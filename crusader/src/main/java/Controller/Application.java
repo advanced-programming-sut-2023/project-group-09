@@ -7,6 +7,15 @@ import java.util.ArrayList;
 
 
 public class Application {
+    private static boolean stayLoggedIn = false;
+
+    public static boolean isStayLoggedIn() {
+        return stayLoggedIn;
+    }
+
+    public static void setStayLoggedIn(boolean stayLoggedIn) {
+        stayLoggedIn = stayLoggedIn;
+    }
 
     private static User currentUser;
     private static ArrayList<User> users;

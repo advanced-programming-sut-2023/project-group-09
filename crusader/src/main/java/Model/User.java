@@ -1,14 +1,8 @@
 package Model;
 
 public class User {
-    private String username;
-    private String password;
-    private String nickname;
-    private String email;
-    private int score = 0;
-    private String passwordRecoveryQuestion;
-    private String passwordRecoveryAnswer;
-    private String slogan;
+    private String username, password, nickname, email, passwordRecoveryQuestion, passwordRecoveryAnswer, slogan;
+
     public User(String username, String password, String nickname, String email, String slogan) {
         this.username = username;
         this.password = password;
@@ -73,11 +67,13 @@ public class User {
         this.slogan = slogan;
     }
 
-    public int getScore() {
-        return score;
+    public User getUserByUsername() {
+        return null;
     }
-
-    public void setScore(int score) {
-        this.score = score;
+    public boolean isPasswordCorrect(String password) {
+        return password.equals(this.password);
+    }
+    public boolean isAnswerToSecurityQuestionCorrect(String answer) {
+        return answer.equals(this.passwordRecoveryQuestion);
     }
 }
