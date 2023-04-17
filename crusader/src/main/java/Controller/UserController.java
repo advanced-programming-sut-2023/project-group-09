@@ -1,6 +1,7 @@
 package Controller;
 
 public class UserController {
+
     public static String createUser(String username, String password, String passwordConfirmation, String email, String slogan) {
         return "";
     }
@@ -33,8 +34,9 @@ public class UserController {
         return false;
     }
 
-    public static String logout() {
-        return "";
+    public static void logout() {
+        Application.setCurrentUser(null);
+        DBController.saveCurrentUser();
     }
 
     public static String changeUsername(String newUsername) {
@@ -80,4 +82,6 @@ public class UserController {
     private static String convertPasswordToHash(){
         return "";
     }
+
+    //---
 }

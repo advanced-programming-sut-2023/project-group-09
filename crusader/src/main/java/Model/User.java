@@ -1,8 +1,14 @@
 package Model;
 
 public class User {
-    private String username, password, nickname, email, passwordRecoveryQuestion, passwordRecoveryAnswer, slogan;
-
+    private String username;
+    private String password;
+    private String nickname;
+    private String email;
+    private int score = 0;
+    private String passwordRecoveryQuestion;
+    private String passwordRecoveryAnswer;
+    private String slogan;
     public User(String username, String password, String nickname, String email, String slogan) {
         this.username = username;
         this.password = password;
@@ -67,7 +73,11 @@ public class User {
         this.slogan = slogan;
     }
 
-    public User getUserByUsername() {
-        return null;
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }
