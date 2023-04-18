@@ -37,15 +37,15 @@ public class LoginMenu {
                     Matcher usernameMatcher = LoginCommands.getMatcher(contents , LoginCommands.USERNAME_REGEX);
                     Matcher passwordMatcher = LoginCommands.getMatcher(contents , LoginCommands.PASSWORD_REGEX);
                     Matcher stayLoggedInMatcher = LoginCommands.getMatcher(contents , LoginCommands.STAY_LOGGED_IN_REGEX);
-                    if (usernameMatcher.groupCount() != 1) {
+                    if (usernameMatcher.results().count() != 1) {
                         System.out.println(LoginAnswers.INVALID_USERNAME_INPUT_MESSAGE.getMessage());
                         continue;
                     }
-                    if (passwordMatcher.groupCount() != 1) {
+                    if (passwordMatcher.results().count() != 1) {
                         System.out.println(LoginAnswers.INVALID_PASSWORD_INPUT_MESSAGE.getMessage());
                         continue;
                     }
-                    if (stayLoggedInMatcher.groupCount() != 1) {
+                    if (stayLoggedInMatcher.results().count() != 1) {
                         System.out.println(LoginAnswers.INVALID_LOGIN_INPUT_MESSAGE.getMessage());
                         continue;
                     }
