@@ -21,11 +21,19 @@ public class Application {
         return null;
     }
 
-    public static boolean isUserExists(String username) {
+    public static User getUserByEmail() {
+        return null;
+    }
+
+    public static boolean isUserExistsByName(String username) {
         return false;
     }
 
-    public static void addUser(User user){
+    public static boolean isUserExistsByEmail(String email) {
+        return false;
+    }
+
+    public static void addUser(User user) {
 
     }
 
