@@ -29,7 +29,7 @@ public class UserController {
     }
 
     public static String loginUser(String username, String password, boolean stayedLoggedIn) {
-        if (!Application.isUserExists(username)) {
+        if (!Application.isUserExistsByName(username)) {
             return LoginAnswers.USER_DOESNT_EXIST_MESSAGE.getMessage();
         }
         User user = Application.getUserByUsername(username);
@@ -43,7 +43,7 @@ public class UserController {
     }
 
     public static String forgotPassword(String username) {
-        if (!Application.isUserExists(username)) {
+        if (!Application.isUserExistsByName(username)) {
             return LoginAnswers.USER_DOESNT_EXIST_MESSAGE.getMessage();
         }
         User user = Application.getUserByUsername(username);

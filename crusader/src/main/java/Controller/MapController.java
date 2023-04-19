@@ -31,6 +31,7 @@ public class MapController {
             return BuildingAnswers.getMessage(BuildingAnswers.INVALID_Y_COORD_ERROR);
         }
         // TODO: dropping building in game and checking type of building
+        return "";
     }
 
     public static String dropCastleBuildings(int x, int y, String type) {

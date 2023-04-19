@@ -27,9 +27,8 @@ public class LoginMenu {
         }
         public static void run(Scanner scanner){
             delayTime = wrongPassTimes = 0;
-            String command = scanner.nextLine();
             while (true) {
-                command = scanner.nextLine();
+                String command = scanner.nextLine();
                 Matcher loginMatcher = LoginCommands.getMatcher(command , LoginCommands.LOGIN_REGEX);
                 Matcher forgotPasswordMatcher = LoginCommands.getMatcher(command , LoginCommands.FORGOT_PASSWORD_REGEX);
                 if (loginMatcher.matches()) {
@@ -45,17 +44,22 @@ public class LoginMenu {
                         System.out.println(LoginAnswers.INVALID_PASSWORD_INPUT_MESSAGE.getMessage());
                         continue;
                     }
-                    if (stayLoggedInMatcher.results().count() != 1) {
+                    if (stayLoggedInMatcher.results().count() > 1) {
                         System.out.println(LoginAnswers.INVALID_LOGIN_INPUT_MESSAGE.getMessage());
                         continue;
                     }
-                    String result = UserController.loginUser(usernameMatcher.group("username") ,
-                            passwordMatcher.group("password") , stayLoggedInMatcher.find());
+                    String result = "";
+                    usernameMatcher = LoginCommands.getMatcher(contents , LoginCommands.USERNAME_REGEX);
+                    passwordMatcher = LoginCommands.getMatcher(contents , LoginCommands.PASSWORD_REGEX);
+                    if (usernameMatcher.find() && passwordMatcher.find())
+                        result = UserController.loginUser(usernameMatcher.group("username") ,
+                                passwordMatcher.group("password") , stayLoggedInMatcher.find());
                     System.out.println(result);
                     if (result.equals(LoginAnswers.WRONG_PASSWORD_MESSAGE.getMessage())) {
                         delayForWrongPass();
                     } else if (result.equals(LoginAnswers.SUCCESSFUL_LOGIN_MESSAGE.getMessage())) {
                         // go to Main Menu
+
                         break;
                     }
                 } else if (forgotPasswordMatcher.matches()) {

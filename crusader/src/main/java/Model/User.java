@@ -1,5 +1,8 @@
 package Model;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class User {
     private String username, password, nickname, email, passwordRecoveryQuestion, passwordRecoveryAnswer, slogan;
 
@@ -70,8 +73,27 @@ public class User {
     public User getUserByUsername() {
         return null;
     }
+    public static String convertPasswordToHash(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            // compute the hash of the input string
+            byte[] hash = md.digest(password.getBytes());
+
+            // convert the hash to a hexadecimal string
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hash) {
+                hexString.append(String.format("%02x", b));
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println("An error occurred.[hashing password]");
+            e.printStackTrace();
+        }
+        return "";
+    }
     public boolean isPasswordCorrect(String password) {
-        return password.equals(this.password);
+
+        return convertPasswordToHash(password).equals(this.password);
     }
     public boolean isAnswerToSecurityQuestionCorrect(String answer) {
         return answer.equals(this.passwordRecoveryQuestion);
