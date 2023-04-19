@@ -17,7 +17,7 @@ public class MainMenu {
             } else if (input.equals("2")) {
                 ProfileMenu.run(scanner);
             } else if (input.equals("3")) {
-                // go to pish menu
+                PrimaryMenu.run(scanner);
             } else if (input.equals("4")) {
                 break;
             } else {

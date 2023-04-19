@@ -494,8 +494,12 @@ public class UserController {
     }
 
     public static String removeSlogan() {
-        Application.getCurrentUser().setSlogan(null);
-        return "slogan removed successfully!";
+        if (Application.getCurrentUser() == null) {
+            return "You didn't log in!";
+        } else {
+            Application.getCurrentUser().setSlogan(null);
+            return "slogan removed successfully!";
+        }
     }
 
     public static String displayHighScore() {
@@ -507,7 +511,7 @@ public class UserController {
     }
 
     public static String displaySlogan() {
-        return "slogan: " + Application.getCurrentUser().getHighScore();
+        return "slogan: " + Application.getCurrentUser().getSlogan();
     }
 
     public static String displayProfile() {
@@ -572,7 +576,7 @@ public class UserController {
 
 
 
-    private static int isPasswordStrong(String password){
+    public static int isPasswordStrong(String password){
         // if return value equals to 1: password is short, 2: a-z, 3: A-Z, 4: 0-9, 5: ^a-zA-Z0-9, 6: true
         if (password.length() < 6) {
             return 1;

@@ -16,7 +16,7 @@ public enum LoginAnswers {SUCCESSFUL_LOGIN_MESSAGE("logged in successfully!"),
     PASSWORD_UPPERCASE_ERROR(" : password must have a uppercase letter!"),
     PASSWORD_NUMBER_ERROR(" : password must have a number digit!"),
     PASSWORD_OTHER_CHARACTERS_ERROR(" : password must have a character except letters and numbers!"),
-    PASSWORD_CONFIRMATION_MESSAGE("Please type your password confirmation: "),
+    PASSWORD_CONFIRMATION_MESSAGE("type your new password again: "),
     PASSWORD_AND_CONFIRMATION_DOESNT_MATCH("Password and confirmation doesn't match!");
 
 
