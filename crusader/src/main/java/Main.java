@@ -1,6 +1,8 @@
-import Controller.DBController;
-import Controller.MainController;
-import View.LoginMenu;
+import controller.DBController;
+import controller.MainController;
+import view.LoginMenu;
+import controller.DBController;
+import view.LoginMenu;
 
 import java.util.Scanner;
 
