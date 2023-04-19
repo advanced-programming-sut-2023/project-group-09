@@ -1,4 +1,4 @@
-package enumeration;
+package Enumeration;
 
 public enum SecurityQuestions {
     // list of questions

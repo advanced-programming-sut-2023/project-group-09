@@ -1,4 +1,4 @@
-package controller.gamestructure;
+package controller.gameStructure;
 
 public class GameResources extends GameGoods {
     protected static void createStone() {

@@ -1,6 +1,7 @@
-package model.building.castlebuildings;
+package model.building.castleBuildings;
 
 import model.Government;
+
 public class Wall extends CastleBuilding {
     private int height;
 
