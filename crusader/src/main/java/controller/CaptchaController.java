@@ -14,8 +14,6 @@ import model.captcha.Captcha;
 import org.apache.commons.codec.binary.Base64;
 
 public class CaptchaController {
-
-
     private static final String SECRET_KEY_1 = "ssdkF$HUy2A#D%kd";
     private static final String SECRET_KEY_2 = "weJiSEvR5yAC5ftB";
 

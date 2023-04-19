@@ -1,4 +1,4 @@
-package model.building.producerBuildings;
+package model.building.producerbuildings;
 
 import model.building.Building;
 import model.Government;
