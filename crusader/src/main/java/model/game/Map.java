@@ -30,6 +30,10 @@ public class Map {
         return mapTiles;
     }
 
+    public Tile getTile(int x, int y) {
+        return mapTiles[x][y];
+    }
+
     public void setMapTiles(Tile[][] mapTiles) {
         this.mapTiles = mapTiles;
     }

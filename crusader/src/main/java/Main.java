@@ -1,3 +1,5 @@
+import model.game.Tile;
+import view.MapMenu;
 import view.SignupMenu;
 
 import java.util.Scanner;

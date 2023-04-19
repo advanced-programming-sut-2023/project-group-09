@@ -9,7 +9,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class SignupMenu {
-    //    0: register - 1: random slogan - 2: random password - 3: 1 and 2 - 4: security question - 5: end
+    //    0: register - 1: random slogan - 2: random password - 3: 1 and 2 - 4: security question - 5: exit
     public static int signupState = 0;
     public static User currentUser = null;
     public static HashMap<String, String> user = new HashMap<>();
@@ -17,13 +17,19 @@ public class SignupMenu {
     public static void run(Scanner scanner) {
         while (true) {
             if (signupState == 0) runRegisterPart(scanner);
-            else if (signupState == 2 || signupState == 3) System.out.println(UserController.createUser(user, scanner.nextLine()));
+            else if (signupState == 2 || signupState == 3)
+                System.out.println(UserController.createUser(user, scanner.nextLine()));
             else if (signupState == 4) runSecurityQuestionPart(scanner);
+            else if (signupState == 5) MainMenu.run(scanner);
         }
     }
 
     private static void runRegisterPart(Scanner scanner) {
         String input = scanner.nextLine();
+        if (SignupMenuCommands.BACK.getMatcher(input).matches()) {
+            signupState = 5;
+            return;
+        }
         Matcher signupM = SignupMenuCommands.SIGNUP.getMatcher(input);
         if (!signupM.matches()) {
             System.out.println("invalid command");

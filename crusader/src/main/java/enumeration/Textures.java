@@ -18,8 +18,20 @@ public enum Textures {
     BEACH("beach"),
     SEA("sea");
 
-    private Textures(String name){
+    private Textures(String name) {
         this.name = name;
     }
+
     private String name;
+
+    public String getTextureName() {
+        return this.name;
+    }
+
+    public static Textures getTextureByName(String name) {
+        for (Textures texture : Textures.values()) {
+            if (texture.getTextureName().equals(name)) return texture;
+        }
+        return null;
+    }
 }
