@@ -17,14 +17,12 @@ public class Captcha {
         this.value = CaptchaController.makeRandomNumber();
     }
 
-    public boolean isCaptchaTrue(String input){
+    public boolean isCaptchaTrue(String input) {
         return value.equals(input);
     }
 
     public String getCaptchaImage() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, IOException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         String picture = CaptchaController.makePictureWithoutNoise(value);
-        return CaptchaController.addNoise(picture,value);
+        return CaptchaController.addNoise(picture, value);
     }
-
-
 }
