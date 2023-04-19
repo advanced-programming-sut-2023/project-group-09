@@ -1,11 +1,10 @@
 package model.building.producerbuildings;
 
 import model.Government;
-import model.building.producerbuildings.ProducerBuilding;
 
 import java.util.ArrayList;
 
-public class MilitaryProducer extends ProducerBuilding {
+public class MilitaryProducer extends model.building.producerbuildings.ProducerBuilding {
     private ArrayList<String> militaryTypes = new ArrayList<>();
 
     public MilitaryProducer(Government government, int numberOfRequiredWorkers, int numberOfRequiredEngineers, String type,

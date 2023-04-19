@@ -4,7 +4,7 @@ import model.Government;
 
 import java.util.ArrayList;
 
-public class ProductProducer extends ProducerBuilding {
+public class ProductProducer extends model.building.producerbuildings.ProducerBuilding {
     private String productType;
     private ArrayList<String> primaryRequired = new ArrayList<>();
     private ArrayList<String> buildingRequired = new ArrayList<>();

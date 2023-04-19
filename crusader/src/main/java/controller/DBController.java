@@ -19,7 +19,6 @@ public class DBController {
     public static void loadAllUsers(){
         try {
             Gson gson = new Gson();
-            checkFileExist(Paths.USERS_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.USERS_PATH.getPath())));
             ArrayList<User> allUsers = gson.fromJson(text, new TypeToken<List<User>>(){}.getType());
             Application.setUsers(allUsers);
@@ -32,7 +31,6 @@ public class DBController {
     public static void saveAllUsers(){
 
         try {
-            checkFileExist(Paths.USERS_PATH.getPath());
             File file = new File(Paths.USERS_PATH.getPath());
             FileWriter fileWriter = new FileWriter(file);
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -48,11 +46,9 @@ public class DBController {
     public static void loadCurrentUser(){
         try {
             Gson gson = new Gson();
-            checkFileExist(Paths.CURRENT_USER_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.CURRENT_USER_PATH.getPath())));
             User user = gson.fromJson(text, User.class);
-            User currentUser = Application.getUserByUsername(user.getUsername());
-            Application.setCurrentUser(currentUser);
+            Application.setCurrentUser(user);
         } catch (IOException e) {
             System.out.println("An error occurred.[load current user]");
             e.printStackTrace();
@@ -61,7 +57,6 @@ public class DBController {
 
     public static void saveCurrentUser(){
         try {
-            checkFileExist(Paths.CURRENT_USER_PATH.getPath());
             File file = new File(Paths.CURRENT_USER_PATH.getPath());
             FileWriter fileWriter = new FileWriter(file);
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -71,16 +66,6 @@ public class DBController {
 
         } catch (IOException e) {
             System.out.println("An error occurred.[save current user]");
-            e.printStackTrace();
-        }
-    }
-
-    public static void checkFileExist(String fileAddress){
-        try {
-            File myObj = new File(fileAddress);
-            boolean check = myObj.createNewFile();
-        } catch (IOException e) {
-            System.out.println("An error occurred.[check file exist]");
             e.printStackTrace();
         }
     }

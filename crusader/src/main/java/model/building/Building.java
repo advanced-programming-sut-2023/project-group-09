@@ -38,6 +38,14 @@ public class Building {
         this.endY = endY;
     }
 
+    public int getMaxHp() {
+        return maxHp;
+    }
+
+    public Government getGovernment() {
+        return government;
+    }
+
     public ArrayList<Permission> getLandPermissions() {
         return landPermissions;
     }

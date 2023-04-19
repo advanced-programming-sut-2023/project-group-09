@@ -1,7 +1,8 @@
 package model.building.producerbuildings;
 
-import model.Government;
 import model.tools.AttackingAndDefendingTool;
+
+import model.Government;
 
 import java.util.ArrayList;
 

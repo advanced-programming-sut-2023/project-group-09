@@ -1,4 +1,4 @@
-package model.building.storagebuildings;
+package model.building.StorageBuildings;
 
 import model.building.Building;
 import model.Government;

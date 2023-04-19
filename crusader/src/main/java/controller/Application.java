@@ -7,6 +7,15 @@ import java.util.ArrayList;
 
 
 public class Application {
+    private static boolean stayLoggedIn = false;
+
+    public static boolean isStayLoggedIn() {
+        return stayLoggedIn;
+    }
+
+    public static void setStayLoggedIn(boolean stayLoggedIn) {
+        stayLoggedIn = stayLoggedIn;
+    }
 
     private static User currentUser;
     private static ArrayList<User> users;
@@ -26,6 +35,7 @@ public class Application {
     public static void setUsers(ArrayList<User> users) {
         Application.users = users;
     }
+
 
     public static User getUserByUsername(String username) {
         for (User user : users){
@@ -55,8 +65,8 @@ public class Application {
         User user = getUserByEmail(email);
         return user != null;
     }
-
     public static void addUser(User user){
         users.add(user);
     }
+
 }
