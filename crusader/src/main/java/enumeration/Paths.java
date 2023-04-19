@@ -2,9 +2,9 @@ package enumeration;
 
 
 public enum Paths {
-    USERS_PATH("crusader/files/user/users.json"),
-    CURRENT_USER_PATH("crusader/files/user/currentUser.json"),
-    CAPTCHA_DATA_PATH("crusader/files/captcha/data/")
+    USERS_PATH("files/user/users.json"),
+    CURRENT_USER_PATH("files/user/currentUser.json"),
+    CAPTCHA_DATA_PATH("files/captcha/data/")
     ;
     private final String path;
 
