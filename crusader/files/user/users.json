@@ -1,0 +1,34 @@
+[
+  {
+    "username": "user1",
+    "password": "1414f8c8e53c207b5b6fe8cf81b9636ce6f987c7d779e73b94b543ab768cdd23",
+    "nickname": "nickname1",
+    "email": "user1@gmail.com",
+    "highScore": 0,
+    "slogan": ""
+  },
+  {
+    "username": "user2",
+    "password": "1414f8c8e53c207b5b6fe8cf81b9636ce6f987c7d779e73b94b543ab768cdd23",
+    "nickname": "nickname2",
+    "email": "user2@gmail.com",
+    "highScore": 0,
+    "slogan": "has slogan"
+  },
+  {
+    "username": "user3",
+    "password": "1414f8c8e53c207b5b6fe8cf81b9636ce6f987c7d779e73b94b543ab768cdd23",
+    "nickname": "nickname3",
+    "email": "user3@gmail.com",
+    "highScore": 0,
+    "slogan": ""
+  },
+  {
+    "username": "user4",
+    "password": "1414f8c8e53c207b5b6fe8cf81b9636ce6f987c7d779e73b94b543ab768cdd23",
+    "nickname": "nickname4",
+    "email": "user4@gmail.com",
+    "highScore": 0,
+    "slogan": "..."
+  }
+]
