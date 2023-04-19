@@ -54,13 +54,12 @@ public class UserController {
                 return "please re-enter the correct password:";
         }
 
-//        TODO: remember to change password to hash after merge
-        User newUser = new User(user.get("username"), user.get("password"), user.get("nickname"), user.get("email"), user.get("slogan"));
+        User newUser = new User(user.get("username"), convertPasswordToHash(user.get("password")), user.get("nickname"), user.get("email"), user.get("slogan"));
         Application.addUser(newUser);
 
         SignupMenu.currentUser = newUser;
         SignupMenu.signupState = 4;
-        return "user " + user.get("username") + " added successfully";
+        return "captcha:";
     }
 
     private static String validateSignup(HashMap<String, Matcher> matchers, HashMap<String, String> user, boolean isSlogan) {
@@ -221,9 +220,7 @@ public class UserController {
         }
         user.setPasswordRecoveryQuestion(securityQuestion.getQuestion());
         user.setPasswordRecoveryAnswer(questionAndAnswer.get("answer"));
-        SignupMenu.signupState = 0;
-        SignupMenu.currentUser = null;
-        SignupMenu.user.clear();
+        SignupMenu.signupState = 5;
         return "security question added successfully";
     }
 
@@ -291,7 +288,7 @@ public class UserController {
         return user.getPasswordRecoveryQuestion();
     }
 
-    public static String changePasswordWithSecurityQuestion(String username , String newPassword , String newPasswordConfirmation) {
+    public static String changePasswordWithSecurityQuestion(String username, String newPassword, String newPasswordConfirmation) {
         User user = Application.getUserByUsername(username);
         if (!newPassword.equals(newPasswordConfirmation))
             return LoginAnswers.PASSWORD_AND_CONFIRMATION_DOESNT_MATCH.getMessage();
@@ -302,19 +299,24 @@ public class UserController {
             switch (check) {
                 case 1: {
                     result += LoginAnswers.PASSWORD_LENGTH_ERROR.getMessage();
-                } break;
+                }
+                break;
                 case 2: {
                     result += LoginAnswers.PASSWORD_LOWERCASE_ERROR.getMessage();
-                } break;
+                }
+                break;
                 case 3: {
                     result += LoginAnswers.PASSWORD_UPPERCASE_ERROR.getMessage();
-                } break;
+                }
+                break;
                 case 4: {
                     result += LoginAnswers.PASSWORD_NUMBER_ERROR.getMessage();
-                } break;
+                }
+                break;
                 case 5: {
                     result += LoginAnswers.PASSWORD_OTHER_CHARACTERS_ERROR.getMessage();
-                } break;
+                }
+                break;
             }
             return result;
         }
@@ -345,6 +347,7 @@ public class UserController {
         }
         return null;
     }
+
     private static boolean checkUsernameChars(String username) {
         Pattern pattern = Pattern.compile("[^a-zA-Z_\\d]");
         Matcher matcher = pattern.matcher(username);
@@ -373,6 +376,7 @@ public class UserController {
         user.setNickname(newNickname);
         return "nickname changed successfully!";
     }
+
     private static String validateChangePassword(String oldPassword, String newPassword) {
         if (checkNullFields(oldPassword)) {
             return "old password field is required!";
@@ -419,7 +423,7 @@ public class UserController {
             return message;
         }
         boolean captchaVerification = CaptchaController.isCaptchaTrue(ProfileMenu.profileMenuScanner);
-        if(!captchaVerification){
+        if (!captchaVerification) {
             return "your behavior was not verified by captcha!";
         }
         boolean check;
@@ -431,7 +435,7 @@ public class UserController {
             check = ProfileMenu.acceptNewPassword(newPassword);
         }
 
-        if(check){
+        if (check) {
             newPassword = convertPasswordToHash(newPassword);
             Application.getCurrentUser().setPassword(newPassword);
             return "password changed successfully!";
@@ -449,6 +453,7 @@ public class UserController {
         user.setEmail(newEmail);
         return "email changed successfully!";
     }
+
     private static boolean checkNullFields(String input) {
         return input == null || input.length() == 0;
     }
@@ -471,6 +476,7 @@ public class UserController {
         }
         return null;
     }
+
     public static String changeSlogan(String newSlogan) {
 
         if (checkNullFields(newSlogan)) {
@@ -518,16 +524,12 @@ public class UserController {
     }
 
 
-
-
-
-
     //profile menu functions
     private static int getRank() {
         ArrayList<User> users = getSortedListOfUsers();
         int index = 1;
-        for (User user : users){
-            if(user.getUsername().equals(Application.getCurrentUser().getUsername())){
+        for (User user : users) {
+            if (user.getUsername().equals(Application.getCurrentUser().getUsername())) {
                 return index;
             }
             index++;
@@ -569,10 +571,11 @@ public class UserController {
         return "";
     }
 
-    private static String convertPasswordToHash(){
+    private static String convertPasswordToHash() {
         return "";
     }
-    private static int isPasswordStrong(String password){
+
+    private static int isPasswordStrong(String password) {
         // if return value equals to 1: password is short, 2: a-z, 3: A-Z, 4: 0-9, 5: ^a-zA-Z0-9, 6: true
         if (password.length() < 6) {
             return 1;
