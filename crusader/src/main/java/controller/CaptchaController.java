@@ -49,7 +49,7 @@ public class CaptchaController {
 
     @SneakyThrows
     private static String getStringOfCaptcha(char num) {
-        String path = enumeration.Paths.CAPTCHA_DATA_PATH.getPath() + num + ".txt";
+        String path = Paths.CAPTCHA_DATA_PATH.getPath() + num + ".txt";
         String cipherText = new String(Files.readAllBytes(Path.of(path)));
         CaptchaController.makeControllerVariable();
         return decrypt(cipherText);
