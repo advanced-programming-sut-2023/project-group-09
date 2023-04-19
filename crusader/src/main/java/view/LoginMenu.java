@@ -1,5 +1,6 @@
 package view;
 
+import controller.MainController;
 import controller.UserController;
 import enumeration.answers.LoginAnswers;
 import enumeration.commands.LoginCommands;
@@ -29,6 +30,7 @@ public class LoginMenu {
                 String command = scanner.nextLine();
                 Matcher loginMatcher = LoginCommands.getMatcher(command , LoginCommands.LOGIN_REGEX);
                 Matcher forgotPasswordMatcher = LoginCommands.getMatcher(command , LoginCommands.FORGOT_PASSWORD_REGEX);
+                Matcher backMatcher = LoginCommands.getMatcher(command , LoginCommands.BACK);
                 if (loginMatcher.matches()) {
                     String contents = loginMatcher.group("contents");
                     Matcher usernameMatcher = LoginCommands.getMatcher(contents , LoginCommands.USERNAME_REGEX);
@@ -67,7 +69,7 @@ public class LoginMenu {
                     String username = forgotPasswordMatcher.group("username");
                     String result = UserController.forgotPassword(username);
                     System.out.println(result);
-                    if (!result.equals(LoginAnswers.USER_DOESNT_EXIST_MESSAGE)) {
+                    if (!result.equals(LoginAnswers.USER_DOESNT_EXIST_MESSAGE.getMessage())) {
                         String answerToQuestion = scanner.nextLine();
                         if (UserController.checkSecurityQuestion(username , answerToQuestion)) {
                             System.out.println(LoginAnswers.ENTER_YOUR_PASSWORD_MESSAGE.getMessage());
@@ -79,6 +81,8 @@ public class LoginMenu {
                             System.out.println(LoginAnswers.WRONG_ANSWER_MESSAGE.getMessage());
                         }
                     }
+                } else if (backMatcher.matches()) {
+                    break;
                 } else {
                     System.out.println(LoginAnswers.INVALID_COMMAND_MESSAGE.getMessage());
                 }

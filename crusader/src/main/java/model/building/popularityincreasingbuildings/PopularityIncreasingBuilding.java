@@ -1,4 +1,4 @@
-package model.building.popularityIncreasingBuildings;
+package model.building.popularityincreasingbuildings;
 
 import model.building.Building;
 import model.Government;

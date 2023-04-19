@@ -68,4 +68,5 @@ public class Application {
     public static void addUser(User user){
         users.add(user);
     }
+
 }

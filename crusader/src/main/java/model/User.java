@@ -1,10 +1,19 @@
 package model;
 
+import controller.UserController;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class User {
-    private String username, password, nickname, email, passwordRecoveryQuestion, passwordRecoveryAnswer, slogan;
+    private String username;
+    private String password;
+    private String nickname;
+    private String email;
+    private int highScore = 0;
+    private String passwordRecoveryQuestion;
+    private String passwordRecoveryAnswer;
+    private String slogan;
 
     public User(String username, String password, String nickname, String email, String slogan) {
         this.username = username;
@@ -20,10 +29,6 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setPassword(String password) {
@@ -43,7 +48,7 @@ public class User {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email.toLowerCase();
     }
 
     public String getPasswordRecoveryQuestion() {
@@ -70,32 +75,29 @@ public class User {
         this.slogan = slogan;
     }
 
+
     public User getUserByUsername() {
         return null;
     }
-    public static String convertPasswordToHash(String password) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            // compute the hash of the input string
-            byte[] hash = md.digest(password.getBytes());
 
-            // convert the hash to a hexadecimal string
-            StringBuilder hexString = new StringBuilder();
-            for (byte b : hash) {
-                hexString.append(String.format("%02x", b));
-            }
-            return hexString.toString();
-        } catch (NoSuchAlgorithmException e) {
-            System.out.println("An error occurred.[hashing password]");
-            e.printStackTrace();
-        }
-        return "";
-    }
     public boolean isPasswordCorrect(String password) {
 
-        return convertPasswordToHash(password).equals(this.password);
+        return UserController.convertPasswordToHash(password).equals(this.password);
     }
     public boolean isAnswerToSecurityQuestionCorrect(String answer) {
         return answer.equals(this.passwordRecoveryAnswer);
+    }
+    //=============================
+    public int getHighScore() {
+        return highScore;
+    }
+
+    public void setHighScore(int highScore) {
+        this.highScore = highScore;
+    }
+
+    public boolean arePasswordsEqual(String secondPassword){
+        secondPassword = UserController.convertPasswordToHash(secondPassword);
+        return password.hashCode() == secondPassword.hashCode();
     }
 }

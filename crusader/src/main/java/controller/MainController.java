@@ -9,6 +9,8 @@ import view.PrimaryMenu;
 import java.util.Scanner;
 
 public class MainController {
+    public static User currentUser;
+
 
     public static void loadGame(){
         DBController.loadCurrentUser();

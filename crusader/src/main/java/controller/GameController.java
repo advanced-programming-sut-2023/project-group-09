@@ -3,7 +3,15 @@ package controller;
 import model.game.Game;
 
 public class GameController {
-    public static Game game;
+    private static Game game;
+
+    public static Game getGame() {
+        return game;
+    }
+
+    public static void setGame(Game game) {
+        GameController.game = game;
+    }
 
     public static String selectUnit(int x, int y) {
         return "";
