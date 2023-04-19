@@ -4,14 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9ab78df3-3bc1-4de6-a2d7-b2e92f81d5e4" name="Changes" comment="commit to merge" />
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="Git.Merge.Settings">
-    <option name="BRANCH" value="origin/Farzam" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -31,68 +28,30 @@
       </MavenGeneralSettings>
     </option>
   </component>
-  <component name="ProjectId" id="2OeRHsfCIZDCdXPsU23ipTfGzkI" />
+  <component name="ProjectId" id="2OeZJGtSER9mrxhoyWb8D0vXmSP" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+    "nodejs_package_manager_path": "npm"
   }
 }]]></component>
-  <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
-      <module name="StrongholdCrusader" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.Main" />
-      </list>
-    </recent_temporary>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="9ab78df3-3bc1-4de6-a2d7-b2e92f81d5e4" name="Changes" comment="" />
-      <created>1681918976546</created>
+      <changelist id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="" />
+      <created>1681922938440</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1681918976546</updated>
-      <workItem from="1681918977991" duration="2847000" />
+      <updated>1681922938440</updated>
+      <workItem from="1681922940573" duration="1143000" />
     </task>
-    <task id="LOCAL-00001" summary="Paths commits...">
-      <created>1681922543324</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1681922543324</updated>
-    </task>
-    <task id="LOCAL-00002" summary="commit to merge">
-      <created>1681923757684</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1681923757684</updated>
-    </task>
-    <task id="LOCAL-00003" summary="commit to merge">
-      <created>1681924037163</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1681924037163</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -108,10 +67,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Paths commits..." />
-    <MESSAGE value="commit to merge" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit to merge" />
   </component>
 </project>
