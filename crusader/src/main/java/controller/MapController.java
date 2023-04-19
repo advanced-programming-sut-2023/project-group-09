@@ -1,12 +1,21 @@
 package controller;
 
+import enumeration.Textures;
+import model.game.Tile;
+import model.human.Human;
+
 public class MapController {
-    public static String setTexture(int x, int y, String type) {
-        return "";
+    public static String setTexture(int x, int y, Textures type) {
+        GameController.getGame().getMap().getTile(x, y).setTexture(type);
+        return "texture of tile (" + x + ", " + y + ") changed to " + type.getTextureName() + " successfully";
     }
 
-    public static String clearLand(int x, int y) {
-        return "";
+    public static String clearTile(int x, int y) {
+        Tile tile = GameController.getGame().getMap().getTile(x, y);
+        tile.setBuilding(null);
+        tile.getHuman().clear();
+        tile.setTexture(null);
+        return "tile (" + x + ", " + y + ") cleared successfully";
     }
 
     public static String dropRock(int x, int y, String direction) {
@@ -33,7 +42,24 @@ public class MapController {
         return "";
     }
 
-    public static String showDetailsOfLand(int x, int y) {
-        return "";
+    public static String showDetailsOfTile(int x, int y) {
+        Tile tile = GameController.getGame().getMap().getTile(x, y);
+
+        String details = "tile (" + x + ", " + y + ") details:\n";
+        details += "texture type: " + tile.getTexture().getTextureName();
+
+        if (tile.getBuilding() != null) {
+            details += "building " + tile.getBuilding().getType() + " from government " + tile.getBuilding().getGovernment() +
+                    " | HP: " + tile.getBuilding().getHp() + "/" + tile.getBuilding().getMaxHp() + "\n";
+        } else details += "there is no building on this tile\n";
+
+        for (int i = 0; i < tile.getHuman().size(); i++) {
+            Human human = tile.getHuman().get(i);
+//            TODO: add human type and government
+        }
+        if (tile.getHuman().size() > 0) details += "total number of humans: " + tile.getHuman().size();
+        else details += "there are no humans on this tile";
+
+        return details;
     }
 }

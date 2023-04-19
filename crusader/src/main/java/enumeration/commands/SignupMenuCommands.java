@@ -21,7 +21,8 @@ public enum SignupMenuCommands {
     PASSWORD_CONTAINING_LOWERCASE_LETTER("[a-z]"),
     PASSWORD_CONTAINING_DIGIT("[\\d]"),
     PASSWORD_CONTAINING_SPECIAL_LETTER("[^a-zA-Z\\d]"),
-    EMAIL_VALIDATION("[a-zA-Z\\d_\\.]+@[a-zA-Z\\d_\\.]+\\.[a-zA-Z\\d_\\.]+");
+    EMAIL_VALIDATION("[a-zA-Z\\d_\\.]+@[a-zA-Z\\d_\\.]+\\.[a-zA-Z\\d_\\.]+"),
+    BACK("back");
     private String regex;
 
     private SignupMenuCommands(String regex) {

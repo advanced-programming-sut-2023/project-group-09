@@ -1,7 +1,6 @@
 package model.building.producerbuildings;
 
 import model.Government;
-import model.building.producerbuildings.ProducerBuilding;
 
 import java.util.ArrayList;
 
