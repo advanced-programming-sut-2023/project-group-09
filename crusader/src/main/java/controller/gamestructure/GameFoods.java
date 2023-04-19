@@ -1,4 +1,4 @@
-package controller.gameStructure;
+package controller.gamestructure;
 
 public class GameFoods extends GameGoods {
     protected static void createMeat() {

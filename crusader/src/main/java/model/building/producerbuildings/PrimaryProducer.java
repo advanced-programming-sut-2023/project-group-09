@@ -1,8 +1,8 @@
-package model.building.producerBuildings;
+package model.building.producerbuildings;
 
 import model.Government;
 
-public class PrimaryProducer extends ProducerBuilding {
+public class PrimaryProducer extends model.building.producerbuildings.ProducerBuilding {
     private String primaryType;
 
     public PrimaryProducer(Government government, int numberOfRequiredWorkers, int numberOfRequiredEngineers, String type,

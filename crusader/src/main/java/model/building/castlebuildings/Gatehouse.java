@@ -1,4 +1,4 @@
-package model.building.castleBuildings;
+package model.building.castlebuildings;
 
 import model.Government;
 

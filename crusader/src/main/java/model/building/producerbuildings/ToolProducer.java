@@ -1,7 +1,6 @@
 package model.building.producerbuildings;
 
 import model.tools.AttackingAndDefendingTool;
-import model.building.producerbuildings.ProducerBuilding;
 
 import model.Government;
 
