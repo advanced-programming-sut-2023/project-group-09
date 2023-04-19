@@ -4,10 +4,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum Commands {
-
-
+    //...
     LOGOUT("logout"),
-    BACK("back"),
+    EXIT("exit"),
     EXIT_CRUSADER("exit crusader")
     ;
 

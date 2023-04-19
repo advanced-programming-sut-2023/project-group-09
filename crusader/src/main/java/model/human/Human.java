@@ -1,5 +1,6 @@
 package model.human;
 
+
 import enumeration.DefenseRating;
 import enumeration.HumanStates;
 import model.Government;

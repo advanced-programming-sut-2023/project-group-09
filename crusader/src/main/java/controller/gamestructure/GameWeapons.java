@@ -1,4 +1,4 @@
-package controller.gamestructure;
+package controller.gameStructure;
 
 public class GameWeapons extends GameGoods {
     protected static void createMace() {
