@@ -1,4 +1,4 @@
-package Enumeration.Commands;
+package enumeration.commands;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

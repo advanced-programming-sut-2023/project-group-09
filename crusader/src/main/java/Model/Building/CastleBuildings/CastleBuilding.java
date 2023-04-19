@@ -1,11 +1,7 @@
-package Model.Building.CastleBuildings;
+package model.building.castlebuildings;
 
-import Model.Building.Building;
-import Model.Government;
-import Model.Human.Human;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import model.building.Building;
+import model.Government;
 
 public class CastleBuilding extends Building {
     public CastleBuilding(Government government, int numberOfRequiredWorkers, int numberOfRequiredEngineers,

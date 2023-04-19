@@ -1,4 +1,4 @@
-package Enumeration.Answers;
+package enumeration.answers;
 
 public enum Answers {
 

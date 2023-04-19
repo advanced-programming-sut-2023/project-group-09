@@ -1,10 +1,6 @@
-package Model.Building.CastleBuildings;
+package model.building.castlebuildings;
 
-import Model.Government;
-import Model.Human.Human;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import model.Government;
 
 public class Wall extends CastleBuilding {
     private int height;

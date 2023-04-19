@@ -1,6 +1,6 @@
-package Model.Goods;
+package model.goods;
 
-import Model.Permission;
+import model.Permission;
 
 import java.util.ArrayList;
 

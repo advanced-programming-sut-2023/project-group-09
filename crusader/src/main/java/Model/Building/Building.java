@@ -1,9 +1,9 @@
-package Model.Building;
+package model.building;
 
-import Enumeration.BuildingStates;
-import Model.Government;
-import Model.Human.Human;
-import Model.Permission;
+import enumeration.BuildingStates;
+import model.Government;
+import model.human.Human;
+import model.Permission;
 
 import java.util.ArrayList;
 import java.util.HashMap;

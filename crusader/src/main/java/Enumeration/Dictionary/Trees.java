@@ -1,4 +1,4 @@
-package Enumeration.Dictionary;
+package enumeration.dictionary;
 
 public enum Trees {
     DESERT_SHRUB("desertShrub"),

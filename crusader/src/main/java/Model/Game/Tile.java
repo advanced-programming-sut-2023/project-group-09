@@ -1,8 +1,8 @@
-package Model.Game;
+package model.game;
 
-import Enumeration.Textures;
-import Model.Building.Building;
-import Model.Human.Human;
+import enumeration.Textures;
+import model.building.Building;
+import model.human.Human;
 
 import java.util.ArrayList;
 

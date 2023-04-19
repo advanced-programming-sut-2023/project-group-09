@@ -1,6 +1,6 @@
-package Controller.GameStructure;
+package controller.gamestructure;
 
-import Model.Human.Human;
+import model.human.Human;
 
 import java.util.HashMap;
 

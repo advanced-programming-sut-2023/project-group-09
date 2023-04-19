@@ -1,11 +1,7 @@
-package Model.Building.PopularityIncreasingBuildings;
+package model.building.popularityincreasingbuildings;
 
-import Model.Building.Building;
-import Model.Government;
-import Model.Human.Human;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import model.building.Building;
+import model.Government;
 
 public class PopularityIncreasingBuilding extends Building {
     private int increaseRate;

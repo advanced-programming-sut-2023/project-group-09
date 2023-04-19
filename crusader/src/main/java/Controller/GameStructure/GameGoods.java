@@ -1,8 +1,7 @@
-package Controller.GameStructure;
+package controller.gamestructure;
 
-import Model.Goods.Goods;
+import model.goods.Goods;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GameGoods {
