@@ -66,7 +66,8 @@ public class LoginMenu {
                         break;
                     }
                 } else if (forgotPasswordMatcher.matches()) {
-                    String username = forgotPasswordMatcher.group("username");
+                    String username = forgotPasswordMatcher.group("username") != null ? forgotPasswordMatcher.group("username") :
+                            forgotPasswordMatcher.group("username2");
                     String result = UserController.forgotPassword(username);
                     System.out.println(result);
                     if (!result.equals(LoginAnswers.USER_DOESNT_EXIST_MESSAGE.getMessage())) {
