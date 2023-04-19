@@ -571,9 +571,7 @@ public class UserController {
         return "";
     }
 
-    private static String convertPasswordToHash() {
-        return "";
-    }
+
 
     private static int isPasswordStrong(String password) {
         // if return value equals to 1: password is short, 2: a-z, 3: A-Z, 4: 0-9, 5: ^a-zA-Z0-9, 6: true
