@@ -29,7 +29,7 @@ public class ProfileMenu {
         Matcher showUserProfileMatcher;
         Matcher exitMatcher;
 
-        System.out.println("Profile Menu:");
+        System.out.println("<< Profile Menu >>");
 
         while (true) {
 

@@ -1,33 +1,42 @@
 package view;
 
+import controller.Application;
+import controller.CaptchaController;
+import controller.DBController;
 import controller.UserController;
 import enumeration.commands.SignupMenuCommands;
 import model.User;
+import model.captcha.Captcha;
 
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class SignupMenu {
-    //    0: register - 1: random slogan - 2: random password - 3: 1 and 2 - 4: security question - 5: exit
+    //    0: register - 1: random slogan - 2: random password - 3: 1 and 2 - 4: security question - 5: captcha - 6: exit
     public static int signupState = 0;
     public static User currentUser = null;
     public static HashMap<String, String> user = new HashMap<>();
 
     public static void run(Scanner scanner) {
+        System.out.println("<< Signup Menu >>");
         while (true) {
             if (signupState == 0) runRegisterPart(scanner);
             else if (signupState == 2 || signupState == 3)
                 System.out.println(UserController.createUser(user, scanner.nextLine()));
             else if (signupState == 4) runSecurityQuestionPart(scanner);
-            else if (signupState == 5) MainMenu.run(scanner);
+            else if (signupState == 5) runCaptcha(scanner);
+            else if (signupState == 6) {
+                signupState = 0;
+                PrimaryMenu.run(scanner);
+            }
         }
     }
 
     private static void runRegisterPart(Scanner scanner) {
         String input = scanner.nextLine();
         if (SignupMenuCommands.BACK.getMatcher(input).matches()) {
-            signupState = 5;
+            signupState = 6;
             return;
         }
         Matcher signupM = SignupMenuCommands.SIGNUP.getMatcher(input);
@@ -65,5 +74,23 @@ public class SignupMenu {
         matchers.put("answerConfirm", SignupMenuCommands.QUESTION_ANSWER_CONFIRM.getMatcher(content));
 
         System.out.println(UserController.pickSecurityQuestion(currentUser, matchers));
+    }
+
+    private static void runCaptcha(Scanner scanner) {
+        boolean captchaVerification = CaptchaController.isCaptchaTrue(scanner);
+        if (!captchaVerification) {
+            System.out.println("you didn't pass captcha verification");
+            Application.getUsers().remove(currentUser);
+            signupState = 0;
+            currentUser = null;
+            user.clear();
+            return;
+        }
+
+        System.out.println("user " + currentUser.getUsername() + " added successfully");
+        DBController.saveAllUsers();
+        signupState = 0;
+        user.clear();
+        currentUser = null;
     }
 }
