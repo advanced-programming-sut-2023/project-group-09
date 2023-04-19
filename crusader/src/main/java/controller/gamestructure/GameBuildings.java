@@ -1,4 +1,4 @@
-package controller.gamestructure;
+package controller.gameStructure;
 
 import model.building.Building;
 

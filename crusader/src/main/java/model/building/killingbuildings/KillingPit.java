@@ -1,4 +1,4 @@
-package model.building.killingbuildings;
+package model.building.killingBuildings;
 
 import model.building.Building;
 import model.Government;

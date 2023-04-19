@@ -1,4 +1,4 @@
-package controller.gamestructure;
+package Controller.GameStructure;
 
 import model.human.Human;
 

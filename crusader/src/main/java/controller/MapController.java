@@ -1,5 +1,6 @@
 package controller;
 
+import enumeration.answers.BuildingAnswers;
 import enumeration.Textures;
 import model.game.Tile;
 import model.human.Human;
@@ -23,6 +24,21 @@ public class MapController {
     }
 
     public static String dropTree(int x, int y, String type) {
+        return "";
+    }
+    public static String dropBuilding(String x , String y , String type) {
+        int xCoord , yCoord;
+        try {
+            xCoord = Integer.parseInt(x);
+        } catch (NumberFormatException e) {
+            return BuildingAnswers.getMessage(BuildingAnswers.INVALID_X_COORD_ERROR);
+        }
+        try {
+            yCoord = Integer.parseInt(x);
+        } catch (NumberFormatException e) {
+            return BuildingAnswers.getMessage(BuildingAnswers.INVALID_Y_COORD_ERROR);
+        }
+        // TODO: dropping building in game and checking type of building
         return "";
     }
 

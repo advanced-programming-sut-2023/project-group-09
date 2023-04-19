@@ -1,14 +1,21 @@
 package controller;
 
+import enumeration.answers.LoginAnswers;
 import enumeration.SecurityQuestions;
 import enumeration.commands.SignupMenuCommands;
 import enumeration.dictionary.Slogans;
 import model.User;
+import view.ProfileMenu;
 import view.SignupMenu;
+
 
 import java.util.HashMap;
 import java.util.Random;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UserController {
     public static String signup(HashMap<String, Matcher> matchers, boolean isSlogan) {
@@ -263,62 +270,327 @@ public class UserController {
     }
 
     public static String loginUser(String username, String password, boolean stayedLoggedIn) {
-        return "";
+        if (!Application.isUserExistsByName(username)) {
+            return LoginAnswers.USER_DOESNT_EXIST_MESSAGE.getMessage();
+        }
+        User user = Application.getUserByUsername(username);
+        if (!user.isPasswordCorrect(password)) {
+            return LoginAnswers.WRONG_PASSWORD_MESSAGE.getMessage();
+        }
+        Application.setCurrentUser(user);
+        Application.setStayLoggedIn(stayedLoggedIn);
+        // go to Main Menu
+        return LoginAnswers.SUCCESSFUL_LOGIN_MESSAGE.getMessage();
     }
 
     public static String forgotPassword(String username) {
-        return "";
+        if (!Application.isUserExistsByName(username)) {
+            return LoginAnswers.USER_DOESNT_EXIST_MESSAGE.getMessage();
+        }
+        User user = Application.getUserByUsername(username);
+        return user.getPasswordRecoveryQuestion();
+    }
+
+    public static String changePasswordWithSecurityQuestion(String username , String newPassword , String newPasswordConfirmation) {
+        User user = Application.getUserByUsername(username);
+        if (!newPassword.equals(newPasswordConfirmation))
+            return LoginAnswers.PASSWORD_AND_CONFIRMATION_DOESNT_MATCH.getMessage();
+        int check = UserController.isPasswordStrong(newPassword);
+        // for knowing what check is, go to isPasswordStrong function in this class
+        if (UserController.isPasswordStrong(newPassword) != 6) {
+            String result = LoginAnswers.WEAK_PASSWORD_MESSAGE.getMessage();
+            switch (check) {
+                case 1: {
+                    result += LoginAnswers.PASSWORD_LENGTH_ERROR.getMessage();
+                } break;
+                case 2: {
+                    result += LoginAnswers.PASSWORD_LOWERCASE_ERROR.getMessage();
+                } break;
+                case 3: {
+                    result += LoginAnswers.PASSWORD_UPPERCASE_ERROR.getMessage();
+                } break;
+                case 4: {
+                    result += LoginAnswers.PASSWORD_NUMBER_ERROR.getMessage();
+                } break;
+                case 5: {
+                    result += LoginAnswers.PASSWORD_OTHER_CHARACTERS_ERROR.getMessage();
+                } break;
+            }
+            return result;
+        }
+        user.setPassword(UserController.convertPasswordToHash(newPassword));
+        DBController.saveAllUsers();
+        return LoginAnswers.PASSWORD_CHANGE_SUCCESSFUL_MESSAGE.getMessage();
     }
 
     public static boolean checkSecurityQuestion(String username, String answer) {
-        return false;
+        User user = Application.getUserByUsername(username);
+        return user.isAnswerToSecurityQuestionCorrect(answer);
     }
 
-    public static String logout() {
-        return "";
+    public static void logout() {
+        Application.setCurrentUser(null);
+        DBController.saveCurrentUser();
     }
 
+    private static String validateUsername(String username) {
+        if (checkNullFields(username)) {
+            return "username field is required!";
+        }
+        if (checkUsernameChars(username)) {
+            return "username is invalid!";
+        }
+        if (Application.isUserExistsByName(username)) {
+            return "username is duplicate!";
+        }
+        return null;
+    }
+    private static boolean checkUsernameChars(String username) {
+        Pattern pattern = Pattern.compile("[^a-zA-Z_\\d]");
+        Matcher matcher = pattern.matcher(username);
+        return matcher.find();
+    }
+
+
+    //==================================================
     public static String changeUsername(String newUsername) {
-        return "";
+
+        String message = validateUsername(newUsername);
+        if (message != null) {
+            return message;
+        }
+        User user = Application.getCurrentUser();
+        user.setUsername(newUsername);
+        return "username changed successfully!";
     }
 
     public static String changeNickname(String newNickname) {
-        return "";
+        if (UserController.checkNullFields(newNickname)) {
+            return "nickname field is required!";
+        }
+
+        User user = Application.getCurrentUser();
+        user.setNickname(newNickname);
+        return "nickname changed successfully!";
+    }
+    private static String validateChangePassword(String oldPassword, String newPassword) {
+        if (checkNullFields(oldPassword)) {
+            return "old password field is required!";
+        }
+        if (checkNullFields(newPassword)) {
+            return "new password field is required!";
+        }
+        if (!Application.getCurrentUser().arePasswordsEqual(oldPassword)) {
+            return "current password is incorrect!";
+        }
+
+        //============================
+        if (newPassword.equals("random")) {
+            return null;
+        }
+        if (checkPasswordPower(newPassword)) {
+            return "new password is weak!";
+        }
+        if (Application.getCurrentUser().arePasswordsEqual(newPassword)) {
+            return "please enter a new password!";
+        }
+        return null;
+    }
+
+    private static boolean checkPasswordPower(String password) {
+        if (password.length() < 6) {
+            return true;
+        }
+
+        Pattern pattern1 = Pattern.compile("[a-z]");
+        Pattern pattern2 = Pattern.compile("[A-Z]");
+        Pattern pattern3 = Pattern.compile("\\d");
+        Pattern pattern4 = Pattern.compile("[^\\da-zA-Z]");
+        Matcher matcher1 = pattern1.matcher(password);
+        Matcher matcher2 = pattern2.matcher(password);
+        Matcher matcher3 = pattern3.matcher(password);
+        Matcher matcher4 = pattern4.matcher(password);
+        return !(matcher1.find() && matcher2.find() && matcher3.find() && matcher4.find());
     }
 
     public static String changePassword(String oldPassword, String newPassword) {
-        return "";
+        String message = validateChangePassword(oldPassword, newPassword);
+        if (message != null) {
+            return message;
+        }
+        boolean captchaVerification = CaptchaController.isCaptchaTrue(ProfileMenu.profileMenuScanner);
+        if(!captchaVerification){
+            return "your behavior was not verified by captcha!";
+        }
+        boolean check;
+        if (newPassword.equals("random")) {
+            newPassword = generateRandomPassword();
+            check = ProfileMenu.acceptRandomPassword(newPassword);
+
+        } else {
+            check = ProfileMenu.acceptNewPassword(newPassword);
+        }
+
+        if(check){
+            newPassword = convertPasswordToHash(newPassword);
+            Application.getCurrentUser().setPassword(newPassword);
+            return "password changed successfully!";
+        }
+        return "input does not match the new password![change password failed]";
     }
 
     public static String changeEmail(String newEmail) {
-        return "";
+
+        String message = validateEmail(newEmail);
+        if (message != null) {
+            return message;
+        }
+        User user = Application.getCurrentUser();
+        user.setEmail(newEmail);
+        return "email changed successfully!";
+    }
+    private static boolean checkNullFields(String input) {
+        return input == null || input.length() == 0;
     }
 
+    private static boolean checkEmailFormat(String email) {
+        Pattern pattern = Pattern.compile("[a-zA-Z_\\d]+@[a-zA-Z_\\d]+\\.[a-zA-Z_\\d]+");
+        Matcher matcher = pattern.matcher(email);
+        return !matcher.matches();
+    }
+
+    private static String validateEmail(String email) {
+        if (checkNullFields(email)) {
+            return "email field is required!";
+        }
+        if (checkEmailFormat(email)) {
+            return "email is invalid!";
+        }
+        if (Application.isUserExistsByEmail(email)) {
+            return "email is duplicate!";
+        }
+        return null;
+    }
     public static String changeSlogan(String newSlogan) {
-        return "";
+
+        if (checkNullFields(newSlogan)) {
+            return "slogan field is required!";
+        }
+
+        if (newSlogan.equals("random")) {
+            String slogan = generateRandomSlogan();
+            Application.getCurrentUser().setSlogan(slogan);
+            return "new slogan is : " + slogan;
+        } else {
+            Application.getCurrentUser().setSlogan(newSlogan);
+            return "slogan changed successfully!";
+        }
+
     }
 
     public static String removeSlogan() {
-        return "";
+        Application.getCurrentUser().setSlogan(null);
+        return "slogan removed successfully!";
     }
 
     public static String displayHighScore() {
-        return "";
+        return "high score: " + Application.getCurrentUser().getHighScore();
     }
 
     public static String displayRank() {
-        return "";
+        return "your rank: " + getRank();
     }
 
     public static String displaySlogan() {
-        return "";
+        return "slogan: " + Application.getCurrentUser().getHighScore();
     }
 
     public static String displayProfile() {
+        User user = Application.getCurrentUser();
+        String output = "username: " + user.getUsername() + "\n";
+        output += "nickname: " + user.getNickname() + "\n";
+        output += "email: " + user.getEmail() + "\n";
+        output += "slogan: " + user.getSlogan() + "\n";
+        output += "highscore: " + user.getHighScore() + "\n";
+        output += "rank: " + getRank();
+
+        return output;
+    }
+
+
+
+
+
+
+    //profile menu functions
+    private static int getRank() {
+        ArrayList<User> users = getSortedListOfUsers();
+        int index = 1;
+        for (User user : users){
+            if(user.getUsername().equals(Application.getCurrentUser().getUsername())){
+                return index;
+            }
+            index++;
+        }
+        return -1;
+    }
+
+    private static ArrayList<User> getSortedListOfUsers() {
+        ArrayList<User> sortedList = new ArrayList<>(Application.getUsers());
+        sortedList.sort((user1, user2) -> {
+            if (user1.getHighScore() > user2.getHighScore()) {
+                return -1;
+            }
+            if (user1.getHighScore() < user2.getHighScore()) {
+                return 1;
+            }
+
+            return user1.getUsername().compareTo(user2.getUsername());
+        });
+        return sortedList;
+    }
+
+    public static String convertPasswordToHash(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            // compute the hash of the input string
+            byte[] hash = md.digest(password.getBytes());
+
+            // convert the hash to a hexadecimal string
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hash) {
+                hexString.append(String.format("%02x", b));
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println("An error occurred.[hashing password]");
+            e.printStackTrace();
+        }
         return "";
     }
 
-    private static String convertPasswordToHash() {
+    private static String convertPasswordToHash(){
         return "";
     }
+    private static int isPasswordStrong(String password){
+        // if return value equals to 1: password is short, 2: a-z, 3: A-Z, 4: 0-9, 5: ^a-zA-Z0-9, 6: true
+        if (password.length() < 6) {
+            return 1;
+        }
+        Matcher matcher2 = Pattern.compile("[a-z]").matcher(password);
+        Matcher matcher3 = Pattern.compile("[A-Z]").matcher(password);
+        Matcher matcher4 = Pattern.compile("[0-9]").matcher(password);
+        Matcher matcher5 = Pattern.compile("[^a-zA-Z0-9]").matcher(password);
+        if (!matcher2.find())
+            return 2;
+        if (!matcher3.find())
+            return 3;
+        if (!matcher4.find())
+            return 4;
+        if (!matcher5.find())
+            return 5;
+        return 6;
+    }
+
+    //---
 }

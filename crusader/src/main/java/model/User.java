@@ -1,10 +1,16 @@
 package model;
 
+import controller.UserController;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class User {
     private String username;
     private String password;
     private String nickname;
     private String email;
+    private int highScore = 0;
     private String passwordRecoveryQuestion;
     private String passwordRecoveryAnswer;
     private String slogan;
@@ -25,10 +31,6 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
@@ -46,7 +48,7 @@ public class User {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email.toLowerCase();
     }
 
     public String getPasswordRecoveryQuestion() {
@@ -73,7 +75,29 @@ public class User {
         this.slogan = slogan;
     }
 
+
     public User getUserByUsername() {
         return null;
+    }
+
+    public boolean isPasswordCorrect(String password) {
+
+        return UserController.convertPasswordToHash(password).equals(this.password);
+    }
+    public boolean isAnswerToSecurityQuestionCorrect(String answer) {
+        return answer.equals(this.passwordRecoveryAnswer);
+    }
+    //=============================
+    public int getHighScore() {
+        return highScore;
+    }
+
+    public void setHighScore(int highScore) {
+        this.highScore = highScore;
+    }
+
+    public boolean arePasswordsEqual(String secondPassword){
+        secondPassword = UserController.convertPasswordToHash(secondPassword);
+        return password.hashCode() == secondPassword.hashCode();
     }
 }
