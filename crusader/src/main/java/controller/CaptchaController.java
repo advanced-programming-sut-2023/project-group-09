@@ -14,6 +14,8 @@ import model.captcha.Captcha;
 import org.apache.commons.codec.binary.Base64;
 
 public class CaptchaController {
+
+
     private static final String SECRET_KEY_1 = "ssdkF$HUy2A#D%kd";
     private static final String SECRET_KEY_2 = "weJiSEvR5yAC5ftB";
 
@@ -51,7 +53,7 @@ public class CaptchaController {
 
     @SneakyThrows
     private static String getStringOfCaptcha(char num) {
-        String path = enumeration.Paths.CAPTCHA_DATA_PATH.getPath() + num + ".txt";
+        String path = Paths.CAPTCHA_DATA_PATH.getPath() + num + ".txt";
         String cipherText = new String(Files.readAllBytes(Path.of(path)));
         CaptchaController.makeControllerVariable();
         return decrypt(cipherText);
