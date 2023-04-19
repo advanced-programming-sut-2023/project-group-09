@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Building {
+
     private Government government = null;
     private ArrayList<Permission> landPermissions;
     private ArrayList<Permission> activityPermissions;

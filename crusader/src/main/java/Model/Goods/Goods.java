@@ -3,6 +3,7 @@ package model.goods;
 import java.util.ArrayList;
 
 public class Goods {
+
     private String name;
     private ArrayList<String> required = new ArrayList<>();
 

@@ -5,6 +5,7 @@ import model.building.Building;
 import java.util.HashMap;
 
 public class GameBuildings {
+
     public static HashMap<String, Building> buildings = new HashMap<>();
 
     public static void createSmallStoneGatehouse() {
