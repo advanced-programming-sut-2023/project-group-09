@@ -1,6 +1,7 @@
 package view;
 
 import controller.MainController;
+import enumeration.answers.Answers;
 import enumeration.commands.Commands;
 
 import java.util.Scanner;
@@ -22,7 +23,7 @@ public class PrimaryMenu {
                 MainController.exitCrusader();
                 return;
             } else {
-                System.out.println("invalid command!");
+                System.out.println(Answers.INVALID_COMMAND.getValue());
             }
         }
     }

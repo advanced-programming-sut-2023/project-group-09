@@ -5,9 +5,9 @@ import java.util.regex.Pattern;
 
 public enum Commands {
 
-    //...
+
     LOGOUT("logout"),
-    EXIT("exit"),
+    BACK("back"),
     EXIT_CRUSADER("exit crusader")
     ;
 

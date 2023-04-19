@@ -5,7 +5,6 @@ import model.Government;
 import java.util.ArrayList;
 
 public class Game {
-
     private Map map;
     private ArrayList<Government> governments = new ArrayList<>();
     private Government currentGovernment;

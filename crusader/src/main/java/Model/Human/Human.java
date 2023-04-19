@@ -5,7 +5,6 @@ import enumeration.HumanStates;
 import model.Government;
 
 public abstract class Human {
-
     private Government government = null;
     private int speed;
     private int x, y;
