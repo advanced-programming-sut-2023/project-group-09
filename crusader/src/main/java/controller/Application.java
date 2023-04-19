@@ -38,18 +38,18 @@ public class Application {
 
 
     public static User getUserByUsername(String username) {
-        for (User user : users){
-            if (user.getUsername().equals(username)){
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
                 return user;
             }
         }
         return null;
     }
 
-    public static User getUserByEmail(String email){
-        for (User user : users){
+    public static User getUserByEmail(String email) {
+        for (User user : users) {
             email = email.toLowerCase();
-            if (user.getEmail().equals(email)){
+            if (user.getEmail().equals(email)) {
                 return user;
             }
         }
@@ -65,7 +65,8 @@ public class Application {
         User user = getUserByEmail(email);
         return user != null;
     }
-    public static void addUser(User user){
+
+    public static void addUser(User user) {
         users.add(user);
     }
 

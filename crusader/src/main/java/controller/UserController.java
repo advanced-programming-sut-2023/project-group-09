@@ -59,7 +59,7 @@ public class UserController {
 
         SignupMenu.currentUser = newUser;
         SignupMenu.signupState = 4;
-        return "captcha:";
+        return "";
     }
 
     private static String validateSignup(HashMap<String, Matcher> matchers, HashMap<String, String> user, boolean isSlogan) {
@@ -201,8 +201,7 @@ public class UserController {
     public static String generateRandomSlogan() {
         Random random = new Random();
 
-//        TODO: remember to change bound
-        int number = random.nextInt(1, 3);
+        int number = random.nextInt(1, Slogans.values().length + 1);
         return Slogans.getSloganByNumber(number);
     }
 

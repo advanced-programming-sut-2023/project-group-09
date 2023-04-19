@@ -2,6 +2,7 @@ package view;
 
 import controller.Application;
 import controller.CaptchaController;
+import controller.DBController;
 import controller.UserController;
 import enumeration.commands.SignupMenuCommands;
 import model.User;
@@ -18,12 +19,13 @@ public class SignupMenu {
     public static HashMap<String, String> user = new HashMap<>();
 
     public static void run(Scanner scanner) {
+        System.out.println("<< Signup Menu >>");
         while (true) {
             if (signupState == 0) runRegisterPart(scanner);
             else if (signupState == 2 || signupState == 3)
                 System.out.println(UserController.createUser(user, scanner.nextLine()));
             else if (signupState == 4) runSecurityQuestionPart(scanner);
-//            else if (signupState == 5)
+            else if (signupState == 5) runCaptcha(scanner);
             else if (signupState == 6) {
                 signupState = 0;
                 PrimaryMenu.run(scanner);
@@ -85,9 +87,10 @@ public class SignupMenu {
             return;
         }
 
+        System.out.println("user " + currentUser.getUsername() + " added successfully");
+        DBController.saveAllUsers();
         signupState = 0;
         user.clear();
         currentUser = null;
-        System.out.println("user " + user.get("username") + " added successfully");
     }
 }
