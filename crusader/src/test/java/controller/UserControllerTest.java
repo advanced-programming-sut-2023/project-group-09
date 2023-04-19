@@ -6,8 +6,9 @@ import org.junit.Test;
 public class UserControllerTest {
     @Test
     public void changeUserNameTest(){
-        DBController.loadCurrentUser();
+
         DBController.loadAllUsers();
+        DBController.loadCurrentUser();
 
         //check change username error and action
         String output = UserController.changeUsername(null);
@@ -26,8 +27,9 @@ public class UserControllerTest {
 
     @Test
     public void changeNickNameTest(){
-        DBController.loadCurrentUser();
+
         DBController.loadAllUsers();
+        DBController.loadCurrentUser();
 
         //check nickname error and action
         String output = UserController.changeNickname(null);
@@ -40,9 +42,8 @@ public class UserControllerTest {
 
     @Test
     public void changePasswordTest(){
-        DBController.loadCurrentUser();
         DBController.loadAllUsers();
-
+        DBController.loadCurrentUser();
         //check errors of change password
         String newPassword = null;
         String oldPassword = "MyPass#12";
@@ -74,8 +75,9 @@ public class UserControllerTest {
 
     @Test
     public void changeEmailTest(){
-        DBController.loadCurrentUser();
+
         DBController.loadAllUsers();
+        DBController.loadCurrentUser();
 
         //check change username error and action
         String output = UserController.changeEmail(null);
@@ -98,8 +100,8 @@ public class UserControllerTest {
 
     @Test
     public void changeSloganTest(){
-        DBController.loadCurrentUser();
         DBController.loadAllUsers();
+        DBController.loadCurrentUser();
 
         //check chane and remove slogan error and action
         String output = UserController.changeSlogan(null);
@@ -116,8 +118,8 @@ public class UserControllerTest {
 
     @Test
     public void displayedProfileFunctionsTest(){
-        DBController.loadCurrentUser();
         DBController.loadAllUsers();
+        DBController.loadCurrentUser();
 
         System.out.println(UserController.displayProfile());
         System.out.println(UserController.displayRank());
