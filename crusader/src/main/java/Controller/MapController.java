@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 public class MapController {
     public static String setTexture(int x, int y, String type) {

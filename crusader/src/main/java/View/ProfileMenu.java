@@ -1,19 +1,20 @@
-package View;
+package view;
 
-import Controller.UserController;
-import Enumeration.Answers.Answers;
-import Enumeration.Commands.Commands;
-import Enumeration.Commands.ProfileCommands;
+import controller.UserController;
+import controller.ViewController;
+import enumeration.answers.Answers;
+import enumeration.commands.Commands;
+import enumeration.commands.ProfileCommands;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class ProfileMenu {
-
+    public static Scanner profileMenuScanner;
     public static void run(Scanner scanner) {
 
         String input, output;
-
+        profileMenuScanner = scanner;
         //profile menu commands should check with this matchers
         Matcher changeUsernameMatcher;
         Matcher changeNicknameMatcher;
@@ -26,8 +27,9 @@ public class ProfileMenu {
         Matcher showUserRankMatcher;
         Matcher showUserSloganMatcher;
         Matcher showUserProfileMatcher;
-        Matcher logoutMatcher;
         Matcher exitMatcher;
+
+        System.out.println("Profile Menu:");
 
         while (true) {
 
@@ -44,65 +46,55 @@ public class ProfileMenu {
             showUserRankMatcher = ProfileCommands.getMatcher(input, ProfileCommands.SHOW_RANK);
             showUserSloganMatcher = ProfileCommands.getMatcher(input, ProfileCommands.SHOW_SLOGAN);
             showUserProfileMatcher = ProfileCommands.getMatcher(input, ProfileCommands.SHOW_DETAILS);
-            logoutMatcher = Commands.getMatcher(input, Commands.LOGOUT);
-            exitMatcher = Commands.getMatcher(input, Commands.EXIT);
+            exitMatcher = Commands.getMatcher(input, Commands.BACK);
 
-            if (logoutMatcher.matches()) {
-
-                UserController.logout();
-                System.out.println(Answers.LOGOUT_MASSAGE.getValue());
-                return;
-
-            } else if (changeUsernameMatcher.matches()) {
+            if (changeUsernameMatcher.matches()) {
 
                 String username = changeUsernameMatcher.group("username");
+                username = ViewController.editItem(username);
                 output = UserController.changeUsername(username);
                 System.out.println(output);
 
             } else if (changeNicknameMatcher.matches()) {
 
-                String nickname1 = changeNicknameMatcher.group("nickname1");
-                String nickname2 = changeNicknameMatcher.group("nickname2");
-
-                if (nickname1 != null){
-                    output = UserController.changeNickname(nickname1);
-                }else{
-                    output = UserController.changeNickname(nickname2);
-                }
-
+                String nickname = changeNicknameMatcher.group("nickname");
+                nickname = ViewController.editItem(nickname);
+                output = UserController.changeNickname(nickname);
                 System.out.println(output);
 
             } else if (changePasswordType1Matcher.matches()) {
 
-                String oldPassword = changePasswordType1Matcher.group("old-password");
-                String newPassword = changePasswordType1Matcher.group("new-password");
+                String newPassword = changePasswordType1Matcher.group("newPassword");
+                String oldPassword = changePasswordType1Matcher.group("oldPassword");
+                oldPassword = ViewController.editItem(oldPassword);
+                newPassword = ViewController.editItem(newPassword);
+
                 output = UserController.changePassword(oldPassword, newPassword);
                 System.out.println(output);
 
             } else if (changePasswordType2Matcher.matches()) {
 
-                String oldPassword = changePasswordType2Matcher.group("old-password");
-                String newPassword = changePasswordType2Matcher.group("new-password");
+                String oldPassword = changePasswordType2Matcher.group("oldPassword");
+                String newPassword = changePasswordType2Matcher.group("newPassword");
+                oldPassword = ViewController.editItem(oldPassword);
+                newPassword = ViewController.editItem(newPassword);
+
                 output = UserController.changePassword(oldPassword, newPassword);
                 System.out.println(output);
 
             } else if (changeEmailMatcher.matches()) {
 
                 String email = changeEmailMatcher.group("email");
+                email = ViewController.editItem(email);
                 output = UserController.changeEmail(email);
                 System.out.println(output);
 
             } else if (changeSloganMatcher.matches()) {
 
-                String slogan1 = changeSloganMatcher.group("slogan1");
-                String slogan2 = changeSloganMatcher.group("slogan2");
+                String slogan = changeSloganMatcher.group("slogan");
+                slogan = ViewController.editItem(slogan);
 
-                if (slogan1 != null){
-                    output = UserController.changeSlogan(slogan1);
-                }else{
-                    output = UserController.changeSlogan(slogan2);
-                }
-
+                output = UserController.changeSlogan(slogan);
                 System.out.println(output);
 
             } else if (removeSloganMatcher.matches()) {
@@ -122,25 +114,31 @@ public class ProfileMenu {
 
             } else if (showUserProfileMatcher.matches()) {
 
-                output = UserController.displayRank();
+                output = UserController.displayProfile();
                 System.out.println(output);
 
             } else if (showUserSloganMatcher.matches()) {
 
-                output = UserController.displayRank();
+                output = UserController.displaySlogan();
                 System.out.println(output);
 
             } else if (exitMatcher.matches()) {
-                System.out.println("Main Menu:");
                 return;
             } else {
-                System.out.println();
+                System.out.println(Answers.INVALID_COMMAND.getValue());
             }
         }
     }
 
-    public static void acceptPassword(String password){
-
+    public static boolean acceptNewPassword(String password){
+        System.out.println("please enter your new password again:");
+        String input = profileMenuScanner.nextLine();
+        return input.equals(password);
     }
 
+    public static boolean acceptRandomPassword(String password){
+        System.out.println("your new password is \"" + password +"\" please type it:");
+        String input = profileMenuScanner.nextLine();
+        return input.equals(password);
+    }
 }

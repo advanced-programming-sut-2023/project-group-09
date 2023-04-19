@@ -1,7 +1,8 @@
-package View;
+package view;
 
-import Controller.MainController;
-import Enumeration.Commands.Commands;
+import controller.MainController;
+import enumeration.answers.Answers;
+import enumeration.commands.Commands;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -22,7 +23,7 @@ public class PrimaryMenu {
                 MainController.exitCrusader();
                 return;
             } else {
-                System.out.println("invalid command!");
+                System.out.println(Answers.INVALID_COMMAND.getValue());
             }
         }
     }

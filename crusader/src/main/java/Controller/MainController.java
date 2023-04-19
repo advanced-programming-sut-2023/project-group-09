@@ -1,25 +1,27 @@
-package Controller;
+package controller;
 
-import Model.User;
-import View.MainMenu;
-import View.PrimaryMenu;
+import view.MainMenu;
+import view.PrimaryMenu;
+import view.ProfileMenu;
 
 import java.util.Scanner;
 
 public class MainController {
 
     public static void loadGame(){
-        DBController.loadCurrentUser();
         DBController.loadAllUsers();
+        DBController.loadCurrentUser();
     }
 
     public static void run(){
         Scanner scanner = new Scanner(System.in);
         loadGame();
-        if (Application.getCurrentUser() == null){
-            PrimaryMenu.run(scanner);
-        }else{
-            MainMenu.run(scanner);
+        while (true){
+            if (Application.getCurrentUser() == null){
+                PrimaryMenu.run(scanner);
+            }else{
+                ProfileMenu.run(scanner);
+            }
         }
     }
 

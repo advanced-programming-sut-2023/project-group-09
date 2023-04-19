@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 public class TradeController {
     public static String tradeGoods(String resourceType , int resourceAmount , int price , String message) {

@@ -1,13 +1,13 @@
-package Model;
+package model;
 
-import Enumeration.Dictionary.Colors;
-import Enumeration.Dictionary.Foodstuffs;
-import Enumeration.Dictionary.RawMaterials;
-import Enumeration.Dictionary.Weapons;
-import Model.Building.Building;
-import Model.Human.Human;
-import Model.Human.Military.ArabianMercenary;
-import Model.Human.Military.EuropeanTroop;
+import enumeration.dictionary.Colors;
+import enumeration.dictionary.Foodstuffs;
+import enumeration.dictionary.RawMaterials;
+import enumeration.dictionary.Weapons;
+import model.building.Building;
+import model.human.Human;
+import model.human.military.ArabianMercenary;
+import model.human.military.EuropeanTroop;
 
 import java.util.ArrayList;
 import java.util.HashMap;

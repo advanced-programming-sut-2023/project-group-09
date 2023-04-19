@@ -1,8 +1,8 @@
-package Model.Human.Civilian;
+package model.human.civilian;
 
-import Enumeration.DefenseRating;
-import Model.Government;
-import Model.Human.Human;
+import enumeration.DefenseRating;
+import model.Government;
+import model.human.Human;
 
 public class Civilian extends Human {
     private boolean hasJob = false;

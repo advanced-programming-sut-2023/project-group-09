@@ -1,6 +1,6 @@
-package Model.Game;
+package model.game;
 
-import Model.Government;
+import model.Government;
 
 import java.util.ArrayList;
 

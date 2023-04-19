@@ -1,7 +1,6 @@
-package Controller;
+package controller;
 
-import Model.Game.Game;
-import Model.Government;
+import model.game.Game;
 
 public class GameController {
     public static Game game;

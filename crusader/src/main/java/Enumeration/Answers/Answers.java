@@ -1,10 +1,10 @@
-package Enumeration.Answers;
+package enumeration.answers;
 
 public enum Answers {
 
     //needed in all menus
     INVALID_COMMAND("invalid command!"),
-    LOGOUT_MASSAGE("logged out!")
+    LOGOUT_MASSAGE("user logged out successfully!")
     ;
 
 

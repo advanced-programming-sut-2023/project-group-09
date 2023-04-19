@@ -1,6 +1,6 @@
-package View;
+package view;
 
-import Model.Game.Game;
+import model.game.Game;
 
 import java.util.Scanner;
 

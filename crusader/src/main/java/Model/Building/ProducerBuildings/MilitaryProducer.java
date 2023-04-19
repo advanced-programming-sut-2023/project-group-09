@@ -1,11 +1,9 @@
-package Model.Building.ProducerBuildings;
+package model.building.producerbuildings;
 
-import Model.Building.Building;
-import Model.Government;
-import Model.Human.Human;
+import model.Government;
+import model.building.producerbuildings.ProducerBuilding;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MilitaryProducer extends ProducerBuilding {
     private ArrayList<String> militaryTypes = new ArrayList<>();

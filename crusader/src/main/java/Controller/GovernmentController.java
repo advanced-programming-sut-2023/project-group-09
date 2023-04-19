@@ -1,6 +1,6 @@
-package Controller;
+package controller;
 
-import Model.Government;
+import model.Government;
 
 public class GovernmentController {
     public static Government currentGovernment;

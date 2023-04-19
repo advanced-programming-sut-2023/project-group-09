@@ -1,9 +1,9 @@
-package Model.AttackingAndDefendingTools;
+package model.tools;
 
-import Enumeration.Speed;
-import Model.Government;
-import Model.Human.Human;
-import Model.Permission;
+import enumeration.Speed;
+import model.Government;
+import model.human.Human;
+import model.Permission;
 
 import java.util.ArrayList;
 

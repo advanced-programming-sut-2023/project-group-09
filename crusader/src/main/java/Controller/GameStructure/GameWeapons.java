@@ -1,9 +1,4 @@
-package Controller.GameStructure;
-
-import Model.Goods.Weapon;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+package controller.gamestructure;
 
 public class GameWeapons extends GameGoods {
     protected static void createMace() {

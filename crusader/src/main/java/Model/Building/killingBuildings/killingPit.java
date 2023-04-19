@@ -1,16 +1,12 @@
-package Model.Building.killingBuildings;
+package model.building.killingbuildings;
 
-import Model.Building.Building;
-import Model.Government;
-import Model.Human.Human;
+import model.building.Building;
+import model.Government;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-public class killingPit extends Building {
+public class KillingPit extends Building {
     private int damage;
 
-    public killingPit(Government government, int numberOfRequiredWorkers, int numberOfRequiredEngineers,
+    public KillingPit(Government government, int numberOfRequiredWorkers, int numberOfRequiredEngineers,
                       String type, int maxHp, int startX, int startY, int endX, int endY, int damage) {
         super(government, numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, startX, startY, endX, endY);
         this.damage = damage;

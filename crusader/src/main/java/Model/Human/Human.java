@@ -1,8 +1,8 @@
-package Model.Human;
+package model.human;
 
-import Enumeration.DefenseRating;
-import Enumeration.HumanStates;
-import Model.Government;
+import enumeration.DefenseRating;
+import enumeration.HumanStates;
+import model.Government;
 
 public abstract class Human {
     private Government government = null;

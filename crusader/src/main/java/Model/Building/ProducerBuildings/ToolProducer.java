@@ -1,12 +1,9 @@
-package Model.Building.ProducerBuildings;
+package model.building.producerbuildings;
 
-import Model.AttackingAndDefendingTools.AttackingAndDefendingTool;
-import Model.Building.Building;
-import Model.Government;
-import Model.Human.Human;
+import model.Government;
+import model.tools.AttackingAndDefendingTool;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ToolProducer extends ProducerBuilding {
     private ArrayList<AttackingAndDefendingTool> tool;

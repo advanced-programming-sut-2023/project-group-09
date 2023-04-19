@@ -1,4 +1,4 @@
-package Model.Game;
+package model.game;
 
 public class Map {
     private int length, width;

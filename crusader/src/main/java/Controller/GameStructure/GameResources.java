@@ -1,8 +1,4 @@
-package Controller.GameStructure;
-
-import Model.Goods.Goods;
-
-import java.util.HashMap;
+package controller.gamestructure;
 
 public class GameResources extends GameGoods {
     protected static void createStone() {

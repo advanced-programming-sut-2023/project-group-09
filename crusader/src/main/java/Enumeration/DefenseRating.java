@@ -1,4 +1,4 @@
-package Enumeration;
+package enumeration;
 
 public enum DefenseRating {;
     private final int rate;

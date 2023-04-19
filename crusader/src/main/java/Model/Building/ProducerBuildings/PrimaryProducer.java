@@ -1,11 +1,6 @@
-package Model.Building.ProducerBuildings;
+package model.building.producerbuildings;
 
-import Model.Building.Building;
-import Model.Government;
-import Model.Human.Human;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import model.Government;
 
 public class PrimaryProducer extends ProducerBuilding {
     private String primaryType;

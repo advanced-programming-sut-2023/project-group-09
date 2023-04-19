@@ -1,11 +1,8 @@
-package Model.Human.Military;
+package model.human.military;
 
-import Enumeration.AttackRating;
-import Enumeration.DefenseRating;
-import Model.Government;
-import Model.Human.Military.Military;
-
-import java.util.ArrayList;
+import enumeration.AttackRating;
+import enumeration.DefenseRating;
+import model.Government;
 
 public class EuropeanTroop extends Military {
     public EuropeanTroop(Government government, int speed, int x, int y, DefenseRating defenseRating, int health, int shootingRange, AttackRating attackRating) {

@@ -1,6 +1,6 @@
-package Controller.GameStructure;
+package controller.gamestructure;
 
-import Model.Building.Building;
+import model.building.Building;
 
 import java.util.HashMap;
 

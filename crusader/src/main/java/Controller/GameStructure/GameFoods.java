@@ -1,8 +1,4 @@
-package Controller.GameStructure;
-
-import Model.Goods.Goods;
-
-import java.util.HashMap;
+package controller.gamestructure;
 
 public class GameFoods extends GameGoods {
     protected static void createMeat() {
