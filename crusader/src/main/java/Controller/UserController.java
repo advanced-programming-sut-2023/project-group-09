@@ -77,7 +77,8 @@ public class UserController {
             }
             return result;
         }
-        user.setPassword(newPassword);
+        user.setPassword(User.convertPasswordToHash(newPassword));
+        DBController.saveAllUsers();
         return LoginAnswers.PASSWORD_CHANGE_SUCCESSFUL_MESSAGE.getMessage();
     }
 

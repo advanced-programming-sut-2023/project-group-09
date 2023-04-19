@@ -96,6 +96,6 @@ public class User {
         return convertPasswordToHash(password).equals(this.password);
     }
     public boolean isAnswerToSecurityQuestionCorrect(String answer) {
-        return answer.equals(this.passwordRecoveryQuestion);
+        return answer.equals(this.passwordRecoveryAnswer);
     }
 }

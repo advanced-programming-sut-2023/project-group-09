@@ -51,15 +51,18 @@ public class LoginMenu {
                     String result = "";
                     usernameMatcher = LoginCommands.getMatcher(contents , LoginCommands.USERNAME_REGEX);
                     passwordMatcher = LoginCommands.getMatcher(contents , LoginCommands.PASSWORD_REGEX);
-                    if (usernameMatcher.find() && passwordMatcher.find())
-                        result = UserController.loginUser(usernameMatcher.group("username") ,
-                                passwordMatcher.group("password") , stayLoggedInMatcher.find());
+                    if (usernameMatcher.find() && passwordMatcher.find()) {
+                        String username = usernameMatcher.group("username") != null ?
+                                usernameMatcher.group("username") : usernameMatcher.group("username2");
+                        String password = passwordMatcher.group("password") != null ?
+                                passwordMatcher.group("password") : passwordMatcher.group("password2");
+                        result = UserController.loginUser(username, password , stayLoggedInMatcher.find());
+                    }
                     System.out.println(result);
                     if (result.equals(LoginAnswers.WRONG_PASSWORD_MESSAGE.getMessage())) {
                         delayForWrongPass();
                     } else if (result.equals(LoginAnswers.SUCCESSFUL_LOGIN_MESSAGE.getMessage())) {
-                        // go to Main Menu
-
+                        MainMenu.run(scanner);
                         break;
                     }
                 } else if (forgotPasswordMatcher.matches()) {
