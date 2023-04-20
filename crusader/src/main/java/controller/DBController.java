@@ -1,10 +1,12 @@
 package controller;
 
+import controller.gamestructure.GameGoods;
 import enumeration.Paths;
 import model.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import model.goods.Goods;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -12,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DBController {
@@ -79,6 +82,54 @@ public class DBController {
         }
     }
 
+    public static void loadGoods(){
+        try {
+            Gson gson = new Gson();
+            checkFileExist(Paths.GOODS_PATH.getPath());
+            String text = new String(Files.readAllBytes(Path.of(Paths.GOODS_PATH.getPath())));
+            GameGoods.goods = gson.fromJson(text, new TypeToken<HashMap<String, Goods>>(){}.getType());
+            loadFoods();
+            loadResources();
+            loadWeapons();
+        } catch (IOException e) {
+            System.out.println("An error occurred.[load goods]");
+            e.printStackTrace();
+        }
+    }
+
+    private static void loadFoods(){
+        try {
+            Gson gson = new Gson();
+            checkFileExist(Paths.FOODS_PATH.getPath());
+            String text = new String(Files.readAllBytes(Path.of(Paths.FOODS_PATH.getPath())));
+            GameGoods.foods = gson.fromJson(text, new TypeToken<HashMap<String, Goods>>(){}.getType());
+        } catch (IOException e) {
+            System.out.println("An error occurred.[load goods]");
+            e.printStackTrace();
+        }
+    }
+    private static void loadResources(){
+        try {
+            Gson gson = new Gson();
+            checkFileExist(Paths.RESOURCES_PATH.getPath());
+            String text = new String(Files.readAllBytes(Path.of(Paths.RESOURCES_PATH.getPath())));
+            GameGoods.resources = gson.fromJson(text, new TypeToken<HashMap<String, Goods>>(){}.getType());
+        } catch (IOException e) {
+            System.out.println("An error occurred.[load goods]");
+            e.printStackTrace();
+        }
+    }
+    private static void loadWeapons(){
+        try {
+            Gson gson = new Gson();
+            checkFileExist(Paths.WEAPONS_PATH.getPath());
+            String text = new String(Files.readAllBytes(Path.of(Paths.WEAPONS_PATH.getPath())));
+            GameGoods.weapons = gson.fromJson(text, new TypeToken<HashMap<String, Goods>>(){}.getType());
+        } catch (IOException e) {
+            System.out.println("An error occurred.[load goods]");
+            e.printStackTrace();
+        }
+    }
     public static void checkFileExist(String fileAddress){
         try {
             File myObj = new File(fileAddress);

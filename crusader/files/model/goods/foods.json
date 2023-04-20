@@ -1,0 +1,52 @@
+{
+  "apple": {
+    "name": "apple",
+    "required": {},
+    "price": 0
+  },
+  "bread": {
+    "name": "bread",
+    "required": {
+      "flour": 1
+    },
+    "price": 0
+  },
+  "flour": {
+    "name": "flour",
+    "required": {
+      "wheat": 1
+    },
+    "price": 0
+  },
+  "meat": {
+    "name": "meat",
+    "required": {
+      "cow": 1
+    },
+    "price": 0
+  },
+  "wheat": {
+    "name": "wheat",
+    "required": {},
+    "price": 0
+  },
+  "hops": {
+    "name": "hops",
+    "required": {},
+    "price": 0
+  },
+  "ale": {
+    "name": "ale",
+    "required": {
+      "hops": 1
+    },
+    "price": 0
+  },
+  "cheese": {
+    "name": "cheese",
+    "required": {
+      "cow": 1
+    },
+    "price": 0
+  }
+}

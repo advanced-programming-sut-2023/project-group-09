@@ -1,21 +1,41 @@
 package controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
 public class FileController {
-
-    //json file here
-    public static void saveCurrentUser(){
-
+    public static void updateFile(String text, String address){
+        try {
+            FileWriter myWriter = new FileWriter(address);
+            myWriter.write(text);
+            myWriter.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
     }
 
-    public static void saveAllUser(){
+    public static String readFile(String address){
+        try {
 
-    }
+            File file = new File(address);
+            Scanner myReader = new Scanner(file);
+            StringBuilder output = new StringBuilder();
 
-    public static void loadCurrentUser(){
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                output.append(data);
+            }
+            myReader.close();
 
-    }
-
-    public static void loadAllUser(){
-
+            return output.toString();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        return "";
     }
 }

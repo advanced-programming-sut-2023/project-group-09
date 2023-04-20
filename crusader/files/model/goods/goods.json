@@ -1,0 +1,128 @@
+{
+  "bread": {
+    "name": "bread",
+    "required": {
+      "flour": 1
+    },
+    "price": 0
+  },
+  "leatherArmour": {
+    "name": "leatherArmour",
+    "required": {
+      "cow": 1
+    },
+    "price": 0
+  },
+  "metalArmour": {
+    "name": "metalArmour",
+    "required": {
+      "iron": 1
+    },
+    "price": 0
+  },
+  "crossBow": {
+    "name": "crossbow",
+    "required": {
+      "wood": 3
+    },
+    "price": 0
+  },
+  "mace": {
+    "name": "mace",
+    "required": {
+      "iron": 1
+    },
+    "price": 0
+  },
+  "pike": {
+    "name": "pike",
+    "required": {
+      "wood": 2
+    },
+    "price": 0
+  },
+  "bow": {
+    "name": "bow",
+    "required": {
+      "wood": 2
+    },
+    "price": 0
+  },
+  "cheese": {
+    "name": "cheese",
+    "required": {
+      "cow": 1
+    },
+    "price": 0
+  },
+  "stone": {
+    "name": "stone",
+    "required": {},
+    "price": 0
+  },
+  "apple": {
+    "name": "apple",
+    "required": {},
+    "price": 0
+  },
+  "spear": {
+    "name": "spear",
+    "required": {
+      "wood": 1
+    },
+    "price": 0
+  },
+  "sword": {
+    "name": "sword",
+    "required": {
+      "iron": 1
+    },
+    "price": 0
+  },
+  "flour": {
+    "name": "flour",
+    "required": {
+      "wheat": 1
+    },
+    "price": 0
+  },
+  "meat": {
+    "name": "meat",
+    "required": {
+      "cow": 1
+    },
+    "price": 0
+  },
+  "iron": {
+    "name": "iron",
+    "required": {},
+    "price": 0
+  },
+  "wheat": {
+    "name": "wheat",
+    "required": {},
+    "price": 0
+  },
+  "hops": {
+    "name": "hops",
+    "required": {},
+    "price": 0
+  },
+  "wood": {
+    "name": "wood",
+    "required": {},
+    "price": 0
+  },
+  "ale": {
+    "name": "ale",
+    "required": {
+      "hops": 1
+    },
+    "price": 0
+  },
+  "pitch": {
+    "name": "pitch",
+    "required": {},
+    "price": 0
+  }
+}

@@ -15,6 +15,7 @@ public class MainController {
     public static void loadGame(){
         DBController.loadCurrentUser();
         DBController.loadAllUsers();
+        DBController.loadGoods();
     }
 
     public static void run(){

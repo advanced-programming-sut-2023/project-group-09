@@ -1,0 +1,22 @@
+{
+  "iron": {
+    "name": "iron",
+    "required": {},
+    "price": 0
+  },
+  "wood": {
+    "name": "wood",
+    "required": {},
+    "price": 0
+  },
+  "pitch": {
+    "name": "pitch",
+    "required": {},
+    "price": 0
+  },
+  "stone": {
+    "name": "stone",
+    "required": {},
+    "price": 0
+  }
+}

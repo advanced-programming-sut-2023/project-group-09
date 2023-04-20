@@ -10,8 +10,7 @@ public class GameGoods {
     public static HashMap<String, Goods> weapons = new HashMap<>();
     public static HashMap<String, Goods> resources = new HashMap<>();
 
-    public static void addGoods() {
-        GameFoods.addFoods();
-        GameResources.addResources();
+    public static Goods getProduct(String name) {
+        return goods.get(name);
     }
 }
