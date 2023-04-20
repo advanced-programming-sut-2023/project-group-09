@@ -4,7 +4,7 @@ import model.Permission;
 
 import java.util.ArrayList;
 
-public class Weapon extends Goods {
+public class Weapon extends Goods implements Cloneable{
     private ArrayList<Permission> permissions = new ArrayList<>();
 
     public Weapon(String name) {
@@ -17,5 +17,9 @@ public class Weapon extends Goods {
 
     public void setPermissions(ArrayList<Permission> permissions) {
         this.permissions = permissions;
+    }
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

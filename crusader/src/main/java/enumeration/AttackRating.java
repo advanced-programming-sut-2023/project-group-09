@@ -1,10 +1,12 @@
 package enumeration;
 
-public enum AttackRating {VERY_LOW(1),
-    LOW(2),
-    MEDIUM(3),
-    HIGH(4),
-    VERY_HIGH(5)
+public enum AttackRating {
+    EXTREMELY_LOW(1),
+    VERY_LOW(2),
+    LOW(3),
+    MEDIUM(4),
+    HIGH(5),
+    VERY_HIGH(6)
     ;
     private final int rate;
 

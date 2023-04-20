@@ -9,15 +9,15 @@ public abstract class Human {
     private Government government = null;
     private int speed;
     private int x, y;
-    private DefenseRating defenseRating;
+    private int defenseRating;
     private int health;
     private HumanStates state;
     private int shootingRange;
 
-    public Human(int speed, DefenseRating defenseRating, int health, int shootingRange) {
+    public Human(int speed, int defenseRating, int shootingRange) {
         this.speed = speed;
         this.defenseRating = defenseRating;
-        this.health = health;
+        this.health = defenseRating;
         this.shootingRange = shootingRange;
     }
 
@@ -69,11 +69,11 @@ public abstract class Human {
         this.y = y;
     }
 
-    public DefenseRating getDefenseRating() {
+    public int getDefenseRating() {
         return defenseRating;
     }
 
-    public void setDefenseRating(DefenseRating defenseRating) {
+    public void setDefenseRating(int defenseRating) {
         this.defenseRating = defenseRating;
     }
 }

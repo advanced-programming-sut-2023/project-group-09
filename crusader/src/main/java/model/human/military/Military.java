@@ -1,33 +1,30 @@
 package model.human.military;
 
-import enumeration.AttackRating;
-import enumeration.DefenseRating;
-import enumeration.StateOfMilitary;
-import model.Government;
+
 import model.human.Human;
 
 public abstract class Military extends Human {
-    private AttackRating attackRating;
-    private StateOfMilitary militaryState;
+    private int attackRating;
+    private String militaryState;
 
-    public Military(int speed, DefenseRating defenseRating, int health, int shootingRange, AttackRating attackRating) {
-        super(speed, defenseRating, health, shootingRange);
+    public Military(int speed, int defenseRating, int shootingRange, int attackRating) {
+        super(speed, defenseRating, shootingRange);
         this.attackRating = attackRating;
     }
 
-    public AttackRating getAttackRating() {
+    public int getAttackRating() {
         return attackRating;
     }
 
-    public void setAttackRating(AttackRating attackRating) {
+    public void setAttackRating(int attackRating) {
         this.attackRating = attackRating;
     }
 
-    public StateOfMilitary getMilitaryState() {
+    public String getMilitaryState() {
         return militaryState;
     }
 
-    public void setMilitaryState(StateOfMilitary militaryState) {
+    public void setMilitaryState(String militaryState) {
         this.militaryState = militaryState;
     }
 }
