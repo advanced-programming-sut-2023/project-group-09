@@ -7,9 +7,9 @@ import java.util.ArrayList;
 public class MilitaryProducer extends model.building.producerbuildings.ProducerBuilding {
     private ArrayList<String> militaryTypes = new ArrayList<>();
 
-    public MilitaryProducer(Government government, int numberOfRequiredWorkers, int numberOfRequiredEngineers, String type,
-                            int maxHp, int startX, int startY, int endX, int endY) {
-        super(government, numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, startX, startY, endX, endY);
+    public MilitaryProducer(int numberOfRequiredWorkers, int numberOfRequiredEngineers, String type,
+                            int maxHp, int width, int length) {
+        super(numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, width, length);
     }
 
     public ArrayList<String> getMilitaryTypes() {

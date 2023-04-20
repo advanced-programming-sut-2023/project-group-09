@@ -9,9 +9,9 @@ public class ProductProducer extends model.building.producerbuildings.ProducerBu
     private ArrayList<String> primaryRequired = new ArrayList<>();
     private ArrayList<String> buildingRequired = new ArrayList<>();
 
-    public ProductProducer(Government government, int numberOfRequiredWorkers, int numberOfRequiredEngineers, String type,
-                           int maxHp, int startX, int startY, int endX, int endY, String productType) {
-        super(government, numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, startX, startY, endX, endY);
+    public ProductProducer(int numberOfRequiredWorkers, int numberOfRequiredEngineers, String type,
+                           int maxHp, int width, int length, String productType) {
+        super(numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, width, length);
         this.productType = productType;
     }
 
