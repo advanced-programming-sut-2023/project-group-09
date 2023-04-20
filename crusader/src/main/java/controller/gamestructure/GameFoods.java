@@ -37,14 +37,23 @@ public class GameFoods extends GameGoods {
     }
 
     protected static void createBread() {
-        Goods weapon = new Goods("bread", "food", 40);
-        weapon.addRequired("iron", 1);
+        Goods food = new Goods("bread", "food", 40);
+        food.addRequired("flour", 1);
+        GameFoods.foods.put("bread",food);
+        GameFoods.goods.put("bread",food);
     }
 
     protected static void createHops() {
+        Goods food = new Goods("hops", "food", 75);
+        GameFoods.foods.put("hops",food);
+        GameFoods.goods.put("hops",food);
     }
 
     protected static void createAle() {
+        Goods food = new Goods("ale", "food", 100);
+        food.addRequired("hops", 1);
+        GameFoods.foods.put("ale",food);
+        GameFoods.goods.put("ale",food);
     }
 
     protected static void addFoods() {
