@@ -5,7 +5,7 @@ import enumeration.DefenseRating;
 import model.Government;
 
 public class Lord extends Military {
-    public Lord(Government government, int speed, int x, int y, DefenseRating defenseRating, int health, int shootingRange, AttackRating attackRating) {
-        super(government, speed, x, y, defenseRating, health, shootingRange, attackRating);
+    public Lord(int speed, DefenseRating defenseRating, int health, int shootingRange, AttackRating attackRating) {
+        super(speed, defenseRating, health, shootingRange, attackRating);
     }
 }

@@ -10,8 +10,8 @@ public abstract class Military extends Human {
     private AttackRating attackRating;
     private StateOfMilitary militaryState;
 
-    public Military(Government government, int speed, int x, int y, DefenseRating defenseRating, int health, int shootingRange, AttackRating attackRating) {
-        super(government, speed, x, y, defenseRating, health, shootingRange);
+    public Military(int speed, DefenseRating defenseRating, int health, int shootingRange, AttackRating attackRating) {
+        super(speed, defenseRating, health, shootingRange);
         this.attackRating = attackRating;
     }
 

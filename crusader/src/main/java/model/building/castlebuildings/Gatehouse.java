@@ -5,9 +5,9 @@ import model.Government;
 public class Gatehouse extends CastleBuilding {
     private int capacity;
 
-    public Gatehouse(Government government, int numberOfRequiredWorkers, int numberOfRequiredEngineers,
-                     String type, int maxHp, int startX, int startY, int endX, int endY, int capacity) {
-        super(government, numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, startX, startY, endX, endY);
+    public Gatehouse(int numberOfRequiredWorkers, int numberOfRequiredEngineers,
+                     String type, int maxHp, int width, int length, int capacity) {
+        super(numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, width, length);
         this.capacity = capacity;
     }
 

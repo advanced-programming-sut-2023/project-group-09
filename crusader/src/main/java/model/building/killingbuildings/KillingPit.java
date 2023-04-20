@@ -6,9 +6,9 @@ import model.Government;
 public class KillingPit extends Building {
     private int damage;
 
-    public KillingPit(Government government, int numberOfRequiredWorkers, int numberOfRequiredEngineers,
-                      String type, int maxHp, int startX, int startY, int endX, int endY, int damage) {
-        super(government, numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, startX, startY, endX, endY);
+    public KillingPit(int numberOfRequiredWorkers, int numberOfRequiredEngineers,
+                      String type, int maxHp, int width, int length, int damage) {
+        super(numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, width, length);
         this.damage = damage;
     }
 

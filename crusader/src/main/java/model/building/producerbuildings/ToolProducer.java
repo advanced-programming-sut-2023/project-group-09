@@ -9,9 +9,9 @@ import java.util.ArrayList;
 public class ToolProducer extends ProducerBuilding {
     private ArrayList<AttackingAndDefendingTool> tool;
 
-    public ToolProducer(Government government, int numberOfRequiredWorkers, int numberOfRequiredEngineers, String type,
-                        int maxHp, int startX, int startY, int endX, int endY) {
-        super(government, numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, startX, startY, endX, endY);
+    public ToolProducer(int numberOfRequiredWorkers, int numberOfRequiredEngineers, String type,
+                        int maxHp, int width, int length) {
+        super(numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, width, length);
     }
 
     public ArrayList<AttackingAndDefendingTool> getTool() {

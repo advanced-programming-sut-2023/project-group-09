@@ -8,8 +8,8 @@ import model.human.Human;
 public class Civilian extends Human {
     private boolean hasJob = false;
 
-    public Civilian(Government government, int speed, int x, int y, DefenseRating defenseRating, int health, int shootingRange) {
-        super(government, speed, x, y, defenseRating, health, shootingRange);
+    public Civilian(int speed, int y, DefenseRating defenseRating, int health, int shootingRange) {
+        super(speed, defenseRating, health, shootingRange);
     }
 
     public boolean isHasJob() {

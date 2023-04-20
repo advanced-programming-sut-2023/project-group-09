@@ -14,13 +14,34 @@ public abstract class Human {
     private HumanStates state;
     private int shootingRange;
 
-    public Human(Government government, int speed, int x, int y, DefenseRating defenseRating, int health, int shootingRange) {
-        this.government = government;
+    public Human(int speed, DefenseRating defenseRating, int health, int shootingRange) {
         this.speed = speed;
-        this.x = x;
-        this.y = y;
         this.defenseRating = defenseRating;
         this.health = health;
+        this.shootingRange = shootingRange;
+    }
+
+    public Government getGovernment() {
+        return government;
+    }
+
+    public void setGovernment(Government government) {
+        this.government = government;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public int getShootingRange() {
+        return shootingRange;
+    }
+
+    public void setShootingRange(int shootingRange) {
         this.shootingRange = shootingRange;
     }
 

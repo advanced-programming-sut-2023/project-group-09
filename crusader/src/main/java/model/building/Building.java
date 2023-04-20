@@ -23,19 +23,37 @@ public class Building {
     private int hp;
     private int startX, startY;
     private int endX, endY;
+    private int width, length;
 
-    public Building(Government government, int numberOfRequiredWorkers, int numberOfRequiredEngineers,
-                    String type, int maxHp, int startX, int startY, int endX, int endY) {
-        this.government = government;
+    public Building(int numberOfRequiredWorkers, int numberOfRequiredEngineers,
+                    String type, int maxHp, int width, int length) {
         this.numberOfRequiredWorkers = numberOfRequiredWorkers;
         this.numberOfRequiredEngineers = numberOfRequiredEngineers;
         this.type = type;
         this.maxHp = maxHp;
         this.hp = maxHp;
-        this.startX = startX;
-        this.startY = startY;
-        this.endX = endX;
-        this.endY = endY;
+        this.width = width;
+        this.length = length;
+    }
+
+    public void setGovernment(Government government) {
+        this.government = government;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
     }
 
     public int getMaxHp() {
