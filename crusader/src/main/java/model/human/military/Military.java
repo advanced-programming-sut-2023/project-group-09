@@ -14,11 +14,21 @@ public abstract class Military extends Human {
     private boolean digsMoat = false;
     private String weapon;
     private ArrayList<String> armours;
+    private int price;
 
     //
-    public Military(int speed, int defenseRating, int shootingRange, int attackRating) {
+    public Military(int speed, int defenseRating, int shootingRange, int attackRating, int price) {
         super(speed, defenseRating, shootingRange);
         this.attackRating = attackRating;
+        this.price = price;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public String getWeapon() {

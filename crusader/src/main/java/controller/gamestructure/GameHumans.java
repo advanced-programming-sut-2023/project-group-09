@@ -30,7 +30,7 @@ public class GameHumans {
         int speed = Speed.FAST.getRate();
         int defenseRating = DefenseRating.LOW.getRate();
         int attackRating = AttackRating.LOW.getRate();
-        EuropeanTroop archer = new EuropeanTroop(speed, defenseRating, 10, attackRating);
+        EuropeanTroop archer = new EuropeanTroop(speed, defenseRating, 10, attackRating, 12);
         archer.setWeapon("bow");
         archer.enableDigsMoat();
         archer.enableUsesLadder();
@@ -40,7 +40,7 @@ public class GameHumans {
         int speed = Speed.SLOW.getRate();
         int defenseRating = DefenseRating.MEDIUM.getRate();
         int attackRating = AttackRating.LOW.getRate();
-        EuropeanTroop crossbowman = new EuropeanTroop(speed, defenseRating, 10, attackRating);
+        EuropeanTroop crossbowman = new EuropeanTroop(speed, defenseRating, 10, attackRating, 20);
         crossbowman.setWeapon("crossbow");
         crossbowman.addArmour("leatherArmour");
     }
@@ -49,7 +49,7 @@ public class GameHumans {
         int speed = Speed.AVERAGE.getRate();
         int defenseRating = DefenseRating.VERY_LOW.getRate();
         int attackRating = AttackRating.MEDIUM.getRate();
-        EuropeanTroop spearman = new EuropeanTroop(speed, defenseRating, 1, attackRating);
+        EuropeanTroop spearman = new EuropeanTroop(speed, defenseRating, 1, attackRating, 8);
         spearman.setWeapon("spear");
         spearman.enableUsesLadder();
         spearman.enableDigsMoat();
@@ -59,7 +59,7 @@ public class GameHumans {
         int speed = Speed.SLOW.getRate();
         int defenseRating = DefenseRating.HIGH.getRate();
         int attackRating = AttackRating.MEDIUM.getRate();
-        EuropeanTroop pikeman = new EuropeanTroop(speed, defenseRating, 1, attackRating);
+        EuropeanTroop pikeman = new EuropeanTroop(speed, defenseRating, 1, attackRating, 20);
         pikeman.setWeapon("pike");
         pikeman.addArmour("metalArmour");
         pikeman.enableDigsMoat();
@@ -69,7 +69,7 @@ public class GameHumans {
         int speed = Speed.AVERAGE.getRate();
         int defenseRating = DefenseRating.MEDIUM.getRate();
         int attackRating = AttackRating.HIGH.getRate();
-        EuropeanTroop maceman = new EuropeanTroop(speed, defenseRating, 1, attackRating);
+        EuropeanTroop maceman = new EuropeanTroop(speed, defenseRating, 1, attackRating, 20);
         maceman.setWeapon("mace");
         maceman.addArmour("leatherArmour");
         maceman.enableDigsMoat();
@@ -80,7 +80,7 @@ public class GameHumans {
         int speed = Speed.EXTREMELY_SLOW.getRate();
         int defenseRating = DefenseRating.VERY_LOW.getRate();
         int attackRating = AttackRating.VERY_HIGH.getRate();
-        EuropeanTroop swordsman = new EuropeanTroop(speed, defenseRating, 1, attackRating);
+        EuropeanTroop swordsman = new EuropeanTroop(speed, defenseRating, 1, attackRating, 40);
         swordsman.setWeapon("sword");
         swordsman.addArmour("metalArmour");
     }
@@ -89,7 +89,7 @@ public class GameHumans {
         int speed = Speed.VERY_FAST.getRate();
         int defenseRating = DefenseRating.HIGH.getRate();
         int attackRating = AttackRating.VERY_HIGH.getRate();
-        EuropeanTroop knight = new EuropeanTroop(speed, defenseRating, 1, attackRating);
+        EuropeanTroop knight = new EuropeanTroop(speed, defenseRating, 1, attackRating, 40);
         knight.setWeapon("sword");
         knight.addArmour("metalArmour");
     }
@@ -98,21 +98,21 @@ public class GameHumans {
         int speed = Speed.FAST.getRate();
         int defenseRating = DefenseRating.VERY_LOW.getRate();
         int attackRating = AttackRating.MEDIUM.getRate();
-        EuropeanTroop tunneler = new EuropeanTroop(speed, defenseRating, 1, attackRating);
+        EuropeanTroop tunneler = new EuropeanTroop(speed, defenseRating, 1, attackRating, 30);
     }
 
     public static void createLadderman() {
         int speed = Speed.FAST.getRate();
         int defenseRating = DefenseRating.VERY_LOW.getRate();
         int attackRating = AttackRating.NONE.getRate();
-        EuropeanTroop ladderman = new EuropeanTroop(speed, defenseRating, 1, attackRating);
+        EuropeanTroop ladderman = new EuropeanTroop(speed, defenseRating, 1, attackRating, 4);
     }
 
     public static void createEngineer() {
         int speed = Speed.AVERAGE.getRate();
         int defenseRating = DefenseRating.VERY_LOW.getRate();
         int attackRating = AttackRating.NONE.getRate();
-        EuropeanTroop engineer = new EuropeanTroop(speed, defenseRating, 1, attackRating);
+        EuropeanTroop engineer = new EuropeanTroop(speed, defenseRating, 1, attackRating, 30);
         engineer.enableDigsMoat();
     }
 
@@ -120,14 +120,14 @@ public class GameHumans {
         int speed = Speed.SLOW.getRate();
         int defenseRating = DefenseRating.MEDIUM.getRate();
         int attackRating = AttackRating.MEDIUM.getRate();
-        EuropeanTroop blackmonk = new EuropeanTroop(speed, defenseRating, 1, attackRating);
+        EuropeanTroop blackmonk = new EuropeanTroop(speed, defenseRating, 1, attackRating, 10);
     }
 
     public static void createArcherBow() {
         int speed = Speed.FAST.getRate();
         int defenseRating = DefenseRating.LOW.getRate();
         int attackRating = AttackRating.LOW.getRate();
-        ArabianMercenary archerBow = new ArabianMercenary(speed, defenseRating, 10, attackRating);
+        ArabianMercenary archerBow = new ArabianMercenary(speed, defenseRating, 10, attackRating, 75);
         archerBow.setWeapon("bow");
         archerBow.enableDigsMoat();
     }
@@ -136,7 +136,7 @@ public class GameHumans {
         int speed = Speed.FAST.getRate();
         int defenseRating = DefenseRating.EXTREMELY_LOW.getRate();
         int attackRating = AttackRating.EXTREMELY_LOW.getRate();
-        ArabianMercenary slave = new ArabianMercenary(speed, defenseRating, 1, attackRating);
+        ArabianMercenary slave = new ArabianMercenary(speed, defenseRating, 1, attackRating, 5);
         slave.enableDigsMoat();
     }
 
@@ -144,7 +144,7 @@ public class GameHumans {
         int speed = Speed.FAST.getRate();
         int defenseRating = DefenseRating.VERY_LOW.getRate();
         int attackRating = AttackRating.LOW.getRate();
-        ArabianMercenary slinger = new ArabianMercenary(speed, defenseRating, 5, attackRating);
+        ArabianMercenary slinger = new ArabianMercenary(speed, defenseRating, 5, attackRating, 12);
 
     }
 
@@ -152,29 +152,29 @@ public class GameHumans {
         int speed = Speed.AVERAGE.getRate();
         int defenseRating = DefenseRating.MEDIUM.getRate();
         int attackRating = AttackRating.MEDIUM.getRate();
-        ArabianMercenary assassin = new ArabianMercenary(speed, defenseRating, 1, attackRating);
+        ArabianMercenary assassin = new ArabianMercenary(speed, defenseRating, 1, attackRating, 60);
     }
 
     public static void createHorseArcher() {
         int speed = Speed.VERY_FAST.getRate();
         int defenseRating = DefenseRating.MEDIUM.getRate();
         int attackRating = AttackRating.LOW.getRate();
-        ArabianMercenary horsearcher = new ArabianMercenary(speed, defenseRating, 10, attackRating);
-        horsearcher.setWeapon("bow");
+        ArabianMercenary horseArcher = new ArabianMercenary(speed, defenseRating, 10, attackRating, 80);
+        horseArcher.setWeapon("bow");
     }
 
     public static void createArabianSwordsman() {
         int speed = Speed.VERY_FAST.getRate();
         int defenseRating = DefenseRating.HIGH.getRate();
         int attackRating = AttackRating.HIGH.getRate();
-        ArabianMercenary arabianswordsman = new ArabianMercenary(speed, defenseRating, 1, attackRating);
-        arabianswordsman.addArmour("metalArmour");
+        ArabianMercenary arabianSwordsman = new ArabianMercenary(speed, defenseRating, 1, attackRating, 80);
+        arabianSwordsman.addArmour("metalArmour");
     }
 
     public static void createFireThrower() {
         int speed = Speed.VERY_FAST.getRate();
         int defenseRating = DefenseRating.LOW.getRate();
         int attackRating = AttackRating.HIGH.getRate();
-        ArabianMercenary firethrower = new ArabianMercenary(speed, defenseRating, 5, attackRating);
+        ArabianMercenary fireThrower = new ArabianMercenary(speed, defenseRating, 5, attackRating, 100);
     }
 }
