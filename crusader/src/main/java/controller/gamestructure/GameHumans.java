@@ -6,7 +6,9 @@ import enumeration.Speed;
 import model.human.Human;
 import model.human.military.EuropeanTroop;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class GameHumans {
     public static HashMap<String, Human> humans = new HashMap<String, Human>();
