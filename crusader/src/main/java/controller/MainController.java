@@ -13,8 +13,8 @@ public class MainController {
 
 
     public static void loadGame(){
-        DBController.loadCurrentUser();
         DBController.loadAllUsers();
+        DBController.loadCurrentUser();
         DBController.loadGoods();
     }
 
