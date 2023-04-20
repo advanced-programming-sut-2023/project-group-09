@@ -11,5 +11,7 @@ public class GameGoods {
     public static HashMap<String, Goods> resources = new HashMap<>();
 
     public static void addGoods() {
+        GameFoods.addFoods();
+        GameResources.addResources();
     }
 }
