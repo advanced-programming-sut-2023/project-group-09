@@ -1,22 +1,26 @@
 {
   "iron": {
     "name": "iron",
+    "type": "resource",
     "required": {},
-    "price": 0
+    "price": 225
   },
   "wood": {
     "name": "wood",
+    "type": "resource",
     "required": {},
-    "price": 0
+    "price": 20
   },
   "pitch": {
     "name": "pitch",
+    "type": "resource",
     "required": {},
-    "price": 0
+    "price": 100
   },
   "stone": {
     "name": "stone",
+    "type": "resource",
     "required": {},
-    "price": 0
+    "price": 70
   }
 }

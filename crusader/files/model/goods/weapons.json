@@ -1,58 +1,66 @@
 {
   "spear": {
     "name": "spear",
+    "type": "weapon",
     "required": {
       "wood": 1
     },
-    "price": 0
+    "price": 100
   },
   "sword": {
     "name": "sword",
+    "type": "weapon",
     "required": {
       "iron": 1
     },
-    "price": 0
+    "price": 290
   },
   "leatherArmour": {
     "name": "leatherArmour",
+    "type": "weapon",
     "required": {
       "cow": 1
     },
-    "price": 0
+    "price": 125
   },
   "metalArmour": {
     "name": "metalArmour",
+    "type": "weapon",
     "required": {
       "iron": 1
     },
-    "price": 0
+    "price": 290
   },
   "crossBow": {
     "name": "crossbow",
+    "type": "weapon",
     "required": {
       "wood": 3
     },
-    "price": 0
+    "price": 290
   },
   "mace": {
     "name": "mace",
+    "type": "weapon",
     "required": {
       "iron": 1
     },
-    "price": 0
+    "price": 290
   },
   "pike": {
     "name": "pike",
+    "type": "weapon",
     "required": {
       "wood": 2
     },
-    "price": 0
+    "price": 180
   },
   "bow": {
     "name": "bow",
+    "type": "weapon",
     "required": {
       "wood": 2
     },
-    "price": 0
+    "price": 155
   }
 }

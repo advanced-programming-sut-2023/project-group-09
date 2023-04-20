@@ -11,6 +11,8 @@ public class Goods {
 
     public Goods(String name, String type, int price) {
         this.name = name;
+        this.type = type;
+        this.price = price;
     }
 
     public String getName() {

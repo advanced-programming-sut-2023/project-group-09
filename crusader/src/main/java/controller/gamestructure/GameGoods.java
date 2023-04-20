@@ -13,4 +13,10 @@ public class GameGoods {
     public static Goods getProduct(String name) {
         return goods.get(name);
     }
+
+    public static void addGoods() {
+        GameFoods.addFoods();
+        GameResources.addResources();
+        GameWeapons.addWeapons();
+    }
 }
