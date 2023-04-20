@@ -38,8 +38,8 @@ public class GameWeapons extends GameGoods {
         weapon.addRequired("iron", 1);
     }
 
-    protected static void createCrossBow() {
-        Goods weapon = new Goods("crossBow", "weapon", 290);
+    protected static void createCrossbow() {
+        Goods weapon = new Goods("crossbow", "weapon", 290);
         weapon.addRequired("wood", 3);
     }
 
@@ -51,6 +51,6 @@ public class GameWeapons extends GameGoods {
         createSwords();
         createLeatherArmour();
         createMetalArmour();
-        createCrossBow();
+        createCrossbow();
     }
 }

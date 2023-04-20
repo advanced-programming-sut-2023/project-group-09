@@ -4,38 +4,37 @@ package model.human.military;
 import model.goods.Goods;
 import model.human.Human;
 
+import java.util.ArrayList;
+
 public abstract class Military extends Human {
     private int attackRating;
     private String militaryState;
     private boolean usesHorse = false;
     private boolean usesLadder = false;
     private boolean digsMoat = false;
-    private Goods weapon;
+    private String weapon;
+    private ArrayList<String> armours;
 
-
+    //
     public Military(int speed, int defenseRating, int shootingRange, int attackRating) {
         super(speed, defenseRating, shootingRange);
         this.attackRating = attackRating;
     }
 
-    public void setUsesHorse(boolean usesHorse) {
-        this.usesHorse = usesHorse;
-    }
-
-    public void setUsesLadder(boolean usesLadder) {
-        this.usesLadder = usesLadder;
-    }
-
-    public void setDigsMoat(boolean digsMoat) {
-        this.digsMoat = digsMoat;
-    }
-
-    public Goods getWeapon() {
+    public String getWeapon() {
         return weapon;
     }
 
-    public void setWeapon(Goods weapon) {
+    public void setWeapon(String weapon) {
         this.weapon = weapon;
+    }
+
+    public ArrayList<String> getArmours() {
+        return armours;
+    }
+
+    public void addArmour(String armour) {
+        this.armours.add(armour);
     }
 
     public boolean isUsesHorse() {
