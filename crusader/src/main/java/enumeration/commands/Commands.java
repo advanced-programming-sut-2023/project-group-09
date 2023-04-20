@@ -7,7 +7,7 @@ public enum Commands {
     //...
     LOGOUT("logout"),
     BACK("back"),
-    EXIT_CRUSADER("exit crusader")
+    EXIT_CRUSADER("exit")
 
     ;
 

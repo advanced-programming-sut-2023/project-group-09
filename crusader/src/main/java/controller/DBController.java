@@ -38,9 +38,13 @@ public class DBController {
             checkFileExist(Paths.USERS_PATH.getPath());
             File file = new File(Paths.USERS_PATH.getPath());
             FileWriter fileWriter = new FileWriter(file);
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String json = gson.toJson(Application.getUsers());
-            fileWriter.write(json);
+            if(Application.getUsers() != null){
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                String json = gson.toJson(Application.getUsers());
+                fileWriter.write(json);
+            }else {
+                fileWriter.write("");
+            }
             fileWriter.close();
         } catch (IOException e) {
             System.out.println("An error occurred.[save users]");
@@ -71,11 +75,14 @@ public class DBController {
             checkFileExist(Paths.CURRENT_USER_PATH.getPath());
             File file = new File(Paths.CURRENT_USER_PATH.getPath());
             FileWriter fileWriter = new FileWriter(file);
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String json = gson.toJson(Application.getCurrentUser());
-            fileWriter.write(json);
+            if(Application.getCurrentUser() != null){
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                String json = gson.toJson(Application.getCurrentUser());
+                fileWriter.write(json);
+            }else {
+                fileWriter.write("");
+            }
             fileWriter.close();
-
         } catch (IOException e) {
             System.out.println("An error occurred.[save current user]");
             e.printStackTrace();

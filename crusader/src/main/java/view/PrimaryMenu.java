@@ -3,6 +3,7 @@ package view;
 import controller.Application;
 import controller.DBController;
 import controller.MainController;
+import enumeration.answers.Answers;
 import enumeration.commands.Commands;
 
 import java.util.Scanner;
@@ -16,25 +17,26 @@ public class PrimaryMenu {
             printSelectMenuMessage();
             input = scanner.nextLine();
             exitGameMatcher = Commands.getMatcher(input, Commands.EXIT_CRUSADER);
-            if (input.equals("1") || input.equals("Login Menu")) {
+            if (input.equals("1") || input.equals("login menu")) {
                 LoginMenu.run(scanner);
-            } else if (input.equals("2") || input.equals("Signup Menu")) {
+            } else if (input.equals("2") || input.equals("signup menu")) {
                 SignupMenu.run(scanner);
-            } else if (exitGameMatcher.matches()) {
+            } else if (input.equals("3") || exitGameMatcher.matches()) {
                 Application.setCurrentUser(null);
                 DBController.saveCurrentUser();
                 Application.setStayLoggedIn(false);
                 MainController.exitCrusader();
                 return;
             } else {
-                System.out.println("invalid command!");
+                System.out.println(Answers.INVALID_COMMAND.getValue());
             }
         }
     }
 
     public static void printSelectMenuMessage() {
         System.out.println("Select one of the following menus:");
-        System.out.println("1.Login Menu");
-        System.out.println("2.Signup Menu");
+        System.out.println("1.login menu");
+        System.out.println("2.signup menu");
+        System.out.println("3.exit");
     }
 }
