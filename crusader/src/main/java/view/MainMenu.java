@@ -21,15 +21,12 @@ public class MainMenu {
                 ProfileMenu.run(scanner);
             } else if (input.equals("3")) {
                 Application.setCurrentUser(null);
+                Application.setStayLoggedIn(false);
                 DBController.saveCurrentUser();
                 PrimaryMenu.run(scanner);
-            } else if (input.equals("4")) {
-                if (!Application.isStayLoggedIn()) {
-                    Application.setCurrentUser(null);
-                    DBController.saveCurrentUser();
-                }
-                MainController.exitCrusader();
                 break;
+            } else if (input.equals("4")) {
+                MainController.exitCrusader();
             } else {
                 System.out.println(Answers.INVALID_COMMAND.getValue());
             }

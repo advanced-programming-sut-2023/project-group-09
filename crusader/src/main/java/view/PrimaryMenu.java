@@ -23,8 +23,8 @@ public class PrimaryMenu {
                 SignupMenu.run(scanner);
             } else if (input.equals("3") || exitGameMatcher.matches()) {
                 Application.setCurrentUser(null);
-                DBController.saveCurrentUser();
                 Application.setStayLoggedIn(false);
+                DBController.saveCurrentUser();
                 MainController.exitCrusader();
                 return;
             } else {

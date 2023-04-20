@@ -55,6 +55,7 @@ public class LoginMenu {
                 String result = "";
                 usernameMatcher = LoginCommands.getMatcher(contents, LoginCommands.USERNAME_REGEX);
                 passwordMatcher = LoginCommands.getMatcher(contents, LoginCommands.PASSWORD_REGEX);
+                stayLoggedInMatcher = LoginCommands.getMatcher(contents, LoginCommands.STAY_LOGGED_IN_REGEX);
                 if (usernameMatcher.find() && passwordMatcher.find()) {
                     String username = usernameMatcher.group("username") != null ?
                             usernameMatcher.group("username") : usernameMatcher.group("username2");

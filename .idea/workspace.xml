@@ -4,8 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="Humans are added.">
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameHumans.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameHumans.java" afterDir="false" />
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="Humans are added. (final)">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/files/user/currentUser.json" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/files/user/currentUser.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/files/user/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/files/user/users.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/enumeration/Paths.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/enumeration/Paths.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/view/LoginMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/view/LoginMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/view/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/view/MainMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/view/PrimaryMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/view/PrimaryMenu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +164,7 @@
       <workItem from="1681922940573" duration="1143000" />
       <workItem from="1681937070375" duration="893000" />
       <workItem from="1681941196344" duration="7452000" />
-      <workItem from="1681984358797" duration="10945000" />
+      <workItem from="1681984358797" duration="15889000" />
     </task>
     <task id="LOCAL-00001" summary="...">
       <created>1681925358549</created>
@@ -207,7 +215,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682001707158</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Humans are added. (final)">
+      <created>1682002807377</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1682002807377</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -232,7 +247,8 @@
     <MESSAGE value="Foods" />
     <MESSAGE value="Foods are added." />
     <MESSAGE value="Humans are added." />
-    <option name="LAST_COMMIT_MESSAGE" value="Humans are added." />
+    <MESSAGE value="Humans are added. (final)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Humans are added. (final)" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Project_Phase_1$UserControllerTest.ic" NAME="UserControllerTest Coverage Results" MODIFIED="1681942420279" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

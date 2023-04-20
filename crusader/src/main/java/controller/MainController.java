@@ -10,7 +10,6 @@ import java.util.Scanner;
 
 public class MainController {
 
-    public static User currentUser;
 
     public static void loadGame(){
         DBController.loadAllUsers();
@@ -25,18 +24,20 @@ public class MainController {
         if (Application.getCurrentUser() == null){
             PrimaryMenu.run(scanner);
         }else{
+            Application.setStayLoggedIn(true);
             MainMenu.run(scanner);
         }
     }
 
     public static void exitCrusader(){
-        DBController.saveAllUsers();
-        if (Application.isStayLoggedIn())
+        if (Application.isStayLoggedIn()) {
             DBController.saveCurrentUser();
+        }
         else {
             Application.setCurrentUser(null);
             DBController.saveCurrentUser();
         }
+        DBController.saveAllUsers();
         System.out.println("App closed :(");
         System.exit(0);
     }
