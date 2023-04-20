@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="some enums are edited.">
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="Resources added.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameHumans.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameHumans.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameResources.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameResources.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameFoods.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameFoods.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,7 +154,7 @@
       <workItem from="1681922940573" duration="1143000" />
       <workItem from="1681937070375" duration="893000" />
       <workItem from="1681941196344" duration="7452000" />
-      <workItem from="1681984358797" duration="7713000" />
+      <workItem from="1681984358797" duration="8590000" />
     </task>
     <task id="LOCAL-00001" summary="...">
       <created>1681925358549</created>
@@ -178,7 +177,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681995637116</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Resources added.">
+      <created>1681999798822</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1681999798822</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -199,7 +205,8 @@
     <MESSAGE value="..." />
     <MESSAGE value="some tests added." />
     <MESSAGE value="some enums are edited." />
-    <option name="LAST_COMMIT_MESSAGE" value="some enums are edited." />
+    <MESSAGE value="Resources added." />
+    <option name="LAST_COMMIT_MESSAGE" value="Resources added." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Project_Phase_1$UserControllerTest.ic" NAME="UserControllerTest Coverage Results" MODIFIED="1681942420279" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
