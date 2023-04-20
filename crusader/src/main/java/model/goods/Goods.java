@@ -1,12 +1,15 @@
 package model.goods;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Goods {
     private String name;
-    private ArrayList<String> required = new ArrayList<>();
+    private String type;
+    private HashMap<String, Integer> required = new HashMap<>();
+    private int price;
 
-    public Goods(String name) {
+    public Goods(String name, String type, int price) {
         this.name = name;
     }
 
@@ -18,11 +21,11 @@ public class Goods {
         this.name = name;
     }
 
-    public ArrayList<String> getRequired() {
+    public HashMap<String, Integer> getRequired() {
         return required;
     }
 
-    public void setRequired(ArrayList<String> required) {
-        this.required = required;
+    public void addRequired(String required, int count) {
+        this.required.put(required, count);
     }
 }

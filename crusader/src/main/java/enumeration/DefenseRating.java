@@ -6,8 +6,7 @@ public enum DefenseRating {
     LOW(3),
     MEDIUM(4),
     HIGH(5),
-    VERY_HIGH(6)
-    ;
+    VERY_HIGH(6);
     private final int rate;
 
     DefenseRating(int rate) {

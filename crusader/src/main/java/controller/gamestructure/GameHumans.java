@@ -3,13 +3,10 @@ package controller.gamestructure;
 import enumeration.AttackRating;
 import enumeration.DefenseRating;
 import enumeration.Speed;
-import enumeration.dictionary.Weapons;
 import model.human.Human;
 import model.human.military.EuropeanTroop;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 public class GameHumans {
     public static HashMap<String, Human> humans = new HashMap<String, Human>();
@@ -26,45 +23,50 @@ public class GameHumans {
     public static void addLord() {
     }
 
-    public static void createArcher(){
+    public static void createArcher() {
         int speed = Speed.FAST.getRate();
-        int defenceRating = DefenseRating.LOW.getRate();
+        int defenseRating = DefenseRating.LOW.getRate();
         int attackRating = AttackRating.LOW.getRate();
 
-        EuropeanTroop archer = new EuropeanTroop(speed,defenceRating,1,attackRating);
+        EuropeanTroop archer = new EuropeanTroop(speed, defenseRating, 10, attackRating);
     }
 
     public static void createCrossbowman() {
         int speed = Speed.SLOW.getRate();
-        int defenceRating = DefenseRating.MEDIUM.getRate();
+        int defenseRating = DefenseRating.MEDIUM.getRate();
         int attackRating = AttackRating.LOW.getRate();
 
-        EuropeanTroop crossbowman = new EuropeanTroop(speed,defenceRating,1,attackRating);
+        EuropeanTroop crossbowman = new EuropeanTroop(speed, defenseRating, 1, attackRating);
     }
 
     public static void createSpearman() {
         int speed = Speed.AVERAGE.getRate();
-        int defenceRating = DefenseRating.VERY_LOW.getRate();
+        int defenseRating = DefenseRating.VERY_LOW.getRate();
         int attackRating = AttackRating.MEDIUM.getRate();
-        EuropeanTroop spearman = new EuropeanTroop(speed,defenceRating,1,attackRating);
+        EuropeanTroop spearman = new EuropeanTroop(speed, defenseRating, 1, attackRating);
 
     }
 
     public static void createPikeman() {
         int speed = Speed.SLOW.getRate();
-        int defenceRating = DefenseRating.MEDIUM.getRate();
-        int attackRating = AttackRating.HIGH.getRate();
-        EuropeanTroop pikeman = new EuropeanTroop(speed,defenceRating,1,attackRating);
+        int defenseRating = DefenseRating.HIGH.getRate();
+        int attackRating = AttackRating.MEDIUM.getRate();
+        EuropeanTroop pikeman = new EuropeanTroop(speed, defenseRating, 1, attackRating);
     }
 
     public static void createMaceman() {
         int speed = Speed.AVERAGE.getRate();
-        int defenceRating = DefenseRating.MEDIUM.getRate();
-        int attackRating = AttackRating.MEDIUM.getRate();
-        EuropeanTroop maceman = new EuropeanTroop(speed,defenceRating,1,attackRating);
+        int defenseRating = DefenseRating.MEDIUM.getRate();
+        int attackRating = AttackRating.HIGH.getRate();
+        EuropeanTroop maceman = new EuropeanTroop(speed, defenseRating, 1, attackRating);
     }
 
     public static void createSwordsman() {
+        int speed = Speed.EXTREMELY_SLOW.getRate();
+        int defenseRating = DefenseRating.VERY_LOW.getRate();
+        int attackRating = AttackRating.VERY_HIGH.getRate();
+        EuropeanTroop swordsman = new EuropeanTroop(speed, defenseRating, 1, attackRating);
+//        swordsman.setWeapon();
     }
 
     public static void createKnight() {

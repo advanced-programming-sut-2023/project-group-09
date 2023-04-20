@@ -3,8 +3,8 @@ package model;
 import enumeration.dictionary.Colors;
 import enumeration.dictionary.Foodstuffs;
 import enumeration.dictionary.RawMaterials;
-import enumeration.dictionary.Weapons;
 import model.building.Building;
+import model.goods.Goods;
 import model.human.Human;
 import model.human.military.ArabianMercenary;
 import model.human.military.EuropeanTroop;
@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class Government {
     private User user;
     private HashMap<Foodstuffs, Integer> foods = new HashMap<>();
-    private HashMap<Weapons, Integer> weapons = new HashMap<>();
+    private HashMap<Goods, Integer> weapons = new HashMap<>();
     private HashMap<RawMaterials, Integer> resources = new HashMap<>();
 
     private ArrayList<Building> buildings = new ArrayList<>();
@@ -48,11 +48,11 @@ public class Government {
         this.foods = foods;
     }
 
-    public HashMap<Weapons, Integer> getWeapons() {
+    public HashMap<Goods, Integer> getWeapons() {
         return weapons;
     }
 
-    public void setWeapons(HashMap<Weapons, Integer> weapons) {
+    public void setWeapons(HashMap<Goods, Integer> weapons) {
         this.weapons = weapons;
     }
 
