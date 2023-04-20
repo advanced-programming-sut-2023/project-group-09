@@ -6,15 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="some tests added.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/files/user/currentUser.json" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/files/user/currentUser.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crusader/files/user/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/files/user/users.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/DBController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/DBController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/view/LoginMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/view/LoginMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/view/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/view/MainMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/view/PrimaryMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/view/PrimaryMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameHumans.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameHumans.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/enumeration/AttackRating.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/enumeration/AttackRating.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/enumeration/DefenseRating.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/enumeration/DefenseRating.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/enumeration/Speed.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/enumeration/Speed.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/human/military/EuropeanTroop.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/human/military/EuropeanTroop.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,6 +159,7 @@
       <workItem from="1681922940573" duration="1143000" />
       <workItem from="1681937070375" duration="893000" />
       <workItem from="1681941196344" duration="7452000" />
+      <workItem from="1681984358797" duration="5329000" />
     </task>
     <task id="LOCAL-00001" summary="...">
       <created>1681925358549</created>

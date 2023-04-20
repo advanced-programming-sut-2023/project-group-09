@@ -49,5 +49,15 @@
     "nickname": "WTF?",
     "email": "F@G.C",
     "highScore": 0
+  },
+  {
+    "username": "Fatemeh",
+    "password": "bb14121bd7f08b8f2faf313d9ac7fc10feea916845024ff0bd70fda02110a5ff",
+    "nickname": "FFF",
+    "email": "F@g.com",
+    "highScore": 0,
+    "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
+    "passwordRecoveryAnswer": "Asgari",
+    "slogan": "Zan, Zendegi, Azadi"
   }
 ]

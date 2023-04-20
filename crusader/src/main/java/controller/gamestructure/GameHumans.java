@@ -1,7 +1,13 @@
-package Controller.GameStructure;
+package controller.gamestructure;
 
+import enumeration.AttackRating;
+import enumeration.DefenseRating;
+import enumeration.Speed;
+import enumeration.dictionary.Weapons;
 import model.human.Human;
+import model.human.military.EuropeanTroop;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GameHumans {
@@ -35,6 +41,10 @@ public class GameHumans {
     }
 
     public static void createSwordsman() {
+        //ArrayList <Weapons> swordsmanWeapons = new ArrayList<>();
+        //swordsmanWeapons.add();
+        //EuropeanTroop swordsmanInstance = new EuropeanTroop(Speed.VERY_SLOW.getRate() , DefenseRating.VERY_LOW, 100*DefenseRating.VERY_LOW.getRate() ,0, AttackRating.VERY_HIGH);
+
     }
 
     public static void createKnight() {
