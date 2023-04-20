@@ -3,24 +3,38 @@ package controller.gamestructure;
 import enumeration.AttackRating;
 import enumeration.DefenseRating;
 import enumeration.Speed;
-import model.human.Human;
 import model.human.military.ArabianMercenary;
 import model.human.military.EuropeanTroop;
+import model.human.military.Military;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
 public class GameHumans {
-    public static HashMap<String, Human> humans = new HashMap<String, Human>();
+    public static HashMap<String, Military> militaries = new HashMap<>();
 
     public static void addHumans() {
     }
 
     public static void addEuropeanTroops() {
+        createArcher();
+        createCrossbowman();
+        createSpearman();
+        createPikeman();
+        createMaceman();
+        createSwordsman();
+        createKnight();
     }
 
     public static void addArabianMercenaries() {
+        createArcherBow();
+        createSlave();
+        createSlinger();
+        createAssassin();
+        createHorseArcher();
+        createArabianSwordsman();
+        createFireThrower();
     }
 
     public static void addLord() {
@@ -34,6 +48,7 @@ public class GameHumans {
         archer.setWeapon("bow");
         archer.enableDigsMoat();
         archer.enableUsesLadder();
+        militaries.put("archer",archer);
     }
 
     public static void createCrossbowman() {
@@ -43,6 +58,7 @@ public class GameHumans {
         EuropeanTroop crossbowman = new EuropeanTroop(speed, defenseRating, 10, attackRating, 20);
         crossbowman.setWeapon("crossbow");
         crossbowman.addArmour("leatherArmour");
+        militaries.put("crossbowman",crossbowman);
     }
 
     public static void createSpearman() {
@@ -53,6 +69,7 @@ public class GameHumans {
         spearman.setWeapon("spear");
         spearman.enableUsesLadder();
         spearman.enableDigsMoat();
+        militaries.put("spearman",spearman);
     }
 
     public static void createPikeman() {
@@ -63,6 +80,7 @@ public class GameHumans {
         pikeman.setWeapon("pike");
         pikeman.addArmour("metalArmour");
         pikeman.enableDigsMoat();
+        militaries.put("pikeman",pikeman);
     }
 
     public static void createMaceman() {
@@ -74,6 +92,7 @@ public class GameHumans {
         maceman.addArmour("leatherArmour");
         maceman.enableDigsMoat();
         maceman.enableDigsMoat();
+        militaries.put("maceman",maceman);
     }
 
     public static void createSwordsman() {
@@ -83,6 +102,7 @@ public class GameHumans {
         EuropeanTroop swordsman = new EuropeanTroop(speed, defenseRating, 1, attackRating, 40);
         swordsman.setWeapon("sword");
         swordsman.addArmour("metalArmour");
+        militaries.put("swordsman",swordsman);
     }
 
     public static void createKnight() {
@@ -92,6 +112,7 @@ public class GameHumans {
         EuropeanTroop knight = new EuropeanTroop(speed, defenseRating, 1, attackRating, 40);
         knight.setWeapon("sword");
         knight.addArmour("metalArmour");
+        militaries.put("knight",knight);
     }
 
     public static void createTunneler() {
@@ -121,6 +142,7 @@ public class GameHumans {
         int defenseRating = DefenseRating.MEDIUM.getRate();
         int attackRating = AttackRating.MEDIUM.getRate();
         EuropeanTroop blackmonk = new EuropeanTroop(speed, defenseRating, 1, attackRating, 10);
+        militaries.put("blackmonk",blackmonk);
     }
 
     public static void createArcherBow() {
@@ -130,6 +152,7 @@ public class GameHumans {
         ArabianMercenary archerBow = new ArabianMercenary(speed, defenseRating, 10, attackRating, 75);
         archerBow.setWeapon("bow");
         archerBow.enableDigsMoat();
+        militaries.put("archerBow",archerBow);
     }
 
     public static void createSlave() {
@@ -138,6 +161,7 @@ public class GameHumans {
         int attackRating = AttackRating.EXTREMELY_LOW.getRate();
         ArabianMercenary slave = new ArabianMercenary(speed, defenseRating, 1, attackRating, 5);
         slave.enableDigsMoat();
+        militaries.put("slave",slave);
     }
 
     public static void createSlinger() {
@@ -145,7 +169,7 @@ public class GameHumans {
         int defenseRating = DefenseRating.VERY_LOW.getRate();
         int attackRating = AttackRating.LOW.getRate();
         ArabianMercenary slinger = new ArabianMercenary(speed, defenseRating, 5, attackRating, 12);
-
+        militaries.put("slinger ",slinger );
     }
 
     public static void createAssassin() {
@@ -153,6 +177,7 @@ public class GameHumans {
         int defenseRating = DefenseRating.MEDIUM.getRate();
         int attackRating = AttackRating.MEDIUM.getRate();
         ArabianMercenary assassin = new ArabianMercenary(speed, defenseRating, 1, attackRating, 60);
+        militaries.put("assassin",assassin);
     }
 
     public static void createHorseArcher() {
@@ -161,6 +186,7 @@ public class GameHumans {
         int attackRating = AttackRating.LOW.getRate();
         ArabianMercenary horseArcher = new ArabianMercenary(speed, defenseRating, 10, attackRating, 80);
         horseArcher.setWeapon("bow");
+        militaries.put("horseArcher",horseArcher);
     }
 
     public static void createArabianSwordsman() {
@@ -169,6 +195,7 @@ public class GameHumans {
         int attackRating = AttackRating.HIGH.getRate();
         ArabianMercenary arabianSwordsman = new ArabianMercenary(speed, defenseRating, 1, attackRating, 80);
         arabianSwordsman.addArmour("metalArmour");
+        militaries.put("arabianSwordsman",arabianSwordsman);
     }
 
     public static void createFireThrower() {
@@ -176,5 +203,6 @@ public class GameHumans {
         int defenseRating = DefenseRating.LOW.getRate();
         int attackRating = AttackRating.HIGH.getRate();
         ArabianMercenary fireThrower = new ArabianMercenary(speed, defenseRating, 5, attackRating, 100);
+        militaries.put("fireThrower",fireThrower);
     }
 }

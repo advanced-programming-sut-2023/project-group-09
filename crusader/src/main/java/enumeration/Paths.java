@@ -9,6 +9,9 @@ public enum Paths {
     FOODS_PATH("files/model/goods/foods.json"),
     RESOURCES_PATH("files/model/goods/resources.json"),
     WEAPONS_PATH("files/model/goods/weapons.json"),
+    EUROPEAN_TROOP_PATH("files/model/humans/europeanTroops.json"),
+    ARABIAN_MERCENARY_PATH("files/model/humans/arabianMercenaries.json")
+
     ;
     private final String path;
 

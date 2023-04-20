@@ -1,12 +1,16 @@
 package controller;
 
 import controller.gamestructure.GameGoods;
+import controller.gamestructure.GameHumans;
 import enumeration.Paths;
 import model.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import model.goods.Goods;
+import model.human.military.ArabianMercenary;
+import model.human.military.EuropeanTroop;
+import model.human.military.Military;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -16,9 +20,14 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DBController {
 
+
+    // load & save users from files
     public static void loadAllUsers(){
         try {
             Gson gson = new Gson();
@@ -89,6 +98,8 @@ public class DBController {
         }
     }
 
+
+    // load goods from file
     public static void loadGoods(){
         try {
             Gson gson = new Gson();
@@ -137,6 +148,48 @@ public class DBController {
             e.printStackTrace();
         }
     }
+
+
+    //load military from file
+    public static void loadMilitary(){
+        HashMap<String, EuropeanTroop> europeanTroops = loadEuropeanTroops();
+        HashMap<String, ArabianMercenary> arabianMercenaries = loadArabianMercenaries();
+
+        GameHumans.militaries.putAll(europeanTroops);
+        GameHumans.militaries.putAll(arabianMercenaries);
+
+    }
+
+    public static HashMap<String, EuropeanTroop> loadEuropeanTroops(){
+        try {
+            Gson gson = new Gson();
+            checkFileExist(Paths.EUROPEAN_TROOP_PATH.getPath());
+            String text = new String(Files.readAllBytes(Path.of(Paths.EUROPEAN_TROOP_PATH.getPath())));
+            HashMap<String, EuropeanTroop> europeanTroopHashMap= gson.fromJson(text, new TypeToken<HashMap<String, EuropeanTroop>>(){}.getType());
+            return europeanTroopHashMap;
+        } catch (IOException e) {
+            System.out.println("An error occurred.[load humans]");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static HashMap<String, ArabianMercenary> loadArabianMercenaries(){
+        try {
+            Gson gson = new Gson();
+            checkFileExist(Paths.ARABIAN_MERCENARY_PATH.getPath());
+            String text = new String(Files.readAllBytes(Path.of(Paths.ARABIAN_MERCENARY_PATH.getPath())));
+            HashMap<String, ArabianMercenary> arabianMercenaryHashMap= gson.fromJson(text, new TypeToken<HashMap<String, ArabianMercenary>>(){}.getType());
+            return arabianMercenaryHashMap;
+        } catch (IOException e) {
+            System.out.println("An error occurred.[load humans]");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
     public static void checkFileExist(String fileAddress){
         try {
             File myObj = new File(fileAddress);

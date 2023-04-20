@@ -1,5 +1,6 @@
 import controller.*;
 import controller.gamestructure.GameGoods;
+import controller.gamestructure.GameHumans;
 import view.MainMenu;
 import view.PrimaryMenu;
 

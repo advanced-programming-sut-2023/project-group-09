@@ -1,0 +1,117 @@
+{
+  "crossbowman": {
+    "attackRating": 3,
+    "usesHorse": false,
+    "usesLadder": false,
+    "digsMoat": false,
+    "weapon": "crossbow",
+    "armours": [
+      "leatherArmour"
+    ],
+    "price": 20,
+    "speed": 2,
+    "x": 0,
+    "y": 0,
+    "defenseRating": 4,
+    "health": 4,
+    "shootingRange": 10
+  },
+  "spearman": {
+    "attackRating": 4,
+    "usesHorse": false,
+    "usesLadder": true,
+    "digsMoat": true,
+    "weapon": "spear",
+    "armours": [],
+    "price": 8,
+    "speed": 3,
+    "x": 0,
+    "y": 0,
+    "defenseRating": 2,
+    "health": 2,
+    "shootingRange": 1
+  },
+  "archer": {
+    "attackRating": 3,
+    "usesHorse": false,
+    "usesLadder": true,
+    "digsMoat": true,
+    "weapon": "bow",
+    "armours": [],
+    "price": 12,
+    "speed": 4,
+    "x": 0,
+    "y": 0,
+    "defenseRating": 3,
+    "health": 3,
+    "shootingRange": 10
+  },
+  "swordsman": {
+    "attackRating": 6,
+    "usesHorse": false,
+    "usesLadder": false,
+    "digsMoat": false,
+    "weapon": "sword",
+    "armours": [
+      "metalArmour"
+    ],
+    "price": 40,
+    "speed": 1,
+    "x": 0,
+    "y": 0,
+    "defenseRating": 2,
+    "health": 2,
+    "shootingRange": 1
+  },
+  "knight": {
+    "attackRating": 6,
+    "usesHorse": false,
+    "usesLadder": false,
+    "digsMoat": false,
+    "weapon": "sword",
+    "armours": [
+      "metalArmour"
+    ],
+    "price": 40,
+    "speed": 5,
+    "x": 0,
+    "y": 0,
+    "defenseRating": 5,
+    "health": 5,
+    "shootingRange": 1
+  },
+  "maceman": {
+    "attackRating": 5,
+    "usesHorse": false,
+    "usesLadder": false,
+    "digsMoat": true,
+    "weapon": "mace",
+    "armours": [
+      "leatherArmour"
+    ],
+    "price": 20,
+    "speed": 3,
+    "x": 0,
+    "y": 0,
+    "defenseRating": 4,
+    "health": 4,
+    "shootingRange": 1
+  },
+  "pikeman": {
+    "attackRating": 4,
+    "usesHorse": false,
+    "usesLadder": false,
+    "digsMoat": true,
+    "weapon": "pike",
+    "armours": [
+      "metalArmour"
+    ],
+    "price": 20,
+    "speed": 2,
+    "x": 0,
+    "y": 0,
+    "defenseRating": 5,
+    "health": 5,
+    "shootingRange": 1
+  }
+}
