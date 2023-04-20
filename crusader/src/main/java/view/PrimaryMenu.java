@@ -1,5 +1,7 @@
 package view;
 
+import controller.Application;
+import controller.DBController;
 import controller.MainController;
 import enumeration.commands.Commands;
 
@@ -19,6 +21,9 @@ public class PrimaryMenu {
             } else if (input.equals("2") || input.equals("Signup Menu")) {
                 SignupMenu.run(scanner);
             } else if (exitGameMatcher.matches()) {
+                Application.setCurrentUser(null);
+                DBController.saveCurrentUser();
+                Application.setStayLoggedIn(false);
                 MainController.exitCrusader();
                 return;
             } else {

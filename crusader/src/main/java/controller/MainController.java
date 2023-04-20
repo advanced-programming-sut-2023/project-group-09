@@ -29,7 +29,12 @@ public class MainController {
 
     public static void exitCrusader(){
         DBController.saveAllUsers();
-        DBController.saveCurrentUser();
+        if (Application.isStayLoggedIn())
+            DBController.saveCurrentUser();
+        else {
+            Application.setCurrentUser(null);
+            DBController.saveCurrentUser();
+        }
         System.out.println("App closed :(");
         System.exit(0);
     }

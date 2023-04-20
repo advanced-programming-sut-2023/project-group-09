@@ -275,7 +275,7 @@ public class UserController {
         }
         Application.setCurrentUser(user);
         Application.setStayLoggedIn(stayedLoggedIn);
-        // go to Main Menu
+        DBController.saveCurrentUser();
         return LoginAnswers.SUCCESSFUL_LOGIN_MESSAGE.getMessage();
     }
 

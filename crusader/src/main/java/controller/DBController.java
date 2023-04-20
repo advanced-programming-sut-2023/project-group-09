@@ -51,8 +51,12 @@ public class DBController {
             checkFileExist(Paths.CURRENT_USER_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.CURRENT_USER_PATH.getPath())));
             User user = gson.fromJson(text, User.class);
-            User currentUser = Application.getUserByUsername(user.getUsername());
-            Application.setCurrentUser(currentUser);
+            if (user != null) {
+                User currentUser = Application.getUserByUsername(user.getUsername());
+                Application.setCurrentUser(currentUser);
+            } else {
+                Application.setCurrentUser(null);
+            }
         } catch (IOException e) {
             System.out.println("An error occurred.[load current user]");
             e.printStackTrace();

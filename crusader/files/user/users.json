@@ -42,5 +42,12 @@
     "passwordRecoveryQuestion": "What was my first pet\u0027s name?",
     "passwordRecoveryAnswer": "Mamad",
     "slogan": "Wow!"
+  },
+  {
+    "username": "Farzam",
+    "password": "FKR@1383inTehran",
+    "nickname": "WTF?",
+    "email": "F@G.C",
+    "highScore": 0
   }
 ]
