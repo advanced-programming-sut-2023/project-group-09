@@ -4,6 +4,7 @@ import enumeration.AttackRating;
 import enumeration.DefenseRating;
 import enumeration.Speed;
 import model.human.Human;
+import model.human.military.ArabianMercenary;
 import model.human.military.EuropeanTroop;
 
 import java.util.ArrayList;
@@ -31,16 +32,16 @@ public class GameHumans {
         int attackRating = AttackRating.LOW.getRate();
         EuropeanTroop archer = new EuropeanTroop(speed, defenseRating, 10, attackRating);
         archer.setWeapon("bow");
-        archer.addArmour("bow");
+        archer.enableDigsMoat();
+        archer.enableUsesLadder();
     }
 
     public static void createCrossbowman() {
         int speed = Speed.SLOW.getRate();
         int defenseRating = DefenseRating.MEDIUM.getRate();
         int attackRating = AttackRating.LOW.getRate();
-        EuropeanTroop crossbowman = new EuropeanTroop(speed, defenseRating, 1, attackRating);
+        EuropeanTroop crossbowman = new EuropeanTroop(speed, defenseRating, 10, attackRating);
         crossbowman.setWeapon("crossbow");
-        crossbowman.addArmour("crossbow");
         crossbowman.addArmour("leatherArmour");
     }
 
@@ -50,7 +51,8 @@ public class GameHumans {
         int attackRating = AttackRating.MEDIUM.getRate();
         EuropeanTroop spearman = new EuropeanTroop(speed, defenseRating, 1, attackRating);
         spearman.setWeapon("spear");
-        spearman.addArmour("spear");
+        spearman.enableUsesLadder();
+        spearman.enableDigsMoat();
     }
 
     public static void createPikeman() {
@@ -59,8 +61,8 @@ public class GameHumans {
         int attackRating = AttackRating.MEDIUM.getRate();
         EuropeanTroop pikeman = new EuropeanTroop(speed, defenseRating, 1, attackRating);
         pikeman.setWeapon("pike");
-        pikeman.addArmour("pike");
         pikeman.addArmour("metalArmour");
+        pikeman.enableDigsMoat();
     }
 
     public static void createMaceman() {
@@ -69,8 +71,9 @@ public class GameHumans {
         int attackRating = AttackRating.HIGH.getRate();
         EuropeanTroop maceman = new EuropeanTroop(speed, defenseRating, 1, attackRating);
         maceman.setWeapon("mace");
-        maceman.addArmour("mace");
         maceman.addArmour("leatherArmour");
+        maceman.enableDigsMoat();
+        maceman.enableDigsMoat();
     }
 
     public static void createSwordsman() {
@@ -79,7 +82,6 @@ public class GameHumans {
         int attackRating = AttackRating.VERY_HIGH.getRate();
         EuropeanTroop swordsman = new EuropeanTroop(speed, defenseRating, 1, attackRating);
         swordsman.setWeapon("sword");
-        swordsman.addArmour("sword");
         swordsman.addArmour("metalArmour");
     }
 
@@ -88,6 +90,8 @@ public class GameHumans {
         int defenseRating = DefenseRating.HIGH.getRate();
         int attackRating = AttackRating.VERY_HIGH.getRate();
         EuropeanTroop knight = new EuropeanTroop(speed, defenseRating, 1, attackRating);
+        knight.setWeapon("sword");
+        knight.addArmour("metalArmour");
     }
 
     public static void createTunneler() {
@@ -109,6 +113,7 @@ public class GameHumans {
         int defenseRating = DefenseRating.VERY_LOW.getRate();
         int attackRating = AttackRating.NONE.getRate();
         EuropeanTroop engineer = new EuropeanTroop(speed, defenseRating, 1, attackRating);
+        engineer.enableDigsMoat();
     }
 
     public static void createBlackMonk() {
@@ -119,55 +124,57 @@ public class GameHumans {
     }
 
     public static void createArcherBow() {
+        int speed = Speed.FAST.getRate();
+        int defenseRating = DefenseRating.LOW.getRate();
+        int attackRating = AttackRating.LOW.getRate();
+        ArabianMercenary archerBow = new ArabianMercenary(speed, defenseRating, 10, attackRating);
+        archerBow.setWeapon("bow");
+        archerBow.enableDigsMoat();
     }
 
     public static void createSlave() {
         int speed = Speed.FAST.getRate();
         int defenseRating = DefenseRating.EXTREMELY_LOW.getRate();
         int attackRating = AttackRating.EXTREMELY_LOW.getRate();
-        EuropeanTroop crossbowman = new EuropeanTroop(speed, defenseRating, 1, attackRating);
-        crossbowman.setWeapon("torch");
+        ArabianMercenary slave = new ArabianMercenary(speed, defenseRating, 1, attackRating);
+        slave.enableDigsMoat();
     }
 
     public static void createSlinger() {
         int speed = Speed.FAST.getRate();
         int defenseRating = DefenseRating.VERY_LOW.getRate();
         int attackRating = AttackRating.LOW.getRate();
-        EuropeanTroop crossbowman = new EuropeanTroop(speed, defenseRating, 1, attackRating);
-        crossbowman.setWeapon("sling");
+        ArabianMercenary slinger = new ArabianMercenary(speed, defenseRating, 5, attackRating);
+
     }
 
     public static void createAssassin() {
         int speed = Speed.AVERAGE.getRate();
         int defenseRating = DefenseRating.MEDIUM.getRate();
         int attackRating = AttackRating.MEDIUM.getRate();
-        EuropeanTroop crossbowman = new EuropeanTroop(speed, defenseRating, 1, attackRating);
-        crossbowman.setWeapon("scimitar");
+        ArabianMercenary assassin = new ArabianMercenary(speed, defenseRating, 1, attackRating);
     }
 
     public static void createHorseArcher() {
         int speed = Speed.VERY_FAST.getRate();
         int defenseRating = DefenseRating.MEDIUM.getRate();
         int attackRating = AttackRating.LOW.getRate();
-        EuropeanTroop crossbowman = new EuropeanTroop(speed, defenseRating, 1, attackRating);
-        crossbowman.setWeapon("bow");
-        crossbowman.addArmour("horse");
+        ArabianMercenary horsearcher = new ArabianMercenary(speed, defenseRating, 10, attackRating);
+        horsearcher.setWeapon("bow");
     }
 
     public static void createArabianSwordsman() {
         int speed = Speed.VERY_FAST.getRate();
         int defenseRating = DefenseRating.HIGH.getRate();
         int attackRating = AttackRating.HIGH.getRate();
-        EuropeanTroop crossbowman = new EuropeanTroop(speed, defenseRating, 1, attackRating);
-        crossbowman.setWeapon("scimitar");
-        crossbowman.addArmour("metalArmour");
+        ArabianMercenary arabianswordsman = new ArabianMercenary(speed, defenseRating, 1, attackRating);
+        arabianswordsman.addArmour("metalArmour");
     }
 
     public static void createFireThrower() {
         int speed = Speed.VERY_FAST.getRate();
         int defenseRating = DefenseRating.LOW.getRate();
         int attackRating = AttackRating.HIGH.getRate();
-        EuropeanTroop crossbowman = new EuropeanTroop(speed, defenseRating, 1, attackRating);
-        crossbowman.setWeapon("greekFire");
+        ArabianMercenary firethrower = new ArabianMercenary(speed, defenseRating, 5, attackRating);
     }
 }
