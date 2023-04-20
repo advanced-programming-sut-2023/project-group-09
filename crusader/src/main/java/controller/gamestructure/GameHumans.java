@@ -72,18 +72,38 @@ public class GameHumans {
     }
 
     public static void createKnight() {
+        int speed = Speed.VERY_FAST.getRate();
+        int defenseRating = DefenseRating.HIGH.getRate();
+        int attackRating = AttackRating.VERY_HIGH.getRate();
+        EuropeanTroop knight = new EuropeanTroop(speed, defenseRating, 1, attackRating);
     }
 
     public static void createTunneler() {
+        int speed = Speed.FAST.getRate();
+        int defenseRating = DefenseRating.VERY_LOW.getRate();
+        int attackRating = AttackRating.MEDIUM.getRate();
+        EuropeanTroop tunneler = new EuropeanTroop(speed, defenseRating, 1, attackRating);
     }
 
     public static void createLadderman() {
+        int speed = Speed.FAST.getRate();
+        int defenseRating = DefenseRating.VERY_LOW.getRate();
+        int attackRating = AttackRating.NONE.getRate();
+        EuropeanTroop ladderman = new EuropeanTroop(speed, defenseRating, 1, attackRating);
     }
 
     public static void createEngineer() {
+        int speed = Speed.AVERAGE.getRate();
+        int defenseRating = DefenseRating.VERY_LOW.getRate();
+        int attackRating = AttackRating.NONE.getRate();
+        EuropeanTroop engineer = new EuropeanTroop(speed, defenseRating, 1, attackRating);
     }
 
     public static void createBlackMonk() {
+        int speed = Speed.SLOW.getRate();
+        int defenseRating = DefenseRating.MEDIUM.getRate();
+        int attackRating = AttackRating.MEDIUM.getRate();
+        EuropeanTroop blackmonk = new EuropeanTroop(speed, defenseRating, 1, attackRating);
     }
 
     public static void createArcherBow() {
