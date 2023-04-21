@@ -59,5 +59,15 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "Asgari",
     "slogan": "Zan, Zendegi, Azadi"
+  },
+  {
+    "username": "Hossein",
+    "password": "6dce6954d4a1c3df6c6a468188503dea6527782d76dbe3bcfc7d2c26fa47aaea",
+    "nickname": "HOSS",
+    "email": "H@G.com",
+    "highScore": 0,
+    "passwordRecoveryQuestion": "What was my first pet\u0027s name?",
+    "passwordRecoveryAnswer": "Schnider",
+    "slogan": "Perspolis!"
   }
 ]

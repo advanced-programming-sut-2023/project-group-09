@@ -7,14 +7,14 @@ import java.util.ArrayList;
 
 
 public class Application {
-    private static boolean stayLoggedIn = false;
+    private static boolean stayLoggedIn;
 
     public static boolean isStayLoggedIn() {
         return stayLoggedIn;
     }
 
-    public static void setStayLoggedIn(boolean stayLoggedIn) {
-        stayLoggedIn = stayLoggedIn;
+    public static void setStayLoggedIn(boolean s) {
+        stayLoggedIn = s;
     }
 
     private static User currentUser;
