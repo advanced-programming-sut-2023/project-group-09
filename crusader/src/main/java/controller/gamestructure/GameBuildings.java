@@ -1,11 +1,13 @@
 package controller.gamestructure;
 
 import model.building.Building;
+import model.building.producerbuildings.MilitaryProducer;
 
 import java.util.HashMap;
 
 public class GameBuildings {
     public static HashMap<String, Building> buildings = new HashMap<>();
+    public static HashMap<String, Building> producerBuildings = new HashMap<>();
 
     public static void createSmallStoneGatehouse() {
     }
@@ -35,6 +37,8 @@ public class GameBuildings {
     }
 
     public static void createBarrack() {
+        MilitaryProducer barrack = new MilitaryProducer(0 , 0 ,
+                "")
     }
 
     public static void createMercenaryPost() {

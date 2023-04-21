@@ -19,6 +19,28 @@ public class Building {
     private BuildingStates state;
 
     private String type;
+    private String name;
+
+    public BuildingStates getState() {
+        return state;
+    }
+
+    public void setState(BuildingStates state) {
+        this.state = state;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setMaxHp(int maxHp) {
+        this.maxHp = maxHp;
+    }
+
     private int maxHp;
     private int hp;
     private int startX, startY;

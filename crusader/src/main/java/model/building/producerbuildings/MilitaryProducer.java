@@ -8,8 +8,11 @@ public class MilitaryProducer extends model.building.producerbuildings.ProducerB
     private ArrayList<String> militaryTypes = new ArrayList<>();
 
     public MilitaryProducer(int numberOfRequiredWorkers, int numberOfRequiredEngineers, String type,
-                            int maxHp, int width, int length) {
-        super(numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, width, length);
+                            int maxHp, int width, int length, int rate, String nameOfStorage,
+                            String itemType, String itemName, ArrayList<String> militaryTypes) {
+        super(numberOfRequiredWorkers, numberOfRequiredEngineers, type,
+                maxHp, width, length, rate, nameOfStorage, itemType, itemName);
+        this.militaryTypes = militaryTypes;
     }
 
     public ArrayList<String> getMilitaryTypes() {

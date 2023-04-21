@@ -8,6 +8,8 @@ import model.goods.Goods;
 import model.human.Human;
 import model.human.military.ArabianMercenary;
 import model.human.military.EuropeanTroop;
+import model.buildinghandler.BuildingCounter;
+import model.buildinghandler.Storage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,18 +21,27 @@ public class Government {
 
     private HashMap<String,Trade> newTrades = new HashMap<>();
 
+    public HashMap<String, Integer> getProperties() {
+        return properties;
+    }
 
+    public HashMap<String, Storage> getStorages() {
+        return storages;
+    }
 
-    private HashMap<Foodstuffs, Integer> foods = new HashMap<>();
-    private HashMap<Goods, Integer> weapons = new HashMap<>();
-    private HashMap<RawMaterials, Integer> resources = new HashMap<>();
-
-    private ArrayList<Building> buildings = new ArrayList<>();
+    private HashMap<String , Integer> properties = new HashMap<>();
+    private HashMap<String , Storage> storages = new HashMap<>();
+    private HashMap<String , BuildingCounter> buildings = new HashMap<>();
     private ArrayList<EuropeanTroop> europeanTroops = new ArrayList<>();
     private ArrayList<ArabianMercenary> arabianMercenaries = new ArrayList<>();
     private ArrayList<Human> society = new ArrayList<>();
 
     private int foodRate;
+
+    public HashMap<String, BuildingCounter> getBuildings() {
+        return buildings;
+    }
+
     private int fearRate;
     private int religionRate;
     private int taxRate;
@@ -47,36 +58,9 @@ public class Government {
         this.color = color;
     }
 
-    public HashMap<Foodstuffs, Integer> getFoods() {
-        return foods;
-    }
-
-    public void setFoods(HashMap<Foodstuffs, Integer> foods) {
-        this.foods = foods;
-    }
-
-    public HashMap<Goods, Integer> getWeapons() {
-        return weapons;
-    }
-
-    public void setWeapons(HashMap<Goods, Integer> weapons) {
-        this.weapons = weapons;
-    }
-
-    public HashMap<RawMaterials, Integer> getResources() {
-        return resources;
-    }
-
-    public void setResources(HashMap<RawMaterials, Integer> resources) {
-        this.resources = resources;
-    }
-
-    public ArrayList<Building> getBuildings() {
-        return buildings;
-    }
-
-    public void setBuildings(ArrayList<Building> buildings) {
-        this.buildings = buildings;
+    public void addAmountToProperties(String itemName , String itemType, int amount) {
+        this.getProperties().put(itemName , this.getProperties().get(itemName) + amount);
+        this.getStorages().get(itemType).addAmount(amount);
     }
 
     public ArrayList<EuropeanTroop> getEuropeanTroops() {
@@ -190,6 +174,7 @@ public class Government {
     public void setColor(Colors color) {
         this.color = color;
     }
+
 
     public void changePopulation() {
 
