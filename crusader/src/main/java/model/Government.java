@@ -1,17 +1,22 @@
 package model;
 
+import com.sun.tools.javac.Main;
 import enumeration.dictionary.Colors;
 import enumeration.dictionary.Foodstuffs;
 import enumeration.dictionary.RawMaterials;
 import model.building.Building;
+import model.building.castlebuildings.CastleBuilding;
+import model.building.castlebuildings.MainCastle;
 import model.goods.Goods;
 import model.human.Human;
 import model.human.military.ArabianMercenary;
 import model.human.military.EuropeanTroop;
 import model.buildinghandler.BuildingCounter;
 import model.buildinghandler.Storage;
+import model.human.military.Lord;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class Government {
@@ -50,6 +55,16 @@ public class Government {
     private int population, maxPopulation;
     private int castleX, castleY;
     private Colors color;
+    private Lord lord;
+
+    public Lord getLord() {
+        return lord;
+    }
+
+    public void setLord(Lord lord) {
+        this.lord = lord;
+        ((MainCastle)(this.getBuildings().get("MainCastle").getBuildings().get(0))).setLord(lord);
+    }
 
     public Government(User user, int castleX, int castleY, Colors color) {
         this.user = user;
@@ -117,6 +132,10 @@ public class Government {
 
     public void setTaxRate(int taxRate) {
         this.taxRate = taxRate;
+        ((MainCastle)(this.getBuildings().get("MainCastle").getBuildings().get(0))).setTaxRate(taxRate);
+    }
+    public void addGold(int amount) {
+        this.gold += amount;
     }
 
     public int getGold() {

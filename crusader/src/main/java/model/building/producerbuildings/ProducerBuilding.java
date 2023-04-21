@@ -1,5 +1,6 @@
 package model.building.producerbuildings;
 
+import enumeration.Textures;
 import model.building.Building;
 import model.Government;
 import model.building.storagebuildings.StorageBuilding;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ProducerBuilding extends Building {
+    private ArrayList<Textures> suitableTextures = new ArrayList<>();
 
     private String nameOfStorage;
     private String itemName;
