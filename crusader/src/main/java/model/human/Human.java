@@ -13,12 +13,17 @@ public abstract class Human {
     private int health;
     private HumanStates state;
     private int shootingRange;
+    private boolean isInvisible = false;
 
     public Human(int speed, int defenseRating, int shootingRange) {
         this.speed = speed;
         this.defenseRating = defenseRating;
         this.health = defenseRating;
         this.shootingRange = shootingRange;
+    }
+
+    public void enableInvisible() {
+        this.isInvisible = true;
     }
 
     public Government getGovernment() {

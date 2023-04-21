@@ -2,9 +2,12 @@ package model.building.popularityincreasingbuildings;
 
 import model.building.Building;
 import model.Government;
+import model.building.producerbuildings.ProducerBuilding;
 
 public class PopularityIncreasingBuilding extends Building {
     private int increaseRate;
+
+    private ProducerBuilding producerBuilding;
 
     public PopularityIncreasingBuilding(int numberOfRequiredWorkers, int numberOfRequiredEngineers, String type,
                                         int maxHp, int width, int length, int increaseRate) {
