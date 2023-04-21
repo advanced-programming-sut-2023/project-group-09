@@ -4,25 +4,30 @@ import enumeration.Textures;
 import model.building.Building;
 import model.Government;
 import model.building.storagebuildings.StorageBuilding;
+import model.human.civilian.Civilian;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ProducerBuilding extends Building {
-    private ArrayList<Textures> suitableTextures = new ArrayList<>();
+    private Civilian worker;
 
     private String nameOfStorage;
-    private String itemName;
+    private ArrayList<String> itemNames = new ArrayList<>();
     private String itemType;
     private int rate;
+
     public ProducerBuilding(int numberOfRequiredWorkers, int numberOfRequiredEngineers,
-                            String type, int maxHp, int width, int length , int rate, String nameOfStorage ,
+                            String type, int maxHp, int width, int length, int rate, String nameOfStorage,
                             String itemType, String itemName) {
         super(numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, width, length);
         this.rate = rate;
         this.nameOfStorage = nameOfStorage;
         this.itemType = itemType;
-        this.itemName = itemName;
+    }
+
+    public void addItemName(String itemName) {
+        this.itemNames.add(itemName);
     }
 
     public void addProduct() {
@@ -35,10 +40,10 @@ public class ProducerBuilding extends Building {
                 break;
             }
             StorageBuilding storage = (StorageBuilding) itr.next();
-            int saved = Math.min(amount , storage.remained());
+            int saved = Math.min(amount, storage.remained());
             amount -= saved;
             storage.addAmount(saved);
         }
-        government.addAmountToProperties(this.itemName , this.itemType,this.rate - amount);
+//        government.addAmountToProperties(this.itemName, this.itemType, this.rate - amount);
     }
 }

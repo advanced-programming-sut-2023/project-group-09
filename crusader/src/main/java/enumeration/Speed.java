@@ -5,8 +5,8 @@ public enum Speed {
     SLOW(2),
     AVERAGE(3),
     FAST(4),
-    VERY_FAST(5)
-    ;
+    VERY_FAST(5),
+    STATIONARY(0);
     private final int rate;
 
     Speed(int rate) {

@@ -1,5 +1,6 @@
 package model.tools;
 
+import enumeration.AttackRating;
 import enumeration.Speed;
 import model.Government;
 import model.human.Human;
@@ -11,18 +12,17 @@ public class AttackingAndDefendingTool {
     private Government government = null;
     private int x, y;
     private int numberOfRequiredEngineers;
-    private Speed speed;
+    private int speed;
     private ArrayList<Permission> permissions = new ArrayList<>();
     private ArrayList<Human> engineers = new ArrayList<>();
     private int shootingRange;
+    private int damage;
 
-    public AttackingAndDefendingTool(Government government, int x, int y, int numberOfRequiredEngineers, Speed speed, int shootingRange) {
-        this.government = government;
-        this.x = x;
-        this.y = y;
+    public AttackingAndDefendingTool(int numberOfRequiredEngineers, int speed, int shootingRange, int damage) {
         this.numberOfRequiredEngineers = numberOfRequiredEngineers;
         this.speed = speed;
         this.shootingRange = shootingRange;
+        this.damage = damage;
     }
 
     public Government getGovernment() {
@@ -57,11 +57,11 @@ public class AttackingAndDefendingTool {
         this.numberOfRequiredEngineers = numberOfRequiredEngineers;
     }
 
-    public Speed getSpeed() {
+    public int getSpeed() {
         return speed;
     }
 
-    public void setSpeed(Speed speed) {
+    public void setSpeed(int speed) {
         this.speed = speed;
     }
 

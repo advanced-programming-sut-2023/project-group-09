@@ -10,6 +10,7 @@ public class KillingPit extends Building {
                       String type, int maxHp, int width, int length, int damage) {
         super(numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, width, length);
         this.damage = damage;
+        this.isInvisible = true;
     }
 
     public int getDamage() {
