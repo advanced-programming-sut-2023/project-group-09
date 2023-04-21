@@ -3,7 +3,7 @@ package enumeration.commands;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public enum BuildingCommands {DROP_BUILDING_REGEX("dropbuilding( -x (?<x>.+)| -y (?<y>.+)| -type (?<type>.+))*"),
+public enum BuildingMenuCommands {DROP_BUILDING_REGEX("dropbuilding( -x (?<x>.+)| -y (?<y>.+)| -type (?<type>.+))*"),
     X_COORD_REGEX("-x (?<x>[\\S]+)"),
     Y_COORD_REGEX("-y (?<y>[\\S]+)"),
     TYPE_REGEX("-type (?<type>[^\\s\\-]+|\".+\")"),
@@ -12,11 +12,11 @@ public enum BuildingCommands {DROP_BUILDING_REGEX("dropbuilding( -x (?<x>.+)| -y
     REPAIR_REGEX("repair");
     private String regex;
 
-    private BuildingCommands(String regex) {
+    private BuildingMenuCommands(String regex) {
         this.regex = regex;
     }
 
-    public static Matcher getMatcher(String input , BuildingCommands command) {
+    public static Matcher getMatcher(String input , BuildingMenuCommands command) {
         Matcher matcher = Pattern.compile(command.regex).matcher(input);
         return matcher;
     }

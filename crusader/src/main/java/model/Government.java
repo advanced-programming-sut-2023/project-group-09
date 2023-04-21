@@ -14,6 +14,13 @@ import java.util.HashMap;
 
 public class Government {
     private User user;
+
+    private HashMap<String,Trade> trades = new HashMap<>();
+
+    private HashMap<String,Trade> newTrades = new HashMap<>();
+
+
+
     private HashMap<Foodstuffs, Integer> foods = new HashMap<>();
     private HashMap<Goods, Integer> weapons = new HashMap<>();
     private HashMap<RawMaterials, Integer> resources = new HashMap<>();

@@ -1,10 +1,8 @@
 package view;
 
-import controller.DBController;
-import controller.MainController;
 import controller.UserController;
 import enumeration.answers.LoginAnswers;
-import enumeration.commands.LoginCommands;
+import enumeration.commands.LoginMenuCommands;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -32,14 +30,14 @@ public class LoginMenu {
         delayTime = wrongPassTimes = 0;
         while (true) {
             String command = scanner.nextLine();
-            Matcher loginMatcher = LoginCommands.getMatcher(command, LoginCommands.LOGIN_REGEX);
-            Matcher forgotPasswordMatcher = LoginCommands.getMatcher(command, LoginCommands.FORGOT_PASSWORD_REGEX);
-            Matcher backMatcher = LoginCommands.getMatcher(command, LoginCommands.BACK);
+            Matcher loginMatcher = LoginMenuCommands.getMatcher(command, LoginMenuCommands.LOGIN_REGEX);
+            Matcher forgotPasswordMatcher = LoginMenuCommands.getMatcher(command, LoginMenuCommands.FORGOT_PASSWORD_REGEX);
+            Matcher backMatcher = LoginMenuCommands.getMatcher(command, LoginMenuCommands.BACK);
             if (loginMatcher.matches()) {
                 String contents = loginMatcher.group("contents");
-                Matcher usernameMatcher = LoginCommands.getMatcher(contents, LoginCommands.USERNAME_REGEX);
-                Matcher passwordMatcher = LoginCommands.getMatcher(contents, LoginCommands.PASSWORD_REGEX);
-                Matcher stayLoggedInMatcher = LoginCommands.getMatcher(contents, LoginCommands.STAY_LOGGED_IN_REGEX);
+                Matcher usernameMatcher = LoginMenuCommands.getMatcher(contents, LoginMenuCommands.USERNAME_REGEX);
+                Matcher passwordMatcher = LoginMenuCommands.getMatcher(contents, LoginMenuCommands.PASSWORD_REGEX);
+                Matcher stayLoggedInMatcher = LoginMenuCommands.getMatcher(contents, LoginMenuCommands.STAY_LOGGED_IN_REGEX);
                 if (usernameMatcher.results().count() != 1) {
                     System.out.println(LoginAnswers.INVALID_USERNAME_INPUT_MESSAGE.getMessage());
                     continue;
@@ -53,8 +51,8 @@ public class LoginMenu {
                     continue;
                 }
                 String result = "";
-                usernameMatcher = LoginCommands.getMatcher(contents, LoginCommands.USERNAME_REGEX);
-                passwordMatcher = LoginCommands.getMatcher(contents, LoginCommands.PASSWORD_REGEX);
+                usernameMatcher = LoginMenuCommands.getMatcher(contents, LoginMenuCommands.USERNAME_REGEX);
+                passwordMatcher = LoginMenuCommands.getMatcher(contents, LoginMenuCommands.PASSWORD_REGEX);
                 if (usernameMatcher.find() && passwordMatcher.find()) {
                     String username = usernameMatcher.group("username") != null ?
                             usernameMatcher.group("username") : usernameMatcher.group("username2");

@@ -9,7 +9,7 @@ public class TradeController {
         return "";
     }
 
-    public static String acceptTrade(int id) {
+    public static String acceptTrade(String id) {
         return "";
     }
 

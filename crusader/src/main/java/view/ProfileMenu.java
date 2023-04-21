@@ -4,7 +4,7 @@ import controller.UserController;
 import controller.ViewController;
 import enumeration.answers.Answers;
 import enumeration.commands.Commands;
-import enumeration.commands.ProfileCommands;
+import enumeration.commands.ProfileMenuCommands;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -15,38 +15,24 @@ public class ProfileMenu {
 
         String input, output;
         profileMenuScanner = scanner;
-        //profile menu commands should check with this matchers
-        Matcher changeUsernameMatcher;
-        Matcher changeNicknameMatcher;
-        Matcher changePasswordType1Matcher;
-        Matcher changePasswordType2Matcher;
-        Matcher changeEmailMatcher;
-        Matcher changeSloganMatcher;
-        Matcher removeSloganMatcher;
-        Matcher showUserHighscoreMatcher;
-        Matcher showUserRankMatcher;
-        Matcher showUserSloganMatcher;
-        Matcher showUserProfileMatcher;
-        Matcher exitMatcher;
-
         System.out.println("<< Profile Menu >>");
 
         while (true) {
-
             input = scanner.nextLine();
 
-            changeUsernameMatcher = ProfileCommands.getMatcher(input, ProfileCommands.CHANGE_USERNAME);
-            changeNicknameMatcher = ProfileCommands.getMatcher(input, ProfileCommands.CHANGE_NICKNAME);
-            changePasswordType1Matcher = ProfileCommands.getMatcher(input, ProfileCommands.CHANGE_PASSWORD_TYPE1);
-            changePasswordType2Matcher = ProfileCommands.getMatcher(input, ProfileCommands.CHANGE_PASSWORD_TYPE2);
-            changeEmailMatcher = ProfileCommands.getMatcher(input, ProfileCommands.CHANGE_EMAIL);
-            changeSloganMatcher = ProfileCommands.getMatcher(input, ProfileCommands.CHANGE_SLOGAN);
-            removeSloganMatcher = ProfileCommands.getMatcher(input, ProfileCommands.REMOVE_SLOGAN);
-            showUserHighscoreMatcher = ProfileCommands.getMatcher(input, ProfileCommands.SHOW_HIGHSCORE);
-            showUserRankMatcher = ProfileCommands.getMatcher(input, ProfileCommands.SHOW_RANK);
-            showUserSloganMatcher = ProfileCommands.getMatcher(input, ProfileCommands.SHOW_SLOGAN);
-            showUserProfileMatcher = ProfileCommands.getMatcher(input, ProfileCommands.SHOW_DETAILS);
-            exitMatcher = Commands.getMatcher(input, Commands.BACK);
+            //profile menu commands should check with this matchers
+            Matcher changeUsernameMatcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_USERNAME);
+            Matcher changeNicknameMatcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_NICKNAME);
+            Matcher changePasswordType1Matcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_PASSWORD_TYPE1);
+            Matcher changePasswordType2Matcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_PASSWORD_TYPE2);
+            Matcher changeEmailMatcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_EMAIL);
+            Matcher changeSloganMatcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.CHANGE_SLOGAN);
+            Matcher removeSloganMatcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.REMOVE_SLOGAN);
+            Matcher showUserHighscoreMatcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.SHOW_HIGHSCORE);
+            Matcher showUserRankMatcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.SHOW_RANK);
+            Matcher showUserSloganMatcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.SHOW_SLOGAN);
+            Matcher showUserProfileMatcher = ProfileMenuCommands.getMatcher(input, ProfileMenuCommands.SHOW_DETAILS);
+            Matcher exitMatcher = Commands.getMatcher(input, Commands.BACK);
 
             if (changeUsernameMatcher.matches()) {
 
