@@ -1,6 +1,7 @@
 package model.building.castlebuildings;
 
 import model.Government;
+import model.building.killingbuildings.castlebuildings.CastleBuilding;
 import model.human.military.Lord;
 
 public class MainCastle extends CastleBuilding {

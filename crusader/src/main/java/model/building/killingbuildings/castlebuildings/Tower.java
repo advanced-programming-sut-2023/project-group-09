@@ -1,14 +1,12 @@
-package model.building.castlebuildings;
-
-import model.Government;
+package model.building.killingbuildings.castlebuildings;
 
 public class Tower extends CastleBuilding {
     private int fireRange;
     private int defendRange;
 
-    public Tower(int numberOfRequiredWorkers, int numberOfRequiredEngineers, String type, int maxHp,
+    public Tower(int numberOfRequiredWorkers, int numberOfRequiredEngineers, String name, int maxHp,
                  int width, int length, int fireRange, int defendRange) {
-        super(numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, width, length);
+        super(numberOfRequiredWorkers, numberOfRequiredEngineers, name, maxHp, width, length);
         this.fireRange = fireRange;
         this.defendRange = defendRange;
     }

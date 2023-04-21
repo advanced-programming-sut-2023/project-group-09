@@ -1,13 +1,11 @@
-package model.building.castlebuildings;
-
-import model.Government;
+package model.building.killingbuildings.castlebuildings;
 
 public class Gatehouse extends CastleBuilding {
     private int capacity;
 
     public Gatehouse(int numberOfRequiredWorkers, int numberOfRequiredEngineers,
-                     String type, int maxHp, int width, int length, int capacity) {
-        super(numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, width, length);
+                     String name, int maxHp, int width, int length, int capacity) {
+        super(numberOfRequiredWorkers, numberOfRequiredEngineers, name, maxHp, width, length);
         this.capacity = capacity;
     }
 

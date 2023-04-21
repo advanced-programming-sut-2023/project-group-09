@@ -1,41 +1,41 @@
 package model.building.storagebuildings;
 
-import model.building.Building;
 import model.Government;
+import model.building.Building;
 
-import javax.naming.InsufficientResourcesException;
 import java.util.HashMap;
 
 public class StorageBuilding extends Building {
-    private String itemType;
+    private final String itemType;
     private int capacity;
     private int amount;
-    private HashMap<String , Integer> items = new HashMap<>();
 
-    public StorageBuilding(int numberOfRequiredWorkers, int numberOfRequiredEngineers, String type,
+    public void setItems(HashMap<String, Integer> items) {
+        this.items = items;
+    }
+
+    private HashMap<String, Integer> items = new HashMap<>();
+
+    public StorageBuilding(int numberOfRequiredWorkers, int numberOfRequiredEngineers, String name,
                            int maxHp, int width, int length, String itemType, int capacity) {
-        super(numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, width, length);
+        super(numberOfRequiredWorkers, numberOfRequiredEngineers, name, maxHp, width, length);
         this.itemType = itemType;
         this.capacity = capacity;
     }
 
-    public String getItemType() {
-        return itemType;
-    }
 
     public HashMap<String, Integer> getItems() {
         return items;
     }
-    public void addAmount(int amountAdded){
+
+    public void addAmount(int amountAdded) {
         this.amount += amountAdded;
     }
+
     public int remained() {
         return this.capacity - this.amount;
     }
 
-    public void setItemType(String itemType) {
-        this.itemType = itemType;
-    }
 
     public int getCapacity() {
         return capacity;
@@ -44,15 +44,25 @@ public class StorageBuilding extends Building {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
+
     public void deleteStorage() {
         Government government = this.getGovernment();
         int amountOfAllRemoved = 0;
         for (String itemName : items.keySet()) {
             int amountRemoved = items.get(itemName);
             amountRemoved -= amountRemoved;
-            government.getProperties().put(itemName , government.getProperties().get(itemName) - amountRemoved);
+            government.getProperties().put(itemName, government.getProperties().get(itemName) - amountRemoved);
         }
         government.getStorages().get(itemType).addCapacity(-this.capacity);
         government.getStorages().get(itemType).addAmount(-amountOfAllRemoved);
+    }
+
+    public void addItem(String key, int value) {
+        int currentValue = items.get(key);
+        items.put(key, currentValue + value);
+    }
+
+    public int getItemAmount(String key) {
+        return items.get(key);
     }
 }

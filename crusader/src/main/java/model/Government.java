@@ -1,11 +1,9 @@
 package model;
 
-import com.sun.tools.javac.Main;
 import enumeration.dictionary.Colors;
 import enumeration.dictionary.Foodstuffs;
 import enumeration.dictionary.RawMaterials;
 import model.building.Building;
-import model.building.castlebuildings.CastleBuilding;
 import model.building.castlebuildings.MainCastle;
 import model.goods.Goods;
 import model.human.Human;
@@ -14,9 +12,9 @@ import model.human.military.EuropeanTroop;
 import model.buildinghandler.BuildingCounter;
 import model.buildinghandler.Storage;
 import model.human.military.Lord;
+import model.human.military.Military;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 
 public class Government {
@@ -34,11 +32,11 @@ public class Government {
         return storages;
     }
 
-    private HashMap<String , Integer> properties = new HashMap<>();
-    private HashMap<String , Storage> storages = new HashMap<>();
-    private HashMap<String , BuildingCounter> buildings = new HashMap<>();
-    private ArrayList<EuropeanTroop> europeanTroops = new ArrayList<>();
-    private ArrayList<ArabianMercenary> arabianMercenaries = new ArrayList<>();
+    private HashMap<String, Integer> properties = new HashMap<>();
+    private HashMap<String, Storage> storages = new HashMap<>();
+    private HashMap<String, BuildingCounter> buildings = new HashMap<>();
+
+    private ArrayList<Military> troops = new ArrayList<>();
     private ArrayList<Human> society = new ArrayList<>();
 
     private int foodRate;
@@ -73,26 +71,13 @@ public class Government {
         this.color = color;
     }
 
-    public void addAmountToProperties(String itemName , String itemType, int amount) {
-        this.getProperties().put(itemName , this.getProperties().get(itemName) + amount);
-        this.getStorages().get(itemType).addAmount(amount);
+    public void addAmountToProperties(String itemName, String itemType, int amount) {
+        this.getProperties().put(itemName, this.getProperties().get(itemName) + amount);
+        if(itemType != null){
+            this.getStorages().get(itemType).addAmount(amount);
+        }
     }
 
-    public ArrayList<EuropeanTroop> getEuropeanTroops() {
-        return europeanTroops;
-    }
-
-    public void setEuropeanTroops(ArrayList<EuropeanTroop> europeanTroops) {
-        this.europeanTroops = europeanTroops;
-    }
-
-    public ArrayList<ArabianMercenary> getArabianMercenaries() {
-        return arabianMercenaries;
-    }
-
-    public void setArabianMercenaries(ArrayList<ArabianMercenary> arabianMercenaries) {
-        this.arabianMercenaries = arabianMercenaries;
-    }
 
     public ArrayList<Human> getSociety() {
         return society;
@@ -146,14 +131,6 @@ public class Government {
         this.gold = gold;
     }
 
-    public int getWeaponCapacity() {
-        return weaponCapacity;
-    }
-
-    public void setWeaponCapacity(int weaponCapacity) {
-        this.weaponCapacity = weaponCapacity;
-    }
-
     public int getPopulation() {
         return population;
     }
@@ -194,9 +171,16 @@ public class Government {
         this.color = color;
     }
 
-
     public void changePopulation() {
-
     }
+
+    public int getPopularity() {
+        return 0;
+    }
+
+    public int getPropertyAmount(String name){
+        return properties.get(name);
+    }
+
 
 }

@@ -14,10 +14,17 @@ public class Building {
     private ArrayList<Permission> activityPermissions;
     private HashMap<String, Integer> cost = new HashMap<>();
     private ArrayList<Human> requiredHumans = new ArrayList<>();
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    private int price = 0;
     private int numberOfRequiredWorkers;
     private int numberOfRequiredEngineers;
     private BuildingStates state;
 
+    private boolean shouldBeOne = false;
     private String type;
     private String name;
 
@@ -48,10 +55,10 @@ public class Building {
     private int width, length;
 
     public Building(int numberOfRequiredWorkers, int numberOfRequiredEngineers,
-                    String type, int maxHp, int width, int length) {
+                    String name, int maxHp, int width, int length) {
         this.numberOfRequiredWorkers = numberOfRequiredWorkers;
         this.numberOfRequiredEngineers = numberOfRequiredEngineers;
-        this.type = type;
+        this.name= name;
         this.maxHp = maxHp;
         this.hp = maxHp;
         this.width = width;
@@ -180,5 +187,13 @@ public class Building {
 
     public void setNumberOfRequiredEngineers(int numberOfRequiredEngineers) {
         this.numberOfRequiredEngineers = numberOfRequiredEngineers;
+    }
+
+    public void enableShouldBeOne(){
+        shouldBeOne  = true;
+    }
+
+    public void addCost(String key,int value){
+        cost.put(key,value);
     }
 }

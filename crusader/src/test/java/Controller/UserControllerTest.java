@@ -1,4 +1,4 @@
-package controller;
+package Controller;
 
 import controller.Application;
 import controller.DBController;

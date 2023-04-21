@@ -7,8 +7,8 @@ public class KillingPit extends Building {
     private int damage;
 
     public KillingPit(int numberOfRequiredWorkers, int numberOfRequiredEngineers,
-                      String type, int maxHp, int width, int length, int damage) {
-        super(numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, width, length);
+                      String name, int maxHp, int width, int length, int damage) {
+        super(numberOfRequiredWorkers, numberOfRequiredEngineers, name, maxHp, width, length);
         this.damage = damage;
     }
 

@@ -5,7 +5,7 @@ import enumeration.DefenseRating;
 import enumeration.HumanStates;
 import model.Government;
 
-public abstract class Human {
+public abstract class Human implements Cloneable{
     private Government government = null;
     private int speed;
     private int x, y;
@@ -75,5 +75,10 @@ public abstract class Human {
 
     public void setDefenseRating(int defenseRating) {
         this.defenseRating = defenseRating;
+    }
+
+    @Override
+    public Human clone() throws CloneNotSupportedException {
+        return (Human) super.clone();
     }
 }

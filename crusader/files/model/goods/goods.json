@@ -1,6 +1,7 @@
 {
   "bread": {
     "name": "bread",
+    "nameOfStorage": "granary",
     "type": "food",
     "required": {
       "flour": 1
@@ -9,6 +10,7 @@
   },
   "leatherArmour": {
     "name": "leatherArmour",
+    "nameOfStorage": "armourer",
     "type": "weapon",
     "required": {
       "cow": 1
@@ -17,6 +19,7 @@
   },
   "metalArmour": {
     "name": "metalArmour",
+    "nameOfStorage": "armourer",
     "type": "weapon",
     "required": {
       "iron": 1
@@ -25,6 +28,7 @@
   },
   "crossBow": {
     "name": "crossbow",
+    "nameOfStorage": "armourer",
     "type": "weapon",
     "required": {
       "wood": 3
@@ -33,6 +37,7 @@
   },
   "mace": {
     "name": "mace",
+    "nameOfStorage": "armourer",
     "type": "weapon",
     "required": {
       "iron": 1
@@ -41,6 +46,7 @@
   },
   "pike": {
     "name": "pike",
+    "nameOfStorage": "armourer",
     "type": "weapon",
     "required": {
       "wood": 2
@@ -49,6 +55,7 @@
   },
   "bow": {
     "name": "bow",
+    "nameOfStorage": "armourer",
     "type": "weapon",
     "required": {
       "wood": 2
@@ -57,6 +64,7 @@
   },
   "cheese": {
     "name": "cheese",
+    "nameOfStorage": "granary",
     "type": "food",
     "required": {
       "cow": 1
@@ -65,18 +73,23 @@
   },
   "stone": {
     "name": "stone",
+    "nameOfStorage": "stockPile",
     "type": "resource",
-    "required": {},
+    "required": {
+      "oxTether": 1
+    },
     "price": 70
   },
   "apple": {
     "name": "apple",
+    "nameOfStorage": "granary",
     "type": "food",
     "required": {},
     "price": 40
   },
   "spear": {
     "name": "spear",
+    "nameOfStorage": "armourer",
     "type": "weapon",
     "required": {
       "wood": 1
@@ -85,6 +98,7 @@
   },
   "sword": {
     "name": "sword",
+    "nameOfStorage": "armourer",
     "type": "weapon",
     "required": {
       "iron": 1
@@ -93,7 +107,8 @@
   },
   "flour": {
     "name": "flour",
-    "type": "food",
+    "nameOfStorage": "stockPile",
+    "type": "resource",
     "required": {
       "wheat": 1
     },
@@ -101,6 +116,7 @@
   },
   "meat": {
     "name": "meat",
+    "nameOfStorage": "granary",
     "type": "food",
     "required": {
       "cow": 1
@@ -109,40 +125,46 @@
   },
   "iron": {
     "name": "iron",
+    "nameOfStorage": "stockPile",
     "type": "resource",
     "required": {},
     "price": 225
   },
+  "wood": {
+    "name": "wood",
+    "nameOfStorage": "stockPile",
+    "type": "resource",
+    "required": {},
+    "price": 20
+  },
   "wheat": {
     "name": "wheat",
-    "type": "food",
+    "nameOfStorage": "stockPile",
+    "type": "resource",
     "required": {},
     "price": 115
   },
   "hops": {
     "name": "hops",
-    "type": "food",
+    "nameOfStorage": "stockPile",
+    "type": "resource",
     "required": {},
     "price": 75
   },
-  "wood": {
-    "name": "wood",
+  "pitch": {
+    "name": "pitch",
+    "nameOfStorage": "stockPile",
     "type": "resource",
     "required": {},
-    "price": 20
+    "price": 100
   },
   "ale": {
     "name": "ale",
-    "type": "food",
+    "nameOfStorage": "stockPile",
+    "type": "resource",
     "required": {
       "hops": 1
     },
-    "price": 100
-  },
-  "pitch": {
-    "name": "pitch",
-    "type": "resource",
-    "required": {},
     "price": 100
   }
 }

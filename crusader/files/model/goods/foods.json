@@ -1,56 +1,32 @@
 {
   "apple": {
     "name": "apple",
+    "nameOfStorage": "granary",
     "type": "food",
     "required": {},
     "price": 40
   },
   "bread": {
     "name": "bread",
+    "nameOfStorage": "granary",
     "type": "food",
     "required": {
       "flour": 1
     },
     "price": 40
   },
-  "flour": {
-    "name": "flour",
-    "type": "food",
-    "required": {
-      "wheat": 1
-    },
-    "price": 160
-  },
   "meat": {
     "name": "meat",
+    "nameOfStorage": "granary",
     "type": "food",
     "required": {
       "cow": 1
     },
     "price": 40
   },
-  "wheat": {
-    "name": "wheat",
-    "type": "food",
-    "required": {},
-    "price": 115
-  },
-  "hops": {
-    "name": "hops",
-    "type": "food",
-    "required": {},
-    "price": 75
-  },
-  "ale": {
-    "name": "ale",
-    "type": "food",
-    "required": {
-      "hops": 1
-    },
-    "price": 100
-  },
   "cheese": {
     "name": "cheese",
+    "nameOfStorage": "granary",
     "type": "food",
     "required": {
       "cow": 1
