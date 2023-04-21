@@ -10,8 +10,11 @@ public class ToolProducer extends ProducerBuilding {
     private ArrayList<AttackingAndDefendingTool> tool;
 
     public ToolProducer(int numberOfRequiredWorkers, int numberOfRequiredEngineers, String type,
-                        int maxHp, int width, int length) {
-        super(numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, width, length);
+                        int maxHp, int width, int length, int rate, String nameOfStorage, String itemType,
+                        String itemName, ArrayList<AttackingAndDefendingTool> tool) {
+        super(numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, width, length,
+                rate, nameOfStorage, itemType, itemName);
+        this.tool = tool;
     }
 
     public ArrayList<AttackingAndDefendingTool> getTool() {

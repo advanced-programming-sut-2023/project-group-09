@@ -9,10 +9,16 @@ public class ProductProducer extends model.building.producerbuildings.ProducerBu
     private ArrayList<String> primaryRequired = new ArrayList<>();
     private ArrayList<String> buildingRequired = new ArrayList<>();
 
-    public ProductProducer(int numberOfRequiredWorkers, int numberOfRequiredEngineers, String type,
-                           int maxHp, int width, int length, String productType) {
-        super(numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, width, length);
+    public ProductProducer(int numberOfRequiredWorkers, int numberOfRequiredEngineers,
+                           String type, int maxHp, int width, int length, int rate,
+                           String nameOfStorage, String itemType, String itemName,
+                           String productType, ArrayList<String> primaryRequired,
+                           ArrayList<String> buildingRequired) {
+        super(numberOfRequiredWorkers, numberOfRequiredEngineers, type,
+                maxHp, width, length, rate, nameOfStorage, itemType, itemName);
         this.productType = productType;
+        this.primaryRequired = primaryRequired;
+        this.buildingRequired = buildingRequired;
     }
 
     public String getProductType() {

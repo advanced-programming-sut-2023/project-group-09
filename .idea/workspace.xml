@@ -4,16 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="Humans are added. (final)">
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="stay logged in.">
+      <change afterPath="$PROJECT_DIR$/crusader/src/main/java/model/buildinghandler/BuildingCounter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crusader/src/main/java/model/buildinghandler/Storage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/files/user/currentUser.json" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/files/user/currentUser.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/files/user/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/files/user/users.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/enumeration/Paths.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/enumeration/Paths.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/view/LoginMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/view/LoginMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/view/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/view/MainMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/view/PrimaryMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/view/PrimaryMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameBuildings.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameBuildings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/Government.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/Government.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/Building.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/Building.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/producerbuildings/MilitaryProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/producerbuildings/MilitaryProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/producerbuildings/PrimaryProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/producerbuildings/PrimaryProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/producerbuildings/ProducerBuilding.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/producerbuildings/ProducerBuilding.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/producerbuildings/ProductProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/producerbuildings/ProductProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/producerbuildings/ToolProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/producerbuildings/ToolProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/storagebuildings/StorageBuilding.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/storagebuildings/StorageBuilding.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +49,7 @@
     </option>
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2OeZJGtSER9mrxhoyWb8D0vXmSP" />
   <component name="ProjectViewState">
@@ -64,6 +67,9 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="model" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Sharif\Term2\AP\Project\Project-Phase-1\crusader\src\test\java\controller" />
     </key>
@@ -164,7 +170,9 @@
       <workItem from="1681922940573" duration="1143000" />
       <workItem from="1681937070375" duration="893000" />
       <workItem from="1681941196344" duration="7452000" />
-      <workItem from="1681984358797" duration="15889000" />
+      <workItem from="1681984358797" duration="16524000" />
+      <workItem from="1682023951191" duration="511000" />
+      <workItem from="1682056344653" duration="6068000" />
     </task>
     <task id="LOCAL-00001" summary="...">
       <created>1681925358549</created>
@@ -222,7 +230,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682002807377</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="stay logged in.">
+      <created>1682021001755</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1682021001755</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -248,7 +263,8 @@
     <MESSAGE value="Foods are added." />
     <MESSAGE value="Humans are added." />
     <MESSAGE value="Humans are added. (final)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Humans are added. (final)" />
+    <MESSAGE value="stay logged in." />
+    <option name="LAST_COMMIT_MESSAGE" value="stay logged in." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Project_Phase_1$UserControllerTest.ic" NAME="UserControllerTest Coverage Results" MODIFIED="1681942420279" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
