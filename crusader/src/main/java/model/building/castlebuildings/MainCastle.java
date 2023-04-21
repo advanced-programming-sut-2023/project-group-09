@@ -9,6 +9,7 @@ public class MainCastle extends CastleBuilding {
 
     public MainCastle(int numberOfRequiredWorkers, int numberOfRequiredEngineers, String type, int maxHp, int width, int length) {
         super(numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, width, length);
+        this.capacity = 10;
     }
 
     public void taxDistribution() {
