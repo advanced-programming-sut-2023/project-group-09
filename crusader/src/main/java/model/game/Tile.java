@@ -7,6 +7,7 @@ import model.human.Human;
 import java.util.ArrayList;
 
 public class Tile {
+    private boolean isMoat;
     private Textures texture;
     private Building building = null;
     private ArrayList<Human> humans = new ArrayList<>();
@@ -37,5 +38,13 @@ public class Tile {
 
     public void setHuman(ArrayList<Human> human) {
         this.humans = human;
+    }
+
+    public boolean isMoat() {
+        return isMoat;
+    }
+
+    public void setMoat(boolean moat) {
+        isMoat = moat;
     }
 }

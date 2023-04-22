@@ -10,7 +10,9 @@ import java.util.ArrayList;
 
 public class AttackingAndDefendingTool {
     private Government government = null;
-    private int x, y;
+    private int width, length;
+    private int startX, startY;
+    private int endX, endY;
     private int numberOfRequiredEngineers;
     private int speed;
     private ArrayList<Permission> permissions = new ArrayList<>();
@@ -18,11 +20,13 @@ public class AttackingAndDefendingTool {
     private int shootingRange;
     private int damage;
 
-    public AttackingAndDefendingTool(int numberOfRequiredEngineers, int speed, int shootingRange, int damage) {
+    public AttackingAndDefendingTool(int numberOfRequiredEngineers, int speed, int shootingRange, int damage, int width, int length) {
         this.numberOfRequiredEngineers = numberOfRequiredEngineers;
         this.speed = speed;
         this.shootingRange = shootingRange;
         this.damage = damage;
+        this.width = width;
+        this.length = length;
     }
 
     public Government getGovernment() {
@@ -33,20 +37,60 @@ public class AttackingAndDefendingTool {
         this.government = government;
     }
 
-    public int getX() {
-        return x;
+    public int getWidth() {
+        return width;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setWidth(int width) {
+        this.width = width;
     }
 
-    public int getY() {
-        return y;
+    public int getLength() {
+        return length;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public int getStartX() {
+        return startX;
+    }
+
+    public void setStartX(int startX) {
+        this.startX = startX;
+    }
+
+    public int getStartY() {
+        return startY;
+    }
+
+    public void setStartY(int startY) {
+        this.startY = startY;
+    }
+
+    public int getEndX() {
+        return endX;
+    }
+
+    public void setEndX(int endX) {
+        this.endX = endX;
+    }
+
+    public int getEndY() {
+        return endY;
+    }
+
+    public void setEndY(int endY) {
+        this.endY = endY;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 
     public int getNumberOfRequiredEngineers() {
