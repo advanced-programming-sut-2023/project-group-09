@@ -4,7 +4,20 @@ import enumeration.AttackRating;
 import enumeration.Speed;
 import model.tools.AttackingAndDefendingTool;
 
+import java.util.HashMap;
+
 public class GameTools {
+    public static HashMap<String, AttackingAndDefendingTool> tools = new HashMap<>();
+
+    public static void createTools() {
+        createTrebuchet();
+        createSiegeTower();
+        createFireBallista();
+        createCatapult();
+        createBatteringRam();
+        createPortableShield();
+    }
+
     public static void createPortableShield() {
         int speed = Speed.VERY_FAST.getRate();
         int damage = AttackRating.NONE.getRate();

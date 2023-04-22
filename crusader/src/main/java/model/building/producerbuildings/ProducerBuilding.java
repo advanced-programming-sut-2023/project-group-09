@@ -97,8 +97,4 @@ public class ProducerBuilding extends Building {
     public void enableHasSpecialTexture(){
         hasSpecialTexture = true;
     }
-
-    public void addTexture(Textures texture){
-        suitableTextures.add(texture);
-    }
 }
