@@ -556,22 +556,7 @@ public class UserController {
     }
 
     public static String convertPasswordToHash(String password) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            // compute the hash of the input string
-            byte[] hash = md.digest(password.getBytes());
-
-            // convert the hash to a hexadecimal string
-            StringBuilder hexString = new StringBuilder();
-            for (byte b : hash) {
-                hexString.append(String.format("%02x", b));
-            }
-            return hexString.toString();
-        } catch (NoSuchAlgorithmException e) {
-            System.out.println("An error occurred.[hashing password]");
-            e.printStackTrace();
-        }
-        return "";
+        return org.apache.commons.codec.digest.DigestUtils.sha256Hex(password);
     }
 
 
