@@ -15,7 +15,16 @@ public class Tower extends CastleBuilding {
 
     private int fireRange;
     private int defendRange;
-    private String typeOfTower;
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    private int capacity;
     private boolean canKeepRidingEquipment;
 
     public boolean isCanKeepRidingEquipment() {
@@ -27,10 +36,11 @@ public class Tower extends CastleBuilding {
     }
 
     public Tower(int numberOfRequiredWorkers, int numberOfRequiredEngineers, String name, int maxHp,
-                 int width, int length, int fireRange, int defendRange) {
+                 int width, int length, int fireRange, int defendRange , int capacity) {
         super(numberOfRequiredWorkers, numberOfRequiredEngineers, name, maxHp, width, length);
         this.fireRange = fireRange;
         this.defendRange = defendRange;
+        this.capacity = capacity;
     }
 
     public int getFireRange() {
@@ -47,5 +57,9 @@ public class Tower extends CastleBuilding {
 
     public void setDefendRange(int defendRange) {
         this.defendRange = defendRange;
+    }
+
+    public void attackTower() {
+        // TODO: this method will attack all enemies who are in the range of defense and attack
     }
 }

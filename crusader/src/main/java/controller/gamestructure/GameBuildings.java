@@ -2,6 +2,10 @@ package controller.gamestructure;
 
 import enumeration.Textures;
 import model.building.Building;
+import model.building.castlebuildings.Gatehouse;
+import model.building.castlebuildings.MainCastle;
+import model.building.castlebuildings.Tower;
+import model.building.castlebuildings.Wall;
 import model.building.producerbuildings.Barrack;
 import model.building.producerbuildings.ProducerBuilding;
 import model.building.producerbuildings.Quarry;
@@ -9,11 +13,13 @@ import model.building.producerbuildings.WeaponProducer;
 import model.building.storagebuildings.StorageBuilding;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class GameBuildings {
     public static HashMap<String, Building> buildings = new HashMap<>();
     public static HashMap<String, Building> producerBuildings = new HashMap<>();
     public static HashMap<String,Building> storageBuildings = new HashMap<>();
+    public static HashMap<String , Building> castleBuildings = new HashMap<>();
 
     public static void createBuildings(){
         createShop();
@@ -58,50 +64,119 @@ public class GameBuildings {
         createStoneWall();
         createCrenulatedWall();
         createStairs();
-        create
+        createLookoutTower();
+        createPerimeterTurret();
+        createDefenseTurret();
+        createSquareTower();
+        createRoundTower();
     }
 
     public static void createMainCastle() {
-
+        MainCastle mainCastle = new MainCastle(0 ,0 ,
+                "castleBuildings", 0 , 18 , 12);
+        // if one object of this created, please call setLord() and setTaxRate() for its government.
+        castleBuildings.put("mainCastle" , mainCastle);
+        buildings.put("mainCastle", mainCastle);
     }
 
     public static void createLowWall() {
-
+        Wall lowWall = new Wall(0, 0,
+        "lowWall", 0, 1, 1, 3);
+        lowWall.addCost("stone" , 1);
+        castleBuildings.put("lowWall", lowWall);
+        buildings.put("lowWall" , lowWall);
     }
     public static void createStoneWall() {
-
+        Wall stoneWall = new Wall(0, 0,
+                "stoneWall", 0, 1, 1, 6);
+        stoneWall.addCost("stone" , 1);
+        castleBuildings.put("stoneWall", stoneWall);
+        buildings.put("stoneWall" , stoneWall);
     }
     public static void createCrenulatedWall() {
-
+        Wall crenulatedWall = new Wall(0, 0,
+                "crenulatedWall", 0, 1, 1, 8);
+        crenulatedWall.addCost("stone" , 1);
+        // this wall must be next to a stoneWall --- using method in the class
+        castleBuildings.put("crenulatedWall", crenulatedWall);
+        buildings.put("crenulatedWall" , crenulatedWall);
     }
     public static void createStairs() {
+        Wall stairs = new Wall(0 , 0 , "stairs" ,
+                0, 0 , 1 , 0); // height of this building varies where it is.
+        // use methods in this class to choosing the suitable height
+        stairs.addCost("stone" , 1);
+        castleBuildings.put("stairs" , stairs);
+        buildings.put("stairs" , stairs);
     }
 
-
-
-
     public static void createSmallStoneGatehouse() {
+        Gatehouse smallStoneGatehouse = new Gatehouse(0 , 0 ,
+                "smallStoneGatehouse" , 1000 , 5 , 5 , 8);
+        smallStoneGatehouse.addCost("stone" , 10);
+        castleBuildings.put("smallStoneGatehouse" , smallStoneGatehouse);
+        buildings.put("smallStoneGatehouse" , smallStoneGatehouse);
     }
 
     public static void createBigStoneGatehouse() {
+        Gatehouse bigStoneGatehouse = new Gatehouse(0 , 0 ,
+                "bigStoneGatehouse" , 2000 , 7 , 7 , 10);
+        bigStoneGatehouse.addCost("stone" , 20);
+        castleBuildings.put("bigStoneGatehouse" , bigStoneGatehouse);
+        buildings.put("bigStoneGatehouse" , bigStoneGatehouse);
     }
 
     public static void createDrawBridge() {
+        Gatehouse drawBridge = new Gatehouse(0 , 0 ,
+                "drawBridge" , 0 , 4 , 4 , 0);
+        drawBridge.addCost("wood" , 10);
+        castleBuildings.put("drawBridge" , drawBridge);
+        buildings.put("drawBridge" ,drawBridge);
     }
 
     public static void createLookoutTower() {
+        Tower lookoutTower = new Tower(0 , 0 , "lookoutTower",
+                250 , 3 , 3 , 60 , 60 , 5);
+        lookoutTower.addCost("stone" , 10);
+        lookoutTower.setCanKeepRidingEquipment(false);
+        castleBuildings.put("lookoutTower" , lookoutTower);
+        buildings.put("lookoutTower" , lookoutTower);
     }
 
-    public static void createPerimeterTower() {
+    public static void createPerimeterTurret() {
+        Tower perimeterTurret = new Tower(0 , 0 , "perimeterTurret",
+                1000 , 5 , 5 , 40 , 40 , 10);
+        perimeterTurret.addCost("stone" , 10);
+        perimeterTurret.setCanKeepRidingEquipment(false);
+        castleBuildings.put("perimeterTurret" , perimeterTurret);
+        buildings.put("perimeterTurret" , perimeterTurret);
     }
 
-    public static void createTurret() {
+    public static void createDefenseTurret() {
+        Tower defenseTurret = new Tower(0 , 0 , "defenseTurret",
+                1200 , 5 , 5 , 40 , 40 , 10);
+        defenseTurret.addCost("stone" , 15);
+        defenseTurret.setCanKeepRidingEquipment(false);
+        castleBuildings.put("defenseTurret" , defenseTurret);
+        buildings.put("defenseTurret" , defenseTurret);
     }
 
     public static void createRoundTower() {
+        Tower roundTower = new Tower(0 , 0 , "roundTower",
+                2000 , 10 , 10 , 50 , 50 , 20);
+        roundTower.addCost("stone" , 40);
+        roundTower.setCanKeepRidingEquipment(true);
+        castleBuildings.put("roundTower" , roundTower);
+        buildings.put("roundTower" , roundTower);
     }
 
     public static void createSquareTower() {
+        Tower squareTower = new Tower(0 , 0 , "squareTower",
+                1600 , 10 , 10 , 50 , 50 , 20);
+        squareTower.addCost("stone" , 35);
+        squareTower.setCanKeepRidingEquipment(true);
+        castleBuildings.put("squareTower" , squareTower);
+        buildings.put("squareTower" , squareTower);
     }
 
     //=====================
