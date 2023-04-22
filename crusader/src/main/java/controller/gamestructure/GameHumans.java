@@ -184,6 +184,7 @@ public class GameHumans {
         int attackRating = AttackRating.MEDIUM.getRate();
         ArabianMercenary assassin = new ArabianMercenary(speed, defenseRating, 1, attackRating, 60);
         militaries.put("assassin",assassin);
+        assassin.enableInvisible();
     }
 
     public static void createHorseArcher() {

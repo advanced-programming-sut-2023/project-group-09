@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="Texture passable conditions ...">
-      <change afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/MainCastle.java" afterDir="false" />
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="Main castle added.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/Government.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/Government.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/CastleBuilding.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/CastleBuilding.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/Gatehouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/Gatehouse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/MainCastle.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/MainCastle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/Wall.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/Wall.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,7 +168,7 @@
       <workItem from="1682056344653" duration="7886000" />
       <workItem from="1682067403104" duration="102000" />
       <workItem from="1682073593485" duration="1034000" />
-      <workItem from="1682087981704" duration="6180000" />
+      <workItem from="1682087981704" duration="14348000" />
     </task>
     <task id="LOCAL-00001" summary="...">
       <created>1681925358549</created>
@@ -245,7 +247,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682063924968</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Main castle added.">
+      <created>1682103062158</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1682103062158</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -274,7 +283,8 @@
     <MESSAGE value="stay logged in." />
     <MESSAGE value="Storage and producer buildings..." />
     <MESSAGE value="Texture passable conditions ..." />
-    <option name="LAST_COMMIT_MESSAGE" value="Texture passable conditions ..." />
+    <MESSAGE value="Main castle added." />
+    <option name="LAST_COMMIT_MESSAGE" value="Main castle added." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Project_Phase_1$UserControllerTest.ic" NAME="UserControllerTest Coverage Results" MODIFIED="1681942420279" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

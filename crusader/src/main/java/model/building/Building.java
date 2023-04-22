@@ -1,9 +1,11 @@
 package model.building;
 
 import enumeration.BuildingStates;
+import enumeration.Textures;
 import model.Government;
 import model.human.Human;
 import model.Permission;
+import model.human.civilian.Civilian;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +25,8 @@ public class Building {
     private int numberOfRequiredWorkers;
     private int numberOfRequiredEngineers;
     private BuildingStates state;
+    private ArrayList<Textures> suitableTextures = new ArrayList<>();
+    protected boolean isInvisible = false;
 
     private boolean shouldBeOne = false;
     private String type;
