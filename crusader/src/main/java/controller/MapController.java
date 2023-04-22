@@ -65,7 +65,7 @@ public class MapController {
         details += "texture type: " + tile.getTexture().getTextureName();
 
         if (tile.getBuilding() != null) {
-            details += "building " + tile.getBuilding().getType() + " from government " + tile.getBuilding().getGovernment() +
+            details += "building " + tile.getBuilding().getName() + " from government " + tile.getBuilding().getGovernment() +
                     " | HP: " + tile.getBuilding().getHp() + "/" + tile.getBuilding().getMaxHp() + "\n";
         } else details += "there is no building on this tile\n";
 

@@ -15,6 +15,7 @@ public class Barrack extends Building{
 
     private final ArrayList<String> units = new ArrayList<>();
 
+    private int BuildingNumber = 4;
 
     public Barrack(int numberOfRequiredWorkers, int numberOfRequiredEngineers, String name, int maxHp, int width, int length) {
         super(numberOfRequiredWorkers,numberOfRequiredEngineers, name,maxHp, width, length);
@@ -39,6 +40,14 @@ public class Barrack extends Building{
             System.out.println("An error occurred.[make unit]");
         }
         return null;
+    }
+
+    public void setBuildingNumber(int buildingNumber) {
+        BuildingNumber = buildingNumber;
+    }
+
+    public int getBuildingNumber() {
+        return BuildingNumber;
     }
 
     public boolean checkRequired(String name){

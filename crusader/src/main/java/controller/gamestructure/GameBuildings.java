@@ -28,6 +28,7 @@ public class GameBuildings {
         createProducerBuildings();
         createStorageBuilding();
         createCastleBuildings();
+        createBarrack();
     }
 
     public static void createProducerBuildings(){
@@ -71,6 +72,12 @@ public class GameBuildings {
         createRoundTower();
     }
 
+    public static void createBarracks(){
+        createBarrack();
+        createEngineerGuild();
+        createTunnelersGuild();
+        createMercenaryPost();
+    }
     public static void createMainCastle() {
         MainCastle mainCastle = new MainCastle(0 ,0 ,
                 "castleBuildings", 0 , 18 , 12);
@@ -199,7 +206,7 @@ public class GameBuildings {
         barrack.addUnit("maceman");
         barrack.addUnit("swordsman");
         barrack.addUnit("knight");
-
+        barrack.setBuildingNumber(5);
         barrack.addCost("stone",15);
         buildings.put("barrack",barrack);
     }
@@ -215,7 +222,7 @@ public class GameBuildings {
         barrack.addUnit("horseArcher");
         barrack.addUnit("arabianSwordsman");
         barrack.addUnit("fireThrower");
-
+        barrack.setBuildingNumber(5);
         barrack.addCost("wood",10);
         buildings.put("mercenaryPost",barrack);
     }
@@ -319,7 +326,7 @@ public class GameBuildings {
 
         barrack.addUnit("blackmonk");
         barrack.changeShouldBeOne();
-
+        barrack.setBuildingNumber(15);
         barrack.setPrice(1000);
         buildings.put("cathedral",barrack);
     }
@@ -330,7 +337,7 @@ public class GameBuildings {
                 40,4,4,1,"armoury","weapon","metalArmour");
 
         producerBuilding.addWeapon("metalArmour");
-
+        producerBuilding.addWeapon("leatherArmour");
 
         producerBuilding.addCost("wood",20);
         producerBuilding.setPrice(100);

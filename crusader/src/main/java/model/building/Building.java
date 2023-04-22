@@ -10,7 +10,7 @@ import model.human.civilian.Civilian;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Building {
+public class Building implements Cloneable{
     private Government government = null;
     private ArrayList<Permission> landPermissions;
     private ArrayList<Permission> activityPermissions;
@@ -25,8 +25,8 @@ public class Building {
     private int numberOfRequiredWorkers;
     private int numberOfRequiredEngineers;
     private BuildingStates state;
-    protected boolean isInvisible = false;
-
+    private boolean hasSpecialTexture = false;
+    private ArrayList<Textures> suitableTextures = new ArrayList<>();
     private boolean shouldBeOne = false;
 
     private String name;
@@ -190,5 +190,16 @@ public class Building {
 
     public void addCost(String key,int value){
         cost.put(key,value);
+    }
+    public void enableHasSpecialTexture(){
+        hasSpecialTexture = true;
+    }
+
+    public void addTexture(Textures texture){
+        suitableTextures.add(texture);
+    }
+    @Override
+    public Building clone() throws CloneNotSupportedException {
+        return (Building) super.clone();
     }
 }

@@ -6,7 +6,7 @@ import model.human.Human;
 
 import java.util.ArrayList;
 
-public abstract class Military extends Human {
+public abstract class Military extends Human implements Cloneable{
     private int attackRating;
     private String militaryState;
     private boolean usesHorse = false;
@@ -85,5 +85,11 @@ public abstract class Military extends Human {
 
     public void setMilitaryState(String militaryState) {
         this.militaryState = militaryState;
+    }
+
+    @Override
+
+    public Military clone() throws CloneNotSupportedException {
+        return (Military) super.clone();
     }
 }

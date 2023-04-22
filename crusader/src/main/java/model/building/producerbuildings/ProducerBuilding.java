@@ -10,14 +10,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ProducerBuilding extends Building {
-    private ArrayList<Textures> suitableTextures = new ArrayList<>();
+
 
     private final String nameOfStorage;
     private String itemName;
     private final String itemType;
     private final int rate;
-
-    private boolean hasSpecialTexture = false;
 
     private int countOfRoundsToProduce = 0;
 
@@ -94,11 +92,5 @@ public class ProducerBuilding extends Building {
     public void computeActionTurn(){
         //-----
     }
-    public void enableHasSpecialTexture(){
-        hasSpecialTexture = true;
-    }
 
-    public void addTexture(Textures texture){
-        suitableTextures.add(texture);
-    }
 }
