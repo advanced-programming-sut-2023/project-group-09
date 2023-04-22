@@ -12,9 +12,10 @@ public class Moat {
 
     public void addTile(int x, int y) {
         Tile tile = GameController.getGame().getMap().getTile(x, y);
-        if (tile.getBuilding() == null && (tile.getTexture().equals(Textures.EARTH) || tile.getTexture().equals(Textures.EARTH_AND_SAND)
-                || tile.getTexture().equals(Textures.GRASS) || tile.getTexture().equals(Textures.THICK_GRASS)
-                || tile.getTexture().equals(Textures.OASIS_GRASS) || tile.getTexture().equals(Textures.BEACH)))
+        if (tile.getBuilding() == null && tile.isMoat() == false && tile.isPit() == false &&
+                (tile.getTexture().equals(Textures.EARTH) || tile.getTexture().equals(Textures.EARTH_AND_SAND)
+                        || tile.getTexture().equals(Textures.GRASS) || tile.getTexture().equals(Textures.THICK_GRASS)
+                        || tile.getTexture().equals(Textures.OASIS_GRASS) || tile.getTexture().equals(Textures.BEACH)))
             tilesToBeMoat.add(tile);
     }
 
