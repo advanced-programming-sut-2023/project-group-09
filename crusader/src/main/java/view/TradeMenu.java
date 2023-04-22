@@ -1,11 +1,9 @@
 package view;
 
-import controller.GameController;
 import controller.TradeController;
 import controller.ViewController;
 import enumeration.answers.Answers;
 import enumeration.commands.Commands;
-import enumeration.commands.GameMenuCommands;
 import enumeration.commands.TradeMenuCommands;
 
 import java.util.ArrayList;

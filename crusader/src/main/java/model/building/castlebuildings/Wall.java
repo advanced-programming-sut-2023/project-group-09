@@ -50,4 +50,27 @@ public class Wall extends CastleBuilding {
         }
         return height;
     }
+
+    public static boolean canDropCrenulatedWall(int x , int y) {
+        Map map = GameController.getGame().getMap();
+        if (map.getTile(x+1 , y).getBuilding() instanceof Wall) {
+            Wall wall = (Wall)map.getTile(x+1 , y).getBuilding();
+            return (wall.height == 6);
+        }
+        if (map.getTile(x , y+1).getBuilding() instanceof Wall) {
+            Wall wall = (Wall)map.getTile(x+1 , y).getBuilding();
+            return (wall.height == 6);
+
+        }
+        if (map.getTile(x-1 , y).getBuilding() instanceof Wall) {
+            Wall wall = (Wall)map.getTile(x+1 , y).getBuilding();
+            return (wall.height == 6);
+        }
+        if (map.getTile(x , y-1).getBuilding() instanceof Wall) {
+            Wall wall = (Wall)map.getTile(x+1 , y).getBuilding();
+            return (wall.height == 6);
+        }
+        return false;
+    }
+
 }

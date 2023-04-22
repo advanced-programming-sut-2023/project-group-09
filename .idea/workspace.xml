@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="Main castle added.">
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="castle buildings final change.">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_10.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/CastleBuilding.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/CastleBuilding.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/Gatehouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/Gatehouse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/MainCastle.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/MainCastle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/Wall.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/Wall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/StrongholdCrusader.iml" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/StrongholdCrusader.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,16 +48,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Sharif/Term2/AP/Project/Project-Phase-1&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/Sharif/Term2/AP/Project/Project-Phase-1",
+    "nodejs_package_manager_path": "npm"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="model" />
@@ -168,7 +167,13 @@
       <workItem from="1682056344653" duration="7886000" />
       <workItem from="1682067403104" duration="102000" />
       <workItem from="1682073593485" duration="1034000" />
-      <workItem from="1682087981704" duration="14348000" />
+      <workItem from="1682087981704" duration="15062000" />
+      <workItem from="1682116199375" duration="2705000" />
+      <workItem from="1682149028155" duration="14217000" />
+      <workItem from="1682174575839" duration="72000" />
+      <workItem from="1682174654488" duration="103000" />
+      <workItem from="1682174764146" duration="99000" />
+      <workItem from="1682180160196" duration="2463000" />
     </task>
     <task id="LOCAL-00001" summary="...">
       <created>1681925358549</created>
@@ -254,7 +259,35 @@
       <option name="project" value="LOCAL" />
       <updated>1682103062158</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Walls, Draw bridge and gatehouses are added.">
+      <created>1682115730401</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1682115730401</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Towers added.">
+      <created>1682165652089</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1682165652089</updated>
+    </task>
+    <task id="LOCAL-00015" summary="castle buildings changed.">
+      <created>1682168093012</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1682168093012</updated>
+    </task>
+    <task id="LOCAL-00016" summary="castle buildings final change.">
+      <created>1682172406877</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1682172406877</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -284,7 +317,11 @@
     <MESSAGE value="Storage and producer buildings..." />
     <MESSAGE value="Texture passable conditions ..." />
     <MESSAGE value="Main castle added." />
-    <option name="LAST_COMMIT_MESSAGE" value="Main castle added." />
+    <MESSAGE value="Walls, Draw bridge and gatehouses are added." />
+    <MESSAGE value="Towers added." />
+    <MESSAGE value="castle buildings changed." />
+    <MESSAGE value="castle buildings final change." />
+    <option name="LAST_COMMIT_MESSAGE" value="castle buildings final change." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Project_Phase_1$UserControllerTest.ic" NAME="UserControllerTest Coverage Results" MODIFIED="1681942420279" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

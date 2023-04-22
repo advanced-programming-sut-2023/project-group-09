@@ -3,6 +3,7 @@ package controller.gamestructure;
 import enumeration.AttackRating;
 import enumeration.DefenseRating;
 import enumeration.Speed;
+import model.human.Human;
 import model.human.military.ArabianMercenary;
 import model.human.military.EuropeanTroop;
 import model.human.military.Military;
@@ -10,11 +11,16 @@ import model.human.military.Military;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.regex.Matcher;
 
 public class GameHumans {
     public static HashMap<String, Military> militaries = new HashMap<>();
 
     public static void addHumans() {
+    }
+
+    public static Military getUnit(String name){
+        return militaries.get(name);
     }
 
     public static void addEuropeanTroops() {

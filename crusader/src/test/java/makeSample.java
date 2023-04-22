@@ -1,11 +1,3 @@
-import controller.Application;
-import controller.DBController;
-import controller.UserController;
-import controller.UserControllerTest;
-import model.User;
-
-import java.util.ArrayList;
-
 public class makeSample {
 //    public void makeSomeUser(){
 //        User user1 = new User("user1", UserController.convertPasswordToHash("MyPass#12"),"nickname1","user1@gmail.com","");

@@ -1,49 +1,104 @@
 package model.building.producerbuildings;
 
 import enumeration.Textures;
-import model.building.Building;
+import controller.GovernmentController;
 import model.Government;
+import model.building.Building;
 import model.building.storagebuildings.StorageBuilding;
-import model.human.civilian.Civilian;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
 
 public class ProducerBuilding extends Building {
-    private Civilian worker;
+    private ArrayList<Textures> suitableTextures = new ArrayList<>();
 
-    private String nameOfStorage;
-    private ArrayList<String> itemNames = new ArrayList<>();
-    private String itemType;
-    private int rate;
+    private final String nameOfStorage;
+    private String itemName;
+    private final String itemType;
+    private final int rate;
+
+    private boolean hasSpecialTexture = false;
+
+    private int countOfRoundsToProduce = 0;
+
+
+    public void setRequired(HashMap<String, Integer> required) {
+        this.required = required;
+    }
+
+    private HashMap<String, Integer> required = new HashMap<>();
 
     public ProducerBuilding(int numberOfRequiredWorkers, int numberOfRequiredEngineers,
-                            String type, int maxHp, int width, int length, int rate, String nameOfStorage,
+                            String name, int maxHp, int width, int length, int rate, String nameOfStorage,
                             String itemType, String itemName) {
-        super(numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, width, length);
+        super(numberOfRequiredWorkers, numberOfRequiredEngineers, name, maxHp, width, length);
         this.rate = rate;
         this.nameOfStorage = nameOfStorage;
         this.itemType = itemType;
+        this.itemName = itemName;
     }
 
-    public void addItemName(String itemName) {
-        this.itemNames.add(itemName);
+    public void doAction(){
+        if (countOfRoundsToProduce == 0){
+            addProduct();
+            computeActionTurn();
+        }
+        countOfRoundsToProduce--;
     }
 
     public void addProduct() {
+        if (!hasRequired()) {
+            return;
+        }
+        consumeRequired();
         int amount = this.rate;
         Government government = this.getGovernment();
         ArrayList<Building> storages = government.getBuildings().get(this.nameOfStorage).getBuildings();
-        Iterator itr = storages.iterator();
-        while (itr.hasNext()) {
+        for (Building building : storages) {
             if (amount == 0) {
                 break;
             }
-            StorageBuilding storage = (StorageBuilding) itr.next();
+            StorageBuilding storage = (StorageBuilding) building;
             int saved = Math.min(amount, storage.remained());
             amount -= saved;
             storage.addAmount(saved);
+            storage.addItem(itemName, saved);
         }
-//        government.addAmountToProperties(this.itemName, this.itemType, this.rate - amount);
+        government.addAmountToProperties(this.itemName, this.itemType, this.rate - amount);
+    }
+
+    public void addRequired(String name, int amount) {
+        required.put(name, amount);
+    }
+
+    public void setItemName(String name) {itemName = name;}
+
+    public boolean hasRequired() {
+        Government government = this.getGovernment();
+        for (String product : required.keySet()) {
+            if (government.getPropertyAmount(product) < required.get(product)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void consumeRequired() {
+        Government government = this.getGovernment();
+        for (String product : required.keySet()) {
+            GovernmentController.consumeProduct(government, product, required.get(product));
+        }
+
+    }
+
+    public void computeActionTurn(){
+        //-----
+    }
+    public void enableHasSpecialTexture(){
+        hasSpecialTexture = true;
+    }
+
+    public void addTexture(Textures texture){
+        suitableTextures.add(texture);
     }
 }

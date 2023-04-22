@@ -1,6 +1,5 @@
 package enumeration.commands;
 
-import java.lang.reflect.Type;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

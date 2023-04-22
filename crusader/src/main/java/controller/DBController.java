@@ -165,8 +165,7 @@ public class DBController {
             Gson gson = new Gson();
             checkFileExist(Paths.EUROPEAN_TROOP_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.EUROPEAN_TROOP_PATH.getPath())));
-            HashMap<String, EuropeanTroop> europeanTroopHashMap= gson.fromJson(text, new TypeToken<HashMap<String, EuropeanTroop>>(){}.getType());
-            return europeanTroopHashMap;
+            return gson.fromJson(text, new TypeToken<HashMap<String, EuropeanTroop>>(){}.getType());
         } catch (IOException e) {
             System.out.println("An error occurred.[load humans]");
             e.printStackTrace();
@@ -179,8 +178,7 @@ public class DBController {
             Gson gson = new Gson();
             checkFileExist(Paths.ARABIAN_MERCENARY_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.ARABIAN_MERCENARY_PATH.getPath())));
-            HashMap<String, ArabianMercenary> arabianMercenaryHashMap= gson.fromJson(text, new TypeToken<HashMap<String, ArabianMercenary>>(){}.getType());
-            return arabianMercenaryHashMap;
+            return gson.fromJson(text, new TypeToken<HashMap<String, ArabianMercenary>>(){}.getType());
         } catch (IOException e) {
             System.out.println("An error occurred.[load humans]");
             e.printStackTrace();
