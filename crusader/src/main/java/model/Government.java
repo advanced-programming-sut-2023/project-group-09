@@ -49,7 +49,6 @@ public class Government {
     private int religionRate;
     private int taxRate;
     private int gold;
-    private int weaponCapacity;
     private int population, maxPopulation;
     private int castleX, castleY;
     private Colors color;

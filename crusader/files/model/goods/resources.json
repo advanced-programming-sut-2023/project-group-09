@@ -56,9 +56,6 @@
     "name": "stone",
     "nameOfStorage": "stockPile",
     "type": "resource",
-    "required": {
-      "oxTether": 1
-    },
     "price": 70
   }
 }

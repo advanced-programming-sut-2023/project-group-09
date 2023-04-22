@@ -1,6 +1,10 @@
 package model.building.producerbuildings;
 
+import controller.gamestructure.GameGoods;
+import model.goods.Goods;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class WeaponProducer extends ProducerBuilding{
 
@@ -17,8 +21,13 @@ public class WeaponProducer extends ProducerBuilding{
 
     public void changeItemName(String name){
         this.setItemName(name);
+        this.setRequired(getRequired(name));
     }
 
+    public HashMap<String, Integer> getRequired(String name){
+        Goods product = GameGoods.getProduct(name);
+        return product.getRequired();
+    }
     public ArrayList<String> getWeapons() {
         return weapons;
     }

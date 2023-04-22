@@ -193,8 +193,8 @@ public class Building {
         this.numberOfRequiredEngineers = numberOfRequiredEngineers;
     }
 
-    public void enableShouldBeOne(){
-        shouldBeOne  = true;
+    public void changeShouldBeOne(){
+        shouldBeOne  = !shouldBeOne;
     }
 
     public void addCost(String key,int value){

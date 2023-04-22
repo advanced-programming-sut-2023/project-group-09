@@ -5,7 +5,6 @@ import model.goods.Goods;
 public class GameResources extends GameGoods {
     protected static void createStone() {
         Goods resource = new Goods("stone" , "resource" ,"stockPile", 70);
-        resource.addRequired("oxTether", 1);
         GameGoods.goods.put("stone",resource);
         GameGoods.resources.put("stone",resource);
     }

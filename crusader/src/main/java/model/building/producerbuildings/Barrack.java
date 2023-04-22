@@ -18,7 +18,7 @@ public class Barrack extends Building{
 
     public Barrack(int numberOfRequiredWorkers, int numberOfRequiredEngineers, String name, int maxHp, int width, int length) {
         super(numberOfRequiredWorkers,numberOfRequiredEngineers, name,maxHp, width, length);
-        this.enableShouldBeOne();
+        this.changeShouldBeOne();
     }
 
     public ArrayList<String> getUnits() {

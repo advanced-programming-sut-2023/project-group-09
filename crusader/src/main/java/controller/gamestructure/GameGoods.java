@@ -21,7 +21,7 @@ public class GameGoods {
         }
         result.put("cow",0);
         result.put("horse",0);
-        result.put("ox tether",0);
+        result.put("oxTether",0);
         return result;
     }
 

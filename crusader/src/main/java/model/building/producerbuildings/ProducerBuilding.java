@@ -19,11 +19,14 @@ public class ProducerBuilding extends Building {
 
     private boolean hasSpecialTexture = false;
 
-    private Textures texture;
     private int countOfRoundsToProduce = 0;
 
 
-    private final HashMap<String, Integer> required = new HashMap<>();
+    public void setRequired(HashMap<String, Integer> required) {
+        this.required = required;
+    }
+
+    private HashMap<String, Integer> required = new HashMap<>();
 
     public ProducerBuilding(int numberOfRequiredWorkers, int numberOfRequiredEngineers,
                             String name, int maxHp, int width, int length, int rate, String nameOfStorage,
@@ -91,8 +94,11 @@ public class ProducerBuilding extends Building {
     public void computeActionTurn(){
         //-----
     }
-    public void enableHasSpecialTexture(Textures texture){
+    public void enableHasSpecialTexture(){
         hasSpecialTexture = true;
-        this.texture = texture;
+    }
+
+    public void addTexture(Textures texture){
+        suitableTextures.add(texture);
     }
 }
