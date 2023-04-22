@@ -1,9 +1,14 @@
 package model.building.producerbuildings;
 
+import enumeration.Textures;
+
 public class Quarry extends ProducerBuilding{
 
-    public Quarry(int numberOfRequiredWorkers, int numberOfRequiredEngineers, String name, int maxHp, int width, int length, int rate, String nameOfStorage, String itemType, String itemName) {
-        super(numberOfRequiredWorkers, numberOfRequiredEngineers, name, maxHp, width, length, rate, nameOfStorage, itemType, itemName);
+    public Quarry() {
+        super(3, 0, "quarry", 60, 6, 6, 12, "stockPile","resource","stone");
+        this.addCost("wood",20);
+        this.enableHasSpecialTexture();
+        this.addTexture(Textures.BOULDER);
     }
 
     @Override

@@ -269,10 +269,6 @@ public class GameBuildings {
         buildings.put("shop",building);
     }
 
-    public static void createOxTether() {
-
-    }
-
     public static void createPitchRig() {
         ProducerBuilding producerBuilding = new ProducerBuilding(1,0,"pitchRig",
                 40,3,3,5,"stockPile","resource","pitch");
@@ -285,16 +281,6 @@ public class GameBuildings {
 
         producerBuildings.put("pitchRig",producerBuilding);
         buildings.put("pitchRig",producerBuilding);
-    }
-
-    public static void createQuarry() {
-        Quarry producerBuilding = new Quarry(3,0,"quarry",
-                60,6,6,12,"stockPile","resource","stone");
-        producerBuilding.addCost("wood",20);
-        producerBuilding.enableHasSpecialTexture();
-        producerBuilding.addTexture(Textures.BOULDER);
-        producerBuildings.put("quarry",producerBuilding);
-        buildings.put("quarry",producerBuilding);
     }
 
     public static void createStockPile() {
@@ -475,7 +461,7 @@ public class GameBuildings {
 
     public static void createHopFarm() {
         ProducerBuilding producerBuilding = new ProducerBuilding(1,0,"hopFarm",
-                40,9,9,10,"stockPile","resource","hop");
+                40,9,9,5,"stockPile","resource","hop");
 
         producerBuilding.addCost("wood",15);
 
@@ -491,7 +477,7 @@ public class GameBuildings {
 
     public static void createHuntingPost() {
         ProducerBuilding producerBuilding = new ProducerBuilding(1,0,"huntingPost",
-                40,3,3,1,"granary","food","meat");
+                40,3,3,3,"granary","food","meat");
 
         producerBuilding.addCost("wood",5);
 
@@ -504,7 +490,7 @@ public class GameBuildings {
 
     public static void createWheatFarm() {
         ProducerBuilding producerBuilding = new ProducerBuilding(1,0,"wheatFarm",
-                40,9,9,10,"stockPile","resource","wheat");
+                40,9,9,5,"stockPile","resource","wheat");
 
         producerBuilding.addCost("wood",15);
 
@@ -532,11 +518,11 @@ public class GameBuildings {
 
     public static void createBrewery() {
         ProducerBuilding producerBuilding = new ProducerBuilding(1,0,"brewery",
-                40,4,4,10,"stockPile","resource","ale");
+                40,4,4,3,"stockPile","resource","ale");
 
         producerBuilding.addCost("wood",10);
 
-        producerBuilding.addRequired("hop",5);
+        producerBuilding.addRequired("hop",1);
         producerBuildings.put("wheatFarm",producerBuilding);
         buildings.put("wheatFarm",producerBuilding);
     }

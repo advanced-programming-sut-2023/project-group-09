@@ -25,11 +25,10 @@ public class Building {
     private int numberOfRequiredWorkers;
     private int numberOfRequiredEngineers;
     private BuildingStates state;
-    private ArrayList<Textures> suitableTextures = new ArrayList<>();
     protected boolean isInvisible = false;
 
     private boolean shouldBeOne = false;
-    private String type;
+
     private String name;
 
     public BuildingStates getState() {
@@ -119,14 +118,6 @@ public class Building {
 
     public void setCost(HashMap<String, Integer> cost) {
         this.cost = cost;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public int getHp() {
