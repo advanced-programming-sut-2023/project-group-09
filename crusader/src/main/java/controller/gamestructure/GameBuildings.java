@@ -50,8 +50,33 @@ public class GameBuildings {
     }
 
     public static void createCastleBuildings(){
+        createMainCastle();
+        createSmallStoneGatehouse();
+        createBigStoneGatehouse();
+        createDrawBridge();
+        createLowWall();
+        createStoneWall();
+        createCrenulatedWall();
+        createStairs();
+        create
+    }
+
+    public static void createMainCastle() {
 
     }
+
+    public static void createLowWall() {
+
+    }
+    public static void createStoneWall() {
+
+    }
+    public static void createCrenulatedWall() {
+
+    }
+    public static void createStairs() {
+    }
+
 
 
 
@@ -450,15 +475,4 @@ public class GameBuildings {
         buildings.put("granary",storageBuilding);
     }
 
-    public static void createShortWall() {
-    }
-
-    public static void createWall() {
-    }
-
-    public static void createLongWall() {
-    }
-
-    public static void createStairs() {
-    }
 }

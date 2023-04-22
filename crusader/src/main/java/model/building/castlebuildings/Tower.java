@@ -1,4 +1,4 @@
-package model.building.killingbuildings.castlebuildings;
+package model.building.castlebuildings;
 
 public class Tower extends CastleBuilding {
     // 1000 for smallStoneCastle 10

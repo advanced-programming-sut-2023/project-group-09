@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="Walls, Draw bridge and gatehouses are added.">
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="Towers added.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/Tower.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/Tower.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameBuildings.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameBuildings.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,7 +167,7 @@
       <workItem from="1682073593485" duration="1034000" />
       <workItem from="1682087981704" duration="15062000" />
       <workItem from="1682116199375" duration="2705000" />
-      <workItem from="1682149028155" duration="6436000" />
+      <workItem from="1682149028155" duration="8487000" />
     </task>
     <task id="LOCAL-00001" summary="...">
       <created>1681925358549</created>
@@ -260,7 +260,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682115730401</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Towers added.">
+      <created>1682165652089</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1682165652089</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -291,7 +298,8 @@
     <MESSAGE value="Texture passable conditions ..." />
     <MESSAGE value="Main castle added." />
     <MESSAGE value="Walls, Draw bridge and gatehouses are added." />
-    <option name="LAST_COMMIT_MESSAGE" value="Walls, Draw bridge and gatehouses are added." />
+    <MESSAGE value="Towers added." />
+    <option name="LAST_COMMIT_MESSAGE" value="Towers added." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Project_Phase_1$UserControllerTest.ic" NAME="UserControllerTest Coverage Results" MODIFIED="1681942420279" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
