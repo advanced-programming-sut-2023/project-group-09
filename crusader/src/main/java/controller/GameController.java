@@ -45,7 +45,7 @@ public class GameController {
         return "";
     }
 
-    public static String buildEquipment(String equipment) {
+    public static String buildEquipment(int equipmentNumber, int x, int y) {
         return "";
     }
 
