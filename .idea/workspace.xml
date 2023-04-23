@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="method convertPasswordToHash() edited.">
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="a bug solved.">
+      <change afterPath="$PROJECT_DIR$/crusader/src/main/java/enumeration/dictionary/Buildings.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/enumeration/answers/BuildingAnswers.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/enumeration/answers/BuildingAnswers.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crusader/src/main/java/enumeration/commands/BuildingMenuCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/enumeration/commands/BuildingMenuCommands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/Wall.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/Wall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/view/BuildingMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/view/BuildingMenu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -172,7 +176,7 @@
       <workItem from="1682174654488" duration="103000" />
       <workItem from="1682174764146" duration="99000" />
       <workItem from="1682180160196" duration="2544000" />
-      <workItem from="1682202541014" duration="759000" />
+      <workItem from="1682202541014" duration="8732000" />
     </task>
     <task id="LOCAL-00001" summary="...">
       <created>1681925358549</created>
@@ -293,7 +297,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682189114122</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="a bug solved.">
+      <created>1682237172223</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1682237172223</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -328,7 +339,8 @@
     <MESSAGE value="castle buildings changed." />
     <MESSAGE value="castle buildings final change." />
     <MESSAGE value="method convertPasswordToHash() edited." />
-    <option name="LAST_COMMIT_MESSAGE" value="method convertPasswordToHash() edited." />
+    <MESSAGE value="a bug solved." />
+    <option name="LAST_COMMIT_MESSAGE" value="a bug solved." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Project_Phase_1$UserControllerTest.ic" NAME="UserControllerTest Coverage Results" MODIFIED="1681942420279" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
