@@ -1,0 +1,323 @@
+{
+  "woodCutter": {
+    "nameOfStorage": "stockPile",
+    "itemName": "wood",
+    "itemType": "resource",
+    "rate": 3,
+    "countOfRoundsToProduce": 0,
+    "required": {},
+    "cost": {
+      "wood": 3
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 1,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "woodCutter",
+    "maxHp": 40,
+    "hp": 40,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 3,
+    "length": 3
+  },
+  "huntingPost": {
+    "nameOfStorage": "granary",
+    "itemName": "meat",
+    "itemType": "food",
+    "rate": 3,
+    "countOfRoundsToProduce": 0,
+    "required": {
+      "cow": 1
+    },
+    "cost": {
+      "wood": 5
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 1,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "huntingPost",
+    "maxHp": 40,
+    "hp": 40,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 3,
+    "length": 3
+  },
+  "hopFarm": {
+    "nameOfStorage": "stockPile",
+    "itemName": "hop",
+    "itemType": "resource",
+    "rate": 5,
+    "countOfRoundsToProduce": 0,
+    "required": {},
+    "cost": {
+      "wood": 15
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 1,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": true,
+    "suitableTextures": [
+      "OASIS_GRASS",
+      "THICK_GRASS"
+    ],
+    "shouldBeOne": false,
+    "name": "hopFarm",
+    "maxHp": 40,
+    "hp": 40,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 9,
+    "length": 9
+  },
+  "wheatFarm": {
+    "nameOfStorage": "stockPile",
+    "itemName": "wheat",
+    "itemType": "resource",
+    "rate": 5,
+    "countOfRoundsToProduce": 0,
+    "required": {},
+    "cost": {
+      "wood": 15
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 1,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": true,
+    "suitableTextures": [
+      "OASIS_GRASS",
+      "THICK_GRASS"
+    ],
+    "shouldBeOne": false,
+    "name": "wheatFarm",
+    "maxHp": 40,
+    "hp": 40,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 9,
+    "length": 9
+  },
+  "bakery": {
+    "nameOfStorage": "granary",
+    "itemName": "bread",
+    "itemType": "food",
+    "rate": 3,
+    "countOfRoundsToProduce": 0,
+    "required": {
+      "flour": 1
+    },
+    "cost": {
+      "wood": 10
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 1,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "bakery",
+    "maxHp": 40,
+    "hp": 40,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 4,
+    "length": 4
+  },
+  "ironMine": {
+    "nameOfStorage": "stockPile",
+    "itemName": "iron",
+    "itemType": "resource",
+    "rate": 3,
+    "countOfRoundsToProduce": 0,
+    "required": {},
+    "cost": {
+      "wood": 20
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 2,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": true,
+    "suitableTextures": [
+      "IRON_TEXTURE"
+    ],
+    "shouldBeOne": false,
+    "name": "ironMine",
+    "maxHp": 60,
+    "hp": 60,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 4,
+    "length": 4
+  },
+  "pitchRig": {
+    "nameOfStorage": "stockPile",
+    "itemName": "pitch",
+    "itemType": "resource",
+    "rate": 5,
+    "countOfRoundsToProduce": 0,
+    "required": {},
+    "cost": {
+      "wood": 20
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 1,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": true,
+    "suitableTextures": [
+      "OIL"
+    ],
+    "shouldBeOne": false,
+    "name": "pitchRig",
+    "maxHp": 40,
+    "hp": 40,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 3,
+    "length": 3
+  },
+  "inn": {
+    "nameOfStorage": "stockPile",
+    "itemName": "ale",
+    "itemType": "resource",
+    "rate": 5,
+    "countOfRoundsToProduce": 0,
+    "required": {
+      "ale": 5
+    },
+    "cost": {
+      "wood": 20
+    },
+    "requiredHumans": [],
+    "price": 100,
+    "numberOfRequiredWorkers": 1,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "inn",
+    "maxHp": 40,
+    "hp": 40,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 5,
+    "length": 5
+  },
+  "dairyProducts": {
+    "nameOfStorage": "granary",
+    "itemName": "cheese",
+    "itemType": "food",
+    "rate": 3,
+    "countOfRoundsToProduce": 0,
+    "required": {},
+    "cost": {
+      "wood": 10
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 1,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": true,
+    "suitableTextures": [
+      "OASIS_GRASS",
+      "THICK_GRASS"
+    ],
+    "shouldBeOne": false,
+    "name": "dairyProducts",
+    "maxHp": 40,
+    "hp": 40,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 9,
+    "length": 9
+  },
+  "appleGarden": {
+    "nameOfStorage": "granary",
+    "itemName": "apple",
+    "itemType": "food",
+    "rate": 5,
+    "countOfRoundsToProduce": 0,
+    "required": {},
+    "cost": {
+      "wood": 5
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 1,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": true,
+    "suitableTextures": [
+      "OASIS_GRASS",
+      "THICK_GRASS"
+    ],
+    "shouldBeOne": false,
+    "name": "appleGarden",
+    "maxHp": 40,
+    "hp": 40,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 9,
+    "length": 9
+  },
+  "mill": {
+    "nameOfStorage": "stockPile",
+    "itemName": "flour",
+    "itemType": "resource",
+    "rate": 3,
+    "countOfRoundsToProduce": 0,
+    "required": {
+      "wheat": 3
+    },
+    "cost": {
+      "wood": 20
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 3,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "mill",
+    "maxHp": 40,
+    "hp": 40,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 3,
+    "length": 3
+  }
+}

@@ -199,9 +199,6 @@ public class Building implements Cloneable{
         hasSpecialTexture = true;
     }
 
-    public void addTexture(Textures texture){
-        suitableTextures.add(texture);
-    }
     @Override
     public Building clone() throws CloneNotSupportedException {
         return (Building) super.clone();

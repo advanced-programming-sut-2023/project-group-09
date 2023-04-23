@@ -1,0 +1,100 @@
+{
+  "armoury": {
+    "itemType": "weapon",
+    "capacity": 100,
+    "amount": 0,
+    "items": {
+      "spear": 0,
+      "sword": 0,
+      "leatherArmour": 0,
+      "metalArmour": 0,
+      "crossBow": 0,
+      "mace": 0,
+      "pike": 0,
+      "bow": 0
+    },
+    "cost": {
+      "wood": 5
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "armoury",
+    "maxHp": 40,
+    "hp": 40,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 4,
+    "length": 4
+  },
+  "granary": {
+    "itemType": "food",
+    "capacity": 100,
+    "amount": 0,
+    "items": {
+      "apple": 0,
+      "bread": 0,
+      "meat": 0,
+      "cheese": 0
+    },
+    "cost": {
+      "wood": 5
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "granary",
+    "maxHp": 40,
+    "hp": 40,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 4,
+    "length": 4
+  },
+  "stockPile": {
+    "itemType": "resource",
+    "capacity": 100,
+    "amount": 0,
+    "items": {
+      "flour": 0,
+      "iron": 0,
+      "wood": 0,
+      "wheat": 0,
+      "hops": 0,
+      "pitch": 0,
+      "ale": 0,
+      "stone": 0
+    },
+    "cost": {
+      "wood": 20
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "stockPile",
+    "maxHp": 40,
+    "hp": 40,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 5,
+    "length": 5
+  }
+}

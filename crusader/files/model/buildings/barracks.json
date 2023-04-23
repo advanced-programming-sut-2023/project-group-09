@@ -1,0 +1,116 @@
+{
+  "engineerGuild": {
+    "units": [
+      "engineer",
+      "ladderman"
+    ],
+    "BuildingNumber": 4,
+    "cost": {
+      "wood": 10
+    },
+    "requiredHumans": [],
+    "price": 100,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": true,
+    "name": "engineerGuild",
+    "maxHp": 80,
+    "hp": 80,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 4,
+    "length": 11
+  },
+  "mercenaryPost": {
+    "units": [
+      "archerBow",
+      "slave",
+      "spearman",
+      "slinger",
+      "assassin",
+      "horseArcher",
+      "arabianSwordsman",
+      "fireThrower"
+    ],
+    "BuildingNumber": 5,
+    "cost": {
+      "wood": 10
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": true,
+    "name": "mercenaryPost",
+    "maxHp": 80,
+    "hp": 80,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 9,
+    "length": 9
+  },
+  "tunnelersGuild": {
+    "units": [
+      "tunneler"
+    ],
+    "BuildingNumber": 4,
+    "cost": {
+      "wood": 10
+    },
+    "requiredHumans": [],
+    "price": 100,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": true,
+    "name": "tunnelersGuild",
+    "maxHp": 80,
+    "hp": 80,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 4,
+    "length": 11
+  },
+  "barrack": {
+    "units": [
+      "archer",
+      "crossbowman",
+      "spearman",
+      "pikeman",
+      "maceman",
+      "swordsman",
+      "knight"
+    ],
+    "BuildingNumber": 5,
+    "cost": {
+      "stone": 15
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": true,
+    "name": "barrack",
+    "maxHp": 80,
+    "hp": 80,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 9,
+    "length": 9
+  }
+}

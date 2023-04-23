@@ -33,10 +33,10 @@ public class UnitMenu {
                 ArrayList<String> itemsPattern = new ArrayList<>();
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
-                if(ViewController.isItemMatch(items,itemsPattern)){
+                if (ViewController.isItemMatch(items, itemsPattern)) {
                     int x = Integer.parseInt(ViewController.resultMatcher.group("x"));
                     int y = Integer.parseInt(ViewController.resultMatcher.group("y"));
-                    output = GameController.moveUnit(x,y);
+                    output = GameController.moveUnit(x, y);
                     System.out.println(output);
                 }
             } else if (patrolUnitMatcher.matches()) {
@@ -46,12 +46,12 @@ public class UnitMenu {
                 itemsPattern.add(UnitMenuCommands.Y1_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.X2_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.Y2_ITEM.getRegex());
-                if(ViewController.isItemMatch(items,itemsPattern)){
+                if (ViewController.isItemMatch(items, itemsPattern)) {
                     int x1 = Integer.parseInt(ViewController.resultMatcher.group("x1"));
                     int y1 = Integer.parseInt(ViewController.resultMatcher.group("y1"));
                     int x2 = Integer.parseInt(ViewController.resultMatcher.group("x2"));
                     int y2 = Integer.parseInt(ViewController.resultMatcher.group("y2"));
-                    output = GameController.patrolUnit(x1,y1,x2,y2);
+                    output = GameController.patrolUnit(x1, y1, x2, y2);
                     System.out.println(output);
                 }
             } else if (setUnitStateMatcher.matches()) {
@@ -60,12 +60,12 @@ public class UnitMenu {
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.S_ITEM.getRegex());
-                if(ViewController.isItemMatch(items,itemsPattern)){
+                if (ViewController.isItemMatch(items, itemsPattern)) {
                     int x = Integer.parseInt(ViewController.resultMatcher.group("x"));
                     int y = Integer.parseInt(ViewController.resultMatcher.group("y"));
                     String state = ViewController.resultMatcher.group("state");
                     state = ViewController.editItem(state);
-                    output = GameController.setStateOfMilitary(x,y,state);
+                    output = GameController.setStateOfMilitary(x, y, state);
                     System.out.println(output);
                 }
             } else if (attackMatcher.matches()) {
@@ -73,10 +73,10 @@ public class UnitMenu {
                 ArrayList<String> itemsPattern = new ArrayList<>();
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
-                if(ViewController.isItemMatch(items,itemsPattern)){
+                if (ViewController.isItemMatch(items, itemsPattern)) {
                     int x = Integer.parseInt(ViewController.resultMatcher.group("x"));
                     int y = Integer.parseInt(ViewController.resultMatcher.group("y"));
-                    output = GameController.attackEnemy(x,y);
+                    output = GameController.attackEnemy(x, y);
                     System.out.println(output);
                 }
             } else if (pourOilMatcher.matches()) {
@@ -88,10 +88,10 @@ public class UnitMenu {
                 ArrayList<String> itemsPattern = new ArrayList<>();
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
-                if(ViewController.isItemMatch(items,itemsPattern)){
+                if (ViewController.isItemMatch(items, itemsPattern)) {
                     int x = Integer.parseInt(ViewController.resultMatcher.group("x"));
                     int y = Integer.parseInt(ViewController.resultMatcher.group("y"));
-                    output = GameController.digTunnel(x,y);
+                    output = GameController.digTunnel(x, y);
                     System.out.println(output);
                 }
             } else if (buildMatcher.matches()) {

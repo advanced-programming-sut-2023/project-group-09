@@ -21,18 +21,18 @@ public class GameBuildings {
     public static HashMap<String, Building> storageBuildings = new HashMap<>();
     public static HashMap<String, Building> castleBuildings = new HashMap<>();
 
-    public static void createBuildings() {
+    public static void addBuildings() {
         createShop();
         createHovel();
         createChurch();
-        createProducerBuildings();
-        createStorageBuilding();
-        createCastleBuildings();
+        addProducerBuildings();
+        addStorageBuilding();
+        addCastleBuildings();
+        addBarracks();
         createSiegeTent();
-        createBarracks();
     }
 
-    public static void createProducerBuildings() {
+    public static void addProducerBuildings() {
         createBakery();
         createBlackSmith();
         createBrewery();
@@ -51,13 +51,13 @@ public class GameBuildings {
         createPoleTurner();
     }
 
-    public static void createStorageBuilding() {
+    public static void addStorageBuilding() {
         createGranary();
         createStockPile();
         createArmoury();
     }
 
-    public static void createCastleBuildings() {
+    public static void addCastleBuildings() {
         createMainCastle();
         createSmallStoneGatehouse();
         createBigStoneGatehouse();
@@ -73,7 +73,7 @@ public class GameBuildings {
         createRoundTower();
     }
 
-    public static void createBarracks(){
+    public static void addBarracks(){
         createBarrack();
         createEngineerGuild();
         createTunnelersGuild();
@@ -210,8 +210,8 @@ public class GameBuildings {
         barrack.addUnit("swordsman");
         barrack.addUnit("knight");
         barrack.setBuildingNumber(5);
-        barrack.addCost("stone", 15);
-        buildings.put("barrack", barrack);
+        barrack.addCost("stone",15);
+        buildings.put("barrack",barrack);
     }
 
     public static void createMercenaryPost() {
@@ -417,16 +417,7 @@ public class GameBuildings {
     public static void createSiegeTent() {
 //        TODO: correct hp
         Building building = new Building(0, 1, "siegeTent", 0, 3, 3);
-        building.addTexture(Textures.EARTH);
-        building.addTexture(Textures.EARTH_AND_SAND);
-        building.addTexture(Textures.BOULDER);
-        building.addTexture(Textures.ROCK_TEXTURE);
-        building.addTexture(Textures.IRON_TEXTURE);
-        building.addTexture(Textures.GRASS);
-        building.addTexture(Textures.THICK_GRASS);
-        building.addTexture(Textures.OASIS_GRASS);
-        building.addTexture(Textures.OIL);
-        building.addTexture(Textures.BEACH);
+        buildings.put("siegeTent",building);
     }
 
     public static void createStable() {
@@ -551,4 +542,12 @@ public class GameBuildings {
         buildings.put("granary", storageBuilding);
     }
 
+    public static void createQuarry(){
+        Quarry quarry = new Quarry();
+        buildings.put("quarry",quarry);
+    }
+
+    public static void createOxTether(){
+
+    }
 }

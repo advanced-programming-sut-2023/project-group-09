@@ -1,5 +1,6 @@
 package controller;
 
+import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameGoods;
 import controller.gamestructure.GameHumans;
 import enumeration.Paths;
@@ -7,6 +8,15 @@ import model.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import model.building.Building;
+import model.building.castlebuildings.CastleBuilding;
+import model.building.castlebuildings.Gatehouse;
+import model.building.castlebuildings.Tower;
+import model.building.castlebuildings.Wall;
+import model.building.producerbuildings.Barrack;
+import model.building.producerbuildings.ProducerBuilding;
+import model.building.producerbuildings.WeaponProducer;
+import model.building.storagebuildings.StorageBuilding;
 import model.goods.Goods;
 import model.human.military.ArabianMercenary;
 import model.human.military.EuropeanTroop;
@@ -186,7 +196,160 @@ public class DBController {
         return null;
     }
 
+    public static void loadBuildings(){
+        HashMap<String, Wall> wallHashMap = loadWalls();
+        HashMap<String, Gatehouse> gatehouseHashMap = loadGatehouses();
+        HashMap<String, Tower> towerHashMap = loadTowers();
+        HashMap<String, Barrack> barrackHashMap = loadBarracks();
+        HashMap<String, ProducerBuilding> producerBuildingHashMap = loadProducerBuilding();
+        HashMap<String, WeaponProducer> weaponProducerHashMap = loadWeaponProducer();
+        HashMap<String, StorageBuilding> storageBuildingHashMap = loadStorageBuilding();
+        HashMap<String, Building> buildingHashMap = loadOther();
+        HashMap<String,CastleBuilding>castleBuildingHashMap = loadCastleBuildings();
 
+        GameBuildings.buildings.putAll(wallHashMap);
+        GameBuildings.buildings.putAll(gatehouseHashMap);
+        GameBuildings.buildings.putAll(towerHashMap);
+        GameBuildings.buildings.putAll(barrackHashMap);
+        GameBuildings.buildings.putAll(producerBuildingHashMap);
+        GameBuildings.buildings.putAll(weaponProducerHashMap);
+        GameBuildings.buildings.putAll(storageBuildingHashMap);
+        GameBuildings.buildings.putAll(buildingHashMap);
+        GameBuildings.buildings.putAll(castleBuildingHashMap);
+        GameBuildings.createQuarry();
+        GameBuildings.createOxTether();
+
+
+        GameBuildings.storageBuildings.putAll(storageBuildingHashMap);
+
+
+        GameBuildings.castleBuildings.putAll(wallHashMap);
+        GameBuildings.castleBuildings.putAll(gatehouseHashMap);
+        GameBuildings.castleBuildings.putAll(towerHashMap);
+        GameBuildings.castleBuildings.putAll(castleBuildingHashMap);
+
+
+        GameBuildings.producerBuildings.putAll(producerBuildingHashMap);
+        GameBuildings.producerBuildings.putAll(weaponProducerHashMap);
+
+    }
+
+    public static HashMap<String, Wall> loadWalls(){
+        try {
+            Gson gson = new Gson();
+            checkFileExist(Paths.BUILDINGS_PATH.getPath() + "walls.json");
+            String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "walls.json")));
+            return gson.fromJson(text, new TypeToken<HashMap<String, Wall>>(){}.getType());
+        } catch (IOException e) {
+            System.out.println("An error occurred.[load buildings]");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static HashMap<String, Gatehouse> loadGatehouses(){
+        try {
+            Gson gson = new Gson();
+            checkFileExist(Paths.BUILDINGS_PATH.getPath() + "gateHouses.json");
+            String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "gateHouses.json")));
+            return gson.fromJson(text, new TypeToken<HashMap<String, Gatehouse>>(){}.getType());
+        } catch (IOException e) {
+            System.out.println("An error occurred.[load buildings]");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static HashMap<String, Tower> loadTowers(){
+        try {
+            Gson gson = new Gson();
+            checkFileExist(Paths.BUILDINGS_PATH.getPath() + "towers.json");
+            String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "towers.json")));
+            return gson.fromJson(text, new TypeToken<HashMap<String, Tower>>(){}.getType());
+        } catch (IOException e) {
+            System.out.println("An error occurred.[load buildings]");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static HashMap<String, CastleBuilding> loadCastleBuildings(){
+        try {
+            Gson gson = new Gson();
+            checkFileExist(Paths.BUILDINGS_PATH.getPath() + "castleBuildings.json");
+            String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "castleBuildings.json")));
+            return gson.fromJson(text, new TypeToken<HashMap<String, CastleBuilding>>(){}.getType());
+        } catch (IOException e) {
+            System.out.println("An error occurred.[load buildings]");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static HashMap<String, Barrack> loadBarracks(){
+        try {
+            Gson gson = new Gson();
+            checkFileExist(Paths.BUILDINGS_PATH.getPath() + "barracks.json");
+            String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "barracks.json")));
+            return gson.fromJson(text, new TypeToken<HashMap<String, Barrack>>(){}.getType());
+        } catch (IOException e) {
+            System.out.println("An error occurred.[load buildings]");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static HashMap<String, ProducerBuilding> loadProducerBuilding(){
+        try {
+            Gson gson = new Gson();
+            checkFileExist(Paths.BUILDINGS_PATH.getPath() + "producerBuildings.json");
+            String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "producerBuildings.json")));
+            return gson.fromJson(text, new TypeToken<HashMap<String, ProducerBuilding>>(){}.getType());
+        } catch (IOException e) {
+            System.out.println("An error occurred.[load buildings]");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static HashMap<String, WeaponProducer> loadWeaponProducer(){
+        try {
+            Gson gson = new Gson();
+            checkFileExist(Paths.BUILDINGS_PATH.getPath() + "weaponProducers.json");
+            String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "weaponProducers.json")));
+            return gson.fromJson(text, new TypeToken<HashMap<String, WeaponProducer>>(){}.getType());
+        } catch (IOException e) {
+            System.out.println("An error occurred.[load buildings]");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static HashMap<String, StorageBuilding> loadStorageBuilding(){
+        try {
+            Gson gson = new Gson();
+            checkFileExist(Paths.BUILDINGS_PATH.getPath() + "storageBuilding.json");
+            String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "storageBuilding.json")));
+            return gson.fromJson(text, new TypeToken<HashMap<String, StorageBuilding>>(){}.getType());
+        } catch (IOException e) {
+            System.out.println("An error occurred.[load buildings]");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static HashMap<String, Building> loadOther(){
+        try {
+            Gson gson = new Gson();
+            checkFileExist(Paths.BUILDINGS_PATH.getPath() + "other.json");
+            String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "other.json")));
+            return gson.fromJson(text, new TypeToken<HashMap<String, Building>>(){}.getType());
+        } catch (IOException e) {
+            System.out.println("An error occurred.[load buildings]");
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public static void checkFileExist(String fileAddress){
         try {

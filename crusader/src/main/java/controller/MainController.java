@@ -16,6 +16,7 @@ public class MainController {
         DBController.loadCurrentUser();
         DBController.loadGoods();
         DBController.loadMilitary();
+        DBController.loadBuildings();
     }
 
     public static void run(){

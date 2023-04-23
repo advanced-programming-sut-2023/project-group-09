@@ -1,0 +1,82 @@
+{
+  "shop": {
+    "cost": {
+      "wood": 5
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 1,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "shop",
+    "maxHp": 70,
+    "hp": 70,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 5,
+    "length": 5
+  },
+  "church": {
+    "cost": {},
+    "requiredHumans": [],
+    "price": 500,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "church",
+    "maxHp": 70,
+    "hp": 70,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 15,
+    "length": 15
+  },
+  "hovel": {
+    "cost": {
+      "wood": 6
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "hovel",
+    "maxHp": 70,
+    "hp": 70,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 4,
+    "length": 4
+  },
+  "siegeTent": {
+    "cost": {},
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 1,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "siegeTent",
+    "maxHp": 0,
+    "hp": 0,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 3,
+    "length": 3
+  }
+}

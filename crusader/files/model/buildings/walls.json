@@ -1,0 +1,94 @@
+{
+  "stairs": {
+    "height": 0,
+    "capacity": 0,
+    "cost": {
+      "stone": 1
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "stairs",
+    "maxHp": 0,
+    "hp": 0,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 0,
+    "length": 1
+  },
+  "stoneWall": {
+    "height": 6,
+    "capacity": 0,
+    "cost": {
+      "stone": 1
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "stoneWall",
+    "maxHp": 0,
+    "hp": 0,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 1,
+    "length": 1
+  },
+  "crenulatedWall": {
+    "height": 8,
+    "capacity": 0,
+    "cost": {
+      "stone": 1
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "crenulatedWall",
+    "maxHp": 0,
+    "hp": 0,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 1,
+    "length": 1
+  },
+  "lowWall": {
+    "height": 3,
+    "capacity": 0,
+    "cost": {
+      "stone": 1
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "lowWall",
+    "maxHp": 0,
+    "hp": 0,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 1,
+    "length": 1
+  }
+}
