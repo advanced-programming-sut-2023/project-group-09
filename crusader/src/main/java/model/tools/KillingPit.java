@@ -5,7 +5,7 @@ import enumeration.Textures;
 import model.game.Tile;
 
 public class KillingPit {
-    public void buildKillingPit(int x, int y) {
+    public void addKillingPit(int x, int y) {
         Tile tile = GameController.getGame().getMap().getTile(x, y);
         if (tile.getBuilding() == null && tile.isPit() == false && tile.isMoat() == false &&
                 (tile.getTexture().equals(Textures.EARTH)) || (tile.getTexture().equals(Textures.EARTH_AND_SAND))

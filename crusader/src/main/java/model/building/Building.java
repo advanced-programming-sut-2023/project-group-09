@@ -61,7 +61,7 @@ public class Building implements Cloneable{
                     String name, int maxHp, int width, int length) {
         this.numberOfRequiredWorkers = numberOfRequiredWorkers;
         this.numberOfRequiredEngineers = numberOfRequiredEngineers;
-        this.name= name;
+        this.name = name;
         this.maxHp = maxHp;
         this.hp = maxHp;
         this.width = width;
@@ -184,12 +184,16 @@ public class Building implements Cloneable{
         this.numberOfRequiredEngineers = numberOfRequiredEngineers;
     }
 
-    public void changeShouldBeOne(){
-        shouldBeOne  = !shouldBeOne;
+    public void changeShouldBeOne() {
+        shouldBeOne = !shouldBeOne;
     }
 
-    public void addCost(String key,int value){
-        cost.put(key,value);
+    public void addCost(String key, int value) {
+        cost.put(key, value);
+    }
+
+    public void addTexture(Textures texture) {
+        suitableTextures.add(texture);
     }
     public void enableHasSpecialTexture(){
         hasSpecialTexture = true;

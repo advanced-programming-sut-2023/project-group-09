@@ -5,6 +5,7 @@ import enumeration.Speed;
 import model.Government;
 import model.human.Human;
 import model.Permission;
+import model.human.military.Engineer;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class AttackingAndDefendingTool {
     private int numberOfRequiredEngineers;
     private int speed;
     private ArrayList<Permission> permissions = new ArrayList<>();
-    private ArrayList<Human> engineers = new ArrayList<>();
+    private ArrayList<Engineer> engineers = new ArrayList<>();
     private int shootingRange;
     private int damage;
 
@@ -117,12 +118,12 @@ public class AttackingAndDefendingTool {
         this.permissions = permissions;
     }
 
-    public ArrayList<Human> getEngineers() {
+    public ArrayList<Engineer> getEngineers() {
         return engineers;
     }
 
-    public void setEngineers(ArrayList<Human> engineers) {
-        this.engineers = engineers;
+    public void addEngineer(Engineer engineer) {
+        this.engineers.add(engineer);
     }
 
     public int getShootingRange() {
