@@ -202,6 +202,35 @@
     "width": 3,
     "length": 3
   },
+  "brewery": {
+    "nameOfStorage": "stockPile",
+    "itemName": "ale",
+    "itemType": "resource",
+    "rate": 3,
+    "countOfRoundsToProduce": 0,
+    "required": {
+      "hop": 5
+    },
+    "cost": {
+      "wood": 10
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 1,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "brewery",
+    "maxHp": 40,
+    "hp": 40,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 4,
+    "length": 4
+  },
   "inn": {
     "nameOfStorage": "stockPile",
     "itemName": "ale",

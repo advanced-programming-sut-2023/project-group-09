@@ -530,8 +530,8 @@ public class GameBuildings {
         producerBuilding.addCost("wood", 10);
 
         producerBuilding.addRequired("hop", 5);
-        producerBuildings.put("wheatFarm", producerBuilding);
-        buildings.put("wheatFarm", producerBuilding);
+        producerBuildings.put("brewery", producerBuilding);
+        buildings.put("brewery", producerBuilding);
     }
 
     public static void createGranary() {
