@@ -16,15 +16,6 @@ public class Tower extends CastleBuilding {
     private int fireRange;
     private int defendRange;
 
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-
-    private int capacity;
     private boolean canKeepRidingEquipment;
 
     public boolean isCanKeepRidingEquipment() {

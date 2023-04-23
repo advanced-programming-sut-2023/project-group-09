@@ -2,6 +2,7 @@ package controller;
 
 import enumeration.answers.BuildingAnswers;
 import enumeration.Textures;
+import model.building.Building;
 import model.game.Tile;
 import model.human.Human;
 
@@ -38,8 +39,16 @@ public class MapController {
         } catch (NumberFormatException e) {
             return BuildingAnswers.getMessage(BuildingAnswers.INVALID_Y_COORD_ERROR);
         }
-        // TODO: dropping building in game and checking type of building
-        return "";
+        Building building = getInstanceOfBuilding(xCoord,yCoord , type); // TODO: get instance of supposed building.
+        if (building == null)
+            return BuildingAnswers.getMessage(BuildingAnswers.ERROR_FOR_DROP_BUILDING);
+        GameController.getGame().getMap().getTile(xCoord , yCoord).setBuilding(building);
+        return BuildingAnswers.getMessage(BuildingAnswers.DROP_BUILDING_SUCCESSFULLY_DONE);
+    }
+
+    public static Building getInstanceOfBuilding(int x , int y , String typeOfBuilding) {
+        return null;
+        // TODO: this method must check (x, y) and typeOfBuilding and returned correct value.
     }
 
     public static String dropCastleBuildings(int x, int y, String type) {

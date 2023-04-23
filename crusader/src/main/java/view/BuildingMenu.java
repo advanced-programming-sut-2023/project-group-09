@@ -21,9 +21,10 @@ public class BuildingMenu {
             Matcher createUnitMatcher = BuildingMenuCommands.getMatcher(command , BuildingMenuCommands.CREATE_UNIT_REGEX);
             Matcher repairMatcher = BuildingMenuCommands.getMatcher(command , BuildingMenuCommands.REPAIR_REGEX);
             if (dropBuildingMatcher.matches()) {
-                Matcher xMatcher = BuildingMenuCommands.getMatcher(command , BuildingMenuCommands.X_COORD_REGEX);
-                Matcher yMatcher = BuildingMenuCommands.getMatcher(command , BuildingMenuCommands.Y_COORD_REGEX);
-                Matcher typeMatcher = BuildingMenuCommands.getMatcher(command , BuildingMenuCommands.TYPE_REGEX);
+                String content = dropBuildingMatcher.group("content");
+                Matcher xMatcher = BuildingMenuCommands.getMatcher(content , BuildingMenuCommands.X_COORD_REGEX);
+                Matcher yMatcher = BuildingMenuCommands.getMatcher(content , BuildingMenuCommands.Y_COORD_REGEX);
+                Matcher typeMatcher = BuildingMenuCommands.getMatcher(content , BuildingMenuCommands.TYPE_REGEX);
                 if (isInvalidInput(xMatcher)) {
                     System.out.println(BuildingAnswers.getMessage(BuildingAnswers.INVALID_X_COORD_ERROR));
                     continue;
@@ -42,8 +43,9 @@ public class BuildingMenu {
                 typeOfBuilding= typeMatcher.group("type");
                 System.out.println(MapController.dropBuilding(xStr , yStr , typeOfBuilding));
             } else if (selectBuildingMatcher.matches()) {
-                Matcher xMatcher = BuildingMenuCommands.getMatcher(command , BuildingMenuCommands.X_COORD_REGEX);
-                Matcher yMatcher = BuildingMenuCommands.getMatcher(command , BuildingMenuCommands.Y_COORD_REGEX);
+                String content = selectBuildingMatcher.group("content");
+                Matcher xMatcher = BuildingMenuCommands.getMatcher(content , BuildingMenuCommands.X_COORD_REGEX);
+                Matcher yMatcher = BuildingMenuCommands.getMatcher(content , BuildingMenuCommands.Y_COORD_REGEX);
                 if (isInvalidInput(xMatcher)) {
                     System.out.println(BuildingAnswers.getMessage(BuildingAnswers.INVALID_X_COORD_ERROR));
                     continue;
@@ -52,6 +54,7 @@ public class BuildingMenu {
                     System.out.println(BuildingAnswers.getMessage(BuildingAnswers.INVALID_Y_COORD_ERROR));
                     continue;
                 }
+                String xStr =
                 // ؟؟؟؟؟؟؟؟
             } else if (createUnitMatcher.matches()) {
                 // ؟؟؟؟؟؟؟؟
