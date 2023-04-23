@@ -30,6 +30,7 @@ public class GameBuildings {
         addCastleBuildings();
         addBarracks();
         createSiegeTent();
+        createStable();
     }
 
     public static void addProducerBuildings() {
@@ -58,7 +59,6 @@ public class GameBuildings {
     }
 
     public static void addCastleBuildings() {
-        createMainCastle();
         createSmallStoneGatehouse();
         createBigStoneGatehouse();
         createDrawBridge();
@@ -78,6 +78,7 @@ public class GameBuildings {
         createEngineerGuild();
         createTunnelersGuild();
         createMercenaryPost();
+        createCathedral();
     }
     public static void createMainCastle() {
         MainCastle mainCastle = new MainCastle(0, 0,

@@ -20,6 +20,27 @@
     "width": 5,
     "length": 5
   },
+  "stable": {
+    "cost": {
+      "wood": 20
+    },
+    "requiredHumans": [],
+    "price": 400,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "stable",
+    "maxHp": 70,
+    "hp": 70,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 5,
+    "length": 5
+  },
   "church": {
     "cost": {},
     "requiredHumans": [],

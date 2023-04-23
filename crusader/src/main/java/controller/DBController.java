@@ -205,7 +205,6 @@ public class DBController {
         HashMap<String, WeaponProducer> weaponProducerHashMap = loadWeaponProducer();
         HashMap<String, StorageBuilding> storageBuildingHashMap = loadStorageBuilding();
         HashMap<String, Building> buildingHashMap = loadOther();
-        HashMap<String,CastleBuilding>castleBuildingHashMap = loadCastleBuildings();
 
         GameBuildings.buildings.putAll(wallHashMap);
         GameBuildings.buildings.putAll(gatehouseHashMap);
@@ -215,9 +214,9 @@ public class DBController {
         GameBuildings.buildings.putAll(weaponProducerHashMap);
         GameBuildings.buildings.putAll(storageBuildingHashMap);
         GameBuildings.buildings.putAll(buildingHashMap);
-        GameBuildings.buildings.putAll(castleBuildingHashMap);
         GameBuildings.createQuarry();
         GameBuildings.createOxTether();
+        GameBuildings.createMainCastle();
 
 
         GameBuildings.storageBuildings.putAll(storageBuildingHashMap);
@@ -226,7 +225,6 @@ public class DBController {
         GameBuildings.castleBuildings.putAll(wallHashMap);
         GameBuildings.castleBuildings.putAll(gatehouseHashMap);
         GameBuildings.castleBuildings.putAll(towerHashMap);
-        GameBuildings.castleBuildings.putAll(castleBuildingHashMap);
 
 
         GameBuildings.producerBuildings.putAll(producerBuildingHashMap);
@@ -266,19 +264,6 @@ public class DBController {
             checkFileExist(Paths.BUILDINGS_PATH.getPath() + "towers.json");
             String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "towers.json")));
             return gson.fromJson(text, new TypeToken<HashMap<String, Tower>>(){}.getType());
-        } catch (IOException e) {
-            System.out.println("An error occurred.[load buildings]");
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static HashMap<String, CastleBuilding> loadCastleBuildings(){
-        try {
-            Gson gson = new Gson();
-            checkFileExist(Paths.BUILDINGS_PATH.getPath() + "castleBuildings.json");
-            String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "castleBuildings.json")));
-            return gson.fromJson(text, new TypeToken<HashMap<String, CastleBuilding>>(){}.getType());
         } catch (IOException e) {
             System.out.println("An error occurred.[load buildings]");
             e.printStackTrace();

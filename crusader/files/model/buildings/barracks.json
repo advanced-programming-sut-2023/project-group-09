@@ -112,5 +112,28 @@
     "endY": 0,
     "width": 9,
     "length": 9
+  },
+  "cathedral": {
+    "units": [
+      "blackmonk"
+    ],
+    "BuildingNumber": 15,
+    "cost": {},
+    "requiredHumans": [],
+    "price": 1000,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "cathedral",
+    "maxHp": 100,
+    "hp": 100,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 20,
+    "length": 20
   }
 }

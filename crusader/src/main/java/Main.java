@@ -8,7 +8,7 @@ public class Main {
 //        DeletedController.makeWeaponsFile();
 //        DeletedController.makeGoodsFile();
 //        DeletedController.makeBuildingsFile();
-//        MainController.loadGame();
+        MainController.loadGame();
         System.out.println(GameBuildings.buildings.size());
         //MainController.run();
     }
