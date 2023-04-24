@@ -18,7 +18,7 @@ public class Application {
     }
 
     private static User currentUser;
-    private static ArrayList<User> users;
+    private static ArrayList<User> users = new ArrayList<>();
 
     public static User getCurrentUser() {
         return currentUser;

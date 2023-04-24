@@ -1,73 +1,12 @@
 [
   {
-    "username": "user1",
-    "password": "fd88514c070984594933a9aac737a4c36549fe90282aca26139b6cf4173ab7e3",
-    "nickname": "nickname1",
-    "email": "user1@gmail.com",
-    "highScore": 5,
-    "passwordRecoveryQuestion": "what?",
-    "passwordRecoveryAnswer": "Yes!",
-    "slogan": ""
-  },
-  {
-    "username": "user2",
-    "password": "1414f8c8e53c207b5b6fe8cf81b9636ce6f987c7d779e73b94b543ab768cdd23",
-    "nickname": "nickname2",
-    "email": "user2@gmail.com",
-    "highScore": 4,
-    "slogan": "has slogan"
-  },
-  {
-    "username": "user3",
-    "password": "1414f8c8e53c207b5b6fe8cf81b9636ce6f987c7d779e73b94b543ab768cdd23",
-    "nickname": "nickname3",
-    "email": "user3@gmail.com",
-    "highScore": 3,
-    "slogan": ""
-  },
-  {
-    "username": "user4",
-    "password": "1414f8c8e53c207b5b6fe8cf81b9636ce6f987c7d779e73b94b543ab768cdd23",
-    "nickname": "nickname4",
-    "email": "user4@gmail.com",
-    "highScore": 2,
-    "slogan": "..."
-  },
-  {
-    "username": "Ali",
-    "password": "4a789660a83ea53e47abc03dd4227fd42fae428fcbb4c204c3e54a89a49abc4c",
-    "nickname": "FKR",
-    "email": "Far@gm.com",
-    "highScore": 1,
-    "passwordRecoveryQuestion": "What was my first pet\u0027s name?",
-    "passwordRecoveryAnswer": "Mamad",
-    "slogan": "Wow!"
-  },
-  {
-    "username": "Farzam",
-    "password": "FKR@1383inTehran",
-    "nickname": "WTF?",
-    "email": "F@G.C",
-    "highScore": 0
-  },
-  {
-    "username": "Fatemeh",
-    "password": "bb14121bd7f08b8f2faf313d9ac7fc10feea916845024ff0bd70fda02110a5ff",
-    "nickname": "FFF",
-    "email": "F@g.com",
+    "username": "Amirhossein",
+    "password": "8b509b17e5408d6a2443a24681bad8b9b66530ec4d2ce27e7105b4379d7dea87",
+    "nickname": "Ami",
+    "email": "something@gmail.com",
     "highScore": 0,
-    "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
-    "passwordRecoveryAnswer": "Asgari",
-    "slogan": "Zan, Zendegi, Azadi"
-  },
-  {
-    "username": "Hossein",
-    "password": "6dce6954d4a1c3df6c6a468188503dea6527782d76dbe3bcfc7d2c26fa47aaea",
-    "nickname": "HOSS",
-    "email": "H@G.com",
-    "highScore": 0,
-    "passwordRecoveryQuestion": "What was my first pet\u0027s name?",
-    "passwordRecoveryAnswer": "Schnider",
-    "slogan": "Perspolis!"
+    "passwordRecoveryQuestion": "What\u0027s my father\u0027s name?",
+    "passwordRecoveryAnswer": "Hello World",
+    "slogan": "The best offense is a good defense!"
   }
 ]

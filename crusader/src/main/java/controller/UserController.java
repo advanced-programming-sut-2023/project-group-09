@@ -258,7 +258,7 @@ public class UserController {
 
         if (matchers.get("answer").group("answer1") == null)
             questionAndAnswer.put("answer", matchers.get("answer").group("answer2"));
-        else matchers.get("answer").group("answer1");
+        else questionAndAnswer.put("answer", matchers.get("answer").group("answer1"));
 
         if (matchers.get("answerConfirm").group("answerConfirm1") == null)
             questionAndAnswer.put("answerConfirm", matchers.get("answerConfirm").group("answerConfirm2"));
