@@ -78,22 +78,23 @@ public class GameController {
     }
 
     public static String dropBuilding(String x, String y, String type) {
-        int xCoord, yCoord;
+        int xCoord = 0, yCoord = 0;
         try {
             xCoord = Integer.parseInt(x);
         } catch (NumberFormatException e) {
-            return BuildingAnswers.getMessage(BuildingAnswers.INVALID_X_COORD_ERROR);
+//            return BuildingAnswers.getMessage(BuildingAnswers.INVALID_X_COORD_ERROR);
         }
         try {
             yCoord = Integer.parseInt(x);
         } catch (NumberFormatException e) {
-            return BuildingAnswers.getMessage(BuildingAnswers.INVALID_Y_COORD_ERROR);
+//            return BuildingAnswers.getMessage(BuildingAnswers.INVALID_Y_COORD_ERROR);
         }
         Building building = getInstanceOfBuilding(xCoord, yCoord, type); // TODO: get instance of supposed building.
         if (building == null)
-            return BuildingAnswers.getMessage(BuildingAnswers.ERROR_FOR_DROP_BUILDING);
+//            return BuildingAnswers.getMessage(BuildingAnswers.ERROR_FOR_DROP_BUILDING);
         GameController.getGame().getMap().getTile(xCoord, yCoord).setBuilding(building);
-        return BuildingAnswers.getMessage(BuildingAnswers.DROP_BUILDING_SUCCESSFULLY_DONE);
+//        return BuildingAnswers.getMessage(BuildingAnswers.DROP_BUILDING_SUCCESSFULLY_DONE);
+        return "";
     }
 
     public static Building getInstanceOfBuilding(int x, int y, String typeOfBuilding) {

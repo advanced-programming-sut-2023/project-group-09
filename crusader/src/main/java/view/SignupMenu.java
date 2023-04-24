@@ -6,7 +6,6 @@ import controller.DBController;
 import controller.UserController;
 import enumeration.commands.SignupMenuCommands;
 import model.User;
-import model.captcha.Captcha;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -21,7 +20,7 @@ public class SignupMenu {
     public static void run(Scanner scanner) {
         System.out.println("<< Signup Menu >>");
         while (true) {
-            if (signupState == 0) runRegisterPart(scanner);
+            if (signupState == 0) runRegister(scanner);
             else if (signupState == 2 || signupState == 3)
                 System.out.println(UserController.createUser(user, scanner.nextLine()));
             else if (signupState == 4) runSecurityQuestionPart(scanner);
@@ -33,7 +32,7 @@ public class SignupMenu {
         }
     }
 
-    private static void runRegisterPart(Scanner scanner) {
+    private static void runRegister(Scanner scanner) {
         String input = scanner.nextLine();
         if (SignupMenuCommands.BACK.getMatcher(input).matches()) {
             signupState = 6;
