@@ -1,6 +1,6 @@
 package model;
 
-import enumeration.dictionary.Colors;
+import java.lang.String;
 import enumeration.dictionary.Foodstuffs;
 import enumeration.dictionary.RawMaterials;
 import model.building.Building;
@@ -51,7 +51,7 @@ public class Government {
     private int gold;
     private int population, maxPopulation;
     private int castleX, castleY;
-    private Colors color;
+    private String color;
     private Lord lord;
 
     public Lord getLord() {
@@ -63,7 +63,7 @@ public class Government {
         ((MainCastle)(this.getBuildings().get("MainCastle").getBuildings().get(0))).setLord(lord);
     }
 
-    public Government(User user, int castleX, int castleY, Colors color) {
+    public Government(User user, int castleX, int castleY, String color) {
         this.user = user;
         this.castleX = castleX;
         this.castleY = castleY;
@@ -162,11 +162,11 @@ public class Government {
         this.castleY = castleY;
     }
 
-    public Colors getColor() {
+    public String getColor() {
         return color;
     }
 
-    public void setColor(Colors color) {
+    public void setColor(String color) {
         this.color = color;
     }
 
@@ -181,5 +181,28 @@ public class Government {
         return properties.get(name);
     }
 
+    public User getUser() {
+        return user;
+    }
 
+    public HashMap<String, Trade> getTrades() {
+        return trades;
+    }
+
+    public HashMap<String, Trade> getNewTrades() {
+        return newTrades;
+    }
+
+    public ArrayList<Military> getTroops() {
+        return troops;
+    }
+
+    public void addTrade(Trade trade){
+        trades.put(trade.getId(), trade);
+        newTrades.put(trade.getId(), trade);
+    }
+
+    public void clearTradeCash(){
+        newTrades.clear();
+    }
 }

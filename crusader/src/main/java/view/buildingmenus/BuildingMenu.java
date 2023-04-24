@@ -102,7 +102,7 @@ public class BuildingMenu {
                     isThisBuildingSelected(Buildings.POLE_TURNER)) {
                 // TODO: ehtiaje ya na? age nist ke bikhial
             } else if (isThisBuildingSelected(Buildings.STABLE)) {
-                Matcher howManyHorsesMatcher = BuildingMenuCommands.getMatcher(BuildingMenuCommands.HOW_MANY_HORSES);
+                Matcher howManyHorsesMatcher = BuildingMenuCommands.getMatcher(command,BuildingMenuCommands.HOW_MANY_HORSES);
                 if (howManyHorsesMatcher.matches()) {
 
                 } else {

@@ -110,5 +110,6 @@ public class BuildingController {
 
     public static String howManyHorses() {
         // TODO: handle it!
+        return "";
     }
 }

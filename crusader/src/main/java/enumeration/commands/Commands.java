@@ -22,4 +22,8 @@ public enum Commands {
         Pattern pattern = Pattern.compile(command.regex);
         return pattern.matcher(input);
     }
+
+    public String getRegex() {
+        return regex;
+    }
 }

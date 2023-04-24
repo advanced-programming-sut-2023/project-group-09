@@ -15,6 +15,6 @@ public class Main {
 //        MainController.loadGame();
 //        System.out.println(GameBuildings.buildings.size());
         //MainController.run();
-        UnitMenu.run(new Scanner(System.in));
+        //UnitMenu.run(new Scanner(System.in));
     }
 }

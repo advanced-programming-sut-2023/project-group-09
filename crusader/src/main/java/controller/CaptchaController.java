@@ -3,8 +3,13 @@ package controller;
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -23,18 +28,28 @@ public class CaptchaController {
     private static SecretKeySpec secretKeySpec;
     private static Cipher cipher;
 
-    @SneakyThrows
-    public static void makeControllerVariable() {
-        ivParameterSpec = new IvParameterSpec(SECRET_KEY_1.getBytes("UTF-8"));
-        secretKeySpec = new SecretKeySpec(SECRET_KEY_2.getBytes("UTF-8"), "AES");
-        cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+
+    public static void makeControllerVariable(){
+        try {
+            ivParameterSpec = new IvParameterSpec(SECRET_KEY_1.getBytes("UTF-8"));
+            secretKeySpec = new SecretKeySpec(SECRET_KEY_2.getBytes("UTF-8"), "AES");
+            cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+        }catch (NoSuchPaddingException | NoSuchAlgorithmException | UnsupportedEncodingException e1){
+            System.out.println("An error occurred.[make controller variables]");
+        }
+
     }
 
-    @SneakyThrows
-    public static String decrypt(String encrypted) {
-        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
-        byte[] decryptedBytes = cipher.doFinal(Base64.decodeBase64(encrypted));
-        return new String(decryptedBytes);
+
+    public static String decrypt(String encrypted){
+        try {
+            cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
+            byte[] decryptedBytes = cipher.doFinal(Base64.decodeBase64(encrypted));
+            return new String(decryptedBytes);
+        }catch (InvalidAlgorithmParameterException| InvalidKeyException| IllegalBlockSizeException| BadPaddingException e){
+            System.out.println("An error occurred.[decrypt]");
+        }
+        return "";
     }
 
     public static String makeRandomNumber() {
@@ -49,16 +64,20 @@ public class CaptchaController {
         return output.toString();
     }
 
-    @SneakyThrows
+
     private static String getStringOfCaptcha(char num) {
-        String path = Paths.CAPTCHA_DATA_PATH.getPath() + num + ".txt";
-        String cipherText = new String(Files.readAllBytes(Path.of(path)));
-        CaptchaController.makeControllerVariable();
-        return decrypt(cipherText);
+        try {
+            String path = Paths.CAPTCHA_DATA_PATH.getPath() + num + ".txt";
+            String cipherText = new String(Files.readAllBytes(Path.of(path)));
+            CaptchaController.makeControllerVariable();
+            return decrypt(cipherText);
+        }catch (IOException e){
+            System.out.println("An error occurred.[make captcha]");
+        }
+        return "";
     }
 
-    @SneakyThrows
-    public static String makePictureWithoutNoise(String value) {
+    public static String makePictureWithoutNoise(String value){
         char[] valueChars = value.toCharArray();
         String[] picture = {"", "", "", "", "", ""};
 
@@ -103,14 +122,18 @@ public class CaptchaController {
         return result.toString();
     }
 
-    @SneakyThrows
     public static Captcha createCaptcha() {
-        Captcha captcha = new Captcha();
-        System.out.println(captcha.getCaptchaImage());
-        return captcha;
+        try {
+            Captcha captcha = new Captcha();
+            System.out.println(captcha.getCaptchaImage());
+            return captcha;
+        }catch (InvalidAlgorithmParameterException| NoSuchPaddingException| IllegalBlockSizeException| IOException| NoSuchAlgorithmException| BadPaddingException |InvalidKeyException e){
+            System.out.println("An error occurred.[make captcha]");
+        }
+        return null;
     }
 
-    public static boolean isCaptchaTrue(Scanner scanner) {
+    public static boolean isCaptchaTrue(Scanner scanner){
         Captcha captcha = createCaptcha();
         String input;
         int counter = 1;

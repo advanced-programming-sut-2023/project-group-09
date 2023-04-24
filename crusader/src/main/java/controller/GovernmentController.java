@@ -47,8 +47,12 @@ public class GovernmentController {
         return "";
     }
 
-    public static void consumeProduct(Government government,String product,int amount){
+    public static boolean consumeProduct(Government government,String product,int amount){
         Goods property = GameGoods.getProduct(product);
+        if(government.getPropertyAmount(product) < amount){
+            return false;
+        }
+
         if (property != null) {
             String storageName = property.getNameOfStorage();
             government.addAmountToProperties(product, property.getType(), -amount);
@@ -67,6 +71,7 @@ public class GovernmentController {
         } else {
             government.addAmountToProperties(product, null, -amount);
         }
+        return true;
     }
 
     /*public static boolean checkRate(int rate , int lowerbound , int upperbound) {

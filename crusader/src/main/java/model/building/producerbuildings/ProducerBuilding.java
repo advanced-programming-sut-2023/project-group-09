@@ -1,6 +1,5 @@
 package model.building.producerbuildings;
 
-import enumeration.Textures;
 import controller.GovernmentController;
 import model.Government;
 import model.building.Building;
@@ -37,8 +36,8 @@ public class ProducerBuilding extends Building {
         this.itemName = itemName;
     }
 
-    public void doAction(){
-        if (countOfRoundsToProduce == 0){
+    public void doAction() {
+        if (countOfRoundsToProduce == 0) {
             addProduct();
             computeActionTurn();
         }
@@ -70,7 +69,9 @@ public class ProducerBuilding extends Building {
         required.put(name, amount);
     }
 
-    public void setItemName(String name) {itemName = name;}
+    public void setItemName(String name) {
+        itemName = name;
+    }
 
     public boolean hasRequired() {
         Government government = this.getGovernment();
@@ -87,10 +88,9 @@ public class ProducerBuilding extends Building {
         for (String product : required.keySet()) {
             GovernmentController.consumeProduct(government, product, required.get(product));
         }
-
     }
 
-    public void computeActionTurn(){
+    public void computeActionTurn() {
         //-----
     }
 

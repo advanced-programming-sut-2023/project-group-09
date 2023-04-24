@@ -74,7 +74,7 @@ public class UserController {
         if (!SignupMenuCommands.USERNAME_VALIDATION.getMatcher(user.get("username")).matches())
             return "username is not valid";
 
-        if (Application.isUserExistsByName(user.get("username")) == true)
+        if (Application.isUserExistsByName(user.get("username")))
             return "username already exists";
 
         String passwordValidation = validatePassword(user.get("password"));
@@ -83,7 +83,7 @@ public class UserController {
         if (user.get("passwordConfirm") != null && !user.get("passwordConfirm").equals(user.get("password")))
             return "password confirmation doesn't match with password";
 
-        if (Application.isUserExistsByEmail(user.get("email")) == true)
+        if (Application.isUserExistsByEmail(user.get("email")))
             return "email has already been used";
 
         if (!SignupMenuCommands.EMAIL_VALIDATION.getMatcher(user.get("email")).matches())
