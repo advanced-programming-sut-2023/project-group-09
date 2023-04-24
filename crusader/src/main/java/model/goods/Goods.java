@@ -46,8 +46,4 @@ public class Goods {
         return price;
     }
 
-    @Override
-    public Goods clone() throws CloneNotSupportedException {
-        return (Goods) super.clone();
-    }
 }

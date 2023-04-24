@@ -78,22 +78,23 @@ public class GameController {
     }
 
     public static String dropBuilding(String x, String y, String type) {
-        int xCoord, yCoord;
-        try {
-            xCoord = Integer.parseInt(x);
-        } catch (NumberFormatException e) {
-            return BuildingAnswers.getMessage(BuildingAnswers.INVALID_X_COORD_ERROR);
-        }
-        try {
-            yCoord = Integer.parseInt(x);
-        } catch (NumberFormatException e) {
-            return BuildingAnswers.getMessage(BuildingAnswers.INVALID_Y_COORD_ERROR);
-        }
-        Building building = getInstanceOfBuilding(xCoord, yCoord, type); // TODO: get instance of supposed building.
-        if (building == null)
-            return BuildingAnswers.getMessage(BuildingAnswers.ERROR_FOR_DROP_BUILDING);
-        GameController.getGame().getMap().getTile(xCoord, yCoord).setBuilding(building);
-        return BuildingAnswers.getMessage(BuildingAnswers.DROP_BUILDING_SUCCESSFULLY_DONE);
+//        int xCoord, yCoord;
+//        try {
+//            xCoord = Integer.parseInt(x);
+//        } catch (NumberFormatException e) {
+//            return BuildingAnswers.getMessage(BuildingAnswers.INVALID_X_COORD_ERROR);
+//        }
+//        try {
+//            yCoord = Integer.parseInt(x);
+//        } catch (NumberFormatException e) {
+//            return BuildingAnswers.getMessage(BuildingAnswers.INVALID_Y_COORD_ERROR);
+//        }
+//        Building building = getInstanceOfBuilding(xCoord, yCoord, type); // TODO: get instance of supposed building.
+//        if (building == null)
+//            return BuildingAnswers.getMessage(BuildingAnswers.ERROR_FOR_DROP_BUILDING);
+//        GameController.getGame().getMap().getTile(xCoord, yCoord).setBuilding(building);
+//        return BuildingAnswers.getMessage(BuildingAnswers.DROP_BUILDING_SUCCESSFULLY_DONE);
+        return null;
     }
 
     public static Building getInstanceOfBuilding(int x, int y, String typeOfBuilding) {
@@ -121,19 +122,19 @@ public class GameController {
         Tile tile = GameController.getGame().getMap().getTile(x, y);
 
         String details = "tile (" + x + ", " + y + ") details:\n";
-        details += "texture type: " + tile.getTexture().getTextureName();
-
-        if (tile.getBuilding() != null) {
-            details += "building " + tile.getBuilding().getName() + " from government " + tile.getBuilding().getGovernment() +
-                    " | HP: " + tile.getBuilding().getHp() + "/" + tile.getBuilding().getMaxHp() + "\n";
-        } else details += "there is no building on this tile\n";
-
-        for (int i = 0; i < tile.getHuman().size(); i++) {
-            Human human = tile.getHuman().get(i);
-//            TODO: add human type and government
-        }
-        if (tile.getHuman().size() > 0) details += "total number of humans: " + tile.getHuman().size();
-        else details += "there are no humans on this tile";
+//        details += "texture type: " + tile.getTexture().getTextureName();
+//
+//        if (tile.getBuilding() != null) {
+//            details += "building " + tile.getBuilding().getName() + " from government " + tile.getBuilding().getGovernment() +
+//                    " | HP: " + tile.getBuilding().getHp() + "/" + tile.getBuilding().getMaxHp() + "\n";
+//        } else details += "there is no building on this tile\n";
+//
+//        for (int i = 0; i < tile.getHuman().size(); i++) {
+//            Human human = tile.getHuman().get(i);
+////            TODO: add human type and government
+//        }
+//        if (tile.getHuman().size() > 0) details += "total number of humans: " + tile.getHuman().size();
+//        else details += "there are no humans on this tile";
 
         return details;
     }

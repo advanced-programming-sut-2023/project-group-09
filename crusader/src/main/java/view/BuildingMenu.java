@@ -85,11 +85,7 @@ public class BuildingMenu {
                     System.out.println(Answers.INVALID_COMMAND);
                 }
             } else if (isThisBuildingSelected(Buildings.SHOP)) {
-                if (true) { // TODO: I don't know :)
-                    System.out.println(BuildingController.shop());
-                } else {
-                    System.out.println(Answers.INVALID_COMMAND);
-                }
+                MarketMenu.run(scanner);
             } else if (isThisBuildingSelected(Buildings.STOCK_PILE)) {
                 Matcher showSavedGoodsMatcher = BuildingMenuCommands.getMatcher(command , BuildingMenuCommands.SHOW_GOODS_SAVED);
                 if (showSavedGoodsMatcher.matches()) {

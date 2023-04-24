@@ -27,6 +27,7 @@ public class GovernmentController {
         output.append("fear : ").append(getTaxPopularity(currentGovernment.getTaxRate())).append("\n");
         output.append("religion : ").append(currentGovernment.getPopularityOfReligion()).append("\n");
         output.append("ale coverage : ").append(currentGovernment.getPopularityOfAleCoverage()).append("\n");
+        //TODO add unemployed rate
         return "";
     }
 

@@ -3,14 +3,13 @@ package model.building;
 import enumeration.BuildingStates;
 import enumeration.Textures;
 import model.Government;
-import model.human.Human;
 import model.Permission;
-import model.human.civilian.Civilian;
+import model.human.Human;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Building implements Cloneable{
+public class Building implements Cloneable {
     private Government government = null;
     private ArrayList<Permission> landPermissions;
     private ArrayList<Permission> activityPermissions;
@@ -25,6 +24,8 @@ public class Building implements Cloneable{
     private int numberOfRequiredWorkers;
     private int numberOfRequiredEngineers;
     private BuildingStates state;
+
+    private int buildingImpassableLength = -1;
     private boolean hasSpecialTexture = false;
     private ArrayList<Textures> suitableTextures = new ArrayList<>();
     private boolean shouldBeOne = false;
@@ -192,11 +193,28 @@ public class Building implements Cloneable{
         cost.put(key, value);
     }
 
+    public ArrayList<Textures> getSuitableTextures() {
+        return suitableTextures;
+    }
+
+    public boolean getHasSpecialTexture() {
+        return hasSpecialTexture;
+    }
+
     public void addTexture(Textures texture) {
         suitableTextures.add(texture);
     }
-    public void enableHasSpecialTexture(){
+
+    public void enableHasSpecialTexture() {
         hasSpecialTexture = true;
+    }
+
+    public void setBuildingImpassableLength(int buildingNumber) {
+        buildingImpassableLength = buildingNumber;
+    }
+
+    public int getBuildingImpassableLength() {
+        return buildingImpassableLength;
     }
 
     @Override

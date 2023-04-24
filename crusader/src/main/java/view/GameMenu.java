@@ -17,6 +17,7 @@ public class GameMenu {
     public static void run(Scanner scanner, Game game) {
         String input, output;
         System.out.println("<< Game Menu >>");
+        //TODO add try catch of parseInt
         while (true) {
             input = scanner.nextLine();
             Matcher dropBuildingMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.DROP_BUILDING);
@@ -24,7 +25,6 @@ public class GameMenu {
             Matcher selectUnitMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.SELECT_UNIT);
             Matcher governmentMenuMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.GOVERNMENT_MENU);
             Matcher tradeMenuMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.TRADE_MENU);
-            Matcher marketMenuMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.MARKET_MENU);
             Matcher nextTurnMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.NEXT_TURN);
             Matcher showPlayerMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.SHOW_PLAYER);
             Matcher showRoundMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.SHOW_ROUND);
@@ -72,8 +72,6 @@ public class GameMenu {
                 GovernmentMenu.run(scanner);
             } else if (tradeMenuMatcher.matches()) {
                 TradeMenu.run(scanner);
-            } else if (marketMenuMatcher.matches()) {
-                MarketMenu.run(scanner);
             } else if (nextTurnMatcher.matches()) {
                 output = GameController.changeTurn();
                 System.out.println(output);

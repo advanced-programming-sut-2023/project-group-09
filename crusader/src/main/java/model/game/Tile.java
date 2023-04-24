@@ -2,7 +2,9 @@ package model.game;
 
 import enumeration.Textures;
 import model.building.Building;
-import model.human.Human;
+import model.human.civilian.Civilian;
+import model.human.civilian.Civilian;
+import model.human.military.Military;
 
 import java.util.ArrayList;
 
@@ -14,19 +16,29 @@ public class Tile {
 
     private Textures texture = Textures.EARTH;
     private Building building = null;
-    private ArrayList<Human> humans = new ArrayList<>();
+    private ArrayList<Civilian> civilians = new ArrayList<>();
+
+    public ArrayList<Military> getMilitaries() {
+        return militaries;
+    }
+
+    public void setMilitaries(ArrayList<Military> militaries) {
+        this.militaries = militaries;
+    }
+
+    private ArrayList<Military> militaries = new ArrayList<>();
     private boolean isMoat;
     private boolean isPit;
 
     private boolean passable = true;
     private boolean canPutBuilding = true;
 
-    public ArrayList<Human> getHumans() {
-        return humans;
+    public ArrayList<Civilian> getCivilians() {
+        return civilians;
     }
 
-    public void setHumans(ArrayList<Human> humans) {
-        this.humans = humans;
+    public void setCivilians(ArrayList<Civilian> civilian) {
+        this.civilians = civilian;
     }
 
     public boolean isPassable() {
@@ -37,7 +49,7 @@ public class Tile {
         this.passable = passable;
     }
 
-    public boolean isCanPutBuilding() {
+    public boolean getCanPutBuilding() {
         return canPutBuilding;
     }
 
@@ -54,7 +66,14 @@ public class Tile {
     }
 
     public void setTexture(Textures texture) {
-        this.texture = texture;
+        if(building == null){
+            this.texture = texture;
+            passable = texture.isPassable();
+            if(!texture.isPassable()){
+                civilians.clear();
+            }
+            canPutBuilding = texture.getCanPutBuilding();
+        }
     }
 
     public Building getBuilding() {
@@ -65,12 +84,16 @@ public class Tile {
         this.building = building;
     }
 
-    public ArrayList<Human> getHuman() {
-        return humans;
+    public ArrayList<Civilian> getCivilian() {
+        return civilians;
     }
 
-    public void setHuman(ArrayList<Human> human) {
-        this.humans = human;
+    public void setCivilian(ArrayList<Civilian> human) {
+        this.civilians = human;
+    }
+
+    public void addMilitary(Military military){
+        militaries.add(military);
     }
 
     public boolean isMoat() {
@@ -87,5 +110,13 @@ public class Tile {
 
     public void setPit(boolean pit) {
         isPit = pit;
+    }
+
+    public void clearCivilian(){
+        civilians.clear();
+    }
+
+    public void clearMilitary(){
+        militaries.clear();
     }
 }

@@ -57,7 +57,7 @@ public class BuildingController {
     }
 
     public static String repair() {
-        // TODO: how to repair?
+        //TODO: how to repair?
         return "";
     }
 
@@ -90,7 +90,7 @@ public class BuildingController {
         if (!barrack.getUnits().contains(unitName)) {
             return BuildingAnswers.getMessage(BuildingAnswers.INVALID_UNIT_NAME);
         }
-        // TODO: how to buy? --check he has enough money to pay or not
+        //TODO: how to buy? --check he has enough money to pay or not
         return "";
     }
 
@@ -109,7 +109,7 @@ public class BuildingController {
     }
 
     public static String howManyHorses() {
-        // TODO: handle it!
+        //TODO: handle it!
         return "";
     }
 }

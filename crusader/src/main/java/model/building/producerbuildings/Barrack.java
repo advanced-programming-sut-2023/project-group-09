@@ -10,16 +10,17 @@ import model.human.military.EuropeanTroop;
 import model.human.military.Military;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Barrack extends Building{
 
     private final ArrayList<String> units = new ArrayList<>();
 
-    private int BuildingNumber = 4;
 
     public Barrack(int numberOfRequiredWorkers, int numberOfRequiredEngineers, String name, int maxHp, int width, int length) {
         super(numberOfRequiredWorkers,numberOfRequiredEngineers, name,maxHp, width, length);
         this.changeShouldBeOne();
+        this.setBuildingImpassableLength(4);
     }
 
     public ArrayList<String> getUnits() {
@@ -32,26 +33,23 @@ public class Barrack extends Building{
 
     public Military makeUnit(String name){
         try {
-            if(!checkRequired(name)){
+            int[] coordinate = makePositionOfUnit();
+            int x = coordinate[0];
+            int y = coordinate[1];
+            if(!checkRequired(name,x,y)){
                 return null;
             }
-            return (Military) GameHumans.getUnit(name).clone();
+            return GameHumans.getUnit(name,this.getGovernment(),x,y).clone();
         }catch (CloneNotSupportedException e){
             System.out.println("An error occurred.[make unit]");
         }
         return null;
     }
 
-    public void setBuildingNumber(int buildingNumber) {
-        BuildingNumber = buildingNumber;
-    }
 
-    public int getBuildingNumber() {
-        return BuildingNumber;
-    }
 
-    public boolean checkRequired(String name){
-        Military military = GameHumans.getUnit(name);
+    public boolean checkRequired(String name,int x,int y){
+        Military military = GameHumans.getUnit(name,this.getGovernment(),x,y);
         int price = military.getPrice();
 
         if (price > this.getGovernment().getGold()){
@@ -76,5 +74,17 @@ public class Barrack extends Building{
 
         this.getGovernment().addGold(price);
         return true;
+    }
+
+
+    public int[] makePositionOfUnit(){
+        Random random = new Random();
+        int x = random.nextInt(this.getWidth());
+        int y = random.nextInt(this.getLength());
+        while (x < this.getBuildingImpassableLength() && y < this.getBuildingImpassableLength()){
+            x = random.nextInt(this.getWidth());
+            y = random.nextInt(this.getLength());
+        }
+        return new int[]{x,y};
     }
 }

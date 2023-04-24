@@ -3,6 +3,8 @@ package controller.gamestructure;
 import enumeration.AttackRating;
 import enumeration.DefenseRating;
 import enumeration.Speed;
+import model.Government;
+import model.building.Building;
 import model.human.Human;
 import model.human.military.ArabianMercenary;
 import model.human.military.EuropeanTroop;
@@ -19,10 +21,17 @@ public class GameHumans {
     public static void addHumans() {
     }
 
-    public static Military getUnit(String name){
-        return militaries.get(name);
+    public static Military getUnit(String name, Government government, int x, int y) {
+        try {
+            Military military= militaries.get(name).clone();
+            military.setGovernment(government);
+            military.setX(x);
+            military.setY(y);
+            return military;
+        } catch (CloneNotSupportedException e) {
+            return null;
+        }
     }
-
     public static void addEuropeanTroops() {
         createArcher();
         createCrossbowman();

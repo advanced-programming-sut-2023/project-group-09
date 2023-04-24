@@ -19,7 +19,21 @@ public enum Textures {
     BEACH("beach" , true,true),
     SEA("sea" , false,false);
 
-    private Textures(String name , boolean passable,boolean canPutBuilding) {
+    public String getName() {
+        return name;
+    }
+
+    public boolean isPassable() {
+        return passable;
+    }
+
+
+    public boolean getCanPutBuilding() {
+        return canPutBuilding;
+    }
+
+
+    private Textures(String name , boolean passable, boolean canPutBuilding) {
         this.name = name;
         this.passable = passable;
         this.canPutBuilding = canPutBuilding;

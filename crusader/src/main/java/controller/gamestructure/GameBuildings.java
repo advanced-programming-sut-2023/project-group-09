@@ -1,6 +1,7 @@
 package controller.gamestructure;
 
 import enumeration.Textures;
+import model.Government;
 import model.building.Building;
 import model.building.castlebuildings.Gatehouse;
 import model.building.castlebuildings.MainCastle;
@@ -13,7 +14,6 @@ import model.building.producerbuildings.WeaponProducer;
 import model.building.storagebuildings.StorageBuilding;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class GameBuildings {
     public static HashMap<String, Building> buildings = new HashMap<>();
@@ -21,6 +21,17 @@ public class GameBuildings {
     public static HashMap<String, Building> storageBuildings = new HashMap<>();
     public static HashMap<String, Building> castleBuildings = new HashMap<>();
 
+    public static Building getBuilding(String name, Government government,int x,int y){
+        try {
+            Building building = buildings.get(name).clone();
+            building.setGovernment(government);
+            building.setStartX(x);
+            building.setStartY(y);
+            return building;
+        }catch (CloneNotSupportedException e){
+            return null;
+        }
+    }
     public static void addBuildings() {
         createShop();
         createHovel();
@@ -210,7 +221,7 @@ public class GameBuildings {
         barrack.addUnit("maceman");
         barrack.addUnit("swordsman");
         barrack.addUnit("knight");
-        barrack.setBuildingNumber(5);
+        barrack.setBuildingImpassableLength(5);
         barrack.addCost("stone",15);
         buildings.put("barrack",barrack);
     }
@@ -226,7 +237,7 @@ public class GameBuildings {
         barrack.addUnit("horseArcher");
         barrack.addUnit("arabianSwordsman");
         barrack.addUnit("fireThrower");
-        barrack.setBuildingNumber(5);
+        barrack.setBuildingImpassableLength(5);
         barrack.addCost("wood",10);
         buildings.put("mercenaryPost",barrack);
     }
@@ -326,7 +337,7 @@ public class GameBuildings {
 
         barrack.addUnit("blackmonk");
         barrack.changeShouldBeOne();
-        barrack.setBuildingNumber(15);
+        barrack.setBuildingImpassableLength(15);
         barrack.setPrice(1000);
         buildings.put("cathedral", barrack);
     }
@@ -444,9 +455,10 @@ public class GameBuildings {
         producerBuilding.addCost("wood", 5);
 
         producerBuilding.enableHasSpecialTexture();
-        producerBuilding.addTexture(Textures.OASIS_GRASS);
         producerBuilding.addTexture(Textures.THICK_GRASS);
-
+        producerBuilding.addTexture(Textures.OASIS_GRASS);
+        producerBuilding.addTexture(Textures.GRASS);
+        producerBuilding.setBuildingImpassableLength(3);
 
         producerBuildings.put("appleGarden", producerBuilding);
         buildings.put("appleGarden", producerBuilding);
@@ -459,9 +471,10 @@ public class GameBuildings {
         producerBuilding.addCost("wood",10);
 
         producerBuilding.enableHasSpecialTexture();
-        producerBuilding.addTexture(Textures.OASIS_GRASS);
         producerBuilding.addTexture(Textures.THICK_GRASS);
-
+        producerBuilding.addTexture(Textures.OASIS_GRASS);
+        producerBuilding.addTexture(Textures.GRASS);
+        producerBuilding.setBuildingImpassableLength(3);
 
         producerBuildings.put("dairyProducts", producerBuilding);
         buildings.put("dairyProducts", producerBuilding);
@@ -474,10 +487,11 @@ public class GameBuildings {
         producerBuilding.addCost("wood", 15);
 
         producerBuilding.enableHasSpecialTexture();
-        producerBuilding.addTexture(Textures.OASIS_GRASS);
         producerBuilding.addTexture(Textures.THICK_GRASS);
+        producerBuilding.addTexture(Textures.OASIS_GRASS);
+        producerBuilding.addTexture(Textures.GRASS);
 
-
+        producerBuilding.setBuildingImpassableLength(3);
         producerBuildings.put("hopFarm", producerBuilding);
         buildings.put("hopFarm", producerBuilding);
     }
@@ -500,11 +514,11 @@ public class GameBuildings {
                 40,9,9,5,"stockPile","resource","wheat");
 
         producerBuilding.addCost("wood", 15);
-
+        producerBuilding.setBuildingImpassableLength(3);
         producerBuilding.enableHasSpecialTexture();
-        producerBuilding.addTexture(Textures.OASIS_GRASS);
         producerBuilding.addTexture(Textures.THICK_GRASS);
-
+        producerBuilding.addTexture(Textures.OASIS_GRASS);
+        producerBuilding.addTexture(Textures.GRASS);
 
         producerBuildings.put("wheatFarm", producerBuilding);
         buildings.put("wheatFarm", producerBuilding);
