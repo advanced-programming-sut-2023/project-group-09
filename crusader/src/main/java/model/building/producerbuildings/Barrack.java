@@ -2,6 +2,7 @@ package model.building.producerbuildings;
 
 
 import controller.GovernmentController;
+import controller.MapController;
 import controller.gamestructure.GameHumans;
 
 import model.Government;
@@ -10,6 +11,7 @@ import model.human.military.EuropeanTroop;
 import model.human.military.Military;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 public class Barrack extends Building{
@@ -39,7 +41,10 @@ public class Barrack extends Building{
             if(!checkRequired(name,x,y)){
                 return null;
             }
-            return GameHumans.getUnit(name,this.getGovernment(),x,y).clone();
+            Military military = Objects.requireNonNull(GameHumans.getUnit(name, this.getGovernment(), x, y)).clone();
+            MapController.dropMilitary(x,y,military);
+            this.getGovernment().addMilitary(military);
+            return military;
         }catch (CloneNotSupportedException e){
             System.out.println("An error occurred.[make unit]");
         }

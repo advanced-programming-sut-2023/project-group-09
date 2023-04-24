@@ -125,5 +125,8 @@ public class MapController {
         Tile tile = map.getTile(x - 1, y - 1);
         tile.addMilitary(military);
     }
-
+    public static void dropMilitary(int x, int y, Military military) {
+        Tile tile = map.getTile(x - 1, y - 1);
+        tile.addMilitary(military);
+    }
 }

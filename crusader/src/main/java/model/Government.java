@@ -228,4 +228,8 @@ public class Government {
         }
         return var;
     }
+
+    public void addMilitary(Military military){
+        troops.add(military);
+    }
 }
