@@ -72,9 +72,14 @@ public class TradeController {
         if(!check){
             return "your resource is not enough!";
         }
+
+        if (trade.getSender().getGold() < trade.getPrice()){
+            return "sender doesn't have enough money!";
+        }
         trade.setAcceptMessage(message);
         trade.setIsAccepted(true);
         currentGovernment.addGold(trade.getPrice());
+        trade.getSender().addGold(-trade.getPrice());
         return "request accepted successfully";
     }
 
@@ -113,7 +118,11 @@ public class TradeController {
         }
 
         if (GameGoods.getProduct(resourceType) == null) {
-            return "resource type is invalid";
+            return "resource type is invalid!";
+        }
+
+        if (resourceAmount == 0){
+            return "amount value can not be 0!";
         }
         return null;
     }

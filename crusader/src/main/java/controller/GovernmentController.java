@@ -74,6 +74,24 @@ public class GovernmentController {
         return true;
     }
 
+    public static int generateProduct(Government government,String name,int amount){
+        Goods product = GameGoods.getProduct(name);
+        int rate = amount;
+        ArrayList<Building> storages = government.getBuildings().get(product.getNameOfStorage()).getBuildings();
+        for (Building building : storages) {
+            if (amount == 0) {
+                break;
+            }
+            StorageBuilding storage = (StorageBuilding) building;
+            int saved = Math.min(amount, storage.remained());
+            amount -= saved;
+            storage.addAmount(saved);
+            storage.addItem(name, saved);
+        }
+        government.addAmountToProperties(product.getName(), product.getType(), rate - amount);
+        return rate - amount;
+    }
+
     /*public static boolean checkRate(int rate , int lowerbound , int upperbound) {
         return false;
     }*/
