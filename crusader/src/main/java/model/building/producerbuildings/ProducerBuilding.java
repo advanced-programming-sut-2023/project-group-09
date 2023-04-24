@@ -16,6 +16,7 @@ public class ProducerBuilding extends Building {
     private String itemName;
     private final String itemType;
     private final int rate;
+    private int inUse; // it just uses for stable //TODO: handle it.
 
     private int countOfRoundsToProduce = 0;
 

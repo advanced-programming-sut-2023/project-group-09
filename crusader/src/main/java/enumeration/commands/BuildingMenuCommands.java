@@ -3,15 +3,18 @@ package enumeration.commands;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public enum BuildingMenuCommands {DROP_BUILDING_REGEX("dropbuilding(?<content>.+)"),
-    X_COORD_REGEX("-x (?<x>[\\S]+)"),
-    Y_COORD_REGEX("-y (?<y>[\\S]+)"),
-    TYPE_REGEX("-type (?<type>[^\\s\\-]+|\"[^\"]+\")"),
-    SELECT_BUILDING_REGEX("select building(?<content>.+)"),
-    CREATE_UNIT_REGEX("createunit( -t (?<type>.+)| -c (?<count>[\\S]+))*"),
-    REPAIR_REGEX("repair");
+public enum BuildingMenuCommands {USELECT_BUILDING("unselect"),
+    CHANGE_TAX_RATE("tax rate -r (?<ratenumber>.+)"),
+    SHOW_TAX_RATE("tax rate show"),
+    OPEN_OR_CLOSE_GATEHOUSE("(?<order>(close|open)) gatehouse"),
+    REPAIR_IT("repair it"),
+    SHOW_GATE_STATE("show state"),
+    SHOW_WEAPONS("show weapons"),
+    SHOW_UNITS_LIST("show units list"),
+    BUY_UNIT("buy unit (?<unitname>.+)"),
+    SHOW_GOODS_SAVED("show saved goods"),
+    HOW_MANY_HORSES("how many horses");
     private String regex;
-
     private BuildingMenuCommands(String regex) {
         this.regex = regex;
     }

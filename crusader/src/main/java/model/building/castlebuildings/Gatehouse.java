@@ -10,7 +10,8 @@ public class Gatehouse extends CastleBuilding {
     private boolean isRightSide;
     private boolean isOpen = true;
     private String typeOfGate;
-    private Gatehouse drawBridge; // if gatehouse has drawbridge
+    private Gatehouse drawBridge_gatehouse; // if gatehouse has drawbridge
+
 
     public boolean isRightSide() {
         return isRightSide;
@@ -28,12 +29,12 @@ public class Gatehouse extends CastleBuilding {
         isOpen = open;
     }
 
-    public Gatehouse getDrawBridge() {
-        return drawBridge;
+    public Gatehouse getDrawBridge_gatehouse() {
+        return drawBridge_gatehouse;
     }
 
-    public void setDrawBridge(Gatehouse drawBridge) {
-        this.drawBridge = drawBridge;
+    public void setDrawBridge_gatehouse(Gatehouse drawBridge) {
+        this.drawBridge_gatehouse = drawBridge;
     }
 
     public String getTypeOfGate() {
@@ -88,8 +89,8 @@ public class Gatehouse extends CastleBuilding {
         return null;
     }
 
-    public void openOrCloseGatehouse() {
-        this.setOpen(!this.isOpen);
-        this.drawBridge.setOpen(!this.isOpen);
+    public void openOrCloseGatehouse(boolean openIt) {
+        this.setOpen(openIt);
+        this.drawBridge_gatehouse.setOpen(openIt);
     }
 }

@@ -236,7 +236,6 @@ public class GameBuildings {
                 "engineerGuild",80,4,11);
         barrack.addUnit("engineer");
         barrack.addUnit("ladderman");
-
         barrack.addCost("wood",10);
         barrack.setPrice(100);
         buildings.put("engineerGuild",barrack);
@@ -357,7 +356,7 @@ public class GameBuildings {
 
 
         producerBuilding.addWeapon("sword");
-        producerBuilding.addWeapon("sword");
+        producerBuilding.addWeapon("mace");
 
         producerBuilding.addRequired("iron", 1);
 

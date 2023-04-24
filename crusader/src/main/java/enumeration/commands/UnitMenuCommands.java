@@ -10,26 +10,27 @@ public enum UnitMenuCommands {
     ATTACK("attack(?<items>.+)"),
     POUR_OIL("pour oil -d (?<direction>(\"[^\"]\"|\\S+))"),
     DIG_TUNNEL("dig tunnel(?<items>.+)"),
-    BUILD("build -q (?<equipment>(\"[^\"]\"|\\S+))"),
+    BUILD("build"),
+    DIG_MOAT("dig moat"),
     DISBAND_UNIT("disband unit"),
     X_ITEM(" -x (?<x>\\d+)"),
-    Y_ITEM(" -y (?<y>\\d+"),
+    Y_ITEM(" -y (?<y>\\d+)"),
     X1_ITEM(" -x1 (?<x1>\\d+)"),
     Y1_ITEM(" -y1 (?<y1>\\d+"),
     X2_ITEM(" -x2 (?<x2>\\d+)"),
     Y2_ITEM(" -y2 (?<y2>\\d+"),
-    S_ITEM(" -s (?<state>(\"[^\"]\"|\\S+))")
-    ;
+    S_ITEM(" -s (?<state>(\"[^\"]\"|\\S+))");
     private final String regex;
 
-    UnitMenuCommands(String regex){
+    UnitMenuCommands(String regex) {
         this.regex = regex;
     }
 
-    public static Matcher getMatcher(String input, UnitMenuCommands command){
+    public static Matcher getMatcher(String input, UnitMenuCommands command) {
         Pattern pattern = Pattern.compile(command.regex);
         return pattern.matcher(input);
     }
+
     public String getRegex() {
         return regex;
     }

@@ -1,12 +1,15 @@
 package view;
 
+import controller.EngineerController;
 import controller.GameController;
 import controller.ViewController;
 import enumeration.answers.Answers;
 import enumeration.commands.Commands;
 import enumeration.commands.UnitMenuCommands;
+import model.human.military.Engineer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -24,6 +27,7 @@ public class UnitMenu {
             Matcher pourOilMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.POUR_OIL);
             Matcher digTunnelMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.DIG_TUNNEL);
             Matcher buildMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.BUILD);
+            Matcher digMoatMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.DIG_MOAT);
             Matcher disbandUnitMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.DISBAND_UNIT);
             Matcher backMatcher = Commands.getMatcher(input, Commands.BACK);
 
@@ -95,9 +99,10 @@ public class UnitMenu {
                     System.out.println(output);
                 }
             } else if (buildMatcher.matches()) {
-                String equipment = buildMatcher.group("equipment");
-                output = GameController.buildEquipment(equipment);
-                System.out.println(output);
+                runBuild(scanner);
+            } else if (digMoatMatcher.matches()) {
+//                TODO: return "invalid command" if the selected unit is not an engineer
+//                TODO: call digMoat()
             } else if (disbandUnitMatcher.matches()) {
                 output = GameController.disbandUnit();
                 System.out.println(output);
@@ -108,5 +113,54 @@ public class UnitMenu {
                 System.out.println(Answers.INVALID_COMMAND.getValue());
             }
         }
+    }
+
+    private static void runBuild(Scanner scanner) {
+//        TODO: return "invalid command" if the selected unit is not an engineer
+        String message = "select one of the following tools:\n";
+        message += "1. Catapult\n";
+        message += "2. Trebuchet\n";
+        message += "3. Siege Tower\n";
+        message += "4. Battering Ram\n";
+        message += "5. Portable Shield\n";
+        message += "6. Fire Ballista\n";
+        message += "7. Back";
+        System.out.println(message);
+
+        boolean back = false;
+        int number = 0, x = 0, y = 0;
+        while (true) {
+            try {
+                number = Integer.parseInt(scanner.nextLine());
+            } catch (Exception e) {
+                System.out.println("enter a number:");
+                continue;
+            }
+            if (number < 1 || number > 7) {
+                System.out.println("invalid number\nreenter a number:");
+                continue;
+            }
+            if (number == 7) back = true;
+            break;
+        }
+
+        if (back) return;
+
+        while (true) {
+            System.out.println("enter the x and y coordinates:");
+            String coords = scanner.nextLine();
+            Matcher xMatcher = UnitMenuCommands.getMatcher(coords, UnitMenuCommands.X_ITEM);
+            Matcher yMatcher = UnitMenuCommands.getMatcher(coords, UnitMenuCommands.Y_ITEM);
+
+            if (!xMatcher.find() || !yMatcher.find()) {
+                System.out.println("invalid command");
+                continue;
+            }
+            x = Integer.parseInt(xMatcher.group("x"));
+            y = Integer.parseInt(yMatcher.group("y"));
+            break;
+        }
+
+        GameController.buildEquipment(number, x, y);
     }
 }
