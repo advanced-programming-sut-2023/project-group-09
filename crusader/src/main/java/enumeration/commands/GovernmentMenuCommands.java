@@ -7,11 +7,11 @@ public enum GovernmentMenuCommands {
     SHOW_POPULARITY_FACTORS("show popularity factors"),
     SHOW_POPULARITY("show popularity"),
     SHOW_FOOD_LIST("show food list"),
-    FOOD_RATE("food rate -r (?<rate>\\-?\\d+)"),
+    FOOD_RATE("food rate -r (?<rate>\\-?\\d*)"),
     SHOW_FOOD_RATE("show food rate"),
-    TAX_RATE("tax rate -r (?<rate>\\-?\\d+)"),
+    TAX_RATE("tax rate -r (?<rate>\\-?\\d*)"),
     SHOW_TAX_RATE("show tax rate"),
-    FEAR_RATE("fear rate -r (?<rate>\\-?\\d+)"),
+    FEAR_RATE("fear rate -r (?<rate>\\-?\\d*)"),
     SHOW_FEAR_RATE("show fear rate")
     ;
     private final String regex;

@@ -7,6 +7,7 @@ import model.game.Tile;
 import model.human.Human;
 
 public class MapController {
+
     public static String setTexture(int x, int y, Textures type) {
         GameController.getGame().getMap().getTile(x, y).setTexture(type);
         return "texture of tile (" + x + ", " + y + ") changed to " + type.getTextureName() + " successfully";

@@ -235,7 +235,7 @@
     "nameOfStorage": "stockPile",
     "itemName": "ale",
     "itemType": "resource",
-    "rate": 5,
+    "rate": 0,
     "countOfRoundsToProduce": 0,
     "required": {
       "ale": 5

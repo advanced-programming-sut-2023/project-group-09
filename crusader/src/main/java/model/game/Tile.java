@@ -12,11 +12,38 @@ public class Tile {
         this.isPit = false;
     }
 
-    private Textures texture;
+    private Textures texture = Textures.EARTH;
     private Building building = null;
     private ArrayList<Human> humans = new ArrayList<>();
     private boolean isMoat;
     private boolean isPit;
+
+    private boolean passable = true;
+    private boolean canPutBuilding = true;
+
+    public ArrayList<Human> getHumans() {
+        return humans;
+    }
+
+    public void setHumans(ArrayList<Human> humans) {
+        this.humans = humans;
+    }
+
+    public boolean isPassable() {
+        return passable;
+    }
+
+    public void setPassable(boolean passable) {
+        this.passable = passable;
+    }
+
+    public boolean isCanPutBuilding() {
+        return canPutBuilding;
+    }
+
+    public void setCanPutBuilding(boolean canPutBuilding) {
+        this.canPutBuilding = canPutBuilding;
+    }
 
     public Tile(Textures texture) {
         this.texture = texture;

@@ -1,5 +1,6 @@
 package view;
 
+import controller.GameController;
 import controller.GovernmentController;
 import enumeration.answers.Answers;
 import enumeration.commands.Commands;
@@ -13,7 +14,7 @@ public class GovernmentMenu {
 
         String input, output;
         System.out.println("<< Government Menu >>");
-
+        GovernmentController.setCurrentGovernment(GameController.getGame().getCurrentGovernment());
         while (true) {
             input = scanner.nextLine();
             Matcher showPopularityFactorsMatcher = GovernmentMenuCommands.getMatcher(input, GovernmentMenuCommands.SHOW_POPULARITY_FACTORS);
@@ -47,15 +48,31 @@ public class GovernmentMenu {
                 output = GovernmentController.showTaxRate();
                 System.out.println(output);
             } else if (setFoodRateMatcher.matches()) {
-                int rate = Integer.parseInt(setFoodRateMatcher.group("rate"));
+                int rate;
+                try {
+                  rate = Integer.parseInt(setFoodRateMatcher.group("rate"));
+                }catch (NumberFormatException e){
+                    rate = -100;
+                }
+
                 output = GovernmentController.changeFoodRate(rate);
                 System.out.println(output);
             } else if (setFearRateMatcher.matches()) {
-                int rate = Integer.parseInt(setFearRateMatcher.group("rate"));
+                int rate;
+                try {
+                    rate = Integer.parseInt(setFearRateMatcher.group("rate"));
+                }catch (NumberFormatException e){
+                    rate = -100;
+                }
                 output = GovernmentController.changeFearRate(rate);
                 System.out.println(output);
             } else if (setTaxRateMatcher.matches()) {
-                int rate = Integer.parseInt(setTaxRateMatcher.group("rate"));
+                int rate;
+                try {
+                    rate = Integer.parseInt(setTaxRateMatcher.group("rate"));
+                }catch (NumberFormatException e){
+                    rate = -100;
+                }
                 output = GovernmentController.changeTaxRate(rate);
                 System.out.println(output);
             } else if (backMatcher.matches()) {

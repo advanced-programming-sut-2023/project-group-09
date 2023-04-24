@@ -1,16 +1,10 @@
 package model;
 
-import java.lang.String;
-import enumeration.dictionary.Foodstuffs;
-import enumeration.dictionary.RawMaterials;
-import model.building.Building;
+import controller.gamestructure.GameGoods;
 import model.building.castlebuildings.MainCastle;
-import model.goods.Goods;
-import model.human.Human;
-import model.human.military.ArabianMercenary;
-import model.human.military.EuropeanTroop;
 import model.buildinghandler.BuildingCounter;
 import model.buildinghandler.Storage;
+import model.human.Human;
 import model.human.military.Lord;
 import model.human.military.Military;
 
@@ -20,9 +14,9 @@ import java.util.HashMap;
 public class Government {
     private User user;
 
-    private HashMap<String,Trade> trades = new HashMap<>();
+    private HashMap<String, Trade> trades = new HashMap<>();
 
-    private HashMap<String,Trade> newTrades = new HashMap<>();
+    private HashMap<String, Trade> newTrades = new HashMap<>();
 
     public HashMap<String, Integer> getProperties() {
         return properties;
@@ -60,7 +54,7 @@ public class Government {
 
     public void setLord(Lord lord) {
         this.lord = lord;
-        ((MainCastle)(this.getBuildings().get("MainCastle").getBuildings().get(0))).setLord(lord);
+        ((MainCastle) (this.getBuildings().get("MainCastle").getBuildings().get(0))).setLord(lord);
     }
 
     public Government(User user, int castleX, int castleY, String color) {
@@ -72,7 +66,7 @@ public class Government {
 
     public void addAmountToProperties(String itemName, String itemType, int amount) {
         this.getProperties().put(itemName, this.getProperties().get(itemName) + amount);
-        if(itemType != null){
+        if (itemType != null) {
             this.getStorages().get(itemType).addAmount(amount);
         }
     }
@@ -116,8 +110,9 @@ public class Government {
 
     public void setTaxRate(int taxRate) {
         this.taxRate = taxRate;
-        ((MainCastle)(this.getBuildings().get("MainCastle").getBuildings().get(0))).setTaxRate(taxRate);
+        ((MainCastle) (this.getBuildings().get("MainCastle").getBuildings().get(0))).setTaxRate(taxRate);
     }
+
     public void addGold(int amount) {
         this.gold += amount;
     }
@@ -177,7 +172,7 @@ public class Government {
         return 0;
     }
 
-    public int getPropertyAmount(String name){
+    public int getPropertyAmount(String name) {
         return properties.get(name);
     }
 
@@ -197,12 +192,40 @@ public class Government {
         return troops;
     }
 
-    public void addTrade(Trade trade){
+    public void addTrade(Trade trade) {
         trades.put(trade.getId(), trade);
         newTrades.put(trade.getId(), trade);
     }
 
-    public void clearTradeCash(){
+    public void clearTradeCash() {
         newTrades.clear();
+    }
+
+    public int getPopularityOfReligion() {
+        int countOfBuilding = 0;
+        countOfBuilding += buildings.get("cathedral").getNumber();
+        countOfBuilding += buildings.get("church").getNumber();
+        return countOfBuilding * 2;
+    }
+
+    public int getPopularityOfAleCoverage(){
+        int countOfBuilding = buildings.get("inn").getNumber();
+        double coverage = Math.min(countOfBuilding * 5 / population,1);
+        return (int)Math.ceil(coverage * 3);
+
+    }
+
+    public int getVarietyOfFood(){
+        int var = 0;
+        for (String food : GameGoods.foods.keySet()){
+            if(getPropertyAmount(food) != 0){
+                var++;
+            }
+        }
+        if(var == 0){
+            foodRate = -2;
+            return 1;
+        }
+        return var;
     }
 }

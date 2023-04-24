@@ -9,9 +9,24 @@ import model.goods.Goods;
 import java.util.ArrayList;
 
 public class GovernmentController {
-    public static Government currentGovernment;
+    private static Government currentGovernment;
+
+    public static Government getCurrentGovernment() {
+        return currentGovernment;
+    }
+
+    public static void setCurrentGovernment(Government currentGovernment) {
+        GovernmentController.currentGovernment = currentGovernment;
+    }
 
     public static String showPopularityFactors() {
+        StringBuilder output = new StringBuilder();
+        int foodRate = currentGovernment.getVarietyOfFood() + getFoodPopularity(currentGovernment.getFoodRate()) - 1;
+        output.append("food : ").append(foodRate).append("\n");
+        output.append("tax : ").append(currentGovernment.getFearRate()).append("\n");
+        output.append("fear : ").append(getTaxPopularity(currentGovernment.getTaxRate())).append("\n");
+        output.append("religion : ").append(currentGovernment.getPopularityOfReligion()).append("\n");
+        output.append("ale coverage : ").append(currentGovernment.getPopularityOfAleCoverage()).append("\n");
         return "";
     }
 
@@ -20,7 +35,11 @@ public class GovernmentController {
     }
 
     public static String changeFoodRate(int rate) {
-        return "";
+        if (-2 <= rate && rate <= 2) {
+            currentGovernment.setFoodRate(rate);
+            return "food rate change successfully!";
+        }
+        return "invalid food rate!";
     }
 
     public static String showFoodList() {
@@ -28,28 +47,36 @@ public class GovernmentController {
     }
 
     public static String showFoodRate() {
-        return "";
+        return "food rate: " + currentGovernment.getFoodRate();
     }
 
     public static String showTaxRate() {
-        return "";
+        return "tax rate: " + currentGovernment.getTaxRate();
     }
 
     public static String changeTaxRate(int rate) {
-        return "";
+        if (-3 <= rate && rate <= 8) {
+            currentGovernment.setTaxRate(rate);
+            return "tax rate change successfully!";
+        }
+        return "invalid tax rate!";
     }
 
     public static String changeFearRate(int rate) {
-        return "";
+        if (-5 <= rate && rate <= 5) {
+            currentGovernment.setFearRate(rate);
+            return "fear rate change successfully!";
+        }
+        return "invalid fear rate!";
     }
 
     public static String showFearRate() {
-        return "";
+        return "fear rate: " + currentGovernment.getFearRate();
     }
 
-    public static boolean consumeProduct(Government government,String product,int amount){
+    public static boolean consumeProduct(Government government, String product, int amount) {
         Goods property = GameGoods.getProduct(product);
-        if(government.getPropertyAmount(product) < amount){
+        if (government.getPropertyAmount(product) < amount) {
             return false;
         }
 
@@ -74,7 +101,7 @@ public class GovernmentController {
         return true;
     }
 
-    public static int generateProduct(Government government,String name,int amount){
+    public static int generateProduct(Government government, String name, int amount) {
         Goods product = GameGoods.getProduct(name);
         int rate = amount;
         ArrayList<Building> storages = government.getBuildings().get(product.getNameOfStorage()).getBuildings();
@@ -91,6 +118,61 @@ public class GovernmentController {
         government.addAmountToProperties(product.getName(), product.getType(), rate - amount);
         return rate - amount;
     }
+
+    public static int getFoodPopularity(int num) {
+        return switch (num) {
+            case -2 -> -8;
+            case -1 -> -4;
+            case 1 -> 4;
+            case 2 -> 8;
+            default -> 0;
+        };
+    }
+
+    public static double getFoodRate(int num) {
+        return switch (num) {
+            case -2 -> 0;
+            case -1 -> 0.5;
+            case 1 -> 1.5;
+            case 2 -> 2;
+            default -> 1;
+        };
+    }
+
+    public static int getTaxPopularity(int num) {
+        return switch (num) {
+            case -3 -> 7;
+            case -2 -> 5;
+            case -1 -> 3;
+            case 1 -> -2;
+            case 2 -> -4;
+            case 3 -> -6;
+            case 4 -> -8;
+            case 5 -> -12;
+            case 6 -> -16;
+            case 7 -> -20;
+            case 8 -> -24;
+            default -> 1;
+        };
+    }
+
+    public static double getTaxRate(int num) {
+        return switch (num) {
+            case -3 -> -1;
+            case -2 -> -0.8;
+            case -1 -> -0.6;
+            case 1 -> 0.6;
+            case 2 -> 0.8;
+            case 3 -> 1;
+            case 4 -> 1.2;
+            case 5 -> 1.4;
+            case 6 -> 1.6;
+            case 7 -> 1.8;
+            case 8 -> 2;
+            default -> 0;
+        };
+    }
+
 
     /*public static boolean checkRate(int rate , int lowerbound , int upperbound) {
         return false;
