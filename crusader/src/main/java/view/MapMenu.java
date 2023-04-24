@@ -42,9 +42,9 @@ public class MapMenu {
         }
 
         if (whichFunction == 0)
-            System.out.println(MapController.showMap(Integer.parseInt(xM.group("x")), Integer.parseInt(yM.group("y"))));
+            System.out.println(GameController.showMap(Integer.parseInt(xM.group("x")), Integer.parseInt(yM.group("y"))));
         else if (whichFunction == 1)
-            System.out.println(MapController.showDetailsOfTile(Integer.parseInt(xM.group("x")), Integer.parseInt(yM.group("y"))));
+            System.out.println(GameController.showDetailsOfTile(Integer.parseInt(xM.group("x")), Integer.parseInt(yM.group("y"))));
         else if (whichFunction == 2)
             System.out.println(MapController.clearTile(Integer.parseInt(xM.group("x")), Integer.parseInt(yM.group("y"))));
     }
