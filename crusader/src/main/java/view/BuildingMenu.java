@@ -1,4 +1,4 @@
-package view.buildingmenus;
+package view;
 
 import controller.BuildingController;
 import enumeration.answers.Answers;
