@@ -1,17 +1,21 @@
 package view;
 
+import controller.Application;
 import enumeration.dictionary.Colors;
+import model.Government;
+import model.User;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class CreateGameMenu {
     public static int mapSize;
+    public static int map;
     public static int governmentsCount;
     private static ArrayList<Colors> colors = new ArrayList<>();
-    public static LinkedHashMap<String, Colors> governments = new LinkedHashMap<>();
+    public static LinkedHashMap<User, Colors> governments = new LinkedHashMap<>();
 
     public static void run(Scanner scanner) {
         while (true) {
@@ -33,6 +37,45 @@ public class CreateGameMenu {
         }
 
         while (true) {
+            int mapNumber;
+            int numberOfMaps = (mapSize == 200) ? Application.getDefaultSmallMaps().size() : Application.getDefaultLargeMaps().size();
+            System.out.println("there are " + numberOfMaps + " default maps available\nchoose one of them to preview:");
+            try {
+                mapNumber = Integer.parseInt(scanner.nextLine());
+            } catch (Exception e) {
+                System.out.println("please enter a number!");
+                continue;
+            }
+            if (mapNumber < 1 || mapNumber > numberOfMaps) {
+                System.out.println("invalid number");
+                continue;
+            }
+//            TODO: show map preview
+
+            boolean mapChosen = false;
+            while (true) {
+                System.out.println("1.choose\n2.back");
+                int choiceNumber;
+                try {
+                    choiceNumber = Integer.parseInt(scanner.nextLine());
+                } catch (Exception e) {
+                    System.out.println("please enter a number!");
+                    continue;
+                }
+                if (choiceNumber != 1 && choiceNumber != 2) {
+                    System.out.println("invalid number");
+                    continue;
+                }
+                mapChosen = (choiceNumber == 1) ? true : false;
+                break;
+            }
+            if (mapChosen) break;
+            else continue;
+        }
+
+        EditMapEnvironmentMenu.run(scanner);
+
+        while (true) {
             System.out.println("enter the number of governments (2 to 8):");
             String input = scanner.nextLine();
             if (input.equals("exit")) return;
@@ -49,10 +92,21 @@ public class CreateGameMenu {
             break;
         }
 
+//        Edit map environment menu
+
         Colors.getColorsList(colors);
         for (int i = 0; i < governmentsCount; i++) {
-            System.out.println("enter the name of government " + (i + 1));
-            String governmentName = scanner.nextLine();
+            User lord;
+            while (true) {
+                System.out.println("enter the username related to government " + (i + 1) + ":");
+                String lordUsername = scanner.nextLine();
+                if (!Application.isUserExistsByName(lordUsername)) {
+                    System.out.println("username doesn't exist");
+                    continue;
+                }
+                lord = Application.getUserByUsername(lordUsername);
+                break;
+            }
             String output = "choose the color of government " + (i + 1) + "\n";
             for (int j = 0; j < colors.size(); j++) {
                 Colors color = colors.get(j);
@@ -73,8 +127,10 @@ public class CreateGameMenu {
                 }
                 break;
             }
-            governments.put(governmentName, colors.get(colorNumber - 1));
+            governments.put(lord, colors.get(colorNumber - 1));
             colors.remove(colorNumber - 1);
         }
+
+
     }
 }
