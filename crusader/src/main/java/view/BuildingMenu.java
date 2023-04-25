@@ -27,7 +27,7 @@ public class BuildingMenu {
         nameOfBuilding = building.getName();
         while (true) {
             String command = scanner.nextLine();
-            Matcher unselectBuildingMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.USELECT_BUILDING);
+            Matcher unselectBuildingMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.UNSELECT_BUILDING);
             if (unselectBuildingMatcher.matches()) {
                 break;
             }
@@ -95,18 +95,38 @@ public class BuildingMenu {
                 } else {
                     System.out.println(Answers.INVALID_COMMAND);
                 }
+<<<<<<< HEAD
             } else if (building instanceof WeaponProducer weaponProducer) {
                 changeWeapon(scanner, weaponProducer);
             } else if (isThisBuildingSelected(Buildings.STABLE)) {
                 Matcher howManyHorsesMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.HOW_MANY_HORSES);
                 if (howManyHorsesMatcher.matches()) {
 
+=======
+            } else if (isThisBuildingSelected(Buildings.BLACK_SMITH) ||
+                    isThisBuildingSelected(Buildings.FLETCHER) ||
+                    isThisBuildingSelected(Buildings.POLE_TURNER)) {
+                Matcher showStateOfProducts = BuildingMenuCommands.getMatcher(command , BuildingMenuCommands.SHOW_STATE_OF_PRODUCTS);
+                Matcher changeWeaponInProoduction = BuildingMenuCommands.getMatcher(
+                        command , BuildingMenuCommands.CHANGE_WEAPON_IN_PRODUCTION);
+                if (showStateOfProducts.matches()) {
+                    // next try
+                } else if (changeWeaponInProoduction.matches()) {
+                    // Mitra's method
+>>>>>>> 4ef2f941ea85a9d9fa754c69c08fc9f64ca4f59c
                 } else {
                     System.out.println(Answers.INVALID_COMMAND);
                 }
-            } else if (isThisBuildingSelected(Buildings.GRANARY)) {
-                // TODO: I don't know.
-            }
+            } else if (isThisBuildingSelected(Buildings.STABLE)) {
+                Matcher howManyHorsesMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.HOW_MANY_HORSES);
+                if (howManyHorsesMatcher.matches()) {
+                    System.out.println(BuildingController.howManyHorses());
+                } else {
+                    System.out.println(Answers.INVALID_COMMAND);
+                }
+            }// else if (isThisBuildingSelected(Buildings.GRANARY)) {
+                // TODO: Not now...
+            //}
         }
     }
 

@@ -1,6 +1,9 @@
 package enumeration.dictionary;
 
-public enum Foodstuffs {
+public enum Foodstuffs {MEAT("meat"),
+    CHEESE("cheese"),
+    APPLE("apple"),
+    BREAD("bread")
     ;
     private final String foodstuff;
 

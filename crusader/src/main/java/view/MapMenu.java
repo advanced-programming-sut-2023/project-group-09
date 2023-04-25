@@ -3,7 +3,7 @@ package view;
 import controller.GameController;
 import controller.MapController;
 import enumeration.Textures;
-import enumeration.commands.MapMenuCommands;
+import enumeration.commands.MapCommands;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -15,11 +15,11 @@ public class MapMenu {
 
         while (true) {
             String input = scanner.nextLine();
-            Matcher showMapM = MapMenuCommands.SHOW_MAP.getMatcher(input);
-            Matcher moveMapM = MapMenuCommands.MOVE_MAP.getMatcher(input);
-            Matcher showDetailsOfLandM = MapMenuCommands.SHOW_DETAILS_OF_TILE.getMatcher(input);
-            Matcher setTextureM = MapMenuCommands.SET_TEXTURE.getMatcher(input);
-            Matcher clearLandM = MapMenuCommands.CLEAR_TILE.getMatcher(input);
+            Matcher showMapM = MapCommands.SHOW_MAP.getMatcher(input);
+            Matcher moveMapM = MapCommands.MOVE_MAP.getMatcher(input);
+            Matcher showDetailsOfLandM = MapCommands.SHOW_DETAILS_OF_TILE.getMatcher(input);
+            Matcher setTextureM = MapCommands.SET_TEXTURE.getMatcher(input);
+            Matcher clearLandM = MapCommands.CLEAR_TILE.getMatcher(input);
 
             if (showMapM.matches()) runShowMapOrShowDetailsOrClearLand(showMapM, 0);
             else if (moveMapM.matches()) runMoveMap(moveMapM);
@@ -30,10 +30,10 @@ public class MapMenu {
         }
     }
 
-    private static void runShowMapOrShowDetailsOrClearLand(Matcher matcher, int whichFunction) {
+    public static void runShowMapOrShowDetailsOrClearLand(Matcher matcher, int whichFunction) {
         String content = matcher.group("content");
-        Matcher xM = MapMenuCommands.X_COORDINATE.getMatcher(content);
-        Matcher yM = MapMenuCommands.Y_COORDINATE.getMatcher(content);
+        Matcher xM = MapCommands.X_COORDINATE.getMatcher(content);
+        Matcher yM = MapCommands.Y_COORDINATE.getMatcher(content);
 
         String validation = validateCoordinates(xM, yM);
         if (!validation.isEmpty()) {
@@ -51,10 +51,10 @@ public class MapMenu {
 
     private static void runMoveMap(Matcher matcher) {
         String content = matcher.group("content");
-        Matcher upM = MapMenuCommands.UP.getMatcher(content);
-        Matcher downM = MapMenuCommands.DOWN.getMatcher(content);
-        Matcher leftM = MapMenuCommands.LEFT.getMatcher(content);
-        Matcher rightM = MapMenuCommands.RIGHT.getMatcher(content);
+        Matcher upM = MapCommands.UP.getMatcher(content);
+        Matcher downM = MapCommands.DOWN.getMatcher(content);
+        Matcher leftM = MapCommands.LEFT.getMatcher(content);
+        Matcher rightM = MapCommands.RIGHT.getMatcher(content);
 
         if (!upM.find() || !downM.find() || !leftM.find() || !rightM.find()) {
             System.out.println("invalid command");
@@ -71,9 +71,9 @@ public class MapMenu {
 
     private static void runSetTexture(Matcher matcher) {
         String content = matcher.group("content");
-        Matcher xM = MapMenuCommands.X_COORDINATE.getMatcher(content);
-        Matcher yM = MapMenuCommands.Y_COORDINATE.getMatcher(content);
-        Matcher typeM = MapMenuCommands.TEXTURE_TYPE.getMatcher(content);
+        Matcher xM = MapCommands.X_COORDINATE.getMatcher(content);
+        Matcher yM = MapCommands.Y_COORDINATE.getMatcher(content);
+        Matcher typeM = MapCommands.TYPE.getMatcher(content);
 
         if (!typeM.find()) {
             System.out.println("invalid command");
@@ -99,7 +99,7 @@ public class MapMenu {
         System.out.println(MapController.setTexture(Integer.parseInt(xM.group("x")), Integer.parseInt(yM.group("y")), texture));
     }
 
-    private static String validateCoordinates(Matcher xM, Matcher yM) {
+    public static String validateCoordinates(Matcher xM, Matcher yM) {
         if (!xM.find() || !yM.find()) return "invalid command";
 
         String result = "";

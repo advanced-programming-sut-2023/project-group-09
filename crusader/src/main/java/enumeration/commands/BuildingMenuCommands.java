@@ -3,7 +3,7 @@ package enumeration.commands;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public enum BuildingMenuCommands {USELECT_BUILDING("unselect"),
+public enum BuildingMenuCommands {UNSELECT_BUILDING("unselect"),
     CHANGE_TAX_RATE("tax rate -r (?<ratenumber>.+)"),
     SHOW_TAX_RATE("tax rate show"),
     OPEN_OR_CLOSE_GATEHOUSE("(?<order>(close|open)) gatehouse"),
@@ -13,7 +13,9 @@ public enum BuildingMenuCommands {USELECT_BUILDING("unselect"),
     SHOW_UNITS_LIST("show units list"),
     BUY_UNIT("buy unit (?<unitname>.+)"),
     SHOW_GOODS_SAVED("show saved goods"),
-    HOW_MANY_HORSES("how many horses");
+    HOW_MANY_HORSES("how many horses"),
+    CHANGE_WEAPON_IN_PRODUCTION("change weapon in production"),
+    SHOW_STATE_OF_PRODUCTS("show state of product");
     private String regex;
     private BuildingMenuCommands(String regex) {
         this.regex = regex;

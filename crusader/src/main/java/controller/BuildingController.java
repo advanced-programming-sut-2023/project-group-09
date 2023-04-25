@@ -7,6 +7,7 @@ import model.building.castlebuildings.Gatehouse;
 import model.building.producerbuildings.Barrack;
 import model.building.producerbuildings.WeaponProducer;
 import model.building.storagebuildings.StorageBuilding;
+import model.human.military.Military;
 
 import javax.xml.crypto.dsig.keyinfo.KeyValue;
 import java.util.ArrayList;
@@ -103,6 +104,7 @@ public class BuildingController {
         return unitName +" added successfully!";
     }
 
+<<<<<<< HEAD
 
     public static void changeWeapon(String name){
         if(building instanceof WeaponProducer weaponProducer){
@@ -114,6 +116,8 @@ public class BuildingController {
         return "";
     }
 
+=======
+>>>>>>> 4ef2f941ea85a9d9fa754c69c08fc9f64ca4f59c
     public static String showSavedGoods() {
         StringBuilder result = new StringBuilder();
         StorageBuilding stockpile = (StorageBuilding) building;
@@ -124,7 +128,14 @@ public class BuildingController {
     }
 
     public static String howManyHorses() {
-        //TODO: handle it!
-        return "";
+        int availableHorses = government.getPropertyAmount("horse");
+        int horsesInUse = 0;
+        for (Military military : government.getTroops()) {
+            if (military.getName().equals("knight")) {
+                horsesInUse++;
+            }
+        }
+        return "Available horses: " + availableHorses + "\nUsed horses: " + horsesInUse;
     }
+
 }

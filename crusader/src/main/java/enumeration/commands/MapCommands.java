@@ -3,7 +3,7 @@ package enumeration.commands;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public enum MapMenuCommands {
+public enum MapCommands {
     SHOW_MAP("show map (?<content>.+)"),
     X_COORDINATE("-x (?<x>[\\d]*)"),
     Y_COORDINATE("-y (?<y>[\\d]*)"),
@@ -14,15 +14,19 @@ public enum MapMenuCommands {
     RIGHT("right (?<count>[\\d]*)"),
     SHOW_DETAILS_OF_TILE("show details (?<content>.+)"),
     SET_TEXTURE("set texture (?<content>.+)"),
-    TEXTURE_TYPE("-t (?<type>.+)"),
+    TYPE("-t (?<type>.+)"),
+    DIRECTION("-d (?<direction>.+)"),
     X1_COORDINATE("-x1 (?<x1>[\\d]*)"),
     X2_COORDINATE("-x2 (?<x2>[\\d]*)"),
     Y1_COORDINATE("-y1 (?<y1>[\\d]*)"),
     Y2_COORDINATE("-y2 (?<y2>[\\d]*)"),
-    CLEAR_TILE("clear land (?<content>.+)");
+    CLEAR_TILE("clear land (?<content>.+)"),
+    DROP_TREE("drop tree (?<content>.+)"),
+    DROP_ROCK("drop rock (?<content>.+)"),
+    CONTINUE("continue");
     private String regex;
 
-    private MapMenuCommands(String regex) {
+    private MapCommands(String regex) {
         this.regex = regex;
     }
 
