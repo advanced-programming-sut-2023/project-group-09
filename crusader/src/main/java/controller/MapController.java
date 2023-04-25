@@ -123,6 +123,7 @@ public class MapController {
     public static void dropMilitary(int x, int y, String type, Government government) {
         Military military = GameHumans.getUnit(type, government, x, y);
         Tile tile = map.getTile(x - 1, y - 1);
+        government.addMilitary(military);
         tile.addMilitary(military);
     }
     public static void dropMilitary(int x, int y, Military military) {
