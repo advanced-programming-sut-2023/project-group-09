@@ -6,7 +6,9 @@ import enumeration.Textures;
 import model.Government;
 import model.building.Building;
 import model.building.castlebuildings.CastleBuilding;
+import model.building.castlebuildings.Wall;
 import model.building.storagebuildings.StorageBuilding;
+import model.buildinghandler.BuildingCounter;
 import model.game.Map;
 import model.game.Tile;
 import model.human.military.Military;
@@ -30,16 +32,7 @@ public class MapController {
         tile.setTexture(Textures.EARTH);
         if (tile.getBuilding() != null) {
             Building building = tile.getBuilding();
-            int xx = building.getStartX();
-            int yy = building.getStartY();
-            for (int i = yy - 1; i < yy + building.getLength(); i++) {
-                for (int j = xx - 1; j < xx + building.getWidth(); j++) {
-                    Tile tileOfBuilding = map.getTile(i, j);
-                    tileOfBuilding.setCanPutBuilding(true);
-                    tileOfBuilding.setPassable(true);
-                    tileOfBuilding.setBuilding(null);
-                }
-            }
+            deleteBuilding(building);
         }
 
         return "tile (" + x + ", " + y + ") cleared successfully";
@@ -59,22 +52,23 @@ public class MapController {
         if (building == null) {
             return false;
         }
-        if (building instanceof StorageBuilding && !checkCanPutStorage(x,y,(StorageBuilding) building)){
-            return false;
-        }
+
         if (x + building.getWidth() >= map.getWidth()) {
             return false;
         }
         if (y + building.getLength() >= map.getLength()) {
             return false;
         }
+        if (building instanceof StorageBuilding && !checkCanPutStorage(x, y, (StorageBuilding) building)) {
+            return false;
+        }
         for (int i = y - 1; i < y + building.getLength(); i++) {
             for (int j = x - 1; j < x + building.getWidth(); j++) {
-                if(building instanceof CastleBuilding){
-                    if(!canPutCastleBuilding(x,y,(CastleBuilding) building)) {
+                if (building instanceof CastleBuilding) {
+                    if (!canPutCastleBuilding(x, y, (CastleBuilding) building)) {
                         return false;
                     }
-                }else if (!map.getTile(i, j).getCanPutBuilding()) {
+                } else if (!map.getTile(i, j).getCanPutBuilding()) {
                     return false;
                 }
                 if (building.getHasSpecialTexture()) {
@@ -91,7 +85,7 @@ public class MapController {
         Building building = GameBuildings.getBuilding(type, government, x, y);
         for (int i = y - 1; i < y + Objects.requireNonNull(building).getLength(); i++) {
             for (int j = x - 1; j < x + building.getWidth(); j++) {
-                Tile tile = map.getTile(i, j);
+                Tile tile = map.getTile(j, i);
                 tile.setCanPutBuilding(false);
                 Textures textures = Textures.EARTH_AND_SAND;
                 if (building.getHasSpecialTexture()) {
@@ -143,15 +137,83 @@ public class MapController {
     }
 
 
-    public static boolean checkCanPutStorage(int x, int y,StorageBuilding storageBuilding){
+    public static boolean checkCanPutStorage(int x, int y, StorageBuilding storageBuilding) {
+        int startX = x - 1;
+        int startY = y - 1;
+        int endX = x + storageBuilding.getWidth() - 1;
+        int endY = y + storageBuilding.getLength() - 1;
+
+
+        if (startY != 0) {
+            for (int j = startX; j <= endX; j++) {
+                Tile tile = map.getTile(j, startY - 1);
+                if (tile.getBuilding() != null && tile.getBuilding().getName().equals(storageBuilding.getName())) {
+                    return true;
+                }
+            }
+        }
+
+        if (startX != 0) {
+            for (int i = startY; i <= endY; i++) {
+                Tile tile = map.getTile(startX - 1, i);
+                if (tile.getBuilding() != null && tile.getBuilding().getName().equals(storageBuilding.getName())) {
+                    return true;
+                }
+            }
+        }
+
+
+        if (endX != map.getWidth() - 1) {
+            for (int i = startY; i <= endY; i++) {
+                Tile tile = map.getTile(endX + 1, i);
+                if (tile.getBuilding() != null && tile.getBuilding().getName().equals(storageBuilding.getName())) {
+                    return true;
+                }
+            }
+        }
+
+        if (endY != map.getLength() - 1) {
+            for (int j = startX; j <= endX; j++) {
+                Tile tile = map.getTile(j, endY + 1);
+                if (tile.getBuilding() != null && tile.getBuilding().getName().equals(storageBuilding.getName())) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
-    public static boolean canPutCastleBuilding(int x, int y,CastleBuilding building){
-        return false;
+    public static boolean canPutCastleBuilding(int x, int y, CastleBuilding building) {
+        Tile tile = map.getTile(x, y);
+        if (tile.getCanPutBuilding()) {
+            return true;
+        } else return tile.getBuilding() instanceof Wall;
     }
 
-    public static boolean deleteOtherBuildingWithThisType(){
-        return false;
+    public static void deleteOtherBuildingWithThisType(Building building) {
+        Government government = GameController.getGame().getCurrentGovernment();
+        BuildingCounter buildingCounter = government.getBuildingData(building.getName());
+        if(buildingCounter.getNumber() == 0){
+            return;
+        }
+
+        Building shouldDelete = buildingCounter.getBuildings().get(0);
+        buildingCounter.deleteBuilding(shouldDelete);
+        deleteBuilding(shouldDelete);
+    }
+
+    public static void deleteBuilding(Building building){
+        int xx = building.getStartX();
+        int yy = building.getStartY();
+        for (int i = yy - 1; i < yy + building.getLength(); i++) {
+            for (int j = xx - 1; j < xx + building.getWidth(); j++) {
+                Tile tileOfBuilding = map.getTile(i, j);
+                tileOfBuilding.setCanPutBuilding(true);
+                tileOfBuilding.setPassable(true);
+                tileOfBuilding.setBuilding(null);
+            }
+        }
+        BuildingCounter buildingCounter = building.getGovernment().getBuildingData(building.getName());
+        buildingCounter.deleteBuilding(building);
     }
 }

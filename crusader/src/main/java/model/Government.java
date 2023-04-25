@@ -232,4 +232,8 @@ public class Government {
     public void addMilitary(Military military){
         troops.add(military);
     }
+
+    public BuildingCounter getBuildingData(String name){
+        return buildings.get(name);
+    }
 }

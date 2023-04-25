@@ -31,10 +31,10 @@ public class Map {
     }
 
     public Tile getTile(int x, int y) {
-        return mapTiles[x][y];
+        return mapTiles[y][x];
     }
     public void setTile(int x, int y,Tile tile) {
-        mapTiles[x][y] = tile;
+        mapTiles[y][x] = tile;
     }
     public void setMapTiles(Tile[][] mapTiles) {
         this.mapTiles = mapTiles;

@@ -28,4 +28,8 @@ public class BuildingCounter {
         this.number++;
         this.buildings.add(building);
     }
+    public void deleteBuilding(Building building){
+        buildings.remove(building);
+        number--;
+    }
 }
