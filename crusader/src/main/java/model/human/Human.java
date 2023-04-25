@@ -15,21 +15,7 @@ public abstract class Human implements Cloneable{
         this.name = name;
     }
 
-    public HumanStates getState() {
-        return state;
-    }
-
-    public void setState(HumanStates state) {
-        this.state = state;
-    }
-
-    public boolean isInvisible() {
-        return isInvisible;
-    }
-
-    public void setInvisible(boolean invisible) {
-        isInvisible = invisible;
-    }
+    
 
     private String name;
     private Government government = null;

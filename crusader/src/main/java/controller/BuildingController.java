@@ -59,7 +59,7 @@ public class BuildingController {
     }
 
     public static String repair() {
-        //TODO: how to repair?
+
         return "";
     }
 
@@ -104,20 +104,12 @@ public class BuildingController {
         return unitName +" added successfully!";
     }
 
-<<<<<<< HEAD
 
     public static void changeWeapon(String name){
         if(building instanceof WeaponProducer weaponProducer){
             weaponProducer.changeItemName(name);
         }
     }
-    public static String shop() {
-        // TODO: I don't know :)
-        return "";
-    }
-
-=======
->>>>>>> 4ef2f941ea85a9d9fa754c69c08fc9f64ca4f59c
     public static String showSavedGoods() {
         StringBuilder result = new StringBuilder();
         StorageBuilding stockpile = (StorageBuilding) building;

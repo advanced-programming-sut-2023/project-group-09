@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="just commit">
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="Building menu updated&#10;and some enums edited.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/files/user/currentUser.json" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/files/user/currentUser.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/files/user/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/files/user/users.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/BuildingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/BuildingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameHumans.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameHumans.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/enumeration/commands/BuildingMenuCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/enumeration/commands/BuildingMenuCommands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/enumeration/Paths.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/enumeration/Paths.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/human/Human.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/human/Human.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crusader/src/main/java/view/BuildingMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/view/BuildingMenu.java" afterDir="false" />
     </list>
@@ -183,7 +185,7 @@
       <workItem from="1682371298142" duration="130000" />
       <workItem from="1682411331249" duration="72000" />
       <workItem from="1682438061345" duration="1337000" />
-      <workItem from="1682442721294" duration="8022000" />
+      <workItem from="1682442721294" duration="9814000" />
     </task>
     <task id="LOCAL-00001" summary="...">
       <created>1681925358549</created>
@@ -360,7 +362,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682447586540</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Building menu updated&#10;and some enums edited.">
+      <created>1682451476656</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1682451476656</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -378,7 +387,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="..." />
     <MESSAGE value="some tests added." />
     <MESSAGE value="some enums are edited." />
     <MESSAGE value="Resources added." />
@@ -403,7 +411,8 @@
     <MESSAGE value="building menu edited." />
     <MESSAGE value="adding tree to Tile class" />
     <MESSAGE value="just commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="just commit" />
+    <MESSAGE value="Building menu updated&#10;and some enums edited." />
+    <option name="LAST_COMMIT_MESSAGE" value="Building menu updated&#10;and some enums edited." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Project_Phase_1$UserControllerTest.ic" NAME="UserControllerTest Coverage Results" MODIFIED="1681942420279" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

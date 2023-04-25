@@ -112,7 +112,7 @@ public class GameController {
 
     public static String showMap(int x, int y) {
         String result;
-
+        return "";
     }
 
     public static String moveMap(int up, int left, int down, int right) {
