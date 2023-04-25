@@ -65,12 +65,13 @@ public class MapController {
         }
         for (int i = y - 1; i < y + building.getLength(); i++) {
             for (int j = x - 1; j < x + building.getWidth(); j++) {
+                if (!map.getTile(i, j).getCanPutBuilding()) {
+                    return false;
+                }
                 if (building.getHasSpecialTexture()) {
                     if (!building.getSuitableTextures().contains(map.getTile(i, j).getTexture())) {
                         return false;
                     }
-                } else if (!map.getTile(i, j).getCanPutBuilding()) {
-                    return false;
                 }
             }
         }
