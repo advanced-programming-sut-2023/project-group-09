@@ -209,7 +209,7 @@ public class MapController {
         int yy = building.getStartY();
         for (int i = yy - 1; i < yy + building.getLength(); i++) {
             for (int j = xx - 1; j < xx + building.getWidth(); j++) {
-                Tile tileOfBuilding = map.getTile(i, j);
+                Tile tileOfBuilding = map.getTile(j,i);
                 tileOfBuilding.setCanPutBuilding(true);
                 tileOfBuilding.setPassable(true);
                 tileOfBuilding.setBuilding(null);
