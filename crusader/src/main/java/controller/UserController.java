@@ -266,6 +266,7 @@ public class UserController {
     }
 
     public static String loginUser(String username, String password, boolean stayedLoggedIn) {
+        DBController.loadAllUsers();
         if (!Application.isUserExistsByName(username)) {
             return LoginAnswers.USER_DOESNT_EXIST_MESSAGE.getMessage();
         }

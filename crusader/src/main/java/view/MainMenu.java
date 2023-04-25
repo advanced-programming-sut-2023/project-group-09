@@ -10,13 +10,13 @@ import java.util.Scanner;
 public class MainMenu {
     public static void run(Scanner scanner) {
         while (true) {
-            System.out.println("1.make game\n" +
+            System.out.println("1.create game\n" +
                     "2.profile menu\n" +
                     "3.logout\n" +
                     "4.exit");
             String input = scanner.nextLine();
             if (input.equals("1")) {
-                //MapMenu.run();
+                CreateGameMenu.run(scanner);
             } else if (input.equals("2")) {
                 ProfileMenu.run(scanner);
             } else if (input.equals("3")) {

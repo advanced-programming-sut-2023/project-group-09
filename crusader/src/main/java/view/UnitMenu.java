@@ -118,13 +118,13 @@ public class UnitMenu {
     private static void runBuild(Scanner scanner) {
 //        TODO: return "invalid command" if the selected unit is not an engineer
         String message = "select one of the following tools:\n";
-        message += "1. Catapult\n";
-        message += "2. Trebuchet\n";
-        message += "3. Siege Tower\n";
-        message += "4. Battering Ram\n";
-        message += "5. Portable Shield\n";
-        message += "6. Fire Ballista\n";
-        message += "7. Back";
+        message += "1.Catapult\n";
+        message += "2.Trebuchet\n";
+        message += "3.Siege Tower\n";
+        message += "4.Battering Ram\n";
+        message += "5.Portable Shield\n";
+        message += "6.Fire Ballista\n";
+        message += "7.back";
         System.out.println(message);
 
         boolean back = false;
