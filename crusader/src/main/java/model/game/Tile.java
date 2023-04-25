@@ -1,6 +1,7 @@
 package model.game;
 
 import enumeration.Textures;
+import enumeration.dictionary.Trees;
 import model.building.Building;
 import model.human.civilian.Civilian;
 import model.human.civilian.Civilian;
@@ -15,6 +16,20 @@ public class Tile {
     }
 
     private Textures texture = Textures.EARTH;
+    private Trees tree;
+
+    public Trees getTree() {
+        return tree;
+    }
+
+    public void setTree(Trees tree) {
+        this.tree = tree;
+    }
+
+    public boolean isCanPutBuilding() {
+        return canPutBuilding;
+    }
+
     private Building building = null;
     private ArrayList<Civilian> civilians = new ArrayList<>();
 
