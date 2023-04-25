@@ -35,10 +35,11 @@ public class Barrack extends Building{
 
     public Military makeUnit(String name){
         try {
+            consumeRequired(name);
             int[] coordinate = makePositionOfUnit();
             int x = coordinate[0];
             int y = coordinate[1];
-            if(!checkRequired(name,x,y)){
+            if(!checkRequired(name)){
                 return null;
             }
             Military military = Objects.requireNonNull(GameHumans.getUnit(name, this.getGovernment(), x, y)).clone();
@@ -53,8 +54,8 @@ public class Barrack extends Building{
 
 
 
-    public boolean checkRequired(String name,int x,int y){
-        Military military = GameHumans.getUnit(name,this.getGovernment(),x,y);
+    public boolean checkRequired(String name){
+        Military military = GameHumans.getUnit(name);
         int price = military.getPrice();
 
         if (price > this.getGovernment().getGold()){
@@ -67,8 +68,26 @@ public class Barrack extends Building{
                     return false;
                 }
             }
+        }
+        return true;
+    }
 
+    public boolean checkGold(String name){
+        Military military = GameHumans.getUnit(name);
+        int price = military.getPrice();
 
+        if (price > this.getGovernment().getGold()){
+            return false;
+        }
+        return true;
+    }
+    public boolean consumeRequired(String name){
+        Military military = GameHumans.getUnit(name);
+        int price = military.getPrice();
+        if (price > this.getGovernment().getGold()){
+            return false;
+        }
+        if(military instanceof EuropeanTroop troop){
             for (String armour : troop.getArmours()){
                 Government government = this.getGovernment();
                 if(government.getPropertyAmount(armour)  == 0){
@@ -77,10 +96,9 @@ public class Barrack extends Building{
             }
         }
 
-        this.getGovernment().addGold(price);
+        this.getGovernment().addGold(-price);
         return true;
     }
-
 
     public int[] makePositionOfUnit(){
         Random random = new Random();

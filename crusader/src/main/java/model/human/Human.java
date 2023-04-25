@@ -4,6 +4,7 @@ package model.human;
 import enumeration.DefenseRating;
 import enumeration.HumanStates;
 import model.Government;
+import model.activity.Move;
 
 public abstract class Human implements Cloneable{
     private Government government = null;
@@ -14,6 +15,7 @@ public abstract class Human implements Cloneable{
     private HumanStates state;
     private int shootingRange;
     private boolean isInvisible = false;
+    private Move move;
 
     public Human(int speed, int defenseRating, int shootingRange) {
         this.speed = speed;
@@ -21,6 +23,30 @@ public abstract class Human implements Cloneable{
         this.health = defenseRating;
         this.shootingRange = shootingRange;
     }
+    public HumanStates getState() {
+        return state;
+    }
+
+    public void setState(HumanStates state) {
+        this.state = state;
+    }
+
+    public boolean isInvisible() {
+        return isInvisible;
+    }
+
+    public void setInvisible(boolean invisible) {
+        isInvisible = invisible;
+    }
+
+    public Move getMove() {
+        return move;
+    }
+
+    public void setMove(Move move) {
+        this.move = move;
+    }
+
 
     public void enableInvisible() {
         this.isInvisible = true;

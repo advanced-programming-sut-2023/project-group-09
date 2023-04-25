@@ -6,7 +6,10 @@ public enum BuildingAnswers {INVALID_NUMBER_INPUT("Invalid number in your input!
     TAX_RATE_SUCCESSFULLY_CHANGED("Tax rate successfully changed!"),
     TAX_RATE_SHOWING("Your tax rate is : "),
     OPEN_CLOSE_SUCCESSFULLY_DONE("your order successfully done!"),
-    INVALID_UNIT_NAME("Invalid unit name");
+    INVALID_UNIT_NAME("Invalid unit name"),
+    INSUFFICIENT_RESOURCE("your resource is not enough!"),
+    INSUFFICIENT_MONEY("your money is not enough!")
+    ;
     private String message;
 
     private BuildingAnswers(String message) {

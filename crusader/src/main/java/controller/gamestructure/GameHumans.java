@@ -32,6 +32,10 @@ public class GameHumans {
             return null;
         }
     }
+
+    public static Military getUnit(String name) {
+        return militaries.get(name);
+    }
     public static void addEuropeanTroops() {
         createArcher();
         createCrossbowman();

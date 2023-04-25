@@ -5,6 +5,8 @@ import controller.gamestructure.GameHumans;
 import enumeration.Textures;
 import model.Government;
 import model.building.Building;
+import model.building.castlebuildings.CastleBuilding;
+import model.building.storagebuildings.StorageBuilding;
 import model.game.Map;
 import model.game.Tile;
 import model.human.military.Military;
@@ -57,6 +59,9 @@ public class MapController {
         if (building == null) {
             return false;
         }
+        if (building instanceof StorageBuilding && !checkCanPutStorage(x,y,(StorageBuilding) building)){
+            return false;
+        }
         if (x + building.getWidth() >= map.getWidth()) {
             return false;
         }
@@ -65,7 +70,11 @@ public class MapController {
         }
         for (int i = y - 1; i < y + building.getLength(); i++) {
             for (int j = x - 1; j < x + building.getWidth(); j++) {
-                if (!map.getTile(i, j).getCanPutBuilding()) {
+                if(building instanceof CastleBuilding){
+                    if(!canPutCastleBuilding(x,y,(CastleBuilding) building)) {
+                        return false;
+                    }
+                }else if (!map.getTile(i, j).getCanPutBuilding()) {
                     return false;
                 }
                 if (building.getHasSpecialTexture()) {
@@ -127,8 +136,22 @@ public class MapController {
         government.addMilitary(military);
         tile.addMilitary(military);
     }
+
     public static void dropMilitary(int x, int y, Military military) {
         Tile tile = map.getTile(x - 1, y - 1);
         tile.addMilitary(military);
+    }
+
+
+    public static boolean checkCanPutStorage(int x, int y,StorageBuilding storageBuilding){
+        return false;
+    }
+
+    public static boolean canPutCastleBuilding(int x, int y,CastleBuilding building){
+        return false;
+    }
+
+    public static boolean deleteOtherBuildingWithThisType(){
+        return false;
     }
 }

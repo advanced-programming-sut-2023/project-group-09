@@ -8,6 +8,7 @@
     "itemName": "bow",
     "itemType": "weapon",
     "rate": 1,
+    "inUse": 0,
     "countOfRoundsToProduce": 0,
     "required": {
       "wood": 2
@@ -19,6 +20,7 @@
     "price": 100,
     "numberOfRequiredWorkers": 1,
     "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
     "hasSpecialTexture": false,
     "suitableTextures": [],
     "shouldBeOne": false,
@@ -35,12 +37,13 @@
   "blackSmith": {
     "weapons": [
       "sword",
-      "sword"
+      "mace"
     ],
     "nameOfStorage": "armoury",
     "itemName": "sword",
     "itemType": "weapon",
     "rate": 1,
+    "inUse": 0,
     "countOfRoundsToProduce": 0,
     "required": {
       "iron": 1
@@ -52,6 +55,7 @@
     "price": 100,
     "numberOfRequiredWorkers": 1,
     "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
     "hasSpecialTexture": false,
     "suitableTextures": [],
     "shouldBeOne": false,
@@ -74,6 +78,7 @@
     "itemName": "metalArmour",
     "itemType": "weapon",
     "rate": 1,
+    "inUse": 0,
     "countOfRoundsToProduce": 0,
     "required": {
       "iron": 1
@@ -85,6 +90,7 @@
     "price": 100,
     "numberOfRequiredWorkers": 1,
     "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
     "hasSpecialTexture": false,
     "suitableTextures": [],
     "shouldBeOne": false,
@@ -107,6 +113,7 @@
     "itemName": "spear",
     "itemType": "weapon",
     "rate": 1,
+    "inUse": 0,
     "countOfRoundsToProduce": 0,
     "required": {
       "wood": 1
@@ -118,6 +125,7 @@
     "price": 100,
     "numberOfRequiredWorkers": 1,
     "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
     "hasSpecialTexture": false,
     "suitableTextures": [],
     "shouldBeOne": false,

@@ -4,7 +4,6 @@
       "engineer",
       "ladderman"
     ],
-    "BuildingNumber": 4,
     "cost": {
       "wood": 10
     },
@@ -12,6 +11,7 @@
     "price": 100,
     "numberOfRequiredWorkers": 0,
     "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": 4,
     "hasSpecialTexture": false,
     "suitableTextures": [],
     "shouldBeOne": true,
@@ -36,7 +36,6 @@
       "arabianSwordsman",
       "fireThrower"
     ],
-    "BuildingNumber": 5,
     "cost": {
       "wood": 10
     },
@@ -44,6 +43,7 @@
     "price": 0,
     "numberOfRequiredWorkers": 0,
     "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": 5,
     "hasSpecialTexture": false,
     "suitableTextures": [],
     "shouldBeOne": true,
@@ -61,7 +61,6 @@
     "units": [
       "tunneler"
     ],
-    "BuildingNumber": 4,
     "cost": {
       "wood": 10
     },
@@ -69,6 +68,7 @@
     "price": 100,
     "numberOfRequiredWorkers": 0,
     "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": 4,
     "hasSpecialTexture": false,
     "suitableTextures": [],
     "shouldBeOne": true,
@@ -92,7 +92,6 @@
       "swordsman",
       "knight"
     ],
-    "BuildingNumber": 5,
     "cost": {
       "stone": 15
     },
@@ -100,6 +99,7 @@
     "price": 0,
     "numberOfRequiredWorkers": 0,
     "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": 5,
     "hasSpecialTexture": false,
     "suitableTextures": [],
     "shouldBeOne": true,
@@ -117,12 +117,12 @@
     "units": [
       "blackmonk"
     ],
-    "BuildingNumber": 15,
     "cost": {},
     "requiredHumans": [],
     "price": 1000,
     "numberOfRequiredWorkers": 0,
     "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": 15,
     "hasSpecialTexture": false,
     "suitableTextures": [],
     "shouldBeOne": false,

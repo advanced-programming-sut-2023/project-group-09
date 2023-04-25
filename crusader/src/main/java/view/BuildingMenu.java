@@ -2,18 +2,20 @@ package view;
 
 import controller.BuildingController;
 import enumeration.answers.Answers;
-import enumeration.answers.BuildingAnswers;
 import enumeration.commands.BuildingMenuCommands;
+import enumeration.commands.Commands;
 import enumeration.dictionary.Buildings;
 import model.building.Building;
+import model.building.producerbuildings.Barrack;
+import model.building.producerbuildings.WeaponProducer;
 
-import javax.swing.plaf.basic.BasicOptionPaneUI;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class BuildingMenu {
-    private static Building building = BuildingController.getBuilding();
-    private static String nameOfBuilding = building.getName();
+    private static Building building;
+    private static String nameOfBuilding;
 
     private static boolean isThisBuildingSelected(Buildings building) {
         return Buildings.getName(building).equals(nameOfBuilding);
@@ -21,6 +23,8 @@ public class BuildingMenu {
 
     public static void run(Scanner scanner) {
         BuildingController.setGovernment();
+        building = BuildingController.getBuilding();
+        nameOfBuilding = building.getName();
         while (true) {
             String command = scanner.nextLine();
             Matcher unselectBuildingMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.USELECT_BUILDING);
@@ -71,11 +75,7 @@ public class BuildingMenu {
                 } else {
                     System.out.println(Answers.INVALID_COMMAND);
                 }
-            } else if (isThisBuildingSelected(Buildings.BARRACK) ||
-                    isThisBuildingSelected(Buildings.MERCENARY_POST) ||
-                    isThisBuildingSelected(Buildings.ENGINEERS_GUILD) ||
-                    isThisBuildingSelected(Buildings.CATHEDRAL) ||
-                    isThisBuildingSelected(Buildings.TUNNELERS_GUILD)) {
+            } else if (building instanceof Barrack) {
                 Matcher showUnitsListMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.SHOW_UNITS_LIST);
                 Matcher buyUnitMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.BUY_UNIT);
                 if (showUnitsListMatcher.matches()) {
@@ -95,10 +95,8 @@ public class BuildingMenu {
                 } else {
                     System.out.println(Answers.INVALID_COMMAND);
                 }
-            } else if (isThisBuildingSelected(Buildings.BLACK_SMITH) ||
-                    isThisBuildingSelected(Buildings.FLETCHER) ||
-                    isThisBuildingSelected(Buildings.POLE_TURNER)) {
-                // TODO: ehtiaje ya na? age nist ke bikhial
+            } else if (building instanceof WeaponProducer weaponProducer) {
+                changeWeapon(scanner, weaponProducer);
             } else if (isThisBuildingSelected(Buildings.STABLE)) {
                 Matcher howManyHorsesMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.HOW_MANY_HORSES);
                 if (howManyHorsesMatcher.matches()) {
@@ -108,6 +106,49 @@ public class BuildingMenu {
                 }
             } else if (isThisBuildingSelected(Buildings.GRANARY)) {
                 // TODO: I don't know.
+            }
+        }
+    }
+
+    public static void changeWeapon(Scanner scanner, WeaponProducer weaponProducer) {
+        ArrayList<String> names = weaponProducer.getWeapons();
+        String currentWeapon;
+        while (true) {
+            int i = 1;
+            currentWeapon = weaponProducer.getName();
+            System.out.println("this building can produce this weapons :");
+            for (String name : names) {
+                if (currentWeapon.equals(name)) {
+                    System.out.println(i + "." + name + " (current weapon)");
+                } else {
+                    System.out.println(i + "." + name);
+                }
+                i++;
+            }
+            System.out.println("do you want to change current product?(y/n)");
+            String input = scanner.nextLine();
+            if (input.equals("y") || input.equals("yes")) {
+                System.out.println("enter number of your product:");
+                input = scanner.nextLine();
+                int num;
+                try {
+                    num = Integer.parseInt(input);
+                    if (num < 1 || num > names.size()) {
+                        System.out.println("invalid number!");
+                    } else {
+                        String name = names.get(num - 1);
+                        BuildingController.changeWeapon(name);
+                        System.out.println("product changed successfully!");
+                    }
+                } catch (Exception e) {
+                    System.out.println(Answers.INVALID_COMMAND);
+                }
+            } else if (input.equals("n") || input.equals("no")) {
+                return;
+            } else if (input.equals(Commands.BACK.getRegex())) {
+                return;
+            } else {
+                System.out.println(Answers.INVALID_COMMAND);
             }
         }
     }

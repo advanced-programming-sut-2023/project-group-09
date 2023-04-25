@@ -4,6 +4,7 @@
     "itemName": "wood",
     "itemType": "resource",
     "rate": 3,
+    "inUse": 0,
     "countOfRoundsToProduce": 0,
     "required": {},
     "cost": {
@@ -13,6 +14,7 @@
     "price": 0,
     "numberOfRequiredWorkers": 1,
     "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
     "hasSpecialTexture": false,
     "suitableTextures": [],
     "shouldBeOne": false,
@@ -31,6 +33,7 @@
     "itemName": "meat",
     "itemType": "food",
     "rate": 3,
+    "inUse": 0,
     "countOfRoundsToProduce": 0,
     "required": {
       "cow": 1
@@ -42,6 +45,7 @@
     "price": 0,
     "numberOfRequiredWorkers": 1,
     "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
     "hasSpecialTexture": false,
     "suitableTextures": [],
     "shouldBeOne": false,
@@ -60,6 +64,7 @@
     "itemName": "hop",
     "itemType": "resource",
     "rate": 5,
+    "inUse": 0,
     "countOfRoundsToProduce": 0,
     "required": {},
     "cost": {
@@ -69,10 +74,12 @@
     "price": 0,
     "numberOfRequiredWorkers": 1,
     "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": 3,
     "hasSpecialTexture": true,
     "suitableTextures": [
+      "THICK_GRASS",
       "OASIS_GRASS",
-      "THICK_GRASS"
+      "GRASS"
     ],
     "shouldBeOne": false,
     "name": "hopFarm",
@@ -90,6 +97,7 @@
     "itemName": "wheat",
     "itemType": "resource",
     "rate": 5,
+    "inUse": 0,
     "countOfRoundsToProduce": 0,
     "required": {},
     "cost": {
@@ -99,10 +107,12 @@
     "price": 0,
     "numberOfRequiredWorkers": 1,
     "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": 3,
     "hasSpecialTexture": true,
     "suitableTextures": [
+      "THICK_GRASS",
       "OASIS_GRASS",
-      "THICK_GRASS"
+      "GRASS"
     ],
     "shouldBeOne": false,
     "name": "wheatFarm",
@@ -120,6 +130,7 @@
     "itemName": "bread",
     "itemType": "food",
     "rate": 3,
+    "inUse": 0,
     "countOfRoundsToProduce": 0,
     "required": {
       "flour": 1
@@ -131,6 +142,7 @@
     "price": 0,
     "numberOfRequiredWorkers": 1,
     "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
     "hasSpecialTexture": false,
     "suitableTextures": [],
     "shouldBeOne": false,
@@ -149,6 +161,7 @@
     "itemName": "iron",
     "itemType": "resource",
     "rate": 3,
+    "inUse": 0,
     "countOfRoundsToProduce": 0,
     "required": {},
     "cost": {
@@ -158,6 +171,7 @@
     "price": 0,
     "numberOfRequiredWorkers": 2,
     "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
     "hasSpecialTexture": true,
     "suitableTextures": [
       "IRON_TEXTURE"
@@ -178,6 +192,7 @@
     "itemName": "pitch",
     "itemType": "resource",
     "rate": 5,
+    "inUse": 0,
     "countOfRoundsToProduce": 0,
     "required": {},
     "cost": {
@@ -187,6 +202,7 @@
     "price": 0,
     "numberOfRequiredWorkers": 1,
     "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
     "hasSpecialTexture": true,
     "suitableTextures": [
       "OIL"
@@ -207,6 +223,7 @@
     "itemName": "ale",
     "itemType": "resource",
     "rate": 3,
+    "inUse": 0,
     "countOfRoundsToProduce": 0,
     "required": {
       "hop": 5
@@ -218,6 +235,7 @@
     "price": 0,
     "numberOfRequiredWorkers": 1,
     "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
     "hasSpecialTexture": false,
     "suitableTextures": [],
     "shouldBeOne": false,
@@ -235,7 +253,8 @@
     "nameOfStorage": "stockPile",
     "itemName": "ale",
     "itemType": "resource",
-    "rate": 0,
+    "rate": 5,
+    "inUse": 0,
     "countOfRoundsToProduce": 0,
     "required": {
       "ale": 5
@@ -247,6 +266,7 @@
     "price": 100,
     "numberOfRequiredWorkers": 1,
     "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
     "hasSpecialTexture": false,
     "suitableTextures": [],
     "shouldBeOne": false,
@@ -265,6 +285,7 @@
     "itemName": "cheese",
     "itemType": "food",
     "rate": 3,
+    "inUse": 0,
     "countOfRoundsToProduce": 0,
     "required": {},
     "cost": {
@@ -274,10 +295,12 @@
     "price": 0,
     "numberOfRequiredWorkers": 1,
     "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": 3,
     "hasSpecialTexture": true,
     "suitableTextures": [
+      "THICK_GRASS",
       "OASIS_GRASS",
-      "THICK_GRASS"
+      "GRASS"
     ],
     "shouldBeOne": false,
     "name": "dairyProducts",
@@ -295,6 +318,7 @@
     "itemName": "apple",
     "itemType": "food",
     "rate": 5,
+    "inUse": 0,
     "countOfRoundsToProduce": 0,
     "required": {},
     "cost": {
@@ -304,10 +328,12 @@
     "price": 0,
     "numberOfRequiredWorkers": 1,
     "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": 3,
     "hasSpecialTexture": true,
     "suitableTextures": [
+      "THICK_GRASS",
       "OASIS_GRASS",
-      "THICK_GRASS"
+      "GRASS"
     ],
     "shouldBeOne": false,
     "name": "appleGarden",
@@ -325,6 +351,7 @@
     "itemName": "flour",
     "itemType": "resource",
     "rate": 3,
+    "inUse": 0,
     "countOfRoundsToProduce": 0,
     "required": {
       "wheat": 3
@@ -336,6 +363,7 @@
     "price": 0,
     "numberOfRequiredWorkers": 3,
     "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
     "hasSpecialTexture": false,
     "suitableTextures": [],
     "shouldBeOne": false,

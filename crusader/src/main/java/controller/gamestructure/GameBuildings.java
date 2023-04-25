@@ -32,6 +32,10 @@ public class GameBuildings {
             return null;
         }
     }
+
+    public static Building getBuilding(String name){
+        return buildings.get(name);
+    }
     public static void addBuildings() {
         createShop();
         createHovel();

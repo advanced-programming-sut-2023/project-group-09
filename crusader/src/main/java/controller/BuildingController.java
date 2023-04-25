@@ -5,6 +5,7 @@ import model.Government;
 import model.building.Building;
 import model.building.castlebuildings.Gatehouse;
 import model.building.producerbuildings.Barrack;
+import model.building.producerbuildings.WeaponProducer;
 import model.building.storagebuildings.StorageBuilding;
 
 import javax.xml.crypto.dsig.keyinfo.KeyValue;
@@ -90,22 +91,36 @@ public class BuildingController {
         if (!barrack.getUnits().contains(unitName)) {
             return BuildingAnswers.getMessage(BuildingAnswers.INVALID_UNIT_NAME);
         }
-        //TODO: how to buy? --check he has enough money to pay or not
-        return "";
+        if(!barrack.checkGold(unitName)){
+            return BuildingAnswers.getMessage(BuildingAnswers.INSUFFICIENT_MONEY);
+        }
+
+        if(!barrack.checkRequired(unitName)){
+            return BuildingAnswers.getMessage(BuildingAnswers.INSUFFICIENT_RESOURCE);
+        }
+
+        barrack.makeUnit(unitName);
+        return unitName +" added successfully!";
     }
 
+
+    public static void changeWeapon(String name){
+        if(building instanceof WeaponProducer weaponProducer){
+            weaponProducer.changeItemName(name);
+        }
+    }
     public static String shop() {
         // TODO: I don't know :)
         return "";
     }
 
     public static String showSavedGoods() {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         StorageBuilding stockpile = (StorageBuilding) building;
         for (String itemName : stockpile.getItems().keySet()) {
-            result += itemName + " : " + stockpile.getItemAmount(itemName) + "\n";
+            result.append(itemName).append(" : ").append(stockpile.getItemAmount(itemName)).append("\n");
         }
-        return result;
+        return result.toString();
     }
 
     public static String howManyHorses() {

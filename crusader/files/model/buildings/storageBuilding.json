@@ -3,16 +3,7 @@
     "itemType": "weapon",
     "capacity": 100,
     "amount": 0,
-    "items": {
-      "spear": 0,
-      "sword": 0,
-      "leatherArmour": 0,
-      "metalArmour": 0,
-      "crossBow": 0,
-      "mace": 0,
-      "pike": 0,
-      "bow": 0
-    },
+    "items": {},
     "cost": {
       "wood": 5
     },
@@ -20,6 +11,7 @@
     "price": 0,
     "numberOfRequiredWorkers": 0,
     "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
     "hasSpecialTexture": false,
     "suitableTextures": [],
     "shouldBeOne": false,
@@ -37,12 +29,7 @@
     "itemType": "food",
     "capacity": 100,
     "amount": 0,
-    "items": {
-      "apple": 0,
-      "bread": 0,
-      "meat": 0,
-      "cheese": 0
-    },
+    "items": {},
     "cost": {
       "wood": 5
     },
@@ -50,6 +37,7 @@
     "price": 0,
     "numberOfRequiredWorkers": 0,
     "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
     "hasSpecialTexture": false,
     "suitableTextures": [],
     "shouldBeOne": false,
@@ -67,16 +55,7 @@
     "itemType": "resource",
     "capacity": 100,
     "amount": 0,
-    "items": {
-      "flour": 0,
-      "iron": 0,
-      "wood": 0,
-      "wheat": 0,
-      "hops": 0,
-      "pitch": 0,
-      "ale": 0,
-      "stone": 0
-    },
+    "items": {},
     "cost": {
       "wood": 20
     },
@@ -84,6 +63,7 @@
     "price": 0,
     "numberOfRequiredWorkers": 0,
     "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
     "hasSpecialTexture": false,
     "suitableTextures": [],
     "shouldBeOne": false,
