@@ -1,8 +1,14 @@
 package model.game;
 
+import enumeration.Pair;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
 public class Map {
     private int length, width;
     private Tile[][] mapTiles;
+    private ArrayList<Pair<Integer, Integer>> defaultCastles = new ArrayList<>();
 
     public Map(int length, int width) {
         this.length = length;
@@ -33,10 +39,20 @@ public class Map {
     public Tile getTile(int x, int y) {
         return mapTiles[y][x];
     }
-    public void setTile(int x, int y,Tile tile) {
+
+    public void setTile(int x, int y, Tile tile) {
         mapTiles[y][x] = tile;
     }
+
     public void setMapTiles(Tile[][] mapTiles) {
         this.mapTiles = mapTiles;
+    }
+
+    public ArrayList<Pair<Integer, Integer>> getDefaultCastles() {
+        return defaultCastles;
+    }
+
+    public void setDefaultCastles(ArrayList<Pair<Integer, Integer>> defaultCastles) {
+        this.defaultCastles = defaultCastles;
     }
 }

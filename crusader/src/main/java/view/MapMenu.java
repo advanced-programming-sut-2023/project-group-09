@@ -18,14 +18,10 @@ public class MapMenu {
             Matcher showMapM = MapCommands.SHOW_MAP.getMatcher(input);
             Matcher moveMapM = MapCommands.MOVE_MAP.getMatcher(input);
             Matcher showDetailsOfLandM = MapCommands.SHOW_DETAILS_OF_TILE.getMatcher(input);
-            Matcher setTextureM = MapCommands.SET_TEXTURE.getMatcher(input);
-            Matcher clearLandM = MapCommands.CLEAR_TILE.getMatcher(input);
 
             if (showMapM.matches()) runShowMapOrShowDetailsOrClearLand(showMapM, 0);
             else if (moveMapM.matches()) runMoveMap(moveMapM);
             else if (showDetailsOfLandM.matches()) runShowMapOrShowDetailsOrClearLand(showDetailsOfLandM, 1);
-            else if (setTextureM.matches()) runSetTexture(setTextureM);
-            else if (clearLandM.matches()) runShowMapOrShowDetailsOrClearLand(clearLandM, 2);
             else System.out.println("invalid command");
         }
     }
@@ -67,36 +63,6 @@ public class MapMenu {
         int right = (rightM.group("count").isEmpty()) ? 1 : Integer.parseInt(rightM.group("count"));
 
 //        TODO: call showMap
-    }
-
-    private static void runSetTexture(Matcher matcher) {
-        String content = matcher.group("content");
-        Matcher xM = MapCommands.X_COORDINATE.getMatcher(content);
-        Matcher yM = MapCommands.Y_COORDINATE.getMatcher(content);
-        Matcher typeM = MapCommands.TYPE.getMatcher(content);
-
-        if (!typeM.find()) {
-            System.out.println("invalid command");
-            return;
-        }
-        if (typeM.group("type").isEmpty()) {
-            System.out.println("type field is empty");
-            return;
-        }
-
-        String validation = validateCoordinates(xM, yM);
-        if (!validation.isEmpty()) {
-            System.out.println(validation);
-            return;
-        }
-
-        Textures texture = Textures.getTextureByName(typeM.group("type"));
-        if (texture == null) {
-            System.out.println("invalid texture type");
-            return;
-        }
-
-        System.out.println(MapController.setTexture(Integer.parseInt(xM.group("x")), Integer.parseInt(yM.group("y")), texture));
     }
 
     public static String validateCoordinates(Matcher xM, Matcher yM) {

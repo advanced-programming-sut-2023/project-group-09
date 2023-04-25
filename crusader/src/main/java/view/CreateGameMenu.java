@@ -1,21 +1,25 @@
 package view;
 
 import controller.Application;
+import enumeration.Pair;
+import enumeration.commands.MapCommands;
 import enumeration.dictionary.Colors;
 import model.Government;
 import model.User;
+import model.game.Game;
+import model.game.Map;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Scanner;
+import java.util.regex.Matcher;
 
 public class CreateGameMenu {
     public static int mapSize;
-    public static int map;
+    public static Map map;
     public static int governmentsCount;
     private static ArrayList<Colors> colors = new ArrayList<>();
-    public static LinkedHashMap<User, Colors> governments = new LinkedHashMap<>();
+    private static ArrayList<Pair<Integer, Integer>> castles = new ArrayList<>();
 
     public static void run(Scanner scanner) {
         while (true) {
@@ -38,7 +42,8 @@ public class CreateGameMenu {
 
         while (true) {
             int mapNumber;
-            int numberOfMaps = (mapSize == 200) ? Application.getDefaultSmallMaps().size() : Application.getDefaultLargeMaps().size();
+            ArrayList<Map> maps = (mapSize == 200) ? Application.getDefaultSmallMaps() : Application.getDefaultLargeMaps();
+            int numberOfMaps = maps.size();
             System.out.println("there are " + numberOfMaps + " default maps available\nchoose one of them to preview:");
             try {
                 mapNumber = Integer.parseInt(scanner.nextLine());
@@ -69,11 +74,14 @@ public class CreateGameMenu {
                 mapChosen = (choiceNumber == 1) ? true : false;
                 break;
             }
-            if (mapChosen) break;
-            else continue;
+            if (mapChosen) {
+                map = maps.get(mapNumber - 1);
+                break;
+            } else continue;
         }
 
         EditMapEnvironmentMenu.run(scanner);
+        Game game = new Game(map);
 
         while (true) {
             System.out.println("enter the number of governments (2 to 8):");
@@ -92,13 +100,12 @@ public class CreateGameMenu {
             break;
         }
 
-//        Edit map environment menu
-
         Colors.getColorsList(colors);
+        castles = map.getDefaultCastles();
         for (int i = 0; i < governmentsCount; i++) {
             User lord;
             while (true) {
-                System.out.println("enter the username related to government " + (i + 1) + ":");
+                System.out.println("enter the lord's username of government " + (i + 1) + ":");
                 String lordUsername = scanner.nextLine();
                 if (!Application.isUserExistsByName(lordUsername)) {
                     System.out.println("username doesn't exist");
@@ -107,6 +114,7 @@ public class CreateGameMenu {
                 lord = Application.getUserByUsername(lordUsername);
                 break;
             }
+
             String output = "choose the color of government " + (i + 1) + "\n";
             for (int j = 0; j < colors.size(); j++) {
                 Colors color = colors.get(j);
@@ -118,7 +126,7 @@ public class CreateGameMenu {
                 try {
                     colorNumber = Integer.parseInt(scanner.nextLine());
                 } catch (Exception e) {
-                    System.out.println("enter a number:");
+                    System.out.println("please enter a number!");
                     continue;
                 }
                 if (colorNumber < 1 || colorNumber > colors.size()) {
@@ -127,10 +135,36 @@ public class CreateGameMenu {
                 }
                 break;
             }
-            governments.put(lord, colors.get(colorNumber - 1));
+
+            output = "choose the castle of government " + (i + 1) + "\n";
+            for (int j = 0; j < castles.size(); j++) {
+                int x = castles.get(i).getFirst();
+                int y = castles.get(i).getSecond();
+                output += (i + 1) + ".castle in (" + x + ", " + y + ")\n";
+            }
+            System.out.println(output.substring(0, output.length() - 1));
+            int castleNumber;
+            while (true) {
+                try {
+                    castleNumber = Integer.parseInt(scanner.nextLine());
+                } catch (Exception e) {
+                    System.out.println("please enter a number!");
+                    continue;
+                }
+                if (castleNumber < 1 || castleNumber > castles.size()) {
+                    System.out.println("invalid number\nreenter a number:");
+                    continue;
+                }
+                break;
+            }
+            int x = castles.get(castleNumber - 1).getFirst();
+            int y = castles.get(castleNumber - 1).getSecond();
+            Government government = new Government(lord, x, y, colors.get(colorNumber - 1));
+            game.addGovernment(government);
+            castles.remove(castleNumber - 1);
             colors.remove(colorNumber - 1);
+            EditMapMenu.currentGovernment = government;
+            EditMapMenu.run(scanner);
         }
-
-
     }
 }

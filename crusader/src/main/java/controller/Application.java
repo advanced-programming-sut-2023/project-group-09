@@ -2,9 +2,9 @@ package controller;
 
 
 import model.User;
+import model.game.Map;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 
 public class Application {

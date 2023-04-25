@@ -1,6 +1,7 @@
 package model;
 
 import controller.gamestructure.GameGoods;
+import enumeration.dictionary.Colors;
 import model.building.castlebuildings.MainCastle;
 import model.buildinghandler.BuildingCounter;
 import model.buildinghandler.Storage;
@@ -45,7 +46,7 @@ public class Government {
     private int gold;
     private int population, maxPopulation;
     private int castleX, castleY;
-    private String color;
+    private Colors color;
     private Lord lord;
 
     public Lord getLord() {
@@ -57,7 +58,7 @@ public class Government {
         ((MainCastle) (this.getBuildings().get("MainCastle").getBuildings().get(0))).setLord(lord);
     }
 
-    public Government(User user, int castleX, int castleY, String color) {
+    public Government(User user, int castleX, int castleY, Colors color) {
         this.user = user;
         this.castleX = castleX;
         this.castleY = castleY;
@@ -158,10 +159,10 @@ public class Government {
     }
 
     public String getColor() {
-        return color;
+        return color.getName();
     }
 
-    public void setColor(String color) {
+    public void setColor(Colors color) {
         this.color = color;
     }
 

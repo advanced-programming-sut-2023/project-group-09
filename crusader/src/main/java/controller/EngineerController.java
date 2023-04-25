@@ -18,44 +18,62 @@ public class EngineerController {
     }
 
     public void buildPortableShield(int x, int y) {
-//        TODO: create a siege tent in (x, y)
+        if (MapController.checkCanPutBuilding(x, y, "siegeTent", currentEngineer.getGovernment()))
+            MapController.dropBuilding(x, y, "siegeTent", currentEngineer.getGovernment());
 //        TODO: move engineer to (x, y)
-//        TODO: create the tool
+        GameController.getGame().getMap().getTile(x, y).setBuilding(null);
+        if (MapController.checkCanPutBuilding(x, y, "portableShield", currentEngineer.getGovernment()))
+            MapController.dropBuilding(x, y, "portableShield", currentEngineer.getGovernment());
 //        TODO: add current engineer to the tool
     }
 
     public void buildBatteringRam(int x, int y) {
-//        TODO: create a siege tent in (x, y)
+        if (MapController.checkCanPutBuilding(x, y, "siegeTent", currentEngineer.getGovernment()))
+            MapController.dropBuilding(x, y, "siegeTent", currentEngineer.getGovernment());
 //        TODO: move engineer to (x, y)
-//        TODO: create the tool
+        GameController.getGame().getMap().getTile(x, y).setBuilding(null);
+        if (MapController.checkCanPutBuilding(x, y, "batteringRam", currentEngineer.getGovernment()))
+            MapController.dropBuilding(x, y, "batteringRam", currentEngineer.getGovernment());
 //        TODO: add current engineer to the tool
     }
 
     public void buildSiegeTower(int x, int y) {
-//        TODO: create a siege tent in (x, y)
+        if (MapController.checkCanPutBuilding(x, y, "siegeTent", currentEngineer.getGovernment()))
+            MapController.dropBuilding(x, y, "siegeTent", currentEngineer.getGovernment());
 //        TODO: move engineer to (x, y)
-//        TODO: create the tool
+        GameController.getGame().getMap().getTile(x, y).setBuilding(null);
+        if (MapController.checkCanPutBuilding(x, y, "siegeTower", currentEngineer.getGovernment()))
+            MapController.dropBuilding(x, y, "siegeTower", currentEngineer.getGovernment());
 //        TODO: add current engineer to the tool
     }
 
     public void buildCatapult(int x, int y) {
-//        TODO: create a siege tent in (x, y)
+        if (MapController.checkCanPutBuilding(x, y, "siegeTent", currentEngineer.getGovernment()))
+            MapController.dropBuilding(x, y, "siegeTent", currentEngineer.getGovernment());
 //        TODO: move engineer to (x, y)
-//        TODO: create the tool
+        GameController.getGame().getMap().getTile(x, y).setBuilding(null);
+        if (MapController.checkCanPutBuilding(x, y, "catapult", currentEngineer.getGovernment()))
+            MapController.dropBuilding(x, y, "catapult", currentEngineer.getGovernment());
 //        TODO: add current engineer to the tool
     }
 
     public void buildTrebuchet(int x, int y) {
-//        TODO: create a siege tent in (x, y)
+        if (MapController.checkCanPutBuilding(x, y, "siegeTent", currentEngineer.getGovernment()))
+            MapController.dropBuilding(x, y, "siegeTent", currentEngineer.getGovernment());
 //        TODO: move engineer to (x, y)
-//        TODO: create the tool
+        GameController.getGame().getMap().getTile(x, y).setBuilding(null);
+        if (MapController.checkCanPutBuilding(x, y, "trebuchet", currentEngineer.getGovernment()))
+            MapController.dropBuilding(x, y, "trebuchet", currentEngineer.getGovernment());
 //        TODO: add current engineer to the tool
     }
 
     public void buildFireBallista(int x, int y) {
-//        TODO: create a siege tent in (x, y)
+        if (MapController.checkCanPutBuilding(x, y, "siegeTent", currentEngineer.getGovernment()))
+            MapController.dropBuilding(x, y, "siegeTent", currentEngineer.getGovernment());
 //        TODO: move engineer to (x, y)
-//        TODO: create the tool
+        GameController.getGame().getMap().getTile(x, y).setBuilding(null);
+        if (MapController.checkCanPutBuilding(x, y, "fireBallista", currentEngineer.getGovernment()))
+            MapController.dropBuilding(x, y, "fireBallista", currentEngineer.getGovernment());
 //        TODO: add current engineer to the tool
     }
 

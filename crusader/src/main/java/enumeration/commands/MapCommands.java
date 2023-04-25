@@ -16,6 +16,7 @@ public enum MapCommands {
     SET_TEXTURE("set texture (?<content>.+)"),
     TYPE("-t (?<type>.+)"),
     DIRECTION("-d (?<direction>.+)"),
+    COUNT("-c (?<count>[\\d]*)"),
     X1_COORDINATE("-x1 (?<x1>[\\d]*)"),
     X2_COORDINATE("-x2 (?<x2>[\\d]*)"),
     Y1_COORDINATE("-y1 (?<y1>[\\d]*)"),
@@ -23,6 +24,8 @@ public enum MapCommands {
     CLEAR_TILE("clear land (?<content>.+)"),
     DROP_TREE("drop tree (?<content>.+)"),
     DROP_ROCK("drop rock (?<content>.+)"),
+    DROP_BUILDING("drop building (?<content>.+)"),
+    DROP_UNIT("drop unit (?<content>.+)"),
     CONTINUE("continue");
     private String regex;
 

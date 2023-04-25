@@ -26,8 +26,8 @@ public class Game {
         return governments;
     }
 
-    public void setGovernments(ArrayList<Government> governments) {
-        this.governments = governments;
+    public void addGovernment(Government government) {
+        this.governments.add(government);
     }
 
     public Government getCurrentGovernment() {

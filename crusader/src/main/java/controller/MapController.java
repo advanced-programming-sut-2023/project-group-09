@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class MapController {
-
     private static Map map;
 
     public static String setTexture(int x, int y, Textures type) {
