@@ -58,9 +58,34 @@ public class BuildingController {
         return BuildingAnswers.getMessage(BuildingAnswers.OPEN_CLOSE_SUCCESSFULLY_DONE);
     }
 
-    public static String repair() {
+    public static String resourcesNeededForRepair() {
+        double rateOfRepairNeeded = ((double)building.getHp())/building.getMaxHp();
+        String result = "Items in need for repair : \n";
+        for (String item : building.getCost().keySet()) {
+            result += item + " : " + (int)(rateOfRepairNeeded*building.getCost().get(item)) + "\n";
+        }
+        return result;
+    }
 
-        return "";
+    public static String repair() {
+        String itemNeeded = "";
+        boolean canRepaired = true;
+        double rateOfRepairNeeded = ((double)building.getHp())/building.getMaxHp();
+        for (String item : building.getCost().keySet()) {
+            if (government.getPropertyAmount(item) < (int)(rateOfRepairNeeded*building.getCost().get(item))) {
+                itemNeeded = item;
+                canRepaired = false;
+                break;
+            }
+        }
+        if (!canRepaired) {
+            return "You don't have enough " + itemNeeded + " for repair!";
+        }
+        for (String item : building.getCost().keySet()) {
+            GovernmentController.consumeProduct(government, item , (int)(rateOfRepairNeeded*building.getCost().get(item)));
+        }
+        building.setHp(building.getMaxHp());
+        return "Successfully repaired!";
     }
 
     public static String showStateOfGate() {

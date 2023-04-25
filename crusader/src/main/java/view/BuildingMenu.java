@@ -64,6 +64,7 @@ public class BuildingMenu {
                     isThisBuildingSelected(Buildings.SQUARE_TOWER)) {
                 Matcher repairMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.REPAIR_IT);
                 if (repairMatcher.matches()) {
+                    System.out.println(BuildingController.resourcesNeededForRepair());
                     System.out.println(BuildingController.repair());
                 } else {
                     System.out.println(Answers.INVALID_COMMAND);
