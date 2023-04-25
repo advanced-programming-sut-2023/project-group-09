@@ -6,6 +6,7 @@ import model.building.Building;
 import model.building.castlebuildings.Gatehouse;
 import model.building.producerbuildings.Barrack;
 import model.building.storagebuildings.StorageBuilding;
+import model.human.military.Military;
 
 import javax.xml.crypto.dsig.keyinfo.KeyValue;
 import java.util.ArrayList;
@@ -104,7 +105,14 @@ public class BuildingController {
     }
 
     public static String howManyHorses() {
-        //TODO: handle it!
-        return "";
+        int availableHorses = government.getPropertyAmount("horse");
+        int horsesInUse = 0;
+        for (Military military : government.getTroops()) {
+            if (military.getName().equals("knight")) {
+                horsesInUse++;
+            }
+        }
+        return "Available horses: " + availableHorses + "\nUsed horses: " + horsesInUse;
     }
+
 }

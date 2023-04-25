@@ -6,6 +6,31 @@ import enumeration.HumanStates;
 import model.Government;
 
 public abstract class Human implements Cloneable{
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public HumanStates getState() {
+        return state;
+    }
+
+    public void setState(HumanStates state) {
+        this.state = state;
+    }
+
+    public boolean isInvisible() {
+        return isInvisible;
+    }
+
+    public void setInvisible(boolean invisible) {
+        isInvisible = invisible;
+    }
+
+    private String name;
     private Government government = null;
     private int speed;
     private int x, y;

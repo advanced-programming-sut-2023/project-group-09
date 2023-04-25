@@ -23,7 +23,7 @@ public class BuildingMenu {
         BuildingController.setGovernment();
         while (true) {
             String command = scanner.nextLine();
-            Matcher unselectBuildingMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.USELECT_BUILDING);
+            Matcher unselectBuildingMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.UNSELECT_BUILDING);
             if (unselectBuildingMatcher.matches()) {
                 break;
             }
@@ -98,11 +98,20 @@ public class BuildingMenu {
             } else if (isThisBuildingSelected(Buildings.BLACK_SMITH) ||
                     isThisBuildingSelected(Buildings.FLETCHER) ||
                     isThisBuildingSelected(Buildings.POLE_TURNER)) {
-                // TODO: ....
+                Matcher showStateOfProducts = BuildingMenuCommands.getMatcher(command , BuildingMenuCommands.SHOW_STATE_OF_PRODUCTS);
+                Matcher changeWeaponInProoduction = BuildingMenuCommands.getMatcher(
+                        command , BuildingMenuCommands.CHANGE_WEAPON_IN_PRODUCTION);
+                if (showStateOfProducts.matches()) {
+                    // next try
+                } else if (changeWeaponInProoduction.matches()) {
+                    // Mitra's method
+                } else {
+                    System.out.println(Answers.INVALID_COMMAND);
+                }
             } else if (isThisBuildingSelected(Buildings.STABLE)) {
                 Matcher howManyHorsesMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.HOW_MANY_HORSES);
                 if (howManyHorsesMatcher.matches()) {
-                    // TODO: ....
+                    System.out.println(BuildingController.howManyHorses());
                 } else {
                     System.out.println(Answers.INVALID_COMMAND);
                 }
