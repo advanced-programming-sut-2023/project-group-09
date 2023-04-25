@@ -94,11 +94,6 @@ public class BuildingController {
         return "";
     }
 
-    public static String shop() {
-        // TODO: I don't know :)
-        return "";
-    }
-
     public static String showSavedGoods() {
         String result = "";
         StorageBuilding stockpile = (StorageBuilding) building;

@@ -98,17 +98,17 @@ public class BuildingMenu {
             } else if (isThisBuildingSelected(Buildings.BLACK_SMITH) ||
                     isThisBuildingSelected(Buildings.FLETCHER) ||
                     isThisBuildingSelected(Buildings.POLE_TURNER)) {
-                // TODO: ehtiaje ya na? age nist ke bikhial
+                // TODO: ....
             } else if (isThisBuildingSelected(Buildings.STABLE)) {
                 Matcher howManyHorsesMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.HOW_MANY_HORSES);
                 if (howManyHorsesMatcher.matches()) {
-
+                    // TODO: ....
                 } else {
                     System.out.println(Answers.INVALID_COMMAND);
                 }
-            } else if (isThisBuildingSelected(Buildings.GRANARY)) {
-                // TODO: I don't know.
-            }
+            }// else if (isThisBuildingSelected(Buildings.GRANARY)) {
+                // TODO: Not now...
+            //}
         }
     }
 }

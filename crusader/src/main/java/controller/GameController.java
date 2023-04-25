@@ -111,7 +111,8 @@ public class GameController {
     }
 
     public static String showMap(int x, int y) {
-        return "";
+        String result;
+
     }
 
     public static String moveMap(int up, int left, int down, int right) {
