@@ -3,6 +3,8 @@ package controller;
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameHumans;
 import enumeration.Textures;
+import enumeration.dictionary.RockDirections;
+import enumeration.dictionary.Trees;
 import model.Government;
 import model.building.Building;
 import model.game.Map;
@@ -43,11 +45,11 @@ public class MapController {
         return "tile (" + x + ", " + y + ") cleared successfully";
     }
 
-    public static String dropRock(int x, int y, String direction) {
+    public static String dropRock(int x, int y, RockDirections direction) {
         return "";
     }
 
-    public static String dropTree(int x, int y, String type) {
+    public static String dropTree(int x, int y, Trees tree) {
         return "";
     }
 

@@ -4,6 +4,7 @@ package controller;
 import model.User;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public class Application {
@@ -19,6 +20,8 @@ public class Application {
 
     private static User currentUser;
     private static ArrayList<User> users = new ArrayList<>();
+    private static ArrayList<Map> defaultSmallMaps = new ArrayList<>();
+    private static ArrayList<Map> defaultLargeMaps = new ArrayList<>();
 
     public static User getCurrentUser() {
         return currentUser;
@@ -70,4 +73,19 @@ public class Application {
         users.add(user);
     }
 
+    public static ArrayList<Map> getDefaultSmallMaps() {
+        return defaultSmallMaps;
+    }
+
+    public static void setDefaultSmallMaps(ArrayList<Map> defaultSmallMaps) {
+        Application.defaultSmallMaps = defaultSmallMaps;
+    }
+
+    public static ArrayList<Map> getDefaultLargeMaps() {
+        return defaultLargeMaps;
+    }
+
+    public static void setDefaultLargeMaps(ArrayList<Map> defaultLargeMaps) {
+        Application.defaultLargeMaps = defaultLargeMaps;
+    }
 }

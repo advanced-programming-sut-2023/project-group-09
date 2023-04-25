@@ -1,6 +1,7 @@
 package model.game;
 
 import enumeration.Textures;
+import enumeration.dictionary.RockDirections;
 import enumeration.dictionary.Trees;
 import model.building.Building;
 import model.human.civilian.Civilian;
@@ -17,6 +18,7 @@ public class Tile {
 
     private Textures texture = Textures.EARTH;
     private Trees tree;
+    private RockDirections rockDirection;
 
     public Trees getTree() {
         return tree;
