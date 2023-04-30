@@ -31,13 +31,13 @@ public class GovernmentMenu {
 
             if (showPopularityFactorsMatcher.matches()) {
                 output = GovernmentController.showPopularityFactors();
-                System.out.println(output);
+                System.out.print(output);
             } else if (showPopularityMatcher.matches()) {
                 output = GovernmentController.showPopularity();
                 System.out.println(output);
             } else if (showFoodListMatcher.matches()) {
                 output = GovernmentController.showFoodList();
-                System.out.println(output);
+                System.out.print(output);
             } else if (showFoodRateMatcher.matches()) {
                 output = GovernmentController.showFoodRate();
                 System.out.println(output);
@@ -51,10 +51,9 @@ public class GovernmentMenu {
                 int rate;
                 try {
                   rate = Integer.parseInt(setFoodRateMatcher.group("rate"));
-                }catch (NumberFormatException e){
+                } catch (NumberFormatException e){
                     rate = -100;
                 }
-
                 output = GovernmentController.changeFoodRate(rate);
                 System.out.println(output);
             } else if (setFearRateMatcher.matches()) {

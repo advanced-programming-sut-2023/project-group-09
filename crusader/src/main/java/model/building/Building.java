@@ -225,4 +225,8 @@ public class Building implements Cloneable {
     public boolean isShouldBeOne() {
         return shouldBeOne;
     }
+
+    public void routinWork() {
+
+    }
 }

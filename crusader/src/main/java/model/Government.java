@@ -2,6 +2,7 @@ package model;
 
 import controller.gamestructure.GameGoods;
 import enumeration.dictionary.Colors;
+import model.building.Building;
 import model.building.castlebuildings.MainCastle;
 import model.buildinghandler.BuildingCounter;
 import model.buildinghandler.Storage;
@@ -34,6 +35,43 @@ public class Government {
 
     private ArrayList<Military> troops = new ArrayList<>();
     private ArrayList<Human> society = new ArrayList<>();
+    private MainCastle mainCastle;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setTrades(HashMap<String, Trade> trades) {
+        this.trades = trades;
+    }
+
+    public void setNewTrades(HashMap<String, Trade> newTrades) {
+        this.newTrades = newTrades;
+    }
+
+    public void setProperties(HashMap<String, Integer> properties) {
+        this.properties = properties;
+    }
+
+    public void setStorages(HashMap<String, Storage> storages) {
+        this.storages = storages;
+    }
+
+    public void setBuildings(HashMap<String, BuildingCounter> buildings) {
+        this.buildings = buildings;
+    }
+
+    public void setTroops(ArrayList<Military> troops) {
+        this.troops = troops;
+    }
+
+    public MainCastle getMainCastle() {
+        return mainCastle;
+    }
+
+    public void setMainCastle(MainCastle mainCastle) {
+        this.mainCastle = mainCastle;
+    }
 
     private int foodRate;
 
@@ -225,7 +263,7 @@ public class Government {
             }
         }
         if(var == 0){
-            foodRate = -2;
+            this.foodRate = -2;
             return 1;
         }
         return var;
@@ -249,5 +287,35 @@ public class Government {
 
     public void removeHuman(Civilian civilian){
         society.remove(civilian);
+    }
+    public void updateAllBuildings() {
+        // TODO: using Mitra's method
+    }
+
+    public void updateAllHumans() {
+        // TODO: using Mitra's method
+    }
+
+    public void updateAfterTurn() {
+        this.updateAllHumans();
+        this.updateAllHumans();
+        this.mainCastle.taxDistribution();
+        this.updateCowAndHorseNumber();
+        this.outOfStockNotification();
+    }
+
+    public void updateCowAndHorseNumber() {
+        int cows = buildings.get("dairyProducts").getNumber() * 3;
+        int horses = buildings.get("stable").getNumber() * 4;
+        this.addAmountToProperties("cow" , "cow", cows-this.getPropertyAmount("cows"));
+        this.addAmountToProperties("horse" , "horse" , horses-this.getPropertyAmount("horse"));
+    }
+
+    public void outOfStockNotification() {
+        for (String name: storages.keySet()) {
+            if (storages.get(name).isFull()) {
+                System.out.println("Storage " + name + " is full!");
+            }
+        }
     }
 }

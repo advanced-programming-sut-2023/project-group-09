@@ -27,12 +27,17 @@ public class GovernmentController {
         output.append("fear : ").append(getTaxPopularity(currentGovernment.getTaxRate())).append("\n");
         output.append("religion : ").append(currentGovernment.getPopularityOfReligion()).append("\n");
         output.append("ale coverage : ").append(currentGovernment.getPopularityOfAleCoverage()).append("\n");
-        //TODO add unemployed rate
-        return "";
+        return output.toString();
     }
 
     public static String showPopularity() {
-        return "";
+        int popularityOfGovernment = 0;
+        popularityOfGovernment += currentGovernment.getVarietyOfFood() + getFoodPopularity(currentGovernment.getFoodRate()) - 1;
+        popularityOfGovernment += currentGovernment.getFearRate();
+        popularityOfGovernment += getTaxPopularity(currentGovernment.getTaxRate());
+        popularityOfGovernment += currentGovernment.getPopularityOfReligion();
+        popularityOfGovernment += currentGovernment.getPopularityOfAleCoverage();
+        return "The popularity of your government is " + popularityOfGovernment;
     }
 
     public static String changeFoodRate(int rate) {
@@ -44,7 +49,11 @@ public class GovernmentController {
     }
 
     public static String showFoodList() {
-        return "";
+        String output = "Foods:\n";
+        for (String food : GameGoods.foods.keySet()){
+            output += food + " : " + currentGovernment.getPropertyAmount(food) + "\n";
+        }
+        return output;
     }
 
     public static String showFoodRate() {
@@ -173,10 +182,5 @@ public class GovernmentController {
             default -> 0;
         };
     }
-
-
-    /*public static boolean checkRate(int rate , int lowerbound , int upperbound) {
-        return false;
-    }*/
 
 }

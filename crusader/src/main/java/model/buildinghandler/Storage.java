@@ -3,6 +3,9 @@ package model.buildinghandler;
 public class Storage {
     private int capacity = 0;
     private int amount = 0;
+    public boolean isFull() {
+        return capacity == amount;
+    }
 
     public int getCapacity() {
         return capacity;
