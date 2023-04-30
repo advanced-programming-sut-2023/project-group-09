@@ -9,6 +9,8 @@ public class Game {
     private ArrayList<Government> governments = new ArrayList<>();
     private Government currentGovernment;
     private int round;
+    private int currentMapX;
+    private int currentMapY;
 
     public Game(Map map) {
         this.map = map;
@@ -47,5 +49,21 @@ public class Game {
     }
 
     public void changeTurn() {
+    }
+
+    public int getCurrentMapX() {
+        return currentMapX;
+    }
+
+    public void setCurrentMapX(int currentMapX) {
+        this.currentMapX = currentMapX;
+    }
+
+    public int getCurrentMapY() {
+        return currentMapY;
+    }
+
+    public void setCurrentMapY(int currentMapY) {
+        this.currentMapY = currentMapY;
     }
 }
