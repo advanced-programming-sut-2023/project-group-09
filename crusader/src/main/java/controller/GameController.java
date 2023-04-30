@@ -113,17 +113,17 @@ public class GameController {
     }
 
     public static String showMap(int x, int y) {
-        Map map = GameController.getGame().getMap();
-        if (y - 3 < 1) y = 4;
-        else if (y + 3 > map.getLength()) y = map.getLength();
-        if (x - 9 < 1) x = 10;
-        else if (x + 9 > map.getWidth()) x = map.getWidth();
-        GameController.getGame().setCurrentMapX(x--);
-        GameController.getGame().setCurrentMapY(y--);
+        Map map = game.getMap();
+        if (y - 3 < 0) y = 3;
+        else if (y + 3 >= map.getLength()) y = map.getLength() - 1;
+        if (x - 9 < 0) x = 9;
+        else if (x + 9 >= map.getWidth()) x = map.getWidth() - 1;
+        game.setCurrentMapX(x);
+        game.setCurrentMapY(y);
 
         String result = "";
         result += "-";
-        for (int i = 0; i < 19 * 5; i++) {
+        for (int i = 0; i < 19 * 6; i++) {
             result += "-";
         }
         result += "\n";
@@ -131,13 +131,14 @@ public class GameController {
             for (int j = 0; j < 2; j++) {
                 result += "|";
                 for (int k = x - 9; k <= x + 9; k++) {
-                    for (int l = 0; l < 4; l++) {
+                    for (int l = 0; l < 5; l++) {
                         Tile tile = map.getTile(i, k);
-                        String sign = "#";
-                        if (tile.getMilitaries().size() != 0) sign = "S";
+                        String sign = " ";
+                        if (tile.getMilitaries().size() != 0) sign = "\uE54E";
                         else if (tile.getBuilding() != null && !(tile.getBuilding() instanceof Wall)) sign = "B";
                         else if (tile.getBuilding() != null && tile.getBuilding() instanceof Wall) sign = "W";
                         else if (tile.getTree() != null) sign = "T";
+                        else if (tile.getRockDirection() != null) sign = "R";
                         result += tile.getTexture().getColor() + sign + "\u001B[0m";
                     }
                     result += "|";
@@ -145,7 +146,7 @@ public class GameController {
                 result += "\n";
             }
             result += "-";
-            for (int j = 0; j < 19 * 5; j++) {
+            for (int j = 0; j < 19 * 6; j++) {
                 result += "-";
             }
             result += "\n";
