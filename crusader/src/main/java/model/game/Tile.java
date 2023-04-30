@@ -15,11 +15,17 @@ public class Tile {
     public Tile() {
         this.isMoat = false;
         this.isPit = false;
+        tree = null;
+        rockDirection = null;
     }
 
     private Textures texture = Textures.EARTH;
     private Trees tree;
     private RockDirections rockDirection;
+
+    public Tile(Textures texture) {
+        this.texture = texture;
+    }
 
     public Trees getTree() {
         return tree;
@@ -42,6 +48,14 @@ public class Tile {
 
     public void setMilitaries(ArrayList<Military> militaries) {
         this.militaries = militaries;
+    }
+
+    public RockDirections getRockDirection() {
+        return rockDirection;
+    }
+
+    public void setRockDirection(RockDirections rockDirection) {
+        this.rockDirection = rockDirection;
     }
 
     private ArrayList<Military> militaries = new ArrayList<>();
@@ -77,19 +91,15 @@ public class Tile {
         this.canPutBuilding = canPutBuilding;
     }
 
-    public Tile(Textures texture) {
-        this.texture = texture;
-    }
-
     public Textures getTexture() {
         return texture;
     }
 
     public void setTexture(Textures texture) {
-        if(building == null){
+        if (building == null) {
             this.texture = texture;
             passable = texture.isPassable();
-            if(!texture.isPassable()){
+            if (!texture.isPassable()) {
                 civilians.clear();
             }
             canPutBuilding = texture.getCanPutBuilding();
@@ -112,7 +122,7 @@ public class Tile {
         this.civilians = human;
     }
 
-    public void addMilitary(Military military){
+    public void addMilitary(Military military) {
         militaries.add(military);
     }
     public void removeMilitary(Military military){
@@ -141,11 +151,11 @@ public class Tile {
         isPit = pit;
     }
 
-    public void clearCivilian(){
+    public void clearCivilian() {
         civilians.clear();
     }
 
-    public void clearMilitary(){
+    public void clearMilitary() {
         militaries.clear();
     }
 }

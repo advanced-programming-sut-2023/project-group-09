@@ -24,12 +24,21 @@ public class MapController {
     private static Map map;
 
     public static String setTexture(int x, int y, Textures type) {
-        GameController.getGame().getMap().getTile(x, y).setTexture(type);
+        map.getTile(x, y).setTexture(type);
         return "texture of tile (" + x + ", " + y + ") changed to " + type.getTextureName() + " successfully";
     }
 
+    public static String setTexture(int x1, int x2, int y1, int y2, Textures type) {
+        for (int i = y1; i <= y2; i++) {
+            for (int j = x1; j <= x2; j++) {
+                map.getTile(i, j).setTexture(type);
+            }
+        }
+        return "texture of tiles from (" + x1 + ", " + y1 + ") to (" + x2 + ", " + y2 + ") changed to " + type.getTextureName() + "successfully";
+    }
+
     public static String clearTile(int x, int y) {
-        Tile tile = GameController.getGame().getMap().getTile(x, y);
+        Tile tile = map.getTile(x, y);
         tile.clearCivilian();
         tile.clearMilitary();
         tile.setTexture(Textures.EARTH);
@@ -42,11 +51,15 @@ public class MapController {
     }
 
     public static String dropRock(int x, int y, RockDirections direction) {
-        return "";
+        map.getTile(x, y).setRockDirection(direction);
+
+        return "rock added in (" + x + ", " + y + ") with " + direction.getDirection() + " direction";
     }
 
     public static String dropTree(int x, int y, Trees tree) {
-        return "";
+        map.getTile(x, y).setTree(tree);
+
+        return tree.getTreeName() + " added to (" + x + ", " + y + ") successfully";
     }
 
 
@@ -234,7 +247,7 @@ public class MapController {
     public static void deleteOtherBuildingWithThisType(Building building) {
         Government government = GameController.getGame().getCurrentGovernment();
         BuildingCounter buildingCounter = government.getBuildingData(building.getName());
-        if(buildingCounter.getNumber() == 0){
+        if (buildingCounter.getNumber() == 0) {
             return;
         }
 
@@ -243,12 +256,12 @@ public class MapController {
         deleteBuilding(shouldDelete);
     }
 
-    public static void deleteBuilding(Building building){
+    public static void deleteBuilding(Building building) {
         int xx = building.getStartX();
         int yy = building.getStartY();
         for (int i = yy - 1; i < yy + building.getLength(); i++) {
             for (int j = xx - 1; j < xx + building.getWidth(); j++) {
-                Tile tileOfBuilding = map.getTile(j,i);
+                Tile tileOfBuilding = map.getTile(j, i);
                 tileOfBuilding.setCanPutBuilding(true);
                 tileOfBuilding.setPassable(true);
                 tileOfBuilding.setBuilding(null);

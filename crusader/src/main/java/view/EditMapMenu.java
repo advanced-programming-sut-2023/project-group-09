@@ -47,8 +47,8 @@ public class EditMapMenu {
             return;
         }
 
-        int x = Integer.parseInt(xM.group("x"));
-        int y = Integer.parseInt(yM.group("y"));
+        int x = Integer.parseInt(xM.group("x")) - 1;
+        int y = Integer.parseInt(yM.group("y")) - 1;
         String type = typeM.group("type");
         if (MapController.checkCanPutBuilding(x, y, type, currentGovernment))
             MapController.dropBuilding(x, y, type, currentGovernment);
@@ -95,9 +95,9 @@ public class EditMapMenu {
         int x = Integer.parseInt(xM.group("x"));
         int y = Integer.parseInt(yM.group("y"));
         String type = typeM.group("type");
-        if (MapController.checkCanPutMilitary(x, y, type, currentGovernment)) {
+        if (MapController.checkCanPutMilitary(x - 1, y - 1, type, currentGovernment)) {
             for (int i = 0; i < count; i++) {
-                MapController.dropMilitary(x, y, type, currentGovernment);
+                MapController.dropMilitary(x - 1, y - 1, type, currentGovernment);
             }
         }
     }

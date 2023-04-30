@@ -4,6 +4,7 @@ import controller.GameController;
 import controller.MapController;
 import enumeration.Textures;
 import enumeration.commands.MapCommands;
+import model.game.Map;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -38,11 +39,14 @@ public class MapMenu {
         }
 
         if (whichFunction == 0)
-            System.out.println(GameController.showMap(Integer.parseInt(xM.group("x")), Integer.parseInt(yM.group("y"))));
+            System.out.println(GameController.showMap(Integer.parseInt(xM.group("x")) - 1,
+                    Integer.parseInt(yM.group("y")) - 1));
         else if (whichFunction == 1)
-            System.out.println(GameController.showDetailsOfTile(Integer.parseInt(xM.group("x")), Integer.parseInt(yM.group("y"))));
+            System.out.println(GameController.showDetailsOfTile(Integer.parseInt(xM.group("x")) - 1,
+                    Integer.parseInt(yM.group("y")) - 1));
         else if (whichFunction == 2)
-            System.out.println(MapController.clearTile(Integer.parseInt(xM.group("x")), Integer.parseInt(yM.group("y"))));
+            System.out.println(MapController.clearTile(Integer.parseInt(xM.group("x")) - 1,
+                    Integer.parseInt(yM.group("y")) - 1));
     }
 
     private static void runMoveMap(Matcher matcher) {
@@ -75,9 +79,10 @@ public class MapMenu {
 
         int x = Integer.parseInt(xM.group("x"));
         int y = Integer.parseInt(yM.group("y"));
-        if (x < 0 || y < 0 || x > GameController.getGame().getMap().getLength() || y > GameController.getGame().getMap().getWidth())
+        if (x < 1 || y < 1 || x > CreateGameMenu.map.getWidth() || y > CreateGameMenu.map.getLength())
             return "invalid coordinates";
 
         return "";
+
     }
 }

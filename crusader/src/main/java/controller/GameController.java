@@ -3,6 +3,7 @@ package controller;
 import controller.human.HumanController;
 import javafx.util.Pair;
 import model.building.Building;
+import model.building.castlebuildings.Wall;
 import model.game.Game;
 import model.game.Map;
 import model.game.Tile;
@@ -153,12 +154,52 @@ public class GameController {
     }
 
     public static String showMap(int x, int y) {
-        String result;
-        return "";
+        Map map = game.getMap();
+        if (y - 3 < 0) y = 3;
+        else if (y + 3 >= map.getLength()) y = map.getLength() - 1;
+        if (x - 9 < 0) x = 9;
+        else if (x + 9 >= map.getWidth()) x = map.getWidth() - 1;
+        game.setCurrentMapX(x);
+        game.setCurrentMapY(y);
+
+        String result = "";
+        result += "-";
+        for (int i = 0; i < 19 * 6; i++) {
+            result += "-";
+        }
+        result += "\n";
+        for (int i = y - 3; i <= y + 3; i++) {
+            for (int j = 0; j < 2; j++) {
+                result += "|";
+                for (int k = x - 9; k <= x + 9; k++) {
+                    for (int l = 0; l < 5; l++) {
+                        Tile tile = map.getTile(i, k);
+                        String sign = " ";
+                        if (tile.getMilitaries().size() != 0) sign = "\uE54E";
+                        else if (tile.getBuilding() != null && !(tile.getBuilding() instanceof Wall)) sign = "B";
+                        else if (tile.getBuilding() != null && tile.getBuilding() instanceof Wall) sign = "W";
+                        else if (tile.getTree() != null) sign = "T";
+                        else if (tile.getRockDirection() != null) sign = "R";
+                        result += tile.getTexture().getColor() + sign + "\u001B[0m";
+                    }
+                    result += "|";
+                }
+                result += "\n";
+            }
+            result += "-";
+            for (int j = 0; j < 19 * 6; j++) {
+                result += "-";
+            }
+            result += "\n";
+        }
+
+        return result;
     }
 
     public static String moveMap(int up, int left, int down, int right) {
-        return "";
+        int y = down - up;
+        int x = right - left;
+        return showMap(GameController.getGame().getCurrentMapX() + x, GameController.game.getCurrentMapY() + y);
     }
 
     public static String showDetailsOfTile(int x, int y) {
