@@ -63,9 +63,20 @@ public class GameMenu {
                 itemsPattern.add(GameMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(GameMenuCommands.Y_ITEM.getRegex());
                 if(ViewController.isItemMatch(items,itemsPattern)){
-                    int x = Integer.parseInt(ViewController.resultMatcher.group("x"));
-                    int y = Integer.parseInt(ViewController.resultMatcher.group("y"));
-                    output = GameController.selectUnit(x,y);
+                    int x;
+                    int y;
+                    try {
+                        x = Integer.parseInt(ViewController.resultMatcher.group("x"));
+                    }catch (Exception e){
+                        x = -1;
+                    }
+
+                    try {
+                        y = Integer.parseInt(ViewController.resultMatcher.group("y"));
+                    }catch (Exception e){
+                        y = -1;
+                    }
+                    output = GameController.selectUnit(x,y,scanner);
                     System.out.println(output);
                 }
             } else if (governmentMenuMatcher.matches()) {

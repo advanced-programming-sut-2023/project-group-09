@@ -1,10 +1,16 @@
 package controller;
 
-import enumeration.answers.BuildingAnswers;
+import controller.human.HumanController;
+import javafx.util.Pair;
 import model.building.Building;
 import model.game.Game;
+import model.game.Map;
 import model.game.Tile;
-import model.human.Human;
+import model.human.military.Military;
+import view.UnitMenu;
+
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class GameController {
     private static Game game;
@@ -17,16 +23,59 @@ public class GameController {
         GameController.game = game;
     }
 
-    public static String selectUnit(int x, int y) {
+    //TODO handel empty field
+    public static String selectUnit(int x, int y, Scanner scanner) {
+        Map map = game.getMap();
+        if(x < 1 || x > map.getWidth()){
+            return "invalid x!";
+        }
+        if(y < 1 || y > map.getLength()){
+            return "invalid y!";
+        }
+        ArrayList<Military> militaries = MapController.getMilitariesOfGovernment(x,y,game.getCurrentGovernment());
+        if(militaries.size() == 0){
+            return "There is no troop in this place!";
+        }
+        HumanController.militaries = militaries;
+        UnitMenu.run(scanner);
         return "";
     }
 
     public static String moveUnit(int x, int y) {
-        return "";
+        Map map = game.getMap();
+        if(x < 1 || x > map.getWidth()){
+            return "invalid x!";
+        }
+        if(y < 1 || y > map.getLength()){
+            return "invalid y!";
+        }
+        Pair<Integer,Integer> destination = new Pair<>(y,x);
+        boolean check =HumanController.move(destination);
+        if(!check){
+            return "can't move unit no path to destination!";
+        }
+        return "unit(s) moved successfully!";
     }
 
     public static String patrolUnit(int x1, int y1, int x2, int y2) {
-        return "";
+        Map map = game.getMap();
+        if(x1 < 1 || x1 > map.getWidth()){
+            return "invalid x1!";
+        }
+        if(y1 < 1 || y1 > map.getLength()){
+            return "invalid y1!";
+        }
+        if(x2 < 1 || x2 > map.getWidth()){
+            return "invalid x2!";
+        }
+        if(y2 < 1 || y2 > map.getLength()){
+            return "invalid y2!";
+        }
+        boolean check = HumanController.patrolUnit(x1,y1,x2,y2);
+        if(!check){
+            return "can't start patrol, no path to destination!";
+        }
+        return "patrol started successfully!";
     }
 
     public static String setStateOfMilitary(int x, int y, String state) {
@@ -65,13 +114,6 @@ public class GameController {
         return "";
     }
 
-    public static String createUnit(String type, int count) {
-        return "";
-    }
-
-    public static String repairCastleBuildings() {
-        return "";
-    }
 
     public static String changeTurn() {
         return "";

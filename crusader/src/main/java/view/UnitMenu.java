@@ -17,8 +17,9 @@ public class UnitMenu {
     public static void run(Scanner scanner) {
 
         String input, output;
-
+        System.out.println("<< Unit Menu >>");
         while (true) {
+
             input = scanner.nextLine();
             Matcher moveUnitMenuMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.MOVE_UNIT);
             Matcher patrolUnitMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.PATROL_UNIT);
@@ -42,6 +43,10 @@ public class UnitMenu {
                     int y = Integer.parseInt(ViewController.resultMatcher.group("y"));
                     output = GameController.moveUnit(x, y);
                     System.out.println(output);
+
+                    if(output.equals("unit(s) moved successfully!")){
+                        return;
+                    }
                 }
             } else if (patrolUnitMatcher.matches()) {
                 String items = patrolUnitMatcher.group("items");

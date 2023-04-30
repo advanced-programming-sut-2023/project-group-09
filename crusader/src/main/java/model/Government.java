@@ -6,6 +6,7 @@ import model.building.castlebuildings.MainCastle;
 import model.buildinghandler.BuildingCounter;
 import model.buildinghandler.Storage;
 import model.human.Human;
+import model.human.civilian.Civilian;
 import model.human.military.Lord;
 import model.human.military.Military;
 
@@ -236,5 +237,17 @@ public class Government {
 
     public BuildingCounter getBuildingData(String name){
         return buildings.get(name);
+    }
+
+    public void removeMilitary(Military military){
+        troops.remove(military);
+    }
+
+    public void addHuman(Civilian civilian){
+        society.add(civilian);
+    }
+
+    public void removeHuman(Civilian civilian){
+        society.remove(civilian);
     }
 }

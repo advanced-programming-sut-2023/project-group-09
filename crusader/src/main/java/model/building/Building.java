@@ -221,4 +221,8 @@ public class Building implements Cloneable {
     public Building clone() throws CloneNotSupportedException {
         return (Building) super.clone();
     }
+
+    public boolean isShouldBeOne() {
+        return shouldBeOne;
+    }
 }

@@ -1,12 +1,17 @@
 package model.human;
 
 
-import enumeration.DefenseRating;
+import controller.GameController;
 import enumeration.HumanStates;
+import javafx.util.Pair;
 import model.Government;
 import model.activity.Move;
+import model.game.Map;
+import model.game.Tile;
 
-public abstract class Human implements Cloneable{
+import java.util.List;
+
+public abstract class Human implements Cloneable {
     public String getName() {
         return name;
     }
@@ -15,7 +20,6 @@ public abstract class Human implements Cloneable{
         this.name = name;
     }
 
-    
 
     private String name;
     private Government government = null;
@@ -34,6 +38,7 @@ public abstract class Human implements Cloneable{
         this.health = defenseRating;
         this.shootingRange = shootingRange;
     }
+
     public HumanStates getState() {
         return state;
     }
@@ -118,6 +123,8 @@ public abstract class Human implements Cloneable{
     public void setDefenseRating(int defenseRating) {
         this.defenseRating = defenseRating;
     }
+
+
 
     @Override
     public Human clone() throws CloneNotSupportedException {

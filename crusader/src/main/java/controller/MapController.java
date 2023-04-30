@@ -13,6 +13,8 @@ import model.building.storagebuildings.StorageBuilding;
 import model.buildinghandler.BuildingCounter;
 import model.game.Map;
 import model.game.Tile;
+import model.human.Human;
+import model.human.civilian.Civilian;
 import model.human.military.Military;
 
 import java.util.ArrayList;
@@ -87,6 +89,12 @@ public class MapController {
         for (int i = y - 1; i < y + Objects.requireNonNull(building).getLength(); i++) {
             for (int j = x - 1; j < x + building.getWidth(); j++) {
                 Tile tile = map.getTile(j, i);
+
+                if(building.isShouldBeOne()){
+                    deleteOtherBuildingWithThisType(building);
+                }
+
+
                 tile.setCanPutBuilding(false);
                 Textures textures = Textures.EARTH_AND_SAND;
                 if (building.getHasSpecialTexture()) {
@@ -132,12 +140,44 @@ public class MapController {
         tile.addMilitary(military);
     }
 
-    public static void dropMilitary(int x, int y, Military military) {
-        Tile tile = map.getTile(x - 1, y - 1);
+    public static void deleteMilitary(int x, int y, Military military) {
+        Tile tile = map.getTile(x, y);
+        military.getGovernment().removeMilitary(military);
+        tile.removeMilitary(military);
+    }
+
+    public static void addMilitary(int x, int y, Military military) {
+        Tile tile = map.getTile(x, y);
+        military.getGovernment().addMilitary(military);
         tile.addMilitary(military);
     }
 
+    public static void moveMilitary(int x, int y,Military military){
+        deleteMilitary(military.getX(), military.getY(), military);
+        addMilitary(x,y, military);
+        military.setX(x);
+        military.setY(y);
+    }
 
+    public static void deleteHuman(int x, int y, Civilian civilian) {
+        Tile tile = map.getTile(x, y);
+        civilian.getGovernment().removeHuman(civilian);
+        tile.removeHuman(civilian);
+    }
+
+    public static void addHuman(int x, int y, Civilian civilian) {
+        Tile tile = map.getTile(x, y);
+        civilian.getGovernment().addHuman(civilian);
+        tile.addHuman(civilian);
+    }
+
+
+    public static void moveHuman(int x, int y, Civilian civilian){
+        deleteHuman(civilian.getX(), civilian.getY(), civilian);
+        addHuman(x,y, civilian);
+        civilian.setX(x);
+        civilian.setY(y);
+    }
     public static boolean checkCanPutStorage(int x, int y, StorageBuilding storageBuilding) {
         int startX = x - 1;
         int startY = y - 1;

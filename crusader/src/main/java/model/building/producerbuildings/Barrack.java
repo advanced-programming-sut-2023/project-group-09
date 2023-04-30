@@ -43,8 +43,7 @@ public class Barrack extends Building{
                 return null;
             }
             Military military = Objects.requireNonNull(GameHumans.getUnit(name, this.getGovernment(), x, y)).clone();
-            MapController.dropMilitary(x,y,military);
-            this.getGovernment().addMilitary(military);
+            MapController.addMilitary(x,y,military);
             return military;
         }catch (CloneNotSupportedException e){
             System.out.println("An error occurred.[make unit]");

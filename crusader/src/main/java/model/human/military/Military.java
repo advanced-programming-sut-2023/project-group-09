@@ -13,7 +13,7 @@ public abstract class Military extends Human implements Cloneable{
     private boolean usesLadder = false;
     private boolean digsMoat = false;
     private String weapon;
-    private ArrayList<String> armours = new ArrayList<>();
+    private final ArrayList<String> armours = new ArrayList<>();
     private int price;
 
     //

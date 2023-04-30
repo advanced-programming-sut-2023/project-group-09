@@ -20,6 +20,7 @@ import java.util.regex.Matcher;
 public class TradeMenu {
     public static void run(Scanner scanner) {
         String input, output;
+        System.out.println("<< Trade Menu >>");
         showNotifications();
         boolean checkTargetGovernment = selectUser(scanner);
         if (checkTargetGovernment){

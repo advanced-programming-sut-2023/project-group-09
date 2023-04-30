@@ -4,6 +4,7 @@ import enumeration.Textures;
 import enumeration.dictionary.RockDirections;
 import enumeration.dictionary.Trees;
 import model.building.Building;
+import model.human.Human;
 import model.human.civilian.Civilian;
 import model.human.civilian.Civilian;
 import model.human.military.Military;
@@ -57,8 +58,10 @@ public class Tile {
     public void setCivilians(ArrayList<Civilian> civilian) {
         this.civilians = civilian;
     }
-
     public boolean isPassable() {
+        return passable;
+    }
+    public boolean isPassable(Human human) {
         return passable;
     }
 
@@ -111,6 +114,15 @@ public class Tile {
 
     public void addMilitary(Military military){
         militaries.add(military);
+    }
+    public void removeMilitary(Military military){
+        militaries.remove(military);
+    }
+    public void addHuman(Civilian civilian){
+        civilians.add(civilian);
+    }
+    public void removeHuman(Civilian civilian){
+        civilians.remove(civilian);
     }
 
     public boolean isMoat() {
