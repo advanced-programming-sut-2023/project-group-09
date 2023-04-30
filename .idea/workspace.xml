@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="Repair added to Building controller.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/GovernmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/GovernmentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/Government.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/Government.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/Building.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/Building.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/buildinghandler/Storage.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/buildinghandler/Storage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/game/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/view/GovernmentMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/view/GovernmentMenu.java" afterDir="false" />
-    </list>
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="some features added to Government and its controller&#10;try for creating template maps" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -187,7 +178,7 @@
       <workItem from="1682438061345" duration="1337000" />
       <workItem from="1682442721294" duration="11971000" />
       <workItem from="1682681015033" duration="40000" />
-      <workItem from="1682872449211" duration="19733000" />
+      <workItem from="1682872449211" duration="20055000" />
     </task>
     <task id="LOCAL-00001" summary="...">
       <created>1681925358549</created>
@@ -385,7 +376,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682454117656</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="some features added to Government and its controller&#10;try for creating template maps">
+      <created>1682898170788</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1682898170788</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -403,7 +401,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Resources added." />
     <MESSAGE value="Foods" />
     <MESSAGE value="Foods are added." />
     <MESSAGE value="Humans are added." />
@@ -428,7 +425,8 @@
     <MESSAGE value="Building menu updated&#10;and some enums edited." />
     <MESSAGE value="the last commits before checkpoint 1 ..." />
     <MESSAGE value="Repair added to Building controller." />
-    <option name="LAST_COMMIT_MESSAGE" value="Repair added to Building controller." />
+    <MESSAGE value="some features added to Government and its controller&#10;try for creating template maps" />
+    <option name="LAST_COMMIT_MESSAGE" value="some features added to Government and its controller&#10;try for creating template maps" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Project_Phase_1$UserControllerTest.ic" NAME="UserControllerTest Coverage Results" MODIFIED="1681942420279" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
