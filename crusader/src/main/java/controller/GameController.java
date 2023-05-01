@@ -196,6 +196,24 @@ public class GameController {
         return result;
     }
 
+    public static String showPreviewOfMap(Map map) {
+        String result = "";
+        for (int k = 1; k < 200; k++) {
+            for (int l = 1; l < 200; l++) {
+                Tile tile = map.getTile(k, l);
+                String sign = " ";
+                if (tile.getMilitaries().size() != 0) sign = "\uE54E";
+                else if (tile.getBuilding() != null && !(tile.getBuilding() instanceof Wall)) sign = "B";
+                else if (tile.getBuilding() != null && tile.getBuilding() instanceof Wall) sign = "W";
+                else if (tile.getTree() != null) sign = "T";
+                else if (tile.getRockDirection() != null) sign = "R";
+                result += tile.getTexture().getColor() + sign + "\u001B[0m";
+            }
+            result += "\n";
+        }
+        return result;
+    }
+
     public static String moveMap(int up, int left, int down, int right) {
         int y = down - up;
         int x = right - left;

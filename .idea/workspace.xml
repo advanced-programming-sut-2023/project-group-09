@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="the last commits before checkpoint 1 ...">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="Map 1 (400*400) created.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameMaps.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameMaps.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -407,7 +407,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Foods" />
     <MESSAGE value="Foods are added." />
     <MESSAGE value="Humans are added." />
     <MESSAGE value="Humans are added. (final)" />
@@ -432,7 +431,8 @@
     <MESSAGE value="the last commits before checkpoint 1 ..." />
     <MESSAGE value="Repair added to Building controller." />
     <MESSAGE value="some features added to Government and its controller&#10;try for creating template maps" />
-    <option name="LAST_COMMIT_MESSAGE" value="some features added to Government and its controller&#10;try for creating template maps" />
+    <MESSAGE value="Map 1 (400*400) created." />
+    <option name="LAST_COMMIT_MESSAGE" value="Map 1 (400*400) created." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Project_Phase_1$UserControllerTest.ic" NAME="UserControllerTest Coverage Results" MODIFIED="1681942420279" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
