@@ -52,15 +52,24 @@ public class MapController {
     }
 
     public static String dropRock(int x, int y, RockDirections direction) {
-        map.getTile(x, y).setRockDirection(direction);
-
-        return "rock added in (" + (x + 1) + ", " + (y + 1) + ") with " + direction.getDirection() + " direction";
+        Tile tile = map.getTile(x, y);
+        if (!tile.getTexture().equals(Textures.SMALL_POND) && !tile.getTexture().equals(Textures.LARGE_POND) && tile.getTree() == null && tile.getBuilding() == null
+                && tile.getMilitaries().size() == 0) {
+            tile.setRockDirection(direction);
+            return "rock added in (" + (x + 1) + ", " + (y + 1) + ") with " + direction.getDirection() + " direction";
+        }
+        return "you can't drop a rock here";
     }
 
     public static String dropTree(int x, int y, Trees tree) {
-        map.getTile(x, y).setTree(tree);
-
-        return tree.getTreeName() + " added to (" + (x + 1) + ", " + (y + 1) + ") successfully";
+        Tile tile = map.getTile(x, y);
+        if ((tile.getTexture().equals(Textures.EARTH) || tile.getTexture().equals(Textures.EARTH_AND_SAND) || tile.getTexture().equals(Textures.GRASS) ||
+                tile.getTexture().equals(Textures.THICK_GRASS) || tile.getTexture().equals(Textures.OASIS_GRASS) || tile.getTexture().equals(Textures.BEACH) &&
+                tile.getBuilding() == null && tile.getRockDirection() == null)) {
+            tile.setTree(tree);
+            return tree.getTreeName() + " added to (" + (x + 1) + ", " + (y + 1) + ") successfully";
+        }
+        return "you can't drop a tree here";
     }
 
 
@@ -82,7 +91,7 @@ public class MapController {
         for (int i = y - 1; i < y + building.getLength(); i++) {
             for (int j = x - 1; j < x + building.getWidth(); j++) {
 
-                if(building.getName().equals("stairs") && building instanceof Wall) {
+                if (building.getName().equals("stairs") && building instanceof Wall) {
                     int height = Wall.heightOfStairs(x, y);
                     if (height == 0 || height == -1) {
                         return false;
@@ -90,19 +99,19 @@ public class MapController {
                 }
 
 
-                if(building.getName().equals("crenulatedWall") && building instanceof Wall){
-                    if(!Wall.canDropCrenulatedWall(x,y)){
+                if (building.getName().equals("crenulatedWall") && building instanceof Wall) {
+                    if (!Wall.canDropCrenulatedWall(x, y)) {
                         return false;
                     }
                 }
 
-                if(building.getName().equals("drawBridge")){
-                    if(Gatehouse.canDropDrawBridge(x,y) == null){
+                if (building.getName().equals("drawBridge")) {
+                    if (Gatehouse.canDropDrawBridge(x, y) == null) {
                         return false;
                     }
                 }
 
-                if (building instanceof CastleBuilding && ! (building instanceof Wall) ) {
+                if (building instanceof CastleBuilding && !(building instanceof Wall)) {
                     if (!canPutCastleBuilding(x, y, (CastleBuilding) building)) {
                         return false;
                     }
@@ -125,7 +134,7 @@ public class MapController {
             for (int j = x - 1; j < x + building.getWidth(); j++) {
                 Tile tile = map.getTile(j, i);
 
-                if(building.isShouldBeOne()){
+                if (building.isShouldBeOne()) {
                     deleteOtherBuildingWithThisType(building);
                 }
 
@@ -136,13 +145,12 @@ public class MapController {
                 }
 
                 tile.setBuilding(building);
-                if(building.getName().equals("stairs") && building instanceof Wall){
-                    ((Wall)building).setHeight(Wall.heightOfStairs(x,y));
+                if (building.getName().equals("stairs") && building instanceof Wall) {
+                    ((Wall) building).setHeight(Wall.heightOfStairs(x, y));
                     tile.setPassable(true);
                     tile.setTexture(textures);
                     continue;
                 }
-
 
 
                 if (building.getBuildingImpassableLength() != -1) {
@@ -170,6 +178,7 @@ public class MapController {
         }
         return militaries;
     }
+
     public static ArrayList<Military> getMilitariesOfOtherGovernment(int x, int y, Government government) {
         ArrayList<Military> militaries = new ArrayList<>();
         Tile tile = map.getTile(x, y);
@@ -180,7 +189,8 @@ public class MapController {
         }
         return militaries;
     }
-    public static ArrayList<Military> getOneTypeOfMilitariesOfGovernment(int x, int y,String type, Government government) {
+
+    public static ArrayList<Military> getOneTypeOfMilitariesOfGovernment(int x, int y, String type, Government government) {
         ArrayList<Military> militaries = new ArrayList<>();
         Tile tile = map.getTile(x, y);
         for (Military military : tile.getMilitaries()) {
@@ -216,9 +226,9 @@ public class MapController {
         tile.addMilitary(military);
     }
 
-    public static void moveMilitary(int x, int y,Military military){
+    public static void moveMilitary(int x, int y, Military military) {
         deleteMilitary(military.getX(), military.getY(), military);
-        addMilitary(x,y, military);
+        addMilitary(x, y, military);
         military.setX(x);
         military.setY(y);
     }
@@ -236,12 +246,13 @@ public class MapController {
     }
 
 
-    public static void moveHuman(int x, int y, Civilian civilian){
+    public static void moveHuman(int x, int y, Civilian civilian) {
         deleteHuman(civilian.getX(), civilian.getY(), civilian);
-        addHuman(x,y, civilian);
+        addHuman(x, y, civilian);
         civilian.setX(x);
         civilian.setY(y);
     }
+
     public static boolean checkCanPutStorage(int x, int y, StorageBuilding storageBuilding) {
         int startX = x - 1;
         int startY = y - 1;
