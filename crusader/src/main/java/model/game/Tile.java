@@ -8,6 +8,7 @@ import model.human.Human;
 import model.human.civilian.Civilian;
 import model.human.civilian.Civilian;
 import model.human.military.Military;
+import model.tools.AttackingAndDefendingTool;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,7 @@ public class Tile {
     private Textures texture = Textures.EARTH;
     private Trees tree;
     private RockDirections rockDirection;
+    private AttackingAndDefendingTool tool;
 
     public Tile(Textures texture) {
         this.texture = texture;
@@ -72,9 +74,11 @@ public class Tile {
     public void setCivilians(ArrayList<Civilian> civilian) {
         this.civilians = civilian;
     }
+
     public boolean isPassable() {
         return passable;
     }
+
     public boolean isPassable(Human human) {
         return passable;
     }
@@ -122,16 +126,27 @@ public class Tile {
         this.civilians = human;
     }
 
+    public AttackingAndDefendingTool getTool() {
+        return tool;
+    }
+
+    public void setTool(AttackingAndDefendingTool tool) {
+        this.tool = tool;
+    }
+
     public void addMilitary(Military military) {
         militaries.add(military);
     }
-    public void removeMilitary(Military military){
+
+    public void removeMilitary(Military military) {
         militaries.remove(military);
     }
-    public void addHuman(Civilian civilian){
+
+    public void addHuman(Civilian civilian) {
         civilians.add(civilian);
     }
-    public void removeHuman(Civilian civilian){
+
+    public void removeHuman(Civilian civilian) {
         civilians.remove(civilian);
     }
 

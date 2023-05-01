@@ -30,8 +30,8 @@ public class Main {
         mapTiles[3][5].setTree(Trees.OLIVE_TREE);
         mapTiles[5][4].setTexture(Textures.GRASS);
         mapTiles[5][5].setBuilding(new Wall(0, 0, "wall", 0, 0, 0, 0));
-        map.setMapTiles(mapTiles);*/
-        /*GameController.setGame(new Game(map));
+        map.setMapTiles(mapTiles);
+        GameController.setGame(new Game(map));
 
         System.out.println(GameController.showMap(0, 0));*/
         GameMaps.createMap1();

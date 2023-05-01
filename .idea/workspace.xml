@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="Map 1 (400*400) created.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameMaps.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameMaps.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="MitraGh" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectId" id="2OeZJGtSER9mrxhoyWb8D0vXmSP" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Sharif/Term2/AP/Project/Project-Phase-1&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="model" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Sharif\Term2\AP\Project\Project-Phase-1\crusader\src\test\java\controller" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Sharif\Term2\AP\Project\Project-Phase-1\crusader\src\main\java" />
+      <recent name="D:\Sharif\Term2\AP\Project\Project-Phase-1\crusader\src\test\java\menu" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="StrongholdCrusader" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="StrongholdCrusader" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="controller" />
+      <option name="MAIN_CLASS_NAME" value="controller.UserControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserControllerTest.changeEmailTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="StrongholdCrusader" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="controller" />
+      <option name="MAIN_CLASS_NAME" value="controller.UserControllerTest" />
+      <option name="METHOD_NAME" value="changeEmailTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserControllerTest.isStrongPasswordTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="StrongholdCrusader" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="controller" />
+      <option name="MAIN_CLASS_NAME" value="controller.UserControllerTest" />
+      <option name="METHOD_NAME" value="isStrongPasswordTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserControllerTest.removeSloganTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="StrongholdCrusader" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="controller" />
+      <option name="MAIN_CLASS_NAME" value="controller.UserControllerTest" />
+      <option name="METHOD_NAME" value="removeSloganTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.UserControllerTest.changeEmailTest" />
+        <item itemvalue="JUnit.UserControllerTest" />
+        <item itemvalue="JUnit.UserControllerTest.removeSloganTest" />
+        <item itemvalue="JUnit.UserControllerTest.isStrongPasswordTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="" />
+      <created>1681922938440</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1681922938440</updated>
+      <workItem from="1681922940573" duration="1143000" />
+      <workItem from="1681937070375" duration="893000" />
+      <workItem from="1681941196344" duration="7452000" />
+      <workItem from="1681984358797" duration="16524000" />
+      <workItem from="1682023951191" duration="511000" />
+      <workItem from="1682056344653" duration="7886000" />
+      <workItem from="1682067403104" duration="102000" />
+      <workItem from="1682073593485" duration="1034000" />
+      <workItem from="1682087981704" duration="15062000" />
+      <workItem from="1682116199375" duration="2705000" />
+      <workItem from="1682149028155" duration="14217000" />
+      <workItem from="1682174575839" duration="72000" />
+      <workItem from="1682174654488" duration="103000" />
+      <workItem from="1682174764146" duration="99000" />
+      <workItem from="1682180160196" duration="2544000" />
+      <workItem from="1682202541014" duration="27766000" />
+      <workItem from="1682333857238" duration="49000" />
+      <workItem from="1682334932839" duration="1014000" />
+      <workItem from="1682353770879" duration="1777000" />
+      <workItem from="1682371298142" duration="130000" />
+      <workItem from="1682411331249" duration="72000" />
+      <workItem from="1682438061345" duration="1337000" />
+      <workItem from="1682442721294" duration="11971000" />
+      <workItem from="1682681015033" duration="40000" />
+      <workItem from="1682872449211" duration="20055000" />
+      <workItem from="1682923931065" duration="16000" />
+      <workItem from="1682923971381" duration="14000" />
+    </task>
+    <task id="LOCAL-00001" summary="...">
+      <created>1681925358549</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1681925358549</updated>
+    </task>
+    <task id="LOCAL-00002" summary="some tests added.">
+      <created>1681944373098</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1681944373098</updated>
+    </task>
+    <task id="LOCAL-00003" summary="some enums are edited.">
+      <created>1681995637116</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1681995637116</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Resources added.">
+      <created>1681999798822</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1681999798822</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Foods">
+      <created>1682000666231</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1682000666231</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Foods are added.">
+      <created>1682001101623</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1682001101623</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Humans are added.">
+      <created>1682001707158</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1682001707158</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Humans are added. (final)">
+      <created>1682002807377</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1682002807377</updated>
+    </task>
+    <task id="LOCAL-00009" summary="stay logged in.">
+      <created>1682021001755</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1682021001755</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Storage and producer buildings...">
+      <created>1682062460681</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1682062460681</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Texture passable conditions ...">
+      <created>1682063924968</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1682063924968</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Main castle added.">
+      <created>1682103062158</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1682103062158</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Walls, Draw bridge and gatehouses are added.">
+      <created>1682115730401</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1682115730401</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Towers added.">
+      <created>1682165652089</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1682165652089</updated>
+    </task>
+    <task id="LOCAL-00015" summary="castle buildings changed.">
+      <created>1682168093012</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1682168093012</updated>
+    </task>
+    <task id="LOCAL-00016" summary="castle buildings final change.">
+      <created>1682172406877</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1682172406877</updated>
+    </task>
+    <task id="LOCAL-00017" summary="method convertPasswordToHash() edited.">
+      <created>1682189114122</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1682189114122</updated>
+    </task>
+    <task id="LOCAL-00018" summary="a bug solved.">
+      <created>1682237172223</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1682237172223</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Building menu and Buildings dictionary. (first try)">
+      <created>1682255351548</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1682255351548</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Building menu (second try)">
+      <created>1682289033211</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1682289033211</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Building menu (second try)">
+      <created>1682289065083</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1682289065083</updated>
+    </task>
+    <task id="LOCAL-00022" summary="a commit to solve a problem.">
+      <created>1682353891980</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1682353891980</updated>
+    </task>
+    <task id="LOCAL-00023" summary="building menu edited.">
+      <created>1682354296419</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1682354296419</updated>
+    </task>
+    <task id="LOCAL-00024" summary="adding tree to Tile class">
+      <created>1682439002928</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1682439002928</updated>
+    </task>
+    <task id="LOCAL-00025" summary="just commit">
+      <created>1682447586540</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1682447586540</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Building menu updated&#10;and some enums edited.">
+      <created>1682451476656</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1682451476656</updated>
+    </task>
+    <task id="LOCAL-00027" summary="the last commits before checkpoint 1 ...">
+      <created>1682453168189</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1682453168189</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Repair added to Building controller.">
+      <created>1682454117656</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1682454117656</updated>
+    </task>
+    <task id="LOCAL-00029" summary="some features added to Government and its controller&#10;try for creating template maps">
+      <created>1682898170788</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1682898170788</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Foods are added." />
+    <MESSAGE value="Humans are added." />
+    <MESSAGE value="Humans are added. (final)" />
+    <MESSAGE value="stay logged in." />
+    <MESSAGE value="Storage and producer buildings..." />
+    <MESSAGE value="Texture passable conditions ..." />
+    <MESSAGE value="Main castle added." />
+    <MESSAGE value="Walls, Draw bridge and gatehouses are added." />
+    <MESSAGE value="Towers added." />
+    <MESSAGE value="castle buildings changed." />
+    <MESSAGE value="castle buildings final change." />
+    <MESSAGE value="method convertPasswordToHash() edited." />
+    <MESSAGE value="a bug solved." />
+    <MESSAGE value="Building menu and Buildings dictionary. (first try)" />
+    <MESSAGE value="Building menu (second try)" />
+    <MESSAGE value="a commit to sove a problem." />
+    <MESSAGE value="a commit to solve a problem." />
+    <MESSAGE value="building menu edited." />
+    <MESSAGE value="adding tree to Tile class" />
+    <MESSAGE value="just commit" />
+    <MESSAGE value="Building menu updated&#10;and some enums edited." />
+    <MESSAGE value="the last commits before checkpoint 1 ..." />
+    <MESSAGE value="Repair added to Building controller." />
+    <MESSAGE value="some features added to Government and its controller&#10;try for creating template maps" />
+    <MESSAGE value="Map 1 (400*400) created." />
+    <option name="LAST_COMMIT_MESSAGE" value="Map 1 (400*400) created." />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Project_Phase_1$UserControllerTest.ic" NAME="UserControllerTest Coverage Results" MODIFIED="1681942420279" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>controller.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Project_Phase_1$UserControllerTest_changeEmailTest.ic" NAME="UserControllerTest.changeEmailTest Coverage Results" MODIFIED="1681944150811" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>controller.*</FILTER>
+    </SUITE>
+  </component>
+</project>
