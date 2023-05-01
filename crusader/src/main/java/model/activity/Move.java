@@ -185,6 +185,10 @@ public class Move {
         }
     }
 
+    public String getMoveState() {
+        return moveState;
+    }
+
     public void moveBeforeDestination() {
         Pair<Integer, Integer> pair = path.get(indexOfPath + human.getSpeed());
         indexOfPath += human.getSpeed();
@@ -193,5 +197,11 @@ public class Move {
         } else {
             MapController.moveHuman(pair.getValue(), pair.getKey(), (Civilian) human);
         }
+    }
+
+
+    public void stopMove(){
+        moveState = MoveStates.STOP.getState();
+        indexOfPath = 0;
     }
 }

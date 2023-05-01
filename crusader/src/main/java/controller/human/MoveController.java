@@ -4,6 +4,7 @@ import controller.GameController;
 import javafx.util.Pair;
 import model.game.Map;
 import model.human.Human;
+import model.human.military.Military;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -200,5 +201,43 @@ public class MoveController extends HumanController{
 
     public static LinkedList<Pair<Integer, Integer>> checkHasPath(Pair<Integer, Integer> startPair,Pair<Integer, Integer> endPair){
         return getPath(startPair, endPair, null);
+    }
+    public static LinkedList<Pair<Integer, Integer>> checkHasLadderPath(Pair<Integer, Integer> startPair, Pair<Integer, Integer> endPair, LinkedList<Pair<Integer, Integer>> path) {
+        if (path != null) {
+            return path;
+        }
+        for (Military military : militaries) {
+            if (military.isUsesLadder()) {
+                return MoveController.getPath(startPair, endPair, military);
+            }
+        }
+        return null;
+    }
+
+    public static LinkedList<Pair<Integer, Integer>> checkAssassinPath(Pair<Integer, Integer> startPair, Pair<Integer, Integer> endPair, LinkedList<Pair<Integer, Integer>> path) {
+        if (path != null) {
+            return path;
+        }
+        for (Military military : militaries) {
+            if (military.getName().equals("assassin")) {
+                return MoveController.getPath(startPair, endPair, military);
+            }
+        }
+        return null;
+    }
+
+    public static Pair<Integer, Integer> getStartPair() {
+        Military firstMilitary = militaries.get(0);
+        return new Pair<>(firstMilitary.getX(), firstMilitary.getY());
+    }
+
+    public static boolean checkPatrolPath(Pair<Integer, Integer> startPair, Pair<Integer, Integer> endPair) {
+        LinkedList<Pair<Integer, Integer>> path = MoveController.checkHasPath(startPair, endPair);
+        LinkedList<Pair<Integer, Integer>> assassinPath = checkHasLadderPath(startPair, endPair, path);
+        LinkedList<Pair<Integer, Integer>> ladderPath = checkAssassinPath(startPair, endPair, path);
+        if (path == null && assassinPath == null && ladderPath == null) {
+            return false;
+        }
+        return true;
     }
 }

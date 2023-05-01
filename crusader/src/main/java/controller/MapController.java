@@ -139,7 +139,16 @@ public class MapController {
         }
         return militaries;
     }
-
+    public static ArrayList<Military> getMilitariesOfOtherGovernment(int x, int y, Government government) {
+        ArrayList<Military> militaries = new ArrayList<>();
+        Tile tile = map.getTile(x, y);
+        for (Military military : tile.getMilitaries()) {
+            if (!military.getGovernment().getColor().equals(government.getColor())) {
+                militaries.add(military);
+            }
+        }
+        return militaries;
+    }
     public static boolean checkCanPutMilitary(int x, int y, String type, Government government) {
         Military military = GameHumans.getUnit(type, government, x, y);
         Tile tile = map.getTile(x - 1, y - 1);

@@ -51,4 +51,14 @@ public class ViewController {
         return true;
     }
 
+    public static int getNumberOfRegex(String groupName){
+        int x;
+        try {
+            x = Integer.parseInt(ViewController.resultMatcher.group(groupName));
+        } catch (Exception e) {
+            x = -1;
+        }
+        return x;
+    }
+
 }
