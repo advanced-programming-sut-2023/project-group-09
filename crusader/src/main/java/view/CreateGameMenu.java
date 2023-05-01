@@ -25,7 +25,7 @@ public class CreateGameMenu {
     private static ArrayList<String> users = new ArrayList<>();
 
     public static void run(Scanner scanner) {
-        System.out.println("<< New Game Menu >>");
+        System.out.println("<< Create Game Menu >>");
 
         while (true) {
             System.out.println("choose map size:\n1.200 x 200\n2.400 x 400\n3.exit");
@@ -184,7 +184,6 @@ public class CreateGameMenu {
             EditMapMenu.run(scanner);
         }
 
-        //MapMenu.run(scanner);
         GameMenu.run(scanner, game);
     }
 }

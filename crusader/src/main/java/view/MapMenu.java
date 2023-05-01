@@ -17,13 +17,12 @@ public class MapMenu {
 
         while (true) {
             String input = scanner.nextLine();
-            Matcher showMapM = MapCommands.SHOW_MAP.getMatcher(input);
             Matcher moveMapM = MapCommands.MOVE_MAP.getMatcher(input);
             Matcher showDetailsOfLandM = MapCommands.SHOW_DETAILS_OF_TILE.getMatcher(input);
 
-            if (showMapM.matches()) runShowMapOrShowDetailsOrClearLand(showMapM, 0);
-            else if (moveMapM.matches()) runMoveMap(moveMapM);
+            if (moveMapM.matches()) runMoveMap(moveMapM);
             else if (showDetailsOfLandM.matches()) runShowMapOrShowDetailsOrClearLand(showDetailsOfLandM, 1);
+            else if (MapCommands.BACK.getMatcher(input).matches()) return;
             else System.out.println("invalid command");
         }
     }
