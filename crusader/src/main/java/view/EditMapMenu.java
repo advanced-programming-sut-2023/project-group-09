@@ -15,6 +15,9 @@ public class EditMapMenu {
     public static Government currentGovernment = null;
 
     public static void run(Scanner scanner) {
+        System.out.println("<< Edit Map Menu >>");
+        System.out.println("changes will be applied to " + currentGovernment.getUser().getUsername() + " government");
+
         while (true) {
             String input = scanner.nextLine();
             Matcher dropBuildingM = MapCommands.DROP_BUILDING.getMatcher(input);
@@ -51,8 +54,13 @@ public class EditMapMenu {
         int x = Integer.parseInt(xM.group("x")) - 1;
         int y = Integer.parseInt(yM.group("y")) - 1;
         String type = typeM.group("type");
-        if (MapController.checkCanPutBuilding(x, y, type, currentGovernment))
+        if (MapController.checkCanPutBuilding(x, y, type, currentGovernment)) {
             MapController.dropBuilding(x, y, type, currentGovernment);
+            System.out.println("building dropped successfully");
+        } else {
+            System.out.println("you can't drop a building here");
+            return;
+        }
     }
 
     private static void runDropUnit(Matcher matcher) {
@@ -101,6 +109,9 @@ public class EditMapMenu {
                 MapController.dropMilitary(x - 1, y - 1, type, currentGovernment);
             }
             System.out.println("unit dropped successfully");
-        } else System.out.println("error");
+        } else {
+            System.out.println("you can't put a unit here");
+            return;
+        }
     }
 }

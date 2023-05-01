@@ -36,7 +36,7 @@ public class Main {
 
         System.out.println(GameController.showMap(0, 0));*/
 //        GameMaps.createMap1();
-//        System.out.println("\u1F60");
+//        System.out.println("hello world");
         MainController.run();
     }
 

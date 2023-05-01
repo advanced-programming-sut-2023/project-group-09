@@ -25,7 +25,7 @@ public class MapController {
 
     public static String setTexture(int x, int y, Textures type) {
         map.getTile(x, y).setTexture(type);
-        return "texture of tile (" + x + ", " + y + ") changed to " + type.getTextureName() + " successfully";
+        return "texture of tile (" + (x + 1) + ", " + (y + 1) + ") changed to " + type.getTextureName() + " successfully";
     }
 
     public static String setTexture(int x1, int x2, int y1, int y2, Textures type) {
@@ -34,7 +34,7 @@ public class MapController {
                 map.getTile(i, j).setTexture(type);
             }
         }
-        return "texture of tiles from (" + x1 + ", " + y1 + ") to (" + x2 + ", " + y2 + ") changed to " + type.getTextureName() + "successfully";
+        return "texture of tiles from (" + (x1 + 1) + ", " + (y1 + 1) + ") to (" + (x2 + 1) + ", " + (y2 + 1) + ") changed to " + type.getTextureName() + " successfully";
     }
 
     public static String clearTile(int x, int y) {
@@ -53,13 +53,13 @@ public class MapController {
     public static String dropRock(int x, int y, RockDirections direction) {
         map.getTile(x, y).setRockDirection(direction);
 
-        return "rock added in (" + x + ", " + y + ") with " + direction.getDirection() + " direction";
+        return "rock added in (" + (x + 1) + ", " + (y + 1) + ") with " + direction.getDirection() + " direction";
     }
 
     public static String dropTree(int x, int y, Trees tree) {
         map.getTile(x, y).setTree(tree);
 
-        return tree.getTreeName() + " added to (" + x + ", " + y + ") successfully";
+        return tree.getTreeName() + " added to (" + (x + 1) + ", " + (y + 1) + ") successfully";
     }
 
 

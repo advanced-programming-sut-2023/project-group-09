@@ -13,6 +13,8 @@ import java.util.regex.Matcher;
 
 public class EditMapEnvironmentMenu {
     public static void run(Scanner scanner) {
+        System.out.println("<< Edit Map Environment Menu >>");
+
         while (true) {
             String input = scanner.nextLine();
             Matcher setTextureM = MapCommands.SET_TEXTURE.getMatcher(input);

@@ -3,10 +3,14 @@ package enumeration.dictionary;
 import java.util.ArrayList;
 
 public enum Colors {
-    RED("red", "ff0000"),
-    BLUE("blue", "0000ff"),
-    GREEN("green", "00ff00");
-    ;
+    RED("red", "db2525"),
+    BLUE("blue", "1d2cdb"),
+    GREEN("green", "29db1d"),
+    YELLOW("yellow", "f1f520"),
+    ORANGE("orange", "db771f"),
+    PURPLE("purple", "831fdb"),
+    GREY("grey", "5d5c5e"),
+    SKY_BLUE("sky blue", "34f7ea");
     private String name;
     private String hex;
 
