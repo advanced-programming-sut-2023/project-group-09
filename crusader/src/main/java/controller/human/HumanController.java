@@ -130,7 +130,7 @@ public class HumanController {
         }
         return true;
     }
-    public static boolean deactivatePatrol(int x1, int y1, int x2, int y2) {
+    public static boolean deactivatePatrol() {
         int counter = 0;
         for (Military military : militaries) {
             if (military.getMove().getMoveState().equals(MoveStates.PATROL.getState())){

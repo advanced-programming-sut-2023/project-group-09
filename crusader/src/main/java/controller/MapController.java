@@ -8,6 +8,7 @@ import enumeration.dictionary.Trees;
 import model.Government;
 import model.building.Building;
 import model.building.castlebuildings.CastleBuilding;
+import model.building.castlebuildings.Gatehouse;
 import model.building.castlebuildings.Wall;
 import model.building.storagebuildings.StorageBuilding;
 import model.buildinghandler.BuildingCounter;
@@ -78,9 +79,30 @@ public class MapController {
         if (building instanceof StorageBuilding && !checkCanPutStorage(x, y, (StorageBuilding) building)) {
             return false;
         }
-        for (int i = y; i <= y + building.getLength(); i++) {
-            for (int j = x; j <= x + building.getWidth(); j++) {
-                if (building instanceof CastleBuilding) {
+        for (int i = y - 1; i < y + building.getLength(); i++) {
+            for (int j = x - 1; j < x + building.getWidth(); j++) {
+
+                if(building.getName().equals("stairs") && building instanceof Wall) {
+                    int height = Wall.heightOfStairs(x, y);
+                    if (height == 0 || height == -1) {
+                        return false;
+                    }
+                }
+
+
+                if(building.getName().equals("crenulatedWall") && building instanceof Wall){
+                    if(!Wall.canDropCrenulatedWall(x,y)){
+                        return false;
+                    }
+                }
+
+                if(building.getName().equals("drawBridge")){
+                    if(Gatehouse.canDropDrawBridge(x,y) == null){
+                        return false;
+                    }
+                }
+
+                if (building instanceof CastleBuilding && ! (building instanceof Wall) ) {
                     if (!canPutCastleBuilding(x, y, (CastleBuilding) building)) {
                         return false;
                     }
@@ -99,21 +121,30 @@ public class MapController {
 
     public static void dropBuilding(int x, int y, String type, Government government) {
         Building building = GameBuildings.getBuilding(type, government, x, y);
-        for (int i = y; i <= y + Objects.requireNonNull(building).getLength(); i++) {
-            for (int j = x; j <= x + building.getWidth(); j++) {
+        for (int i = y - 1; i < y + Objects.requireNonNull(building).getLength(); i++) {
+            for (int j = x - 1; j < x + building.getWidth(); j++) {
                 Tile tile = map.getTile(j, i);
 
-                if (building.isShouldBeOne()) {
+                if(building.isShouldBeOne()){
                     deleteOtherBuildingWithThisType(building);
                 }
-
 
                 tile.setCanPutBuilding(false);
                 Textures textures = Textures.EARTH_AND_SAND;
                 if (building.getHasSpecialTexture()) {
                     textures = building.getSuitableTextures().get(0);
                 }
+
                 tile.setBuilding(building);
+                if(building.getName().equals("stairs") && building instanceof Wall){
+                    ((Wall)building).setHeight(Wall.heightOfStairs(x,y));
+                    tile.setPassable(true);
+                    tile.setTexture(textures);
+                    continue;
+                }
+
+
+
                 if (building.getBuildingImpassableLength() != -1) {
                     if (i >= building.getBuildingImpassableLength() || j >= building.getBuildingImpassableLength()) {
                         tile.setPassable(true);
@@ -139,7 +170,6 @@ public class MapController {
         }
         return militaries;
     }
-
     public static ArrayList<Military> getMilitariesOfOtherGovernment(int x, int y, Government government) {
         ArrayList<Military> militaries = new ArrayList<>();
         Tile tile = map.getTile(x, y);
@@ -150,8 +180,7 @@ public class MapController {
         }
         return militaries;
     }
-
-    public static ArrayList<Military> getOneTypeOfMilitariesOfGovernment(int x, int y, String type, Government government) {
+    public static ArrayList<Military> getOneTypeOfMilitariesOfGovernment(int x, int y,String type, Government government) {
         ArrayList<Military> militaries = new ArrayList<>();
         Tile tile = map.getTile(x, y);
         for (Military military : tile.getMilitaries()) {
@@ -163,15 +192,14 @@ public class MapController {
     }
 
     public static boolean checkCanPutMilitary(int x, int y, String type, Government government) {
-        Military military = GameHumans.getUnit(type);
-        if (military == null) return false;
-        Tile tile = map.getTile(x, y);
+        Military military = GameHumans.getUnit(type, government, x, y);
+        Tile tile = map.getTile(x - 1, y - 1);
         return tile.isPassable();
     }
 
     public static void dropMilitary(int x, int y, String type, Government government) {
         Military military = GameHumans.getUnit(type, government, x, y);
-        Tile tile = map.getTile(x, y);
+        Tile tile = map.getTile(x - 1, y - 1);
         government.addMilitary(military);
         tile.addMilitary(military);
     }
@@ -188,9 +216,9 @@ public class MapController {
         tile.addMilitary(military);
     }
 
-    public static void moveMilitary(int x, int y, Military military) {
+    public static void moveMilitary(int x, int y,Military military){
         deleteMilitary(military.getX(), military.getY(), military);
-        addMilitary(x, y, military);
+        addMilitary(x,y, military);
         military.setX(x);
         military.setY(y);
     }
@@ -208,18 +236,17 @@ public class MapController {
     }
 
 
-    public static void moveHuman(int x, int y, Civilian civilian) {
+    public static void moveHuman(int x, int y, Civilian civilian){
         deleteHuman(civilian.getX(), civilian.getY(), civilian);
-        addHuman(x, y, civilian);
+        addHuman(x,y, civilian);
         civilian.setX(x);
         civilian.setY(y);
     }
-
     public static boolean checkCanPutStorage(int x, int y, StorageBuilding storageBuilding) {
-        int startX = x;
-        int startY = y;
-        int endX = x + storageBuilding.getWidth();
-        int endY = y + storageBuilding.getLength();
+        int startX = x - 1;
+        int startY = y - 1;
+        int endX = x + storageBuilding.getWidth() - 1;
+        int endY = y + storageBuilding.getLength() - 1;
 
 
         if (startY != 0) {

@@ -23,6 +23,8 @@ public class GameTools {
         int damage = AttackRating.NONE.getRate();
         AttackingAndDefendingTool portableShield = new AttackingAndDefendingTool(1, speed,
                 0, damage, 2, 1);
+        tools.put("portableShield",portableShield);
+        portableShield.setName("portableShield");
     }
 
     public static void createBatteringRam() {
@@ -31,6 +33,8 @@ public class GameTools {
         int damage = AttackRating.NONE.getRate();
         AttackingAndDefendingTool batteringRam = new AttackingAndDefendingTool(4, speed,
                 0, damage, 3, 4);
+        tools.put("batteringRam",batteringRam);
+        batteringRam.setName("batteringRam");
     }
 
     public static void createSiegeTower() {
@@ -38,6 +42,8 @@ public class GameTools {
         int damage = AttackRating.NONE.getRate();
         AttackingAndDefendingTool siegeTower = new AttackingAndDefendingTool(4, speed,
                 0, damage, 4, 4);
+        tools.put("siegeTower",siegeTower);
+        siegeTower.setName("siegeTower");
     }
 
     public static void createCatapult() {
@@ -46,6 +52,8 @@ public class GameTools {
         int damage = AttackRating.HIGH.getRate();
         AttackingAndDefendingTool catapult = new AttackingAndDefendingTool(2, speed,
                 10, damage, 3, 4);
+        tools.put("catapult",catapult);
+        catapult.setName("catapult");
     }
 
     public static void createTrebuchet() {
@@ -54,6 +62,8 @@ public class GameTools {
         int damage = AttackRating.VERY_HIGH.getRate();
         AttackingAndDefendingTool trebuchet = new AttackingAndDefendingTool(3, speed,
                 15, damage, 4, 5);
+        tools.put("trebuchet",trebuchet);
+        trebuchet.setName("trebuchet");
     }
 
     public static void createFireBallista() {
@@ -62,5 +72,7 @@ public class GameTools {
         int damage = AttackRating.VERY_HIGH.getRate();
         AttackingAndDefendingTool fireBallista = new AttackingAndDefendingTool(2, speed,
                 10, damage, 3, 3);
+        tools.put("fireBallista",fireBallista);
+        fireBallista.setName("fireBallista");
     }
 }

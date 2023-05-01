@@ -18,6 +18,7 @@ public class MainController {
         DBController.loadGoods();
         DBController.loadMilitary();
         DBController.loadBuildings();
+        DBController.loadTools();
         GameMaps.createMaps();
     }
 

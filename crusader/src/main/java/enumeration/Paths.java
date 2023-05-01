@@ -12,7 +12,7 @@ public enum Paths {
     EUROPEAN_TROOP_PATH("files/model/humans/europeanTroops.json"),
     ARABIAN_MERCENARY_PATH("files/model/humans/arabianMercenaries.json"),
     BUILDINGS_PATH("files/model/buildings/"),
-
+    TOOLS_PATH("files/model/tools/tools.json"),
     ;
     private final String path;
 

@@ -1,17 +1,17 @@
 package model.tools;
 
-import enumeration.AttackRating;
-import enumeration.Speed;
+import jdk.incubator.vector.VectorOperators;
 import model.Government;
-import model.human.Human;
 import model.Permission;
 import model.human.military.Engineer;
 
 import java.util.ArrayList;
 
-public class AttackingAndDefendingTool {
+public class AttackingAndDefendingTool implements Cloneable {
     private Government government = null;
     private int width, length;
+
+    private String name;
     private int startX, startY;
     private int endX, endY;
     private int numberOfRequiredEngineers;
@@ -133,4 +133,14 @@ public class AttackingAndDefendingTool {
     public void setShootingRange(int shootingRange) {
         this.shootingRange = shootingRange;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public AttackingAndDefendingTool clone() throws CloneNotSupportedException {
+        return (AttackingAndDefendingTool) super.clone();
+    }
+
 }
