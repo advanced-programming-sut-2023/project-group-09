@@ -200,7 +200,7 @@ public class GameController {
                     for (int l = 0; l < 5; l++) {
                         Tile tile = map.getTile(i, k);
                         String sign = " ";
-                        if (tile.getMilitaries().size() != 0) sign = "\uE54E";
+                        if (tile.getMilitaries().size() != 0) sign = "S";
                         else if (tile.getBuilding() != null && !(tile.getBuilding() instanceof Wall)) sign = "B";
                         else if (tile.getBuilding() != null && tile.getBuilding() instanceof Wall) sign = "W";
                         else if (tile.getTree() != null) sign = "T";

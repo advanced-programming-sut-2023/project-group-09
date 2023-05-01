@@ -1,9 +1,6 @@
 package view;
 
-import controller.Application;
-import controller.GameController;
-import controller.MapController;
-import controller.PixelCanvas;
+import controller.*;
 import controller.gamestructure.GameMaps;
 import enumeration.Pair;
 import enumeration.commands.MapCommands;
@@ -85,9 +82,11 @@ public class CreateGameMenu {
                 break;
             } else continue;
         }
+        MapController.map = map;
 
         EditMapEnvironmentMenu.run(scanner);
         Game game = new Game(map);
+        GameController.setGame(game);
 
         while (true) {
             System.out.println("enter the number of governments (2 to 8):");
@@ -144,9 +143,9 @@ public class CreateGameMenu {
 
             output = "choose the castle of government " + (i + 1) + "\n";
             for (int j = 0; j < castles.size(); j++) {
-                int x = castles.get(i).getFirst();
-                int y = castles.get(i).getSecond();
-                output += (i + 1) + ".castle in (" + x + ", " + y + ")\n";
+                int x = castles.get(j).getFirst();
+                int y = castles.get(j).getSecond();
+                output += (j + 1) + ".castle in (" + x + ", " + y + ")\n";
             }
             System.out.println(output.substring(0, output.length() - 1));
             int castleNumber;
@@ -172,5 +171,8 @@ public class CreateGameMenu {
             EditMapMenu.currentGovernment = government;
             EditMapMenu.run(scanner);
         }
+
+        System.out.println(GameController.showMap(0, 0));
+        System.out.println(GameController.showDetailsOfTile(4, 4));
     }
 }

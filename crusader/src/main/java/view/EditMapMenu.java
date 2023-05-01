@@ -2,6 +2,7 @@ package view;
 
 import controller.GameController;
 import controller.MapController;
+import controller.gamestructure.GameHumans;
 import enumeration.Textures;
 import enumeration.commands.MapCommands;
 import model.Government;
@@ -99,6 +100,7 @@ public class EditMapMenu {
             for (int i = 0; i < count; i++) {
                 MapController.dropMilitary(x - 1, y - 1, type, currentGovernment);
             }
-        }
+            System.out.println("unit dropped successfully");
+        } else System.out.println("error");
     }
 }

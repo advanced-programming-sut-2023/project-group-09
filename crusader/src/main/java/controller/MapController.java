@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class MapController {
-    private static Map map;
+    public static Map map;
 
     public static String setTexture(int x, int y, Textures type) {
         map.getTile(x, y).setTexture(type);
@@ -78,8 +78,8 @@ public class MapController {
         if (building instanceof StorageBuilding && !checkCanPutStorage(x, y, (StorageBuilding) building)) {
             return false;
         }
-        for (int i = y - 1; i < y + building.getLength(); i++) {
-            for (int j = x - 1; j < x + building.getWidth(); j++) {
+        for (int i = y; i <= y + building.getLength(); i++) {
+            for (int j = x; j <= x + building.getWidth(); j++) {
                 if (building instanceof CastleBuilding) {
                     if (!canPutCastleBuilding(x, y, (CastleBuilding) building)) {
                         return false;
@@ -99,11 +99,11 @@ public class MapController {
 
     public static void dropBuilding(int x, int y, String type, Government government) {
         Building building = GameBuildings.getBuilding(type, government, x, y);
-        for (int i = y - 1; i < y + Objects.requireNonNull(building).getLength(); i++) {
-            for (int j = x - 1; j < x + building.getWidth(); j++) {
+        for (int i = y; i <= y + Objects.requireNonNull(building).getLength(); i++) {
+            for (int j = x; j <= x + building.getWidth(); j++) {
                 Tile tile = map.getTile(j, i);
 
-                if(building.isShouldBeOne()){
+                if (building.isShouldBeOne()) {
                     deleteOtherBuildingWithThisType(building);
                 }
 
@@ -139,6 +139,7 @@ public class MapController {
         }
         return militaries;
     }
+
     public static ArrayList<Military> getMilitariesOfOtherGovernment(int x, int y, Government government) {
         ArrayList<Military> militaries = new ArrayList<>();
         Tile tile = map.getTile(x, y);
@@ -149,7 +150,8 @@ public class MapController {
         }
         return militaries;
     }
-    public static ArrayList<Military> getOneTypeOfMilitariesOfGovernment(int x, int y,String type, Government government) {
+
+    public static ArrayList<Military> getOneTypeOfMilitariesOfGovernment(int x, int y, String type, Government government) {
         ArrayList<Military> militaries = new ArrayList<>();
         Tile tile = map.getTile(x, y);
         for (Military military : tile.getMilitaries()) {
@@ -161,14 +163,15 @@ public class MapController {
     }
 
     public static boolean checkCanPutMilitary(int x, int y, String type, Government government) {
-        Military military = GameHumans.getUnit(type, government, x, y);
-        Tile tile = map.getTile(x - 1, y - 1);
+        Military military = GameHumans.getUnit(type);
+        if (military == null) return false;
+        Tile tile = map.getTile(x, y);
         return tile.isPassable();
     }
 
     public static void dropMilitary(int x, int y, String type, Government government) {
         Military military = GameHumans.getUnit(type, government, x, y);
-        Tile tile = map.getTile(x - 1, y - 1);
+        Tile tile = map.getTile(x, y);
         government.addMilitary(military);
         tile.addMilitary(military);
     }
@@ -185,9 +188,9 @@ public class MapController {
         tile.addMilitary(military);
     }
 
-    public static void moveMilitary(int x, int y,Military military){
+    public static void moveMilitary(int x, int y, Military military) {
         deleteMilitary(military.getX(), military.getY(), military);
-        addMilitary(x,y, military);
+        addMilitary(x, y, military);
         military.setX(x);
         military.setY(y);
     }
@@ -205,17 +208,18 @@ public class MapController {
     }
 
 
-    public static void moveHuman(int x, int y, Civilian civilian){
+    public static void moveHuman(int x, int y, Civilian civilian) {
         deleteHuman(civilian.getX(), civilian.getY(), civilian);
-        addHuman(x,y, civilian);
+        addHuman(x, y, civilian);
         civilian.setX(x);
         civilian.setY(y);
     }
+
     public static boolean checkCanPutStorage(int x, int y, StorageBuilding storageBuilding) {
-        int startX = x - 1;
-        int startY = y - 1;
-        int endX = x + storageBuilding.getWidth() - 1;
-        int endY = y + storageBuilding.getLength() - 1;
+        int startX = x;
+        int startY = y;
+        int endX = x + storageBuilding.getWidth();
+        int endY = y + storageBuilding.getLength();
 
 
         if (startY != 0) {
