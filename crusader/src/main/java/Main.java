@@ -34,6 +34,6 @@ public class Main {
         GameController.setGame(new Game(map));
 
         System.out.println(GameController.showMap(0, 0));*/
-        GameMaps.createMap1();
+        GameMaps.createMap2();
     }
 }

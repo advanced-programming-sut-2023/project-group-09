@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="Show preview map (Trial)">
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="add defaults castles to Show preview map (Trial)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameMaps.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameMaps.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/game/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/game/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/game/Tile.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -406,7 +403,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682933904570</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="add defaults castles to Show preview map (Trial)">
+      <created>1682935784161</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1682935784161</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -424,7 +428,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Humans are added." />
     <MESSAGE value="Humans are added. (final)" />
     <MESSAGE value="stay logged in." />
     <MESSAGE value="Storage and producer buildings..." />
@@ -449,7 +452,8 @@
     <MESSAGE value="some features added to Government and its controller&#10;try for creating template maps" />
     <MESSAGE value="Map 1 (400*400) created." />
     <MESSAGE value="Show preview map (Trial)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Show preview map (Trial)" />
+    <MESSAGE value="add defaults castles to Show preview map (Trial)" />
+    <option name="LAST_COMMIT_MESSAGE" value="add defaults castles to Show preview map (Trial)" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
