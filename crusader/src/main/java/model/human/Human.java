@@ -2,7 +2,7 @@ package model.human;
 
 
 import controller.GameController;
-import enumeration.HumanStates;
+import java.lang.String;
 import javafx.util.Pair;
 import model.Government;
 import model.activity.Move;
@@ -27,7 +27,7 @@ public abstract class Human implements Cloneable {
     private int x, y;
     private int defenseRating;
     private int health;
-    private HumanStates state;
+    private String state;
     private int shootingRange;
     private boolean isInvisible = false;
     private Move move;
@@ -39,11 +39,11 @@ public abstract class Human implements Cloneable {
         this.shootingRange = shootingRange;
     }
 
-    public HumanStates getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(HumanStates state) {
+    public void setState(String state) {
         this.state = state;
     }
 
