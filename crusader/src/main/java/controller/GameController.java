@@ -198,8 +198,8 @@ public class GameController {
 
     public static String showPreviewOfMap(Map map) {
         String result = "";
-        for (int k = 1; k < 200; k++) {
-            for (int l = 1; l < 200; l++) {
+        for (int k = 1; k < 400; k++) {
+            for (int l = 1; l < 400; l++) {
                 Tile tile = map.getTile(k, l);
                 String sign = " ";
                 if (tile.getMilitaries().size() != 0) sign = "\uE54E";
