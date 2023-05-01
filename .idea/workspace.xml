@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="some features added to Government and its controller&#10;try for creating template maps" />
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="the last commits before checkpoint 1 ...">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/Main.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -179,6 +183,8 @@
       <workItem from="1682442721294" duration="11971000" />
       <workItem from="1682681015033" duration="40000" />
       <workItem from="1682872449211" duration="20055000" />
+      <workItem from="1682923931065" duration="16000" />
+      <workItem from="1682923971381" duration="14000" />
     </task>
     <task id="LOCAL-00001" summary="...">
       <created>1681925358549</created>
