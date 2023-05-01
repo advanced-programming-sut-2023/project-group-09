@@ -6,6 +6,7 @@ import controller.ViewController;
 import enumeration.answers.Answers;
 import enumeration.commands.Commands;
 import enumeration.commands.GameMenuCommands;
+import enumeration.commands.UnitMenuCommands;
 import model.game.Game;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class GameMenu {
             Matcher selectUnitMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.SELECT_UNIT);
             Matcher governmentMenuMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.GOVERNMENT_MENU);
             Matcher tradeMenuMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.TRADE_MENU);
+            Matcher setUnitStateMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.SET_UNIT_STATE);
             Matcher nextTurnMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.NEXT_TURN);
             Matcher showPlayerMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.SHOW_PLAYER);
             Matcher showRoundMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.SHOW_ROUND);
@@ -37,12 +39,12 @@ public class GameMenu {
                 itemsPattern.add(GameMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(GameMenuCommands.Y_ITEM.getRegex());
                 itemsPattern.add(GameMenuCommands.TYPE_ITEM.getRegex());
-                if(ViewController.isItemMatch(items,itemsPattern)){
-                    int x = Integer.parseInt(ViewController.resultMatcher.group("x"));
-                    int y = Integer.parseInt(ViewController.resultMatcher.group("y"));
+                if (ViewController.isItemMatch(items, itemsPattern)) {
+                    int x = ViewController.getNumberOfRegex("x");
+                    int y = ViewController.getNumberOfRegex("y");
                     String type = ViewController.resultMatcher.group("type");
                     type = ViewController.editItem(type);
-                    output = GameController.dropBuilding(x,y,type);
+                    output = GameController.dropBuilding(x, y, type);
                     System.out.println(output);
                 }
             } else if (selectBuildingMatcher.matches()) {
@@ -50,10 +52,10 @@ public class GameMenu {
                 ArrayList<String> itemsPattern = new ArrayList<>();
                 itemsPattern.add(GameMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(GameMenuCommands.Y_ITEM.getRegex());
-                if(ViewController.isItemMatch(items,itemsPattern)){
-                    int x = Integer.parseInt(ViewController.resultMatcher.group("x"));
-                    int y = Integer.parseInt(ViewController.resultMatcher.group("y"));
-                    output = GameController.selectBuilding(x,y);
+                if (ViewController.isItemMatch(items, itemsPattern)) {
+                    int x = ViewController.getNumberOfRegex("x");
+                    int y = ViewController.getNumberOfRegex("y");
+                    output = GameController.selectBuilding(x, y);
                     System.out.println(output);
                 }
 
@@ -62,21 +64,24 @@ public class GameMenu {
                 ArrayList<String> itemsPattern = new ArrayList<>();
                 itemsPattern.add(GameMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(GameMenuCommands.Y_ITEM.getRegex());
-                if(ViewController.isItemMatch(items,itemsPattern)){
-                    int x;
-                    int y;
-                    try {
-                        x = Integer.parseInt(ViewController.resultMatcher.group("x"));
-                    }catch (Exception e){
-                        x = -1;
-                    }
-
-                    try {
-                        y = Integer.parseInt(ViewController.resultMatcher.group("y"));
-                    }catch (Exception e){
-                        y = -1;
-                    }
-                    output = GameController.selectUnit(x,y,scanner);
+                if (ViewController.isItemMatch(items, itemsPattern)) {
+                    int x = ViewController.getNumberOfRegex("x");
+                    int y = ViewController.getNumberOfRegex("y");
+                    output = GameController.selectUnit(x, y, scanner);
+                    System.out.println(output);
+                }
+            } else if (setUnitStateMatcher.matches()) {
+                String items = setUnitStateMatcher.group("items");
+                ArrayList<String> itemsPattern = new ArrayList<>();
+                itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
+                itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
+                itemsPattern.add(UnitMenuCommands.S_ITEM.getRegex());
+                if (ViewController.isItemMatch(items, itemsPattern)) {
+                    int x = ViewController.getNumberOfRegex("x");
+                    int y = ViewController.getNumberOfRegex("y");
+                    String state = ViewController.resultMatcher.group("state");
+                    state = ViewController.editItem(state);
+                    output = GameController.setStateOfMilitary(x, y, state);
                     System.out.println(output);
                 }
             } else if (governmentMenuMatcher.matches()) {
