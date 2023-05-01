@@ -18,24 +18,37 @@ import model.human.Human;
 import model.human.civilian.Civilian;
 import model.human.military.Military;
 
+import java.awt.event.TextEvent;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class MapController {
     public static Map map;
 
+    //    TODO: complete setTexture conditions
     public static String setTexture(int x, int y, Textures type) {
-        map.getTile(x, y).setTexture(type);
+        Tile tile = map.getTile(x, y);
+        if ((tile.getTree() != null && !type.equals(Textures.EARTH) && !type.equals(Textures.EARTH_AND_SAND) && !type.equals(Textures.GRASS) &&
+                !type.equals(Textures.THICK_GRASS) && !type.equals(Textures.OASIS_GRASS) && !type.equals(Textures.BEACH)) ||
+                (tile.getRockDirection() != null && (type.equals(Textures.SMALL_POND) || type.equals(Textures.LARGE_POND))))
+            return "you can't change this tile's texture to " + type.getTextureName();
+        tile.setTexture(type);
         return "texture of tile (" + (x + 1) + ", " + (y + 1) + ") changed to " + type.getTextureName() + " successfully";
     }
 
     public static String setTexture(int x1, int x2, int y1, int y2, Textures type) {
+        String result = "";
         for (int i = y1; i <= y2; i++) {
             for (int j = x1; j <= x2; j++) {
-                map.getTile(i, j).setTexture(type);
+                Tile tile = map.getTile(i , j);
+                if ((tile.getTree() != null && !type.equals(Textures.EARTH) && !type.equals(Textures.EARTH_AND_SAND) && !type.equals(Textures.GRASS) &&
+                        !type.equals(Textures.THICK_GRASS) && !type.equals(Textures.OASIS_GRASS) && !type.equals(Textures.BEACH)) ||
+                        (tile.getRockDirection() != null && (type.equals(Textures.SMALL_POND) || type.equals(Textures.LARGE_POND))))
+                    result += "you can't change texture of tile (" + (i + 1) + ", " + (j + 1) + ") to " + type.getTextureName() + "\n";
             }
         }
-        return "texture of tiles from (" + (x1 + 1) + ", " + (y1 + 1) + ") to (" + (x2 + 1) + ", " + (y2 + 1) + ") changed to " + type.getTextureName() + " successfully";
+        return result + "texture of tiles from (" + (x1 + 1) + ", " + (y1 + 1) + ") to (" + (x2 + 1) + ", " + (y2 + 1) + ") changed to "
+                + type.getTextureName() + " successfully (except the mentioned ones)";
     }
 
     public static String clearTile(int x, int y) {
