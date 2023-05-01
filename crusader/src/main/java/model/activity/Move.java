@@ -20,7 +20,7 @@ public class Move {
     private Pair<Integer, Integer> startPair;
     private Pair<Integer, Integer> endPair;
     private Pair<Integer, Integer> patrolPair;
-    private boolean isDestinationConstant;
+    private final boolean isDestinationConstant;
     Human human;
 
 

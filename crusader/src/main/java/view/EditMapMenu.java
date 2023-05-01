@@ -56,9 +56,9 @@ public class EditMapMenu {
         String type = typeM.group("type");
         if (MapController.checkCanPutBuilding(x, y, type, currentGovernment)) {
             MapController.dropBuilding(x, y, type, currentGovernment);
-            System.out.println("building dropped successfully");
+            System.out.println("building dropped successfully!");
         } else {
-            System.out.println("you can't drop a building here");
+            System.out.println("you can't drop a building here!");
             return;
         }
     }
@@ -97,7 +97,7 @@ public class EditMapMenu {
             return;
         }
         if (count < 0) {
-            System.out.println("invalid number");
+            System.out.println("invalid number!");
             return;
         }
 
@@ -108,9 +108,9 @@ public class EditMapMenu {
             for (int i = 0; i < count; i++) {
                 MapController.dropMilitary(x - 1, y - 1, type, currentGovernment);
             }
-            System.out.println("unit dropped successfully");
+            System.out.println("unit dropped successfully!");
         } else {
-            System.out.println("you can't put a unit here");
+            System.out.println("you can't put a unit here!");
             return;
         }
     }

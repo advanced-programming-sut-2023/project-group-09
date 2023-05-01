@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Game {
     private Map map;
-    private ArrayList<Government> governments = new ArrayList<>();
+    private final ArrayList<Government> governments = new ArrayList<>();
     private Government currentGovernment;
     private int round;
     private int currentMapX;
@@ -29,6 +29,9 @@ public class Game {
     }
 
     public void addGovernment(Government government) {
+        if(currentGovernment == null){
+            currentGovernment = government;
+        }
         this.governments.add(government);
     }
 
@@ -49,6 +52,11 @@ public class Game {
     }
 
     public void changeTurn() {
+        int index = governments.indexOf(currentGovernment);
+        if(index + 1  == governments.size()){
+            index = -1;
+        }
+        currentGovernment = governments.get(index + 1);
     }
 
     public int getCurrentMapX() {
