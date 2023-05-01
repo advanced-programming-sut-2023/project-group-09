@@ -74,7 +74,7 @@ public class CreateGameMenu {
                     System.out.println("invalid number");
                     continue;
                 }
-                mapChosen = (choiceNumber == 1) ? true : false;
+                mapChosen = choiceNumber == 1;
                 break;
             }
             if (mapChosen) {
@@ -113,7 +113,7 @@ public class CreateGameMenu {
                 System.out.println("enter the lord's username of government " + (i + 1) + ":");
                 String lordUsername = scanner.nextLine();
                 if (!Application.isUserExistsByName(lordUsername)) {
-                    System.out.println("username doesn't exist");
+                    System.out.println("username doesn't exist!");
                     continue;
                 }
                 lord = Application.getUserByUsername(lordUsername);
@@ -135,7 +135,7 @@ public class CreateGameMenu {
                     continue;
                 }
                 if (colorNumber < 1 || colorNumber > colors.size()) {
-                    System.out.println("invalid number");
+                    System.out.println("invalid number!");
                     continue;
                 }
                 break;
@@ -157,7 +157,7 @@ public class CreateGameMenu {
                     continue;
                 }
                 if (castleNumber < 1 || castleNumber > castles.size()) {
-                    System.out.println("invalid number\nreenter a number:");
+                    System.out.println("invalid number!\nreenter a number:");
                     continue;
                 }
                 break;

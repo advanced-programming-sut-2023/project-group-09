@@ -89,7 +89,7 @@ public class EditMapMenu {
             return;
         }
         if (count < 0) {
-            System.out.println("invalid number");
+            System.out.println("invalid number!");
             return;
         }
 
@@ -100,7 +100,7 @@ public class EditMapMenu {
             for (int i = 0; i < count; i++) {
                 MapController.dropMilitary(x - 1, y - 1, type, currentGovernment);
             }
-            System.out.println("unit dropped successfully");
+            System.out.println("unit dropped successfully!");
         } else System.out.println("error");
     }
 }
