@@ -251,20 +251,32 @@ public class GameController {
         Tile tile = GameController.getGame().getMap().getTile(x, y);
 
         String details = "tile (" + x + ", " + y + ") details:\n";
-//        details += "texture type: " + tile.getTexture().getTextureName();
-//
-//        if (tile.getBuilding() != null) {
-//            details += "building " + tile.getBuilding().getName() + " from government " + tile.getBuilding().getGovernment() +
-//                    " | HP: " + tile.getBuilding().getHp() + "/" + tile.getBuilding().getMaxHp() + "\n";
-//        } else details += "there is no building on this tile\n";
-//
-//        for (int i = 0; i < tile.getHuman().size(); i++) {
-//            Human human = tile.getHuman().get(i);
-////            TODO: add human type and government
-//        }
-//        if (tile.getHuman().size() > 0) details += "total number of humans: " + tile.getHuman().size();
-//        else details += "there are no humans on this tile";
-
+        details += "texture type: " + tile.getTexture().getTextureName() + "\n";
+        if (tile.getTree() != null) {
+            details += "Tree : " + tile.getTree().getTreeName() + "\n";
+        }
+        if (tile.getRockDirection() != null) {
+            details += "Rock : " + tile.getRockDirection().getDirection() + "\n";
+        }
+        if (tile.getBuilding() != null) {
+            details += "building " + tile.getBuilding().getName() + " from Lord " +
+                    tile.getBuilding().getGovernment().getUser().getNickname() +
+                    " | HP: " + tile.getBuilding().getHp() + "/" +
+                    tile.getBuilding().getMaxHp() + "\n";
+        } else details += "there is no building on this tile\n";
+        details += "Civilian number : " + tile.getCivilians().size() + "\n";
+        if (tile.getCivilians().size() != 0) {
+            details += "Civilian in details : \n";
+            for (int i = 0; i != tile.getCivilians().size(); i++) {
+                details += "Civilian " + i + ": from Lord " +
+                        tile.getCivilians().get(i).getGovernment().getUser().getNickname() + "\n";
+            }
+        }
+        details += "Military number : " + tile.getMilitaries().size() + "\n";
+        for (int i = 0; i != tile.getMilitaries().size(); i++) {
+            details += "Military " + i + ": type: " + tile.getMilitaries().get(i).getName() + " | from Lord " +
+                    tile.getMilitaries().get(i).getGovernment().getUser().getNickname() + "\n";
+        }
         return details;
     }
 
