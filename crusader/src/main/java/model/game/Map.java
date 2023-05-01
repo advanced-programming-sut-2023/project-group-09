@@ -59,4 +59,8 @@ public class Map {
     public void setDefaultCastles(ArrayList<Pair<Integer, Integer>> defaultCastles) {
         this.defaultCastles = defaultCastles;
     }
+
+    public void addDefaultCastle(int x , int y) {
+        this.defaultCastles.add(new Pair<>(x, y));
+    }
 }

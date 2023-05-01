@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="some features added to Government and its controller&#10;try for creating template maps" />
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="some features added to Government and its controller&#10;try for creating template maps">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameMaps.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameMaps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/game/Map.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
