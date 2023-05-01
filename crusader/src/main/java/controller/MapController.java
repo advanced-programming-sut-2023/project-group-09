@@ -125,7 +125,7 @@ public class MapController {
                 }
 
                 if (building instanceof CastleBuilding && !(building instanceof Wall)) {
-                    if (!canPutCastleBuilding(x, y) {
+                    if (!canPutCastleBuilding(x, y)) {
                         return false;
                     }
                 } else if (!map.getTile(i, j).getCanPutBuilding()) {
