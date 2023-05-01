@@ -198,11 +198,14 @@ public class GameController {
 
     public static String showPreviewOfMap(Map map) {
         String result = "";
-        for (int k = 1; k < 400; k++) {
-            for (int l = 1; l < 400; l++) {
+        for (int k = 1; k < map.getLength(); k++) {
+            for (int l = 1; l < map.getWidth(); l++) {
                 Tile tile = map.getTile(k, l);
                 String sign = " ";
-                if (tile.getMilitaries().size() != 0) sign = "\uE54E";
+                if (tile.isDefaultCastle()) {
+                    sign = "\u001B[40m" + "C";
+                }
+                else if (tile.getMilitaries().size() != 0) sign = "\uE54E";
                 else if (tile.getBuilding() != null && !(tile.getBuilding() instanceof Wall)) sign = "B";
                 else if (tile.getBuilding() != null && tile.getBuilding() instanceof Wall) sign = "W";
                 else if (tile.getTree() != null) sign = "T";

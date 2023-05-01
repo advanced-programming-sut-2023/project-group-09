@@ -128,7 +128,7 @@ public class GameMaps {
                 map1.getTile(i , j).setTexture(Textures.IRON_TEXTURE);
             }
         }
-        map1.addDefaultCastle(85 , 60);
+        map1.addDefaultCastle(85 , 100);
         map1.addDefaultCastle(180 , 30);
         map1.addDefaultCastle(330 , 25);
         map1.addDefaultCastle(365 , 200);

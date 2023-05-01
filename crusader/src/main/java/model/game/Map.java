@@ -62,5 +62,6 @@ public class Map {
 
     public void addDefaultCastle(int x , int y) {
         this.defaultCastles.add(new Pair<>(x, y));
+        this.getTile(x , y).setDefaultCastle(true);
     }
 }

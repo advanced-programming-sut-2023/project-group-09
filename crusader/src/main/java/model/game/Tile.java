@@ -24,6 +24,15 @@ public class Tile {
     private Trees tree;
     private RockDirections rockDirection;
     private AttackingAndDefendingTool tool;
+    private boolean isDefaultCastle;
+
+    public boolean isDefaultCastle() {
+        return isDefaultCastle;
+    }
+
+    public void setDefaultCastle(boolean defaultCastle) {
+        isDefaultCastle = defaultCastle;
+    }
 
     public Tile(Textures texture) {
         this.texture = texture;
