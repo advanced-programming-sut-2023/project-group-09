@@ -14,7 +14,6 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class BuildingMenu {
-    private static Building building;
     private static String nameOfBuilding;
 
     private static boolean isThisBuildingSelected(Buildings building) {
@@ -23,7 +22,7 @@ public class BuildingMenu {
 
     public static void run(Scanner scanner) {
         BuildingController.setGovernment();
-        building = BuildingController.getBuilding();
+        Building building = BuildingController.getBuilding();
         nameOfBuilding = building.getName();
         while (true) {
             String command = scanner.nextLine();
@@ -100,59 +99,59 @@ public class BuildingMenu {
             } else if (building instanceof WeaponProducer weaponProducer) {
                 changeWeapon(scanner, weaponProducer);
             } else if (isThisBuildingSelected(Buildings.STABLE)) {
-                    Matcher howManyHorsesMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.HOW_MANY_HORSES);
-                    if (howManyHorsesMatcher.matches()) {
-                        System.out.println(BuildingController.howManyHorses());
-                    } else {
-                        System.out.println(Answers.INVALID_COMMAND);
-                    }
-                }// else if (isThisBuildingSelected(Buildings.GRANARY)) {
-                // TODO: Not now...
-                //}
-            }
-        }
-
-        public static void changeWeapon (Scanner scanner, WeaponProducer weaponProducer){
-            ArrayList<String> names = weaponProducer.getWeapons();
-            String currentWeapon;
-            while (true) {
-                int i = 1;
-                currentWeapon = weaponProducer.getName();
-                System.out.println("this building can produce this weapons :");
-                for (String name : names) {
-                    if (currentWeapon.equals(name)) {
-                        System.out.println(i + "." + name + " (current weapon)");
-                    } else {
-                        System.out.println(i + "." + name);
-                    }
-                    i++;
-                }
-                System.out.println("do you want to change current product?(y/n)");
-                String input = scanner.nextLine();
-                if (input.equals("y") || input.equals("yes")) {
-                    System.out.println("enter number of your product:");
-                    input = scanner.nextLine();
-                    int num;
-                    try {
-                        num = Integer.parseInt(input);
-                        if (num < 1 || num > names.size()) {
-                            System.out.println("invalid number!");
-                        } else {
-                            String name = names.get(num - 1);
-                            BuildingController.changeWeapon(name);
-                            System.out.println("product changed successfully!");
-                        }
-                    } catch (Exception e) {
-                        System.out.println(Answers.INVALID_COMMAND);
-                    }
-                } else if (input.equals("n") || input.equals("no")) {
-                    return;
-                } else if (input.equals(Commands.BACK.getRegex())) {
-                    return;
+                Matcher howManyHorsesMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.HOW_MANY_HORSES);
+                if (howManyHorsesMatcher.matches()) {
+                    System.out.println(BuildingController.howManyHorses());
                 } else {
                     System.out.println(Answers.INVALID_COMMAND);
                 }
+            }// else if (isThisBuildingSelected(Buildings.GRANARY)) {
+            // TODO: Not now...
+            //}
+        }
+    }
+
+    public static void changeWeapon(Scanner scanner, WeaponProducer weaponProducer) {
+        ArrayList<String> names = weaponProducer.getWeapons();
+        String currentWeapon;
+        while (true) {
+            int i = 1;
+            currentWeapon = weaponProducer.getName();
+            System.out.println("this building can produce this weapons :");
+            for (String name : names) {
+                if (currentWeapon.equals(name)) {
+                    System.out.println(i + "." + name + " (current weapon)");
+                } else {
+                    System.out.println(i + "." + name);
+                }
+                i++;
+            }
+            System.out.println("do you want to change current product?(y/n)");
+            String input = scanner.nextLine();
+            if (input.equals("y") || input.equals("yes")) {
+                System.out.println("enter number of your product:");
+                input = scanner.nextLine();
+                int num;
+                try {
+                    num = Integer.parseInt(input);
+                    if (num < 1 || num > names.size()) {
+                        System.out.println("invalid number!");
+                    } else {
+                        String name = names.get(num - 1);
+                        BuildingController.changeWeapon(name);
+                        System.out.println("product changed successfully!");
+                    }
+                } catch (Exception e) {
+                    System.out.println(Answers.INVALID_COMMAND);
+                }
+            } else if (input.equals("n") || input.equals("no")) {
+                return;
+            } else if (input.equals(Commands.BACK.getRegex())) {
+                return;
+            } else {
+                System.out.println(Answers.INVALID_COMMAND);
             }
         }
     }
+}
 

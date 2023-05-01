@@ -26,7 +26,6 @@ public class GameController {
         GameController.game = game;
     }
 
-    //TODO handel empty field
     public static String selectUnit(int x, int y, String type, Scanner scanner) {
         String message = validateXAndY(x, y);
         if (message != null) {
@@ -34,19 +33,19 @@ public class GameController {
         }
         ArrayList<Military> militaries;
         if (type == null) {
-            militaries = MapController.getMilitariesOfGovernment(x, y, game.getCurrentGovernment());
+            militaries = MapController.getMilitariesOfGovernment(x - 1, y - 1, game.getCurrentGovernment());
         } else if (GameHumans.getUnit(type) == null) {
             return "invalid type!";
         } else {
-            militaries = MapController.getOneTypeOfMilitariesOfGovernment(x, y, type, game.getCurrentGovernment());
+            militaries = MapController.getOneTypeOfMilitariesOfGovernment(x - 1, y - 1, type, game.getCurrentGovernment());
         }
 
         if (militaries.size() == 0) {
             return "There is no troop in this place!";
         }
         HumanController.militaries = militaries;
-        UnitMenu.x = x;
-        UnitMenu.y = y;
+        UnitMenu.x = x - 1;
+        UnitMenu.y = y - 1;
         UnitMenu.run(scanner);
         return "";
     }
@@ -56,7 +55,7 @@ public class GameController {
         if (message != null) {
             return message;
         }
-        Pair<Integer, Integer> destination = new Pair<>(y, x);
+        Pair<Integer, Integer> destination = new Pair<>(y - 1, x - 1);
         boolean check = HumanController.move(destination);
         if (!check) {
             return "can't move unit no path to destination!";
@@ -70,7 +69,7 @@ public class GameController {
             return message;
         }
 
-        boolean check = HumanController.patrolUnit(x1, y1, x2, y2);
+        boolean check = HumanController.patrolUnit(x1 - 1, y1 - 1, x2 - 1, y2 - 1);
         if (!check) {
             return "can't start patrol, no path to destination!";
         }
@@ -83,7 +82,7 @@ public class GameController {
             return message;
         }
 
-        ArrayList<Military> militaries = MapController.getMilitariesOfGovernment(x, y, game.getCurrentGovernment());
+        ArrayList<Military> militaries = MapController.getMilitariesOfGovernment(x - 1, y - 1, game.getCurrentGovernment());
         if (militaries.size() == 0) {
             return "There is no troop in this place!";
         }
@@ -145,25 +144,6 @@ public class GameController {
         return "";
     }
 
-    public static String dropBuilding(String x, String y, String type) {
-//        int xCoord, yCoord;
-//        try {
-//            xCoord = Integer.parseInt(x);
-//        } catch (NumberFormatException e) {
-//            return BuildingAnswers.getMessage(BuildingAnswers.INVALID_X_COORD_ERROR);
-//        }
-//        try {
-//            yCoord = Integer.parseInt(x);
-//        } catch (NumberFormatException e) {
-//            return BuildingAnswers.getMessage(BuildingAnswers.INVALID_Y_COORD_ERROR);
-//        }
-//        Building building = getInstanceOfBuilding(xCoord, yCoord, type); // TODO: get instance of supposed building.
-//        if (building == null)
-//            return BuildingAnswers.getMessage(BuildingAnswers.ERROR_FOR_DROP_BUILDING);
-//        GameController.getGame().getMap().getTile(xCoord, yCoord).setBuilding(building);
-//        return BuildingAnswers.getMessage(BuildingAnswers.DROP_BUILDING_SUCCESSFULLY_DONE);
-        return null;
-    }
 
     public static Building getInstanceOfBuilding(int x, int y, String typeOfBuilding) {
         return null;

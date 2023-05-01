@@ -3,6 +3,7 @@ package controller;
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameGoods;
 import controller.gamestructure.GameHumans;
+import controller.gamestructure.GameTools;
 import enumeration.Paths;
 import model.User;
 import com.google.gson.Gson;
@@ -21,6 +22,7 @@ import model.goods.Goods;
 import model.human.military.ArabianMercenary;
 import model.human.military.EuropeanTroop;
 import model.human.military.Military;
+import model.tools.AttackingAndDefendingTool;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -335,7 +337,17 @@ public class DBController {
         }
         return null;
     }
-
+    public static void loadTools(){
+        try {
+            Gson gson = new Gson();
+            checkFileExist(Paths.TOOLS_PATH.getPath());
+            String text = new String(Files.readAllBytes(Path.of(Paths.TOOLS_PATH.getPath())));
+            GameTools.tools = gson.fromJson(text, new TypeToken<HashMap<String, AttackingAndDefendingTool>>(){}.getType());
+        } catch (IOException e) {
+            System.out.println("An error occurred.[load tools]");
+            e.printStackTrace();
+        }
+    }
     public static void checkFileExist(String fileAddress){
         try {
             File myObj = new File(fileAddress);

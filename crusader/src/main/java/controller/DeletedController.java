@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameGoods;
 import controller.gamestructure.GameHumans;
+import controller.gamestructure.GameTools;
 import enumeration.Paths;
 import model.building.Building;
 import model.building.castlebuildings.CastleBuilding;
@@ -160,7 +161,21 @@ public class DeletedController {
         makeWeaponBuildingFile(weaponProducerHashMap);
         makeOtherBuildingFile(buildingHashMap);
     }
-
+    public static void makeToolsFile(){
+        try {
+            DBController.checkFileExist(Paths.TOOLS_PATH.getPath());
+            File file = new File(Paths.TOOLS_PATH.getPath());
+            FileWriter fileWriter = new FileWriter(file);
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            GameTools.createTools();
+            String json = gson.toJson(GameTools.tools);
+            fileWriter.write(json);
+            fileWriter.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.[add tools]");
+            e.printStackTrace();
+        }
+    }
     public static void makeWallsFile(HashMap<String,Wall> wallHashMap){
         try {
             DBController.checkFileExist(Paths.BUILDINGS_PATH.getPath() + "walls.json");
