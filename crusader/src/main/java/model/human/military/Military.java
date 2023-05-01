@@ -1,12 +1,12 @@
 package model.human.military;
 
 
-import model.goods.Goods;
+import controller.human.MoveController;
 import model.human.Human;
 
 import java.util.ArrayList;
 
-public abstract class Military extends Human implements Cloneable{
+public abstract class Military extends Human implements Cloneable {
     private int attackRating;
     private String militaryState;
     private boolean usesHorse = false;
@@ -15,6 +15,8 @@ public abstract class Military extends Human implements Cloneable{
     private String weapon;
     private final ArrayList<String> armours = new ArrayList<>();
     private int price;
+
+
 
     //
     public Military(int speed, int defenseRating, int shootingRange, int attackRating, int price) {
@@ -85,6 +87,26 @@ public abstract class Military extends Human implements Cloneable{
 
     public void setMilitaryState(String militaryState) {
         this.militaryState = militaryState;
+    }
+
+    public boolean canAirAttack() {
+        if (armours.contains("bow") || armours.contains("crossBow")) {
+            return true;
+        }
+        return false;
+    }
+
+    public void attack() {
+        //
+    }
+
+    public void attack(int x, int y) {
+        if (canAirAttack()) {
+            double distance = MoveController.getDistance(x, y, this.getX(), this.getY());
+            if (distance < this.getShootingRange() ||Math.abs(this.getShootingRange() - distance) < 0.5){
+
+            }
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package controller;
 
+import controller.gamestructure.GameHumans;
 import controller.human.HumanController;
 import enumeration.HumanStates;
 import javafx.util.Pair;
@@ -12,7 +13,6 @@ import model.human.military.Military;
 import view.UnitMenu;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class GameController {
@@ -27,13 +27,21 @@ public class GameController {
     }
 
     //TODO handel empty field
-    public static String selectUnit(int x, int y, Scanner scanner) {
-        String message = validateXAndY(x,y);
-        if(message != null){
+    public static String selectUnit(int x, int y, String type, Scanner scanner) {
+        String message = validateXAndY(x, y);
+        if (message != null) {
             return message;
         }
-        ArrayList<Military> militaries = MapController.getMilitariesOfGovernment(x,y,game.getCurrentGovernment());
-        if(militaries.size() == 0){
+        ArrayList<Military> militaries;
+        if (type == null) {
+            militaries = MapController.getMilitariesOfGovernment(x, y, game.getCurrentGovernment());
+        } else if (GameHumans.getUnit(type) == null) {
+            return "invalid type!";
+        } else {
+            militaries = MapController.getOneTypeOfMilitariesOfGovernment(x, y, type, game.getCurrentGovernment());
+        }
+
+        if (militaries.size() == 0) {
             return "There is no troop in this place!";
         }
         HumanController.militaries = militaries;
@@ -44,61 +52,61 @@ public class GameController {
     }
 
     public static String moveUnit(int x, int y) {
-        String message = validateXAndY(x,y);
-        if(message != null){
+        String message = validateXAndY(x, y);
+        if (message != null) {
             return message;
         }
-        Pair<Integer,Integer> destination = new Pair<>(y,x);
-        boolean check =HumanController.move(destination);
-        if(!check){
+        Pair<Integer, Integer> destination = new Pair<>(y, x);
+        boolean check = HumanController.move(destination);
+        if (!check) {
             return "can't move unit no path to destination!";
         }
         return "unit(s) moved successfully!";
     }
 
     public static String patrolUnit(int x1, int y1, int x2, int y2) {
-        String message = validatePatrol(x1,y1,x2,y2);
-        if(message != null){
+        String message = validatePatrol(x1, y1, x2, y2);
+        if (message != null) {
             return message;
         }
 
-        boolean check = HumanController.patrolUnit(x1,y1,x2,y2);
-        if(!check){
+        boolean check = HumanController.patrolUnit(x1, y1, x2, y2);
+        if (!check) {
             return "can't start patrol, no path to destination!";
         }
         return "patrol started successfully!";
     }
 
     public static String setStateOfMilitary(int x, int y, String state) {
-        String message = validateXAndY(x,y);
-        if(message != null){
+        String message = validateXAndY(x, y);
+        if (message != null) {
             return message;
         }
 
-        ArrayList<Military> militaries = MapController.getMilitariesOfGovernment(x,y,game.getCurrentGovernment());
-        if(militaries.size() == 0){
+        ArrayList<Military> militaries = MapController.getMilitariesOfGovernment(x, y, game.getCurrentGovernment());
+        if (militaries.size() == 0) {
             return "There is no troop in this place!";
         }
 
 
-        if(state.equals(HumanStates.STAND_GROUND.getState())){
-            HumanController.setState(HumanStates.STAND_GROUND.getState(),militaries);
+        if (state.equals(HumanStates.STAND_GROUND.getState())) {
+            HumanController.setState(HumanStates.STAND_GROUND.getState(), militaries);
         }
 
-        if(state.equals(HumanStates.DEFENSIVE_STANCE.getState())){
-            HumanController.setState(HumanStates.DEFENSIVE_STANCE.getState(),militaries);
+        if (state.equals(HumanStates.DEFENSIVE_STANCE.getState())) {
+            HumanController.setState(HumanStates.DEFENSIVE_STANCE.getState(), militaries);
         }
 
-        if(state.equals(HumanStates.AGGRESSIVE_STANCE.getState())){
-            HumanController.setState(HumanStates.AGGRESSIVE_STANCE.getState(),militaries);
+        if (state.equals(HumanStates.AGGRESSIVE_STANCE.getState())) {
+            HumanController.setState(HumanStates.AGGRESSIVE_STANCE.getState(), militaries);
         }
 
         return "invalid state!";
     }
 
     public static String attackEnemy(int x, int y) {
-        String message = validateXAndY(x,y);
-        if(message != null){
+        String message = validateXAndY(x, y);
+        if (message != null) {
             return message;
         }
         return "";
@@ -221,8 +229,7 @@ public class GameController {
                 String sign = " ";
                 if (tile.isDefaultCastle()) {
                     sign = "\u001B[40m" + "C";
-                }
-                else if (tile.getMilitaries().size() != 0) sign = "\uE54E";
+                } else if (tile.getMilitaries().size() != 0) sign = "\uE54E";
                 else if (tile.getBuilding() != null && !(tile.getBuilding() instanceof Wall)) sign = "B";
                 else if (tile.getBuilding() != null && tile.getBuilding() instanceof Wall) sign = "W";
                 else if (tile.getTree() != null) sign = "T";
@@ -261,48 +268,48 @@ public class GameController {
         return details;
     }
 
-    public static String validateXAndY(int x, int y){
+    public static String validateXAndY(int x, int y) {
         Map map = game.getMap();
-        if(checkNullFields(x)){
+        if (checkNullFields(x)) {
             return "x is required!";
         }
-        if(checkNullFields(y)){
+        if (checkNullFields(y)) {
             return "y is required!";
         }
-        if(x < 1 || x > map.getWidth()){
+        if (x < 1 || x > map.getWidth()) {
             return "invalid x!";
         }
-        if(y < 1 || y > map.getLength()){
+        if (y < 1 || y > map.getLength()) {
             return "invalid y!";
         }
         return null;
     }
 
-    public static String validatePatrol(int x1, int y1,int x2, int y2){
+    public static String validatePatrol(int x1, int y1, int x2, int y2) {
         Map map = game.getMap();
-        if(checkNullFields(x1)){
+        if (checkNullFields(x1)) {
             return "x1 is required!";
         }
-        if(checkNullFields(y1)){
+        if (checkNullFields(y1)) {
             return "y1 is required!";
         }
-        if(x1 < 1 || x1 > map.getWidth()){
+        if (x1 < 1 || x1 > map.getWidth()) {
             return "invalid x1!";
         }
-        if(y1 < 1 || y1 > map.getLength()){
+        if (y1 < 1 || y1 > map.getLength()) {
             return "invalid y!";
         }
 
-        if(checkNullFields(x2)){
+        if (checkNullFields(x2)) {
             return "x2 is required!";
         }
-        if(checkNullFields(y2)){
+        if (checkNullFields(y2)) {
             return "y2 is required!";
         }
-        if(x2 < 1 || x2 > map.getWidth()){
+        if (x2 < 1 || x2 > map.getWidth()) {
             return "invalid x2!";
         }
-        if(y2 < 1 || y2 > map.getLength()){
+        if (y2 < 1 || y2 > map.getLength()) {
             return "invalid y2!";
         }
         return null;

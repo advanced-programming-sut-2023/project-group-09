@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 public class GameMaps {
     HashMap<String , Map> maps = new HashMap<>();
-    public static void createMap1() {
+    public static Map createMap1() {
         Map map1 = new Map(401 , 401);
         for (int i = 15; i <= 60; i++) {
             for (int j = 15; j <= 40; j++) {
@@ -136,6 +136,7 @@ public class GameMaps {
         map1.addDefaultCastle(80 , 380);
         map1.addDefaultCastle(200 , 250);
         map1.addDefaultCastle(30 , 280);
-        System.out.println(GameController.showPreviewOfMap(map1));
+        //System.out.println(GameController.showPreviewOfMap(map1));
+        return map1;
     }
 }

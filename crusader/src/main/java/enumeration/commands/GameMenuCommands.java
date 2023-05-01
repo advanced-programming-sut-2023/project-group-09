@@ -15,16 +15,17 @@ public enum GameMenuCommands {
     SHOW_PLAYER("show player"),
     SHOW_ROUND("show round"),
     X_ITEM(" -x (?<x>\\d+)"),
-    Y_ITEM(" -y (?<y>\\d+"),
+    Y_ITEM(" -y (?<y>\\d+)"),
     TYPE_ITEM(" -type (?<type>(\"[^\"]+\"|\\S+))"),
+    UNIT_TYPE_ITEM("( -type (?<type>(\"[^\"]+\"|\\S+)))?"),
     ;
     private final String regex;
 
-    GameMenuCommands(String regex){
+    GameMenuCommands(String regex) {
         this.regex = regex;
     }
 
-    public static Matcher getMatcher(String input, GameMenuCommands command){
+    public static Matcher getMatcher(String input, GameMenuCommands command) {
         Pattern pattern = Pattern.compile(command.regex);
         return pattern.matcher(input);
     }

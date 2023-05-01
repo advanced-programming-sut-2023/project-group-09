@@ -18,7 +18,6 @@ public class GameMenu {
     public static void run(Scanner scanner, Game game) {
         String input, output;
         System.out.println("<< Game Menu >>");
-        //TODO add try catch of parseInt
         while (true) {
             input = scanner.nextLine();
             Matcher dropBuildingMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.DROP_BUILDING);
@@ -64,10 +63,12 @@ public class GameMenu {
                 ArrayList<String> itemsPattern = new ArrayList<>();
                 itemsPattern.add(GameMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(GameMenuCommands.Y_ITEM.getRegex());
+                itemsPattern.add(GameMenuCommands.UNIT_TYPE_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
                     int x = ViewController.getNumberOfRegex("x");
                     int y = ViewController.getNumberOfRegex("y");
-                    output = GameController.selectUnit(x, y, scanner);
+                    String type = ViewController.resultMatcher.group("type");
+                    output = GameController.selectUnit(x, y, type, scanner);
                     System.out.println(output);
                 }
             } else if (setUnitStateMatcher.matches()) {
@@ -79,7 +80,7 @@ public class GameMenu {
                 if (ViewController.isItemMatch(items, itemsPattern)) {
                     int x = ViewController.getNumberOfRegex("x");
                     int y = ViewController.getNumberOfRegex("y");
-                    String state = ViewController.resultMatcher.group("state");
+                    String state = ViewController.resultMatcher.group("type");
                     state = ViewController.editItem(state);
                     output = GameController.setStateOfMilitary(x, y, state);
                     System.out.println(output);
