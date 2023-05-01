@@ -230,7 +230,7 @@ public class GameController {
     public static String showDetailsOfTile(int x, int y) {
         Tile tile = GameController.getGame().getMap().getTile(x, y);
 
-        String details = "tile (" + x + ", " + y + ") details:\n";
+        String details = "tile (" + (x + 1) + ", " + (y + 1) + ") details:\n";
         details += "texture type: " + tile.getTexture().getTextureName() + "\n";
         if (tile.getTree() != null) {
             details += "Tree : " + tile.getTree().getTreeName() + "\n";
@@ -248,16 +248,16 @@ public class GameController {
         if (tile.getCivilians().size() != 0) {
             details += "Civilian in details : \n";
             for (int i = 0; i != tile.getCivilians().size(); i++) {
-                details += "Civilian " + i + ": from Lord " +
+                details += "Civilian " + (i + 1) + ": from Lord " +
                         tile.getCivilians().get(i).getGovernment().getUser().getNickname() + "\n";
             }
         }
         details += "Military number : " + tile.getMilitaries().size() + "\n";
         for (int i = 0; i != tile.getMilitaries().size(); i++) {
-            details += "Military " + i + ": type: " + tile.getMilitaries().get(i).getName() + " | from Lord " +
+            details += "Military " + (i + 1) + ": type: " + tile.getMilitaries().get(i).getName() + " | from Lord " +
                     tile.getMilitaries().get(i).getGovernment().getUser().getNickname() + "\n";
         }
-        return details;
+        return details.substring(0, details.length() - 1);
     }
 
     public static String validateXAndY(int x, int y) {
