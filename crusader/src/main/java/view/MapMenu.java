@@ -4,6 +4,7 @@ import controller.GameController;
 import controller.MapController;
 import enumeration.Textures;
 import enumeration.commands.MapCommands;
+import model.game.Game;
 import model.game.Map;
 
 import java.util.Scanner;
@@ -56,17 +57,26 @@ public class MapMenu {
         Matcher leftM = MapCommands.LEFT.getMatcher(content);
         Matcher rightM = MapCommands.RIGHT.getMatcher(content);
 
-        if (!upM.find() || !downM.find() || !leftM.find() || !rightM.find()) {
+        if (!upM.find() && !downM.find() && !leftM.find() && !rightM.find()) {
             System.out.println("invalid command");
             return;
         }
 
-        int up = (upM.group("count").isEmpty()) ? 1 : Integer.parseInt(upM.group("count"));
-        int down = (downM.group("count").isEmpty()) ? 1 : Integer.parseInt(downM.group("count"));
-        int left = (leftM.group("count").isEmpty()) ? 1 : Integer.parseInt(leftM.group("count"));
-        int right = (rightM.group("count").isEmpty()) ? 1 : Integer.parseInt(rightM.group("count"));
+        int up, down, left, right;
+        if (!upM.find()) up = 0;
+        else if (upM.group("count").isEmpty()) up = 1;
+        else up = Integer.parseInt(upM.group("count"));
+        if (!downM.find()) down = 0;
+        else if (downM.group("count").isEmpty()) down = 1;
+        else down = Integer.parseInt(downM.group("count"));
+        if (!leftM.find()) left = 0;
+        else if (leftM.group("count").isEmpty()) left = 1;
+        else left = Integer.parseInt(leftM.group("count"));
+        if (!rightM.find()) right = 0;
+        else if (rightM.group("count").isEmpty()) right = 1;
+        else right = Integer.parseInt(rightM.group("count"));
 
-//        TODO: call showMap
+        System.out.println(GameController.moveMap(up, left, down, right));
     }
 
     public static String validateCoordinates(Matcher xM, Matcher yM) {
