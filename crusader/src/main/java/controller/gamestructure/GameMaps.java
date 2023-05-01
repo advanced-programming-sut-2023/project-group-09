@@ -1,7 +1,11 @@
 package controller.gamestructure;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import controller.DBController;
 import controller.GameController;
 import controller.MapController;
+import enumeration.Paths;
 import enumeration.Textures;
 import enumeration.commands.MapCommands;
 import enumeration.dictionary.RockDirections;
@@ -9,125 +13,62 @@ import enumeration.dictionary.Trees;
 import model.game.Game;
 import model.game.Map;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class GameMaps {
-    HashMap<String , Map> maps = new HashMap<>();
-    public static Map createMap1() {
-        Map map1 = new Map(401 , 401);
-        for (int i = 15; i <= 60; i++) {
-            for (int j = 15; j <= 40; j++) {
-                map1.getTile(i , j).setTexture(Textures.IRON_TEXTURE);
+    private static HashMap<String , Map> maps = new HashMap<>();
+    private static void changeTextureOfSomeTiles(int x1 , int x2 , int y1, int y2 , Map map , Textures texture) {
+        for (int i = x1; i <= x2; i++) {
+            for (int j = y1; j <= y2; j++) {
+                map.getTile(i , j).setTexture(texture);
             }
         }
+    }
+    public static void createMap1() {
+        Map map1 = new Map(401 , 401);
+        changeTextureOfSomeTiles(15 , 60 , 15 , 40 , map1 , Textures.IRON_TEXTURE);
         for (int i = 5; i <= 45; i++) {
             for (int j = 40; j <= 40 + i; j++) {
                 map1.getTile(i , j).setTexture(Textures.ROCK_TEXTURE);
             }
         }
-        for (int i = 60; i <= 100; i++) {
-            for (int j = 0; j <= 60; j++) {
-                map1.getTile(i , j).setTexture(Textures.MARSH);
-            }
-        }
+        changeTextureOfSomeTiles(60 , 100 , 0 , 60 , map1 , Textures.MARSH);
         for (int i = 70; i <= 100 ;i++) {
             map1.getTile(i , i).setRockDirection(RockDirections.getRandomDirection());
         }
         for (int i = 100; i >= 50; i--) {
             map1.getTile(i , 200-i).setRockDirection(RockDirections.getRandomDirection());
         }
-        for (int i = 105; i <= 110; i++) {
-            for (int j = 0; j <= 50; j++) {
-                map1.getTile(i, j).setTexture(Textures.RIVER);
-            }
-        }
+        changeTextureOfSomeTiles(105 , 110 , 0 , 50 , map1 , Textures.RIVER);
         for (int i = 105; i <= 155; i++) {
             map1.getTile(i , 50 + (i - 105)).setTexture(Textures.RIVER);
         }
-        for (int i = 10; i <= 40; i++) {
-            for (int j = 138; j <= 142; j++) {
-                map1.getTile(i , j).setTexture(Textures.GRASS);
-            }
-        }
+        changeTextureOfSomeTiles(10 , 40 , 138 , 142 , map1 , Textures.GRASS);
         map1.getTile(95 , 80).setTree(Trees.OLIVE_TREE);
-        GameController.setGame(new Game(map1));
-        for (int i = 120; i <= 200; i++) {
-            for (int j = 105; j <= 110; j++) {
-                map1.getTile(i , j).setTexture(Textures.THICK_GRASS);
-            }
-        }
-        for (int i = 150; i <= 220; i++) {
-            for (int j = 150; j <= 170; j++) {
-                map1.getTile(i , j).setTexture(Textures.MARSH);
-            }
-        }
+        changeTextureOfSomeTiles(120 , 200 , 105 , 110 , map1 , Textures.THICK_GRASS);
+        changeTextureOfSomeTiles(150 , 220 , 150 , 170 , map1 , Textures.MARSH);
         for (int i = 155; i <= 185; i++) {
             map1.getTile(i , 20+i-155).setRockDirection(RockDirections.getRandomDirection());
         }
         map1.getTile(220 , 25).setTree(Trees.DATE_PALM);
-        for (int i = 350; i <= 390; i++) {
-            for (int j = 40; j <= 70; j++) {
-                map1.getTile(i , j).setTexture(Textures.BOULDER);
-            }
-        }
-        for (int i = 275; i <= 305; i++) {
-            for (int j = 65; j <= 95; j++) {
-                map1.getTile(i , j).setTexture(Textures.IRON_TEXTURE);
-            }
-        }
-        for (int i = 330; i <= 400; i++) {
-            for (int j = 80; j <= 160; j++) {
-                map1.getTile(i , j).setTexture(Textures.GRASS);
-            }
-        }
-        for (int i = 330; i <= 360; i++) {
-            for (int j = 160; j <= 220; j++) {
-                map1.getTile(i , j).setTexture(Textures.GRASS);
-            }
-        }
-        for (int i = 270; i <= 310; i++) {
-            for (int j = 140; j <= 180; j++) {
-                map1.getTile(i , j).setTexture(Textures.BOULDER);
-            }
-        }
-        for (int i = 0; i <= 50; i++) {
-            for (int j = 50; j <= 400; j++) {
-                map1.getTile(i , j).setTexture(Textures.THICK_GRASS);
-            }
-        }
+        changeTextureOfSomeTiles(350 , 390 , 40 , 70 , map1 , Textures.BOULDER);
+        changeTextureOfSomeTiles(270 , 305 , 65 , 95 , map1 , Textures.IRON_TEXTURE);
+        changeTextureOfSomeTiles(330 , 400 , 80 , 160 , map1 , Textures.GRASS);
+        changeTextureOfSomeTiles(330 , 360 , 160 , 220 , map1 , Textures.GRASS);
+        changeTextureOfSomeTiles(270 , 310 , 140 , 180 , map1 , Textures.BOULDER);
+        changeTextureOfSomeTiles(0 , 50 , 50 , 400 , map1 , Textures.THICK_GRASS);
         map1.getTile(90 , 260).setTree(Trees.CHERRY_PALM);
         map1.getTile(90 , 261).setTree(Trees.DATE_PALM);
         map1.getTile(90 , 262).setTree(Trees.COCONUT_PALM);
-        for (int i = 110; i <= 150; i++) {
-            for (int j = 220; j <= 250; j++) {
-                map1.getTile(i ,j).setTexture(Textures.IRON_TEXTURE);
-            }
-        }
-        for (int i = 140; i <= 170; i++) {
-            for (int j = 300; j <= 330; j++) {
-                map1.getTile(i , j).setTexture(Textures.BOULDER);
-            }
-        }
-        for (int i = 205; i <= 250; i++) {
-            for (int j = 285; j <= 350; j++) {
-                map1.getTile(i ,j).setTexture(Textures.OASIS_GRASS);
-            }
-        }
-        for (int i = 205; i <= 220; i++) {
-            for (int j = 350; j <= 370; j++) {
-                map1.getTile(i , j).setTexture(Textures.OIL);
-            }
-        }
-        for (int i = 330; i <= 400; i++) {
-            for (int j = 330; j <= 400; j++) {
-                map1.getTile(i , j).setTexture(Textures.SEA);
-            }
-        }
-        for (int i = 360; i <= 400; i++) {
-            for (int j = 280; j <= 310; j++) {
-                map1.getTile(i , j).setTexture(Textures.IRON_TEXTURE);
-            }
-        }
+        changeTextureOfSomeTiles(100 , 150 , 220 , 250 , map1 , Textures.IRON_TEXTURE);
+        changeTextureOfSomeTiles(140 , 170 , 300 , 330 , map1 , Textures.BOULDER);
+        changeTextureOfSomeTiles(205 , 250 , 285 , 350 , map1 , Textures.OASIS_GRASS);
+        changeTextureOfSomeTiles(205 , 220 , 350 , 370 , map1 , Textures.OIL);
+        changeTextureOfSomeTiles(330 , 400 , 330 , 400 , map1 , Textures.SEA);
+        changeTextureOfSomeTiles(360 , 400 , 280 , 310 , map1 , Textures.IRON_TEXTURE);
         map1.addDefaultCastle(85 , 100);
         map1.addDefaultCastle(180 , 30);
         map1.addDefaultCastle(330 , 25);
@@ -136,7 +77,51 @@ public class GameMaps {
         map1.addDefaultCastle(80 , 380);
         map1.addDefaultCastle(200 , 250);
         map1.addDefaultCastle(30 , 280);
-        //System.out.println(GameController.showPreviewOfMap(map1));
-        return map1;
+        maps.put("map1" , map1);
+    }
+
+    public static void createMap2() {
+        Map map2 = new Map(201 , 201);
+        changeTextureOfSomeTiles(50 , 85 , 75 , 140 , map2 , Textures.SEA);
+        changeTextureOfSomeTiles(25 , 50 , 115 , 140 , map2 , Textures.ROCK_TEXTURE);
+        for (int i = 25; i <= 50; i++) {
+            map2.getTile(i , 114).setTree(Trees.DESERT_SHRUB);
+        }
+        changeTextureOfSomeTiles(35 , 45 , 100 , 114 , map2 , Textures.BOULDER);
+        changeTextureOfSomeTiles(45 , 55 , 100 , 110 , map2 , Textures.IRON_TEXTURE);
+        changeTextureOfSomeTiles(30 , 50 , 140 , 150 , map2 , Textures.BOULDER);
+        changeTextureOfSomeTiles(0 , 40 , 0 , 50 , map2 , Textures.THICK_GRASS);
+        for (int i = 20; i <= 30; i++) {
+            for (int j = 20; j <= 30; j++) {
+                map2.getTile(i , j).setTree(Trees.OLIVE_TREE);
+            }
+        }
+        changeTextureOfSomeTiles(45 , 60 , 35 , 55 , map2 , Textures.OIL);
+        changeTextureOfSomeTiles(15 , 30 , 80 , 95 , map2 , Textures.BOULDER);
+        changeTextureOfSomeTiles(0 , 15 , 130 , 150 , map2 , Textures.IRON_TEXTURE);
+        changeTextureOfSomeTiles(0 , 20 , 160 , 185 , map2 , Textures.OASIS_GRASS);
+        changeTextureOfSomeTiles(120 , 140 , 165 , 175 , map2 , Textures.BOULDER);
+        changeTextureOfSomeTiles(180 , 195 , 150 , 165 , map2 , Textures.IRON_TEXTURE);
+        changeTextureOfSomeTiles(150 ,170 , 130 , 150 , map2 , Textures.GRASS);
+        changeTextureOfSomeTiles(130 , 180 , 0 , 60 , map2 , Textures.OASIS_GRASS);
+        changeTextureOfSomeTiles(190 , 200, 40 , 50 , map2 , Textures.ROCK_TEXTURE);
+        changeTextureOfSomeTiles(100 , 115 , 5 , 15 , map2 , Textures.IRON_TEXTURE);
+        map2.getTile(100 , 130).setTree(Trees.COCONUT_PALM);
+        map2.getTile(100 , 131).setTree(Trees.CHERRY_PALM);
+        map2.getTile(99 , 129).setTree(Trees.DATE_PALM);
+        map2.getTile(100 , 132).setTree(Trees.DESERT_SHRUB);
+        map2.getTile(99,128).setTree(Trees.DESERT_SHRUB);
+        map2.getTile(1 , 1).setRockDirection(RockDirections.getRandomDirection());
+        map2.getTile(1,4).setRockDirection(RockDirections.getRandomDirection());
+        map2.addDefaultCastle(25 , 60);
+        map2.addDefaultCastle(85 , 35);
+        map2.addDefaultCastle(170 , 40);
+        map2.addDefaultCastle(120 , 90);
+        map2.addDefaultCastle(35 , 180);
+        map2.addDefaultCastle(110 , 180);
+        map2.addDefaultCastle(180 , 180);
+        map2.addDefaultCastle(190 , 120);
+        maps.put("map2" , map2);
+        System.out.println(GameController.showPreviewOfMap(map2));
     }
 }
