@@ -79,8 +79,8 @@ public class MapController {
         if (building instanceof StorageBuilding && !checkCanPutStorage(x, y, (StorageBuilding) building)) {
             return false;
         }
-        for (int i = y - 1; i < y + building.getLength(); i++) {
-            for (int j = x - 1; j < x + building.getWidth(); j++) {
+        for (int i = y ; i < y + building.getLength(); i++) {
+            for (int j = x; j < x + building.getWidth(); j++) {
 
                 if(building.getName().equals("stairs") && building instanceof Wall) {
                     int height = Wall.heightOfStairs(x, y);
@@ -103,7 +103,7 @@ public class MapController {
                 }
 
                 if (building instanceof CastleBuilding && ! (building instanceof Wall) ) {
-                    if (!canPutCastleBuilding(x, y, (CastleBuilding) building)) {
+                    if (!canPutCastleBuilding(x, y)) {
                         return false;
                     }
                 } else if (!map.getTile(i, j).getCanPutBuilding()) {
@@ -121,8 +121,8 @@ public class MapController {
 
     public static void dropBuilding(int x, int y, String type, Government government) {
         Building building = GameBuildings.getBuilding(type, government, x, y);
-        for (int i = y - 1; i < y + Objects.requireNonNull(building).getLength(); i++) {
-            for (int j = x - 1; j < x + building.getWidth(); j++) {
+        for (int i = y; i < y + Objects.requireNonNull(building).getLength(); i++) {
+            for (int j = x; j < x + building.getWidth(); j++) {
                 Tile tile = map.getTile(j, i);
 
                 if(building.isShouldBeOne()){
@@ -192,14 +192,17 @@ public class MapController {
     }
 
     public static boolean checkCanPutMilitary(int x, int y, String type, Government government) {
-        Military military = GameHumans.getUnit(type, government, x, y);
-        Tile tile = map.getTile(x - 1, y - 1);
+        Military military = GameHumans.getUnit(type);
+        if(military == null){
+            return false;
+        }
+        Tile tile = map.getTile(x, y);
         return tile.isPassable();
     }
 
     public static void dropMilitary(int x, int y, String type, Government government) {
         Military military = GameHumans.getUnit(type, government, x, y);
-        Tile tile = map.getTile(x - 1, y - 1);
+        Tile tile = map.getTile(x , y);
         government.addMilitary(military);
         tile.addMilitary(military);
     }
@@ -243,10 +246,10 @@ public class MapController {
         civilian.setY(y);
     }
     public static boolean checkCanPutStorage(int x, int y, StorageBuilding storageBuilding) {
-        int startX = x - 1;
-        int startY = y - 1;
-        int endX = x + storageBuilding.getWidth() - 1;
-        int endY = y + storageBuilding.getLength() - 1;
+        int startX = x;
+        int startY = y;
+        int endX = x + storageBuilding.getWidth();
+        int endY = y + storageBuilding.getLength();
 
 
         if (startY != 0) {
@@ -288,7 +291,7 @@ public class MapController {
         return false;
     }
 
-    public static boolean canPutCastleBuilding(int x, int y, CastleBuilding building) {
+    public static boolean canPutCastleBuilding(int x, int y) {
         Tile tile = map.getTile(x, y);
         if (tile.getCanPutBuilding()) {
             return true;
@@ -310,8 +313,8 @@ public class MapController {
     public static void deleteBuilding(Building building) {
         int xx = building.getStartX();
         int yy = building.getStartY();
-        for (int i = yy - 1; i < yy + building.getLength(); i++) {
-            for (int j = xx - 1; j < xx + building.getWidth(); j++) {
+        for (int i = yy; i < yy + building.getLength(); i++) {
+            for (int j = xx; j < xx + building.getWidth(); j++) {
                 Tile tileOfBuilding = map.getTile(j, i);
                 tileOfBuilding.setCanPutBuilding(true);
                 tileOfBuilding.setPassable(true);

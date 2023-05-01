@@ -184,7 +184,7 @@ public class CreateGameMenu {
             EditMapMenu.run(scanner);
         }
 
-        MapMenu.run(scanner);
-//        GameMenu.run(scanner, game);
+        //MapMenu.run(scanner);
+        GameMenu.run(scanner, game);
     }
 }

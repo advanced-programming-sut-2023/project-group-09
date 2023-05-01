@@ -39,6 +39,7 @@ public class UnitMenu {
 
 
             if (moveUnitMenuMatcher.matches()) {
+
                 String items = moveUnitMenuMatcher.group("items");
                 ArrayList<String> itemsPattern = new ArrayList<>();
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());

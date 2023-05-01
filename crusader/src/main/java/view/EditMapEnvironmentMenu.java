@@ -27,7 +27,7 @@ public class EditMapEnvironmentMenu {
             else if (dropRockM.matches()) runDropRock(dropRockM);
             else if (clearTileM.matches()) MapMenu.runShowMapOrShowDetailsOrClearLand(clearTileM, 2);
             else if (MapCommands.CONTINUE.getMatcher(input).matches()) return;
-            else System.out.println("invalid command");
+            else System.out.println("invalid command!");
         }
     }
 

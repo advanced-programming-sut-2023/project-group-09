@@ -16,11 +16,10 @@ public class PixelCanvas extends Canvas {
     private static int  zoomRate;
     public void paint(Graphics g) {
         super.paint(g);
-
         for(int i = 0; i < WIDTH; i++) {
             for(int j = 0; j < HEIGHT; j++) {
-                int x = i/4;
-                int y = j/4;
+                int x = i/zoomRate;
+                int y = j/zoomRate;
                 g.setColor(getColor(x,y,map));
                 g.drawLine(i, j, i, j);
             }

@@ -4,7 +4,7 @@ public enum Textures {
     EARTH("earth", true, true, "\u001b[48;5;137m",255, 233, 126),
     EARTH_AND_SAND("earthAndSand", true, true, "\u001b[48;5;173m",189, 168, 69),
     BOULDER("boulder", true, true, "\u001b[48;5;94m",140, 115, 104),
-    ROCK_TEXTURE("rockTexture", false, false, "\u001b[48;2;148;63;6m",91, 9, 166),
+    ROCK_TEXTURE("rockTexture", true, false, "\u001b[48;2;148;63;6m",91, 9, 166),
     IRON_TEXTURE("ironTexture", true, true, "\u001b[48;5;88m",143, 14, 2),
     GRASS("grass", true, true, "\u001b[48;5;40m",73, 234, 27),
     THICK_GRASS("thickGrass", true, true, "\u001b[48;5;28m",73, 234, 27),

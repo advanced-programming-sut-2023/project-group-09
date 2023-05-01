@@ -35,7 +35,7 @@ public class Tile {
     }
 
     public Tile(Textures texture) {
-        this.texture = texture;
+        setTexture(texture);
     }
 
     public Trees getTree() {
