@@ -17,7 +17,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(GameTools.tools.size());
+//        System.out.println(GameTools.tools.size());
         MainController.run();
     }
 

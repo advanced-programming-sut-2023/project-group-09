@@ -26,7 +26,8 @@ public enum MapCommands {
     DROP_ROCK("drop rock (?<content>.+)"),
     DROP_BUILDING("drop building (?<content>.+)"),
     DROP_UNIT("drop unit (?<content>.+)"),
-    CONTINUE("continue");
+    CONTINUE("continue"),
+    BACK("back");
     private String regex;
 
     private MapCommands(String regex) {

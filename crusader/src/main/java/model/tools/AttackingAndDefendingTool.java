@@ -1,6 +1,6 @@
 package model.tools;
 
-import jdk.incubator.vector.VectorOperators;
+//import jdk.incubator.vector.VectorOperators;
 import model.Government;
 import model.Permission;
 import model.human.military.Engineer;
