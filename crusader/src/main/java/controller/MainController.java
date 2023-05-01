@@ -2,6 +2,7 @@ package controller;
 
 import controller.Application;
 import controller.DBController;
+import controller.gamestructure.GameMaps;
 import model.User;
 import view.MainMenu;
 import view.PrimaryMenu;
@@ -17,6 +18,7 @@ public class MainController {
         DBController.loadGoods();
         DBController.loadMilitary();
         DBController.loadBuildings();
+        GameMaps.createMaps();
     }
 
     public static void run(){

@@ -9,6 +9,7 @@ import model.game.Game;
 import model.game.Map;
 import model.game.Tile;
 import model.human.military.ArabianMercenary;
+import view.PrimaryMenu;
 
 import java.io.*;
 import java.util.Scanner;
@@ -34,6 +35,9 @@ public class Main {
         GameController.setGame(new Game(map));
 
         System.out.println(GameController.showMap(0, 0));*/
-        GameMaps.createMap2();
+//        GameMaps.createMap1();
+//        System.out.println("\u1F60");
+        MainController.run();
     }
+
 }

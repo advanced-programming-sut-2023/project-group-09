@@ -1,6 +1,10 @@
 package view;
 
 import controller.Application;
+import controller.GameController;
+import controller.MapController;
+import controller.PixelCanvas;
+import controller.gamestructure.GameMaps;
 import enumeration.Pair;
 import enumeration.commands.MapCommands;
 import enumeration.dictionary.Colors;
@@ -10,6 +14,7 @@ import model.game.Game;
 import model.game.Map;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -22,6 +27,7 @@ public class CreateGameMenu {
     private static ArrayList<Pair<Integer, Integer>> castles = new ArrayList<>();
 
     public static void run(Scanner scanner) {
+
         while (true) {
             System.out.println("choose map size:\n1.200 x 200\n2.400 x 400\n3.exit");
             int sizeNumber = 0;
@@ -42,7 +48,7 @@ public class CreateGameMenu {
 
         while (true) {
             int mapNumber;
-            ArrayList<Map> maps = (mapSize == 200) ? Application.getDefaultSmallMaps() : Application.getDefaultLargeMaps();
+            ArrayList<Map> maps = (mapSize == 200) ? GameMaps.smallMaps : GameMaps.largeMaps;
             int numberOfMaps = maps.size();
             System.out.println("there are " + numberOfMaps + " default maps available\nchoose one of them to preview:");
             try {
@@ -55,7 +61,7 @@ public class CreateGameMenu {
                 System.out.println("invalid number");
                 continue;
             }
-//            TODO: show map preview
+            PixelCanvas.drawMap(maps.get(mapNumber - 1));
 
             boolean mapChosen = false;
             while (true) {
