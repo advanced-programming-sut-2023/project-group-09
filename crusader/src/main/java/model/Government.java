@@ -201,6 +201,10 @@ public class Government {
         return color.getName();
     }
 
+    public String getColorRgb() {
+        return color.getRgb();
+    }
+
     public void setColor(Colors color) {
         this.color = color;
     }
@@ -248,46 +252,47 @@ public class Government {
         return countOfBuilding * 2;
     }
 
-    public int getPopularityOfAleCoverage(){
+    public int getPopularityOfAleCoverage() {
         int countOfBuilding = buildings.get("inn").getNumber();
-        double coverage = Math.min(countOfBuilding * 5 / population,1);
-        return (int)Math.ceil(coverage * 3);
+        double coverage = Math.min(countOfBuilding * 5 / population, 1);
+        return (int) Math.ceil(coverage * 3);
 
     }
 
-    public int getVarietyOfFood(){
+    public int getVarietyOfFood() {
         int var = 0;
-        for (String food : GameGoods.foods.keySet()){
-            if(getPropertyAmount(food) != 0){
+        for (String food : GameGoods.foods.keySet()) {
+            if (getPropertyAmount(food) != 0) {
                 var++;
             }
         }
-        if(var == 0){
+        if (var == 0) {
             this.foodRate = -2;
             return 1;
         }
         return var;
     }
 
-    public void addMilitary(Military military){
+    public void addMilitary(Military military) {
         troops.add(military);
     }
 
-    public BuildingCounter getBuildingData(String name){
+    public BuildingCounter getBuildingData(String name) {
         return buildings.get(name);
     }
 
-    public void removeMilitary(Military military){
+    public void removeMilitary(Military military) {
         troops.remove(military);
     }
 
-    public void addHuman(Civilian civilian){
+    public void addHuman(Civilian civilian) {
         society.add(civilian);
     }
 
-    public void removeHuman(Civilian civilian){
+    public void removeHuman(Civilian civilian) {
         society.remove(civilian);
     }
+
     public void updateAllBuildings() {
         // TODO: using Mitra's method
     }
@@ -307,12 +312,12 @@ public class Government {
     public void updateCowAndHorseNumber() {
         int cows = buildings.get("dairyProducts").getNumber() * 3;
         int horses = buildings.get("stable").getNumber() * 4;
-        this.addAmountToProperties("cow" , "cow", cows-this.getPropertyAmount("cows"));
-        this.addAmountToProperties("horse" , "horse" , horses-this.getPropertyAmount("horse"));
+        this.addAmountToProperties("cow", "cow", cows - this.getPropertyAmount("cows"));
+        this.addAmountToProperties("horse", "horse", horses - this.getPropertyAmount("horse"));
     }
 
     public void outOfStockNotification() {
-        for (String name: storages.keySet()) {
+        for (String name : storages.keySet()) {
             if (storages.get(name).isFull()) {
                 System.out.println("Storage " + name + " is full!");
             }
