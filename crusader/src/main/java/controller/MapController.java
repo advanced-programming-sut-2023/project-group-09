@@ -69,6 +69,8 @@ public class MapController {
         if (!tile.getTexture().equals(Textures.SMALL_POND) && !tile.getTexture().equals(Textures.LARGE_POND) && tile.getTree() == null && tile.getBuilding() == null
                 && tile.getMilitaries().size() == 0) {
             tile.setRockDirection(direction);
+            tile.setCanPutBuilding(false);
+            tile.setPassable(false);
             return "rock added in (" + (x + 1) + ", " + (y + 1) + ") with " + direction.getDirection() + " direction";
         }
         return "you can't drop a rock here";
@@ -80,6 +82,7 @@ public class MapController {
                 tile.getTexture().equals(Textures.THICK_GRASS) || tile.getTexture().equals(Textures.OASIS_GRASS) || tile.getTexture().equals(Textures.BEACH) &&
                 tile.getBuilding() == null && tile.getRockDirection() == null)) {
             tile.setTree(tree);
+            tile.setCanPutBuilding(false);
             return tree.getTreeName() + " added to (" + (x + 1) + ", " + (y + 1) + ") successfully";
         }
         return "you can't drop a tree here";

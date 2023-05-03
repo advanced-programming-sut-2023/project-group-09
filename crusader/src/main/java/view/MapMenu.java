@@ -55,24 +55,25 @@ public class MapMenu {
         Matcher downM = MapCommands.DOWN.getMatcher(content);
         Matcher leftM = MapCommands.LEFT.getMatcher(content);
         Matcher rightM = MapCommands.RIGHT.getMatcher(content);
+        boolean upFound = upM.find(), downFound = downM.find(), leftFound = leftM.find(), rightFound = rightM.find();
 
-        if (!upM.find() && !downM.find() && !leftM.find() && !rightM.find()) {
+        if (!upFound && !downFound && !leftFound && !rightFound) {
             System.out.println("invalid command");
             return;
         }
 
         int up, down, left, right;
-        if (!upM.find()) up = 0;
-        else if (upM.group("count").isEmpty()) up = 1;
+        if (!upFound) up = 0;
+        else if (upM.group("count") == null || upM.group("count").isEmpty()) up = 1;
         else up = Integer.parseInt(upM.group("count"));
-        if (!downM.find()) down = 0;
-        else if (downM.group("count").isEmpty()) down = 1;
+        if (!downFound) down = 0;
+        else if (downM.group("count") == null || downM.group("count").isEmpty()) down = 1;
         else down = Integer.parseInt(downM.group("count"));
-        if (!leftM.find()) left = 0;
-        else if (leftM.group("count").isEmpty()) left = 1;
+        if (!leftFound) left = 0;
+        else if (leftM.group("count") == null || leftM.group("count").isEmpty()) left = 1;
         else left = Integer.parseInt(leftM.group("count"));
-        if (!rightM.find()) right = 0;
-        else if (rightM.group("count").isEmpty()) right = 1;
+        if (!rightFound) right = 0;
+        else if (rightM.group("count") == null || rightM.group("count").isEmpty()) right = 1;
         else right = Integer.parseInt(rightM.group("count"));
 
         System.out.println(GameController.moveMap(up, left, down, right));
