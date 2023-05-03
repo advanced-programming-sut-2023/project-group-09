@@ -182,7 +182,7 @@ public class GameController {
                 result += "|";
                 for (int k = x - 9; k <= x + 9; k++) {
                     for (int l = 0; l < 5; l++) {
-                        Tile tile = map.getTile(i, k);
+                        Tile tile = map.getTile(k , i);
                         String sign = " ";
                         if (tile.getMilitaries().size() != 0) {
                             HashMap<Government, Integer> numberOfMilitariesOnTile = new HashMap<>();
