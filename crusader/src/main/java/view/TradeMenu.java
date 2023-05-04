@@ -11,7 +11,6 @@ import model.Trade;
 import model.User;
 import model.game.Game;
 
-import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -23,10 +22,10 @@ public class TradeMenu {
         System.out.println("<< Trade Menu >>");
         showNotifications();
         boolean checkTargetGovernment = selectUser(scanner);
-        if (checkTargetGovernment){
+        if (checkTargetGovernment) {
             Government government = TradeController.getTargetGovernment();
             System.out.println("selected government is : " + government.getUser().getUsername() + "(" + government.getColor() + ")");
-        }else {
+        } else {
             System.out.println("<< Game Menu >>");
             return;
         }
@@ -50,14 +49,14 @@ public class TradeMenu {
                 if (ViewController.isItemMatch(items, itemsPattern)) {
                     int amount;
                     int price;
-                    try{
-                        amount= Integer.parseInt(ViewController.resultMatcher.group("amount"));
-                    }catch (NumberFormatException e){
+                    try {
+                        amount = Integer.parseInt(ViewController.resultMatcher.group("amount"));
+                    } catch (NumberFormatException e) {
                         amount = -1;
                     }
-                    try{
-                       price = Integer.parseInt(ViewController.resultMatcher.group("price"));
-                    }catch (NumberFormatException e){
+                    try {
+                        price = Integer.parseInt(ViewController.resultMatcher.group("price"));
+                    } catch (NumberFormatException e) {
                         price = -1;
                     }
 
@@ -83,7 +82,7 @@ public class TradeMenu {
                     String message = ViewController.resultMatcher.group("message");
                     message = ViewController.editItem(message);
 
-                    output = TradeController.acceptTrade(id,message);
+                    output = TradeController.acceptTrade(id, message);
                     System.out.println(output);
                 }
             } else if (tradeHistoryMatcher.matches()) {
@@ -104,11 +103,11 @@ public class TradeMenu {
     public static void showNotifications() {
         Game game = GameController.getGame();
         Government government = game.getCurrentGovernment();
-        HashMap<String, Trade> trades = government.getNewTrades();
-        for (String key : trades.keySet()){
+        HashMap<String, Trade> trades = government.getNewReceivedTrades();
+        for (String key : trades.keySet()) {
             Trade trade = trades.get(key);
-            System.out.println("notification: id: "+ key + ", type: " + trade.getTradeType()  + ", sender: " +
-                    trade.getSender().getUser().getUsername() +"("+ trade.getSender().getColor() + "), message: " + trade.getRequestMessage());
+            System.out.println("notification: id: " + key + ", type: " + trade.getTradeType() + ", sender: " +
+                    trade.getSender().getUser().getUsername() + "(" + trade.getSender().getColor() + "), message: " + trade.getRequestMessage());
         }
         government.clearTradeCash();
     }
@@ -129,7 +128,6 @@ public class TradeMenu {
                 User user = government.getUser();
                 String color = government.getColor();
                 System.out.println(i + "." + user.getUsername() + "( " + color + " )");
-
             }
             String input = scanner.nextLine();
             int num;
@@ -143,9 +141,9 @@ public class TradeMenu {
             if (1 <= num && num <= governments.size()) {
                 TradeController.setTargetGovernment(governments.get(num - 1));
                 return true;
-            }else if (input.equals(Commands.BACK.getRegex())){
+            } else if (input.equals(Commands.BACK.getRegex())) {
                 return false;
-            }else {
+            } else {
                 System.out.println(Answers.INVALID_COMMAND.getValue());
             }
         }

@@ -150,6 +150,7 @@ public class CreateGameMenu {
                     System.out.println("invalid number!");
                     continue;
                 }
+
                 break;
             }
 

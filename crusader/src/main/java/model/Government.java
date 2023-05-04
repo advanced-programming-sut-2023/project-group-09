@@ -2,7 +2,6 @@ package model;
 
 import controller.gamestructure.GameGoods;
 import enumeration.dictionary.Colors;
-import model.building.Building;
 import model.building.castlebuildings.MainCastle;
 import model.buildinghandler.BuildingCounter;
 import model.buildinghandler.Storage;
@@ -13,13 +12,14 @@ import model.human.military.Military;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class Government {
     private User user;
 
-    private HashMap<String, Trade> trades = new HashMap<>();
-
-    private HashMap<String, Trade> newTrades = new HashMap<>();
+    private LinkedHashMap<String, Trade> receivedTrades = new LinkedHashMap<>();
+    private LinkedHashMap<String, Trade> newReceivedTrades = new LinkedHashMap<>();
+    private LinkedHashMap<String, Trade> sentTrades = new LinkedHashMap<>();
 
     public HashMap<String, Integer> getProperties() {
         return properties;
@@ -39,14 +39,6 @@ public class Government {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public void setTrades(HashMap<String, Trade> trades) {
-        this.trades = trades;
-    }
-
-    public void setNewTrades(HashMap<String, Trade> newTrades) {
-        this.newTrades = newTrades;
     }
 
     public void setProperties(HashMap<String, Integer> properties) {
@@ -202,6 +194,10 @@ public class Government {
         return color.getName();
     }
 
+    public String getColorRgb() {
+        return color.getRgb();
+    }
+
     public void setColor(Colors color) {
         this.color = color;
     }
@@ -221,25 +217,29 @@ public class Government {
         return user;
     }
 
-    public HashMap<String, Trade> getTrades() {
-        return trades;
+    public HashMap<String, Trade> getReceivedTrades() {
+        return receivedTrades;
     }
 
-    public HashMap<String, Trade> getNewTrades() {
-        return newTrades;
+    public HashMap<String, Trade> getNewReceivedTrades() {
+        return newReceivedTrades;
     }
 
     public ArrayList<Military> getTroops() {
         return troops;
     }
 
-    public void addTrade(Trade trade) {
-        trades.put(trade.getId(), trade);
-        newTrades.put(trade.getId(), trade);
+    public void addReceivedTrade(Trade trade) {
+        receivedTrades.put(trade.getId(), trade);
+        newReceivedTrades.put(trade.getId(), trade);
+    }
+
+    public void addSentTrade(Trade trade) {
+        this.sentTrades.put(trade.getId(), trade);
     }
 
     public void clearTradeCash() {
-        newTrades.clear();
+        newReceivedTrades.clear();
     }
 
     public int getPopularityOfReligion() {
@@ -249,46 +249,47 @@ public class Government {
         return countOfBuilding * 2;
     }
 
-    public int getPopularityOfAleCoverage(){
+    public int getPopularityOfAleCoverage() {
         int countOfBuilding = buildings.get("inn").getNumber();
-        double coverage = Math.min(countOfBuilding * 5 / population,1);
-        return (int)Math.ceil(coverage * 3);
+        double coverage = Math.min(countOfBuilding * 5 / population, 1);
+        return (int) Math.ceil(coverage * 3);
 
     }
 
-    public int getVarietyOfFood(){
+    public int getVarietyOfFood() {
         int var = 0;
-        for (String food : GameGoods.foods.keySet()){
-            if(getPropertyAmount(food) != 0){
+        for (String food : GameGoods.foods.keySet()) {
+            if (getPropertyAmount(food) != 0) {
                 var++;
             }
         }
-        if(var == 0){
+        if (var == 0) {
             this.foodRate = -2;
             return 1;
         }
         return var;
     }
 
-    public void addMilitary(Military military){
+    public void addMilitary(Military military) {
         troops.add(military);
     }
 
-    public BuildingCounter getBuildingData(String name){
+    public BuildingCounter getBuildingData(String name) {
         return buildings.get(name);
     }
 
-    public void removeMilitary(Military military){
+    public void removeMilitary(Military military) {
         troops.remove(military);
     }
 
-    public void addHuman(Civilian civilian){
+    public void addHuman(Civilian civilian) {
         society.add(civilian);
     }
 
-    public void removeHuman(Civilian civilian){
+    public void removeHuman(Civilian civilian) {
         society.remove(civilian);
     }
+
     public void updateAllBuildings() {
         // TODO: using Mitra's method
     }
@@ -308,12 +309,12 @@ public class Government {
     public void updateCowAndHorseNumber() {
         int cows = buildings.get("dairyProducts").getNumber() * 3;
         int horses = buildings.get("stable").getNumber() * 4;
-        this.addAmountToProperties("cow" , "cow", cows-this.getPropertyAmount("cows"));
-        this.addAmountToProperties("horse" , "horse" , horses-this.getPropertyAmount("horse"));
+        this.addAmountToProperties("cow", "cow", cows - this.getPropertyAmount("cows"));
+        this.addAmountToProperties("horse", "horse", horses - this.getPropertyAmount("horse"));
     }
 
     public void outOfStockNotification() {
-        for (String name: storages.keySet()) {
+        for (String name : storages.keySet()) {
             if (storages.get(name).isFull()) {
                 System.out.println("Storage " + name + " is full!");
             }

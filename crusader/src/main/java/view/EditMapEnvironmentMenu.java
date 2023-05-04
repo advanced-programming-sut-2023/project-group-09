@@ -127,11 +127,11 @@ public class EditMapEnvironmentMenu {
         }
 
         RockDirections direction = RockDirections.getRockByDirection(directionM.group("direction"));
-        if (direction == null) {
+        if (directionM.group("direction").equals("random"))
+            direction = RockDirections.getRandomDirection();
+        else if (direction == null) {
             System.out.println("invalid rock direction");
             return;
-        } else if (direction.equals("random")) {
-            direction = RockDirections.getRandomDirection();
         }
 
         System.out.println(MapController.dropRock(Integer.parseInt(xM.group("x")) - 1,
