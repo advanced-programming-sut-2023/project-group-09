@@ -50,7 +50,7 @@ public class GovernmentController {
 
     public static String showFoodList() {
         String output = "Foods:\n";
-        for (String food : GameGoods.foods.keySet()){
+        for (String food : GameGoods.foods.keySet()) {
             output += food + " : " + currentGovernment.getPropertyAmount(food) + "\n";
         }
         return output;
@@ -127,6 +127,21 @@ public class GovernmentController {
         }
         government.addAmountToProperties(product.getName(), product.getType(), rate - amount);
         return rate - amount;
+    }
+
+    public static boolean canAddProduct(Government government, String name, int amount) {
+        Goods product = GameGoods.getProduct(name);
+        ArrayList<Building> storages = government.getBuildings().get(product.getNameOfStorage()).getBuildings();
+        for (Building building : storages) {
+            if (amount == 0) {
+                break;
+            }
+            StorageBuilding storage = (StorageBuilding) building;
+            int saved = Math.min(amount, storage.remained());
+            amount -= saved;
+        }
+        if (amount == 0) return true;
+        return false;
     }
 
     public static int getFoodPopularity(int num) {

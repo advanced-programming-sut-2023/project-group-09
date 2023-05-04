@@ -31,24 +31,6 @@ public class TradeController {
         return "request sent successfully!";
     }
 
-    public static String showTradeList() {
-        Government government = GameController.getGame().getCurrentGovernment();
-        String output = "";
-        int count = 0;
-        for (String key : government.getReceivedTrades().keySet()) {
-            Trade trade = government.getReceivedTrades().get(key);
-            if (!trade.isAccepted()) {
-                count++;
-                output += makeTradeInfo(trade);
-                output += "=============================================\n";
-            }
-        }
-        if (count == 0) {
-            return "you don't have unaccepted request or donation!";
-        }
-        return output;
-    }
-
     public static String acceptTrade(String id, String message) {
         Government currentGovernment = GameController.getGame().getCurrentGovernment();
 
@@ -74,9 +56,18 @@ public class TradeController {
             check = GovernmentController.consumeProduct(currentGovernment, trade.getType(), trade.getAmount());
         else check = GovernmentController.consumeProduct(trade.getSender(), trade.getType(), trade.getAmount());
         if (!check) {
-            String output = "your";
-            if (trade.getTradeType().equals("donate")) output = "sender's";
-            return output + " resource is not enough!";
+            String pronoun = "your";
+            if (trade.getTradeType().equals("donate")) pronoun = "sender's";
+            return pronoun + " resource is not enough!";
+        }
+
+        if (trade.getTradeType().equals("request"))
+            check = GovernmentController.canAddProduct(trade.getSender(), trade.getType(), trade.getAmount());
+        else check = GovernmentController.canAddProduct(currentGovernment, trade.getType(), trade.getAmount());
+        if (!check) {
+            String pronoun = "sender doesn't";
+            if (trade.getTradeType().equals("donate")) pronoun = "you don't";
+            return pronoun + " have capacity to store!";
         }
 
         if (trade.getTradeType().equals("request") && trade.getSender().getGold() < trade.getPrice()) {
@@ -87,31 +78,58 @@ public class TradeController {
         if (trade.getTradeType().equals("request")) {
             currentGovernment.addGold(trade.getPrice());
             trade.getSender().addGold(-trade.getPrice());
-//        TODO: add resources to current government
-        } else {
-//            TODO: add resources to sender
-        }
+            GovernmentController.generateProduct(trade.getSender(), trade.getType(), trade.getAmount());
+        } else GovernmentController.generateProduct(currentGovernment, trade.getType(), trade.getAmount());
         return "request accepted successfully";
+    }
+
+    public static String showTradeList() {
+        Government government = GameController.getGame().getCurrentGovernment();
+        String output = "unaccepted received requests/donations:\n";
+        int count = 0;
+        for (String id : government.getReceivedTrades().keySet()) {
+            Trade trade = government.getReceivedTrades().get(id);
+            if (!trade.isAccepted()) {
+                count++;
+                if (count > 1) output += "=============================================\n";
+                output += makeTradeInfo(trade);
+                output += trade.getRequestMessage() + "\n";
+            }
+        }
+        if (count == 0) {
+            return "you don't have any unaccepted received requests/donations!\n";
+        }
+        return output.substring(0, output.length() - 1);
     }
 
     public static String showTradeHistory() {
         Government government = GameController.getGame().getCurrentGovernment();
-        StringBuilder output = new StringBuilder();
+        String output = "sent requests/donations:\n";
         int count = 0;
-        for (String key : government.getReceivedTrades().keySet()) {
+        for (String id : government.getSentTrades().keySet()) {
             count++;
-            Trade trade = government.getReceivedTrades().get(key);
-            output.append(makeTradeInfo(trade));
+            Trade trade = government.getSentTrades().get(id);
+            if (count > 1) output += "=============================================\n";
+            output += makeTradeInfo(trade);
+            output += trade.getRequestMessage() + "\n";
+        }
+        if (count == 0) output += "you don't have sent requests/donations!\n";
+        output += "=============================================\n";
+        output += "accepted received requests/donations:\n";
+        count = 0;
+        for (String id : government.getReceivedTrades().keySet()) {
+            Trade trade = government.getReceivedTrades().get(id);
             if (trade.isAccepted()) {
-                output.append("accepted request\n");
-                output.append("accept message: ").append(trade.getAcceptMessage()).append("\n");
+                count++;
+                if (count > 1) output += "=============================================\n";
+                output += makeTradeInfo(trade);
+                output += trade.getAcceptMessage() + "\n";
             }
-            output.append("=============================================\n");
         }
         if (count == 0) {
-            return "you don't have any request or donation!";
+            return "you don't have any sent requests/donations!\n";
         }
-        return output.toString();
+        return output.substring(0, output.length() - 1);
     }
 
     public static String validateTradeItems(String resourceType, int resourceAmount, int price, String message) {
