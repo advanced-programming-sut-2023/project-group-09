@@ -27,7 +27,7 @@ public abstract class Human implements Cloneable {
     private int x, y;
     private int defenseRating;
     private int health;
-    private String state;
+
     private int shootingRange;
 
     private boolean isInvisible = false;
@@ -40,13 +40,6 @@ public abstract class Human implements Cloneable {
         this.shootingRange = shootingRange;
     }
 
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
 
     public boolean isInvisible() {
         return isInvisible;

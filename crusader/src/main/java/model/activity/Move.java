@@ -208,8 +208,22 @@ public class Move {
         indexOfPath = 0;
     }
 
+    public boolean isMoving(){
+        return !moveState.equals(MoveStates.STOP.getState()) && !isAttacking;
+    }
     public void setAttacking(boolean attacking) {
         isAttacking = attacking;
     }
 
+    public Military getEnemy() {
+        return enemy;
+    }
+
+    public void setEnemy(Military enemy) {
+        this.enemy = enemy;
+    }
+
+    public boolean isAttacking() {
+        return isAttacking;
+    }
 }
