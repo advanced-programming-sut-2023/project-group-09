@@ -29,6 +29,7 @@ public abstract class Human implements Cloneable {
     private int health;
     private String state;
     private int shootingRange;
+
     private boolean isInvisible = false;
     private Move move;
 

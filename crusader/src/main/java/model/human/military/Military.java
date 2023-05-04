@@ -15,7 +15,8 @@ public abstract class Military extends Human implements Cloneable {
     private String weapon;
     private final ArrayList<String> armours = new ArrayList<>();
     private int price;
-
+    private int defenseRange;
+    private int aggressiveRange;
 
 
     //
@@ -107,6 +108,14 @@ public abstract class Military extends Human implements Cloneable {
 
             }
         }
+    }
+
+    public int getAggressiveRange() {
+        return aggressiveRange;
+    }
+
+    public void setAggressiveRange(int aggressiveRange) {
+        this.aggressiveRange = aggressiveRange;
     }
 
     @Override

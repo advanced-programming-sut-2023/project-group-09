@@ -14,11 +14,9 @@ import model.building.storagebuildings.StorageBuilding;
 import model.buildinghandler.BuildingCounter;
 import model.game.Map;
 import model.game.Tile;
-import model.human.Human;
 import model.human.civilian.Civilian;
 import model.human.military.Military;
 
-import java.awt.event.TextEvent;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -40,7 +38,7 @@ public class MapController {
         String result = "";
         for (int i = y1; i <= y2; i++) {
             for (int j = x1; j <= x2; j++) {
-                Tile tile = map.getTile(i , j);
+                Tile tile = map.getTile(i, j);
                 if ((tile.getTree() != null && !type.equals(Textures.EARTH) && !type.equals(Textures.EARTH_AND_SAND) && !type.equals(Textures.GRASS) &&
                         !type.equals(Textures.THICK_GRASS) && !type.equals(Textures.OASIS_GRASS) && !type.equals(Textures.BEACH)) ||
                         (tile.getRockDirection() != null && (type.equals(Textures.SMALL_POND) || type.equals(Textures.LARGE_POND))))
@@ -101,10 +99,13 @@ public class MapController {
         if (building instanceof StorageBuilding && !checkCanPutStorage(x, y, (StorageBuilding) building)) {
             return false;
         }
-        for (int i = y ; i < y + building.getLength(); i++) {
+        for (int i = y; i < y + building.getLength(); i++) {
             for (int j = x; j < x + building.getWidth(); j++) {
-
-                if(building.getName().equals("stairs") && building instanceof Wall) {
+                Tile tile = map.getTile(x, y);
+                if (tile.getMilitaries().size() != 0 || tile.getCivilian().size() != 0) {
+                    return false;
+                }
+                if (building.getName().equals("stairs") && building instanceof Wall) {
                     int height = Wall.heightOfStairs(x, y);
                     if (height == 0 || height == -1) {
                         return false;
@@ -216,7 +217,7 @@ public class MapController {
 
     public static boolean checkCanPutMilitary(int x, int y, String type, Government government) {
         Military military = GameHumans.getUnit(type);
-        if(military == null){
+        if (military == null) {
             return false;
         }
         Tile tile = map.getTile(x, y);
@@ -225,7 +226,7 @@ public class MapController {
 
     public static void dropMilitary(int x, int y, String type, Government government) {
         Military military = GameHumans.getUnit(type, government, x, y);
-        Tile tile = map.getTile(x , y);
+        Tile tile = map.getTile(x, y);
         government.addMilitary(military);
         tile.addMilitary(military);
     }
@@ -238,6 +239,8 @@ public class MapController {
 
     public static void addMilitary(int x, int y, Military military) {
         Tile tile = map.getTile(x, y);
+        military.setX(x);
+        military.setY(y);
         military.getGovernment().addMilitary(military);
         tile.addMilitary(military);
     }
@@ -270,24 +273,22 @@ public class MapController {
     }
 
     public static boolean checkCanPutStorage(int x, int y, StorageBuilding storageBuilding) {
-        int startX = x;
-        int startY = y;
         int endX = x + storageBuilding.getWidth();
         int endY = y + storageBuilding.getLength();
 
 
-        if (startY != 0) {
-            for (int j = startX; j <= endX; j++) {
-                Tile tile = map.getTile(j, startY - 1);
+        if (y != 0) {
+            for (int j = x; j <= endX; j++) {
+                Tile tile = map.getTile(j, y - 1);
                 if (tile.getBuilding() != null && tile.getBuilding().getName().equals(storageBuilding.getName())) {
                     return true;
                 }
             }
         }
 
-        if (startX != 0) {
-            for (int i = startY; i <= endY; i++) {
-                Tile tile = map.getTile(startX - 1, i);
+        if (x != 0) {
+            for (int i = y; i <= endY; i++) {
+                Tile tile = map.getTile(x - 1, i);
                 if (tile.getBuilding() != null && tile.getBuilding().getName().equals(storageBuilding.getName())) {
                     return true;
                 }
@@ -296,7 +297,7 @@ public class MapController {
 
 
         if (endX != map.getWidth() - 1) {
-            for (int i = startY; i <= endY; i++) {
+            for (int i = y; i <= endY; i++) {
                 Tile tile = map.getTile(endX + 1, i);
                 if (tile.getBuilding() != null && tile.getBuilding().getName().equals(storageBuilding.getName())) {
                     return true;
@@ -305,7 +306,7 @@ public class MapController {
         }
 
         if (endY != map.getLength() - 1) {
-            for (int j = startX; j <= endX; j++) {
+            for (int j = x; j <= endX; j++) {
                 Tile tile = map.getTile(j, endY + 1);
                 if (tile.getBuilding() != null && tile.getBuilding().getName().equals(storageBuilding.getName())) {
                     return true;

@@ -23,7 +23,7 @@ public class Move {
     private final boolean isDestinationConstant;
     Human human;
 
-
+    private boolean isAttacking = false;
     private boolean isPatrolStart = false;
     private String moveState;
     private LinkedList<Pair<Integer, Integer>> path;
@@ -122,7 +122,7 @@ public class Move {
     }
 
     public void moveOneTurn() {
-        if (moveState.equals(MoveStates.STOP.getState())) {
+        if (moveState.equals(MoveStates.STOP.getState()) || isAttacking) {
             return;
         }
 
@@ -202,6 +202,14 @@ public class Move {
 
     public void stopMove(){
         moveState = MoveStates.STOP.getState();
+        path.clear();
+        startPair = null;
+        endPair = null;
         indexOfPath = 0;
     }
+
+    public void setAttacking(boolean attacking) {
+        isAttacking = attacking;
+    }
+
 }
