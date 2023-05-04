@@ -2,8 +2,7 @@ package controller;
 
 import controller.gamestructure.GameHumans;
 import controller.human.HumanController;
-import enumeration.HumanStates;
-import enumeration.dictionary.Colors;
+import enumeration.MilitaryStates;
 import javafx.util.Pair;
 import model.Government;
 import model.building.Building;
@@ -14,10 +13,7 @@ import model.game.Tile;
 import model.human.military.Military;
 import view.UnitMenu;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class GameController {
     private static Game game;
@@ -92,31 +88,52 @@ public class GameController {
         }
 
 
-        if (state.equals(HumanStates.STAND_GROUND.getState())) {
-            HumanController.setState(HumanStates.STAND_GROUND.getState(), militaries);
+        if (state.equals(MilitaryStates.STAND_GROUND.getState())) {
+            HumanController.setState(MilitaryStates.STAND_GROUND.getState(), militaries);
         }
 
-        if (state.equals(HumanStates.DEFENSIVE_STANCE.getState())) {
-            HumanController.setState(HumanStates.DEFENSIVE_STANCE.getState(), militaries);
+        if (state.equals(MilitaryStates.DEFENSIVE_STANCE.getState())) {
+            HumanController.setState(MilitaryStates.DEFENSIVE_STANCE.getState(), militaries);
         }
 
-        if (state.equals(HumanStates.AGGRESSIVE_STANCE.getState())) {
-            HumanController.setState(HumanStates.AGGRESSIVE_STANCE.getState(), militaries);
+        if (state.equals(MilitaryStates.AGGRESSIVE_STANCE.getState())) {
+            HumanController.setState(MilitaryStates.AGGRESSIVE_STANCE.getState(), militaries);
         }
 
         return "invalid state!";
     }
 
-    public static String attackEnemy(int x, int y) {
+    public static String attackEnemy(int x, int y, Scanner scanner) {
         String message = validateXAndY(x, y);
         if (message != null) {
             return message;
         }
-        return "";
+        Military enemy = UnitMenu.getEnemy(x, y, scanner);
+        if (enemy == null) {
+            return "your input is not valid please try again later!";
+        }
+        boolean canAttack = HumanController.attack(enemy);
+        if (!canAttack) {
+            return "can't attack to enemy with this type or position!";
+        }
+        return "attack start successfully!";
     }
 
     public static String airAttack(int x, int y) {
-        return "";
+        String message = validateXAndY(x, y);
+        if (message != null) {
+            return message;
+        }
+        List<Military> enemies = MapController.getMilitariesOfOtherGovernment(x, y, GameController.getGame().getCurrentGovernment());
+        if (enemies.size() == 0) {
+            return "there is no enemy in this position!";
+        }
+
+        boolean canAttack = HumanController.airAttack(x,y,enemies);
+        if (!canAttack) {
+            return "can't attack with this type or position!";
+        }
+        return "attack start successfully!";
     }
 
     public static String pourOil(String direction) {
@@ -182,7 +199,7 @@ public class GameController {
                 result += "|";
                 for (int k = x - 9; k <= x + 9; k++) {
                     for (int l = 0; l < 5; l++) {
-                        Tile tile = map.getTile(k , i);
+                        Tile tile = map.getTile(k, i);
                         String sign = " ";
                         if (tile.getMilitaries().size() != 0) {
                             HashMap<Government, Integer> numberOfMilitariesOnTile = new HashMap<>();

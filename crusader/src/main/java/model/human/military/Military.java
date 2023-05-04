@@ -2,6 +2,7 @@ package model.human.military;
 
 
 import controller.human.MoveController;
+import model.activity.Attack;
 import model.human.Human;
 
 import java.util.ArrayList;
@@ -15,14 +16,16 @@ public abstract class Military extends Human implements Cloneable {
     private String weapon;
     private final ArrayList<String> armours = new ArrayList<>();
     private int price;
-
-
+    private int defenseRange;
+    private int aggressiveRange;
+    private Attack attack;
 
     //
     public Military(int speed, int defenseRating, int shootingRange, int attackRating, int price) {
         super(speed, defenseRating, shootingRange);
         this.attackRating = attackRating;
         this.price = price;
+        attack = new Attack(this);
     }
 
     public int getPrice() {
@@ -96,17 +99,30 @@ public abstract class Military extends Human implements Cloneable {
         return false;
     }
 
-    public void attack() {
-        //
+    public int getAggressiveRange() {
+        return aggressiveRange;
     }
 
-    public void attack(int x, int y) {
-        if (canAirAttack()) {
-            double distance = MoveController.getDistance(x, y, this.getX(), this.getY());
-            if (distance < this.getShootingRange() ||Math.abs(this.getShootingRange() - distance) < 0.5){
+    public void setAggressiveRange(int aggressiveRange) {
+        this.aggressiveRange = aggressiveRange;
+    }
 
-            }
-        }
+    public int getDefenseRange() {
+        return defenseRange;
+    }
+
+    public void setDefenseRange(int defenseRange) {
+        this.defenseRange = defenseRange;
+    }
+
+    public int takeDamage(int damage){
+        int newHp = this.getHealth() - damage;
+        this.setHealth(newHp);
+        return newHp;
+    }
+
+    public Attack getAttack() {
+        return attack;
     }
 
     @Override

@@ -94,6 +94,7 @@ public class Government {
         this.castleX = castleX;
         this.castleY = castleY;
         this.color = color;
+        properties = GameGoods.getHashMapOfGovernment();
     }
 
     public void addAmountToProperties(String itemName, String itemType, int amount) {
