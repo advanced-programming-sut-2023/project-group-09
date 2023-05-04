@@ -2,7 +2,6 @@ package model;
 
 import controller.gamestructure.GameGoods;
 import enumeration.dictionary.Colors;
-import model.building.Building;
 import model.building.castlebuildings.MainCastle;
 import model.buildinghandler.BuildingCounter;
 import model.buildinghandler.Storage;
@@ -13,13 +12,14 @@ import model.human.military.Military;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class Government {
     private User user;
 
-    private HashMap<String, Trade> trades = new HashMap<>();
-
-    private HashMap<String, Trade> newTrades = new HashMap<>();
+    private LinkedHashMap<String, Trade> receivedTrades = new LinkedHashMap<>();
+    private LinkedHashMap<String, Trade> newReceivedTrades = new LinkedHashMap<>();
+    private LinkedHashMap<String, Trade> sentTrades = new LinkedHashMap<>();
 
     public HashMap<String, Integer> getProperties() {
         return properties;
@@ -39,14 +39,6 @@ public class Government {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public void setTrades(HashMap<String, Trade> trades) {
-        this.trades = trades;
-    }
-
-    public void setNewTrades(HashMap<String, Trade> newTrades) {
-        this.newTrades = newTrades;
     }
 
     public void setProperties(HashMap<String, Integer> properties) {
@@ -224,25 +216,29 @@ public class Government {
         return user;
     }
 
-    public HashMap<String, Trade> getTrades() {
-        return trades;
+    public HashMap<String, Trade> getReceivedTrades() {
+        return receivedTrades;
     }
 
-    public HashMap<String, Trade> getNewTrades() {
-        return newTrades;
+    public HashMap<String, Trade> getNewReceivedTrades() {
+        return newReceivedTrades;
     }
 
     public ArrayList<Military> getTroops() {
         return troops;
     }
 
-    public void addTrade(Trade trade) {
-        trades.put(trade.getId(), trade);
-        newTrades.put(trade.getId(), trade);
+    public void addReceivedTrade(Trade trade) {
+        receivedTrades.put(trade.getId(), trade);
+        newReceivedTrades.put(trade.getId(), trade);
+    }
+
+    public void addSentTrade(Trade trade) {
+        this.sentTrades.put(trade.getId(), trade);
     }
 
     public void clearTradeCash() {
-        newTrades.clear();
+        newReceivedTrades.clear();
     }
 
     public int getPopularityOfReligion() {
