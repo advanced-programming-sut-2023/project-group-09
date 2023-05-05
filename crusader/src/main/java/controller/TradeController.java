@@ -91,13 +91,13 @@ public class TradeController {
             Trade trade = government.getReceivedTrades().get(id);
             if (!trade.isAccepted()) {
                 count++;
-                if (count > 1) output += "=============================================\n";
+                if (count > 1) output += ".._.._.._.._.._.._.._.._.._.._.._.._.._.._.._\n";
                 output += makeTradeInfo(trade);
-                output += trade.getRequestMessage() + "\n";
+                output += "request message: " + trade.getRequestMessage() + "\n";
             }
         }
         if (count == 0) {
-            return "you don't have any unaccepted received requests/donations!\n";
+            output += "you don't have any unaccepted received requests/donations!\n";
         }
         return output.substring(0, output.length() - 1);
     }
@@ -109,9 +109,9 @@ public class TradeController {
         for (String id : government.getSentTrades().keySet()) {
             count++;
             Trade trade = government.getSentTrades().get(id);
-            if (count > 1) output += "=============================================\n";
+            if (count > 1) output += ".._.._.._.._.._.._.._.._.._.._.._.._.._.._.._\n";
             output += makeTradeInfo(trade);
-            output += trade.getRequestMessage() + "\n";
+            output += "request message: " + trade.getRequestMessage() + "\n";
         }
         if (count == 0) output += "you don't have sent requests/donations!\n";
         output += "=============================================\n";
@@ -121,13 +121,13 @@ public class TradeController {
             Trade trade = government.getReceivedTrades().get(id);
             if (trade.isAccepted()) {
                 count++;
-                if (count > 1) output += "=============================================\n";
+                if (count > 1) output += ".._.._.._.._.._.._.._.._.._.._.._.._.._.._.._\n";
                 output += makeTradeInfo(trade);
-                output += trade.getAcceptMessage() + "\n";
+                output += "accept message: " + trade.getAcceptMessage() + "\n";
             }
         }
         if (count == 0) {
-            return "you don't have any sent requests/donations!\n";
+            output += "you don't have any accepted received requests/donations!\n";
         }
         return output.substring(0, output.length() - 1);
     }
@@ -162,7 +162,7 @@ public class TradeController {
                 "resource type: " + trade.getType() + "\n" +
                 "amount: " + trade.getAmount() + "\n" +
                 "price: " + trade.getPrice() + "\n" +
-                "sender: " + trade.getSender().getUser().getUsername() + "(" + trade.getSender().getColor() + ")\n";
+                "sender: " + trade.getSender().getUser().getUsername() + " (" + trade.getSender().getColor() + ")\n";
     }
 
     private static boolean checkNullFields(String input) {

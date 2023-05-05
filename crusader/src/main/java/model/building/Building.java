@@ -8,6 +8,7 @@ import model.Permission;
 import model.game.Map;
 import model.game.Tile;
 import model.human.Human;
+import model.human.civilian.Civilian;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -280,6 +281,18 @@ public class Building implements Cloneable {
         return (Building) super.clone();
     }
 
+    public void addHuman(Human human) {
+        this.requiredHumans.add(human);
+    }
+
+    public int howManyWorkersHave() {
+        int counterOfWorkers = 0;
+        for (Human human : requiredHumans) {
+            if (human instanceof Civilian)
+                counterOfWorkers++;
+        }
+        return counterOfWorkers;
+    }
 
 
     public void routinWork() {

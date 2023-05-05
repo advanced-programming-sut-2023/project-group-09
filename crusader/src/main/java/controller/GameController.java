@@ -2,14 +2,18 @@ package controller;
 
 import controller.gamestructure.GameHumans;
 import controller.human.HumanController;
+import controller.human.MoveController;
 import enumeration.MilitaryStates;
 import model.Government;
+import model.activity.Move;
 import model.building.Building;
 import model.building.castlebuildings.Wall;
 import model.game.Game;
 import model.game.Map;
 import model.game.Tile;
 import model.game.Tuple;
+import model.human.Human;
+import model.human.civilian.Civilian;
 import model.human.military.Military;
 import model.tools.Tool;
 import view.UnitMenu;
@@ -271,7 +275,28 @@ public class GameController {
 
 
     public static String changeTurn() {
-        return "";
+        String nickname = game.getCurrentGovernment().getUser().getNickname();
+        String result = "Lord " + nickname + " was played!\n";
+        int indexOfCurrentGovernment = game.getGovernments().indexOf(game.getCurrentGovernment());
+        if (indexOfCurrentGovernment == 7) {
+            Government nowGovernment = game.getGovernments().get(0);
+            result += "now Lord " + nowGovernment.getUser().getNickname() + " is playing\n";
+            result += "new Turn started!\n";
+            // TODO : next turn rules
+            /*
+            attacking and defending damages to Buildings and Humans
+            killing militaries and humans
+            routine work of buildings (such as producing some thing)
+            message of no enough workers remained
+             */
+            game.setCurrentGovernment(nowGovernment);
+            return result;
+        } else {
+            Government nowGovernment = game.getGovernments().get(indexOfCurrentGovernment+1);
+            result += "now Lord " + nowGovernment.getUser().getNickname() + " is playing\n";
+            game.setCurrentGovernment(nowGovernment);
+            return result;
+        }
     }
 
 
@@ -457,6 +482,26 @@ public class GameController {
             return "invalid y2!";
         }
         return null;
+    }
+
+    public static void workerDistribution(Building building) {
+        Government government = building.getGovernment();
+        int numberOfRequiredWorkers = building.getNumberOfRequiredWorkers();
+        for (Human human : government.getSociety()) {
+            if (human instanceof Civilian) {
+                if (!((Civilian)human).isHasJob()) {
+                    building.addHuman(human);
+                    numberOfRequiredWorkers--;
+                    Move move = new Move(human.getX() , human.getY() , building ,
+                            true , human);
+                    move.setPath(MoveController.getPathForBuilding(move.getStartPair() , building , human));
+                    ((Civilian) human).setHasJob(true);
+                }
+            }
+            if (numberOfRequiredWorkers == 0) {
+                return;
+            }
+        }
     }
 
     private static boolean checkNullFields(String input) {
