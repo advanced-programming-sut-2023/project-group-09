@@ -32,10 +32,6 @@ public class Move {
     int indexOfPath = 0;
     Military enemy;
 
-    public void setPath(LinkedList<Tuple> path) {
-        this.path = path;
-        setMoveState();
-    }
 
     public Move(int startX, int startY, Tuple endPair, boolean isDestinationConstant, Human human) {
         this.startPair = new Tuple(startY, startX);
@@ -52,7 +48,7 @@ public class Move {
         this.human = human;
     }
 
-    public Move(int startX, int startY, Building building, boolean isDestinationConstant,Human human ) {
+    public Move(int startX, int startY, Building building, boolean isDestinationConstant, Human human) {
         this.startPair = new Tuple(startY, startX);
         this.building = building;
         this.isDestinationConstant = isDestinationConstant;
@@ -90,12 +86,9 @@ public class Move {
         indexOfPath = 0;
     }
 
-    public Tuple getPatrolPair() {
-        return patrolPair;
-    }
-
-    public void setPatrolPair(Tuple patrolPair) {
-        this.patrolPair = patrolPair;
+    public void setPath(LinkedList<Tuple> path) {
+        this.path = path;
+        setMoveState();
     }
 
     public boolean checkIsPathValid() {

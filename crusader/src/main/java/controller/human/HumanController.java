@@ -1,10 +1,7 @@
 package controller.human;
 
 
-import controller.GameController;
-import controller.MapController;
 import enumeration.MoveStates;
-import javafx.util.Pair;
 import model.activity.Move;
 import model.building.Building;
 import model.building.castlebuildings.Wall;
@@ -71,7 +68,7 @@ public class HumanController {
 
         if (path == null) {
             for (Military military : militaries) {
-                if(military.canAirAttack() || military.getName().equals("engineer") || military.getName().equals("ladderman")){
+                if (military.canAirAttack() || military.getName().equals("engineer") || military.getName().equals("ladderman")) {
                     continue;
                 }
                 if (military.isUsesLadder()) {
@@ -90,7 +87,7 @@ public class HumanController {
             }
         } else {
             for (Military military : militaries) {
-                if(military.canAirAttack() || military.getName().equals("engineer") || military.getName().equals("ladderman")){
+                if (military.canAirAttack() || military.getName().equals("engineer") || military.getName().equals("ladderman")) {
                     continue;
                 }
                 Move move = new Move(military.getX(), military.getY(), enemy, false, military);
@@ -99,7 +96,7 @@ public class HumanController {
                 count++;
             }
         }
-        if (count == 0){
+        if (count == 0) {
             return false;
         }
         return true;
@@ -118,18 +115,18 @@ public class HumanController {
 
         if (path == null) {
             for (Military military : militaries) {
-                if(military.canAirAttack() || military.getName().equals("engineer") || military.getName().equals("ladderman")){
+                if (military.canAirAttack() || military.getName().equals("engineer") || military.getName().equals("ladderman")) {
                     continue;
                 }
                 if (military.isUsesLadder()) {
-                    Move move = new Move(military.getX(), military.getY(), building, false, military);
+                    Move move = new Move(military.getX(), military.getY(), building, true, military);
                     move.setPath(ladderPath);
                     military.setMove(move);
                     count++;
                 }
 
                 if (military.getName().equals("assassin")) {
-                    Move move = new Move(military.getX(), military.getY(), building, false, military);
+                    Move move = new Move(military.getX(), military.getY(), building, true, military);
                     move.setPath(assassinPath);
                     military.setMove(move);
                     count++;
@@ -137,26 +134,27 @@ public class HumanController {
             }
         } else {
             for (Military military : militaries) {
-                if(military.canAirAttack() || military.getName().equals("engineer")){
+                if (military.canAirAttack() || military.getName().equals("engineer")) {
                     continue;
                 }
 
-                if(military.getName().equals("ladderman") && !(building instanceof Wall)){
+                if (military.getName().equals("ladderman") && !(building instanceof Wall)) {
                     continue;
                 }
 
-                Move move = new Move(military.getX(), military.getY(), building, false, military);
+                Move move = new Move(military.getX(), military.getY(), building, true, military);
                 move.setPath(path);
                 military.setMove(move);
                 count++;
             }
         }
-        if (count == 0){
+        if (count == 0) {
             return false;
         }
         return true;
     }
-    public static boolean airAttack(int x, int y,List<Military> enemies) {
+
+    public static boolean airAttack(int x, int y, List<Military> enemies) {
 
         int countOfTroop = 0;
         for (Military military : militaries) {
@@ -188,10 +186,11 @@ public class HumanController {
         }
         return true;
     }
+
     public static boolean patrolUnit(int x1, int y1, int x2, int y2) {
 
-        Tuple patrolPair = new Tuple(y2,x2 );
-        Tuple endPair = new Tuple(y1,x1);
+        Tuple patrolPair = new Tuple(y2, x2);
+        Tuple endPair = new Tuple(y1, x1);
         Tuple startPair = MoveController.getStartPair();
         LinkedList<Tuple> path = MoveController.checkHasPath(startPair, endPair);
         LinkedList<Tuple> assassinPath = MoveController.checkHasLadderPath(startPair, endPair, path);
