@@ -1,9 +1,15 @@
 package model.game;
 
+import controller.MapController;
+import controller.human.MoveController;
 import enumeration.Textures;
 import enumeration.dictionary.RockDirections;
 import enumeration.dictionary.Trees;
 import model.building.Building;
+import model.building.castlebuildings.CastleBuilding;
+import model.building.castlebuildings.Gatehouse;
+import model.building.castlebuildings.MainCastle;
+import model.building.castlebuildings.Wall;
 import model.human.Human;
 import model.human.civilian.Civilian;
 import model.human.military.Military;
@@ -87,8 +93,42 @@ public class Tile {
         return passable;
     }
 
-    public boolean isPassable(Human human) {
-        return passable;
+    public boolean isPassable(Human human,boolean isOverhead) {
+        if(human instanceof Military military && military.getName().equals("assassin")){
+            return building instanceof Wall || passable;
+        }
+
+        if(!isOverhead){
+            if (building instanceof Wall wall && wall.getHeight() == 1){
+                return true;
+            }
+            if (building instanceof Gatehouse gatehouse && gatehouse.isOpen() && !gatehouse.getName().equals("drawBridge")){
+                return true;
+            }
+            if (building instanceof MainCastle ){
+                return true;
+            }
+            if(human instanceof Military military && military.isUsesLadder()){
+                for (Military troop : militaries){
+                    if(troop.getGovernment().equals(military.getGovernment()) && troop.getName().equals("ladderman")){
+                        return true;
+                    }
+                }
+            }
+            return passable;
+        }else{
+            if(building instanceof CastleBuilding castleBuilding && !castleBuilding.getName().equals("drawBridge")){
+                return true;
+            }
+            if(human instanceof Military military && military.isUsesLadder() && !military.getName().equals("ladderman")){
+                for (Military troop : militaries){
+                    if(troop.getGovernment().equals(military.getGovernment()) && troop.getName().equals("ladderman")){
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
     }
 
     public void setPassable(boolean passable) {

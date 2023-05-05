@@ -25,11 +25,15 @@ public class UnitMenu {
             input = scanner.nextLine();
             Matcher moveUnitMenuMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.MOVE_UNIT);
             Matcher patrolUnitMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.PATROL_UNIT);
+            Matcher deactivatePatrolMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.DEACTIVATE_PATROL);
             Matcher airAttackMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.AIR_ATTACK);
+            Matcher attachEnemyMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.ATTACK_ENEMY);
+            Matcher airAttackBuildingMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.AIR_ATTACK_BUILDING);
+            Matcher attachBuildingMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.ATTACK_BUILDING);
+
             Matcher pourOilMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.POUR_OIL);
             Matcher digTunnelMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.DIG_TUNNEL);
             Matcher buildMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.BUILD);
-            Matcher attachEnemyMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.ATTACK_ENEMY);
             Matcher digMoatMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.DIG_MOAT);
             Matcher disbandUnitMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.DISBAND_UNIT);
             Matcher backMatcher = Commands.getMatcher(input, Commands.BACK);
@@ -69,7 +73,11 @@ public class UnitMenu {
                         return;
                     }
                 }
-            } else if (attachEnemyMatcher.matches()) {
+            } else if (deactivatePatrolMatcher.matches()) {
+                output = GameController.deactivatePatrolUnit();
+                System.out.println(output);
+
+            }else if (attachEnemyMatcher.matches()) {
                 String items = attachEnemyMatcher.group("items");
                 ArrayList<String> itemsPattern = new ArrayList<>();
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
@@ -83,7 +91,6 @@ public class UnitMenu {
                         return;
                     }
                 }
-
             } else if (airAttackMatcher.matches()) {
                 String items = airAttackMatcher.group("items");
                 ArrayList<String> itemsPattern = new ArrayList<>();
@@ -98,7 +105,36 @@ public class UnitMenu {
                         return;
                     }
                 }
-            } else if (pourOilMatcher.matches()) {
+            }  else if (attachBuildingMatcher.matches()) {
+                String items = attachBuildingMatcher.group("items");
+                ArrayList<String> itemsPattern = new ArrayList<>();
+                itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
+                itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
+                if (ViewController.isItemMatch(items, itemsPattern)) {
+                    int x = ViewController.getNumberOfRegex("x");
+                    int y = ViewController.getNumberOfRegex("y");
+                    output = GameController.attackBuilding(x, y);
+                    System.out.println(output);
+                    if (output.equals("attack order has been recorded successfully!")) {
+                        return;
+                    }
+                }
+
+            } else if (airAttackBuildingMatcher.matches()) {
+                String items = airAttackBuildingMatcher.group("items");
+                ArrayList<String> itemsPattern = new ArrayList<>();
+                itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
+                itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
+                if (ViewController.isItemMatch(items, itemsPattern)) {
+                    int x = ViewController.getNumberOfRegex("x");
+                    int y = ViewController.getNumberOfRegex("y");
+                    output = GameController.airAttackBuilding(x, y);
+                    System.out.println(output);
+                    if (output.equals("attack order has been recorded successfully!")) {
+                        return;
+                    }
+                }
+            }else if (pourOilMatcher.matches()) {
                 String direction = pourOilMatcher.group("direction");
                 output = GameController.pourOil(direction);
                 System.out.println(output);

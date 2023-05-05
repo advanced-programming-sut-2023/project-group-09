@@ -10,6 +10,7 @@ import model.building.castlebuildings.Wall;
 import model.game.Game;
 import model.game.Map;
 import model.game.Tile;
+import model.game.Tuple;
 import model.human.military.Military;
 import view.UnitMenu;
 
@@ -55,7 +56,7 @@ public class GameController {
         if (message != null) {
             return message;
         }
-        Pair<Integer, Integer> destination = new Pair<>(y - 1, x - 1);
+        Tuple destination = new Tuple(y - 1, x - 1);
         boolean check = HumanController.move(destination);
         if (!check) {
             return "can't move unit no path to destination!";
@@ -75,7 +76,13 @@ public class GameController {
         }
         return "patrol started successfully!";
     }
-
+    public static String deactivatePatrolUnit() {
+        boolean check = HumanController.deactivatePatrol();
+        if (!check) {
+            return "no troop is patrolling!";
+        }
+        return "patrol deactivate successfully!";
+    }
     public static String setStateOfMilitary(int x, int y, String state) {
         String message = validateXAndY(x, y);
         if (message != null) {
@@ -114,7 +121,7 @@ public class GameController {
         }
         boolean canAttack = HumanController.attack(enemy);
         if (!canAttack) {
-            return "can't attack to enemy with this type or position!";
+            return "can't attack to enemy with this type of unit or position!";
         }
         return "attack start successfully!";
     }
@@ -131,11 +138,43 @@ public class GameController {
 
         boolean canAttack = HumanController.airAttack(x,y,enemies);
         if (!canAttack) {
-            return "can't attack with this type or position!";
+            return "can't attack with this type of unit or position!";
         }
         return "attack start successfully!";
     }
 
+    public static String attackBuilding(int x, int y) {
+        String message = validateXAndY(x, y);
+        if (message != null) {
+            return message;
+        }
+        Building building = game.getMap().getTile(x,y).getBuilding();
+        if (building == null) {
+            return "no building in this place";
+        }
+        boolean canAttack = HumanController.attack(building);
+        if (!canAttack) {
+            return "can't attack to enemy with this type of unit or position!";
+        }
+        return "attack start successfully!";
+    }
+
+    public static String airAttackBuilding(int x, int y) {
+        String message = validateXAndY(x, y);
+        if (message != null) {
+            return message;
+        }
+        Building building = game.getMap().getTile(x,y).getBuilding();
+        if (building == null) {
+            return "no building in this place";
+        }
+
+        boolean canAttack = HumanController.airAttack(building);
+        if (!canAttack) {
+            return "can't attack with this type of unit or position!";
+        }
+        return "attack start successfully!";
+    }
     public static String pourOil(String direction) {
         return "";
     }

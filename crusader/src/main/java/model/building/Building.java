@@ -1,9 +1,12 @@
 package model.building;
 
+import controller.GameController;
 import enumeration.BuildingStates;
 import enumeration.Textures;
 import model.Government;
 import model.Permission;
+import model.game.Map;
+import model.game.Tile;
 import model.human.Human;
 
 import java.util.ArrayList;
@@ -16,10 +19,6 @@ public class Building implements Cloneable {
     private HashMap<String, Integer> cost = new HashMap<>();
     private ArrayList<Human> requiredHumans = new ArrayList<>();
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
     private int price = 0;
     private int numberOfRequiredWorkers;
     private int numberOfRequiredEngineers;
@@ -27,10 +26,19 @@ public class Building implements Cloneable {
 
     private int buildingImpassableLength = -1;
     private boolean hasSpecialTexture = false;
-    private ArrayList<Textures> suitableTextures = new ArrayList<>();
+    private final ArrayList<Textures> suitableTextures = new ArrayList<>();
     private boolean shouldBeOne = false;
 
     private String name;
+
+    ArrayList<Tile> neighborTiles = new ArrayList<>();
+
+
+    private int maxHp;
+    private int hp;
+    private int startX, startY;
+    private int endX, endY;
+    private int width, length;
 
     public BuildingStates getState() {
         return state;
@@ -51,12 +59,6 @@ public class Building implements Cloneable {
     public void setMaxHp(int maxHp) {
         this.maxHp = maxHp;
     }
-
-    private int maxHp;
-    private int hp;
-    private int startX, startY;
-    private int endX, endY;
-    private int width, length;
 
     public Building(int numberOfRequiredWorkers, int numberOfRequiredEngineers,
                     String name, int maxHp, int width, int length) {
@@ -217,14 +219,68 @@ public class Building implements Cloneable {
         return buildingImpassableLength;
     }
 
+    public void setPrice(int price) {
+        this.price = price;
+    }
+    public boolean isShouldBeOne() {
+        return shouldBeOne;
+    }
+
+    public ArrayList<Tile> getNeighborTiles() {
+        return neighborTiles;
+    }
+
+    public void setNeighborTiles() {
+
+        int endX = startX + width;
+        int endY = startY + length;
+        if(buildingImpassableLength != -1){
+            endX = startX + buildingImpassableLength;
+            endY = startY + buildingImpassableLength;
+        }
+        Map map = GameController.getGame().getMap();
+
+        if (startY != 0) {
+            for (int j = startX; j <= endX; j++) {
+                Tile tile = map.getTile(j, startY - 1);
+                neighborTiles.add(tile);
+            }
+        }
+
+        if (startX != 0) {
+            for (int i = startY; i <= endY; i++) {
+                Tile tile = map.getTile(startX - 1, i);
+                neighborTiles.add(tile);
+            }
+        }
+
+
+        if (endX != map.getWidth() - 1) {
+            for (int i = startY; i <= endY; i++) {
+                Tile tile = map.getTile(endX + 1, i);
+                neighborTiles.add(tile);
+            }
+        }
+
+        if (endY != map.getLength() - 1) {
+            for (int j = startX; j <= endX; j++) {
+                Tile tile = map.getTile(j, endY + 1);
+                neighborTiles.add(tile);
+            }
+        }
+    }
+
+    public int takeDamage(int damage){
+        int newHp = this.getHp() - damage;
+        this.setHp(newHp);
+        return newHp;
+    }
     @Override
     public Building clone() throws CloneNotSupportedException {
         return (Building) super.clone();
     }
 
-    public boolean isShouldBeOne() {
-        return shouldBeOne;
-    }
+
 
     public void routinWork() {
 
