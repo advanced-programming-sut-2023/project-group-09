@@ -164,7 +164,7 @@ public class MapController {
                 tile.setBuilding(building);
                 if (building.getName().equals("stairs") && building instanceof Wall) {
                     ((Wall) building).setHeight(Wall.heightOfStairs(x, y));
-                    tile.setPassable(true);
+                    tile.setPassable(false);
                     tile.setTexture(textures);
                     continue;
                 }
@@ -267,7 +267,6 @@ public class MapController {
         tile.addHuman(civilian);
     }
 
-
     public static void moveHuman(int x, int y, Civilian civilian) {
         deleteHuman(civilian.getX(), civilian.getY(), civilian);
         addHuman(x, y, civilian);
@@ -278,12 +277,13 @@ public class MapController {
     public static boolean checkCanPutStorage(int x, int y, StorageBuilding storageBuilding) {
         int endX = x + storageBuilding.getWidth();
         int endY = y + storageBuilding.getLength();
-
+        Government government = GameController.getGame().getCurrentGovernment();
 
         if (y != 0) {
             for (int j = x; j <= endX; j++) {
                 Tile tile = map.getTile(j, y - 1);
-                if (tile.getBuilding() != null && tile.getBuilding().getName().equals(storageBuilding.getName())) {
+                Building building = tile.getBuilding();
+                if (building != null && building.getName().equals(storageBuilding.getName()) && building.getGovernment().equals(government)) {
                     return true;
                 }
             }

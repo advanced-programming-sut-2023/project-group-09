@@ -56,8 +56,16 @@ public abstract class Military extends Human implements Cloneable {
         return usesHorse;
     }
 
-    public void enableUsesHorse() {
-        this.usesHorse = true;
+    public void setUsesHorse(boolean usesHorse) {
+        this.usesHorse = usesHorse;
+    }
+
+    public void setUsesLadder(boolean usesLadder) {
+        this.usesLadder = usesLadder;
+    }
+
+    public void setDigsMoat(boolean digsMoat) {
+        this.digsMoat = digsMoat;
     }
 
     public boolean isUsesLadder() {

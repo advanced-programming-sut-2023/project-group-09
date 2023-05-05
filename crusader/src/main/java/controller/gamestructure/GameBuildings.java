@@ -27,6 +27,7 @@ public class GameBuildings {
             building.setGovernment(government);
             building.setStartX(x);
             building.setStartY(y);
+            building.setNeighborTiles();
             return building;
         }catch (CloneNotSupportedException e){
             return null;
