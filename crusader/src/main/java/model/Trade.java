@@ -90,7 +90,7 @@ public class Trade {
     }
 
     public String makeId() {
-        char[] allCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+-*/~`".toCharArray();
+        char[] allCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
         char[] id = new char[5];
         Random random = new Random();
         for (int i = 0; i < 5; i++) {
@@ -98,9 +98,9 @@ public class Trade {
             id[i] = allCharacters[selectedChar];
         }
         HashMap<String, Trade> tradeHashMap = TradeController.allTrades;
-        if (tradeHashMap.get(Arrays.toString(id)) != null) {
+        if (tradeHashMap.get(new String(id)) != null) {
             return makeId();
         }
-        return Arrays.toString(id);
+        return new String(id);
     }
 }

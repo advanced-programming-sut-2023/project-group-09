@@ -107,7 +107,7 @@ public class TradeMenu {
         for (String key : trades.keySet()) {
             Trade trade = trades.get(key);
             System.out.println("notification: id: " + key + ", type: " + trade.getTradeType() + ", sender: " +
-                    trade.getSender().getUser().getUsername() + "(" + trade.getSender().getColor() + "), message: " + trade.getRequestMessage());
+                    trade.getSender().getUser().getUsername() + " (" + trade.getSender().getColor() + "), message: " + trade.getRequestMessage());
         }
         government.clearTradeCash();
     }
@@ -127,7 +127,7 @@ public class TradeMenu {
                 Government government = governments.get(i - 1);
                 User user = government.getUser();
                 String color = government.getColor();
-                System.out.println(i + "." + user.getUsername() + "( " + color + " )");
+                System.out.println(i + "." + user.getUsername() + " (" + color + ")");
             }
             String input = scanner.nextLine();
             int num;
