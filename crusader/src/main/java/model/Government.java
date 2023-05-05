@@ -238,6 +238,10 @@ public class Government {
         this.sentTrades.put(trade.getId(), trade);
     }
 
+    public LinkedHashMap<String, Trade> getSentTrades() {
+        return sentTrades;
+    }
+
     public void clearTradeCash() {
         newReceivedTrades.clear();
     }
