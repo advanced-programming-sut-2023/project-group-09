@@ -7,27 +7,26 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class Trade {
-    String id;
-    String requestMessage;
-    String type;
-    String tradeType = "request";
-    int amount;
-    int price;
-    String acceptMessage;
-    Government sender;
-    Government receiver;
-    boolean isAccepted = false;
+    private String id;
+    private String requestMessage;
+    private String type;
+    private String tradeType = "request";
+    private int amount;
+    private int price;
+    private String acceptMessage;
+    private Government sender;
+    private Government receiver;
+    private boolean isAccepted = false;
 
 
-
-    public Trade(String requestMessage, String type, int amount, int price,Government sender,Government receiver) {
+    public Trade(String requestMessage, String type, int amount, int price, Government sender, Government receiver) {
         this.requestMessage = requestMessage;
         this.type = type;
         this.amount = amount;
         this.price = price;
         this.sender = sender;
         this.receiver = receiver;
-        if(price == 0){
+        if (price == 0) {
             tradeType = "donate";
         }
         setId();
@@ -40,6 +39,7 @@ public class Trade {
     public String getRequestMessage() {
         return requestMessage;
     }
+
     public String getTradeType() {
         return tradeType;
     }
@@ -76,10 +76,11 @@ public class Trade {
         isAccepted = true;
     }
 
-    public void setId(){
+    public void setId() {
         String id = makeId();
         this.id = id;
     }
+
     public void setIsAccepted(boolean accepted) {
         this.isAccepted = accepted;
     }
@@ -88,19 +89,18 @@ public class Trade {
         return receiver;
     }
 
-    public String makeId(){
+    public String makeId() {
         char[] allCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+-*/~`".toCharArray();
         char[] id = new char[5];
         Random random = new Random();
-        for (int i = 0; i < 5; i++){
+        for (int i = 0; i < 5; i++) {
             int selectedChar = random.nextInt(allCharacters.length);
             id[i] = allCharacters[selectedChar];
         }
-        HashMap<String,Trade> tradeHashMap = TradeController.allTrades;
-        if(tradeHashMap.get(Arrays.toString(id)) != null){
+        HashMap<String, Trade> tradeHashMap = TradeController.allTrades;
+        if (tradeHashMap.get(Arrays.toString(id)) != null) {
             return makeId();
         }
         return Arrays.toString(id);
     }
-
 }

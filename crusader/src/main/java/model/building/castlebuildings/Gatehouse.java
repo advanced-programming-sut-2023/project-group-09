@@ -60,7 +60,7 @@ public class Gatehouse extends CastleBuilding {
         this.capacity = capacity;
     }
 
-    public Gatehouse canDropDrawBridge(int x , int y) { // it returned the gatehouse that connects to new draw bridge
+    public static Gatehouse canDropDrawBridge(int x, int y) { // it returned the gatehouse that connects to new draw bridge
         Map map = GameController.getGame().getMap();
         Building building = map.getTile(x+1 , y).getBuilding();
         if (building instanceof Gatehouse &&

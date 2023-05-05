@@ -6,6 +6,7 @@ import controller.ViewController;
 import enumeration.answers.Answers;
 import enumeration.commands.Commands;
 import enumeration.commands.GameMenuCommands;
+import enumeration.commands.MapCommands;
 import enumeration.commands.UnitMenuCommands;
 import model.game.Game;
 
@@ -31,6 +32,7 @@ public class GameMenu {
             Matcher showRoundMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.SHOW_ROUND);
             Matcher backMatcher = Commands.getMatcher(input, Commands.BACK);
             Matcher exitMatcher = Commands.getMatcher(input, Commands.EXIT_CRUSADER);
+            Matcher showMapM = MapCommands.SHOW_MAP.getMatcher(input);
             // to be continued.?
             if (dropBuildingMatcher.matches()) {
                 String items = dropBuildingMatcher.group("items");
@@ -98,6 +100,9 @@ public class GameMenu {
             } else if (showRoundMatcher.matches()) {
                 output = GameController.changeTurn();
                 System.out.println(output);
+            } else if (showMapM.matches()) {
+                MapMenu.runShowMapOrShowDetailsOrClearLand(showMapM, 0);
+                MapMenu.run(scanner);
             } else if (backMatcher.matches()) {
                 break;
             } else if (exitMatcher.matches()) {

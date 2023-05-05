@@ -1,17 +1,14 @@
 package view;
 
-import controller.EngineerController;
 import controller.GameController;
 import controller.MapController;
 import controller.ViewController;
 import enumeration.answers.Answers;
 import enumeration.commands.Commands;
 import enumeration.commands.UnitMenuCommands;
-import model.human.military.Engineer;
 import model.human.military.Military;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -28,7 +25,7 @@ public class UnitMenu {
             input = scanner.nextLine();
             Matcher moveUnitMenuMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.MOVE_UNIT);
             Matcher patrolUnitMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.PATROL_UNIT);
-            Matcher attackMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.ATTACK);
+            Matcher airAttackMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.AIR_ATTACK);
             Matcher pourOilMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.POUR_OIL);
             Matcher digTunnelMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.DIG_TUNNEL);
             Matcher buildMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.BUILD);
@@ -39,6 +36,7 @@ public class UnitMenu {
 
 
             if (moveUnitMenuMatcher.matches()) {
+
                 String items = moveUnitMenuMatcher.group("items");
                 ArrayList<String> itemsPattern = new ArrayList<>();
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
@@ -49,7 +47,7 @@ public class UnitMenu {
                     output = GameController.moveUnit(x, y);
                     System.out.println(output);
 
-                    if(output.equals("unit(s) moved successfully!")){
+                    if (output.equals("unit(s) moved successfully!")) {
                         return;
                     }
                 }
@@ -67,19 +65,38 @@ public class UnitMenu {
                     int y2 = ViewController.getNumberOfRegex("y2");
                     output = GameController.patrolUnit(x1, y1, x2, y2);
                     System.out.println(output);
+                    if (output.equals("patrol started successfully!")) {
+                        return;
+                    }
                 }
-            }  else if (attachEnemyMatcher.matches()) {
-                Military military = getEnemy(scanner);
-            }else if (attackMatcher.matches()) {
-                String items = attackMatcher.group("items");
+            } else if (attachEnemyMatcher.matches()) {
+                String items = attachEnemyMatcher.group("items");
                 ArrayList<String> itemsPattern = new ArrayList<>();
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
                     int x = ViewController.getNumberOfRegex("x");
                     int y = ViewController.getNumberOfRegex("y");
-                    output = GameController.attackEnemy(x, y);
+                    output = GameController.attackEnemy(x, y, scanner);
                     System.out.println(output);
+                    if (output.equals("attack order has been recorded successfully!")) {
+                        return;
+                    }
+                }
+
+            } else if (airAttackMatcher.matches()) {
+                String items = airAttackMatcher.group("items");
+                ArrayList<String> itemsPattern = new ArrayList<>();
+                itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
+                itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
+                if (ViewController.isItemMatch(items, itemsPattern)) {
+                    int x = ViewController.getNumberOfRegex("x");
+                    int y = ViewController.getNumberOfRegex("y");
+                    output = GameController.airAttack(x, y);
+                    System.out.println(output);
+                    if (output.equals("attack order has been recorded successfully!")) {
+                        return;
+                    }
                 }
             } else if (pourOilMatcher.matches()) {
                 String direction = pourOilMatcher.group("direction");
@@ -163,13 +180,21 @@ public class UnitMenu {
     }
 
 
-    public static Military getEnemy(Scanner scanner){
-        ArrayList<Military> militaries = MapController.getMilitariesOfOtherGovernment(x,y,GameController.getGame().getCurrentGovernment());
-        if(militaries.size() == 0){
+    public static Military getEnemy(int x, int y, Scanner scanner) {
+        ArrayList<Military> militaries = MapController.getMilitariesOfOtherGovernment(x, y, GameController.getGame().getCurrentGovernment());
+        if (militaries.size() == 0) {
             return null;
         }
         System.out.println("Choose one of the following troop:");
-
-        return null;
+        for (int i = 0; i < militaries.size(); i++) {
+            Military military = militaries.get(i);
+            System.out.println(i + 1 + "." + military.getName() + " (" + military.getGovernment().getColor() + ") hp: " + military.getHealth());
+        }
+        String input = scanner.nextLine();
+        int index = ViewController.getNumberOfRegex(input);
+        if (index < 1 || index > militaries.size()) {
+            return null;
+        }
+        return militaries.get(index - 1);
     }
 }

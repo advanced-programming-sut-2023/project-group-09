@@ -22,8 +22,10 @@ public class CreateGameMenu {
     public static int governmentsCount;
     private static ArrayList<Colors> colors = new ArrayList<>();
     private static ArrayList<Pair<Integer, Integer>> castles = new ArrayList<>();
+    private static ArrayList<String> users = new ArrayList<>();
 
     public static void run(Scanner scanner) {
+        System.out.println("<< Create Game Menu >>");
 
         while (true) {
             System.out.println("choose map size:\n1.200 x 200\n2.400 x 400\n3.exit");
@@ -74,7 +76,7 @@ public class CreateGameMenu {
                     System.out.println("invalid number");
                     continue;
                 }
-                mapChosen = (choiceNumber == 1) ? true : false;
+                mapChosen = choiceNumber == 1;
                 break;
             }
             if (mapChosen) {
@@ -108,12 +110,22 @@ public class CreateGameMenu {
         Colors.getColorsList(colors);
         castles = map.getDefaultCastles();
         for (int i = 0; i < governmentsCount; i++) {
-            User lord;
-            while (true) {
+            User lord = null;
+            boolean getUsername = true;
+            if (i == 0) {
+                lord = Application.getCurrentUser();
+                System.out.println("lord of government 1: " + lord.getUsername());
+                users.add(lord.getUsername());
+                getUsername = false;
+            }
+            while (getUsername) {
                 System.out.println("enter the lord's username of government " + (i + 1) + ":");
                 String lordUsername = scanner.nextLine();
                 if (!Application.isUserExistsByName(lordUsername)) {
-                    System.out.println("username doesn't exist");
+                    System.out.println("username doesn't exist!");
+                    continue;
+                } else if (users.contains(lordUsername)) {
+                    System.out.println("this username has already been added to this game");
                     continue;
                 }
                 lord = Application.getUserByUsername(lordUsername);
@@ -135,9 +147,10 @@ public class CreateGameMenu {
                     continue;
                 }
                 if (colorNumber < 1 || colorNumber > colors.size()) {
-                    System.out.println("invalid number");
+                    System.out.println("invalid number!");
                     continue;
                 }
+
                 break;
             }
 
@@ -157,7 +170,7 @@ public class CreateGameMenu {
                     continue;
                 }
                 if (castleNumber < 1 || castleNumber > castles.size()) {
-                    System.out.println("invalid number\nreenter a number:");
+                    System.out.println("invalid number!\nreenter a number:");
                     continue;
                 }
                 break;
@@ -172,7 +185,6 @@ public class CreateGameMenu {
             EditMapMenu.run(scanner);
         }
 
-        System.out.println(GameController.showMap(0, 0));
-        System.out.println(GameController.showDetailsOfTile(4, 4));
+        GameMenu.run(scanner, game);
     }
 }

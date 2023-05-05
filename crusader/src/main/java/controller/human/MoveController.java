@@ -6,18 +6,19 @@ import model.game.Map;
 import model.human.Human;
 import model.human.military.Military;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Objects;
 
-public class MoveController extends HumanController{
+public class MoveController extends HumanController {
+    public static boolean[][] checkArray;
     public static LinkedList<Pair<Integer, Integer>> getPath(Pair<Integer, Integer> startPair, Pair<Integer, Integer> endPair, Human human) {
         Map map = GameController.getGame().getMap();
-        int[][] wave = new int[map.getLength()][map.getWidth()];
-        boolean[][] checkArray = new boolean[map.getLength()][map.getWidth()];
+        int[][] wave = new int[map.getWidth()][map.getWidth()];
+        checkArray = new boolean[map.getWidth()][map.getWidth()];
 
-        HashSet<Pair<Integer, Integer>> firstPairs = new HashSet<>();
-        HashSet<Pair<Integer, Integer>> secondPairs;
+        ArrayList<Pair<Integer, Integer>> firstPairs = new ArrayList<>();
+        ArrayList<Pair<Integer, Integer>> secondPairs;
         firstPairs.add(startPair);
 
         int depth = 2;
@@ -27,10 +28,9 @@ public class MoveController extends HumanController{
         checkArray[y][x] = true;
 
         boolean receiveEnd = false;
-
-        while (firstPairs.size() != 0 || receiveEnd) {
-            secondPairs = makeNextPairs(wave, checkArray, firstPairs, human);
-            firstPairs = new HashSet<>(secondPairs);
+        while (firstPairs.size() != 0 && !receiveEnd) {
+            secondPairs = makeNextPairs(firstPairs, human);
+            firstPairs = new ArrayList<>(secondPairs);
 
             for (Pair<Integer, Integer> pair : secondPairs) {
                 y = pair.getKey();
@@ -41,7 +41,7 @@ public class MoveController extends HumanController{
                 }
                 wave[y][x] = depth;
                 checkArray[y][x] = true;
-                if (y == endPair.getKey() && x == startPair.getValue()) {
+                if (y == endPair.getKey() && x == endPair.getValue()) {
                     receiveEnd = true;
                 }
             }
@@ -50,9 +50,11 @@ public class MoveController extends HumanController{
         return makePath(wave, startPair, endPair);
     }
 
+
     public static LinkedList<Pair<Integer, Integer>> makePath(int[][] wave, Pair<Integer, Integer> start, Pair<Integer, Integer> end) {
         LinkedList<Pair<Integer, Integer>> result = new LinkedList<>();
         Pair<Integer, Integer> nextPair = new Pair<>(end.getKey(), end.getValue());
+        result.add(nextPair);
         while (!Objects.equals(nextPair.getValue(), start.getValue()) || !Objects.equals(nextPair.getKey(), start.getKey())) {
             nextPair = findNextNode(nextPair, wave, end);
             if (nextPair == null) {
@@ -60,6 +62,10 @@ public class MoveController extends HumanController{
             }
             result.addFirst(nextPair);
         }
+        for (Pair<Integer, Integer> pair : result) {
+            System.out.println(pair.getValue() + " " + pair.getKey());
+        }
+
         return result;
     }
 
@@ -73,6 +79,9 @@ public class MoveController extends HumanController{
 
         int minDepth = 10000;
         double minDistance = 10000;
+        if(wave[y][x] == 0){
+            return null;
+        }
         if (y != 0) {
             double distance = getDistance(end.getValue(), end.getKey(), x, y - 1);
             if (wave[y - 1][x] > 0 && (wave[y - 1][x] < minDepth || (wave[y - 1][x] == minDepth && distance < minDistance))) {
@@ -98,7 +107,7 @@ public class MoveController extends HumanController{
                 minDistance = distance;
             }
         }
-        if (x != wave.length - 1) {
+        if (x != GameController.getGame().getMap().getWidth() - 1) {
             double distance = getDistance(end.getValue(), end.getKey(), x + 1, y);
             if (wave[y][x + 1] > 0 && (wave[y][x + 1] < minDepth || (wave[y][x + 1] == minDepth && distance < minDistance))) {
                 nextPair = new Pair<>(y, x + 1);
@@ -106,7 +115,7 @@ public class MoveController extends HumanController{
                 minDistance = distance;
             }
         }
-        if (y != wave.length - 1) {
+        if (y != GameController.getGame().getMap().getWidth() - 1) {
             double distance = getDistance(end.getValue(), end.getKey(), x, y + 1);
             if (wave[y + 1][x] > 0 && (wave[y + 1][x] < minDepth || (wave[y + 1][x] == minDepth && distance < minDistance))) {
                 nextPair = new Pair<>(y + 1, x);
@@ -114,7 +123,7 @@ public class MoveController extends HumanController{
                 minDistance = distance;
             }
         }
-        if (y != wave.length - 1 && x != wave.length - 1) {
+        if (y != GameController.getGame().getMap().getWidth() - 1 && x != GameController.getGame().getMap().getWidth() - 1) {
 
             double distance = getDistance(end.getValue(), end.getKey(), x + 1, y + 1);
             if (wave[y + 1][x + 1] > 0 && (wave[y + 1][x + 1] < minDepth || (wave[y + 1][x + 1] == minDepth && distance < minDistance))) {
@@ -124,7 +133,7 @@ public class MoveController extends HumanController{
 
             }
         }
-        if (y != wave.length - 1 && x != 0) {
+        if (y != GameController.getGame().getMap().getWidth() - 1 && x != 0) {
             double distance = getDistance(end.getValue(), end.getKey(), x - 1, y + 1);
             if (wave[y + 1][x - 1] > 0 && (wave[y + 1][x - 1] < minDepth || (wave[y + 1][x - 1] == minDepth && distance < minDistance))) {
                 nextPair = new Pair<>(y + 1, x - 1);
@@ -132,7 +141,7 @@ public class MoveController extends HumanController{
                 minDistance = distance;
             }
         }
-        if (y != 0 && x != wave.length - 1) {
+        if (y != 0 && x != GameController.getGame().getMap().getWidth() - 1) {
             double distance = getDistance(end.getValue(), end.getKey(), x + 1, y - 1);
             if (wave[y - 1][x + 1] > 0 && (wave[y - 1][x + 1] < minDepth || (wave[y - 1][x + 1] == minDepth && distance < minDistance))) {
                 nextPair = new Pair<>(y - 1, x + 1);
@@ -141,15 +150,15 @@ public class MoveController extends HumanController{
             }
         }
 
-        if (minDepth == 0) {
+        if (minDepth == 10000) {
             return null;
         }
         return nextPair;
     }
 
-    public static HashSet<Pair<Integer, Integer>> makeNextPairs(int[][] wave, boolean[][] checkArray, HashSet<Pair<Integer, Integer>> firstPairs, Human human) {
+    public static ArrayList<Pair<Integer, Integer>> makeNextPairs( ArrayList<Pair<Integer, Integer>> firstPairs, Human human) {
         Map map = GameController.getGame().getMap();
-        HashSet<Pair<Integer, Integer>> secondPairs = new HashSet<>();
+        ArrayList<Pair<Integer, Integer>> secondPairs = new ArrayList<>();
         for (Pair<Integer, Integer> pair : firstPairs) {
             int y = pair.getKey();
             int x = pair.getValue();
@@ -170,27 +179,27 @@ public class MoveController extends HumanController{
                     secondPairs.add(new Pair<>(y - 1, x - 1));
                 }
             }
-            if (x != wave.length - 1) {
+            if (x != GameController.getGame().getMap().getWidth() - 1) {
                 if (map.getTile(x + 1, y).isPassable(human) && !checkArray[y][x + 1]) {
                     secondPairs.add(new Pair<>(y, x + 1));
                 }
             }
-            if (y != wave.length - 1) {
+            if (y != GameController.getGame().getMap().getWidth() - 1) {
                 if (map.getTile(x, y + 1).isPassable(human) && !checkArray[y + 1][x]) {
                     secondPairs.add(new Pair<>(y + 1, x));
                 }
             }
-            if (y != wave.length - 1 && x != wave.length - 1) {
+            if (y != GameController.getGame().getMap().getWidth() - 1 && x != GameController.getGame().getMap().getWidth() - 1) {
                 if (map.getTile(x + 1, y + 1).isPassable(human) && !checkArray[y + 1][x + 1]) {
                     secondPairs.add(new Pair<>(y + 1, x + 1));
                 }
             }
-            if (y != wave.length - 1 && x != 0) {
+            if (y != GameController.getGame().getMap().getWidth() - 1 && x != 0) {
                 if (map.getTile(x - 1, y + 1).isPassable(human) && !checkArray[y + 1][x - 1]) {
                     secondPairs.add(new Pair<>(y + 1, x - 1));
                 }
             }
-            if (y != 0 && x != wave.length - 1) {
+            if (y != 0 && x != GameController.getGame().getMap().getWidth() - 1) {
                 if (map.getTile(x + 1, y - 1).isPassable(human) && !checkArray[y - 1][x + 1]) {
                     secondPairs.add(new Pair<>(y - 1, x + 1));
                 }
@@ -199,9 +208,10 @@ public class MoveController extends HumanController{
         return secondPairs;
     }
 
-    public static LinkedList<Pair<Integer, Integer>> checkHasPath(Pair<Integer, Integer> startPair,Pair<Integer, Integer> endPair){
+    public static LinkedList<Pair<Integer, Integer>> checkHasPath(Pair<Integer, Integer> startPair, Pair<Integer, Integer> endPair) {
         return getPath(startPair, endPair, null);
     }
+
     public static LinkedList<Pair<Integer, Integer>> checkHasLadderPath(Pair<Integer, Integer> startPair, Pair<Integer, Integer> endPair, LinkedList<Pair<Integer, Integer>> path) {
         if (path != null) {
             return path;

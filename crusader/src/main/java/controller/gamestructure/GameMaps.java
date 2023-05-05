@@ -32,7 +32,7 @@ public class GameMaps {
     }
 
     public static void createMap1() {
-        Map map1 = new Map(401, 401);
+        Map map1 = new Map(400, 400);
         changeTextureOfSomeTiles(15, 60, 15, 40, map1, Textures.IRON_TEXTURE);
         for (int i = 5; i <= 45; i++) {
             for (int j = 40; j <= 40 + i; j++) {
@@ -60,10 +60,10 @@ public class GameMaps {
         map1.getTile(220, 25).setTree(Trees.DATE_PALM);
         changeTextureOfSomeTiles(350, 390, 40, 70, map1, Textures.BOULDER);
         changeTextureOfSomeTiles(270, 305, 65, 95, map1, Textures.IRON_TEXTURE);
-        changeTextureOfSomeTiles(330, 400, 80, 160, map1, Textures.GRASS);
+        changeTextureOfSomeTiles(330, 399, 80, 160, map1, Textures.GRASS);
         changeTextureOfSomeTiles(330, 360, 160, 220, map1, Textures.GRASS);
         changeTextureOfSomeTiles(270, 310, 140, 180, map1, Textures.BOULDER);
-        changeTextureOfSomeTiles(0, 50, 50, 400, map1, Textures.THICK_GRASS);
+        changeTextureOfSomeTiles(0, 50, 50, 399, map1, Textures.THICK_GRASS);
         map1.getTile(90, 260).setTree(Trees.CHERRY_PALM);
         map1.getTile(90, 261).setTree(Trees.DATE_PALM);
         map1.getTile(90, 262).setTree(Trees.COCONUT_PALM);
@@ -71,8 +71,8 @@ public class GameMaps {
         changeTextureOfSomeTiles(140, 170, 300, 330, map1, Textures.BOULDER);
         changeTextureOfSomeTiles(205, 250, 285, 350, map1, Textures.OASIS_GRASS);
         changeTextureOfSomeTiles(205, 220, 350, 370, map1, Textures.OIL);
-        changeTextureOfSomeTiles(330, 400, 330, 400, map1, Textures.SEA);
-        changeTextureOfSomeTiles(360, 400, 280, 310, map1, Textures.IRON_TEXTURE);
+        changeTextureOfSomeTiles(330, 399, 330, 399, map1, Textures.SEA);
+        changeTextureOfSomeTiles(360, 399, 280, 310, map1, Textures.IRON_TEXTURE);
         map1.addDefaultCastle(85, 100);
         map1.addDefaultCastle(180, 30);
         map1.addDefaultCastle(330, 25);
@@ -85,7 +85,7 @@ public class GameMaps {
     }
 
     public static void createMap2() {
-        Map map2 = new Map(201, 201);
+        Map map2 = new Map(200, 200);
         changeTextureOfSomeTiles(50, 85, 75, 140, map2, Textures.SEA);
         changeTextureOfSomeTiles(25, 50, 115, 140, map2, Textures.ROCK_TEXTURE);
         for (int i = 25; i <= 50; i++) {
@@ -108,7 +108,7 @@ public class GameMaps {
         changeTextureOfSomeTiles(180, 195, 150, 165, map2, Textures.IRON_TEXTURE);
         changeTextureOfSomeTiles(150, 170, 130, 150, map2, Textures.GRASS);
         changeTextureOfSomeTiles(130, 180, 0, 60, map2, Textures.OASIS_GRASS);
-        changeTextureOfSomeTiles(190, 200, 40, 50, map2, Textures.ROCK_TEXTURE);
+        changeTextureOfSomeTiles(190, 199, 40, 50, map2, Textures.ROCK_TEXTURE);
         changeTextureOfSomeTiles(100, 115, 5, 15, map2, Textures.IRON_TEXTURE);
         map2.getTile(100, 130).setTree(Trees.COCONUT_PALM);
         map2.getTile(100, 131).setTree(Trees.CHERRY_PALM);

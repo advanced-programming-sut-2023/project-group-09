@@ -6,7 +6,6 @@ import enumeration.dictionary.Trees;
 import model.building.Building;
 import model.human.Human;
 import model.human.civilian.Civilian;
-import model.human.civilian.Civilian;
 import model.human.military.Military;
 import model.tools.AttackingAndDefendingTool;
 
@@ -35,7 +34,7 @@ public class Tile {
     }
 
     public Tile(Textures texture) {
-        this.texture = texture;
+        setTexture(texture);
     }
 
     public Trees getTree() {
@@ -109,7 +108,7 @@ public class Tile {
     }
 
     public void setTexture(Textures texture) {
-        if (building == null) {
+        if (building == null && civilians.size() == 0 && militaries.size() == 0 && rockDirection == null && tree == null) {
             this.texture = texture;
             passable = texture.isPassable();
             if (!texture.isPassable()) {

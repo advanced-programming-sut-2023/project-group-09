@@ -2,8 +2,9 @@ package controller;
 
 import controller.gamestructure.GameHumans;
 import controller.human.HumanController;
-import enumeration.HumanStates;
+import enumeration.MilitaryStates;
 import javafx.util.Pair;
+import model.Government;
 import model.building.Building;
 import model.building.castlebuildings.Wall;
 import model.game.Game;
@@ -12,8 +13,7 @@ import model.game.Tile;
 import model.human.military.Military;
 import view.UnitMenu;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class GameController {
     private static Game game;
@@ -26,7 +26,6 @@ public class GameController {
         GameController.game = game;
     }
 
-    //TODO handel empty field
     public static String selectUnit(int x, int y, String type, Scanner scanner) {
         String message = validateXAndY(x, y);
         if (message != null) {
@@ -34,19 +33,19 @@ public class GameController {
         }
         ArrayList<Military> militaries;
         if (type == null) {
-            militaries = MapController.getMilitariesOfGovernment(x, y, game.getCurrentGovernment());
+            militaries = MapController.getMilitariesOfGovernment(x - 1, y - 1, game.getCurrentGovernment());
         } else if (GameHumans.getUnit(type) == null) {
             return "invalid type!";
         } else {
-            militaries = MapController.getOneTypeOfMilitariesOfGovernment(x, y, type, game.getCurrentGovernment());
+            militaries = MapController.getOneTypeOfMilitariesOfGovernment(x - 1, y - 1, type, game.getCurrentGovernment());
         }
 
         if (militaries.size() == 0) {
             return "There is no troop in this place!";
         }
         HumanController.militaries = militaries;
-        UnitMenu.x = x;
-        UnitMenu.y = y;
+        UnitMenu.x = x - 1;
+        UnitMenu.y = y - 1;
         UnitMenu.run(scanner);
         return "";
     }
@@ -56,7 +55,7 @@ public class GameController {
         if (message != null) {
             return message;
         }
-        Pair<Integer, Integer> destination = new Pair<>(y, x);
+        Pair<Integer, Integer> destination = new Pair<>(y - 1, x - 1);
         boolean check = HumanController.move(destination);
         if (!check) {
             return "can't move unit no path to destination!";
@@ -70,7 +69,7 @@ public class GameController {
             return message;
         }
 
-        boolean check = HumanController.patrolUnit(x1, y1, x2, y2);
+        boolean check = HumanController.patrolUnit(x1 - 1, y1 - 1, x2 - 1, y2 - 1);
         if (!check) {
             return "can't start patrol, no path to destination!";
         }
@@ -83,37 +82,58 @@ public class GameController {
             return message;
         }
 
-        ArrayList<Military> militaries = MapController.getMilitariesOfGovernment(x, y, game.getCurrentGovernment());
+        ArrayList<Military> militaries = MapController.getMilitariesOfGovernment(x - 1, y - 1, game.getCurrentGovernment());
         if (militaries.size() == 0) {
             return "There is no troop in this place!";
         }
 
 
-        if (state.equals(HumanStates.STAND_GROUND.getState())) {
-            HumanController.setState(HumanStates.STAND_GROUND.getState(), militaries);
+        if (state.equals(MilitaryStates.STAND_GROUND.getState())) {
+            HumanController.setState(MilitaryStates.STAND_GROUND.getState(), militaries);
         }
 
-        if (state.equals(HumanStates.DEFENSIVE_STANCE.getState())) {
-            HumanController.setState(HumanStates.DEFENSIVE_STANCE.getState(), militaries);
+        if (state.equals(MilitaryStates.DEFENSIVE_STANCE.getState())) {
+            HumanController.setState(MilitaryStates.DEFENSIVE_STANCE.getState(), militaries);
         }
 
-        if (state.equals(HumanStates.AGGRESSIVE_STANCE.getState())) {
-            HumanController.setState(HumanStates.AGGRESSIVE_STANCE.getState(), militaries);
+        if (state.equals(MilitaryStates.AGGRESSIVE_STANCE.getState())) {
+            HumanController.setState(MilitaryStates.AGGRESSIVE_STANCE.getState(), militaries);
         }
 
         return "invalid state!";
     }
 
-    public static String attackEnemy(int x, int y) {
+    public static String attackEnemy(int x, int y, Scanner scanner) {
         String message = validateXAndY(x, y);
         if (message != null) {
             return message;
         }
-        return "";
+        Military enemy = UnitMenu.getEnemy(x, y, scanner);
+        if (enemy == null) {
+            return "your input is not valid please try again later!";
+        }
+        boolean canAttack = HumanController.attack(enemy);
+        if (!canAttack) {
+            return "can't attack to enemy with this type or position!";
+        }
+        return "attack start successfully!";
     }
 
     public static String airAttack(int x, int y) {
-        return "";
+        String message = validateXAndY(x, y);
+        if (message != null) {
+            return message;
+        }
+        List<Military> enemies = MapController.getMilitariesOfOtherGovernment(x, y, GameController.getGame().getCurrentGovernment());
+        if (enemies.size() == 0) {
+            return "there is no enemy in this position!";
+        }
+
+        boolean canAttack = HumanController.airAttack(x,y,enemies);
+        if (!canAttack) {
+            return "can't attack with this type or position!";
+        }
+        return "attack start successfully!";
     }
 
     public static String pourOil(String direction) {
@@ -145,25 +165,6 @@ public class GameController {
         return "";
     }
 
-    public static String dropBuilding(String x, String y, String type) {
-//        int xCoord, yCoord;
-//        try {
-//            xCoord = Integer.parseInt(x);
-//        } catch (NumberFormatException e) {
-//            return BuildingAnswers.getMessage(BuildingAnswers.INVALID_X_COORD_ERROR);
-//        }
-//        try {
-//            yCoord = Integer.parseInt(x);
-//        } catch (NumberFormatException e) {
-//            return BuildingAnswers.getMessage(BuildingAnswers.INVALID_Y_COORD_ERROR);
-//        }
-//        Building building = getInstanceOfBuilding(xCoord, yCoord, type); // TODO: get instance of supposed building.
-//        if (building == null)
-//            return BuildingAnswers.getMessage(BuildingAnswers.ERROR_FOR_DROP_BUILDING);
-//        GameController.getGame().getMap().getTile(xCoord, yCoord).setBuilding(building);
-//        return BuildingAnswers.getMessage(BuildingAnswers.DROP_BUILDING_SUCCESSFULLY_DONE);
-        return null;
-    }
 
     public static Building getInstanceOfBuilding(int x, int y, String typeOfBuilding) {
         return null;
@@ -198,11 +199,32 @@ public class GameController {
                 result += "|";
                 for (int k = x - 9; k <= x + 9; k++) {
                     for (int l = 0; l < 5; l++) {
-                        Tile tile = map.getTile(i, k);
+                        Tile tile = map.getTile(k, i);
                         String sign = " ";
-                        if (tile.getMilitaries().size() != 0) sign = "S";
-                        else if (tile.getBuilding() != null && !(tile.getBuilding() instanceof Wall)) sign = "B";
-                        else if (tile.getBuilding() != null && tile.getBuilding() instanceof Wall) sign = "W";
+                        if (tile.getMilitaries().size() != 0) {
+                            HashMap<Government, Integer> numberOfMilitariesOnTile = new HashMap<>();
+                            for (int m = 0; m < game.getGovernments().size(); m++) {
+                                numberOfMilitariesOnTile.put(game.getGovernments().get(m), 0);
+                            }
+                            for (int m = 0; m < tile.getMilitaries().size(); m++) {
+                                Military military = tile.getMilitaries().get(m);
+                                numberOfMilitariesOnTile.replace(military.getGovernment(), numberOfMilitariesOnTile.get(military.getGovernment()) + 1);
+                            }
+                            int max = Collections.max(numberOfMilitariesOnTile.values());
+                            int numberOfMax = 0;
+                            Government maxMilitariesGovernment = null;
+                            for (Government government : numberOfMilitariesOnTile.keySet()) {
+                                if (numberOfMilitariesOnTile.get(government) == max) {
+                                    numberOfMax++;
+                                    maxMilitariesGovernment = government;
+                                }
+                            }
+                            if (numberOfMax == 1) sign = maxMilitariesGovernment.getColorRgb() + "S";
+                            else sign = "S";
+                        } else if (tile.getBuilding() != null && !(tile.getBuilding() instanceof Wall))
+                            sign = tile.getBuilding().getGovernment().getColorRgb() + "B";
+                        else if (tile.getBuilding() != null && tile.getBuilding() instanceof Wall)
+                            sign = tile.getBuilding().getGovernment().getColorRgb() + "W";
                         else if (tile.getTree() != null) sign = "T";
                         else if (tile.getRockDirection() != null) sign = "R";
                         result += tile.getTexture().getColor() + sign + "\u001B[0m";
@@ -250,7 +272,7 @@ public class GameController {
     public static String showDetailsOfTile(int x, int y) {
         Tile tile = GameController.getGame().getMap().getTile(x, y);
 
-        String details = "tile (" + x + ", " + y + ") details:\n";
+        String details = "tile (" + (x + 1) + ", " + (y + 1) + ") details:\n";
         details += "texture type: " + tile.getTexture().getTextureName() + "\n";
         if (tile.getTree() != null) {
             details += "Tree : " + tile.getTree().getTreeName() + "\n";
@@ -268,16 +290,16 @@ public class GameController {
         if (tile.getCivilians().size() != 0) {
             details += "Civilian in details : \n";
             for (int i = 0; i != tile.getCivilians().size(); i++) {
-                details += "Civilian " + i + ": from Lord " +
+                details += "Civilian " + (i + 1) + ": from Lord " +
                         tile.getCivilians().get(i).getGovernment().getUser().getNickname() + "\n";
             }
         }
         details += "Military number : " + tile.getMilitaries().size() + "\n";
         for (int i = 0; i != tile.getMilitaries().size(); i++) {
-            details += "Military " + i + ": type: " + tile.getMilitaries().get(i).getName() + " | from Lord " +
+            details += "Military " + (i + 1) + ": type: " + tile.getMilitaries().get(i).getName() + " | from Lord " +
                     tile.getMilitaries().get(i).getGovernment().getUser().getNickname() + "\n";
         }
-        return details;
+        return details.substring(0, details.length() - 1);
     }
 
     public static String validateXAndY(int x, int y) {

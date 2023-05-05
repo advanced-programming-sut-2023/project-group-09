@@ -13,6 +13,8 @@ import java.util.regex.Matcher;
 
 public class EditMapEnvironmentMenu {
     public static void run(Scanner scanner) {
+        System.out.println("<< Edit Map Environment Menu >>");
+
         while (true) {
             String input = scanner.nextLine();
             Matcher setTextureM = MapCommands.SET_TEXTURE.getMatcher(input);
@@ -25,7 +27,7 @@ public class EditMapEnvironmentMenu {
             else if (dropRockM.matches()) runDropRock(dropRockM);
             else if (clearTileM.matches()) MapMenu.runShowMapOrShowDetailsOrClearLand(clearTileM, 2);
             else if (MapCommands.CONTINUE.getMatcher(input).matches()) return;
-            else System.out.println("invalid command");
+            else System.out.println("invalid command!");
         }
     }
 
@@ -125,11 +127,11 @@ public class EditMapEnvironmentMenu {
         }
 
         RockDirections direction = RockDirections.getRockByDirection(directionM.group("direction"));
-        if (direction == null) {
+        if (directionM.group("direction").equals("random"))
+            direction = RockDirections.getRandomDirection();
+        else if (direction == null) {
             System.out.println("invalid rock direction");
             return;
-        } else if (direction.equals("random")) {
-            direction = RockDirections.getRandomDirection();
         }
 
         System.out.println(MapController.dropRock(Integer.parseInt(xM.group("x")) - 1,

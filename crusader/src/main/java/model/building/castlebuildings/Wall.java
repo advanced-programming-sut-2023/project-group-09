@@ -15,6 +15,23 @@ public class Wall extends CastleBuilding {
         this.height = height;
         this.capacity = 0;
     }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public static int heightOfStairs(int x, int y) { // if returned 0 or -1, we can't create wall over there.
         Map map = GameController.getGame().getMap();
         int heightOfTallestWallOrStairs = findHeightOfTallestWallOrStairs(x , y);
