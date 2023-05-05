@@ -9,6 +9,7 @@ import model.human.Human;
 import model.human.civilian.Civilian;
 import model.human.military.Lord;
 import model.human.military.Military;
+import model.tools.Tool;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,13 +30,37 @@ public class Government {
         return storages;
     }
 
-    private HashMap<String, Integer> properties = new HashMap<>();
+    private HashMap<String, Integer> properties;
     private HashMap<String, Storage> storages = new HashMap<>();
     private HashMap<String, BuildingCounter> buildings = new HashMap<>();
 
+    private ArrayList<Tool> tools = new ArrayList<>();
     private ArrayList<Military> troops = new ArrayList<>();
     private ArrayList<Human> society = new ArrayList<>();
     private MainCastle mainCastle;
+
+    private int foodRate;
+
+    public HashMap<String, BuildingCounter> getBuildings() {
+        return buildings;
+    }
+
+    private int fearRate;
+    private int religionRate;
+    private int taxRate;
+    private int gold;
+    private int population, maxPopulation;
+    private int castleX, castleY;
+    private Colors color;
+    private Lord lord;
+
+    public Government(User user, int castleX, int castleY, Colors color) {
+        this.user = user;
+        this.castleX = castleX;
+        this.castleY = castleY;
+        this.color = color;
+        properties = GameGoods.getHashMapOfGovernment();
+    }
 
     public void setUser(User user) {
         this.user = user;
@@ -65,37 +90,12 @@ public class Government {
         this.mainCastle = mainCastle;
     }
 
-    private int foodRate;
-
-    public HashMap<String, BuildingCounter> getBuildings() {
-        return buildings;
-    }
-
-    private int fearRate;
-    private int religionRate;
-    private int taxRate;
-    private int gold;
-    private int population, maxPopulation;
-    private int castleX, castleY;
-    private Colors color;
-    private Lord lord;
-
-    public Lord getLord() {
-        return lord;
-    }
 
     public void setLord(Lord lord) {
         this.lord = lord;
         ((MainCastle) (this.getBuildings().get("MainCastle").getBuildings().get(0))).setLord(lord);
     }
 
-    public Government(User user, int castleX, int castleY, Colors color) {
-        this.user = user;
-        this.castleX = castleX;
-        this.castleY = castleY;
-        this.color = color;
-        properties = GameGoods.getHashMapOfGovernment();
-    }
 
     public void addAmountToProperties(String itemName, String itemType, int amount) {
         this.getProperties().put(itemName, this.getProperties().get(itemName) + amount);
@@ -111,6 +111,10 @@ public class Government {
 
     public void setSociety(ArrayList<Human> society) {
         this.society = society;
+    }
+
+    public Lord getLord() {
+        return lord;
     }
 
     public int getFoodRate() {
@@ -324,4 +328,12 @@ public class Government {
             }
         }
     }
+
+    public void addTool(Tool tool){
+        tools.add(tool);
+    }
+    public void removeTool(Tool tool){
+        tools.add(tool);
+    }
+
 }

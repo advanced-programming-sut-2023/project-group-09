@@ -16,6 +16,7 @@ import model.game.Map;
 import model.game.Tile;
 import model.human.civilian.Civilian;
 import model.human.military.Military;
+import model.tools.Tool;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -247,7 +248,26 @@ public class MapController {
         military.getGovernment().addMilitary(military);
         tile.addMilitary(military);
     }
+    public static void deleteTool(int x, int y, Tool tool) {
+        Tile tile = map.getTile(x, y);
+        tool.getGovernment().removeTool(tool);
+        tile.setTool(null);
+    }
 
+    public static void addTool(int x, int y, Tool tool) {
+        Tile tile = map.getTile(x, y);
+        tool.setY(y);
+        tool.setX(x);
+        tool.getGovernment().removeTool(tool);
+        tile.setTool(null);
+    }
+
+    public static void moveTool(int x, int y, Tool tool) {
+        deleteTool(tool.getX(), tool.getY(), tool);
+        addTool(x, y, tool);
+        tool.setX(x);
+        tool.setY(y);
+    }
     public static void moveMilitary(int x, int y, Military military) {
         deleteMilitary(military.getX(), military.getY(), military);
         addMilitary(x, y, military);
@@ -352,4 +372,5 @@ public class MapController {
         BuildingCounter buildingCounter = building.getGovernment().getBuildingData(building.getName());
         buildingCounter.deleteBuilding(building);
     }
+
 }

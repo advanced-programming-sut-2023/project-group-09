@@ -29,7 +29,10 @@ public class UnitMenu {
             Matcher airAttackMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.AIR_ATTACK);
             Matcher attachEnemyMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.ATTACK_ENEMY);
             Matcher airAttackBuildingMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.AIR_ATTACK_BUILDING);
-            Matcher attachBuildingMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.ATTACK_BUILDING);
+            Matcher attackBuildingMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.ATTACK_BUILDING);
+            Matcher airAttackToolMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.AIR_ATTACK_TOOL);
+            Matcher attackToolMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.ATTACK_TOOL);
+            Matcher useToolMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.USE_TOOL);
 
             Matcher pourOilMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.POUR_OIL);
             Matcher digTunnelMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.DIG_TUNNEL);
@@ -105,8 +108,8 @@ public class UnitMenu {
                         return;
                     }
                 }
-            }  else if (attachBuildingMatcher.matches()) {
-                String items = attachBuildingMatcher.group("items");
+            }  else if (attackBuildingMatcher.matches()) {
+                String items = attackBuildingMatcher.group("items");
                 ArrayList<String> itemsPattern = new ArrayList<>();
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
@@ -131,6 +134,49 @@ public class UnitMenu {
                     output = GameController.airAttackBuilding(x, y);
                     System.out.println(output);
                     if (output.equals("attack order has been recorded successfully!")) {
+                        return;
+                    }
+                }
+            }  else if (attackToolMatcher.matches()) {
+                String items = attackToolMatcher.group("items");
+                ArrayList<String> itemsPattern = new ArrayList<>();
+                itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
+                itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
+                if (ViewController.isItemMatch(items, itemsPattern)) {
+                    int x = ViewController.getNumberOfRegex("x");
+                    int y = ViewController.getNumberOfRegex("y");
+                    output = GameController.attackTool(x, y);
+                    System.out.println(output);
+                    if (output.equals("attack order has been recorded successfully!")) {
+                        return;
+                    }
+                }
+
+            } else if (airAttackToolMatcher.matches()) {
+                String items = airAttackToolMatcher.group("items");
+                ArrayList<String> itemsPattern = new ArrayList<>();
+                itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
+                itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
+                if (ViewController.isItemMatch(items, itemsPattern)) {
+                    int x = ViewController.getNumberOfRegex("x");
+                    int y = ViewController.getNumberOfRegex("y");
+                    output = GameController.airAttackTool(x, y);
+                    System.out.println(output);
+                    if (output.equals("attack order has been recorded successfully!")) {
+                        return;
+                    }
+                }
+            }else if (useToolMatcher.matches()) {
+                String items = airAttackToolMatcher.group("items");
+                ArrayList<String> itemsPattern = new ArrayList<>();
+                itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
+                itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
+                if (ViewController.isItemMatch(items, itemsPattern)) {
+                    int x = ViewController.getNumberOfRegex("x");
+                    int y = ViewController.getNumberOfRegex("y");
+                    output = GameController.useTool(x, y);
+                    System.out.println(output);
+                    if (output.equals("order record successfully!")) {
                         return;
                     }
                 }

@@ -385,4 +385,6 @@ public class MoveController extends HumanController {
         }
         return militaries;
     }
+
+
 }

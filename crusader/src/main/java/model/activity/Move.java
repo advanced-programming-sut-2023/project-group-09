@@ -11,6 +11,7 @@ import model.game.Tuple;
 import model.human.Human;
 import model.human.civilian.Civilian;
 import model.human.military.Military;
+import model.tools.Tool;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -21,15 +22,18 @@ public class Move {
     private Tuple endPair;
     private Tuple patrolPair;
     private final boolean isDestinationConstant;
-    Human human;
-
+    private final Human human;
+    private Tool tool;
     private boolean isAttacking = false;
     private boolean isPatrolStart = false;
     private String moveState;
     private LinkedList<Tuple> path;
 
+    private boolean shouldConnectToTool = false;
     private Building building;
     int indexOfPath = 0;
+
+
     Military enemy;
 
 
@@ -54,6 +58,13 @@ public class Move {
         this.isDestinationConstant = isDestinationConstant;
         this.human = human;
     }
+    public Move(int startX, int startY, Tool tool, boolean isDestinationConstant, Human human) {
+        this.startPair = new Tuple(startY, startX);
+        this.building = building;
+        this.isDestinationConstant = isDestinationConstant;
+        this.human = human;
+    }
+
 
     public int getStartX() {
         return startPair.getX();
@@ -115,12 +126,18 @@ public class Move {
     }
 
     public boolean checkDestination() {
+
         if (!isDestinationConstant) {
-            if (endPair.getX() != enemy.getX() && endPair.getY() != enemy.getY()) {
+            if (enemy != null && endPair.getX() != enemy.getX() && endPair.getY() != enemy.getY()) {
                 endPair = new Tuple(enemy.getY(), enemy.getX());
                 return true;
             }
+            if (tool != null && endPair.getX() != tool.getX() && endPair.getY() != tool.getY()) {
+                endPair = new Tuple(tool.getY(), tool.getX());
+                return true;
+            }
         }
+
         Tuple lastPair = path.getLast();
         if (!Objects.equals(endPair.getX(), lastPair.getX()) && !Objects.equals(endPair.getY(), lastPair.getY())) {
             endPair = new Tuple(enemy.getY(), enemy.getX());
@@ -154,6 +171,9 @@ public class Move {
                 MapController.moveHuman(endPair.getX(), endPair.getY(), (Civilian) human);
             }
             moveState = MoveStates.STOP.getState();
+            if(tool != null && shouldConnectToTool){
+                //TODO connect to tool
+            }
         }
 
         if (MoveStates.PATROL.getState().equals(moveState) && isPatrolStart) {
@@ -233,11 +253,27 @@ public class Move {
         return enemy;
     }
 
+    public Tool getTool() {
+        return tool;
+    }
+
+    public void setTool(Tool tool) {
+        this.tool = tool;
+    }
+
     public void setEnemy(Military enemy) {
         this.enemy = enemy;
     }
 
     public boolean isAttacking() {
         return isAttacking;
+    }
+
+    public boolean isShouldConnectToTool() {
+        return shouldConnectToTool;
+    }
+
+    public void setShouldConnectToTool(boolean shouldConnectToTool) {
+        this.shouldConnectToTool = shouldConnectToTool;
     }
 }

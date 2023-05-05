@@ -2,7 +2,7 @@ package controller;
 
 import model.game.Tile;
 import model.human.military.Engineer;
-import model.tools.AttackingAndDefendingTool;
+import model.tools.Tool;
 import model.tools.Moat;
 
 public class EngineerController {
@@ -77,7 +77,7 @@ public class EngineerController {
 //        TODO: add current engineer to the tool
     }
 
-    public void enterTool(AttackingAndDefendingTool tool) {
+    public void enterTool(Tool tool) {
 //        TODO: move to the position of the tool
         tool.addEngineer(currentEngineer);
     }

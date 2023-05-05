@@ -10,7 +10,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import model.building.Building;
-import model.building.castlebuildings.CastleBuilding;
 import model.building.castlebuildings.Gatehouse;
 import model.building.castlebuildings.Tower;
 import model.building.castlebuildings.Wall;
@@ -21,8 +20,7 @@ import model.building.storagebuildings.StorageBuilding;
 import model.goods.Goods;
 import model.human.military.ArabianMercenary;
 import model.human.military.EuropeanTroop;
-import model.human.military.Military;
-import model.tools.AttackingAndDefendingTool;
+import model.tools.Tool;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -32,9 +30,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class DBController {
 
@@ -342,7 +337,7 @@ public class DBController {
             Gson gson = new Gson();
             checkFileExist(Paths.TOOLS_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.TOOLS_PATH.getPath())));
-            GameTools.tools = gson.fromJson(text, new TypeToken<HashMap<String, AttackingAndDefendingTool>>(){}.getType());
+            GameTools.tools = gson.fromJson(text, new TypeToken<HashMap<String, Tool>>(){}.getType());
         } catch (IOException e) {
             System.out.println("An error occurred.[load tools]");
             e.printStackTrace();
