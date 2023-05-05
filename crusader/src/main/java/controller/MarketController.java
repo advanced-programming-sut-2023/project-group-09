@@ -6,7 +6,7 @@ import model.goods.Goods;
 
 import java.util.HashMap;
 
-public class ShopController {
+public class MarketController {
     public static String showPriceList() {
         HashMap<String, Goods> goodsHashMap = GameGoods.goods;
         StringBuilder output = new StringBuilder();

@@ -1,11 +1,9 @@
 package view;
 
-import controller.GameController;
-import controller.ShopController;
+import controller.MarketController;
 import controller.ViewController;
 import enumeration.answers.Answers;
 import enumeration.commands.Commands;
-import enumeration.commands.GameMenuCommands;
 import enumeration.commands.MarketMenuCommands;
 
 import java.util.ArrayList;
@@ -23,7 +21,7 @@ public class MarketMenu {
             Matcher sellMatcher = MarketMenuCommands.getMatcher(input, MarketMenuCommands.SELL);
             Matcher backMatcher = Commands.getMatcher(input, Commands.BACK);
             if (showPriceListMatcher.matches()) {
-                output = ShopController.showPriceList();
+                output = MarketController.showPriceList();
                 System.out.println(output);
             } else if (buyMatcher.matches()) {
                 String items = buyMatcher.group("items");
@@ -34,7 +32,7 @@ public class MarketMenu {
                     int amount = Integer.parseInt(ViewController.resultMatcher.group("amount"));
                     String name = ViewController.resultMatcher.group("name");
                     name = ViewController.editItem(name);
-                    output = ShopController.buyItem(name, amount);
+                    output = MarketController.buyItem(name, amount);
                     System.out.println(output);
                 }
             } else if (sellMatcher.matches()) {
@@ -46,7 +44,7 @@ public class MarketMenu {
                     int amount = Integer.parseInt(ViewController.resultMatcher.group("amount"));
                     String name = ViewController.resultMatcher.group("name");
                     name = ViewController.editItem(name);
-                    output = ShopController.sellItem(name, amount);
+                    output = MarketController.sellItem(name, amount);
                     System.out.println(output);
                 }
             } else if (backMatcher.matches()) {
