@@ -48,6 +48,14 @@ public class Move {
         this.human = human;
     }
 
+    public Tuple getStartPair() {
+        return startPair;
+    }
+
+    public void setStartPair(Tuple startPair) {
+        this.startPair = startPair;
+    }
+
     public Move(int startX, int startY, Building building, boolean isDestinationConstant, Human human) {
         this.startPair = new Tuple(startY, startX);
         this.building = building;
