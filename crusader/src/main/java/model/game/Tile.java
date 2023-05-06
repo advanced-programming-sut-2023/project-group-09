@@ -1,7 +1,5 @@
 package model.game;
 
-import controller.MapController;
-import controller.human.MoveController;
 import enumeration.Textures;
 import enumeration.dictionary.RockDirections;
 import enumeration.dictionary.Trees;
@@ -13,7 +11,7 @@ import model.building.castlebuildings.Wall;
 import model.human.Human;
 import model.human.civilian.Civilian;
 import model.human.military.Military;
-import model.tools.AttackingAndDefendingTool;
+import model.tools.Tool;
 
 import java.util.ArrayList;
 
@@ -28,7 +26,7 @@ public class Tile {
     private Textures texture = Textures.EARTH;
     private Trees tree;
     private RockDirections rockDirection;
-    private AttackingAndDefendingTool tool;
+    private Tool tool;
     private boolean isDefaultCastle;
 
     public boolean isDefaultCastle() {
@@ -174,11 +172,11 @@ public class Tile {
         this.civilians = human;
     }
 
-    public AttackingAndDefendingTool getTool() {
+    public Tool getTool() {
         return tool;
     }
 
-    public void setTool(AttackingAndDefendingTool tool) {
+    public void setTool(Tool tool) {
         this.tool = tool;
     }
 

@@ -11,8 +11,12 @@ public enum UnitMenuCommands {
     SET_UNIT_STATE("set(?<items>.*)"),
     ATTACK_ENEMY("attack enemy(?<items>.*)"),
     AIR_ATTACK("air attack(?<items>.*)"),
+    ATTACK_TOOL("attack tool(?<items>.*)"),
+    AIR_ATTACK_TOOL("air attack tool(?<items>.*)"),
     ATTACK_BUILDING("attack building(?<items>.*)"),
-    AIR_ATTACK_BUILDING("attack building(?<items>.*)"),
+    AIR_ATTACK_BUILDING("air attack building(?<items>.*)"),
+
+    USE_TOOL("use tool(?<items>.*)"),
     POUR_OIL("pour oil -d (?<direction>(\"[^\"]*\"|\\S*))"),
     DIG_TUNNEL("dig tunnel(?<items>.*)"),
     BUILD("build"),

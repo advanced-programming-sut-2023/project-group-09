@@ -4,7 +4,6 @@ import controller.gamestructure.GameHumans;
 import controller.human.HumanController;
 import controller.human.MoveController;
 import enumeration.MilitaryStates;
-import javafx.util.Pair;
 import model.Government;
 import model.activity.Move;
 import model.building.Building;
@@ -16,6 +15,7 @@ import model.game.Tuple;
 import model.human.Human;
 import model.human.civilian.Civilian;
 import model.human.military.Military;
+import model.tools.Tool;
 import view.UnitMenu;
 
 import java.util.*;
@@ -80,6 +80,7 @@ public class GameController {
         }
         return "patrol started successfully!";
     }
+
     public static String deactivatePatrolUnit() {
         boolean check = HumanController.deactivatePatrol();
         if (!check) {
@@ -87,6 +88,7 @@ public class GameController {
         }
         return "patrol deactivate successfully!";
     }
+
     public static String setStateOfMilitary(int x, int y, String state) {
         String message = validateXAndY(x, y);
         if (message != null) {
@@ -127,7 +129,7 @@ public class GameController {
         if (!canAttack) {
             return "can't attack to enemy with this type of unit or position!";
         }
-        return "attack start successfully!";
+        return "attack order record successfully!";
     }
 
     public static String airAttack(int x, int y) {
@@ -140,11 +142,11 @@ public class GameController {
             return "there is no enemy in this position!";
         }
 
-        boolean canAttack = HumanController.airAttack(x,y,enemies);
+        boolean canAttack = HumanController.airAttack(x, y, enemies);
         if (!canAttack) {
             return "can't attack with this type of unit or position!";
         }
-        return "attack start successfully!";
+        return "attack order record successfully!";
     }
 
     public static String attackBuilding(int x, int y) {
@@ -152,15 +154,18 @@ public class GameController {
         if (message != null) {
             return message;
         }
-        Building building = game.getMap().getTile(x,y).getBuilding();
+        Building building = game.getMap().getTile(x, y).getBuilding();
         if (building == null) {
-            return "no building in this place";
+            return "no building in this place!";
+        }
+        if (building.getGovernment().equals(game.getCurrentGovernment())) {
+            return "this building is yours!";
         }
         boolean canAttack = HumanController.attack(building);
         if (!canAttack) {
             return "can't attack to enemy with this type of unit or position!";
         }
-        return "attack start successfully!";
+        return "attack order record successfully!";
     }
 
     public static String airAttackBuilding(int x, int y) {
@@ -168,17 +173,82 @@ public class GameController {
         if (message != null) {
             return message;
         }
-        Building building = game.getMap().getTile(x,y).getBuilding();
+        Building building = game.getMap().getTile(x, y).getBuilding();
         if (building == null) {
-            return "no building in this place";
+            return "no building in this place!";
         }
-
+        if (building.getGovernment().equals(game.getCurrentGovernment())) {
+            return "this building is yours!";
+        }
         boolean canAttack = HumanController.airAttack(building);
         if (!canAttack) {
             return "can't attack with this type of unit or position!";
         }
-        return "attack start successfully!";
+        return "attack order record successfully!";
     }
+
+    public static String attackTool(int x, int y) {
+        String message = validateXAndY(x, y);
+        if (message != null) {
+            return message;
+        }
+        Tool tool = game.getMap().getTile(x, y).getTool();
+        if (tool == null) {
+            return "no tool in this place!";
+        }
+        if (tool.getGovernment().equals(game.getCurrentGovernment())) {
+            return "this tool is yours!";
+        }
+        boolean canAttack = HumanController.attack(tool);
+        if (!canAttack) {
+            return "can't attack to enemy with this type of unit or position!";
+        }
+        return "attack order record successfully!";
+    }
+
+    public static String airAttackTool(int x, int y) {
+        String message = validateXAndY(x, y);
+        if (message != null) {
+            return message;
+        }
+        Tool tool = game.getMap().getTile(x, y).getTool();
+        if (tool == null) {
+            return "no tool in this place!";
+        }
+        if (tool.getGovernment().equals(game.getCurrentGovernment())) {
+            return "this tool is yours!";
+        }
+        boolean canAttack = HumanController.airAttack(tool);
+        if (!canAttack) {
+            return "can't attack with this type of unit or position!";
+        }
+        return "attack order record successfully!";
+    }
+
+    public static String useTool(int x,int y){
+        String message = validateXAndY(x, y);
+        if (message != null) {
+            return message;
+        }
+        Tool tool = game.getMap().getTile(x, y).getTool();
+        if (tool == null) {
+            return "no tool in this place!";
+        }
+        if (!tool.getGovernment().equals(game.getCurrentGovernment())) {
+            return "this tool is not yours!";
+        }
+
+        //TODO
+        boolean canAttack = HumanController.attack(tool);
+        if (!canAttack) {
+            return "can't attack to enemy with this type of unit or position!";
+        }
+        return "order record successfully!";
+    }
+
+
+
+
     public static String pourOil(String direction) {
         return "";
     }
@@ -229,6 +299,7 @@ public class GameController {
             return result;
         }
     }
+
 
 
     public static Building getInstanceOfBuilding(int x, int y, String typeOfBuilding) {

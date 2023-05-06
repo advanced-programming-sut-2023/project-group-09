@@ -1,21 +1,19 @@
 package model.human.military;
 
-import model.game.Tile;
-import model.tools.AttackingAndDefendingTool;
-import model.tools.Moat;
+import model.tools.Tool;
 
 public class Engineer extends EuropeanTroop {
-    private AttackingAndDefendingTool target;
+    private Tool target;
 
     public Engineer(int speed, int defenseRating, int shootingRange, int attackRating, int price) {
         super(speed, defenseRating, shootingRange, attackRating, price);
     }
 
-    public AttackingAndDefendingTool getTarget() {
+    public Tool getTarget() {
         return target;
     }
 
-    public void setTarget(AttackingAndDefendingTool target) {
+    public void setTarget(Tool target) {
         this.target = target;
     }
 }

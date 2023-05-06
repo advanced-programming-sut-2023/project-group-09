@@ -10,6 +10,7 @@ import model.building.Building;
 import model.game.Map;
 import model.game.Tile;
 import model.human.military.Military;
+import model.tools.Tool;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -18,6 +19,7 @@ public class Attack {
     Building targetBuilding;
     Military military;
     Military enemy;
+    Tool tool;
 
     public Attack(Military military) {
         this.military = military;
@@ -57,6 +59,55 @@ public class Attack {
         return enemies;
     }
 
+
+    public Tool getToolOfRange(int x, int y, int range) {
+        Map map = GameController.getGame().getMap();
+        int endX = x + range;
+        int endY = y + range;
+        int startX = x - range;
+        int startY = y - range;
+
+        if (endX + 1 >= map.getWidth()) {
+            endX = map.getWidth() - 1;
+        }
+
+        if (endY + 1 >= map.getLength()) {
+            endY = map.getLength() - 1;
+        }
+
+        if (x - range < 0) {
+            startX = 0;
+        }
+
+        if (y - range < 0) {
+            startY = 0;
+        }
+
+        return getToolOfArea(startX, startY, endX, endY);
+    }
+
+    public Tool getToolOfArea(int startX, int startY, int endX, int endY) {
+        double minDistance = 500;
+        Tool result = null;
+        for (int i = startX; i <= endX; i++) {
+            for (int j = startY; j <= endY; j++) {
+                Tool tool = GameController.getGame().getMap().getTile(i,j).getTool();
+                if(tool == null || tool.getGovernment().equals(military.getGovernment())){
+                    continue;
+                }
+                Tool targetTool = military.getMove().getTool();
+                double distance = MoveController.getDistance(tool.getX(),tool.getY(),military.getX(),military.getY());
+                if(tool.equals(targetTool)){
+                    return tool;
+                }else if (distance < minDistance){
+                    minDistance = distance;
+                    result = tool;
+                }
+            }
+        }
+        return result;
+    }
+
     public void setEnemy(Military enemy) {
         targetBuilding = null;
         this.enemy = enemy;
@@ -76,36 +127,44 @@ public class Attack {
         return Math.abs(military.getY() - y) <= range;
     }
 
-    /*
-    find enemies who are in range and if target enemy exist
-    choose him else between the nearest enemies choose one random
-    enemy return true if it finds enemy
-    */
+    public void setTool(Tool tool) {
+        this.tool = tool;
+    }
+
     public boolean shouldAttack(int range) {
-        if (enemy != null) {
+        if (enemy != null || tool != null) {
             return true;
         }
-
+        Tool nearestTool = getToolOfRange(military.getX(), military.getY(), range);
         ArrayList<Military> militaries = getEnemyOfRange(military.getX(), military.getY(), range);
-        if (militaries.size() == 0) {
+        if (militaries.size() == 0 && nearestTool == null) {
             return false;
         }
 
-        Military targetTroop = military.getMove().getEnemy();
-        if (targetTroop != null && militaries.contains(targetTroop)) {
-            this.enemy = militaries.get(militaries.indexOf(targetTroop));
-            return true;
+        double minDistance = 500;
+        ArrayList<Military> enemies = new ArrayList<>();
+
+        if(militaries.size() != 0){
+            Military targetTroop = military.getMove().getEnemy();
+            if (targetTroop != null && militaries.contains(targetTroop)) {
+                this.enemy = militaries.get(militaries.indexOf(targetTroop));
+                return true;
+            }
+            for (Military enemy : militaries) {
+                double distance = MoveController.getDistance(enemy.getX(), enemy.getY(), military.getX(), military.getY());
+                if (distance < minDistance && Math.abs(minDistance - distance) > 0.5) {
+                    minDistance = distance;
+                    enemies.clear();
+                    enemies.add(enemy);
+                }
+            }
         }
 
 
-        ArrayList<Military> enemies = new ArrayList<>();
-        double minDistance = military.getShootingRange();
-        for (Military enemy : militaries) {
-            double distance = MoveController.getDistance(enemy.getX(), enemy.getY(), military.getX(), military.getY());
-            if (distance < minDistance && Math.abs(minDistance - distance) > 0.5) {
-                minDistance = distance;
-                enemies.clear();
-                enemies.add(enemy);
+        if(nearestTool != null ){
+            if(minDistance > MoveController.getDistance(nearestTool.getX(),nearestTool.getY(),military.getX(),military.getY())){
+                this.tool = nearestTool;
+                return true;
             }
         }
 
@@ -117,14 +176,17 @@ public class Attack {
     }
 
 
-    /*
-    if enemy exists decrease hp of enemy and if enemy can damage him set him as enemy's enemy
-    if enemy dead delete him and set government null
-    */
     public void attackEnemy() {
+
+        if(tool != null){
+            attackToTool();
+            return;
+        }
+
         if (enemy == null) {
             return;
         }
+
         int enemyHp = enemy.takeDamage(military.getAttackRating());
         if (enemy.getAttack().enemy == null && enemy.getAttack().isInRange(military.getX(), military.getY(), enemy.getShootingRange())) {
             enemy.getAttack().setEnemy(military);
@@ -140,6 +202,14 @@ public class Attack {
 
     //set attack according type of enemy(he can air attack or not)
     public void attack() {
+        if(tool != null){
+            if (military.canAirAttack()) {
+                attackToTool();
+            } else {
+                HumanController.attack(tool);
+                enemy = null;
+            }
+        }
         if (military.canAirAttack()) {
             attackEnemy();
         } else {
@@ -161,7 +231,7 @@ public class Attack {
     }
 
     public boolean buildingIsInRange(Building building) {
-        if(building == null){
+        if (building == null) {
             return false;
         }
         if (military.canAirAttack()) {
@@ -172,7 +242,7 @@ public class Attack {
     }
 
     public void attackToBuilding() {
-        if (military.getName().equals("ladderman")){
+        if (military.getName().equals("ladderman")) {
             military.setUsesLadder(true);
         }
         int hp = targetBuilding.takeDamage(military.getAttackRating());
@@ -180,6 +250,15 @@ public class Attack {
             MapController.deleteBuilding(targetBuilding);
             targetBuilding.setGovernment(null);
             targetBuilding = null;
+        }
+    }
+
+    public void attackToTool() {
+        int hp = targetBuilding.takeDamage(military.getAttackRating());
+        if (hp < 0) {
+            MapController.deleteTool(tool.getX(), tool.getY(), tool);
+            tool.setGovernment(null);
+            tool = null;
         }
     }
 
@@ -197,9 +276,10 @@ public class Attack {
             return;
         }
 
+        //
 
         //building attack
-        if (buildingIsInRange(targetBuilding)) {
+        if (targetBuilding != null && buildingIsInRange(targetBuilding)) {
             if (move != null && move.isMoving()) {
                 move.setAttacking(true);
             }
@@ -207,6 +287,14 @@ public class Attack {
             return;
         }
 
+
+        if (tool != null && isInRange(tool.getX(), tool.getY(), military.getShootingRange())) {
+            if (move != null && move.isMoving()) {
+                move.setAttacking(true);
+            }
+            attackToBuilding();
+            return;
+        }
 
         //continue moving if you don't need to defend yourself
         if (move != null && !move.getMoveState().equals(MoveStates.STOP.getState())) {
