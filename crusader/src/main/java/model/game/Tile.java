@@ -106,6 +106,9 @@ public class Tile {
             if (building instanceof MainCastle ){
                 return true;
             }
+            if( tool != null && tool.getName().equals("siegeTower") && !tool.isCanMove()){
+                return true;
+            }
             if(human instanceof Military military && military.isUsesLadder()){
                 for (Military troop : militaries){
                     if(troop.getGovernment().equals(military.getGovernment()) && troop.getName().equals("ladderman")){
@@ -116,6 +119,9 @@ public class Tile {
             return passable;
         }else{
             if(building instanceof CastleBuilding castleBuilding && !castleBuilding.getName().equals("drawBridge")){
+                return true;
+            }
+            if( tool != null && tool.getName().equals("siegeTower") && !tool.isCanMove()){
                 return true;
             }
             if(human instanceof Military military && military.isUsesLadder() && !military.getName().equals("ladderman")){

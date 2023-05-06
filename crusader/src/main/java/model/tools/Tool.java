@@ -88,6 +88,9 @@ public class Tool implements Cloneable {
     }
 
     public void addEngineer(Engineer engineer) {
+        if(engineers.size() == numberOfRequiredEngineers){
+            return;
+        }
         this.engineers.add(engineer);
     }
 

@@ -238,10 +238,13 @@ public class GameController {
             return "this tool is not yours!";
         }
 
-        //TODO
-        boolean canAttack = HumanController.attack(tool);
-        if (!canAttack) {
-            return "can't attack to enemy with this type of unit or position!";
+        if(tool.getEngineers().size() == tool.getNumberOfRequiredEngineers()){
+            return "tool already is active!";
+        }
+
+        boolean canMove = HumanController.attack(tool);
+        if (!canMove) {
+            return "can't move, you didn't select eny engineer!";
         }
         return "order record successfully!";
     }

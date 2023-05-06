@@ -12,6 +12,7 @@ import model.game.Tile;
 import model.game.Tuple;
 import model.human.Human;
 import model.human.military.Military;
+import model.tools.Tool;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -364,13 +365,20 @@ public class MoveController extends HumanController {
         if (building instanceof MainCastle) {
             return true;
         }
-        if (!(human instanceof Military military) || !military.isUsesLadder() || military.getName().equals("ladderman")) {
+        if (!(human instanceof Military military)) {
             return tuple.isOverhead();
         }
-        List<Military> militaries = getActiveLadderMans(x, y, military.getGovernment());
-        if (militaries.size() != 0 && military.isUsesLadder()) {
+        Tool tool = tile.getTool();
+        if( tool != null && tool.getName().equals("siegeTower") && !tool.isCanMove()){
             return !tuple.isOverhead();
         }
+        if (!military.isUsesLadder() || military.getName().equals("ladderman")){
+            List<Military> militaries = getActiveLadderMans(x, y, military.getGovernment());
+            if (militaries.size() != 0 && military.isUsesLadder()) {
+                return !tuple.isOverhead();
+            }
+        }
+
         return tuple.isOverhead();
     }
 

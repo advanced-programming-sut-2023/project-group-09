@@ -31,10 +31,7 @@ public class ToolAttack {
         return Math.abs(tool.getY() - y) <= range;
     }
 
-    /*
-    if enemy exists decrease hp of enemy and if enemy can damage him set him as enemy's enemy
-    if enemy dead delete him and set government null
-    */
+
     public void attack() {
         if (enemy == null) {
             return;
@@ -51,8 +48,6 @@ public class ToolAttack {
         attackToBuilding();
 
     }
-
-    //set attack according type of enemy(he can air attack or not)
 
 
     public boolean buildingIsInRange(Building building) {
@@ -79,7 +74,7 @@ public class ToolAttack {
     }
 
 
-    //this should use in nextTurn for each troop if troop has government so far
+
     public void doAttack() {
 
         if(!tool.isCanAttack() || !tool.isActive()){

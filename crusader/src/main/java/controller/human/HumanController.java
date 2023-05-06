@@ -204,6 +204,27 @@ public class HumanController {
         }
         return true;
     }
+    public static boolean useTool(Tool tool) {
+        Tuple startPair = MoveController.getStartPair();
+        Tuple endPair = new Tuple(tool.getY(), tool.getX());
+        LinkedList<Tuple> path = MoveController.checkHasPath(startPair, endPair);
+
+        if (path == null) {
+            return false;
+        }
+        int count = 0;
+        for (Military military : militaries) {
+            if (!military.getName().equals("engineer")) {
+                continue;
+            }
+            Move move = new Move(military.getX(), military.getY(), tool, false, military);
+            move.setPath(path);
+            move.setShouldConnectToTool(true);
+            military.setMove(move);
+            count++;
+        }
+        return count != 0;
+    }
     public static boolean airAttack(int x, int y, List<Military> enemies) {
 
         int countOfTroop = 0;
