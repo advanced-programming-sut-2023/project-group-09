@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="add main castles to map.&#10;select building done.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="try to merge." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,17 +43,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Sharif/Term2/AP/Project/Project-Phase-1",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Sharif/Term2/AP/Project/Project-Phase-1&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="model" />
@@ -185,6 +183,7 @@
       <workItem from="1683283725160" duration="942000" />
       <workItem from="1683310709942" duration="11889000" />
       <workItem from="1683367003368" duration="2823000" />
+      <workItem from="1683370107762" duration="413000" />
     </task>
     <task id="LOCAL-00001" summary="...">
       <created>1681925358549</created>
@@ -452,7 +451,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683369842377</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="try to merge.">
+      <created>1683370139591</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1683370139591</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -482,7 +488,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Walls, Draw bridge and gatehouses are added." />
     <MESSAGE value="Towers added." />
     <MESSAGE value="castle buildings changed." />
     <MESSAGE value="castle buildings final change." />
@@ -507,7 +512,8 @@
     <MESSAGE value="Next turn second try" />
     <MESSAGE value="stay logged in - bug resolved" />
     <MESSAGE value="add main castles to map.&#10;select building done." />
-    <option name="LAST_COMMIT_MESSAGE" value="add main castles to map.&#10;select building done." />
+    <MESSAGE value="try to merge." />
+    <option name="LAST_COMMIT_MESSAGE" value="try to merge." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
