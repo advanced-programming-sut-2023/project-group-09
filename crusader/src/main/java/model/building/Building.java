@@ -294,6 +294,10 @@ public class Building implements Cloneable {
         return counterOfWorkers;
     }
 
+    public boolean isDestroyed() {
+        return this.hp <= 0;
+    }
+
 
     public void routinWork() {
 

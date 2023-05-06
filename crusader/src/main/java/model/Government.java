@@ -1,8 +1,11 @@
 package model;
 
+import controller.MapController;
 import controller.gamestructure.GameGoods;
 import enumeration.dictionary.Colors;
+import model.building.Building;
 import model.building.castlebuildings.MainCastle;
+import model.building.producerbuildings.ProducerBuilding;
 import model.buildinghandler.BuildingCounter;
 import model.buildinghandler.Storage;
 import model.human.Human;
@@ -13,6 +16,7 @@ import model.tools.Tool;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 public class Government {
@@ -299,11 +303,33 @@ public class Government {
     }
 
     public void updateAllBuildings() {
-        // TODO: using Mitra's method
+        for (String name : this.buildings.keySet()) {
+            BuildingCounter bc = buildings.get(name);
+            Iterator itr = bc.getBuildings().iterator();
+            while (itr.hasNext()) {
+                Building building = (Building) itr.next();
+                if (building.isDestroyed()) {
+                    MapController.deleteBuilding(building);
+                }
+            }
+        }
     }
 
     public void updateAllHumans() {
-        // TODO: using Mitra's method
+        Iterator itr = this.society.iterator();
+        while (itr.hasNext()) {
+            Human human = (Human)itr.next();
+            if (human.getHealth() <= 0) {
+                MapController.deleteHuman(human.getX() , human.getY(), (Civilian) human);
+            }
+        }
+        itr = this.troops.iterator();
+        while (itr.hasNext()) {
+            Military military = (Military) itr.next();
+            if (military.getHealth() <= 0) {
+                MapController.deleteMilitary(military.getX() , military.getY() , military);
+            }
+        }
     }
 
     public void updateAfterTurn() {
@@ -311,7 +337,11 @@ public class Government {
         this.updateAllHumans();
         this.mainCastle.taxDistribution();
         this.updateCowAndHorseNumber();
+        this.producerBuildingsAction();
         this.outOfStockNotification();
+        this.updateAllBuildings();
+        this.updateAllHumans();
+        this.workersNeededNotification();
     }
 
     public void updateCowAndHorseNumber() {
@@ -324,7 +354,28 @@ public class Government {
     public void outOfStockNotification() {
         for (String name : storages.keySet()) {
             if (storages.get(name).isFull()) {
-                System.out.println("Storage " + name + " is full!");
+                System.out.println("Lord " + this.getUser().getNickname() + " : Storage " + name + " is full!");
+            }
+        }
+    }
+
+    public void workersNeededNotification() {
+        int workersNeeded = 0;
+        for (String name : buildings.keySet()) {
+            for (Building building : buildings.get(name).getBuildings()) {
+                workersNeeded += building.getNumberOfRequiredWorkers() - building.howManyWorkersHave();
+            }
+        }
+        System.out.println("Lord " + this.getUser().getNickname() + " : " + workersNeeded + " workers we need!");
+    }
+
+    public void producerBuildingsAction() {
+        for (String name : this.buildings.keySet()) {
+            for (Building building : this.buildings.get(name).getBuildings()) {
+                if (!(building instanceof ProducerBuilding)) {
+                    break;
+                }
+                ((ProducerBuilding) building).doAction();
             }
         }
     }
