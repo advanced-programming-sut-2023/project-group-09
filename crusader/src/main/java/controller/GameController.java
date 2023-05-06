@@ -212,12 +212,13 @@ public class GameController {
             Government nowGovernment = game.getGovernments().get(0);
             result += "now Lord " + nowGovernment.getUser().getNickname() + " is playing\n";
             result += "new Turn started!\n";
+            for (Government government : game.getGovernments()) {
+                government.updateAfterTurn();
+            }
             // TODO : next turn rules
             /*
-            attacking and defending damages to Buildings and Humans
-            killing militaries and humans
-            routine work of buildings (such as producing some thing)
-            message of no enough workers remained
+                attacking and defending damages to Buildings and Humans
+                routine work of buildings (such as producing some thing)
              */
             game.setCurrentGovernment(nowGovernment);
             return result;
@@ -415,7 +416,7 @@ public class GameController {
 
     public static void workerDistribution(Building building) {
         Government government = building.getGovernment();
-        int numberOfRequiredWorkers = building.getNumberOfRequiredWorkers();
+        int numberOfRequiredWorkers = building.getNumberOfRequiredWorkers()-building.;
         for (Human human : government.getSociety()) {
             if (human instanceof Civilian) {
                 if (!((Civilian)human).isHasJob()) {
