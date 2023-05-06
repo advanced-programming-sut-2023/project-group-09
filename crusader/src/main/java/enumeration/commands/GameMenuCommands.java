@@ -5,8 +5,8 @@ import java.util.regex.Pattern;
 
 public enum GameMenuCommands {
 
-    DROP_BUILDING("dropbuilding(?<items>.+)"),
-    SELECT_BUILDING("select building(?<items>).+"),
+    DROP_BUILDING("drop building(?<items>.+)"),
+    SELECT_BUILDING("select building(?<items>.+)"),
     SELECT_UNIT("select unit(?<items>.+)"),
     GOVERNMENT_MENU("government menu"),
     TRADE_MENU("trade menu"),

@@ -57,6 +57,7 @@ public class GameMenu {
                     int x = ViewController.getNumberOfRegex("x");
                     int y = ViewController.getNumberOfRegex("y");
                     output = GameController.selectBuilding(x, y);
+                    BuildingMenu.run(scanner);
                     System.out.println(output);
                 }
 
@@ -107,6 +108,8 @@ public class GameMenu {
                 break;
             } else if (exitMatcher.matches()) {
                 MainController.exitCrusader();
+            } else if (input.equals("market menu")) {
+                MarketMenu.run(scanner);
             } else {
                 System.out.println(Answers.INVALID_COMMAND.getValue());
             }

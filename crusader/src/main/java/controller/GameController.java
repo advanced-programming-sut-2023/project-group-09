@@ -16,12 +16,22 @@ import model.human.Human;
 import model.human.civilian.Civilian;
 import model.human.military.Military;
 import model.tools.Tool;
+import view.BuildingMenu;
 import view.UnitMenu;
 
 import java.util.*;
 
 public class GameController {
     private static Game game;
+    private static boolean isBuildingSelected = false;
+
+    public static boolean isIsBuildingSelected() {
+        return isBuildingSelected;
+    }
+
+    public static void setIsBuildingSelected(boolean isBuildingSelected) {
+        GameController.isBuildingSelected = isBuildingSelected;
+    }
 
     public static Game getGame() {
         return game;
@@ -273,7 +283,14 @@ public class GameController {
     }
 
     public static String selectBuilding(int x, int y) {
-        return "";
+        Government nowGovernment = game.getCurrentGovernment();
+        Building building = game.getMap().getTile(x,y).getBuilding();
+        if (building == null || !building.getGovernment().equals(nowGovernment)) {
+            return "There is no building of your government here!";
+        }
+        GameController.setIsBuildingSelected(true);
+        BuildingController.setBuilding(building);
+        return "Building " + building.getName() + " Selected!";
     }
 
 
