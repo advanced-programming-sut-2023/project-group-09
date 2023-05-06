@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 public class Goods {
     private String name;
-
     private final String nameOfStorage;
     private final String type;
     private final HashMap<String, Integer> required = new HashMap<>();

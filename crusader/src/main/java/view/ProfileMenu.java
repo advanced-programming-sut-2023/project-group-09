@@ -1,5 +1,6 @@
 package view;
 
+import controller.DBController;
 import controller.UserController;
 import controller.ViewController;
 import enumeration.answers.Answers;
@@ -113,6 +114,8 @@ public class ProfileMenu {
             } else {
                 System.out.println(Answers.INVALID_COMMAND.getValue());
             }
+            DBController.saveAllUsers();
+            DBController.saveCurrentUser();
         }
     }
 

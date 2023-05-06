@@ -108,6 +108,8 @@ public class GameMenu {
                 break;
             } else if (exitMatcher.matches()) {
                 MainController.exitCrusader();
+            } else if (input.equals("market menu")) {
+                MarketMenu.run(scanner);
             } else {
                 System.out.println(Answers.INVALID_COMMAND.getValue());
             }
