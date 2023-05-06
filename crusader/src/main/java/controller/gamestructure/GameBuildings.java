@@ -12,6 +12,7 @@ import model.building.producerbuildings.ProducerBuilding;
 import model.building.producerbuildings.Quarry;
 import model.building.producerbuildings.WeaponProducer;
 import model.building.storagebuildings.StorageBuilding;
+import model.buildinghandler.BuildingCounter;
 
 import java.util.HashMap;
 
@@ -22,21 +23,26 @@ public class GameBuildings {
     public static HashMap<String, Building> castleBuildings = new HashMap<>();
 
     public static Building getBuilding(String name, Government government,int x,int y){
-        try {
-            Building building = buildings.get(name).clone();
-            building.setGovernment(government);
-            building.setStartX(x);
-            building.setStartY(y);
-            building.setNeighborTiles();
-            return building;
-        }catch (CloneNotSupportedException e){
-            return null;
-        }
+        Building building = getClone(buildings.get(name));
+        building.setGovernment(government);
+        building.setStartX(x);
+        building.setStartY(y);
+        building.setNeighborTiles();
+        return building;
     }
 
     public static Building getBuilding(String name){
         return buildings.get(name);
     }
+
+    public static HashMap<String, BuildingCounter> getGovernmentBuildingHashMap(){
+        HashMap<String, BuildingCounter> result = new HashMap<>();
+        for (String key : buildings.keySet()){
+            result.put(key,new BuildingCounter());
+        }
+        return result;
+    }
+
     public static void addBuildings() {
         createShop();
         createHovel();
@@ -568,5 +574,36 @@ public class GameBuildings {
 
     public static void createOxTether(){
 
+    }
+
+    public static Building getClone(Building building){
+        if (building instanceof MainCastle){
+            return new MainCastle((MainCastle) building);
+        }
+        if(building instanceof Wall){
+            return new Wall((Wall) building);
+        }
+        if(building instanceof Tower){
+            return new Tower((Tower) building);
+        }
+        if(building instanceof Gatehouse){
+            return new Gatehouse((Gatehouse) building);
+        }
+        if(building instanceof WeaponProducer){
+            return new WeaponProducer((WeaponProducer) building);
+        }
+        if(building instanceof Quarry){
+            return new Quarry();
+        }
+        if(building instanceof ProducerBuilding){
+            return new ProducerBuilding((ProducerBuilding) building);
+        }
+        if(building instanceof StorageBuilding){
+            return new StorageBuilding((StorageBuilding) building);
+        }
+        if(building != null){
+            return new Building(building);
+        }
+        return null;
     }
 }

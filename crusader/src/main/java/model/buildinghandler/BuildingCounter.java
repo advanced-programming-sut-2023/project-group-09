@@ -6,8 +6,8 @@ import javax.swing.plaf.basic.BasicOptionPaneUI;
 import java.util.ArrayList;
 
 public class BuildingCounter {
-    private int number;
-    private ArrayList<Building> buildings;
+    private int number = 0;
+    private ArrayList<Building> buildings = new ArrayList<>();
 
     public int getNumber() {
         return number;

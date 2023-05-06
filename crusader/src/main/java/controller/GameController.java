@@ -154,7 +154,7 @@ public class GameController {
         if (message != null) {
             return message;
         }
-        Building building = game.getMap().getTile(x, y).getBuilding();
+        Building building = game.getMap().getTile(x-1, y-1).getBuilding();
         if (building == null) {
             return "no building in this place!";
         }

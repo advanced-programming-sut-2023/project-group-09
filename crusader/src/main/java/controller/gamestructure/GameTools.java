@@ -75,4 +75,11 @@ public class GameTools {
         tools.put("fireBallista",fireBallista);
         fireBallista.setName("fireBallista");
     }
+
+    public static Tool getClone(Tool tool){
+        if(tool != null){
+            return new Tool(tool);
+        }
+        return null;
+    }
 }

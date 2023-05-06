@@ -50,7 +50,12 @@ public class Gatehouse extends CastleBuilding {
         super(numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, width, length);
         this.capacity = capacity;
     }
-
+    public Gatehouse(Gatehouse gatehouse) {
+        super(gatehouse.getNumberOfRequiredWorkers(), gatehouse.getNumberOfRequiredEngineers(), gatehouse.getName(),
+                gatehouse.getMaxHp(), gatehouse.getWidth(), gatehouse.getLength());
+        this.capacity = gatehouse.getCapacity();
+        super.setCost(gatehouse.getCost());
+    }
 
     public int getCapacity() {
         return capacity;

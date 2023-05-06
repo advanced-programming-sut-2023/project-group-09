@@ -6,7 +6,7 @@ import enumeration.Textures;
 import model.Government;
 import model.Permission;
 import model.game.Map;
-import model.game.Tile;
+import model.game.Tuple;
 import model.human.Human;
 import model.human.civilian.Civilian;
 
@@ -32,7 +32,7 @@ public class Building implements Cloneable {
 
     private String name;
 
-    ArrayList<Tile> neighborTiles = new ArrayList<>();
+    private ArrayList<Tuple> neighborTiles = new ArrayList<>();
 
 
     private int maxHp;
@@ -70,6 +70,16 @@ public class Building implements Cloneable {
         this.hp = maxHp;
         this.width = width;
         this.length = length;
+    }
+
+    public Building(Building building) {
+        this.numberOfRequiredWorkers = building.numberOfRequiredWorkers;
+        this.numberOfRequiredEngineers = building.numberOfRequiredEngineers;
+        this.name = building.name;
+        this.maxHp = building.maxHp;
+        this.hp = maxHp;
+        this.width = building.width;
+        this.length = building.length;
     }
 
     public void setGovernment(Government government) {
@@ -223,11 +233,12 @@ public class Building implements Cloneable {
     public void setPrice(int price) {
         this.price = price;
     }
+
     public boolean isShouldBeOne() {
         return shouldBeOne;
     }
 
-    public ArrayList<Tile> getNeighborTiles() {
+    public ArrayList<Tuple> getNeighborTiles() {
         return neighborTiles;
     }
 
@@ -235,50 +246,46 @@ public class Building implements Cloneable {
 
         int endX = startX + width;
         int endY = startY + length;
-        if(buildingImpassableLength != -1){
+        if (buildingImpassableLength != -1) {
             endX = startX + buildingImpassableLength;
             endY = startY + buildingImpassableLength;
         }
         Map map = GameController.getGame().getMap();
 
         if (startY != 0) {
-            for (int j = startX; j <= endX; j++) {
-                Tile tile = map.getTile(j, startY - 1);
-                neighborTiles.add(tile);
+            for (int j = startX; j < endX; j++) {
+                Tuple tuple = new Tuple(startY - 1, j);
+                neighborTiles.add(tuple);
             }
         }
 
         if (startX != 0) {
-            for (int i = startY; i <= endY; i++) {
-                Tile tile = map.getTile(startX - 1, i);
-                neighborTiles.add(tile);
+            for (int i = startY; i < endY; i++) {
+                Tuple tuple = new Tuple(i, startX - 1);
+                neighborTiles.add(tuple);
             }
         }
 
 
         if (endX != map.getWidth() - 1) {
-            for (int i = startY; i <= endY; i++) {
-                Tile tile = map.getTile(endX + 1, i);
-                neighborTiles.add(tile);
+            for (int i = startY; i < endY; i++) {
+                Tuple tuple = new Tuple(i, endX);
+                neighborTiles.add(tuple);
             }
         }
 
         if (endY != map.getLength() - 1) {
-            for (int j = startX; j <= endX; j++) {
-                Tile tile = map.getTile(j, endY + 1);
-                neighborTiles.add(tile);
+            for (int j = startX; j < endX; j++) {
+                Tuple tuple = new Tuple(endY, j);
+                neighborTiles.add(tuple);
             }
         }
     }
 
-    public int takeDamage(int damage){
+    public int takeDamage(int damage) {
         int newHp = this.getHp() - damage;
         this.setHp(newHp);
         return newHp;
-    }
-    @Override
-    public Building clone() throws CloneNotSupportedException {
-        return (Building) super.clone();
     }
 
     public void addHuman(Human human) {

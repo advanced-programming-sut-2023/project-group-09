@@ -9,6 +9,7 @@ import enumeration.MoveStates;
 import model.building.Building;
 import model.game.Map;
 import model.game.Tile;
+import model.game.Tuple;
 import model.human.military.Military;
 import model.tools.Tool;
 
@@ -241,13 +242,14 @@ public class Attack {
         if (military.canAirAttack()) {
             return isInRange(building.getStartX(), building.getStartY(), military.getShootingRange());
         }
-        Tile tile = GameController.getGame().getMap().getTile(military.getX(), military.getY());
-        return building.getNeighborTiles().contains(tile);
+        Tuple tuple = new Tuple( military.getY(),military.getX());
+        return building.getNeighborTiles().contains(tuple);
     }
 
     public void attackToBuilding() {
         if (military.getName().equals("ladderman")) {
             military.setUsesLadder(true);
+            return;
         }
         int hp = targetBuilding.takeDamage(military.getAttackRating());
         if (hp < 0) {
