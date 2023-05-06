@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="stay logged in - bug resolved">
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="add main castles to map.&#10;select building done.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -184,7 +184,7 @@
       <workItem from="1682945242476" duration="1674000" />
       <workItem from="1683283725160" duration="942000" />
       <workItem from="1683310709942" duration="11889000" />
-      <workItem from="1683367003368" duration="1664000" />
+      <workItem from="1683367003368" duration="2823000" />
     </task>
     <task id="LOCAL-00001" summary="...">
       <created>1681925358549</created>
@@ -445,7 +445,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683367890510</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="add main castles to map.&#10;select building done.">
+      <created>1683369842377</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1683369842377</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -475,7 +482,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Main castle added." />
     <MESSAGE value="Walls, Draw bridge and gatehouses are added." />
     <MESSAGE value="Towers added." />
     <MESSAGE value="castle buildings changed." />
@@ -500,7 +506,8 @@
     <MESSAGE value="Next turn first try.&#10;Worker distribution" />
     <MESSAGE value="Next turn second try" />
     <MESSAGE value="stay logged in - bug resolved" />
-    <option name="LAST_COMMIT_MESSAGE" value="stay logged in - bug resolved" />
+    <MESSAGE value="add main castles to map.&#10;select building done." />
+    <option name="LAST_COMMIT_MESSAGE" value="add main castles to map.&#10;select building done." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
