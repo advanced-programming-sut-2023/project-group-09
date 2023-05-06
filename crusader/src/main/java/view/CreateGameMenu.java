@@ -179,6 +179,7 @@ public class CreateGameMenu {
             int y = castles.get(castleNumber - 1).getSecond();
             Government government = new Government(lord, x, y, colors.get(colorNumber - 1));
             game.addGovernment(government);
+            MapController.dropBuilding(x , y , "mainCastle" , government);
             castles.remove(castleNumber - 1);
             colors.remove(colorNumber - 1);
             EditMapMenu.currentGovernment = government;

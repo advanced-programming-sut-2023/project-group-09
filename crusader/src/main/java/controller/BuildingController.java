@@ -30,7 +30,7 @@ public class BuildingController {
         return building;
     }
 
-    private static void setBuilding(Building b) {
+    public static void setBuilding(Building b) {
         building = b;
     }
 
