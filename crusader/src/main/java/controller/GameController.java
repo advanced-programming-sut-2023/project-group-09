@@ -487,7 +487,7 @@ public class GameController {
 
     public static void workerDistribution(Building building) {
         Government government = building.getGovernment();
-        int numberOfRequiredWorkers = building.getNumberOfRequiredWorkers()-building.;
+        int numberOfRequiredWorkers = building.getNumberOfRequiredWorkers()-building.howManyWorkersHave();
         for (Human human : government.getSociety()) {
             if (human instanceof Civilian) {
                 if (!((Civilian)human).isHasJob()) {
