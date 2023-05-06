@@ -207,14 +207,18 @@ public class Attack {
                 attackToTool();
             } else {
                 HumanController.attack(tool);
+                tool = null;
                 enemy = null;
             }
         }
-        if (military.canAirAttack()) {
-            attackEnemy();
-        } else {
-            HumanController.attack(enemy);
-            enemy = null;
+        if(enemy != null){
+            if (military.canAirAttack()) {
+                attackEnemy();
+            } else {
+                HumanController.attack(enemy);
+                enemy = null;
+                tool = null;
+            }
         }
     }
 
@@ -276,12 +280,11 @@ public class Attack {
             return;
         }
 
-        //
 
         //building attack
         if (targetBuilding != null && buildingIsInRange(targetBuilding)) {
             if (move != null && move.isMoving()) {
-                move.setAttacking(true);
+                move.stopMove();
             }
             attackToBuilding();
             return;
@@ -292,10 +295,11 @@ public class Attack {
             if (move != null && move.isMoving()) {
                 move.setAttacking(true);
             }
-            attackToBuilding();
+            attackToTool();
             return;
         }
 
+        tool = null;
         //continue moving if you don't need to defend yourself
         if (move != null && !move.getMoveState().equals(MoveStates.STOP.getState())) {
             if (move.isAttacking()) {
