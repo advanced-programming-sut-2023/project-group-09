@@ -26,6 +26,9 @@ public class CreateGameMenu {
 
     public static void run(Scanner scanner) {
         System.out.println("<< Create Game Menu >>");
+        colors.clear();
+        castles.clear();
+        users.clear();
 
         while (true) {
             System.out.println("choose map size:\n1.200 x 200\n2.400 x 400\n3.exit");
@@ -178,6 +181,7 @@ public class CreateGameMenu {
             int x = castles.get(castleNumber - 1).getFirst();
             int y = castles.get(castleNumber - 1).getSecond();
             Government government = new Government(lord, x, y, colors.get(colorNumber - 1));
+//            government.addAmountToProperties();
             game.addGovernment(government);
             MapController.dropBuilding(x , y , "mainCastle" , government);
             castles.remove(castleNumber - 1);
