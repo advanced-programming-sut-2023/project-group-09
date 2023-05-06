@@ -334,13 +334,11 @@ public class Government {
 
     public void updateAfterTurn() {
         this.updateAllHumans();
-        this.updateAllHumans();
+        this.updateAllBuildings();
         this.mainCastle.taxDistribution();
         this.updateCowAndHorseNumber();
         this.producerBuildingsAction();
         this.outOfStockNotification();
-        this.updateAllBuildings();
-        this.updateAllHumans();
         this.workersNeededNotification();
     }
 
