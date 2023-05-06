@@ -9,15 +9,14 @@ import java.util.HashMap;
 public class MarketController {
     public static String showPriceList() {
         HashMap<String, Goods> goodsHashMap = GameGoods.goods;
-        StringBuilder output = new StringBuilder();
+        String output = "";
         Government government = GameController.getGame().getCurrentGovernment();
         for (String key : goodsHashMap.keySet().stream().sorted().toList()) {
             Goods product = goodsHashMap.get(key);
-            output.append(key).append(" type: ").append(product.getType()).append(" sell price: ").append(product.getPrice());
-            output.append(" buy price: ").append((int)Math.ceil(product.getPrice() * 0.5));
-            output.append(" count: ").append(government.getPropertyAmount(key)).append("\n");
+            output += key + " ==> type: " + product.getType() + " | sell price: " + product.getPrice() + " | buy price: " +
+                    (int) Math.ceil(product.getPrice() * 0.5) + " | count: " + government.getPropertyAmount(key) + "\n";
         }
-        return output.toString();
+        return output.substring(0, output.length() - 1);
     }
 
     public static String buyItem(String name, int amount) {
@@ -28,14 +27,11 @@ public class MarketController {
         Goods product = GameGoods.getProduct(name);
         int cost = product.getPrice() * amount;
         Government government = GameController.getGame().getCurrentGovernment();
-        if (cost > government.getGold()) {
-            return "your money is not enough!";
-        }
+        if (cost > government.getGold()) return "you don't have enough gold!";
         int addedCount = GovernmentController.generateProduct(government, name, amount);
         government.addGold(-cost);
-        if (addedCount != amount) {
+        if (addedCount != amount)
             return "storage is full!\n" + addedCount + " " + name + " bought successfully!";
-        }
         return addedCount + " " + name + " bought successfully!";
     }
 
@@ -49,11 +45,11 @@ public class MarketController {
         Government government = GameController.getGame().getCurrentGovernment();
 
         boolean check = GovernmentController.consumeProduct(government, name, amount);
-        if(!check){
+        if (!check) {
             return "your resource is not enough";
         }
         government.addGold(cost);
-        return amount + " " + name + "sold successfully!";
+        return amount + " " + name + " sold successfully!";
     }
 
     private static String validateItems(String name, int amount) {
