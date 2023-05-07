@@ -1,12 +1,12 @@
 package enumeration;
 
 public enum DefenseRating {
-    EXTREMELY_LOW(1),
-    VERY_LOW(2),
-    LOW(3),
-    MEDIUM(4),
-    HIGH(5),
-    VERY_HIGH(6);
+    EXTREMELY_LOW(2),
+    VERY_LOW(3),
+    LOW(7),
+    MEDIUM(10),
+    HIGH(15),
+    VERY_HIGH(30);
     private final int rate;
 
     DefenseRating(int rate) {

@@ -146,8 +146,8 @@ public class Attack {
         ArrayList<Military> enemies = new ArrayList<>();
 
         if(militaries.size() != 0){
-            Military targetTroop = military.getMove().getEnemy();
-            if (targetTroop != null && militaries.contains(targetTroop)) {
+            if (military.getMove() != null && military.getMove().getEnemy()!= null && militaries.contains(military.getMove().getEnemy())) {
+                Military targetTroop = military.getMove().getEnemy();
                 this.enemy = militaries.get(militaries.indexOf(targetTroop));
                 return true;
             }
@@ -211,6 +211,7 @@ public class Attack {
                 tool = null;
                 enemy = null;
             }
+            return;
         }
         if(enemy != null){
             if (military.canAirAttack()) {
@@ -271,6 +272,10 @@ public class Attack {
 
     //this should use in nextTurn for each troop if troop has government so far
     public void doAttack() {
+
+        if(military.getName().equals("engineer")){
+            return;
+        }
 
         //if enemy is very near to military
         Move move = military.getMove();

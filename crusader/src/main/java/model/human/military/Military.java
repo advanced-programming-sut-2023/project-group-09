@@ -114,7 +114,7 @@ public abstract class Military extends Human implements Cloneable {
     }
 
     public boolean canAirAttack() {
-        if (armours.contains("bow") || armours.contains("crossBow")) {
+        if (weapon != null && (weapon.equals("bow") || weapon.equals("crossBow"))) {
             return true;
         }
         return false;
@@ -147,5 +147,6 @@ public abstract class Military extends Human implements Cloneable {
             attack = new Attack(this);
         }
         return attack;
+        //return null;
     }
 }

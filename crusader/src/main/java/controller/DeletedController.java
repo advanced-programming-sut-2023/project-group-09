@@ -44,6 +44,7 @@ public class DeletedController {
             File file = new File(Paths.ARABIAN_MERCENARY_PATH.getPath());
             FileWriter fileWriter = new FileWriter(file);
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            GameHumans.militaries.clear();
             GameHumans.addArabianMercenaries();
             String json = gson.toJson(GameHumans.militaries);
             fileWriter.write(json);

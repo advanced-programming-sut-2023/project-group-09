@@ -1,15 +1,8 @@
 package model.human;
 
 
-import controller.GameController;
-import java.lang.String;
-import javafx.util.Pair;
 import model.Government;
 import model.activity.Move;
-import model.game.Map;
-import model.game.Tile;
-
-import java.util.List;
 
 public abstract class Human implements Cloneable {
     public String getName() {
@@ -50,6 +43,7 @@ public abstract class Human implements Cloneable {
     }
 
     public Move getMove() {
+        //return null;
         return move;
     }
 
@@ -118,10 +112,4 @@ public abstract class Human implements Cloneable {
         this.defenseRating = defenseRating;
     }
 
-
-
-    @Override
-    public Human clone() throws CloneNotSupportedException {
-        return (Human) super.clone();
-    }
 }
