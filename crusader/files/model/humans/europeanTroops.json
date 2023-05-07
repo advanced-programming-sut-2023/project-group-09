@@ -1,6 +1,26 @@
 {
+  "ladderman": {
+    "attackRating": 0,
+    "militaryState": "standing",
+    "usesHorse": false,
+    "usesLadder": false,
+    "digsMoat": false,
+    "armours": [],
+    "price": 4,
+    "defenseRange": 0,
+    "aggressiveRange": 0,
+    "name": "ladderman",
+    "speed": 4,
+    "x": 0,
+    "y": 0,
+    "defenseRating": 2,
+    "health": 2,
+    "shootingRange": 1,
+    "isInvisible": false
+  },
   "crossbowman": {
     "attackRating": 3,
+    "militaryState": "standing",
     "usesHorse": false,
     "usesLadder": false,
     "digsMoat": false,
@@ -9,6 +29,8 @@
       "leatherArmour"
     ],
     "price": 20,
+    "defenseRange": 0,
+    "aggressiveRange": 0,
     "name": "crossbowman",
     "speed": 2,
     "x": 0,
@@ -20,12 +42,15 @@
   },
   "spearman": {
     "attackRating": 4,
+    "militaryState": "standing",
     "usesHorse": false,
     "usesLadder": true,
     "digsMoat": true,
     "weapon": "spear",
     "armours": [],
     "price": 8,
+    "defenseRange": 0,
+    "aggressiveRange": 0,
     "name": "spearman",
     "speed": 3,
     "x": 0,
@@ -37,12 +62,15 @@
   },
   "archer": {
     "attackRating": 3,
+    "militaryState": "standing",
     "usesHorse": false,
     "usesLadder": true,
     "digsMoat": true,
     "weapon": "bow",
     "armours": [],
     "price": 12,
+    "defenseRange": 0,
+    "aggressiveRange": 0,
     "name": "archer",
     "speed": 4,
     "x": 0,
@@ -54,6 +82,7 @@
   },
   "swordsman": {
     "attackRating": 6,
+    "militaryState": "standing",
     "usesHorse": false,
     "usesLadder": false,
     "digsMoat": false,
@@ -62,6 +91,8 @@
       "metalArmour"
     ],
     "price": 40,
+    "defenseRange": 0,
+    "aggressiveRange": 0,
     "name": "swordsman",
     "speed": 1,
     "x": 0,
@@ -73,6 +104,7 @@
   },
   "knight": {
     "attackRating": 6,
+    "militaryState": "standing",
     "usesHorse": false,
     "usesLadder": false,
     "digsMoat": false,
@@ -81,6 +113,8 @@
       "metalArmour"
     ],
     "price": 40,
+    "defenseRange": 0,
+    "aggressiveRange": 0,
     "name": "knight",
     "speed": 5,
     "x": 0,
@@ -92,6 +126,7 @@
   },
   "maceman": {
     "attackRating": 5,
+    "militaryState": "standing",
     "usesHorse": false,
     "usesLadder": false,
     "digsMoat": true,
@@ -100,6 +135,8 @@
       "leatherArmour"
     ],
     "price": 20,
+    "defenseRange": 0,
+    "aggressiveRange": 0,
     "name": "maceman",
     "speed": 3,
     "x": 0,
@@ -111,6 +148,7 @@
   },
   "pikeman": {
     "attackRating": 4,
+    "militaryState": "standing",
     "usesHorse": false,
     "usesLadder": false,
     "digsMoat": true,
@@ -119,6 +157,8 @@
       "metalArmour"
     ],
     "price": 20,
+    "defenseRange": 0,
+    "aggressiveRange": 0,
     "name": "pikeman",
     "speed": 2,
     "x": 0,

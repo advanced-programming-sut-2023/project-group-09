@@ -85,10 +85,9 @@ public class CreateGameMenu {
             if (mapChosen) {
                 map = maps.get(mapNumber - 1);
                 break;
-            } else continue;
+            }
         }
         MapController.map = map;
-
         EditMapEnvironmentMenu.run(scanner);
         Game game = new Game(map);
         GameController.setGame(game);

@@ -8,6 +8,7 @@ import model.building.Building;
 import model.human.Human;
 import model.human.military.ArabianMercenary;
 import model.human.military.EuropeanTroop;
+import model.human.military.Lord;
 import model.human.military.Military;
 
 import java.util.ArrayList;
@@ -22,15 +23,11 @@ public class GameHumans {
     }
 
     public static Military getUnit(String name, Government government, int x, int y) {
-        try {
-            Military military= militaries.get(name).clone();
-            military.setGovernment(government);
-            military.setX(x);
-            military.setY(y);
-            return military;
-        } catch (CloneNotSupportedException e) {
-            return null;
-        }
+        Military military= getClone(militaries.get(name));
+        military.setGovernment(government);
+        military.setX(x);
+        military.setY(y);
+        return military;
     }
 
     public static Military getUnit(String name) {
@@ -44,6 +41,7 @@ public class GameHumans {
         createMaceman();
         createSwordsman();
         createKnight();
+        createLadderman();
     }
 
     public static void addArabianMercenaries() {
@@ -114,7 +112,6 @@ public class GameHumans {
         maceman.setName("maceman");
         maceman.setWeapon("mace");
         maceman.addArmour("leatherArmour");
-        maceman.enableDigsMoat();
         maceman.enableDigsMoat();
         militaries.put("maceman",maceman);
     }
@@ -245,5 +242,19 @@ public class GameHumans {
         ArabianMercenary fireThrower = new ArabianMercenary(speed, defenseRating, 5, attackRating, 100);
         fireThrower.setName("fireThrower");
         militaries.put("fireThrower",fireThrower);
+    }
+
+
+    public static Military getClone(Military military){
+        if(military instanceof  EuropeanTroop){
+            return new EuropeanTroop((EuropeanTroop) military);
+        }
+        if(military instanceof  ArabianMercenary){
+            return new ArabianMercenary((ArabianMercenary) military);
+        }
+        if(military instanceof Lord){
+            return new Lord((Lord) military);
+        }
+        return null;
     }
 }

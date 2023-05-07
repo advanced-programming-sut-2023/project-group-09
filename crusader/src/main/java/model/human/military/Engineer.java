@@ -7,8 +7,20 @@ public class Engineer extends EuropeanTroop {
 
     public Engineer(int speed, int defenseRating, int shootingRange, int attackRating, int price) {
         super(speed, defenseRating, shootingRange, attackRating, price);
-    }
 
+    }
+    public Engineer(Engineer engineer) {
+        super(engineer.getSpeed(), engineer.getDefenseRating(),
+                engineer.getShootingRange(), engineer.getAttackRating(), engineer.getPrice());
+        super.setArmours(engineer.getArmours());
+        super.setName(engineer.getName());
+        super.setWeapon(engineer.getWeapon());
+        super.setMilitaryState(engineer.getMilitaryState());
+        super.setDefenseRange(engineer.getDefenseRange());
+        super.setAggressiveRange(engineer.getAggressiveRange());
+        super.setUsesLadder(engineer.isUsesLadder());
+        super.setDigsMoat(engineer.isDigsMoat());
+    }
     public Tool getTarget() {
         return target;
     }

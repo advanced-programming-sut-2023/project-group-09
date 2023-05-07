@@ -1,7 +1,6 @@
 package controller.human;
 
 import controller.GameController;
-import controller.MapController;
 import model.Government;
 import model.building.Building;
 import model.building.castlebuildings.Gatehouse;
@@ -23,22 +22,18 @@ public class MoveController extends HumanController {
     public static boolean[][] checkArray;
 
     public static LinkedList<Tuple> getPath(Tuple startPair, Tuple endPair, Human human) {
-        Map map = GameController.getGame().getMap();
-        int[][] wave = new int[map.getWidth()][map.getWidth()];
-        checkArray = new boolean[map.getWidth()][map.getWidth()];
-
         ArrayList<Tuple> firstPairs = new ArrayList<>();
         ArrayList<Tuple> secondPairs;
 
+        Map map = GameController.getGame().getMap();
+        Tuple[][] wave = new Tuple[map.getWidth()][map.getWidth()];
+        checkArray = new boolean[map.getWidth()][map.getWidth()];
 
-        int depth = 2;
         int y = startPair.getY();
         int x = startPair.getX();
-        wave[y][x] = 1;
         checkArray[y][x] = true;
         startPair.setOverhead(checkIsPathOverhead(x, y, human, startPair));
         firstPairs.add(startPair);
-
 
         boolean receiveEnd = false;
         while (firstPairs.size() != 0 && !receiveEnd) {
@@ -46,39 +41,49 @@ public class MoveController extends HumanController {
             firstPairs = new ArrayList<>();
 
             for (Tuple pair : secondPairs) {
-                y = pair.getY();
+
                 x = pair.getX();
+                y = pair.getY();
                 if (checkArray[y][x]) {
                     continue;
                 }
 
                 pair.setOverhead(checkIsPathOverhead(x, y, human, pair));
-                wave[y][x] = depth;
+                wave[y][x] = pair.getParentPair();
                 checkArray[y][x] = true;
                 firstPairs.add(pair);
                 if (y == endPair.getY() && x == endPair.getX()) {
                     receiveEnd = true;
                 }
             }
-            depth++;
         }
+//        for (int i = 0; i < 10 ; i++){
+//            for (int j = 0; j < 10; j++){
+//                if(wave[i][j] == null){
+//                    System.out.print("null      ");
+//                    continue;
+//                }
+//                System.out.format("(%3d,%3d) ",wave[i][j].getX(),wave[i][j].getY());
+//            }
+//            System.out.println();
+//        }
+//        System.out.println();
+
+
         return makePath(wave, startPair, endPair);
     }
 
     public static LinkedList<Tuple> getPathForBuilding(Tuple startPair, Building building, Human human) {
 
-        Map map = GameController.getGame().getMap();
-        int[][] wave = new int[map.getWidth()][map.getWidth()];
-        checkArray = new boolean[map.getWidth()][map.getWidth()];
         Tuple endPair = null;
-
+        Map map = GameController.getGame().getMap();
+        Tuple[][] wave = new Tuple[map.getWidth()][map.getWidth()];
+        checkArray = new boolean[map.getWidth()][map.getWidth()];
         ArrayList<Tuple> secondPairs;
         ArrayList<Tuple> firstPairs = new ArrayList<>();
 
-        int depth = 2;
         int y = startPair.getY();
         int x = startPair.getX();
-        wave[y][x] = 1;
         checkArray[y][x] = true;
         startPair.setOverhead(checkIsPathOverhead(x, y, human, startPair));
         firstPairs.add(startPair);
@@ -97,16 +102,14 @@ public class MoveController extends HumanController {
                 }
 
                 pair.setOverhead(checkIsPathOverhead(x, y, human, pair));
-                wave[y][x] = depth;
+                wave[y][x] = pair.getParentPair();
                 checkArray[y][x] = true;
                 firstPairs.add(pair);
-                Tile tile = map.getTile(x, y);
-                if (building.getNeighborTiles().contains(tile)) {
+                if (building.getNeighborTiles().contains(pair)) {
                     endPair = pair;
                     receiveEnd = true;
                 }
             }
-            depth++;
         }
         if (endPair == null) {
             return null;
@@ -115,15 +118,17 @@ public class MoveController extends HumanController {
     }
 
     //detect path from wave array
-    public static LinkedList<Tuple> makePath(int[][] wave, Tuple start, Tuple end) {
+    public static LinkedList<Tuple> makePath(Tuple[][] wave, Tuple start, Tuple end) {
         LinkedList<Tuple> result = new LinkedList<>();
-        Tuple nextPair = new Tuple(end.getY(), end.getX());
+        Tuple nextPair = end;
+
         result.add(nextPair);
-        while (!Objects.equals(nextPair.getX(), start.getX()) || !Objects.equals(nextPair.getY(), start.getY())) {
-            nextPair = findNextNode(nextPair, wave, end);
+        while (!nextPair.equals(start)) {
+            nextPair = findNextNode(nextPair, wave);
             if (nextPair == null) {
                 return null;
             }
+
             result.addFirst(nextPair);
         }
         for (Tuple pair : result) {
@@ -139,87 +144,14 @@ public class MoveController extends HumanController {
     }
 
     //this used in makePath and detect next node
-    public static Tuple findNextNode(Tuple nextPair, int[][] wave, Tuple end) {
+    public static Tuple findNextNode(Tuple nextPair, Tuple[][] wave) {
         int x = nextPair.getX();
         int y = nextPair.getY();
-
-        int minDepth = 10000;
-        double minDistance = 10000;
-        if (wave[y][x] == 0) {
+        if (wave[y][x] == null) {
             return null;
         }
-        if (y != 0) {
-            double distance = getDistance(end.getX(), end.getY(), x, y - 1);
-            if (wave[y - 1][x] > 0 && (wave[y - 1][x] < minDepth || (wave[y - 1][x] == minDepth && distance < minDistance))) {
-                nextPair = new Tuple(y - 1, x);
-                minDepth = wave[y - 1][x];
-                minDistance = distance;
-            }
-        }
 
-        if (x != 0) {
-            double distance = getDistance(end.getX(), end.getY(), x - 1, y);
-            if (wave[y][x - 1] > 0 && (wave[y][x - 1] < minDepth || (wave[y][x - 1] == minDepth && distance < minDistance))) {
-                nextPair = new Tuple(y, x - 1);
-                minDepth = wave[y][x - 1];
-                minDistance = distance;
-            }
-        }
-        if (x != 0 && y != 0) {
-            double distance = getDistance(end.getX(), end.getY(), x - 1, y - 1);
-            if (wave[y - 1][x - 1] > 0 && (wave[y - 1][x - 1] < minDepth || (wave[y - 1][x - 1] == minDepth && distance < minDistance))) {
-                nextPair = new Tuple(y - 1, x - 1);
-                minDepth = wave[y - 1][x - 1];
-                minDistance = distance;
-            }
-        }
-        if (x != GameController.getGame().getMap().getWidth() - 1) {
-            double distance = getDistance(end.getX(), end.getY(), x + 1, y);
-            if (wave[y][x + 1] > 0 && (wave[y][x + 1] < minDepth || (wave[y][x + 1] == minDepth && distance < minDistance))) {
-                nextPair = new Tuple(y, x + 1);
-                minDepth = wave[y][x + 1];
-                minDistance = distance;
-            }
-        }
-        if (y != GameController.getGame().getMap().getWidth() - 1) {
-            double distance = getDistance(end.getX(), end.getY(), x, y + 1);
-            if (wave[y + 1][x] > 0 && (wave[y + 1][x] < minDepth || (wave[y + 1][x] == minDepth && distance < minDistance))) {
-                nextPair = new Tuple(y + 1, x);
-                minDepth = wave[y + 1][x];
-                minDistance = distance;
-            }
-        }
-        if (y != GameController.getGame().getMap().getWidth() - 1 && x != GameController.getGame().getMap().getWidth() - 1) {
-
-            double distance = getDistance(end.getX(), end.getY(), x + 1, y + 1);
-            if (wave[y + 1][x + 1] > 0 && (wave[y + 1][x + 1] < minDepth || (wave[y + 1][x + 1] == minDepth && distance < minDistance))) {
-                nextPair = new Tuple(y + 1, x + 1);
-                minDepth = wave[y + 1][x + 1];
-                minDistance = distance;
-
-            }
-        }
-        if (y != GameController.getGame().getMap().getWidth() - 1 && x != 0) {
-            double distance = getDistance(end.getX(), end.getY(), x - 1, y + 1);
-            if (wave[y + 1][x - 1] > 0 && (wave[y + 1][x - 1] < minDepth || (wave[y + 1][x - 1] == minDepth && distance < minDistance))) {
-                nextPair = new Tuple(y + 1, x - 1);
-                minDepth = wave[y + 1][x - 1];
-                minDistance = distance;
-            }
-        }
-        if (y != 0 && x != GameController.getGame().getMap().getWidth() - 1) {
-            double distance = getDistance(end.getX(), end.getY(), x + 1, y - 1);
-            if (wave[y - 1][x + 1] > 0 && (wave[y - 1][x + 1] < minDepth || (wave[y - 1][x + 1] == minDepth && distance < minDistance))) {
-                nextPair = new Tuple(y - 1, x + 1);
-                minDepth = wave[y - 1][x + 1];
-                minDistance = distance;
-            }
-        }
-
-        if (minDepth == 10000) {
-            return null;
-        }
-        return nextPair;
+        return wave[y][x];
     }
 
     //this used in getPath to make wave array
@@ -232,43 +164,43 @@ public class MoveController extends HumanController {
             boolean isOverHead = pair.isOverhead();
             if (y != 0) {
                 if (map.getTile(x, y - 1).isPassable(human, isOverHead) && !checkArray[y - 1][x]) {
-                    secondPairs.add(new Tuple(y - 1, x, isOverHead));
+                    secondPairs.add(new Tuple(y - 1, x, isOverHead,pair));
                 }
             }
 
             if (x != 0 && !checkArray[y][x - 1]) {
-                if (map.getTile(x - 1, y).isPassable(human, isOverHead)) {
-                    secondPairs.add(new Tuple(y, x - 1, isOverHead));
+                if (map.getTile(x - 1, y).isPassable(human, isOverHead) && !checkArray[y][x - 1]) {
+                    secondPairs.add(new Tuple(y, x - 1, isOverHead,pair));
                 }
             }
             if (x != 0 && y != 0) {
                 if (map.getTile(x - 1, y - 1).isPassable(human, isOverHead) && !checkArray[y - 1][x - 1]) {
-                    secondPairs.add(new Tuple(y - 1, x - 1, isOverHead));
+                    secondPairs.add(new Tuple(y - 1, x - 1, isOverHead,pair));
                 }
             }
             if (x != GameController.getGame().getMap().getWidth() - 1) {
                 if (map.getTile(x + 1, y).isPassable(human, isOverHead) && !checkArray[y][x + 1]) {
-                    secondPairs.add(new Tuple(y, x + 1, isOverHead));
+                    secondPairs.add(new Tuple(y, x + 1, isOverHead,pair));
                 }
             }
             if (y != GameController.getGame().getMap().getWidth() - 1) {
                 if (map.getTile(x, y + 1).isPassable(human, isOverHead) && !checkArray[y + 1][x]) {
-                    secondPairs.add(new Tuple(y + 1, x, isOverHead));
+                    secondPairs.add(new Tuple(y + 1, x, isOverHead,pair));
                 }
             }
             if (y != GameController.getGame().getMap().getWidth() - 1 && x != GameController.getGame().getMap().getWidth() - 1) {
                 if (map.getTile(x + 1, y + 1).isPassable(human, isOverHead) && !checkArray[y + 1][x + 1]) {
-                    secondPairs.add(new Tuple(y + 1, x + 1, isOverHead));
+                    secondPairs.add(new Tuple(y + 1, x + 1, isOverHead,pair));
                 }
             }
             if (y != GameController.getGame().getMap().getWidth() - 1 && x != 0) {
                 if (map.getTile(x - 1, y + 1).isPassable(human, isOverHead) && !checkArray[y + 1][x - 1]) {
-                    secondPairs.add(new Tuple(y + 1, x - 1, isOverHead));
+                    secondPairs.add(new Tuple(y + 1, x - 1, isOverHead,pair));
                 }
             }
             if (y != 0 && x != GameController.getGame().getMap().getWidth() - 1) {
                 if (map.getTile(x + 1, y - 1).isPassable(human, isOverHead) && !checkArray[y - 1][x + 1]) {
-                    secondPairs.add(new Tuple(y - 1, x + 1, isOverHead));
+                    secondPairs.add(new Tuple(y - 1, x + 1, isOverHead,pair));
                 }
             }
         }
@@ -339,8 +271,8 @@ public class MoveController extends HumanController {
 
 
     public static Tuple getStartPair() {
-        Military firstMilitary = militaries.get(0);
-        return new Tuple(firstMilitary.getX(), firstMilitary.getY());
+        Military firstMilitary = HumanController.militaries.get(0);
+        return new Tuple(firstMilitary.getY(), firstMilitary.getX());
     }
 
     public static boolean checkPatrolPath(Tuple startPair, Tuple endPair) {
@@ -369,12 +301,12 @@ public class MoveController extends HumanController {
             return tuple.isOverhead();
         }
         Tool tool = tile.getTool();
-        if( tool != null && tool.getName().equals("siegeTower") && !tool.isCanMove()){
+        if (tool != null && tool.getName().equals("siegeTower") && !tool.isCanMove()) {
             return !tuple.isOverhead();
         }
-        if (!military.isUsesLadder() || military.getName().equals("ladderman")){
+        if (military.isUsesLadder() && !military.getName().equals("ladderman")) {
             List<Military> militaries = getActiveLadderMans(x, y, military.getGovernment());
-            if (militaries.size() != 0 && military.isUsesLadder()) {
+            if (militaries.size() != 0) {
                 return !tuple.isOverhead();
             }
         }
@@ -382,7 +314,7 @@ public class MoveController extends HumanController {
         return tuple.isOverhead();
     }
 
-    public static List<Military> getActiveLadderMans(int x, int y, Government government){
+    public static List<Military> getActiveLadderMans(int x, int y, Government government) {
         ArrayList<Military> militaries = new ArrayList<>();
         Tile tile = GameController.getGame().getMap().getTile(x, y);
         for (Military military : tile.getMilitaries()) {

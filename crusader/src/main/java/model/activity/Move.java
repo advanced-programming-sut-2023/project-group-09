@@ -96,6 +96,7 @@ public class Move {
             moveState = MoveStates.STOP.getState();
             return;
         }
+        endPair = path.getLast();
         moveState = MoveStates.MOVING.getState();
     }
 
@@ -114,6 +115,9 @@ public class Move {
         Map map = GameController.getGame().getMap();
         boolean beforeSate = false;
         for (int i = indexOfPath; i <= indexOfPath + human.getSpeed(); i++) {
+            if(i >= path.size() ){
+                return true;
+            }
             Tuple pair = path.get(i);
 
 
@@ -147,7 +151,7 @@ public class Move {
         }
 
         Tuple lastPair = path.getLast();
-        if (!Objects.equals(endPair.getX(), lastPair.getX()) && !Objects.equals(endPair.getY(), lastPair.getY())) {
+        if (endPair.getX() != lastPair.getX() || endPair.getY() != lastPair.getY()) {
             endPair = new Tuple(enemy.getY(), enemy.getX());
             return true;
         }
@@ -165,7 +169,7 @@ public class Move {
         }
 
         if (MoveStates.MOVING.getState().equals(moveState) || MoveStates.PATROL.getState().equals(moveState)) {
-            if (indexOfPath + human.getSpeed() < path.size() - 1) {
+            if (indexOfPath + human.getSpeed() < path.size()) {
                 moveBeforeDestination();
                 return;
             }

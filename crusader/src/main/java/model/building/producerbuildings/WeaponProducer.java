@@ -14,6 +14,13 @@ public class WeaponProducer extends ProducerBuilding{
     public WeaponProducer(int numberOfRequiredWorkers, int numberOfRequiredEngineers, String name, int maxHp, int width, int length, int rate, String nameOfStorage, String itemType, String itemName) {
         super(numberOfRequiredWorkers, numberOfRequiredEngineers, name, maxHp, width, length, rate, nameOfStorage, itemType, itemName);
     }
+  public WeaponProducer(WeaponProducer weaponProducer) {
+      super(weaponProducer.getNumberOfRequiredWorkers(), weaponProducer.getNumberOfRequiredEngineers(),
+              weaponProducer.getName(), weaponProducer.getMaxHp(), weaponProducer.getWidth(), weaponProducer.getLength(),
+              weaponProducer.getRate(), weaponProducer.getNameOfStorage(), weaponProducer.getItemType(), weaponProducer.getItemName());
+      super.setCost(weaponProducer.getCost());
+      super.setRequired(weaponProducer.getRequired());
+    }
 
     public void addWeapon(String weapon){
         weapons.add(weapon);

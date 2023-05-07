@@ -12,7 +12,6 @@ public class Tower extends CastleBuilding {
     // 0 for drawbridge 10 woods
 
 
-
     private int fireRange;
     private int defendRange;
 
@@ -27,11 +26,20 @@ public class Tower extends CastleBuilding {
     }
 
     public Tower(int numberOfRequiredWorkers, int numberOfRequiredEngineers, String name, int maxHp,
-                 int width, int length, int fireRange, int defendRange , int capacity) {
+                 int width, int length, int fireRange, int defendRange, int capacity) {
         super(numberOfRequiredWorkers, numberOfRequiredEngineers, name, maxHp, width, length);
         this.fireRange = fireRange;
         this.defendRange = defendRange;
         this.capacity = capacity;
+    }
+
+    public Tower(Tower tower) {
+        super(tower.getNumberOfRequiredWorkers(), tower.getNumberOfRequiredEngineers(), tower.getName(),
+                tower.getMaxHp(), tower.getWidth(), tower.getLength());
+        super.setCost(tower.getCost());
+        this.fireRange = tower.getFireRange();
+        this.defendRange = tower.defendRange;
+        this.capacity = tower.capacity;
     }
 
     public int getFireRange() {

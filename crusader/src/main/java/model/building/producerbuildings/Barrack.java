@@ -11,7 +11,6 @@ import model.human.military.EuropeanTroop;
 import model.human.military.Military;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Random;
 
 public class Barrack extends Building{
@@ -25,6 +24,13 @@ public class Barrack extends Building{
         this.setBuildingImpassableLength(4);
     }
 
+    public Barrack(Barrack barrack) {
+        super(barrack.getNumberOfRequiredWorkers(),barrack.getNumberOfRequiredEngineers(), barrack.getName(),
+                barrack.getMaxHp(), barrack.getWidth(), barrack.getLength());
+        this.changeShouldBeOne();
+        this.setBuildingImpassableLength(4);
+        super.setCost(barrack.getCost());
+    }
     public ArrayList<String> getUnits() {
         return units;
     }
@@ -33,22 +39,17 @@ public class Barrack extends Building{
         units.add(unit);
     }
 
-    public Military makeUnit(String name){
-        try {
-            consumeRequired(name);
-            int[] coordinate = makePositionOfUnit();
-            int x = coordinate[0];
-            int y = coordinate[1];
-            if(!checkRequired(name)){
-                return null;
-            }
-            Military military = Objects.requireNonNull(GameHumans.getUnit(name, this.getGovernment(), x, y)).clone();
-            MapController.addMilitary(x,y,military);
-            return military;
-        }catch (CloneNotSupportedException e){
-            System.out.println("An error occurred.[make unit]");
+    public void makeUnit(String name){
+
+        consumeRequired(name);
+        int[] coordinate = makePositionOfUnit();
+        int x = coordinate[0];
+        int y = coordinate[1];
+        if(!checkRequired(name)) {
+            return;
         }
-        return null;
+        Military military = GameHumans.getUnit(name, this.getGovernment(), x, y);
+        MapController.addMilitary(x,y,military);
     }
 
 

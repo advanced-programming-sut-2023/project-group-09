@@ -24,7 +24,7 @@ import java.util.Objects;
 public class MapController {
     public static Map map;
 
-    //    TODO: complete setTexture conditions
+    //TODO: complete setTexture conditions
     public static String setTexture(int x, int y, Textures type) {
         Tile tile = map.getTile(x, y);
         if ((tile.getTree() != null && !type.equals(Textures.EARTH) && !type.equals(Textures.EARTH_AND_SAND) && !type.equals(Textures.GRASS) &&

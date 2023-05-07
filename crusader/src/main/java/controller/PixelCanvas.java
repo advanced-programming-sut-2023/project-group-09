@@ -28,6 +28,14 @@ public class PixelCanvas extends Canvas {
 
     private Color getColor(int x, int y,Map map) {
         Tile tile = map.getTile(x,y);
+
+        if(tile.getTree() != null){
+            return new Color(48, 189, 38);
+        }
+        if(tile.getRockDirection() != null){
+            return new Color(101, 101, 101);
+        }
+
         if(tile.getMilitaries().size() != 0) {
             String color = tile.getMilitaries().get(0).getGovernment().getColor();
             return getGovernmentColor(color);
@@ -35,7 +43,7 @@ public class PixelCanvas extends Canvas {
             if(tile.getBuilding() instanceof MainCastle){
                 return new Color(0,0,0);
             }
-            return new Color(83, 62, 62);
+            return new Color(0, 0, 0);
         }else{
             return new Color(tile.getTexture().getR(), tile.getTexture().getB(), tile.getTexture().getG());
         }

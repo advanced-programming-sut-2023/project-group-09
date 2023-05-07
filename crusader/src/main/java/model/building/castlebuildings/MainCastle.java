@@ -11,7 +11,12 @@ public class MainCastle extends CastleBuilding {
         super(numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, width, length);
         this.capacity = 10;
     }
-
+    public MainCastle(MainCastle mainCastle) {
+        super(mainCastle.getNumberOfRequiredWorkers(), mainCastle.getNumberOfRequiredEngineers(), mainCastle.getName(),
+                mainCastle.getMaxHp(), mainCastle.getWidth(), mainCastle.getLength());
+        this.capacity = 10;
+        super.setCost(mainCastle.getCost());
+    }
     public void taxDistribution() {
         double goldPerPerson = 0.6 + (0.2)*(Math.abs(this.taxRate)-1);
         Government government = this.getGovernment();

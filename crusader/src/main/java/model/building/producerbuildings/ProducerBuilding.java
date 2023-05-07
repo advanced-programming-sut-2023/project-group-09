@@ -20,9 +20,7 @@ public class ProducerBuilding extends Building {
     private int countOfRoundsToProduce = 0;
 
 
-    public void setRequired(HashMap<String, Integer> required) {
-        this.required = required;
-    }
+
 
     private HashMap<String, Integer> required = new HashMap<>();
 
@@ -34,8 +32,21 @@ public class ProducerBuilding extends Building {
         this.nameOfStorage = nameOfStorage;
         this.itemType = itemType;
         this.itemName = itemName;
-    }
 
+    }
+    public ProducerBuilding(ProducerBuilding producerBuilding) {
+        super(producerBuilding.getNumberOfRequiredWorkers(), producerBuilding.getNumberOfRequiredEngineers(),
+                producerBuilding.getName(), producerBuilding.getMaxHp(), producerBuilding.getWidth(), producerBuilding.getLength());
+        this.rate = producerBuilding.getRate();
+        this.nameOfStorage = producerBuilding.getNameOfStorage();
+        this.itemType = producerBuilding.getItemType();
+        this.itemName = producerBuilding.itemName;
+        this.required = producerBuilding.getRequired();
+        super.setCost(producerBuilding.getCost());
+    }
+    public void setRequired(HashMap<String, Integer> required) {
+        this.required = required;
+    }
     public void doAction() {
         if (countOfRoundsToProduce == 0) {
             addProduct();
@@ -88,6 +99,42 @@ public class ProducerBuilding extends Building {
         for (String product : required.keySet()) {
             GovernmentController.consumeProduct(government, product, required.get(product));
         }
+    }
+
+    public String getNameOfStorage() {
+        return nameOfStorage;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public String getItemType() {
+        return itemType;
+    }
+
+    public int getRate() {
+        return rate;
+    }
+
+    public int getInUse() {
+        return inUse;
+    }
+
+    public void setInUse(int inUse) {
+        this.inUse = inUse;
+    }
+
+    public int getCountOfRoundsToProduce() {
+        return countOfRoundsToProduce;
+    }
+
+    public void setCountOfRoundsToProduce(int countOfRoundsToProduce) {
+        this.countOfRoundsToProduce = countOfRoundsToProduce;
+    }
+
+    public HashMap<String, Integer> getRequired() {
+        return required;
     }
 
     public void computeActionTurn() {

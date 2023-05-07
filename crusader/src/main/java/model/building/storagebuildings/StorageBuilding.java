@@ -23,7 +23,12 @@ public class StorageBuilding extends Building {
         this.capacity = capacity;
     }
 
-
+    public StorageBuilding(StorageBuilding storageBuilding) {
+        super(storageBuilding.getNumberOfRequiredWorkers(), storageBuilding.getNumberOfRequiredEngineers(),
+                storageBuilding.getName(), storageBuilding.getMaxHp(), storageBuilding.getWidth(), storageBuilding.getLength());
+        this.itemType = storageBuilding.itemType;
+        this.capacity = storageBuilding.getCapacity();
+    }
     public HashMap<String, Integer> getItems() {
         return items;
     }

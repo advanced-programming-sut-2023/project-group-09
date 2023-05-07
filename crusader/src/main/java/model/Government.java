@@ -1,6 +1,7 @@
 package model;
 
 import controller.MapController;
+import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameGoods;
 import enumeration.dictionary.Colors;
 import model.building.Building;
@@ -64,6 +65,7 @@ public class Government {
         this.castleY = castleY;
         this.color = color;
         properties = GameGoods.getHashMapOfGovernment();
+        buildings = GameBuildings.getGovernmentBuildingHashMap();
     }
 
     public void setUser(User user) {

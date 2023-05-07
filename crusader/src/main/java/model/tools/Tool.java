@@ -34,7 +34,17 @@ public class Tool implements Cloneable {
         this.shootingRange = shootingRange;
         this.damage = damage;
     }
-
+    public Tool(Tool tool) {
+        this.numberOfRequiredEngineers = tool.numberOfRequiredEngineers;
+        this.speed = tool.getSpeed();
+        this.shootingRange = tool.shootingRange;
+        this.damage = tool.damage;
+        this.canAirAttack = tool.canAirAttack;
+        this.canAttack = tool.canAttack;
+        this.isActive = tool.isActive;
+        this.canMove = tool.canMove;
+        toolAttack = new ToolAttack(this);
+    }
     public Government getGovernment() {
         return government;
     }

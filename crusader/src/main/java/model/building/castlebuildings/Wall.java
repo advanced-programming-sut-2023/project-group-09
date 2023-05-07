@@ -15,7 +15,12 @@ public class Wall extends CastleBuilding {
         this.height = height;
         this.capacity = 0;
     }
-
+    public Wall(Wall wall) {
+        super(wall.getNumberOfRequiredWorkers(), wall.getNumberOfRequiredEngineers(), wall.getName(), wall.getMaxHp(), wall.getWidth(), wall.getLength());
+        this.height = wall.height;
+        this.capacity = 0;
+        this.type = wall.type;
+    }
     public int getHeight() {
         return height;
     }

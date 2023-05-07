@@ -1,7 +1,9 @@
 package model.human.military;
 
 
+import com.google.gson.annotations.Expose;
 import controller.human.MoveController;
+import enumeration.MilitaryStates;
 import model.activity.Attack;
 import model.human.Human;
 
@@ -9,12 +11,12 @@ import java.util.ArrayList;
 
 public abstract class Military extends Human implements Cloneable {
     private int attackRating;
-    private String militaryState;
+    private String militaryState = MilitaryStates.STAND_GROUND.getState();
     private boolean usesHorse = false;
     private boolean usesLadder = false;
     private boolean digsMoat = false;
     private String weapon;
-    private final ArrayList<String> armours = new ArrayList<>();
+    private ArrayList<String> armours = new ArrayList<>();
     private int price;
     private int defenseRange;
     private int aggressiveRange;
@@ -26,6 +28,17 @@ public abstract class Military extends Human implements Cloneable {
         this.attackRating = attackRating;
         this.price = price;
         attack = new Attack(this);
+    }
+    public Military(Military military) {
+        super(military.getSpeed(), military.getDefenseRating(), military.getShootingRange());
+        this.attackRating = military.getAttackRating();
+        this.price = military.getPrice();
+        attack = new Attack(this);
+        armours = military.getArmours();
+    }
+
+    public void setArmours(ArrayList<String> armours) {
+        this.armours = armours;
     }
 
     public int getPrice() {
@@ -130,12 +143,9 @@ public abstract class Military extends Human implements Cloneable {
     }
 
     public Attack getAttack() {
+        if(attack == null){
+            attack = new Attack(this);
+        }
         return attack;
-    }
-
-    @Override
-
-    public Military clone() throws CloneNotSupportedException {
-        return (Military) super.clone();
     }
 }
