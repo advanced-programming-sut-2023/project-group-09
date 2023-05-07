@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 public enum UnitMenuCommands {
     MOVE_UNIT("move unit to(?<items>.*)"),
     PATROL_UNIT("patrol unit(?<items>.*)"),
-
     DEACTIVATE_PATROL("deactivate patrol"),
     SET_UNIT_STATE("set(?<items>.*)"),
     ATTACK_ENEMY("attack enemy(?<items>.*)"),
@@ -15,7 +14,6 @@ public enum UnitMenuCommands {
     AIR_ATTACK_TOOL("air attack tool(?<items>.*)"),
     ATTACK_BUILDING("attack building(?<items>.*)"),
     AIR_ATTACK_BUILDING("air attack building(?<items>.*)"),
-
     USE_TOOL("use tool(?<items>.*)"),
     POUR_OIL("pour oil -d (?<direction>(\"[^\"]*\"|\\S*))"),
     DIG_TUNNEL("dig tunnel(?<items>.*)"),

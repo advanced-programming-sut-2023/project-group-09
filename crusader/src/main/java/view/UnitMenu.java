@@ -27,13 +27,12 @@ public class UnitMenu {
             Matcher patrolUnitMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.PATROL_UNIT);
             Matcher deactivatePatrolMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.DEACTIVATE_PATROL);
             Matcher airAttackMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.AIR_ATTACK);
-            Matcher attachEnemyMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.ATTACK_ENEMY);
+            Matcher attackEnemyMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.ATTACK_ENEMY);
             Matcher airAttackBuildingMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.AIR_ATTACK_BUILDING);
             Matcher attackBuildingMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.ATTACK_BUILDING);
             Matcher airAttackToolMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.AIR_ATTACK_TOOL);
             Matcher attackToolMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.ATTACK_TOOL);
             Matcher useToolMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.USE_TOOL);
-
             Matcher pourOilMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.POUR_OIL);
             Matcher digTunnelMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.DIG_TUNNEL);
             Matcher buildMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.BUILD);
@@ -80,8 +79,8 @@ public class UnitMenu {
                 output = GameController.deactivatePatrolUnit();
                 System.out.println(output);
 
-            }else if (attachEnemyMatcher.matches()) {
-                String items = attachEnemyMatcher.group("items");
+            } else if (attackEnemyMatcher.matches()) {
+                String items = attackEnemyMatcher.group("items");
                 ArrayList<String> itemsPattern = new ArrayList<>();
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
@@ -108,7 +107,7 @@ public class UnitMenu {
                         return;
                     }
                 }
-            }  else if (attackBuildingMatcher.matches()) {
+            } else if (attackBuildingMatcher.matches()) {
                 String items = attackBuildingMatcher.group("items");
                 ArrayList<String> itemsPattern = new ArrayList<>();
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
@@ -137,7 +136,7 @@ public class UnitMenu {
                         return;
                     }
                 }
-            }  else if (attackToolMatcher.matches()) {
+            } else if (attackToolMatcher.matches()) {
                 String items = attackToolMatcher.group("items");
                 ArrayList<String> itemsPattern = new ArrayList<>();
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
@@ -166,7 +165,7 @@ public class UnitMenu {
                         return;
                     }
                 }
-            }else if (useToolMatcher.matches()) {
+            } else if (useToolMatcher.matches()) {
                 String items = airAttackToolMatcher.group("items");
                 ArrayList<String> itemsPattern = new ArrayList<>();
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
@@ -180,7 +179,7 @@ public class UnitMenu {
                         return;
                     }
                 }
-            }else if (pourOilMatcher.matches()) {
+            } else if (pourOilMatcher.matches()) {
                 String direction = pourOilMatcher.group("direction");
                 output = GameController.pourOil(direction);
                 System.out.println(output);

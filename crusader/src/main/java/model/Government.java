@@ -318,16 +318,16 @@ public class Government {
     public void updateAllHumans() {
         Iterator itr = this.society.iterator();
         while (itr.hasNext()) {
-            Human human = (Human)itr.next();
+            Human human = (Human) itr.next();
             if (human.getHealth() <= 0) {
-                MapController.deleteHuman(human.getX() , human.getY(), (Civilian) human);
+                MapController.deleteHuman(human.getX(), human.getY(), (Civilian) human);
             }
         }
         itr = this.troops.iterator();
         while (itr.hasNext()) {
             Military military = (Military) itr.next();
             if (military.getHealth() <= 0) {
-                MapController.deleteMilitary(military.getX() , military.getY() , military);
+                MapController.deleteMilitary(military.getX(), military.getY(), military);
             }
         }
     }
@@ -378,10 +378,11 @@ public class Government {
         }
     }
 
-    public void addTool(Tool tool){
+    public void addTool(Tool tool) {
         tools.add(tool);
     }
-    public void removeTool(Tool tool){
+
+    public void removeTool(Tool tool) {
         tools.add(tool);
     }
 

@@ -22,8 +22,10 @@ public class MapMenu {
 
             if (moveMapM.matches()) runMoveMap(moveMapM);
             else if (showDetailsOfLandM.matches()) runShowMapOrShowDetailsOrClearLand(showDetailsOfLandM, 1);
-            else if (MapCommands.BACK.getMatcher(input).matches()) return;
-            else System.out.println("invalid command");
+            else if (MapCommands.BACK.getMatcher(input).matches()) {
+                System.out.println("<< Game Menu >>");
+                return;
+            } else System.out.println("invalid command");
         }
     }
 
@@ -93,6 +95,5 @@ public class MapMenu {
             return "invalid coordinates";
 
         return "";
-
     }
 }

@@ -181,9 +181,13 @@ public class CreateGameMenu {
             int x = castles.get(castleNumber - 1).getFirst();
             int y = castles.get(castleNumber - 1).getSecond();
             Government government = new Government(lord, x, y, colors.get(colorNumber - 1));
-//            government.addAmountToProperties();
+            government.addAmountToProperties("wood", "resource", 100);
+            government.addAmountToProperties("rock", "resource", 50);
+            government.addAmountToProperties("bread", "food", 60);
+            government.setGold(4000);
+//            TODO: add primary units
             game.addGovernment(government);
-            MapController.dropBuilding(x , y , "mainCastle" , government);
+            MapController.dropBuilding(x, y, "mainCastle", government);
             castles.remove(castleNumber - 1);
             colors.remove(colorNumber - 1);
             EditMapMenu.currentGovernment = government;
