@@ -292,15 +292,15 @@ public class GameController {
         if (building == null) {
             return "building type is invalid!";
         }
-        if(!hasRequired(building.getCost())){
+        if (!hasRequired(building.getCost())) {
             return "your resource is not enough!";
         }
-        if (!MapController.checkCanPutBuilding(x,y,type,GameController.getGame().getCurrentGovernment())){
+        if (!MapController.checkCanPutBuilding(x, y, type, GameController.getGame().getCurrentGovernment())) {
             return "this coordinate is not suitable!";
         }
         consumeRequired(building.getCost());
 
-        MapController.dropBuilding(x,y,type,GameController.getGame().getCurrentGovernment());
+        MapController.dropBuilding(x, y, type, GameController.getGame().getCurrentGovernment());
         return "building dropped successfully!";
     }
 
@@ -396,7 +396,9 @@ public class GameController {
                     for (int l = 0; l < 5; l++) {
                         Tile tile = map.getTile(k, i);
                         String sign = " ";
-                        if (tile.getMilitaries().size() != 0) {
+                        if (tile.getTool() != null) {
+                            sign = tile.getTool().getGovernment().getColorRgb() + "A";
+                        } else if (tile.getMilitaries().size() != 0) {
                             HashMap<Government, Integer> numberOfMilitariesOnTile = new HashMap<>();
                             for (int m = 0; m < game.getGovernments().size(); m++) {
                                 numberOfMilitariesOnTile.put(game.getGovernments().get(m), 0);
