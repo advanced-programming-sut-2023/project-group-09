@@ -1,4 +1,23 @@
 {
+  "lord": {
+    "attackRating": 10,
+    "militaryState": "standing",
+    "usesHorse": false,
+    "usesLadder": false,
+    "digsMoat": false,
+    "armours": [],
+    "price": 0,
+    "defenseRange": 15,
+    "aggressiveRange": 5,
+    "name": "ladderman",
+    "speed": 3,
+    "x": 0,
+    "y": 0,
+    "defenseRating": 15,
+    "health": 50,
+    "shootingRange": 1,
+    "isInvisible": false
+  },
   "ladderman": {
     "attackRating": 0,
     "militaryState": "standing",

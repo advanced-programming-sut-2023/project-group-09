@@ -42,6 +42,9 @@ public class DBController {
             String text = new String(Files.readAllBytes(Path.of(Paths.USERS_PATH.getPath())));
             ArrayList<User> allUsers = gson.fromJson(text, new TypeToken<List<User>>(){}.getType());
             Application.setUsers(allUsers);
+            if (allUsers == null) {
+                Application.setUsers(new ArrayList<>());
+            }
         } catch (IOException e) {
             System.out.println("An error occurred.[load users]");
             e.printStackTrace();

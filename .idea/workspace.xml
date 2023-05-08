@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="try to merge." />
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="a regex edited.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/files/user/currentUser.json" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/files/user/currentUser.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/files/user/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/files/user/users.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/DBController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/DBController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameHumans.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameHumans.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/enumeration/Paths.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/enumeration/Paths.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/Government.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/Government.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -183,7 +191,13 @@
       <workItem from="1683283725160" duration="942000" />
       <workItem from="1683310709942" duration="11889000" />
       <workItem from="1683367003368" duration="2823000" />
-      <workItem from="1683370107762" duration="413000" />
+      <workItem from="1683370107762" duration="3901000" />
+      <workItem from="1683393528103" duration="38000" />
+      <workItem from="1683402108608" duration="74000" />
+      <workItem from="1683404509546" duration="256000" />
+      <workItem from="1683405242091" duration="2420000" />
+      <workItem from="1683570483643" duration="3735000" />
+      <workItem from="1683581790202" duration="320000" />
     </task>
     <task id="LOCAL-00001" summary="...">
       <created>1681925358549</created>
@@ -458,7 +472,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683370139591</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="a regex edited.">
+      <created>1683370946785</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1683370946785</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -469,26 +490,13 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="text">
-                    <value>
-                      <list>
-                        <option value="stay" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Towers added." />
     <MESSAGE value="castle buildings changed." />
     <MESSAGE value="castle buildings final change." />
     <MESSAGE value="method convertPasswordToHash() edited." />
@@ -513,7 +521,8 @@
     <MESSAGE value="stay logged in - bug resolved" />
     <MESSAGE value="add main castles to map.&#10;select building done." />
     <MESSAGE value="try to merge." />
-    <option name="LAST_COMMIT_MESSAGE" value="try to merge." />
+    <MESSAGE value="a regex edited." />
+    <option name="LAST_COMMIT_MESSAGE" value="a regex edited." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

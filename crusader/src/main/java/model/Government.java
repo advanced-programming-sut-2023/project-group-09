@@ -322,6 +322,7 @@ public class Government {
         while (itr.hasNext()) {
             Human human = (Human) itr.next();
             if (human.getHealth() <= 0) {
+                itr.remove();
                 MapController.deleteHuman(human.getX(), human.getY(), (Civilian) human);
             }
         }
@@ -329,6 +330,7 @@ public class Government {
         while (itr.hasNext()) {
             Military military = (Military) itr.next();
             if (military.getHealth() <= 0) {
+                itr.remove();
                 MapController.deleteMilitary(military.getX(), military.getY(), military);
             }
         }
