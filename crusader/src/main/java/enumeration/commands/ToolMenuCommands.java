@@ -8,11 +8,12 @@ public enum ToolMenuCommands {
     DISBAND("disband"),
     STOP("stop"),
     PATROL("patrol (?<content>.+)"),
-//    ATTACK("attack"),
+    ATTACK_REGION("attack (?<content>.+)"),
     FREE("free engineers"),
     ADD_STONE("add stone"),
     X_COORDINATE("-x (?<x>[\\d]*)"),
-    Y_COORDINATE("-y (?<y>[\\d]*)");
+    Y_COORDINATE("-y (?<y>[\\d]*)"),
+    BACK("back");
     private String regex;
 
     private ToolMenuCommands(String regex) {

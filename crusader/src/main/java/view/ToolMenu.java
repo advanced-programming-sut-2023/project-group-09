@@ -7,6 +7,7 @@ import enumeration.commands.ToolMenuCommands;
 import model.activity.Move;
 import model.activity.ToolMove;
 import model.game.Tuple;
+import model.human.military.Engineer;
 import model.tools.Tool;
 
 import java.util.LinkedList;
@@ -41,7 +42,7 @@ public class ToolMenu {
                 int x = Integer.parseInt(xM.group("x"));
                 int y = Integer.parseInt(yM.group("y"));
                 LinkedList<Tuple> path = ToolsController.getPathTools(new Tuple(tool.getY(), tool.getX()), new Tuple(y, x));
-                if (path == null){
+                if (path == null) {
                     System.out.println("there is no available way to move tool");
                     continue;
                 }
@@ -66,7 +67,24 @@ public class ToolMenu {
                 }
 
 //                TODO: patrol tool
-            }
+            } else if (ToolMenuCommands.FREE.getMatcher(input).matches()) {
+                for (int i = 0; i < tool.getEngineers().size(); i++) {
+                    Engineer engineer = tool.getEngineers().get(i);
+                    engineer.setInTool(false);
+                }
+                tool.getEngineers().clear();
+            } else if (ToolMenuCommands.ADD_STONE.getMatcher(input).matches()) {
+                int rockNumber = tool.getGovernment().getPropertyAmount("rock");
+                if (rockNumber < 10) {
+                    System.out.println("you can't add stones to tool");
+                    continue;
+                }
+                tool.getGovernment().addAmountToProperties("rock", "resource", -10);
+                tool.addStone(20);
+            } else if (ToolMenuCommands.BACK.getMatcher(input).matches()) {
+                System.out.println("<< Game Menu >>");
+                return;
+            } else System.out.println("invalid command");
         }
     }
 

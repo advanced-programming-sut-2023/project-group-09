@@ -25,6 +25,7 @@ public class Tool implements Cloneable {
     private int shootingRange;
     private int damage;
     private int hp;
+    private int stoneNumber;
     private ToolMove toolMove;
     private ToolAttack toolAttack;
 
@@ -33,7 +34,9 @@ public class Tool implements Cloneable {
         this.speed = speed;
         this.shootingRange = shootingRange;
         this.damage = damage;
+        stoneNumber = 20;
     }
+
     public Tool(Tool tool) {
         this.numberOfRequiredEngineers = tool.numberOfRequiredEngineers;
         this.speed = tool.getSpeed();
@@ -45,6 +48,7 @@ public class Tool implements Cloneable {
         this.canMove = tool.canMove;
         toolAttack = new ToolAttack(this);
     }
+
     public Government getGovernment() {
         return government;
     }
@@ -98,10 +102,18 @@ public class Tool implements Cloneable {
     }
 
     public void addEngineer(Engineer engineer) {
-        if(engineers.size() == numberOfRequiredEngineers){
+        if (engineers.size() == numberOfRequiredEngineers) {
             return;
         }
         this.engineers.add(engineer);
+    }
+
+    public int getStoneNumber() {
+        return stoneNumber;
+    }
+
+    public void addStone(int amount) {
+        this.stoneNumber += amount;
     }
 
     public int getShootingRange() {
