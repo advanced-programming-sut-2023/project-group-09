@@ -1,11 +1,13 @@
 package controller.human;
 
 
+import controller.MapController;
 import enumeration.MoveStates;
 import model.activity.Move;
 import model.building.Building;
 import model.building.castlebuildings.Wall;
 import model.game.Tuple;
+import model.human.civilian.Civilian;
 import model.human.military.Military;
 import model.tools.Tool;
 
@@ -332,6 +334,13 @@ public class HumanController {
         return counter != 0;
     }
 
+    public static void disbandUnits(ArrayList<Military> militaries){
+        for (Military military : militaries) {
+            MapController.deleteMilitary(military.getX(), military.getY(), military);
+            Civilian civilian = new Civilian(military.getX(), military.getY(), false);
+            MapController.addHuman(military.getX(), military.getY(), civilian);
+        }
+    }
     public static void setState(String state, ArrayList<Military> militaries) {
         for (Military military : militaries) {
             if (military.getMove().getMoveState().equals(MoveStates.PATROL.getState())) {

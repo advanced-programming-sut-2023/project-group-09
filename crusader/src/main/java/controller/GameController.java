@@ -274,11 +274,7 @@ public class GameController {
     }
 
     public static String disbandUnit() {
-        for (Military military : HumanController.militaries) {
-            MapController.deleteMilitary(military.getX(), military.getY(), military);
-            Civilian civilian = new Civilian(military.getX(), military.getY(), false);
-            MapController.addHuman(military.getX(), military.getY(), civilian);
-        }
+        HumanController.disbandUnits(HumanController.militaries);
         return "unit disbanded successfully!";
     }
 

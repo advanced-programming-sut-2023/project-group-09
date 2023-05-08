@@ -222,6 +222,7 @@ public class UnitMenu {
             } else if (disbandUnitMatcher.matches()) {
                 output = GameController.disbandUnit();
                 System.out.println(output);
+                return;
             } else if (backMatcher.matches()) {
                 System.out.println("<< Game Menu >>");
                 return;
