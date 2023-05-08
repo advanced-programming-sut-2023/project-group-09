@@ -597,6 +597,9 @@ public class GameBuildings {
         if(building instanceof Gatehouse){
             return new Gatehouse((Gatehouse) building);
         }
+        if(building instanceof Barrack){
+            return new Barrack((Barrack) building);
+        }
         if(building instanceof WeaponProducer){
             return new WeaponProducer((WeaponProducer) building);
         }

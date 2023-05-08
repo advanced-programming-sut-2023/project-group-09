@@ -105,7 +105,7 @@ public class Government {
 
     public void addAmountToProperties(String itemName, String itemType, int amount) {
         this.getProperties().put(itemName, this.getProperties().get(itemName) + amount);
-        if (itemType != null) {
+        if (itemType != null && this.getStorages().get(itemType) != null) {
             this.getStorages().get(itemType).addAmount(amount);
         }
     }
