@@ -61,6 +61,7 @@ public class GameController {
         HumanController.militaries = militaries;
         UnitMenu.x = x - 1;
         UnitMenu.y = y - 1;
+        UnitMenu.type = type;
         UnitMenu.run(scanner);
         return "";
     }

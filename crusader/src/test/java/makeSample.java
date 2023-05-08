@@ -92,6 +92,7 @@ public class makeSample {
         military2.getMove().moveOneTurn();
 
         System.out.println(GameController.showMap(0,0));
+        System.out.println(military2.getHealth());
     }
 
     public static String selectUnit(int x, int y, String type, Game game) {

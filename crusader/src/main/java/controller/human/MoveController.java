@@ -1,6 +1,7 @@
 package controller.human;
 
 import controller.GameController;
+import controller.gamestructure.GameHumans;
 import model.Government;
 import model.building.Building;
 import model.building.castlebuildings.Gatehouse;
@@ -12,14 +13,18 @@ import model.game.Tuple;
 import model.human.Human;
 import model.human.military.Military;
 import model.tools.Tool;
+import view.UnitMenu;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 public class MoveController extends HumanController {
     public static boolean[][] checkArray;
+    public static boolean checkLadderPath = true;
+    public static boolean checkAssassinPath = true;
+    public static boolean checkUsualPath = true;
+
 
     public static LinkedList<Tuple> getPath(Tuple startPair, Tuple endPair, Human human) {
         ArrayList<Tuple> firstPairs = new ArrayList<>();
@@ -57,19 +62,6 @@ public class MoveController extends HumanController {
                 }
             }
         }
-//        for (int i = 0; i < 10 ; i++){
-//            for (int j = 0; j < 10; j++){
-//                if(wave[i][j] == null){
-//                    System.out.print("null      ");
-//                    continue;
-//                }
-//                System.out.format("(%3d,%3d) ",wave[i][j].getX(),wave[i][j].getY());
-//            }
-//            System.out.println();
-//        }
-//        System.out.println();
-
-
         return makePath(wave, startPair, endPair);
     }
 
@@ -164,77 +156,138 @@ public class MoveController extends HumanController {
             boolean isOverHead = pair.isOverhead();
             if (y != 0) {
                 if (map.getTile(x, y - 1).isPassable(human, isOverHead) && !checkArray[y - 1][x]) {
-                    secondPairs.add(new Tuple(y - 1, x, isOverHead,pair));
+                    secondPairs.add(new Tuple(y - 1, x, isOverHead, pair));
                 }
             }
 
             if (x != 0 && !checkArray[y][x - 1]) {
                 if (map.getTile(x - 1, y).isPassable(human, isOverHead) && !checkArray[y][x - 1]) {
-                    secondPairs.add(new Tuple(y, x - 1, isOverHead,pair));
+                    secondPairs.add(new Tuple(y, x - 1, isOverHead, pair));
                 }
             }
             if (x != 0 && y != 0) {
                 if (map.getTile(x - 1, y - 1).isPassable(human, isOverHead) && !checkArray[y - 1][x - 1]) {
-                    secondPairs.add(new Tuple(y - 1, x - 1, isOverHead,pair));
+                    secondPairs.add(new Tuple(y - 1, x - 1, isOverHead, pair));
                 }
             }
             if (x != GameController.getGame().getMap().getWidth() - 1) {
                 if (map.getTile(x + 1, y).isPassable(human, isOverHead) && !checkArray[y][x + 1]) {
-                    secondPairs.add(new Tuple(y, x + 1, isOverHead,pair));
+                    secondPairs.add(new Tuple(y, x + 1, isOverHead, pair));
                 }
             }
             if (y != GameController.getGame().getMap().getWidth() - 1) {
                 if (map.getTile(x, y + 1).isPassable(human, isOverHead) && !checkArray[y + 1][x]) {
-                    secondPairs.add(new Tuple(y + 1, x, isOverHead,pair));
+                    secondPairs.add(new Tuple(y + 1, x, isOverHead, pair));
                 }
             }
             if (y != GameController.getGame().getMap().getWidth() - 1 && x != GameController.getGame().getMap().getWidth() - 1) {
                 if (map.getTile(x + 1, y + 1).isPassable(human, isOverHead) && !checkArray[y + 1][x + 1]) {
-                    secondPairs.add(new Tuple(y + 1, x + 1, isOverHead,pair));
+                    secondPairs.add(new Tuple(y + 1, x + 1, isOverHead, pair));
                 }
             }
             if (y != GameController.getGame().getMap().getWidth() - 1 && x != 0) {
                 if (map.getTile(x - 1, y + 1).isPassable(human, isOverHead) && !checkArray[y + 1][x - 1]) {
-                    secondPairs.add(new Tuple(y + 1, x - 1, isOverHead,pair));
+                    secondPairs.add(new Tuple(y + 1, x - 1, isOverHead, pair));
                 }
             }
             if (y != 0 && x != GameController.getGame().getMap().getWidth() - 1) {
                 if (map.getTile(x + 1, y - 1).isPassable(human, isOverHead) && !checkArray[y - 1][x + 1]) {
-                    secondPairs.add(new Tuple(y - 1, x + 1, isOverHead,pair));
+                    secondPairs.add(new Tuple(y - 1, x + 1, isOverHead, pair));
                 }
             }
         }
         return secondPairs;
     }
 
+
+    public static void shouldCheckOtherPath() {
+
+        MoveController.checkUsualPath = true;
+        MoveController.checkLadderPath = true;
+        MoveController.checkAssassinPath = true;
+        if (UnitMenu.type != null) {
+            String type = UnitMenu.type;
+            Military military = GameHumans.getUnit(type);
+            if (military.isUsesLadder() && !military.getName().equals("ladderman")) {
+                checkAssassinPath = false;
+                checkUsualPath = false;
+                return;
+            }
+            if (type.equals("assassin")) {
+                checkLadderPath = false;
+                checkUsualPath = false;
+                return;
+            }
+            checkAssassinPath = false;
+            checkLadderPath = false;
+            return;
+        }
+
+        int countOfUseLadder = 0;
+        int countOfAssassin = 0;
+
+        for (Military military : militaries) {
+            if (military.isUsesLadder() && !military.getName().equals("ladderman")) {
+                countOfUseLadder++;
+            }
+            if (military.getName().equals("assassin")) {
+                countOfAssassin++;
+            }
+        }
+
+        if (countOfAssassin == militaries.size()) {
+            checkLadderPath = false;
+            checkUsualPath = false;
+            return;
+        }
+        if (countOfUseLadder == militaries.size()) {
+            checkAssassinPath = false;
+            checkUsualPath = false;
+            return;
+        }
+
+        if (countOfAssassin == 0) {
+            checkAssassinPath = false;
+        }
+        if (countOfUseLadder == 0) {
+            checkLadderPath = false;
+        }
+    }
+
     //find path for usual troop
     public static LinkedList<Tuple> checkHasPath(Tuple startPair, Tuple endPair) {
-        return getPath(startPair, endPair, null);
+        if (checkUsualPath) {
+            return getPath(startPair, endPair, null);
+        }
+        checkUsualPath = true;
+        return null;
     }
 
     //find path for troops who can climb ladder
     public static LinkedList<Tuple> checkHasLadderPath(Tuple startPair, Tuple endPair, LinkedList<Tuple> path) {
         if (path != null) {
-            return path;
+            checkLadderPath = true;
+            return null;
         }
-        for (Military military : militaries) {
-            if (military.isUsesLadder() && !military.getName().equals("ladderman")) {
-                return MoveController.getPath(startPair, endPair, military);
-            }
+        if (checkLadderPath) {
+            Military military = GameHumans.getUnit("archer",militaries.get(0).getGovernment(),0,0);
+            return getPath(startPair, endPair, military);
         }
+        checkLadderPath = true;
         return null;
     }
 
     //find path for assassin
     public static LinkedList<Tuple> checkAssassinPath(Tuple startPair, Tuple endPair, LinkedList<Tuple> path) {
         if (path != null) {
-            return path;
+            checkAssassinPath = true;
+            return null;
         }
-        for (Military military : militaries) {
-            if (military.getName().equals("assassin")) {
-                return MoveController.getPath(startPair, endPair, military);
-            }
+        if (checkAssassinPath) {
+            Military military = GameHumans.getUnit("assassin",militaries.get(0).getGovernment(),0,0);
+            return getPath(startPair, endPair, military);
         }
+        checkAssassinPath = true;
         return null;
     }
 
@@ -325,6 +378,4 @@ public class MoveController extends HumanController {
         }
         return militaries;
     }
-
-
 }

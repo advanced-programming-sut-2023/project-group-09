@@ -15,6 +15,8 @@ import java.util.regex.Matcher;
 public class UnitMenu {
     public static int x;
     public static int y;
+    public static String type;
+
 
     public static void run(Scanner scanner) {
 

@@ -41,13 +41,14 @@ public class Barrack extends Building{
 
     public void makeUnit(String name){
 
-        consumeRequired(name);
+
         int[] coordinate = makePositionOfUnit();
         int x = coordinate[0];
         int y = coordinate[1];
         if(!checkRequired(name)) {
             return;
         }
+        consumeRequired(name);
         Military military = GameHumans.getUnit(name, this.getGovernment(), x, y);
         MapController.addMilitary(x,y,military);
     }

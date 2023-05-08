@@ -21,6 +21,7 @@ public class HumanController {
     public static boolean move(Tuple endPair) {
 
         Tuple startPair = MoveController.getStartPair();
+        MoveController.shouldCheckOtherPath();
         LinkedList<Tuple> path = MoveController.checkHasPath(startPair, endPair);
         LinkedList<Tuple> assassinPath = MoveController.checkHasLadderPath(startPair, endPair, path);
         LinkedList<Tuple> ladderPath = MoveController.checkAssassinPath(startPair, endPair, path);
@@ -58,6 +59,8 @@ public class HumanController {
     public static boolean attack(Military enemy) {
         Tuple startPair = MoveController.getStartPair();
         Tuple endPair = new Tuple(enemy.getY(), enemy.getX());
+        MoveController.shouldCheckOtherPath();
+
         LinkedList<Tuple> path = MoveController.checkHasPath(startPair, endPair);
         LinkedList<Tuple> assassinPath = MoveController.checkHasLadderPath(startPair, endPair, path);
         LinkedList<Tuple> ladderPath = MoveController.checkAssassinPath(startPair, endPair, path);
@@ -105,6 +108,7 @@ public class HumanController {
 
     public static boolean attack(Building building) {
         Tuple startPair = MoveController.getStartPair();
+        MoveController.shouldCheckOtherPath();
         LinkedList<Tuple> path = MoveController.checkHasPathForBuilding(startPair, building);
         LinkedList<Tuple> assassinPath = MoveController.checkHasLadderPathForBuilding(startPair, building, path);
         LinkedList<Tuple> ladderPath = MoveController.checkAssassinPathForBuilding(startPair, building, path);
@@ -160,6 +164,7 @@ public class HumanController {
     public static boolean attack(Tool tool) {
         Tuple startPair = MoveController.getStartPair();
         Tuple endPair = new Tuple(tool.getY(), tool.getX());
+        MoveController.shouldCheckOtherPath();
         LinkedList<Tuple> path = MoveController.checkHasPath(startPair, endPair);
         LinkedList<Tuple> assassinPath = MoveController.checkHasLadderPath(startPair, endPair, path);
         LinkedList<Tuple> ladderPath = MoveController.checkAssassinPath(startPair, endPair, path);
@@ -276,6 +281,7 @@ public class HumanController {
         Tuple patrolPair = new Tuple(y2, x2);
         Tuple endPair = new Tuple(y1, x1);
         Tuple startPair = MoveController.getStartPair();
+        MoveController.shouldCheckOtherPath();
         LinkedList<Tuple> path = MoveController.checkHasPath(startPair, endPair);
         LinkedList<Tuple> assassinPath = MoveController.checkHasLadderPath(startPair, endPair, path);
         LinkedList<Tuple> ladderPath = MoveController.checkAssassinPath(startPair, endPair, path);
