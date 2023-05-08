@@ -1,6 +1,8 @@
 package controller;
 
+import controller.human.HumanController;
 import model.game.Tile;
+import model.game.Tuple;
 import model.human.military.Engineer;
 import model.tools.Tool;
 import model.tools.Moat;
@@ -10,9 +12,10 @@ public class EngineerController {
 
     public void digMoat() {
         for (int i = 0; i < Moat.getTilesToBeMoat().size(); i++) {
-            Tile tile = Moat.getTilesToBeMoat().get(i);
-//            TODO: move to (x, y)
-            tile.setMoat(true);
+            int x = Moat.getTilesToBeMoat().get(i).getX();
+            int y = Moat.getTilesToBeMoat().get(i).getY();
+            if (!HumanController.move(new Tuple(y, x))) continue;
+            GameController.getGame().getMap().getTile(x, y).setMoat(true);
         }
 //        TODO: refresh graphics
     }
@@ -20,7 +23,10 @@ public class EngineerController {
     public void buildPortableShield(int x, int y) {
         if (MapController.checkCanPutBuilding(x, y, "siegeTent", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "siegeTent", currentEngineer.getGovernment());
-//        TODO: move engineer to (x, y)
+        if (!HumanController.move(new Tuple(y, x))) {
+            System.out.println("engineer can't go there");
+            return;
+        }
         GameController.getGame().getMap().getTile(x, y).setBuilding(null);
         if (MapController.checkCanPutBuilding(x, y, "portableShield", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "portableShield", currentEngineer.getGovernment());
@@ -30,7 +36,10 @@ public class EngineerController {
     public void buildBatteringRam(int x, int y) {
         if (MapController.checkCanPutBuilding(x, y, "siegeTent", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "siegeTent", currentEngineer.getGovernment());
-//        TODO: move engineer to (x, y)
+        if (!HumanController.move(new Tuple(y, x))) {
+            System.out.println("engineer can't go there");
+            return;
+        }
         GameController.getGame().getMap().getTile(x, y).setBuilding(null);
         if (MapController.checkCanPutBuilding(x, y, "batteringRam", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "batteringRam", currentEngineer.getGovernment());
@@ -40,7 +49,10 @@ public class EngineerController {
     public void buildSiegeTower(int x, int y) {
         if (MapController.checkCanPutBuilding(x, y, "siegeTent", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "siegeTent", currentEngineer.getGovernment());
-//        TODO: move engineer to (x, y)
+        if (!HumanController.move(new Tuple(y, x))) {
+            System.out.println("engineer can't go there");
+            return;
+        }
         GameController.getGame().getMap().getTile(x, y).setBuilding(null);
         if (MapController.checkCanPutBuilding(x, y, "siegeTower", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "siegeTower", currentEngineer.getGovernment());
@@ -49,8 +61,10 @@ public class EngineerController {
 
     public void buildCatapult(int x, int y) {
         if (MapController.checkCanPutBuilding(x, y, "siegeTent", currentEngineer.getGovernment()))
-            MapController.dropBuilding(x, y, "siegeTent", currentEngineer.getGovernment());
-//        TODO: move engineer to (x, y)
+            if (!HumanController.move(new Tuple(y, x))) {
+                System.out.println("engineer can't go there");
+                return;
+            }
         GameController.getGame().getMap().getTile(x, y).setBuilding(null);
         if (MapController.checkCanPutBuilding(x, y, "catapult", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "catapult", currentEngineer.getGovernment());
@@ -60,7 +74,10 @@ public class EngineerController {
     public void buildTrebuchet(int x, int y) {
         if (MapController.checkCanPutBuilding(x, y, "siegeTent", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "siegeTent", currentEngineer.getGovernment());
-//        TODO: move engineer to (x, y)
+        if (!HumanController.move(new Tuple(y, x))) {
+            System.out.println("engineer can't go there");
+            return;
+        }
         GameController.getGame().getMap().getTile(x, y).setBuilding(null);
         if (MapController.checkCanPutBuilding(x, y, "trebuchet", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "trebuchet", currentEngineer.getGovernment());
@@ -70,7 +87,10 @@ public class EngineerController {
     public void buildFireBallista(int x, int y) {
         if (MapController.checkCanPutBuilding(x, y, "siegeTent", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "siegeTent", currentEngineer.getGovernment());
-//        TODO: move engineer to (x, y)
+        if (!HumanController.move(new Tuple(y, x))) {
+            System.out.println("engineer can't go there");
+            return;
+        }
         GameController.getGame().getMap().getTile(x, y).setBuilding(null);
         if (MapController.checkCanPutBuilding(x, y, "fireBallista", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "fireBallista", currentEngineer.getGovernment());
@@ -78,7 +98,11 @@ public class EngineerController {
     }
 
     public void enterTool(Tool tool) {
-//        TODO: move to the position of the tool
+        if (!HumanController.move(new Tuple(tool.getY(), tool.getX()))) {
+            System.out.println("engineer can't go there");
+            return;
+        }
         tool.addEngineer(currentEngineer);
+        currentEngineer.setInTool(true);
     }
 }

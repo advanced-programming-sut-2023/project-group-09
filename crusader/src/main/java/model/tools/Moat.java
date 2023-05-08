@@ -4,11 +4,12 @@ import controller.GameController;
 import controller.gamestructure.GameTools;
 import enumeration.Textures;
 import model.game.Tile;
+import model.game.Tuple;
 
 import java.util.ArrayList;
 
 public class Moat {
-    private static ArrayList<Tile> tilesToBeMoat = new ArrayList<>();
+    private static ArrayList<Tuple> tilesToBeMoat = new ArrayList<>();
 
     public void addTile(int x, int y) {
         Tile tile = GameController.getGame().getMap().getTile(x, y);
@@ -16,10 +17,10 @@ public class Moat {
                 (tile.getTexture().equals(Textures.EARTH) || tile.getTexture().equals(Textures.EARTH_AND_SAND)
                         || tile.getTexture().equals(Textures.GRASS) || tile.getTexture().equals(Textures.THICK_GRASS)
                         || tile.getTexture().equals(Textures.OASIS_GRASS) || tile.getTexture().equals(Textures.BEACH)))
-            tilesToBeMoat.add(tile);
+            tilesToBeMoat.add(new Tuple(y, x));
     }
 
-    public static ArrayList<Tile> getTilesToBeMoat() {
+    public static ArrayList<Tuple> getTilesToBeMoat() {
 //        TODO: better to sort them based on distance
         return tilesToBeMoat;
     }
