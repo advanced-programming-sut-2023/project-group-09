@@ -1,5 +1,6 @@
 package controller;
 
+import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameHumans;
 import controller.human.HumanController;
 import controller.human.MoveController;
@@ -16,7 +17,6 @@ import model.human.Human;
 import model.human.civilian.Civilian;
 import model.human.military.Military;
 import model.tools.Tool;
-import view.BuildingMenu;
 import view.UnitMenu;
 
 import java.util.*;
@@ -165,7 +165,7 @@ public class GameController {
         if (message != null) {
             return message;
         }
-        Building building = game.getMap().getTile(x-1, y-1).getBuilding();
+        Building building = game.getMap().getTile(x - 1, y - 1).getBuilding();
         if (building == null) {
             return "no building in this place!";
         }
@@ -236,7 +236,7 @@ public class GameController {
         return "attack order record successfully!";
     }
 
-    public static String useTool(int x,int y){
+    public static String useTool(int x, int y) {
         String message = validateXAndY(x, y);
         if (message != null) {
             return message;
@@ -249,7 +249,7 @@ public class GameController {
             return "this tool is not yours!";
         }
 
-        if(tool.getEngineers().size() == tool.getNumberOfRequiredEngineers()){
+        if (tool.getEngineers().size() == tool.getNumberOfRequiredEngineers()) {
             return "tool already is active!";
         }
 
@@ -259,8 +259,6 @@ public class GameController {
         }
         return "order record successfully!";
     }
-
-
 
 
     public static String pourOil(String direction) {
@@ -276,21 +274,57 @@ public class GameController {
     }
 
     public static String disbandUnit() {
-        for (Military military : HumanController.militaries){
-            MapController.deleteMilitary(military.getX(),military.getY(),military);
-            Civilian civilian = new Civilian(military.getX(),military.getY(),false);
-            MapController.addHuman(military.getX(),military.getY(),civilian);
+        for (Military military : HumanController.militaries) {
+            MapController.deleteMilitary(military.getX(), military.getY(), military);
+            Civilian civilian = new Civilian(military.getX(), military.getY(), false);
+            MapController.addHuman(military.getX(), military.getY(), civilian);
         }
         return "unit disbanded successfully!";
     }
 
     public static String dropBuilding(int x, int y, String type) {
-        return "";
+        String message = validateXAndY(x, y);
+        if (message != null) {
+            return message;
+        }
+
+        Building building = GameBuildings.getBuilding(type);
+        if (building == null) {
+            return "building type is invalid!";
+        }
+        if(!hasRequired(building.getCost())){
+            return "your resource is not enough!";
+        }
+        if (!MapController.checkCanPutBuilding(x,y,type,GameController.getGame().getCurrentGovernment())){
+            return "this coordinate is not suitable!";
+        }
+        consumeRequired(building.getCost());
+
+        MapController.dropBuilding(x,y,type,GameController.getGame().getCurrentGovernment());
+        return "building dropped successfully!";
     }
+
+    public static boolean hasRequired(HashMap<String, Integer> required) {
+        Government government = GameController.getGame().getCurrentGovernment();
+        for (String product : required.keySet()) {
+            if (government.getPropertyAmount(product) < required.get(product)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void consumeRequired(HashMap<String, Integer> required) {
+        Government government = GameController.getGame().getCurrentGovernment();
+        for (String product : required.keySet()) {
+            GovernmentController.consumeProduct(government, product, required.get(product));
+        }
+    }
+
 
     public static String selectBuilding(int x, int y) {
         Government nowGovernment = game.getCurrentGovernment();
-        Building building = game.getMap().getTile(x,y).getBuilding();
+        Building building = game.getMap().getTile(x, y).getBuilding();
         if (building == null || !building.getGovernment().equals(nowGovernment)) {
             return "There is no building of your government here!";
         }
@@ -319,13 +353,12 @@ public class GameController {
             game.setCurrentGovernment(nowGovernment);
             return result;
         } else {
-            Government nowGovernment = game.getGovernments().get(indexOfCurrentGovernment+1);
+            Government nowGovernment = game.getGovernments().get(indexOfCurrentGovernment + 1);
             result += "now Lord " + nowGovernment.getUser().getNickname() + " is playing\n";
             game.setCurrentGovernment(nowGovernment);
             return result;
         }
     }
-
 
 
     public static Building getInstanceOfBuilding(int x, int y, String typeOfBuilding) {
@@ -513,15 +546,15 @@ public class GameController {
 
     public static void workerDistribution(Building building) {
         Government government = building.getGovernment();
-        int numberOfRequiredWorkers = building.getNumberOfRequiredWorkers()-building.howManyWorkersHave();
+        int numberOfRequiredWorkers = building.getNumberOfRequiredWorkers() - building.howManyWorkersHave();
         for (Human human : government.getSociety()) {
             if (human instanceof Civilian) {
-                if (!((Civilian)human).isHasJob()) {
+                if (!((Civilian) human).isHasJob()) {
                     building.addHuman(human);
                     numberOfRequiredWorkers--;
-                    Move move = new Move(human.getX() , human.getY() , building ,
-                            true , human);
-                    move.setPath(MoveController.getPathForBuilding(move.getStartPair() , building , human));
+                    Move move = new Move(human.getX(), human.getY(), building,
+                            true, human);
+                    move.setPath(MoveController.getPathForBuilding(move.getStartPair(), building, human));
                     ((Civilian) human).setHasJob(true);
                 }
             }
@@ -531,8 +564,8 @@ public class GameController {
         }
     }
 
-    public static String unleashWarDogs(){
-        if (!BuildingController.unleashWarDogs()){
+    public static String unleashWarDogs() {
+        if (!BuildingController.unleashWarDogs()) {
             return "no enemy around here!";
         }
         return "war dogs unleashed successfully!";

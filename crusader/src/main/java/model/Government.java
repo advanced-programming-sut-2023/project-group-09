@@ -380,6 +380,10 @@ public class Government {
         }
     }
 
+    public void updateMaxPopularity() {
+        maxPopulation = 10 + buildings.get("hovel").getNumber() * 8;
+    }
+
     public void addTool(Tool tool) {
         tools.add(tool);
     }
