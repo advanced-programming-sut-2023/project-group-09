@@ -43,7 +43,7 @@ public class GovernmentController {
     public static String changeFoodRate(int rate) {
         if (-2 <= rate && rate <= 2) {
             currentGovernment.setFoodRate(rate);
-            return "food rate change successfully!";
+            return "food rate changed successfully!";
         }
         return "invalid food rate!";
     }
@@ -67,7 +67,7 @@ public class GovernmentController {
     public static String changeTaxRate(int rate) {
         if (-3 <= rate && rate <= 8) {
             currentGovernment.setTaxRate(rate);
-            return "tax rate change successfully!";
+            return "tax rate changed successfully!";
         }
         return "invalid tax rate!";
     }
@@ -75,7 +75,7 @@ public class GovernmentController {
     public static String changeFearRate(int rate) {
         if (-5 <= rate && rate <= 5) {
             currentGovernment.setFearRate(rate);
-            return "fear rate change successfully!";
+            return "fear rate changed successfully!";
         }
         return "invalid fear rate!";
     }

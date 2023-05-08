@@ -25,7 +25,7 @@ public class Civilian extends Human {
     private boolean isGoingToDestination;
 
     public Civilian(int x,int y,boolean hasJob) {
-        super(Speed.FAST.getRate(), DefenseRating.VERY_LOW.getRate(), 0);
+        super(Speed.AVERAGE.getRate(), DefenseRating.VERY_LOW.getRate(), 0);
         this.setX(x);
         this.setY(y);
         this.hasJob = hasJob;
@@ -66,5 +66,12 @@ public class Civilian extends Human {
             move.setPath(path);
             this.setMove(move);
         }
+    }
+
+    public int getSpeed(){
+        if(this.getGovernment() != null && hasJob){
+            return this.getGovernment().getFearRate() * (-1) + super.getSpeed();
+        }
+        return super.getSpeed();
     }
 }

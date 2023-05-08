@@ -98,12 +98,12 @@ public abstract class Military extends Human implements Cloneable {
     }
 
     public int getAttackRating() {
+        if(this.getGovernment() != null){
+            return this.getGovernment().getFearRate() * (-1) + attackRating;
+        }
         return attackRating;
     }
 
-    public void setAttackRating(int attackRating) {
-        this.attackRating = attackRating;
-    }
 
     public String getMilitaryState() {
         return militaryState;
