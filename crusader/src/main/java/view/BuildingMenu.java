@@ -22,9 +22,11 @@ public class BuildingMenu {
     }
 
     public static void run(Scanner scanner) {
+        System.out.println("<< Building Menu >>");
         BuildingController.setGovernment();
         Building building = BuildingController.getBuilding();
         nameOfBuilding = building.getName();
+
         while (true) {
             String command = scanner.nextLine();
             Matcher unselectBuildingMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.UNSELECT_BUILDING);
@@ -67,14 +69,14 @@ public class BuildingMenu {
                     System.out.println(BuildingController.resourcesNeededForRepair());
                     System.out.println(BuildingController.repair());
                 } else {
-                    System.out.println(Answers.INVALID_COMMAND);
+                    System.out.println(Answers.INVALID_COMMAND.getValue());
                 }
             } else if (isThisBuildingSelected(Buildings.ARMOURY)) {
                 Matcher showWeaponsMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.SHOW_WEAPONS);
                 if (showWeaponsMatcher.matches()) {
                     System.out.print(BuildingController.showItems());
                 } else {
-                    System.out.println(Answers.INVALID_COMMAND);
+                    System.out.println(Answers.INVALID_COMMAND.getValue());
                 }
             } else if (building instanceof Barrack) {
                 Matcher showUnitsListMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.SHOW_UNITS_LIST);
@@ -85,7 +87,7 @@ public class BuildingMenu {
                     String unitType = buyUnitMatcher.group("unitname");
                     System.out.println(BuildingController.buyUnit(unitType));
                 } else {
-                    System.out.println(Answers.INVALID_COMMAND);
+                    System.out.println(Answers.INVALID_COMMAND.getValue());
                 }
             } else if (isThisBuildingSelected(Buildings.SHOP)) {
                 MarketMenu.run(scanner);
@@ -94,7 +96,7 @@ public class BuildingMenu {
                 if (showSavedGoodsMatcher.matches()) {
                     System.out.print(BuildingController.showSavedGoods());
                 } else {
-                    System.out.println(Answers.INVALID_COMMAND);
+                    System.out.println(Answers.INVALID_COMMAND.getValue());
                 }
 
             } else if (building instanceof WeaponProducer weaponProducer) {
@@ -104,11 +106,16 @@ public class BuildingMenu {
                 if (howManyHorsesMatcher.matches()) {
                     System.out.println(BuildingController.howManyHorses());
                 } else {
-                    System.out.println(Answers.INVALID_COMMAND);
+                    System.out.println(Answers.INVALID_COMMAND.getValue());
                 }
             } else if (isThisBuildingSelected(Buildings.CAGED_WAR_DOGS)) {
                 Matcher unleashWarDogsMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.UNLEASH_WAR_DOGS);
                 System.out.println(GameController.unleashWarDogs());
+                return;
+            }else if (command.equals("back")){
+                return;
+            }else{
+                System.out.println(Answers.INVALID_COMMAND.getValue());
             }// else if (isThisBuildingSelected(Buildings.GRANARY)) {
             // TODO: Not now...
             //}

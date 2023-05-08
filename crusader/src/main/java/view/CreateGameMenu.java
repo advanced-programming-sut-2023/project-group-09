@@ -181,7 +181,7 @@ public class CreateGameMenu {
             int y = castles.get(castleNumber - 1).getSecond();
             Government government = new Government(lord, x, y, colors.get(colorNumber - 1));
             government.addAmountToProperties("wood", "resource", 100);
-            government.addAmountToProperties("rock", "resource", 50);
+            government.addAmountToProperties("stone", "resource", 50);
             government.addAmountToProperties("bread", "food", 60);
             government.setGold(4000);
 //            TODO: add primary units

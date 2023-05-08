@@ -148,7 +148,7 @@ public class MapController {
 
     public static void dropBuilding(int x, int y, String type, Government government) {
         Building building = GameBuildings.getBuilding(type, government, x, y);
-        government.getBuildings().get(type).addBuilding(building);
+
         if (building.getName().equals("hovel")){
             government.updateMaxPopularity();
         }
@@ -188,6 +188,7 @@ public class MapController {
                 }
             }
         }
+        government.getBuildings().get(type).addBuilding(building);
     }
 
     public static ArrayList<Military> getMilitariesOfGovernment(int x, int y, Government government) {
