@@ -1,12 +1,15 @@
 package view;
 
+import controller.EngineerController;
 import controller.GameController;
 import controller.MapController;
 import controller.ViewController;
 import enumeration.answers.Answers;
 import enumeration.commands.Commands;
 import enumeration.commands.UnitMenuCommands;
+import model.game.Game;
 import model.human.military.Military;
+import model.tools.Moat;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -38,6 +41,7 @@ public class UnitMenu {
             Matcher pourOilMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.POUR_OIL);
             Matcher digTunnelMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.DIG_TUNNEL);
             Matcher buildMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.BUILD);
+            Matcher enterToolMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.ENTER_TOOL);
             Matcher digMoatMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.DIG_MOAT);
             Matcher disbandUnitMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.DISBAND_UNIT);
             Matcher backMatcher = Commands.getMatcher(input, Commands.BACK);
@@ -198,9 +202,21 @@ public class UnitMenu {
                 }
             } else if (buildMatcher.matches()) {
                 runBuild(scanner);
+            } else if (enterToolMatcher.matches()) {
+//                TODO: return "invalid command" if the selected unit is not an engineer
+                String items = enterToolMatcher.group("content");
+                ArrayList<String> itemsPattern = new ArrayList<>();
+                itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
+                itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
+                if (ViewController.isItemMatch(items, itemsPattern)) {
+                    int x = Integer.parseInt(ViewController.resultMatcher.group("x"));
+                    int y = Integer.parseInt(ViewController.resultMatcher.group("y"));
+                    output = EngineerController.enterTool(GameController.getGame().getMap().getTile(x, y).getTool());
+                    System.out.println(output);
+                }
             } else if (digMoatMatcher.matches()) {
 //                TODO: return "invalid command" if the selected unit is not an engineer
-//                TODO: call digMoat()
+                EngineerController.digMoat();
             } else if (disbandUnitMatcher.matches()) {
                 output = GameController.disbandUnit();
                 System.out.println(output);

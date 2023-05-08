@@ -18,6 +18,7 @@ public enum UnitMenuCommands {
     POUR_OIL("pour oil -d (?<direction>(\"[^\"]*\"|\\S*))"),
     DIG_TUNNEL("dig tunnel(?<items>.*)"),
     BUILD("build"),
+    ENTER_TOOL("enter tool(?<content>)"),
     DIG_MOAT("dig moat"),
     DISBAND_UNIT("disband unit"),
     X_ITEM(" -x (?<x>\\d*)"),

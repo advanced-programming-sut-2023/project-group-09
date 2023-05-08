@@ -10,7 +10,7 @@ import model.tools.Moat;
 public class EngineerController {
     public static Engineer currentEngineer;
 
-    public void digMoat() {
+    public static void digMoat() {
         for (int i = 0; i < Moat.getTilesToBeMoat().size(); i++) {
             int x = Moat.getTilesToBeMoat().get(i).getX();
             int y = Moat.getTilesToBeMoat().get(i).getY();
@@ -97,12 +97,11 @@ public class EngineerController {
 //        TODO: add current engineer to the tool
     }
 
-    public void enterTool(Tool tool) {
-        if (!HumanController.move(new Tuple(tool.getY(), tool.getX()))) {
-            System.out.println("engineer can't go there");
-            return;
-        }
+    public static String enterTool(Tool tool) {
+        if (!HumanController.move(new Tuple(tool.getY(), tool.getX())))
+            return "engineer can't go there";
         tool.addEngineer(currentEngineer);
         currentEngineer.setInTool(true);
+        return "engineer entered the tool successfully";
     }
 }
