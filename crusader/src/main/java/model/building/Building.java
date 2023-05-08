@@ -12,6 +12,7 @@ import model.human.civilian.Civilian;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class Building implements Cloneable {
     private Government government = null;
@@ -305,6 +306,16 @@ public class Building implements Cloneable {
         return this.hp <= 0;
     }
 
+    public boolean isActive(){
+        requiredHumans.removeIf(i -> i.getGovernment() == null);
+        if (numberOfRequiredEngineers > 0){
+            return requiredHumans.size() == numberOfRequiredEngineers;
+        }
+        if (numberOfRequiredWorkers > 0){
+            return requiredHumans.size() == numberOfRequiredWorkers;
+        }
+        return true;
+    }
 
     public void routinWork() {
 

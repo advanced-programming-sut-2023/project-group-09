@@ -148,6 +148,10 @@ public class MapController {
 
     public static void dropBuilding(int x, int y, String type, Government government) {
         Building building = GameBuildings.getBuilding(type, government, x, y);
+        government.getBuildings().get(type).addBuilding(building);
+        if (building.getName().equals("hovel")){
+            government.updateMaxPopularity();
+        }
         for (int i = y; i < y + Objects.requireNonNull(building).getLength(); i++) {
             for (int j = x; j < x + building.getWidth(); j++) {
                 Tile tile = map.getTile(j, i);
@@ -207,16 +211,18 @@ public class MapController {
         }
         return militaries;
     }
+
     public static ArrayList<Civilian> getCiviliansOfOtherGovernment(int x, int y, Government government) {
         ArrayList<Civilian> civilians = new ArrayList<>();
         Tile tile = map.getTile(x, y);
-        for (Civilian civilian: tile.getCivilian()) {
+        for (Civilian civilian : tile.getCivilian()) {
             if (!civilian.getGovernment().getColor().equals(government.getColor())) {
                 civilians.add(civilian);
             }
         }
         return civilians;
     }
+
     public static ArrayList<Military> getOneTypeOfMilitariesOfGovernment(int x, int y, String type, Government government) {
         ArrayList<Military> militaries = new ArrayList<>();
         Tile tile = map.getTile(x, y);
@@ -257,6 +263,7 @@ public class MapController {
         military.getGovernment().addMilitary(military);
         tile.addMilitary(military);
     }
+
     public static void deleteTool(int x, int y, Tool tool) {
         Tile tile = map.getTile(x, y);
         tool.getGovernment().removeTool(tool);
@@ -277,6 +284,7 @@ public class MapController {
         tool.setX(x);
         tool.setY(y);
     }
+
     public static void moveMilitary(int x, int y, Military military) {
         deleteMilitary(military.getX(), military.getY(), military);
         addMilitary(x, y, military);

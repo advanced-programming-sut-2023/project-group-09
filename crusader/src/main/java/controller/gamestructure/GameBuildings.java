@@ -54,6 +54,8 @@ public class GameBuildings {
         createSiegeTent();
         createStable();
         createCagedWarDogs();
+        createOilSmelter();
+        createOxTether();
     }
 
     public static void addProducerBuildings() {
@@ -432,6 +434,8 @@ public class GameBuildings {
     }
 
     public static void createOilSmelter() {
+        Building building = new Building(0,0,"oilSmelter",10,3,3);
+        buildings.put("oilSmelter",building);
     }
 
     public static void createCagedWarDogs() {
@@ -576,7 +580,8 @@ public class GameBuildings {
     }
 
     public static void createOxTether(){
-
+        Building building = new Building(0,0,"oxTether",10,2,2);
+        buildings.put("oxTether",building);
     }
 
     public static Building getClone(Building building){

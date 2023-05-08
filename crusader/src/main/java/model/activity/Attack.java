@@ -316,6 +316,18 @@ public class Attack {
             return;
         }
 
+        if (enemy != null && enemy.getGovernment() == null){
+            enemy = null;
+        }
+
+        if(tool != null && tool.getGovernment() == null){
+            tool = null;
+        }
+
+        if (targetBuilding != null && targetBuilding.getGovernment() != null){
+            targetBuilding = null;
+        }
+
         //if enemy is very near to military
         Move move = military.getMove();
         if (shouldAttack(2)) {
