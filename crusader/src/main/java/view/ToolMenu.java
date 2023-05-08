@@ -1,12 +1,21 @@
 package view;
 
 import controller.GameController;
+import controller.ToolsController;
+import controller.human.MoveController;
 import enumeration.commands.ToolMenuCommands;
+import model.activity.Move;
+import model.activity.ToolMove;
+import model.game.Tuple;
+import model.tools.Tool;
 
+import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class ToolMenu {
+    public static Tool tool;
+
     public static void run(Scanner scanner) {
         while (true) {
             String input = scanner.nextLine();
@@ -25,9 +34,22 @@ public class ToolMenu {
                     continue;
                 }
 
-//                TODO: move tool
+                if (tool.getName().equals("trebuchet")) {
+                    System.out.println("you can't move a trebuchet");
+                    continue;
+                }
+                int x = Integer.parseInt(xM.group("x"));
+                int y = Integer.parseInt(yM.group("y"));
+                LinkedList<Tuple> path = ToolsController.getPathTools(new Tuple(tool.getY(), tool.getX()), new Tuple(y, x));
+                if (path == null){
+                    System.out.println("there is no available way to move tool");
+                    continue;
+                }
+                ToolMove move = new ToolMove(tool.getX(), tool.getY(), new Tuple(y, x), true, tool);
+                move.setPath(path);
+                tool.setToolMove(move);
             } else if (ToolMenuCommands.DISBAND.getMatcher(input).matches()) {
-//                TODO: delete tool
+                GameController.getGame().getCurrentGovernment().removeTool(tool);
 //                TODO: disband engineers
 //                TODO: update graphics
             } else if (ToolMenuCommands.STOP.getMatcher(input).matches()) {
