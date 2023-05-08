@@ -5,7 +5,7 @@ import model.tools.Tool;
 public class Engineer extends EuropeanTroop {
     private Tool target;
     private boolean isInTool = false;
-
+    private boolean hasOil = false;
     public Engineer(int speed, int defenseRating, int shootingRange, int attackRating, int price) {
         super(speed, defenseRating, shootingRange, attackRating, price);
 
@@ -38,5 +38,13 @@ public class Engineer extends EuropeanTroop {
 
     public void setInTool(boolean inTool) {
         isInTool = inTool;
+    }
+
+    public boolean isHasOil() {
+        return hasOil;
+    }
+
+    public void setHasOil(boolean hasOil) {
+        this.hasOil = hasOil;
     }
 }

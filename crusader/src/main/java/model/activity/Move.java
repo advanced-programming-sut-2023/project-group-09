@@ -10,6 +10,7 @@ import model.game.Tile;
 import model.game.Tuple;
 import model.human.Human;
 import model.human.civilian.Civilian;
+import model.human.military.Engineer;
 import model.human.military.Military;
 import model.tools.Tool;
 
@@ -30,6 +31,7 @@ public class Move {
     private LinkedList<Tuple> path;
 
     private boolean shouldConnectToTool = false;
+    private boolean shouldGetOil = false;
     private Building building;
     int indexOfPath = 0;
 
@@ -197,7 +199,7 @@ public class Move {
             }
         }
 
-        if (MoveStates.MOVING.getState().equals(moveState)) {
+        if (MoveStates.MOVING.getState().equals(moveState) && !shouldGetOil) {
             indexOfPath = 0;
             if (human instanceof Military) {
                 MapController.moveMilitary(endPair.getX(), endPair.getY(), (Military) human);
@@ -209,6 +211,23 @@ public class Move {
                 //TODO connect to tool
             }
         }
+
+        if (MoveStates.MOVING.getState().equals(moveState) && shouldGetOil) {
+            indexOfPath = 0;
+            if (human instanceof Engineer engineer) {
+                shouldGetOil = false;
+                if (building.isActive()){
+                    engineer.setHasOil(true);
+                }
+                MapController.moveMilitary(endPair.getX(), endPair.getY(), (Military) human);
+                building = null;
+                Collections.reverse(path);
+                Tuple temp = new Tuple(endPair.getY(), endPair.getX());
+                endPair = new Tuple(startPair.getY(), startPair.getX());
+                startPair = new Tuple(temp.getY(), temp.getX());
+            }
+        }
+
 
         if (MoveStates.PATROL.getState().equals(moveState) && isPatrolStart) {
             indexOfPath = 0;
