@@ -35,6 +35,7 @@ public class EngineerController {
         if (MapController.checkCanPutBuilding(x, y, "portableShield", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "portableShield", currentEngineer.getGovernment());
         GameController.getGame().getMap().getTile(x, y).getTool().addEngineer(currentEngineer);
+        currentEngineer.setInTool(true);
     }
 
     public void buildBatteringRam(int x, int y) {
@@ -52,6 +53,7 @@ public class EngineerController {
         if (MapController.checkCanPutBuilding(x, y, "batteringRam", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "batteringRam", currentEngineer.getGovernment());
         GameController.getGame().getMap().getTile(x, y).getTool().addEngineer(currentEngineer);
+        currentEngineer.setInTool(true);
     }
 
     public void buildSiegeTower(int x, int y) {
@@ -69,6 +71,7 @@ public class EngineerController {
         if (MapController.checkCanPutBuilding(x, y, "siegeTower", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "siegeTower", currentEngineer.getGovernment());
         GameController.getGame().getMap().getTile(x, y).getTool().addEngineer(currentEngineer);
+        currentEngineer.setInTool(true);
     }
 
     public void buildCatapult(int x, int y) {
@@ -82,6 +85,7 @@ public class EngineerController {
         if (MapController.checkCanPutBuilding(x, y, "catapult", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "catapult", currentEngineer.getGovernment());
         GameController.getGame().getMap().getTile(x, y).getTool().addEngineer(currentEngineer);
+        currentEngineer.setInTool(true);
     }
 
     public void buildTrebuchet(int x, int y) {
@@ -99,6 +103,7 @@ public class EngineerController {
         if (MapController.checkCanPutBuilding(x, y, "trebuchet", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "trebuchet", currentEngineer.getGovernment());
         GameController.getGame().getMap().getTile(x, y).getTool().addEngineer(currentEngineer);
+        currentEngineer.setInTool(true);
     }
 
     public void buildFireBallista(int x, int y) {
@@ -116,6 +121,7 @@ public class EngineerController {
         if (MapController.checkCanPutBuilding(x, y, "fireBallista", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "fireBallista", currentEngineer.getGovernment());
         GameController.getGame().getMap().getTile(x, y).getTool().addEngineer(currentEngineer);
+        currentEngineer.setInTool(true);
     }
 
     public static String enterTool(Tool tool) {
