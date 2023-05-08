@@ -8,8 +8,8 @@ import enumeration.MilitaryStates;
 import enumeration.MoveStates;
 import model.building.Building;
 import model.game.Map;
-import model.game.Tile;
 import model.game.Tuple;
+import model.human.civilian.Civilian;
 import model.human.military.Military;
 import model.tools.Tool;
 
@@ -60,6 +60,45 @@ public class Attack {
         return enemies;
     }
 
+    public void attackCiviliansOfRange(int x, int y, int range) {
+        Map map = GameController.getGame().getMap();
+        int startX = x - range;
+        int endX = x + range;
+        int startY = y - range;
+        int endY = y + range;
+
+
+        if (x < range) {
+            startX = 0;
+        }
+        if (endX >= map.getWidth() - 1) {
+            endX = map.getWidth() - 1;
+        }
+
+        if (endY + 1 >= map.getLength()) {
+            endY = map.getLength() - 1;
+        }
+
+        if (y - range < 0) {
+            startY = 0;
+        }
+
+        attackCiviliansOfArea(startX, startY, endX, endY);
+    }
+
+    public void attackCiviliansOfArea(int startX, int startY, int endX, int endY) {
+        for (int i = startX; i <= endX; i++) {
+            for (int j = startY; j <= endY; j++) {
+                ArrayList<Civilian> civilians = MapController.getCiviliansOfOtherGovernment(i, j, military.getGovernment());
+                if (civilians.size() != 0) {
+                    Civilian civilian = civilians.get(0);
+                    MapController.deleteHuman(civilian.getX(),civilian.getY(),civilian);
+                    civilian.setGovernment(null);
+                    return;
+                }
+            }
+        }
+    }
 
     public Tool getToolOfRange(int x, int y, int range) {
         Map map = GameController.getGame().getMap();
@@ -92,15 +131,15 @@ public class Attack {
         Tool result = null;
         for (int i = startX; i <= endX; i++) {
             for (int j = startY; j <= endY; j++) {
-                Tool tool = GameController.getGame().getMap().getTile(i,j).getTool();
-                if(tool == null || tool.getGovernment().equals(military.getGovernment())){
+                Tool tool = GameController.getGame().getMap().getTile(i, j).getTool();
+                if (tool == null || tool.getGovernment().equals(military.getGovernment())) {
                     continue;
                 }
                 Tool targetTool = military.getMove().getTool();
-                double distance = MoveController.getDistance(tool.getX(),tool.getY(),military.getX(),military.getY());
-                if(tool.equals(targetTool)){
+                double distance = MoveController.getDistance(tool.getX(), tool.getY(), military.getX(), military.getY());
+                if (tool.equals(targetTool)) {
                     return tool;
-                }else if (distance < minDistance){
+                } else if (distance < minDistance) {
                     minDistance = distance;
                     result = tool;
                 }
@@ -145,8 +184,8 @@ public class Attack {
         double minDistance = 500;
         ArrayList<Military> enemies = new ArrayList<>();
 
-        if(militaries.size() != 0){
-            if (military.getMove() != null && military.getMove().getEnemy()!= null && militaries.contains(military.getMove().getEnemy())) {
+        if (militaries.size() != 0) {
+            if (military.getMove() != null && military.getMove().getEnemy() != null && militaries.contains(military.getMove().getEnemy())) {
                 Military targetTroop = military.getMove().getEnemy();
                 this.enemy = militaries.get(militaries.indexOf(targetTroop));
                 return true;
@@ -162,8 +201,8 @@ public class Attack {
         }
 
 
-        if(nearestTool != null ){
-            if(minDistance > MoveController.getDistance(nearestTool.getX(),nearestTool.getY(),military.getX(),military.getY())){
+        if (nearestTool != null) {
+            if (minDistance > MoveController.getDistance(nearestTool.getX(), nearestTool.getY(), military.getX(), military.getY())) {
                 this.tool = nearestTool;
                 return true;
             }
@@ -179,7 +218,7 @@ public class Attack {
 
     public void attackEnemy() {
 
-        if(tool != null){
+        if (tool != null) {
             attackToTool();
             return;
         }
@@ -203,7 +242,7 @@ public class Attack {
 
     //set attack according type of enemy(he can air attack or not)
     public void attack() {
-        if(tool != null){
+        if (tool != null) {
             if (military.canAirAttack()) {
                 attackToTool();
             } else {
@@ -213,7 +252,7 @@ public class Attack {
             }
             return;
         }
-        if(enemy != null){
+        if (enemy != null) {
             if (military.canAirAttack()) {
                 attackEnemy();
             } else {
@@ -243,7 +282,7 @@ public class Attack {
         if (military.canAirAttack()) {
             return isInRange(building.getStartX(), building.getStartY(), military.getShootingRange());
         }
-        Tuple tuple = new Tuple( military.getY(),military.getX());
+        Tuple tuple = new Tuple(military.getY(), military.getX());
         return building.getNeighborTiles().contains(tuple);
     }
 
@@ -273,7 +312,7 @@ public class Attack {
     //this should use in nextTurn for each troop if troop has government so far
     public void doAttack() {
 
-        if(military.getName().equals("engineer")){
+        if (military.getName().equals("engineer")) {
             return;
         }
 
@@ -318,6 +357,8 @@ public class Attack {
         //attack
         if (shouldAttack()) {
             attack();
+        }else {
+            attackCiviliansOfRange(military.getX(), military.getY(), 2);
         }
     }
 

@@ -526,6 +526,13 @@ public class GameController {
         }
     }
 
+    public static String unleashWarDogs(){
+        if (!BuildingController.unleashWarDogs()){
+            return "no enemy around here!";
+        }
+        return "war dogs unleashed successfully!";
+    }
+
     private static boolean checkNullFields(String input) {
         return input == null || input.length() == 0;
     }

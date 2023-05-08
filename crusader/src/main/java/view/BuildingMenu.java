@@ -1,6 +1,7 @@
 package view;
 
 import controller.BuildingController;
+import controller.GameController;
 import enumeration.answers.Answers;
 import enumeration.commands.BuildingMenuCommands;
 import enumeration.commands.Commands;
@@ -105,6 +106,9 @@ public class BuildingMenu {
                 } else {
                     System.out.println(Answers.INVALID_COMMAND);
                 }
+            } else if (isThisBuildingSelected(Buildings.CAGED_WAR_DOGS)) {
+                Matcher unleashWarDogsMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.UNLEASH_WAR_DOGS);
+                System.out.println(GameController.unleashWarDogs());
             }// else if (isThisBuildingSelected(Buildings.GRANARY)) {
             // TODO: Not now...
             //}

@@ -53,6 +53,7 @@ public class GameBuildings {
         addBarracks();
         createSiegeTent();
         createStable();
+        createCagedWarDogs();
     }
 
     public static void addProducerBuildings() {
@@ -434,6 +435,8 @@ public class GameBuildings {
     }
 
     public static void createCagedWarDogs() {
+        Building building = new Building(0,0,"cagedWarDogs",10,2,2);
+        buildings.put("cagedWarDogs",building);
     }
 
     public static void createSiegeTent() {

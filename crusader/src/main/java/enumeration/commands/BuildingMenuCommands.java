@@ -15,7 +15,8 @@ public enum BuildingMenuCommands {UNSELECT_BUILDING("unselect"),
     SHOW_GOODS_SAVED("show saved goods"),
     HOW_MANY_HORSES("how many horses"),
     CHANGE_WEAPON_IN_PRODUCTION("change weapon in production"),
-    SHOW_STATE_OF_PRODUCTS("show state of product");
+    SHOW_STATE_OF_PRODUCTS("show state of product"),
+    UNLEASH_WAR_DOGS("unleash war dogs");
     private String regex;
     private BuildingMenuCommands(String regex) {
         this.regex = regex;

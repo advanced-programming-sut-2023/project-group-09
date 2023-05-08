@@ -207,7 +207,16 @@ public class MapController {
         }
         return militaries;
     }
-
+    public static ArrayList<Civilian> getCiviliansOfOtherGovernment(int x, int y, Government government) {
+        ArrayList<Civilian> civilians = new ArrayList<>();
+        Tile tile = map.getTile(x, y);
+        for (Civilian civilian: tile.getCivilian()) {
+            if (!civilian.getGovernment().getColor().equals(government.getColor())) {
+                civilians.add(civilian);
+            }
+        }
+        return civilians;
+    }
     public static ArrayList<Military> getOneTypeOfMilitariesOfGovernment(int x, int y, String type, Government government) {
         ArrayList<Military> militaries = new ArrayList<>();
         Tile tile = map.getTile(x, y);
