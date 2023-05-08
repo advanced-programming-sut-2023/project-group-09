@@ -204,6 +204,7 @@ public class UnitMenu {
                 runBuild(scanner);
             } else if (enterToolMatcher.matches()) {
 //                TODO: return "invalid command" if the selected unit is not an engineer
+//                TODO: return "invalid command" if the selected engineer is in a tool
                 String items = enterToolMatcher.group("content");
                 ArrayList<String> itemsPattern = new ArrayList<>();
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
@@ -216,6 +217,7 @@ public class UnitMenu {
                 }
             } else if (digMoatMatcher.matches()) {
 //                TODO: return "invalid command" if the selected unit is not an engineer
+//                TODO: return "invalid command" if the selected engineer is in a tool
                 EngineerController.digMoat();
             } else if (disbandUnitMatcher.matches()) {
                 output = GameController.disbandUnit();
@@ -231,6 +233,8 @@ public class UnitMenu {
 
     private static void runBuild(Scanner scanner) {
 //        TODO: return "invalid command" if the selected unit is not an engineer
+//        TODO: return "invalid command" if the selected engineer is in a tool
+
         String message = "select one of the following tools:\n";
         message += "1.Catapult\n";
         message += "2.Trebuchet\n";
