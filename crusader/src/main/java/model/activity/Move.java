@@ -34,7 +34,7 @@ public class Move {
     int indexOfPath = 0;
 
 
-    Military enemy;
+    private Military enemy;
 
 
     public Move(int startX, int startY, Tuple endPair, boolean isDestinationConstant, Human human) {
@@ -140,6 +140,19 @@ public class Move {
     public boolean checkDestination() {
 
         if (!isDestinationConstant) {
+            if(enemy != null && enemy.getGovernment() == null){
+                stopMove();
+                enemy = null;
+                return false;
+            }
+
+            if(tool != null && tool.getGovernment() == null){
+                stopMove();
+                tool = null;
+                return false;
+            }
+
+
             if (enemy != null && endPair.getX() != enemy.getX() && endPair.getY() != enemy.getY()) {
                 endPair = new Tuple(enemy.getY(), enemy.getX());
                 return true;
@@ -150,6 +163,11 @@ public class Move {
             }
         }
 
+        if (building != null && building.getGovernment() == null){
+            stopMove();
+            building = null;
+            return false;
+        }
         Tuple lastPair = path.getLast();
         if (endPair.getX() != lastPair.getX() || endPair.getY() != lastPair.getY()) {
             endPair = new Tuple(enemy.getY(), enemy.getX());
@@ -166,6 +184,10 @@ public class Move {
 
         if (checkDestination() || !checkIsPathValid()) {
             updatePath();
+        }
+
+        if (path == null){
+            return;
         }
 
         if (MoveStates.MOVING.getState().equals(moveState) || MoveStates.PATROL.getState().equals(moveState)) {
@@ -247,7 +269,7 @@ public class Move {
 
     public void stopMove() {
         moveState = MoveStates.STOP.getState();
-        path.clear();
+        path = null;
         startPair = null;
         endPair = null;
         indexOfPath = 0;

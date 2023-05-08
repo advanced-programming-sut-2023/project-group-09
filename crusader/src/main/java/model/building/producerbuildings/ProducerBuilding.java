@@ -1,12 +1,18 @@
 package model.building.producerbuildings;
 
 import controller.GovernmentController;
+import controller.human.MoveController;
 import model.Government;
 import model.building.Building;
 import model.building.storagebuildings.StorageBuilding;
+import model.buildinghandler.BuildingCounter;
+import model.game.Tuple;
+import model.human.Human;
+import model.human.civilian.Civilian;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class ProducerBuilding extends Building {
 
@@ -15,9 +21,11 @@ public class ProducerBuilding extends Building {
     private String itemName;
     private final String itemType;
     private final int rate;
-    private int inUse; // it just uses for stable //TODO: handle it.
+    private int inUse; // it just uses for stable // TODO: handle it.
 
     private int countOfRoundsToProduce = 0;
+
+    boolean start = false;
 
 
 
@@ -48,8 +56,16 @@ public class ProducerBuilding extends Building {
         this.required = required;
     }
     public void doAction() {
-        if (countOfRoundsToProduce == 0) {
+
+        if (!this.isActive()){
+            return;
+        }
+        if (countOfRoundsToProduce == 0 && start) {
             addProduct();
+            computeActionTurn();
+        }
+        if (!start && countOfRoundsToProduce == 0){
+            start = true;
             computeActionTurn();
         }
         countOfRoundsToProduce--;
@@ -139,6 +155,17 @@ public class ProducerBuilding extends Building {
 
     public void computeActionTurn() {
         //-----
+        BuildingCounter buildingCounter;
+        Building building;
+        if((buildingCounter = getGovernment().getBuildings().get(nameOfStorage))!= null && buildingCounter.getNumber() != 0){
+            building = buildingCounter.getBuildings().get(0);
+            double distance = MoveController.getDistance(building.getStartX(),building.getStartY(),getStartX(),getStartY());
+            Civilian civilian = (Civilian) getRequiredHumans().get(0);
+            countOfRoundsToProduce = (int) (distance / civilian.getSpeed());
+            return;
+        }
+        start = false;
+        countOfRoundsToProduce = 0;
     }
 
 }

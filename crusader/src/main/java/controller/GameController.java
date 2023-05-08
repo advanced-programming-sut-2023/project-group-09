@@ -276,7 +276,12 @@ public class GameController {
     }
 
     public static String disbandUnit() {
-        return "";
+        for (Military military : HumanController.militaries){
+            MapController.deleteMilitary(military.getX(),military.getY(),military);
+            Civilian civilian = new Civilian(military.getX(),military.getY(),false);
+            MapController.addHuman(military.getX(),military.getY(),civilian);
+        }
+        return "unit disbanded successfully!";
     }
 
     public static String dropBuilding(int x, int y, String type) {
