@@ -20,6 +20,7 @@ import model.human.military.Engineer;
 import model.human.military.Military;
 import model.human.military.Tunneler;
 import model.tools.Tool;
+import view.ToolMenu;
 import view.UnitMenu;
 
 import java.util.*;
@@ -431,15 +432,24 @@ public class GameController {
         return "Building " + building.getName() + " Selected!";
     }
 
-    public static int howManyGovermentsRemainsInGame() {
-        int numberOfGoverments = 0;
+    public static String selectTool(int x, int y) {
+        Tool tool = game.getMap().getTile(x, y).getTool();
+        if (tool == null || !tool.getGovernment().equals(game.getCurrentGovernment())) {
+            return "there is no tool of your government here!";
+        }
+        ToolMenu.tool = tool;
+        return "tool " + tool.getName() + " selected";
+    }
+
+    public static int howManyGovernmentsRemainsInGame() {
+        int numberOfGovernments = 0;
         for (Government government : game.getGovernments()) {
             if (government.isAlive()) {
                 government.addTurnsSurvive();
-                numberOfGoverments++;
+                numberOfGovernments++;
             }
         }
-        return numberOfGoverments;
+        return numberOfGovernments;
     }
 
 
@@ -462,7 +472,7 @@ public class GameController {
                 routine work of buildings (such as producing some thing)
              */
             game.setCurrentGovernment(nowGovernment);
-            int numberOfRemainedGoverments = howManyGovermentsRemainsInGame();
+            int numberOfRemainedGoverments = howManyGovernmentsRemainsInGame();
             if (numberOfRemainedGoverments == 1) {
                 game.setEndGame(true);
                 game.setWinner();

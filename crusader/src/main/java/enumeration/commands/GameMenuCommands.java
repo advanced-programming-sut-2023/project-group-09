@@ -8,6 +8,7 @@ public enum GameMenuCommands {
     DROP_BUILDING("drop building(?<items>.+)"),
     SELECT_BUILDING("select building(?<items>.+)"),
     SELECT_UNIT("select unit(?<items>.+)"),
+    SELECT_TOOL("select tool(?<items>.+)"),
     GOVERNMENT_MENU("government menu"),
     TRADE_MENU("trade menu"),
     MARKET_MENU("market menu"),

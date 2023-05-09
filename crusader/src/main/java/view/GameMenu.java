@@ -9,6 +9,7 @@ import enumeration.commands.GameMenuCommands;
 import enumeration.commands.MapCommands;
 import enumeration.commands.UnitMenuCommands;
 import model.game.Game;
+import model.tools.Tool;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -23,6 +24,7 @@ public class GameMenu {
             input = scanner.nextLine();
             Matcher dropBuildingMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.DROP_BUILDING);
             Matcher selectBuildingMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.SELECT_BUILDING);
+            Matcher selectToolMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.SELECT_TOOL);
             Matcher selectUnitMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.SELECT_UNIT);
             Matcher governmentMenuMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.GOVERNMENT_MENU);
             Matcher tradeMenuMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.TRADE_MENU);
@@ -74,6 +76,19 @@ public class GameMenu {
                     String type = ViewController.resultMatcher.group("type");
                     output = GameController.selectUnit(x, y, type, scanner);
                     System.out.println(output);
+                }
+            } else if (selectToolMatcher.matches()) {
+                String items = selectBuildingMatcher.group("items");
+                ArrayList<String> itemsPattern = new ArrayList<>();
+                itemsPattern.add(GameMenuCommands.X_ITEM.getRegex());
+                itemsPattern.add(GameMenuCommands.Y_ITEM.getRegex());
+                if (ViewController.isItemMatch(items, itemsPattern)) {
+                    int x = ViewController.getNumberOfRegex("x");
+                    int y = ViewController.getNumberOfRegex("y");
+                    output = GameController.selectTool(x, y);
+                    if (output.charAt(1) == 'h') continue;
+                    System.out.println(output);
+                    ToolMenu.run(scanner);
                 }
             } else if (setUnitStateMatcher.matches()) {
                 String items = setUnitStateMatcher.group("items");
