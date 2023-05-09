@@ -19,7 +19,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
-        this.email = email;
+        this.email = email.toLowerCase();
         this.slogan = slogan;
     }
 
@@ -64,7 +64,7 @@ public class User {
     }
 
     public void setPasswordRecoveryAnswer(String passwordRecoveryAnswer) {
-        this.passwordRecoveryAnswer = passwordRecoveryAnswer;
+        this.passwordRecoveryAnswer = UserController.convertPasswordToHash(passwordRecoveryAnswer);
     }
 
     public String getSlogan() {
@@ -85,7 +85,8 @@ public class User {
         return UserController.convertPasswordToHash(password).equals(this.password);
     }
     public boolean isAnswerToSecurityQuestionCorrect(String answer) {
-        return answer.equals(this.passwordRecoveryAnswer);
+        answer = UserController.convertPasswordToHash(answer);
+        return this.passwordRecoveryAnswer.hashCode() == answer.hashCode();
     }
     //=============================
     public int getHighScore() {

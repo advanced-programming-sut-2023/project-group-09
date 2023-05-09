@@ -84,8 +84,15 @@ public class ToolMove{
     }
 
     public boolean checkIsPathValid() {
+
+        if (building != null && building.getGovernment() == null){
+            stopMove();
+            building = null;
+            return true;
+        }
+
+
         Map map = GameController.getGame().getMap();
-        boolean beforeSate = false;
         for (int i = indexOfPath; i <= indexOfPath + tool.getSpeed(); i++) {
             Tuple pair = path.get(i);
             Tile tile = map.getTile(pair.getX(), pair.getY());
@@ -106,6 +113,10 @@ public class ToolMove{
 
         if (!checkIsPathValid()) {
             updatePath();
+        }
+
+        if (path == null){
+            return;
         }
 
         if (MoveStates.MOVING.getState().equals(moveState) || MoveStates.PATROL.getState().equals(moveState)) {

@@ -1,5 +1,6 @@
 package model.tools;
 
+import controller.GovernmentController;
 import model.Government;
 import model.activity.ToolAttack;
 import model.activity.ToolMove;
@@ -7,13 +8,15 @@ import model.human.military.Engineer;
 
 import java.util.ArrayList;
 
-public class Tool implements Cloneable {
+public class Tool{
     private Government government = null;
 
     private boolean canMove;
     private boolean isActive = false;
     private boolean canAttack = false;
     private boolean canAirAttack = false;
+
+    private boolean useStone = false;
     private String name;
 
     private int x, y;
@@ -188,9 +191,29 @@ public class Tool implements Cloneable {
         this.toolAttack = toolAttack;
     }
 
-    @Override
-    public Tool clone() throws CloneNotSupportedException {
-        return (Tool) super.clone();
+    public boolean isUseStone() {
+        return useStone;
     }
 
+    public void setUseStone(boolean useStone) {
+        this.useStone = useStone;
+    }
+    public void setStoneNumber(int stoneNumber) {
+        this.stoneNumber = stoneNumber;
+    }
+    public void decreaseStoneNumber(int stoneNumber) {
+        this.stoneNumber -= stoneNumber;
+    }
+
+    public boolean chargeStone(){
+        if (stoneNumber != 0){
+            return true;
+        }
+
+        if(GovernmentController.consumeProduct(government,"stone",8)){
+            stoneNumber = 8;
+            return true;
+        }
+        return false;
+    }
 }

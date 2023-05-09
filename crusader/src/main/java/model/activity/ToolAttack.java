@@ -23,7 +23,7 @@ public class ToolAttack {
     }
 
     //methods
-    public boolean isInRange(int x, int y,int range) {
+    public boolean isInRange(int x, int y, int range) {
         if (Math.abs(tool.getX() - x) > range) {
             return false;
         }
@@ -36,6 +36,11 @@ public class ToolAttack {
         if (enemy == null) {
             return;
         }
+
+        if (tool.isUseStone() && !tool.chargeStone()) {
+            return;
+        }
+
         int enemyHp = enemy.takeDamage(tool.getDamage());
         if (enemy.getAttack().enemy == null && enemy.getAttack().isInRange(tool.getX(), tool.getY(), enemy.getShootingRange())) {
             enemy.getAttack().setTool(tool);
@@ -51,7 +56,7 @@ public class ToolAttack {
 
 
     public boolean buildingIsInRange(Building building) {
-        if(building == null){
+        if (building == null) {
             return false;
         }
         if (tool.isCanAirAttack()) {
@@ -62,9 +67,16 @@ public class ToolAttack {
     }
 
     public void attackToBuilding() {
-        if (tool.getName().equals("siegeTower")){
+        if (tool.getName().equals("siegeTower")) {
             tool.setCanMove(false);
+            return;
         }
+
+        if (tool.isUseStone() && !tool.chargeStone()) {
+            return;
+        }
+
+
         int hp = targetBuilding.takeDamage(tool.getDamage());
         if (hp < 0) {
             MapController.deleteBuilding(targetBuilding);
@@ -74,12 +86,20 @@ public class ToolAttack {
     }
 
 
-
     public void doAttack() {
 
-        if(!tool.isCanAttack() || !tool.isActive()){
+        if (!tool.isCanAttack() || !tool.isActive()) {
             return;
         }
+
+        if (enemy != null && enemy.getGovernment() == null) {
+            enemy = null;
+        }
+
+        if (targetBuilding != null && targetBuilding.getGovernment() != null) {
+            targetBuilding = null;
+        }
+
 
         ToolMove move = tool.getToolMove();
 

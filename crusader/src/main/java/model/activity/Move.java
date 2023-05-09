@@ -292,6 +292,11 @@ public class Move {
         startPair = null;
         endPair = null;
         indexOfPath = 0;
+        building = null;
+        tool = null;
+        enemy = null;
+        setShouldGetOil(false);
+        setShouldConnectToTool(false);
     }
 
     public boolean isMoving() {
