@@ -159,9 +159,6 @@ public class Tile {
         if (building == null && civilians.size() == 0 && militaries.size() == 0 && rockDirection == null && tree == null) {
             this.texture = texture;
             passable = texture.isPassable();
-            if (!texture.isPassable()) {
-                civilians.clear();
-            }
             canPutBuilding = texture.getCanPutBuilding();
         }
     }
@@ -171,7 +168,10 @@ public class Tile {
     }
 
     public void setBuilding(Building building) {
+        canPutBuilding = false;
         this.building = building;
+        isPit = false;
+        pitGovernment = null;
     }
 
     public ArrayList<Civilian> getCivilian() {
