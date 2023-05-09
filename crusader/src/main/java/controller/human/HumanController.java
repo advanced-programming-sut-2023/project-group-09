@@ -367,7 +367,7 @@ public class HumanController {
     public static boolean pourOilDirection(Engineer engineer, String direction, String state) {
         ArrayList<Military> enemies = null;
         if (direction != null) {
-            if (engineer.isHasOil()){
+            if (engineer.isHasOil()) {
                 switch (direction) {
                     case "e":
                         enemies = getEnemyOfRight(engineer.getX(), engineer.getY(), engineer.getGovernment());
@@ -558,17 +558,17 @@ public class HumanController {
         return enemies;
     }
 
-    public static boolean takeDamage(int damage, Human human){
-        if(human instanceof Military military){
+    public static boolean takeDamage(int damage, Human human) {
+        if (human instanceof Military military) {
             int hp = military.takeDamage(damage);
-            if(hp <= 0){
-                MapController.deleteMilitary(military.getX(),military.getY(),military);
+            if (hp <= 0) {
+                MapController.deleteMilitary(military.getX(), military.getY(), military);
                 military.setGovernment(null);
                 return true;
             }
             return false;
-        }else{
-            if(damage != 0){
+        } else {
+            if (damage != 0) {
                 MapController.deleteHuman(human.getX(), human.getY(), (Civilian) human);
                 human.setGovernment(null);
                 return true;
@@ -576,27 +576,29 @@ public class HumanController {
             return false;
         }
     }
-    public static boolean digTunnel(Building targetBuilding, Tunneler tunneler){
+
+    public static boolean digTunnel(Building targetBuilding, Tunneler tunneler) {
         Tuple startTuple = new Tuple(tunneler.getY(), tunneler.getX());
-        LinkedList<Tuple> path = MoveController.getPathForBuilding(startTuple,targetBuilding,tunneler);
-        if (path == null){
+        LinkedList<Tuple> path = MoveController.getPathForBuilding(startTuple, targetBuilding, tunneler);
+        if (path == null) {
             return false;
         }
 
         Tuple buildingPosition = path.getLast();
         int x = buildingPosition.getX();
         int y = buildingPosition.getY();
-        Building tunnel = GameBuildings.getTunnel(GameController.getGame().getCurrentGovernment(),x, y);
-        Tile tile = GameController.getGame().getMap().getTile(x,y);
+        Building tunnel = GameBuildings.getTunnel(GameController.getGame().getCurrentGovernment(), x, y);
+        Tile tile = GameController.getGame().getMap().getTile(x, y);
         tile.setBuilding(tunnel);
         tunneler.setTargetTunnel(tunnel);
         tunneler.setTargetBuilding(targetBuilding);
-        Move move = new Move(startTuple.getX(),startTuple.getY(),path.getLast(),true,tunneler);
+        Move move = new Move(startTuple.getX(), startTuple.getY(), path.getLast(), true, tunneler);
         move.setPath(path);
         move.setWantDigTunnel(true);
         tunneler.setMove(move);
         return true;
     }
+
     public static void setState(String state, ArrayList<Military> militaries) {
         for (Military military : militaries) {
             if (military.getMove().getMoveState().equals(MoveStates.PATROL.getState())) {

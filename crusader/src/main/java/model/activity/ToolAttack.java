@@ -14,10 +14,9 @@ import model.tools.Tool;
 
 public class ToolAttack {
 
-    Tool tool;
-
-    Building targetBuilding;
-    Tuple attackPoint;
+    public Tool tool;
+    public Building targetBuilding;
+    public Tuple attackPoint;
 
     public ToolAttack(Tool tool) {
         this.tool = tool;
@@ -36,6 +35,9 @@ public class ToolAttack {
         return Math.abs(tool.getY() - y) <= range;
     }
 
+    public void setAttackPoint(Tuple attackPoint) {
+        this.attackPoint = attackPoint;
+    }
 
     public void attackToMilitary(Military enemy) {
         if (enemy == null) {
