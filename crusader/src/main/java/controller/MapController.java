@@ -2,6 +2,7 @@ package controller;
 
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameHumans;
+import controller.gamestructure.GameTools;
 import enumeration.Textures;
 import enumeration.dictionary.RockDirections;
 import enumeration.dictionary.Trees;
@@ -173,6 +174,54 @@ public class MapController {
     }
 
     public static void dropBuilding(int x, int y, String type, Government government) {
+        Building building = GameBuildings.getBuilding(type, government, x, y);
+        if (type.equals("killingPit")) {
+            dropKillingPit(x, y);
+            return;
+        }
+        if (building.getName().equals("hovel")) {
+            government.updateMaxPopularity();
+        }
+        for (int i = y; i < y + Objects.requireNonNull(building).getLength(); i++) {
+            for (int j = x; j < x + building.getWidth(); j++) {
+                Tile tile = map.getTile(j, i);
+
+                if (building.isShouldBeOne()) {
+                    deleteOtherBuildingWithThisType(building);
+                }
+
+                tile.setCanPutBuilding(false);
+                Textures textures = Textures.EARTH_AND_SAND;
+                if (building.getHasSpecialTexture()) {
+                    textures = building.getSuitableTextures().get(0);
+                }
+
+                tile.setBuilding(building);
+                if (building.getName().equals("stairs") && building instanceof Wall) {
+                    ((Wall) building).setHeight(Wall.heightOfStairs(x, y));
+                    tile.setPassable(false);
+                    tile.setTexture(textures);
+                    continue;
+                }
+
+
+                if (building.getBuildingImpassableLength() != -1) {
+                    if (i >= building.getBuildingImpassableLength() || j >= building.getBuildingImpassableLength()) {
+                        tile.setPassable(true);
+                    } else {
+                        tile.setPassable(false);
+                        tile.setTexture(textures);
+                    }
+                } else {
+                    tile.setPassable(false);
+                    tile.setTexture(textures);
+                }
+            }
+        }
+        government.getBuildings().get(type).addBuilding(building);
+    }
+
+    public static void dropTool(int x, int y, String type, Government government) {
         Building building = GameBuildings.getBuilding(type, government, x, y);
         if (type.equals("killingPit")) {
             dropKillingPit(x, y);
