@@ -292,7 +292,7 @@ public class Attack {
     }
 
     public void attackToTool() {
-        int hp = targetBuilding.takeDamage(military.getAttackRating());
+        int hp = tool.takeDamage(military.getAttackRating());
         if (hp < 0) {
             MapController.deleteTool(tool.getX(), tool.getY(), tool);
             tool.setGovernment(null);
