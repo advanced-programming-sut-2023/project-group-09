@@ -90,6 +90,9 @@ public class MapController {
 
     public static boolean checkCanPutBuilding(int x, int y, String type, Government government) {
         Building building = GameBuildings.getBuilding(type, government, x, y);
+        if (type.equals("killingPit")) {
+            return checkKillingPit(x, y);
+        }
         if (building == null) {
             return false;
         }
@@ -146,10 +149,35 @@ public class MapController {
         return true;
     }
 
+    public static boolean checkKillingPit(int x, int y) {
+        Tile tile = GameController.getGame().getMap().getTile(x, y);
+        if (tile.getBuilding() == null && !tile.isPit() && !tile.isMoat() &&
+                (tile.getTexture().equals(Textures.EARTH)) || (tile.getTexture().equals(Textures.EARTH_AND_SAND))
+                || (tile.getTexture().equals(Textures.BOULDER)) || (tile.getTexture().equals(Textures.GRASS))
+                || (tile.getTexture().equals(Textures.THICK_GRASS)) || (tile.getTexture().equals(Textures.OASIS_GRASS))
+                || (tile.getTexture().equals(Textures.BEACH)))
+            return true;
+        return false;
+    }
+
+    public static void dropKillingPit(int x, int y) {
+        Tile tile = GameController.getGame().getMap().getTile(x, y);
+        if (tile.getBuilding() == null && !tile.isPit() && !tile.isMoat() &&
+                (tile.getTexture().equals(Textures.EARTH)) || (tile.getTexture().equals(Textures.EARTH_AND_SAND))
+                || (tile.getTexture().equals(Textures.BOULDER)) || (tile.getTexture().equals(Textures.GRASS))
+                || (tile.getTexture().equals(Textures.THICK_GRASS)) || (tile.getTexture().equals(Textures.OASIS_GRASS))
+                || (tile.getTexture().equals(Textures.BEACH)))
+            tile.setPit(true);
+        tile.setPitGovernment(GameController.getGame().getCurrentGovernment());
+    }
+
     public static void dropBuilding(int x, int y, String type, Government government) {
         Building building = GameBuildings.getBuilding(type, government, x, y);
-
-        if (building.getName().equals("hovel")){
+        if (type.equals("killingPit")) {
+            dropKillingPit(x, y);
+            return;
+        }
+        if (building.getName().equals("hovel")) {
             government.updateMaxPopularity();
         }
         for (int i = y; i < y + Objects.requireNonNull(building).getLength(); i++) {

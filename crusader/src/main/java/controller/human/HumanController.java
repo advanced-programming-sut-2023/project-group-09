@@ -11,6 +11,7 @@ import model.building.Building;
 import model.building.castlebuildings.Wall;
 import model.game.Map;
 import model.game.Tuple;
+import model.human.Human;
 import model.human.civilian.Civilian;
 import model.human.military.Engineer;
 import model.human.military.Military;
@@ -546,6 +547,24 @@ public class HumanController {
         return enemies;
     }
 
+    public static boolean takeDamage(int damage, Human human){
+        if(human instanceof Military military){
+            int hp = military.takeDamage(damage);
+            if(hp <= 0){
+                MapController.deleteMilitary(military.getX(),military.getY(),military);
+                military.setGovernment(null);
+                return true;
+            }
+            return false;
+        }else{
+            if(damage != 0){
+                MapController.deleteHuman(human.getX(), human.getY(), (Civilian) human);
+                human.setGovernment(null);
+                return true;
+            }
+            return false;
+        }
+    }
     public static void setState(String state, ArrayList<Military> militaries) {
         for (Military military : militaries) {
             if (military.getMove().getMoveState().equals(MoveStates.PATROL.getState())) {

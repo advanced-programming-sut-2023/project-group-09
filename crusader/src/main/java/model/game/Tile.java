@@ -3,6 +3,7 @@ package model.game;
 import enumeration.Textures;
 import enumeration.dictionary.RockDirections;
 import enumeration.dictionary.Trees;
+import model.Government;
 import model.building.Building;
 import model.building.castlebuildings.CastleBuilding;
 import model.building.castlebuildings.Gatehouse;
@@ -28,6 +29,13 @@ public class Tile {
     private RockDirections rockDirection;
     private Tool tool;
     private boolean isDefaultCastle;
+    private Building building = null;
+    private boolean isMoat;
+    private boolean isPit;
+
+    private Government pitGovernment;
+    private boolean passable = true;
+    private boolean canPutBuilding = true;
 
     public boolean isDefaultCastle() {
         return isDefaultCastle;
@@ -53,7 +61,7 @@ public class Tile {
         return canPutBuilding;
     }
 
-    private Building building = null;
+
     private ArrayList<Civilian> civilians = new ArrayList<>();
 
     public ArrayList<Military> getMilitaries() {
@@ -73,11 +81,7 @@ public class Tile {
     }
 
     private ArrayList<Military> militaries = new ArrayList<>();
-    private boolean isMoat;
-    private boolean isPit;
 
-    private boolean passable = true;
-    private boolean canPutBuilding = true;
 
     public ArrayList<Civilian> getCivilians() {
         return civilians;
@@ -91,42 +95,42 @@ public class Tile {
         return passable;
     }
 
-    public boolean isPassable(Human human,boolean isOverhead) {
-        if(human instanceof Military military && military.getName().equals("assassin")){
+    public boolean isPassable(Human human, boolean isOverhead) {
+        if (human instanceof Military military && military.getName().equals("assassin")) {
             return building instanceof Wall || passable;
         }
 
-        if(!isOverhead){
-            if (building instanceof Wall wall && wall.getHeight() == 1){
+        if (!isOverhead) {
+            if (building instanceof Wall wall && wall.getHeight() == 1) {
                 return true;
             }
-            if (building instanceof Gatehouse gatehouse && gatehouse.isOpen()){
+            if (building instanceof Gatehouse gatehouse && gatehouse.isOpen()) {
                 return true;
             }
-            if (building instanceof MainCastle ){
+            if (building instanceof MainCastle) {
                 return true;
             }
-            if( tool != null && tool.getName().equals("siegeTower") && !tool.isCanMove()){
+            if (tool != null && tool.getName().equals("siegeTower") && !tool.isCanMove()) {
                 return true;
             }
-            if(human instanceof Military military && military.isUsesLadder()){
-                for (Military troop : militaries){
-                    if(troop.getGovernment().equals(military.getGovernment()) && troop.getName().equals("ladderman")){
+            if (human instanceof Military military && military.isUsesLadder()) {
+                for (Military troop : militaries) {
+                    if (troop.getGovernment().equals(military.getGovernment()) && troop.getName().equals("ladderman")) {
                         return true;
                     }
                 }
             }
             return passable;
-        }else{
-            if(building instanceof CastleBuilding castleBuilding && !castleBuilding.getName().equals("drawBridge")){
+        } else {
+            if (building instanceof CastleBuilding castleBuilding && !castleBuilding.getName().equals("drawBridge")) {
                 return true;
             }
-            if( tool != null && tool.getName().equals("siegeTower") && !tool.isCanMove()){
+            if (tool != null && tool.getName().equals("siegeTower") && !tool.isCanMove()) {
                 return true;
             }
-            if(human instanceof Military military && military.isUsesLadder() && !military.getName().equals("ladderman")){
-                for (Military troop : militaries){
-                    if(troop.getGovernment().equals(military.getGovernment()) && troop.getName().equals("ladderman")){
+            if (human instanceof Military military && military.isUsesLadder() && !military.getName().equals("ladderman")) {
+                for (Military troop : militaries) {
+                    if (troop.getGovernment().equals(military.getGovernment()) && troop.getName().equals("ladderman")) {
                         return true;
                     }
                 }
@@ -224,5 +228,13 @@ public class Tile {
 
     public void clearMilitary() {
         militaries.clear();
+    }
+
+    public Government getPitGovernment() {
+        return pitGovernment;
+    }
+
+    public void setPitGovernment(Government pitGovernment) {
+        this.pitGovernment = pitGovernment;
     }
 }

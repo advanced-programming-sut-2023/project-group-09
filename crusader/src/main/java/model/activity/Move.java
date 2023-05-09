@@ -2,6 +2,7 @@ package model.activity;
 
 import controller.GameController;
 import controller.MapController;
+import controller.human.HumanController;
 import controller.human.MoveController;
 import enumeration.MoveStates;
 import model.building.Building;
@@ -14,6 +15,7 @@ import model.human.military.Engineer;
 import model.human.military.Military;
 import model.tools.Tool;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Objects;
@@ -35,7 +37,7 @@ public class Move {
     private Building building;
     int indexOfPath = 0;
 
-
+    ArrayList<Tile> killPits = new ArrayList<>();
     private Military enemy;
 
 
@@ -53,15 +55,6 @@ public class Move {
         this.isDestinationConstant = isDestinationConstant;
         this.human = human;
     }
-
-    public Tuple getStartPair() {
-        return startPair;
-    }
-
-    public void setStartPair(Tuple startPair) {
-        this.startPair = startPair;
-    }
-
     public Move(int startX, int startY, Building building, boolean isDestinationConstant, Human human) {
         this.startPair = new Tuple(startY, startX);
         this.building = building;
@@ -74,7 +67,13 @@ public class Move {
         this.isDestinationConstant = isDestinationConstant;
         this.human = human;
     }
+    public Tuple getStartPair() {
+        return startPair;
+    }
 
+    public void setStartPair(Tuple startPair) {
+        this.startPair = startPair;
+    }
 
     public int getStartX() {
         return startPair.getX();
@@ -133,7 +132,9 @@ public class Move {
             if (!tile.isPassable(human, pair.isOverhead())) {
                 return false;
             }
-
+            if (tile.isPit() && !tile.getPitGovernment().equals(human.getGovernment())){
+                killPits.add(tile);
+            }
             beforeSate = pair.isOverhead();
         }
         return true;
@@ -178,7 +179,17 @@ public class Move {
         return false;
     }
 
+    public boolean takeDamageOfKillPit(){
+        int killPitCount = killPits.size();
+        for (Tile tile: killPits){
+            tile.setPit(false);
+            tile.setPitGovernment(null);
+        }
+        return HumanController.takeDamage(killPitCount * 8, human);
+    }
     public void moveOneTurn() {
+
+        killPits.clear();
         if (moveState.equals(MoveStates.STOP.getState()) || isAttacking) {
             return;
         }
@@ -191,6 +202,11 @@ public class Move {
         if (path == null){
             return;
         }
+
+        if (takeDamageOfKillPit()){
+            return;
+        }
+
 
         if (MoveStates.MOVING.getState().equals(moveState) || MoveStates.PATROL.getState().equals(moveState)) {
             if (indexOfPath + human.getSpeed() < path.size()) {
@@ -278,8 +294,8 @@ public class Move {
     public void moveBeforeDestination() {
         Tuple pair = path.get(indexOfPath + human.getSpeed());
         indexOfPath += human.getSpeed();
-        if (human instanceof Military) {
-            MapController.moveMilitary(pair.getX(), pair.getY(), (Military) human);
+        if (human instanceof Military military) {
+            MapController.moveMilitary(pair.getX(), pair.getY(), military);
         } else {
             MapController.moveHuman(pair.getX(), pair.getY(), (Civilian) human);
         }
@@ -319,16 +335,8 @@ public class Move {
         this.tool = tool;
     }
 
-    public void setEnemy(Military enemy) {
-        this.enemy = enemy;
-    }
-
     public boolean isAttacking() {
         return isAttacking;
-    }
-
-    public boolean isShouldConnectToTool() {
-        return shouldConnectToTool;
     }
 
     public void setShouldConnectToTool(boolean shouldConnectToTool) {

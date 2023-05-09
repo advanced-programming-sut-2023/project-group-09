@@ -329,6 +329,9 @@ public class Attack {
             if (move != null && move.isMoving()) {
                 move.setAttacking(true);
             }
+            if (military.getName().equals("assassin")){
+                military.setInvisible(true);
+            }
             attackEnemy();
             return;
         }
@@ -363,6 +366,9 @@ public class Attack {
 
         //attack
         if (shouldAttack()) {
+            if (military.getName().equals("assassin")){
+                military.setInvisible(true);
+            }
             attack();
         }else {
             attackCiviliansOfRange(military.getX(), military.getY(), 2);
