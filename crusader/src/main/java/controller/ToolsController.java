@@ -2,6 +2,7 @@ package controller;
 
 import controller.human.MoveController;
 import model.activity.Move;
+import model.activity.ToolAttack;
 import model.activity.ToolMove;
 import model.building.Building;
 import model.game.Map;
@@ -175,6 +176,6 @@ public class ToolsController {
 
     public static void stop(Tool tool) {
         tool.setToolMove(null);
-        tool.setToolAttack(null);
+        tool.setToolAttack(new ToolAttack(tool));
     }
 }

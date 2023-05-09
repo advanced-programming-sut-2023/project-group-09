@@ -95,6 +95,7 @@ public class ToolMenu {
                 for (int i = 0; i < tool.getEngineers().size(); i++) {
                     Engineer engineer = tool.getEngineers().get(i);
                     engineer.setInTool(false);
+                    engineer.setInvisible(false);
                 }
                 tool.getEngineers().clear();
             } else if (ToolMenuCommands.ADD_STONE.getMatcher(input).matches()) {
