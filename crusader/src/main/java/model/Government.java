@@ -1,12 +1,15 @@
 package model;
 
 import controller.BuildingController;
+import controller.GameController;
 import controller.GovernmentController;
 import controller.MapController;
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameGoods;
 import controller.gamestructure.GameMaps;
+import controller.human.MoveController;
 import enumeration.dictionary.Colors;
+import model.activity.Move;
 import model.building.Building;
 import model.building.castlebuildings.CastleBuilding;
 import model.building.castlebuildings.MainCastle;
@@ -383,10 +386,11 @@ public class Government {
         this.updateCowAndHorseNumber();
         this.producerBuildingsAction();
         this.outOfStockNotification();
-        this.workersNeededNotification();
         this.updateMaxPopularity();
         this.updatePeopleAfterTurn();
         this.foodDistribution();
+        this.workerDistribution();
+        this.workersNeededNotification();
     }
 
     public void updateCowAndHorseNumber() {
@@ -558,4 +562,13 @@ public class Government {
         amountOfFoods -= amount;
 
     }
+
+    public void workerDistribution() {
+        for (BuildingCounter bc : buildings.values()) {
+            for (Building building : bc.getBuildings()) {
+                GameController.workerDistribution(building);
+            }
+        }
+    }
+
 }
