@@ -40,6 +40,7 @@ public class ToolMenu {
                     System.out.println("you can't move a trebuchet");
                     continue;
                 }
+
                 int x = Integer.parseInt(xM.group("x"));
                 int y = Integer.parseInt(yM.group("y"));
                 LinkedList<Tuple> path = ToolsController.getPathTools(new Tuple(tool.getY(), tool.getX()), new Tuple(y, x));
@@ -55,19 +56,29 @@ public class ToolMenu {
                 HumanController.disbandEngineers(tool.getEngineers());
 //                TODO: update graphics
             } else if (ToolMenuCommands.STOP.getMatcher(input).matches()) {
-//                TODO: stop patrol or attack
+                ToolsController.stop(tool);
             } else if (patrolM.matches()) {
                 String content = patrolM.group("content");
-                Matcher xM = ToolMenuCommands.X_COORDINATE.getMatcher(content);
-                Matcher yM = ToolMenuCommands.Y_COORDINATE.getMatcher(content);
+                Matcher x1M = ToolMenuCommands.X1_COORDINATE.getMatcher(content);
+                Matcher y1M = ToolMenuCommands.Y1_COORDINATE.getMatcher(content);
+                Matcher x2M = ToolMenuCommands.X2_COORDINATE.getMatcher(content);
+                Matcher y2M = ToolMenuCommands.Y2_COORDINATE.getMatcher(content);
 
-                String validation = validateCoordinates(xM, yM);
+                String validation = validateDoubleCoordinates(x1M, x2M, y1M, y2M);
                 if (!validation.isEmpty()) {
                     System.out.println(validation);
                     continue;
                 }
 
-//                TODO: patrol tool
+                if (tool.getName().equals("trebuchet")) {
+                    System.out.println("you can't patrol a trebuchet");
+                    continue;
+                }
+
+                if (ToolsController.patrolTool(Integer.parseInt(x1M.group("x1")), Integer.parseInt(y1M.group("y1")),
+                        Integer.parseInt(x2M.group("x2")), Integer.parseInt(y2M.group("y2"))))
+                    System.out.println("patrol started successfully");
+                else System.out.println("invalid patrol");
             } else if (attackM.matches()) {
                 String content = attackM.group("content");
                 Matcher xM = ToolMenuCommands.X_COORDINATE.getMatcher(content);
@@ -84,6 +95,7 @@ public class ToolMenu {
                 for (int i = 0; i < tool.getEngineers().size(); i++) {
                     Engineer engineer = tool.getEngineers().get(i);
                     engineer.setInTool(false);
+                    engineer.setInvisible(false);
                 }
                 tool.getEngineers().clear();
             } else if (ToolMenuCommands.ADD_STONE.getMatcher(input).matches()) {
@@ -112,6 +124,28 @@ public class ToolMenu {
         int x = Integer.parseInt(xM.group("x"));
         int y = Integer.parseInt(yM.group("y"));
         if (x < 1 || y < 1 || x > GameController.getGame().getMap().getWidth() || y > GameController.getGame().getMap().getLength())
+            return "invalid coordinates";
+
+        return "";
+    }
+
+    private static String validateDoubleCoordinates(Matcher x1M, Matcher x2M, Matcher y1M, Matcher y2M) {
+        if (!x1M.find() || !y1M.find() || !x2M.find() || !y2M.find()) return "invalid command";
+
+        String result = "";
+        if (x1M.group("x1").isEmpty()) result += "x1 coordinate field is empty\n";
+        if (y1M.group("y1").isEmpty()) result += "y1 coordinate field is empty\n";
+        if (x2M.group("x2").isEmpty()) result += "x2 coordinate field is empty\n";
+        if (y2M.group("y2").isEmpty()) result += "y2 coordinate field is empty\n";
+        if (!result.isEmpty()) return result.substring(0, result.length() - 1);
+
+        int x1 = Integer.parseInt(x1M.group("x1"));
+        int y1 = Integer.parseInt(y1M.group("y1"));
+        int x2 = Integer.parseInt(x2M.group("x2"));
+        int y2 = Integer.parseInt(y2M.group("y2"));
+        int width = GameController.getGame().getMap().getWidth();
+        int length = GameController.getGame().getMap().getLength();
+        if (x1 < 1 || y1 < 1 || x2 < 1 || y2 < 1 || x1 > width || y1 > length || x2 > width || y2 > length)
             return "invalid coordinates";
 
         return "";

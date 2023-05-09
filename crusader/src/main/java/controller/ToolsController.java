@@ -1,11 +1,15 @@
 package controller;
 
 import controller.human.MoveController;
+import model.activity.Move;
+import model.activity.ToolAttack;
+import model.activity.ToolMove;
 import model.building.Building;
 import model.game.Map;
 import model.game.Tile;
 import model.game.Tuple;
 import model.human.Human;
+import model.human.military.Military;
 import model.tools.Tool;
 
 import java.util.ArrayList;
@@ -13,7 +17,7 @@ import java.util.LinkedList;
 
 public class ToolsController {
     public static boolean[][] checkArray;
-    Tool tool;
+    public static Tool tool;
 
     public static LinkedList<Tuple> getPathTools(Tuple startPair, Tuple endPair) {
         Map map = GameController.getGame().getMap();
@@ -68,7 +72,7 @@ public class ToolsController {
 
             if (x != 0 && !checkArray[y][x - 1]) {
                 if (map.getTile(x - 1, y).isPassable()) {
-                    secondPairs.add(new Tuple(y, x - 1, isOverHead,pair));
+                    secondPairs.add(new Tuple(y, x - 1, isOverHead, pair));
                 }
             }
             if (x != 0 && y != 0) {
@@ -78,27 +82,27 @@ public class ToolsController {
             }
             if (x != GameController.getGame().getMap().getWidth() - 1) {
                 if (map.getTile(x + 1, y).isPassable() && !checkArray[y][x + 1]) {
-                    secondPairs.add(new Tuple(y, x + 1, isOverHead,pair));
+                    secondPairs.add(new Tuple(y, x + 1, isOverHead, pair));
                 }
             }
             if (y != GameController.getGame().getMap().getWidth() - 1) {
                 if (map.getTile(x, y + 1).isPassable() && !checkArray[y + 1][x]) {
-                    secondPairs.add(new Tuple(y + 1, x, isOverHead,pair));
+                    secondPairs.add(new Tuple(y + 1, x, isOverHead, pair));
                 }
             }
             if (y != GameController.getGame().getMap().getWidth() - 1 && x != GameController.getGame().getMap().getWidth() - 1) {
                 if (map.getTile(x + 1, y + 1).isPassable() && !checkArray[y + 1][x + 1]) {
-                    secondPairs.add(new Tuple(y + 1, x + 1, isOverHead,pair));
+                    secondPairs.add(new Tuple(y + 1, x + 1, isOverHead, pair));
                 }
             }
             if (y != GameController.getGame().getMap().getWidth() - 1 && x != 0) {
                 if (map.getTile(x - 1, y + 1).isPassable() && !checkArray[y + 1][x - 1]) {
-                    secondPairs.add(new Tuple(y + 1, x - 1, isOverHead,pair));
+                    secondPairs.add(new Tuple(y + 1, x - 1, isOverHead, pair));
                 }
             }
             if (y != 0 && x != GameController.getGame().getMap().getWidth() - 1) {
                 if (map.getTile(x + 1, y - 1).isPassable() && !checkArray[y - 1][x + 1]) {
-                    secondPairs.add(new Tuple(y - 1, x + 1, isOverHead,pair));
+                    secondPairs.add(new Tuple(y - 1, x + 1, isOverHead, pair));
                 }
             }
         }
@@ -144,5 +148,34 @@ public class ToolsController {
             return null;
         }
         return MoveController.makePath(wave, startPair, endPair);
+    }
+
+    public static boolean patrolTool(int x1, int y1, int x2, int y2) {
+
+        Tuple patrolPair = new Tuple(y2, x2);
+        Tuple endPair = new Tuple(y1, x1);
+        Tuple startPair = MoveController.getStartPair();
+        MoveController.shouldCheckOtherPath();
+        LinkedList<Tuple> path = MoveController.checkHasPath(startPair, endPair);
+
+        if (path == null) {
+            return false;
+        }
+
+        if (!MoveController.checkPatrolPath(endPair, patrolPair)) {
+            return false;
+        }
+
+        ToolMove move = new ToolMove(tool.getX(), tool.getY(), endPair, true, tool);
+        move.setPath(path);
+        move.setMovePatrol(patrolPair);
+        tool.setToolMove(move);
+
+        return true;
+    }
+
+    public static void stop(Tool tool) {
+        tool.setToolMove(null);
+        tool.setToolAttack(new ToolAttack(tool));
     }
 }
