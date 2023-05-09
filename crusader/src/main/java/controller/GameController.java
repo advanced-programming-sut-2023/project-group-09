@@ -265,8 +265,8 @@ public class GameController {
     }
 
 
-    public static String pourOil(String direction) {
-        return "";
+    public static String pourOil(String direction, Engineer engineer) {
+        HumanController.pourOilDirection(, direction, );
     }
 
     public static String digTunnel(int x, int y) {
@@ -437,6 +437,7 @@ public class GameController {
         if (tool == null || !tool.getGovernment().equals(game.getCurrentGovernment())) {
             return "there is no tool of your government here!";
         }
+        ToolMenu.tool = tool;
         ToolMenu.tool = tool;
         return "tool " + tool.getName() + " selected";
     }
