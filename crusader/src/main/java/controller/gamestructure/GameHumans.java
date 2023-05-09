@@ -6,10 +6,7 @@ import enumeration.Speed;
 import model.Government;
 import model.building.Building;
 import model.human.Human;
-import model.human.military.ArabianMercenary;
-import model.human.military.EuropeanTroop;
-import model.human.military.Lord;
-import model.human.military.Military;
+import model.human.military.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,9 +15,6 @@ import java.util.regex.Matcher;
 
 public class GameHumans {
     public static HashMap<String, Military> militaries = new HashMap<>();
-
-    public static void addHumans() {
-    }
 
     public static Military getUnit(String name, Government government, int x, int y) {
         Military military= getClone(militaries.get(name));
@@ -149,7 +143,7 @@ public class GameHumans {
         int speed = Speed.FAST.getRate();
         int defenseRating = DefenseRating.VERY_LOW.getRate();
         int attackRating = AttackRating.MEDIUM.getRate();
-        EuropeanTroop tunneler = new EuropeanTroop(speed, defenseRating, 1, attackRating, 30);
+        Tunneler tunneler = new Tunneler(speed, defenseRating, 1, attackRating, 30);
         tunneler.setName("tunneler");
         militaries.put("tunneler",tunneler);
     }
@@ -167,7 +161,7 @@ public class GameHumans {
         int speed = Speed.AVERAGE.getRate();
         int defenseRating = DefenseRating.VERY_LOW.getRate();
         int attackRating = AttackRating.NONE.getRate();
-        EuropeanTroop engineer = new EuropeanTroop(speed, defenseRating, 1, attackRating, 30);
+        Engineer engineer = new Engineer(speed, defenseRating, 1, attackRating, 30);
         engineer.setName("engineer");
         engineer.enableDigsMoat();
         militaries.put("engineer" , engineer);
@@ -253,6 +247,14 @@ public class GameHumans {
 
 
     public static Military getClone(Military military){
+        if(military instanceof Engineer){
+            return new Engineer((Engineer) military);
+        }
+
+        if(military instanceof  Tunneler){
+            return new Tunneler((Tunneler) military);
+        }
+
         if(military instanceof  EuropeanTroop){
             return new EuropeanTroop((EuropeanTroop) military);
         }

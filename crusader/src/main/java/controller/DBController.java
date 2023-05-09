@@ -167,7 +167,8 @@ public class DBController {
 
         GameHumans.militaries.putAll(europeanTroops);
         GameHumans.militaries.putAll(arabianMercenaries);
-
+        GameHumans.createEngineer();
+        GameHumans.createTunneler();
     }
 
     public static HashMap<String, EuropeanTroop> loadEuropeanTroops(){

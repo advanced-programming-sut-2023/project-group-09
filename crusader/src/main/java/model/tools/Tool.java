@@ -51,6 +51,9 @@ public class Tool{
         this.canAttack = tool.canAttack;
         this.isActive = tool.isActive;
         this.canMove = tool.canMove;
+        this.attackToHuman = tool.attackToHuman;
+        this.attackToBuilding = tool.attackToBuilding;
+        this.useStone = tool.useStone;
         toolAttack = new ToolAttack(this);
     }
 
