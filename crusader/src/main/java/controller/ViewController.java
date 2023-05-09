@@ -35,6 +35,7 @@ public class ViewController {
             }
             Pattern pattern = Pattern.compile(patternString.toString());
             Matcher matcher = pattern.matcher(input);
+            System.out.println(patternString);
             if (matcher.matches()) {
                 resultMatcher = matcher;
                 return true;
