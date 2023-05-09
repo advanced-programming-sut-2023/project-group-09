@@ -74,11 +74,13 @@ public class ToolAttack {
             tool.setCanMove(false);
             return;
         }
-        int hp = targetBuilding.takeDamage(tool.getDamage());
+        int hp = building.takeDamage(tool.getDamage());
         if (hp < 0) {
-            MapController.deleteBuilding(targetBuilding);
-            targetBuilding.setGovernment(null);
-            targetBuilding = null;
+            MapController.deleteBuilding(building);
+            building.setGovernment(null);
+            if (building == targetBuilding) {
+                targetBuilding = null;
+            }
         }
     }
 
@@ -163,7 +165,7 @@ public class ToolAttack {
             if (tool.isUseStone() && !tool.chargeStone()) {
                 return;
             }
-            if(attackToPoint()){
+            if (attackToPoint()) {
                 tool.decreaseStoneNumber(1);
             }
         }
