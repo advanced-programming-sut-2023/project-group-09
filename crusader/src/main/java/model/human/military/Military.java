@@ -7,8 +7,8 @@ import model.human.Human;
 
 import java.util.ArrayList;
 
-public abstract class Military extends Human implements Cloneable {
-    private int attackRating;
+public abstract class Military extends Human{
+    private final int attackRating;
     private String militaryState = MilitaryStates.STAND_GROUND.getState();
     private boolean usesHorse = false;
     private boolean usesLadder = false;
