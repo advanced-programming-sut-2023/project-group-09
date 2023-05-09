@@ -1,10 +1,14 @@
 package model.building.castlebuildings;
 
 import controller.GameController;
+import controller.human.HumanController;
 import model.Government;
 import model.building.Building;
 import model.game.Game;
 import model.game.Map;
+import model.human.military.Military;
+
+import java.util.ArrayList;
 
 public class Gatehouse extends CastleBuilding {
     private boolean isRightSide;
@@ -97,5 +101,33 @@ public class Gatehouse extends CastleBuilding {
     public void openOrCloseGatehouse(boolean openIt) {
         this.setOpen(openIt);
         this.drawBridge_gatehouse.setOpen(openIt);
+    }
+
+
+    public void checkToCloseGateHouse(){
+        int startX = getStartX() - 25;
+        int startY = getStartY() - 25;
+        int endX = getStartX() + 25;
+        int endY = getStartY() + 25;
+        Map map = GameController.getGame().getMap();
+        if (getStartX() - 25 < 0) {
+            startX = 0;
+        }
+
+        if (getStartY() - 25 < 0) {
+            startY = 0;
+        }
+
+        if (endX + 1 >= map.getWidth()) {
+            endX = map.getWidth() - 1;
+        }
+
+        if (endY + 1 >= map.getLength()) {
+            endY = map.getLength() - 1;
+        }
+        ArrayList<Military> militaries = HumanController.getEnemiesOfArea(startX,startY,endX,endY,getGovernment());
+        if (militaries.size() != 0){
+            openOrCloseGatehouse(false);
+        }
     }
 }
