@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="popularity + update population">
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="update population completed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/Government.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/Government.java" afterDir="false" />
     </list>
@@ -195,7 +195,7 @@
       <workItem from="1683581790202" duration="5293000" />
       <workItem from="1683626274596" duration="107000" />
       <workItem from="1683626585666" duration="143000" />
-      <workItem from="1683646489636" duration="5578000" />
+      <workItem from="1683646489636" duration="8221000" />
     </task>
     <task id="LOCAL-00001" summary="...">
       <created>1681925358549</created>
@@ -505,7 +505,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683650178434</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="update population completed">
+      <created>1683652179278</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1683652179278</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -523,7 +530,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Building menu and Buildings dictionary. (first try)" />
     <MESSAGE value="Building menu (second try)" />
     <MESSAGE value="a commit to sove a problem." />
     <MESSAGE value="a commit to solve a problem." />
@@ -548,7 +554,8 @@
     <MESSAGE value="Laying off workers after destroying their buildings." />
     <MESSAGE value="ending of game + scores + scoreboard" />
     <MESSAGE value="popularity + update population" />
-    <option name="LAST_COMMIT_MESSAGE" value="popularity + update population" />
+    <MESSAGE value="update population completed" />
+    <option name="LAST_COMMIT_MESSAGE" value="update population completed" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
