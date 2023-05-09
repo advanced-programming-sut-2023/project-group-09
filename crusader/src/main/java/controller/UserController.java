@@ -588,6 +588,7 @@ public class UserController {
         int rank = 1;
         for (User user : sortedUsers) {
             result += rank + ". " + user.getUsername() + "\n";
+            rank++;
         }
         return result;
     }
