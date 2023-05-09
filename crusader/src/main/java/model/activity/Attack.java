@@ -330,7 +330,7 @@ public class Attack {
                 move.setAttacking(true);
             }
             if (military.getName().equals("assassin")){
-                military.setInvisible(true);
+                military.setInvisible(false);
             }
             attackEnemy();
             return;
@@ -367,7 +367,7 @@ public class Attack {
         //attack
         if (shouldAttack()) {
             if (military.getName().equals("assassin")){
-                military.setInvisible(true);
+                military.setInvisible(false);
             }
             attack();
         }else {
