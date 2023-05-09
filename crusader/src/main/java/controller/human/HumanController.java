@@ -356,6 +356,14 @@ public class HumanController {
         }
     }
 
+    public static void disbandEngineers(ArrayList<Engineer> engineers) {
+        for (Engineer engineer : engineers) {
+            MapController.deleteMilitary(engineer.getX(), engineer.getY(), engineer);
+            Civilian civilian = new Civilian(engineer.getX(), engineer.getY(), false);
+            MapController.addHuman(engineer.getX(), engineer.getY(), civilian);
+        }
+    }
+
     public static boolean pourOilDirection(Engineer engineer, String direction, String state) {
         ArrayList<Military> enemies = null;
         if (direction != null) {

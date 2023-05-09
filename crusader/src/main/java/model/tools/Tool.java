@@ -32,12 +32,13 @@ public class Tool{
     private ToolMove toolMove;
     private ToolAttack toolAttack;
 
-    public Tool(int numberOfRequiredEngineers, int speed, int shootingRange, int damage) {
+    public Tool(String name, int numberOfRequiredEngineers, int speed, int shootingRange, int damage) {
         this.numberOfRequiredEngineers = numberOfRequiredEngineers;
         this.speed = speed;
         this.shootingRange = shootingRange;
         this.damage = damage;
-        stoneNumber = 20;
+        this.name = name;
+
     }
 
     public Tool(Tool tool) {
@@ -49,6 +50,7 @@ public class Tool{
         this.canAttack = tool.canAttack;
         this.isActive = tool.isActive;
         this.canMove = tool.canMove;
+        this.name = tool.name;
         toolAttack = new ToolAttack(this);
     }
 
