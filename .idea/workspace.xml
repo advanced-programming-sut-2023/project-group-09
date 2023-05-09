@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="ending of game + scores + scoreboard">
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="popularity + update population">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/MapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/MapController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/Government.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/Government.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/CastleBuilding.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/CastleBuilding.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/producerbuildings/ProducerBuilding.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/producerbuildings/ProducerBuilding.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/human/civilian/Civilian.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/human/civilian/Civilian.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -199,7 +195,7 @@
       <workItem from="1683581790202" duration="5293000" />
       <workItem from="1683626274596" duration="107000" />
       <workItem from="1683626585666" duration="143000" />
-      <workItem from="1683646489636" duration="3624000" />
+      <workItem from="1683646489636" duration="5578000" />
     </task>
     <task id="LOCAL-00001" summary="...">
       <created>1681925358549</created>
@@ -502,7 +498,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683591226404</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="popularity + update population">
+      <created>1683650178434</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1683650178434</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -520,7 +523,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="a bug solved." />
     <MESSAGE value="Building menu and Buildings dictionary. (first try)" />
     <MESSAGE value="Building menu (second try)" />
     <MESSAGE value="a commit to sove a problem." />
@@ -545,7 +547,8 @@
     <MESSAGE value="adding Lord to militaries (humans)" />
     <MESSAGE value="Laying off workers after destroying their buildings." />
     <MESSAGE value="ending of game + scores + scoreboard" />
-    <option name="LAST_COMMIT_MESSAGE" value="ending of game + scores + scoreboard" />
+    <MESSAGE value="popularity + update population" />
+    <option name="LAST_COMMIT_MESSAGE" value="popularity + update population" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
