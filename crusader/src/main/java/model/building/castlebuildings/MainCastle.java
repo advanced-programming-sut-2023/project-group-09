@@ -58,6 +58,12 @@ public class MainCastle extends CastleBuilding {
         MapController.addHuman(x,y,civilian);
     }
 
+    public void makeUnemployed(int numberToAdd) {
+        for (int i = 0; i != numberToAdd; i++) {
+            this.makeUnemployed();
+        }
+    }
+
     public Tuple makePositionOfUnit(){
         Random random = new Random();
         int x = random.nextInt(this.getWidth());

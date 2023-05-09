@@ -378,7 +378,7 @@ public class Government {
         this.outOfStockNotification();
         this.workersNeededNotification();
         this.updateMaxPopularity();
-
+        this.updatePeopleAfterTurn();
     }
 
     public void updateCowAndHorseNumber() {
@@ -441,10 +441,15 @@ public class Government {
         }
     }
 
+    public void updatePopulationWithAdd(int wanted) {
+        int counterOfAddedPeople = wanted - population;
+        this.mainCastle.makeUnemployed(counterOfAddedPeople);
+    }
 
 
-    public void updatePopulation() {
-        int counterOfRemovedPeople = maxPopulation - population;
+
+    public void updatePopulationWithRemove(int wanted) {
+        int counterOfRemovedPeople = population - wanted;
         if (counterOfRemovedPeople != 0) {
             Iterator itr = this.society.iterator();
             while (itr.hasNext()) {
@@ -471,7 +476,34 @@ public class Government {
                 }
             }
         }
+    }
 
+    public void updatePeopleAfterTurn() {
+        // maxPopularity : 25 --- minPopularity : -37
+        double ratio = (double)(this.getPopularity() + 37)/(25+37);
+        int checker = (int)ratio*100;
+        int number;
+        if (checker < 20) {
+            // 30%
+            number = (int)0.3f * maxPopulation;
+        } else if (checker < 40) {
+            // 50%
+            number = (int)0.5f * maxPopulation;
+        } else if (checker < 60) {
+            // 70%
+            number = (int)0.7f * maxPopulation;
+        } else if (checker < 80) {
+            // 90%
+            number = (int)0.9f * maxPopulation;
+        } else {
+            // 100%
+            number = (int)1 * maxPopulation;
+        }
+        if (number > population) {
+            this.updatePopulationWithAdd(number);
+        } else if (number < population) {
+            this.updatePopulationWithRemove(number);
+        }
     }
 
     public int getPopularity() {
