@@ -127,6 +127,13 @@ public class Government {
         ((MainCastle) (this.getBuildings().get("MainCastle").getBuildings().get(0))).setLord(lord);
     }
 
+    public ArrayList<Tool> getTools() {
+        return tools;
+    }
+
+    public void setTools(ArrayList<Tool> tools) {
+        this.tools = tools;
+    }
 
     public void addAmountToProperties(String itemName, String itemType, int amount) {
         this.getProperties().put(itemName, this.getProperties().get(itemName) + amount);
