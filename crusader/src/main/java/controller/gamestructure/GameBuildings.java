@@ -24,6 +24,9 @@ public class GameBuildings {
 
     public static Building getBuilding(String name, Government government,int x,int y){
         Building building = getClone(buildings.get(name));
+        if (building == null){
+            return null;
+        }
         building.setGovernment(government);
         building.setStartX(x);
         building.setStartY(y);
