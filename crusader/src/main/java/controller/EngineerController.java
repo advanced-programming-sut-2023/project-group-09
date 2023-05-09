@@ -20,108 +20,82 @@ public class EngineerController {
 //        TODO: refresh graphics
     }
 
-    public void buildPortableShield(int x, int y) {
+    public static String buildPortableShield(int x, int y) {
         if (MapController.checkCanPutBuilding(x, y, "siegeTent", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "siegeTent", currentEngineer.getGovernment());
-        else {
-            System.out.println("you can't put a tool here");
-            return;
-        }
-        if (!HumanController.move(new Tuple(y, x))) {
-            System.out.println("engineer can't go there");
-            return;
-        }
+        else return "you can't put a tool here";
+        if (!HumanController.move(new Tuple(y, x))) return "engineer can't go there";
         GameController.getGame().getMap().getTile(x, y).setBuilding(null);
         if (MapController.checkCanPutBuilding(x, y, "portableShield", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "portableShield", currentEngineer.getGovernment());
         GameController.getGame().getMap().getTile(x, y).getTool().addEngineer(currentEngineer);
         currentEngineer.setInTool(true);
+        return "portable shield added successfully";
     }
 
-    public void buildBatteringRam(int x, int y) {
+    public static String buildBatteringRam(int x, int y) {
         if (MapController.checkCanPutBuilding(x, y, "siegeTent", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "siegeTent", currentEngineer.getGovernment());
-        else {
-            System.out.println("you can't put a tool here");
-            return;
-        }
-        if (!HumanController.move(new Tuple(y, x))) {
-            System.out.println("engineer can't go there");
-            return;
-        }
+        else return "you can't put a tool here";
+        if (!HumanController.move(new Tuple(y, x))) return "engineer can't go there";
         GameController.getGame().getMap().getTile(x, y).setBuilding(null);
         if (MapController.checkCanPutBuilding(x, y, "batteringRam", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "batteringRam", currentEngineer.getGovernment());
         GameController.getGame().getMap().getTile(x, y).getTool().addEngineer(currentEngineer);
         currentEngineer.setInTool(true);
+        return "battering ram added successfully";
     }
 
-    public void buildSiegeTower(int x, int y) {
+    public static String buildSiegeTower(int x, int y) {
         if (MapController.checkCanPutBuilding(x, y, "siegeTent", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "siegeTent", currentEngineer.getGovernment());
-        else {
-            System.out.println("you can't put a tool here");
-            return;
-        }
-        if (!HumanController.move(new Tuple(y, x))) {
-            System.out.println("engineer can't go there");
-            return;
-        }
+        else return "you can't put a tool here";
+        if (!HumanController.move(new Tuple(y, x))) return "engineer can't go there";
         GameController.getGame().getMap().getTile(x, y).setBuilding(null);
         if (MapController.checkCanPutBuilding(x, y, "siegeTower", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "siegeTower", currentEngineer.getGovernment());
         GameController.getGame().getMap().getTile(x, y).getTool().addEngineer(currentEngineer);
         currentEngineer.setInTool(true);
+        return "siege tower added successfully";
     }
 
-    public void buildCatapult(int x, int y) {
+    public static String buildCatapult(int x, int y) {
         if (MapController.checkCanPutBuilding(x, y, "siegeTent", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "siegeTent", currentEngineer.getGovernment());
-        else {
-            System.out.println("you can't put a tool here");
-            return;
-        }
+        else return "you can't put a tool here";
+        if (!HumanController.move(new Tuple(y, x))) return "engineer can't go there";
         GameController.getGame().getMap().getTile(x, y).setBuilding(null);
         if (MapController.checkCanPutBuilding(x, y, "catapult", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "catapult", currentEngineer.getGovernment());
         GameController.getGame().getMap().getTile(x, y).getTool().addEngineer(currentEngineer);
         currentEngineer.setInTool(true);
+        return "catapult added successfully";
     }
 
-    public void buildTrebuchet(int x, int y) {
+    public static String buildTrebuchet(int x, int y) {
         if (MapController.checkCanPutBuilding(x, y, "siegeTent", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "siegeTent", currentEngineer.getGovernment());
-        else {
-            System.out.println("you can't put a tool here");
-            return;
-        }
-        if (!HumanController.move(new Tuple(y, x))) {
-            System.out.println("engineer can't go there");
-            return;
-        }
+        else return "you can't put a tool here";
+        if (!HumanController.move(new Tuple(y, x))) return "engineer can't go there";
         GameController.getGame().getMap().getTile(x, y).setBuilding(null);
         if (MapController.checkCanPutBuilding(x, y, "trebuchet", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "trebuchet", currentEngineer.getGovernment());
         GameController.getGame().getMap().getTile(x, y).getTool().addEngineer(currentEngineer);
         currentEngineer.setInTool(true);
+        return "trebuchet added successfully";
     }
 
-    public void buildFireBallista(int x, int y) {
+    public static String buildFireBallista(int x, int y) {
         if (MapController.checkCanPutBuilding(x, y, "siegeTent", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "siegeTent", currentEngineer.getGovernment());
-        else {
-            System.out.println("you can't put a tool here");
-            return;
-        }
-        if (!HumanController.move(new Tuple(y, x))) {
-            System.out.println("engineer can't go there");
-            return;
-        }
+        else return "you can't put a tool here";
+        if (!HumanController.move(new Tuple(y, x))) return "engineer can't go there";
         GameController.getGame().getMap().getTile(x, y).setBuilding(null);
         if (MapController.checkCanPutBuilding(x, y, "fireBallista", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "fireBallista", currentEngineer.getGovernment());
         GameController.getGame().getMap().getTile(x, y).getTool().addEngineer(currentEngineer);
         currentEngineer.setInTool(true);
+        return "fire ballista added successfully";
     }
 
     public static String enterTool(Tool tool) {
@@ -129,6 +103,7 @@ public class EngineerController {
             return "engineer can't go there";
         tool.addEngineer(currentEngineer);
         currentEngineer.setInTool(true);
+        currentEngineer.enableInvisible();
         return "engineer entered the tool successfully";
     }
 }

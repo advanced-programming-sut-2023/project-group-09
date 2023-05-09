@@ -8,7 +8,7 @@ public enum ToolMenuCommands {
     DISBAND("disband"),
     STOP("stop"),
     PATROL("patrol (?<content>.+)"),
-    ATTACK_REGION("attack (?<content>.+)"),
+    ATTACK("attack (?<content>.+)"),
     FREE("free engineers"),
     ADD_STONE("add stone"),
     X_COORDINATE("-x (?<x>[\\d]*)"),

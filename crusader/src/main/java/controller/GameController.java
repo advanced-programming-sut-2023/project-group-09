@@ -16,6 +16,7 @@ import model.game.Tile;
 import model.game.Tuple;
 import model.human.Human;
 import model.human.civilian.Civilian;
+import model.human.military.Engineer;
 import model.human.military.Military;
 import model.human.military.Tunneler;
 import model.tools.Tool;
@@ -272,15 +273,15 @@ public class GameController {
         if (message != null) {
             return message;
         }
-        ArrayList<Military> militaries = MapController.getOneTypeOfMilitariesOfGovernment(UnitMenu.x,UnitMenu.y,"tunneler",game.getCurrentGovernment());
-        if(militaries.size() == 0){
+        ArrayList<Military> militaries = MapController.getOneTypeOfMilitariesOfGovernment(UnitMenu.x, UnitMenu.y, "tunneler", game.getCurrentGovernment());
+        if (militaries.size() == 0) {
             return "no tunneler between selected troops!";
         }
-        Random random= new Random();
+        Random random = new Random();
         Tunneler tunneler = (Tunneler) militaries.get(random.nextInt(militaries.size()));
 
-        Tile tile = game.getMap().getTile(x,y);
-        if (!tile.getCanPutBuilding()){
+        Tile tile = game.getMap().getTile(x, y);
+        if (!tile.getCanPutBuilding()) {
             return "this position is not suitable !";
         }
 
@@ -288,7 +289,7 @@ public class GameController {
         if (targetBuilding == null) {
             return "no enemy's castle building is around here!";
         }
-        boolean checkPath = HumanController.digTunnel(targetBuilding,tunneler);
+        boolean checkPath = HumanController.digTunnel(targetBuilding, tunneler);
         if (!checkPath) {
             return "no path to position!";
         }
@@ -315,7 +316,7 @@ public class GameController {
         if (0 < y && check) {
             Tile neighbor = game.getMap().getTile(x, y - 1);
             Building neighborBuilding = neighbor.getBuilding();
-            if (neighborBuilding instanceof CastleBuilding  && !neighborBuilding.getGovernment().equals(game.getCurrentGovernment())) {
+            if (neighborBuilding instanceof CastleBuilding && !neighborBuilding.getGovernment().equals(game.getCurrentGovernment())) {
                 targetBuilding = neighborBuilding;
                 check = false;
             }
@@ -339,7 +340,38 @@ public class GameController {
         return targetBuilding;
     }
 
-    public static String buildEquipment(int equipmentNumber, int x, int y) {
+    public static String buildEquipment(int equipmentNumber, ArrayList<Engineer> engineers, int x, int y) {
+        if (equipmentNumber == 1) {
+            for (int i = 0; i < engineers.size(); i++) {
+                EngineerController.currentEngineer = engineers.get(i);
+                return EngineerController.buildCatapult(x, y);
+            }
+        } else if (equipmentNumber == 2) {
+            for (int i = 0; i < engineers.size(); i++) {
+                EngineerController.currentEngineer = engineers.get(i);
+                return EngineerController.buildTrebuchet(x, y);
+            }
+        } else if (equipmentNumber == 3) {
+            for (int i = 0; i < engineers.size(); i++) {
+                EngineerController.currentEngineer = engineers.get(i);
+                return EngineerController.buildSiegeTower(x, y);
+            }
+        } else if (equipmentNumber == 4) {
+            for (int i = 0; i < engineers.size(); i++) {
+                EngineerController.currentEngineer = engineers.get(i);
+                return EngineerController.buildBatteringRam(x, y);
+            }
+        } else if (equipmentNumber == 5) {
+            for (int i = 0; i < engineers.size(); i++) {
+                EngineerController.currentEngineer = engineers.get(i);
+                return EngineerController.buildPortableShield(x, y);
+            }
+        } else if (equipmentNumber == 6) {
+            for (int i = 0; i < engineers.size(); i++) {
+                EngineerController.currentEngineer = engineers.get(i);
+                return EngineerController.buildFireBallista(x, y);
+            }
+        }
         return "";
     }
 

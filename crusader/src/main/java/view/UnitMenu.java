@@ -8,6 +8,7 @@ import enumeration.answers.Answers;
 import enumeration.commands.Commands;
 import enumeration.commands.UnitMenuCommands;
 import model.game.Game;
+import model.human.military.Engineer;
 import model.human.military.Military;
 import model.tools.Moat;
 
@@ -199,15 +200,24 @@ public class UnitMenu {
                     int y = Integer.parseInt(ViewController.resultMatcher.group("y"));
                     output = GameController.digTunnel(x, y);
                     System.out.println(output);
-                    if(output.equals("dig tunnel order recorded successfully!")){
+                    if (output.equals("dig tunnel order recorded successfully!")) {
                         return;
                     }
                 }
             } else if (buildMatcher.matches()) {
                 runBuild(scanner);
             } else if (enterToolMatcher.matches()) {
-//                TODO: return "invalid command" if the selected unit is not an engineer
-//                TODO: return "invalid command" if the selected engineer is in a tool
+                ArrayList<Engineer> engineers = getEngineersOfTile();
+                if (engineers.size() == 0) {
+                    System.out.println("invalid command");
+                    return;
+                }
+                for (int i = 0; i < engineers.size(); i++) {
+                    if (engineers.get(i).isInTool()) {
+                        System.out.println("some of the selected engineers are in a tool");
+                        return;
+                    }
+                }
                 String items = enterToolMatcher.group("content");
                 ArrayList<String> itemsPattern = new ArrayList<>();
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
@@ -219,8 +229,17 @@ public class UnitMenu {
                     System.out.println(output);
                 }
             } else if (digMoatMatcher.matches()) {
-//                TODO: return "invalid command" if the selected unit is not an engineer
-//                TODO: return "invalid command" if the selected engineer is in a tool
+                ArrayList<Engineer> engineers = getEngineersOfTile();
+                if (engineers.size() == 0) {
+                    System.out.println("invalid command");
+                    return;
+                }
+                for (int i = 0; i < engineers.size(); i++) {
+                    if (engineers.get(i).isInTool()) {
+                        System.out.println("some of the selected engineers are in a tool");
+                        return;
+                    }
+                }
                 EngineerController.digMoat();
             } else if (disbandUnitMatcher.matches()) {
                 output = GameController.disbandUnit();
@@ -236,8 +255,17 @@ public class UnitMenu {
     }
 
     private static void runBuild(Scanner scanner) {
-//        TODO: return "invalid command" if the selected unit is not an engineer
-//        TODO: return "invalid command" if the selected engineer is in a tool
+        ArrayList<Engineer> engineers = getEngineersOfTile();
+        if (engineers.size() == 0) {
+            System.out.println("invalid command");
+            return;
+        }
+        for (int i = 0; i < engineers.size(); i++) {
+            if (engineers.get(i).isInTool()) {
+                System.out.println("some of the selected engineers are in a tool");
+                return;
+            }
+        }
 
         String message = "select one of the following tools:\n";
         message += "1.Catapult\n";
@@ -283,9 +311,8 @@ public class UnitMenu {
             break;
         }
 
-        GameController.buildEquipment(number, x, y);
+        System.out.println(GameController.buildEquipment(number, engineers, x, y));
     }
-
 
     public static Military getEnemy(int x, int y, Scanner scanner) {
         ArrayList<Military> militaries = MapController.getMilitariesOfOtherGovernment(x, y, GameController.getGame().getCurrentGovernment());
@@ -303,5 +330,15 @@ public class UnitMenu {
             return null;
         }
         return militaries.get(index - 1);
+    }
+
+    public static ArrayList<Engineer> getEngineersOfTile() {
+        ArrayList<Engineer> engineers = new ArrayList<>();
+        for (int i = 0; i < GameController.getGame().getMap().getTile(x, y).getMilitaries().size(); i++) {
+            Military military = GameController.getGame().getMap().getTile(x, y).getMilitaries().get(i);
+            if (military instanceof Engineer)
+                engineers.add((Engineer) military);
+        }
+        return engineers;
     }
 }

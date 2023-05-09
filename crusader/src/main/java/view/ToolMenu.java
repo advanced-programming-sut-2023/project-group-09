@@ -2,10 +2,10 @@ package view;
 
 import controller.GameController;
 import controller.ToolsController;
-import controller.human.MoveController;
+import controller.human.HumanController;
 import enumeration.commands.ToolMenuCommands;
-import model.activity.Move;
 import model.activity.ToolMove;
+import model.game.Tile;
 import model.game.Tuple;
 import model.human.military.Engineer;
 import model.tools.Tool;
@@ -23,6 +23,7 @@ public class ToolMenu {
 
             Matcher moveM = ToolMenuCommands.MOVE.getMatcher(input);
             Matcher patrolM = ToolMenuCommands.PATROL.getMatcher(input);
+            Matcher attackM = ToolMenuCommands.ATTACK.getMatcher(input);
 
             if (moveM.matches()) {
                 String content = moveM.group("content");
@@ -51,7 +52,7 @@ public class ToolMenu {
                 tool.setToolMove(move);
             } else if (ToolMenuCommands.DISBAND.getMatcher(input).matches()) {
                 GameController.getGame().getCurrentGovernment().removeTool(tool);
-//                TODO: disband engineers
+                HumanController.disbandEngineers(tool.getEngineers());
 //                TODO: update graphics
             } else if (ToolMenuCommands.STOP.getMatcher(input).matches()) {
 //                TODO: stop patrol or attack
@@ -67,6 +68,18 @@ public class ToolMenu {
                 }
 
 //                TODO: patrol tool
+            } else if (attackM.matches()) {
+                String content = attackM.group("content");
+                Matcher xM = ToolMenuCommands.X_COORDINATE.getMatcher(content);
+                Matcher yM = ToolMenuCommands.Y_COORDINATE.getMatcher(content);
+
+                String validation = validateCoordinates(xM, yM);
+                if (!validation.isEmpty()) {
+                    System.out.println(validation);
+                    continue;
+                }
+
+
             } else if (ToolMenuCommands.FREE.getMatcher(input).matches()) {
                 for (int i = 0; i < tool.getEngineers().size(); i++) {
                     Engineer engineer = tool.getEngineers().get(i);
@@ -88,7 +101,7 @@ public class ToolMenu {
         }
     }
 
-    public static String validateCoordinates(Matcher xM, Matcher yM) {
+    private static String validateCoordinates(Matcher xM, Matcher yM) {
         if (!xM.find() || !yM.find()) return "invalid command";
 
         String result = "";
@@ -103,4 +116,11 @@ public class ToolMenu {
 
         return "";
     }
+
+//    private static String validateAttack(int x, int y) {
+//        Tile tile = GameController.getGame().getMap().getTile(x, y);
+//        if (tile.getBuilding() != null) {
+//
+//        }
+//    }
 }
