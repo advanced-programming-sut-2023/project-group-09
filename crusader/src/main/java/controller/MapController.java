@@ -329,6 +329,9 @@ public class MapController {
     public static void deleteHuman(int x, int y, Civilian civilian) {
         Tile tile = map.getTile(x, y);
         civilian.getGovernment().removeHuman(civilian);
+        if (civilian.isHasJob()) {
+            civilian.getOriginBuilding().getRequiredHumans().remove(civilian);
+        }
         tile.removeHuman(civilian);
     }
 
