@@ -9,4 +9,12 @@ public class CastleBuilding extends Building {
                           String name, int maxHp, int width, int length) {
         super(numberOfRequiredWorkers, numberOfRequiredEngineers, name, maxHp, width, length);
     }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
 }

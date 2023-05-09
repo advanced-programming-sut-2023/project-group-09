@@ -42,6 +42,8 @@ public class ProducerBuilding extends Building {
         this.itemName = itemName;
 
     }
+
+
     public ProducerBuilding(ProducerBuilding producerBuilding) {
         super(producerBuilding.getNumberOfRequiredWorkers(), producerBuilding.getNumberOfRequiredEngineers(),
                 producerBuilding.getName(), producerBuilding.getMaxHp(), producerBuilding.getWidth(), producerBuilding.getLength());

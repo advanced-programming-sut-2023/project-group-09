@@ -71,4 +71,12 @@ public class Civilian extends Human {
         }
         return super.getSpeed();
     }
+
+    public ProducerBuilding getOriginBuilding() {
+        return originBuilding;
+    }
+
+    public void setOriginBuilding(ProducerBuilding originBuilding) {
+        this.originBuilding = originBuilding;
+    }
 }

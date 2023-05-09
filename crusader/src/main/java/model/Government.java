@@ -1,10 +1,12 @@
 package model;
 
+import controller.BuildingController;
 import controller.MapController;
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameGoods;
 import enumeration.dictionary.Colors;
 import model.building.Building;
+import model.building.castlebuildings.CastleBuilding;
 import model.building.castlebuildings.MainCastle;
 import model.building.producerbuildings.ProducerBuilding;
 import model.buildinghandler.BuildingCounter;
@@ -236,9 +238,6 @@ public class Government {
     public void changePopulation() {
     }
 
-    public int getPopularity() {
-        return 0;
-    }
 
     public int getPropertyAmount(String name) {
         return properties.get(name);
@@ -378,6 +377,8 @@ public class Government {
         this.producerBuildingsAction();
         this.outOfStockNotification();
         this.workersNeededNotification();
+        this.updateMaxPopularity();
+
     }
 
     public void updateCowAndHorseNumber() {
@@ -440,4 +441,49 @@ public class Government {
         }
     }
 
+
+
+    public void updatePopulation() {
+        int counterOfRemovedPeople = maxPopulation - population;
+        if (counterOfRemovedPeople != 0) {
+            Iterator itr = this.society.iterator();
+            while (itr.hasNext()) {
+                if (counterOfRemovedPeople == 0)
+                    break;
+                Human human = (Human) itr.next();
+                if (human instanceof Civilian && !((Civilian) human).isHasJob()) {
+                    counterOfRemovedPeople++;
+                    itr.remove();
+                    MapController.deleteHuman(human.getX() , human.getY() , (Civilian) human);
+                }
+            }
+        }
+        if (counterOfRemovedPeople != 0) {
+            Iterator itr = this.society.iterator();
+            while (itr.hasNext()) {
+                if (counterOfRemovedPeople == 0)
+                    break;
+                Human human = (Human) itr.next();
+                if (human instanceof Civilian) {
+                    counterOfRemovedPeople++;
+                    itr.remove();
+                    MapController.deleteHuman(human.getX() , human.getY() , (Civilian) human);
+                }
+            }
+        }
+
+    }
+
+    public int getPopularity() {
+        this.religionRate = 0;
+        for (BuildingCounter bc : this.buildings.values()) {
+            for (Building building : bc.getBuildings()) {
+                if (building.getName().equals("cathedral"))
+                    this.religionRate += 2;
+                if (building.getName().equals("church"))
+                    this.religionRate++;
+            }
+        }
+        return this.fearRate + this.taxRate + this.foodRate + this.religionRate;
+    }
 }
