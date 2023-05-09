@@ -166,7 +166,6 @@ public class ToolMenu {
             ToolAttack attack = new ToolAttack(tool);
             attack.setAttackPoint(new Tuple(y, x));
             tool.setToolAttack(attack);
-            attack.attackToPoint();
         } else {
             Building building = tile.getBuilding();
             if (!(building instanceof Wall) && tool.getName().equals("siegeTower"))
@@ -174,9 +173,8 @@ public class ToolMenu {
             ToolAttack attack = new ToolAttack(tool);
             attack.setTargetBuilding(building);
             tool.setToolAttack(attack);
-            attack.attackToBuilding(building);
-            if (tool.getName().equals("batteringRam")) {
-                LinkedList<Tuple> path = ToolsController.getPathTools(new Tuple(tool.getY(), tool.getX()), new Tuple(y, x));
+            if (tool.getName().equals("batteringRam") || tool.getName().equals("siegeTower")) {
+                LinkedList<Tuple> path = ToolsController.getPathForBuilding(new Tuple(tool.getY(), tool.getX()), building, tool);
                 if (path == null) {
                     return "there is no available way to move tool";
                 }
