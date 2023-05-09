@@ -352,38 +352,42 @@ public class HumanController {
         }
     }
 
-    public static void pourOilDirection(Engineer engineer, String direction, String state) {
+    public static boolean pourOilDirection(Engineer engineer, String direction, String state) {
         ArrayList<Military> enemies = null;
         if (direction != null) {
-            switch (direction) {
-                case "e":
-                    enemies = getEnemyOfRight(engineer.getX(), engineer.getY(), engineer.getGovernment());
-                    if (enemies.size() != 0) {
-                        attackWithOil(enemies);
-                    }
-                    break;
-                case "w":
-                    enemies = getEnemyOfLeft(engineer.getX(), engineer.getY(), engineer.getGovernment());
-                    if (enemies.size() != 0) {
-                        attackWithOil(enemies);
-                    }
-                    break;
-                case "n":
-                    enemies = getEnemyOfUp(engineer.getX(), engineer.getY(), engineer.getGovernment());
-                    if (enemies.size() != 0) {
-                        attackWithOil(enemies);
-                    }
-                    break;
-                case "s":
-                    enemies = getEnemyOfDown(engineer.getX(), engineer.getY(), engineer.getGovernment());
-                    if (enemies.size() != 0) {
-                        attackWithOil(enemies);
-                    }
-                    break;
-                default:
-                    return;
+            if (engineer.isHasOil()){
+                switch (direction) {
+                    case "e":
+                        enemies = getEnemyOfRight(engineer.getX(), engineer.getY(), engineer.getGovernment());
+                        if (enemies.size() != 0) {
+                            attackWithOil(enemies);
+                        }
+                        break;
+                    case "w":
+                        enemies = getEnemyOfLeft(engineer.getX(), engineer.getY(), engineer.getGovernment());
+                        if (enemies.size() != 0) {
+                            attackWithOil(enemies);
+                        }
+                        break;
+                    case "n":
+                        enemies = getEnemyOfUp(engineer.getX(), engineer.getY(), engineer.getGovernment());
+                        if (enemies.size() != 0) {
+                            attackWithOil(enemies);
+                        }
+                        break;
+                    case "s":
+                        enemies = getEnemyOfDown(engineer.getX(), engineer.getY(), engineer.getGovernment());
+                        if (enemies.size() != 0) {
+                            attackWithOil(enemies);
+                        }
+                        break;
+                    default:
+                        return false;
+                }
+                getOil(engineer);
+                return true;
             }
-            getOil(engineer);
+            return getOil(engineer);
         } else {
             int enemiesCount = 0;
             int maxEnemy = 0;
@@ -424,16 +428,16 @@ public class HumanController {
                 getOil(engineer);
             }
         }
-
+        return true;
     }
 
-    public static void getOil(Engineer engineer) {
+    public static boolean getOil(Engineer engineer) {
         engineer.setHasOil(false);
         Building targetBuilding = null;
         LinkedList<Tuple> path = null;
         for (Building building : engineer.getGovernment().getBuildingData("oilSmelter").getBuildings()) {
             if (building.isActive()) {
-
+                targetBuilding = building;
                 Tuple start = new Tuple(engineer.getY(), engineer.getX());
                 path = MoveController.getPathForBuilding(start, building, engineer);
                 if (path != null) {
@@ -446,7 +450,9 @@ public class HumanController {
             move.setPath(path);
             move.setShouldGetOil(true);
             engineer.setMove(move);
+            return true;
         }
+        return false;
     }
 
     public static void attackWithOil(ArrayList<Military> militaries) {
