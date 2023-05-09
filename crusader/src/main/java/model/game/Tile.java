@@ -54,6 +54,9 @@ public class Tile {
     }
 
     public void setTree(Trees tree) {
+        if (tree != null){
+            canPutBuilding = false;
+        }
         this.tree = tree;
     }
 
@@ -77,6 +80,10 @@ public class Tile {
     }
 
     public void setRockDirection(RockDirections rockDirection) {
+        if (rockDirection != null){
+            canPutBuilding = false;
+            passable = false;
+        }
         this.rockDirection = rockDirection;
     }
 

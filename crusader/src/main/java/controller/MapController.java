@@ -110,7 +110,6 @@ public class MapController {
         for (int i = y; i < y + building.getLength(); i++) {
             for (int j = x; j < x + building.getWidth(); j++) {
                 Tile tile = map.getTile(j, i);
-                System.out.println(tile.getCanPutBuilding());
                 if (tile.getMilitaries().size() != 0 || tile.getCivilian().size() != 0) {
                     return false;
                 }
@@ -135,7 +134,7 @@ public class MapController {
                 }
 
                 if (building instanceof CastleBuilding && !(building instanceof Wall)) {
-                    if (!canPutCastleBuilding(x, y)) {
+                    if (!canPutCastleBuilding(j, i)) {
                         return false;
                     }
                 } else if (!map.getTile(j, i).getCanPutBuilding()) {
