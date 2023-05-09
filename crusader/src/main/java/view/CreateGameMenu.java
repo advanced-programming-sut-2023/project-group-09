@@ -180,6 +180,7 @@ public class CreateGameMenu {
             int x = castles.get(castleNumber - 1).getFirst();
             int y = castles.get(castleNumber - 1).getSecond();
             Government government = new Government(lord, x, y, colors.get(colorNumber - 1));
+            MapController.dropMilitary(x, y, "lord", government);
             government.addAmountToProperties("wood", "resource", 100);
             government.addAmountToProperties("stone", "resource", 50);
             government.addAmountToProperties("bread", "food", 60);

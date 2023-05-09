@@ -4,7 +4,10 @@ import controller.GameController;
 import controller.ToolsController;
 import controller.human.HumanController;
 import enumeration.commands.ToolMenuCommands;
+import model.activity.ToolAttack;
 import model.activity.ToolMove;
+import model.building.Building;
+import model.building.castlebuildings.Wall;
 import model.game.Tile;
 import model.game.Tuple;
 import model.human.military.Engineer;
@@ -90,7 +93,7 @@ public class ToolMenu {
                     continue;
                 }
 
-
+                System.out.println(attack(Integer.parseInt(xM.group("x")), Integer.parseInt(yM.group("y"))));
             } else if (ToolMenuCommands.FREE.getMatcher(input).matches()) {
                 for (int i = 0; i < tool.getEngineers().size(); i++) {
                     Engineer engineer = tool.getEngineers().get(i);
@@ -151,10 +154,35 @@ public class ToolMenu {
         return "";
     }
 
-//    private static String validateAttack(int x, int y) {
-//        Tile tile = GameController.getGame().getMap().getTile(x, y);
-//        if (tile.getBuilding() != null) {
-//
-//        }
-//    }
+    private static String attack(int x, int y) {
+        if (tool.getName().equals("portableShield"))
+            return "invalid command";
+        Tile tile = GameController.getGame().getMap().getTile(x, y);
+        if (tile.getBuilding() != null) {
+            if (tool.getName().equals("batteringRam"))
+                return "invalid command";
+            ToolAttack attack = new ToolAttack(tool);
+            attack.setAttackPoint(new Tuple(y, x));
+            tool.setToolAttack(attack);
+            attack.attackToPoint();
+        } else {
+            Building building = tile.getBuilding();
+            if (!(building instanceof Wall) && tool.getName().equals("siegeTower"))
+                return "invalid command";
+            ToolAttack attack = new ToolAttack(tool);
+            attack.setTargetBuilding(building);
+            tool.setToolAttack(attack);
+            attack.attackToBuilding(building);
+            if (tool.getName().equals("batteringRam")) {
+                LinkedList<Tuple> path = ToolsController.getPathTools(new Tuple(tool.getY(), tool.getX()), new Tuple(y, x));
+                if (path == null) {
+                    return "there is no available way to move tool";
+                }
+                ToolMove move = new ToolMove(tool.getX(), tool.getY(), new Tuple(y, x), true, tool);
+                move.setPath(path);
+                tool.setToolMove(move);
+            }
+        }
+        return "attack command applied successfully";
+    }
 }
