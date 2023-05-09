@@ -225,7 +225,7 @@ public class MapController {
         Tile tile = map.getTile(x, y);
         for (Military military : tile.getMilitaries()) {
             if (military.getGovernment().getColor().equals(government.getColor())) {
-                if(!(military instanceof Lord) ){
+                if (!(military instanceof Lord)) {
                     militaries.add(military);
                 }
             }
@@ -238,7 +238,7 @@ public class MapController {
         Tile tile = map.getTile(x, y);
         for (Military military : tile.getMilitaries()) {
             if (!military.getGovernment().getColor().equals(government.getColor())) {
-                if(!military.isInvisible()){
+                if (!military.isInvisible()) {
                     militaries.add(military);
                 }
             }
@@ -421,7 +421,9 @@ public class MapController {
             }
         }
         BuildingCounter buildingCounter = building.getGovernment().getBuildingData(building.getName());
-        buildingCounter.deleteBuilding(building);
+        if (buildingCounter != null) {
+            buildingCounter.deleteBuilding(building);
+        }
     }
 
 }
