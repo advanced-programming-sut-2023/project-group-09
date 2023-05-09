@@ -2,7 +2,6 @@ package controller;
 
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameHumans;
-import controller.gamestructure.GameTools;
 import enumeration.Textures;
 import enumeration.dictionary.RockDirections;
 import enumeration.dictionary.Trees;
@@ -110,7 +109,8 @@ public class MapController {
         }
         for (int i = y; i < y + building.getLength(); i++) {
             for (int j = x; j < x + building.getWidth(); j++) {
-                Tile tile = map.getTile(x, y);
+                Tile tile = map.getTile(j, i);
+                System.out.println(tile.getCanPutBuilding());
                 if (tile.getMilitaries().size() != 0 || tile.getCivilian().size() != 0) {
                     return false;
                 }
@@ -138,11 +138,11 @@ public class MapController {
                     if (!canPutCastleBuilding(x, y)) {
                         return false;
                     }
-                } else if (!map.getTile(i, j).getCanPutBuilding()) {
+                } else if (!map.getTile(j, i).getCanPutBuilding()) {
                     return false;
                 }
                 if (building.getHasSpecialTexture()) {
-                    if (!building.getSuitableTextures().contains(map.getTile(i, j).getTexture())) {
+                    if (!building.getSuitableTextures().contains(map.getTile(j,i).getTexture())) {
                         return false;
                     }
                 }
