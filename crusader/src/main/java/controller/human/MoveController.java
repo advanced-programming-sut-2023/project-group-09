@@ -4,6 +4,7 @@ import controller.GameController;
 import controller.gamestructure.GameHumans;
 import model.Government;
 import model.building.Building;
+import model.building.castlebuildings.CastleBuilding;
 import model.building.castlebuildings.Gatehouse;
 import model.building.castlebuildings.MainCastle;
 import model.building.castlebuildings.Wall;
@@ -34,6 +35,8 @@ public class MoveController extends HumanController {
         Tuple[][] wave = new Tuple[map.getWidth()][map.getWidth()];
         checkArray = new boolean[map.getWidth()][map.getWidth()];
 
+
+        startPair.setOverhead(setOverHeadOfCoordinate(startPair));
         int y = startPair.getY();
         int x = startPair.getX();
         checkArray[y][x] = true;
@@ -77,6 +80,7 @@ public class MoveController extends HumanController {
         int y = startPair.getY();
         int x = startPair.getX();
         checkArray[y][x] = true;
+        startPair.setOverhead(setOverHeadOfCoordinate(startPair));
         startPair.setOverhead(checkIsPathOverhead(x, y, human, startPair));
         firstPairs.add(startPair);
 
@@ -377,5 +381,11 @@ public class MoveController extends HumanController {
             }
         }
         return militaries;
+    }
+
+    public static boolean setOverHeadOfCoordinate(Tuple tuple){
+        Tile tile = GameController.getGame().getMap().getTile(tuple.getX(), tuple.getY());
+        Building building = tile.getBuilding();
+        return building instanceof CastleBuilding castleBuilding && !castleBuilding.getName().equals("drawBridge");
     }
 }

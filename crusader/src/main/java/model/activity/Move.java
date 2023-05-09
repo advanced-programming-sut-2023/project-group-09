@@ -329,4 +329,12 @@ public class Move {
     public void setShouldConnectToTool(boolean shouldConnectToTool) {
         this.shouldConnectToTool = shouldConnectToTool;
     }
+
+    public boolean isShouldGetOil() {
+        return shouldGetOil;
+    }
+
+    public void setShouldGetOil(boolean shouldGetOil) {
+        this.shouldGetOil = shouldGetOil;
+    }
 }

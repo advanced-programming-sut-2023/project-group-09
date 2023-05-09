@@ -253,9 +253,9 @@ public class GameController {
             return "tool already is active!";
         }
 
-        boolean canMove = HumanController.attack(tool);
+        boolean canMove = HumanController.useTool(tool);
         if (!canMove) {
-            return "can't move, you didn't select eny engineer!";
+            return "can't move, order is unsuitable!";
         }
         return "order record successfully!";
     }

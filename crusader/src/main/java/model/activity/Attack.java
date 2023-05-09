@@ -10,6 +10,7 @@ import model.building.Building;
 import model.game.Map;
 import model.game.Tuple;
 import model.human.civilian.Civilian;
+import model.human.military.Engineer;
 import model.human.military.Military;
 import model.tools.Tool;
 
@@ -47,18 +48,9 @@ public class Attack {
         if (endY + 1 >= map.getLength()) {
             endY = map.getLength() - 1;
         }
-        return getEnemiesOfArea(startX, startY, endX, endY);
+        return HumanController.getEnemiesOfArea(startX, startY, endX, endY,military.getGovernment());
     }
 
-    public ArrayList<Military> getEnemiesOfArea(int startX, int startY, int endX, int endY) {
-        ArrayList<Military> enemies = new ArrayList<>();
-        for (int i = startX; i <= endX; i++) {
-            for (int j = startY; j <= endY; j++) {
-                enemies.addAll(MapController.getMilitariesOfOtherGovernment(i, j, military.getGovernment()));
-            }
-        }
-        return enemies;
-    }
 
     public void attackCiviliansOfRange(int x, int y, int range) {
         Map map = GameController.getGame().getMap();
@@ -312,7 +304,10 @@ public class Attack {
     //this should use in nextTurn for each troop if troop has government so far
     public void doAttack() {
 
-        if (military.getName().equals("engineer")) {
+        if (military instanceof Engineer engineer) {
+            if(engineer.isHasOil()){
+                HumanController.pourOilDirection(engineer,null, engineer.getMilitaryState());
+            }
             return;
         }
 

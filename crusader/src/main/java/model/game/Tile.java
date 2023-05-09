@@ -100,7 +100,7 @@ public class Tile {
             if (building instanceof Wall wall && wall.getHeight() == 1){
                 return true;
             }
-            if (building instanceof Gatehouse gatehouse && gatehouse.isOpen() && !gatehouse.getName().equals("drawBridge")){
+            if (building instanceof Gatehouse gatehouse && gatehouse.isOpen()){
                 return true;
             }
             if (building instanceof MainCastle ){
