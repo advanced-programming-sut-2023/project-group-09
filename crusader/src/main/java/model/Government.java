@@ -22,6 +22,7 @@ import java.util.LinkedHashMap;
 
 public class Government {
     private User user;
+    private int howManyTurnsSurvive = 0;
 
     private LinkedHashMap<String, Trade> receivedTrades = new LinkedHashMap<>();
     private LinkedHashMap<String, Trade> newReceivedTrades = new LinkedHashMap<>();
@@ -37,6 +38,16 @@ public class Government {
 
     private HashMap<String, Integer> properties;
     private HashMap<String, Storage> storages = new HashMap<>();
+
+    public int getHowManyTurnsSurvive() {
+        return howManyTurnsSurvive;
+    }
+
+    public void addTurnsSurvive() {
+        this.howManyTurnsSurvive++;
+    }
+
+
     private HashMap<String, BuildingCounter> buildings = new HashMap<>();
 
     private ArrayList<Tool> tools = new ArrayList<>();

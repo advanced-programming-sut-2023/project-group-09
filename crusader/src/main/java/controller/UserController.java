@@ -582,5 +582,15 @@ public class UserController {
         return 6;
     }
 
+    public static String showScoreboard() {
+        String result = "";
+        ArrayList<User> sortedUsers = getSortedListOfUsers();
+        int rank = 1;
+        for (User user : sortedUsers) {
+            result += rank + ". " + user.getUsername() + "\n";
+        }
+        return result;
+    }
+
     //---
 }
