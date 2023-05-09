@@ -6,6 +6,7 @@
     "rate": 3,
     "inUse": 0,
     "countOfRoundsToProduce": 0,
+    "start": false,
     "required": {},
     "cost": {
       "wood": 3
@@ -36,6 +37,7 @@
     "rate": 3,
     "inUse": 0,
     "countOfRoundsToProduce": 0,
+    "start": false,
     "required": {
       "cow": 1
     },
@@ -68,6 +70,7 @@
     "rate": 5,
     "inUse": 0,
     "countOfRoundsToProduce": 0,
+    "start": false,
     "required": {},
     "cost": {
       "wood": 15
@@ -102,6 +105,7 @@
     "rate": 5,
     "inUse": 0,
     "countOfRoundsToProduce": 0,
+    "start": false,
     "required": {},
     "cost": {
       "wood": 15
@@ -136,6 +140,7 @@
     "rate": 3,
     "inUse": 0,
     "countOfRoundsToProduce": 0,
+    "start": false,
     "required": {
       "flour": 1
     },
@@ -168,6 +173,7 @@
     "rate": 3,
     "inUse": 0,
     "countOfRoundsToProduce": 0,
+    "start": false,
     "required": {},
     "cost": {
       "wood": 20
@@ -200,6 +206,7 @@
     "rate": 5,
     "inUse": 0,
     "countOfRoundsToProduce": 0,
+    "start": false,
     "required": {},
     "cost": {
       "wood": 20
@@ -232,6 +239,7 @@
     "rate": 3,
     "inUse": 0,
     "countOfRoundsToProduce": 0,
+    "start": false,
     "required": {
       "hop": 5
     },
@@ -264,6 +272,7 @@
     "rate": 5,
     "inUse": 0,
     "countOfRoundsToProduce": 0,
+    "start": false,
     "required": {
       "ale": 5
     },
@@ -296,6 +305,7 @@
     "rate": 3,
     "inUse": 0,
     "countOfRoundsToProduce": 0,
+    "start": false,
     "required": {},
     "cost": {
       "wood": 10
@@ -330,6 +340,7 @@
     "rate": 5,
     "inUse": 0,
     "countOfRoundsToProduce": 0,
+    "start": false,
     "required": {},
     "cost": {
       "wood": 5
@@ -364,6 +375,7 @@
     "rate": 3,
     "inUse": 0,
     "countOfRoundsToProduce": 0,
+    "start": false,
     "required": {
       "wheat": 3
     },

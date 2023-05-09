@@ -10,6 +10,7 @@
     "rate": 1,
     "inUse": 0,
     "countOfRoundsToProduce": 0,
+    "start": false,
     "required": {
       "wood": 2
     },
@@ -46,6 +47,7 @@
     "rate": 1,
     "inUse": 0,
     "countOfRoundsToProduce": 0,
+    "start": false,
     "required": {
       "iron": 1
     },
@@ -82,6 +84,7 @@
     "rate": 1,
     "inUse": 0,
     "countOfRoundsToProduce": 0,
+    "start": false,
     "required": {
       "iron": 1
     },
@@ -118,6 +121,7 @@
     "rate": 1,
     "inUse": 0,
     "countOfRoundsToProduce": 0,
+    "start": false,
     "required": {
       "wood": 1
     },

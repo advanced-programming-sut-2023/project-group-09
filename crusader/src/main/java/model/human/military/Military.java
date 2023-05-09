@@ -1,10 +1,8 @@
 package model.human.military;
 
-
-import com.google.gson.annotations.Expose;
-import controller.human.MoveController;
 import enumeration.MilitaryStates;
 import model.activity.Attack;
+import model.activity.Move;
 import model.human.Human;
 
 import java.util.ArrayList;
@@ -148,5 +146,11 @@ public abstract class Military extends Human implements Cloneable {
         }
         return attack;
         //return null;
+    }
+
+    @Override
+    public void setMove(Move move) {
+        super.setMove(move);
+        attack = new Attack(this);
     }
 }

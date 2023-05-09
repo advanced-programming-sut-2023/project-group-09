@@ -5,14 +5,19 @@ import controller.MapController;
 import enumeration.MoveStates;
 import model.building.Building;
 import model.game.Tile;
+import model.game.Tuple;
+import model.human.civilian.Civilian;
+import model.human.military.Engineer;
 import model.human.military.Military;
 import model.tools.Tool;
 
 
 public class ToolAttack {
-    Building targetBuilding;
+
     Tool tool;
-    Military enemy;
+
+    Building targetBuilding;
+    Tuple attackPoint;
 
     public ToolAttack(Tool tool) {
         this.tool = tool;
@@ -32,7 +37,7 @@ public class ToolAttack {
     }
 
 
-    public void attack() {
+    public void attackToMilitary(Military enemy) {
         if (enemy == null) {
             return;
         }
@@ -50,8 +55,6 @@ public class ToolAttack {
             enemy.setGovernment(null);
             enemy = null;
         }
-        attackToBuilding();
-
     }
 
 
@@ -66,17 +69,11 @@ public class ToolAttack {
         return building.getNeighborTiles().contains(tile);
     }
 
-    public void attackToBuilding() {
+    public void attackToBuilding(Building building) {
         if (tool.getName().equals("siegeTower")) {
             tool.setCanMove(false);
             return;
         }
-
-        if (tool.isUseStone() && !tool.chargeStone()) {
-            return;
-        }
-
-
         int hp = targetBuilding.takeDamage(tool.getDamage());
         if (hp < 0) {
             MapController.deleteBuilding(targetBuilding);
@@ -85,6 +82,55 @@ public class ToolAttack {
         }
     }
 
+    public void attackToTool(Tool tool) {
+        int hp = targetBuilding.takeDamage(tool.getDamage());
+        if (hp < 0) {
+            MapController.deleteTool(tool.getX(), tool.getY(), tool);
+            tool.setGovernment(null);
+        }
+    }
+
+    public void attackToCivilian(Civilian civilian) {
+        MapController.deleteHuman(civilian.getX(), civilian.getY(), civilian);
+        civilian.setGovernment(null);
+    }
+
+    public boolean attackToPoint() {
+        Tile tile = GameController.getGame().getMap().getTile(attackPoint.getX(), attackPoint.getY());
+        Building building;
+        Tool tool;
+        int count = 0;
+        if (this.tool.isAttackToBuilding()) {
+            if ((building = tile.getBuilding()) != null) {
+                attackToBuilding(building);
+                count++;
+            }
+        }
+
+        if (this.tool.isAttackToHuman()) {
+            if ((tool = tile.getTool()) != null) {
+                attackToTool(tool);
+                count++;
+            }
+            for (Military military : tile.getMilitaries()) {
+                if (!military.getGovernment().equals(this.tool.getGovernment())) {
+                    attackToMilitary(military);
+                    count++;
+                    if (!(military instanceof Engineer)) {
+                        military.setInvisible(false);
+                    }
+                }
+            }
+            for (Civilian civilian : tile.getCivilian()) {
+                if (!civilian.getGovernment().equals(this.tool.getGovernment())) {
+                    attackToCivilian(civilian);
+                    count++;
+                }
+
+            }
+        }
+        return count != 0;
+    }
 
     public void doAttack() {
 
@@ -92,9 +138,6 @@ public class ToolAttack {
             return;
         }
 
-        if (enemy != null && enemy.getGovernment() == null) {
-            enemy = null;
-        }
 
         if (targetBuilding != null && targetBuilding.getGovernment() != null) {
             targetBuilding = null;
@@ -106,7 +149,7 @@ public class ToolAttack {
         //building attack
         if (targetBuilding != null && buildingIsInRange(targetBuilding)) {
             move.stopMove();
-            attackToBuilding();
+            attackToBuilding(targetBuilding);
             return;
         }
 
@@ -116,8 +159,13 @@ public class ToolAttack {
         }
 
         //attack
-        if (enemy != null) {
-            attack();
+        if (attackPoint != null) {
+            if (tool.isUseStone() && !tool.chargeStone()) {
+                return;
+            }
+            if(attackToPoint()){
+                tool.decreaseStoneNumber(1);
+            }
         }
     }
 

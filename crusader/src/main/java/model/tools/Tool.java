@@ -16,6 +16,8 @@ public class Tool{
     private boolean canAttack = false;
     private boolean canAirAttack = false;
 
+    private boolean attackToBuilding = false;
+    private boolean attackToHuman = false;
     private boolean useStone = false;
     private String name;
 
@@ -38,7 +40,7 @@ public class Tool{
         this.shootingRange = shootingRange;
         this.damage = damage;
         this.name = name;
-
+        stoneNumber = 20;
     }
 
     public Tool(Tool tool) {
@@ -51,6 +53,9 @@ public class Tool{
         this.isActive = tool.isActive;
         this.canMove = tool.canMove;
         this.name = tool.name;
+        this.attackToHuman = tool.attackToHuman;
+        this.attackToBuilding = tool.attackToBuilding;
+        this.useStone = tool.useStone;
         toolAttack = new ToolAttack(this);
     }
 
@@ -217,5 +222,21 @@ public class Tool{
             return true;
         }
         return false;
+    }
+
+    public boolean isAttackToBuilding() {
+        return attackToBuilding;
+    }
+
+    public void setAttackToBuilding(boolean attackToBuilding) {
+        this.attackToBuilding = attackToBuilding;
+    }
+
+    public boolean isAttackToHuman() {
+        return attackToHuman;
+    }
+
+    public void setAttackToHuman(boolean attackToHuman) {
+        this.attackToHuman = attackToHuman;
     }
 }

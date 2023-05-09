@@ -19,10 +19,6 @@ public class BuildingController {
     private static Building building;
     private static Government government;
 
-    private static Government getGovernment() {
-        return government;
-    }
-
     public static void setGovernment() {
         if (building != null)
             BuildingController.government = BuildingController.getBuilding().getGovernment();
