@@ -87,7 +87,7 @@ public class ToolAttack {
     }
 
     public void attackToTool(Tool tool) {
-        int hp = targetBuilding.takeDamage(tool.getDamage());
+        int hp = tool.takeDamage(tool.getDamage());
         if (hp < 0) {
             MapController.deleteTool(tool.getX(), tool.getY(), tool);
             tool.setGovernment(null);

@@ -4,12 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="Laying off workers after destroying their buildings.">
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="ending of game + scores + scoreboard">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/MapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/MapController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/Government.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/Government.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/CastleBuilding.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/CastleBuilding.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/producerbuildings/ProducerBuilding.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/producerbuildings/ProducerBuilding.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/human/civilian/Civilian.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/human/civilian/Civilian.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -195,7 +196,10 @@
       <workItem from="1683404509546" duration="256000" />
       <workItem from="1683405242091" duration="2420000" />
       <workItem from="1683570483643" duration="3735000" />
-      <workItem from="1683581790202" duration="4711000" />
+      <workItem from="1683581790202" duration="5293000" />
+      <workItem from="1683626274596" duration="107000" />
+      <workItem from="1683626585666" duration="143000" />
+      <workItem from="1683646489636" duration="3624000" />
     </task>
     <task id="LOCAL-00001" summary="...">
       <created>1681925358549</created>
@@ -491,7 +495,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683588386904</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="ending of game + scores + scoreboard">
+      <created>1683591226404</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1683591226404</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -509,7 +520,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="method convertPasswordToHash() edited." />
     <MESSAGE value="a bug solved." />
     <MESSAGE value="Building menu and Buildings dictionary. (first try)" />
     <MESSAGE value="Building menu (second try)" />
@@ -534,7 +544,8 @@
     <MESSAGE value="a regex edited." />
     <MESSAGE value="adding Lord to militaries (humans)" />
     <MESSAGE value="Laying off workers after destroying their buildings." />
-    <option name="LAST_COMMIT_MESSAGE" value="Laying off workers after destroying their buildings." />
+    <MESSAGE value="ending of game + scores + scoreboard" />
+    <option name="LAST_COMMIT_MESSAGE" value="ending of game + scores + scoreboard" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
