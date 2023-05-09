@@ -265,8 +265,12 @@ public class GameController {
     }
 
 
-    public static String pourOil(String direction, Engineer engineer) {
-        HumanController.pourOilDirection(, direction, );
+    public static String pourOil(String direction, ArrayList<Engineer> engineers) {
+        for (int i = 0; i < engineers.size(); i++) {
+            if (!HumanController.pourOilDirection(engineers.get(i), direction, engineers.get(i).getMilitaryState()))
+                return "can't pour oil";
+        }
+        return "poured oil successfully";
     }
 
     public static String digTunnel(int x, int y) {

@@ -201,12 +201,7 @@ public class UnitMenu {
                         return;
                     }
                 }
-                output = "";
-                for (int i = 0; i < engineers.size(); i++) {
-                    if (HumanController.pourOilDirection(engineers.get(i), direction, engineers.get(i).getMilitaryState()))
-                        output = "poured oil successfully";
-                    else output = "can't pour oil";
-                }
+                output = GameController.pourOil(direction, engineers);
                 System.out.println(output);
             } else if (digTunnelMatcher.matches()) {
                 String items = digTunnelMatcher.group("items");
