@@ -13,6 +13,10 @@ public enum ToolMenuCommands {
     ADD_STONE("add stone"),
     X_COORDINATE("-x (?<x>[\\d]*)"),
     Y_COORDINATE("-y (?<y>[\\d]*)"),
+    X1_COORDINATE("-x1 (?<x1>[\\d]*)"),
+    X2_COORDINATE("-x2 (?<x2>[\\d]*)"),
+    Y1_COORDINATE("-y1 (?<y1>[\\d]*)"),
+    Y2_COORDINATE("-y2 (?<y2>[\\d]*)"),
     BACK("back");
     private String regex;
 
