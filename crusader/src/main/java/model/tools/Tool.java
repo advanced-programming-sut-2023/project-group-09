@@ -1,6 +1,7 @@
 package model.tools;
 
 import controller.GovernmentController;
+import controller.MapController;
 import model.Government;
 import model.activity.ToolAttack;
 import model.activity.ToolMove;
@@ -12,7 +13,6 @@ public class Tool{
     private Government government = null;
 
     private boolean canMove;
-    private boolean isActive = false;
     private boolean canAttack = false;
     private boolean canAirAttack = false;
 
@@ -50,7 +50,6 @@ public class Tool{
         this.damage = tool.damage;
         this.canAirAttack = tool.canAirAttack;
         this.canAttack = tool.canAttack;
-        this.isActive = tool.isActive;
         this.canMove = tool.canMove;
         this.name = tool.name;
         this.attackToHuman = tool.attackToHuman;
@@ -154,14 +153,6 @@ public class Tool{
         this.canMove = canMove;
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
     public boolean isCanAirAttack() {
         return canAirAttack;
     }
@@ -224,6 +215,21 @@ public class Tool{
         return false;
     }
 
+    public boolean isActive(){
+        engineers.removeIf(i -> i.getGovernment() == null);
+        return engineers.size() == numberOfRequiredEngineers;
+    }
+
+    public int takeDamage(int damage){
+         hp -= damage;
+         if(hp < 0){
+             for (Engineer engineer : engineers){
+                 MapController.deleteMilitary(engineer.getX(),engineer.getY(),engineer);
+                 engineer.setGovernment(null);
+             }
+         }
+         return hp;
+    }
     public boolean isAttackToBuilding() {
         return attackToBuilding;
     }

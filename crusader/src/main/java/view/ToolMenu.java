@@ -21,6 +21,8 @@ public class ToolMenu {
     public static Tool tool;
 
     public static void run(Scanner scanner) {
+        System.out.println("<< Tool Menu >>");
+
         while (true) {
             String input = scanner.nextLine();
 
