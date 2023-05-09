@@ -95,9 +95,13 @@ public class User {
     public void setHighScore(int highScore) {
         this.highScore = highScore;
     }
+    public void addHighScore(int highScore) {
+        this.highScore += highScore;
+    }
 
     public boolean arePasswordsEqual(String secondPassword){
         secondPassword = UserController.convertPasswordToHash(secondPassword);
         return password.hashCode() == secondPassword.hashCode();
     }
+
 }

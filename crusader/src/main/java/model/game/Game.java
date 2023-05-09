@@ -3,14 +3,39 @@ package model.game;
 import model.Government;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Game {
     private Map map;
     private final ArrayList<Government> governments = new ArrayList<>();
     private Government currentGovernment;
+    private Government winner;
     private int round;
     private int currentMapX;
     private int currentMapY;
+    private boolean endGame = false;
+
+    public boolean isEndGame() {
+        return endGame;
+    }
+
+    public void setEndGame(boolean endGame) {
+        this.endGame = endGame;
+    }
+
+    public Government getWinner() {
+        return winner;
+    }
+
+    public void setWinner() {
+        this.winner = null;
+        Iterator itr = getGovernments().iterator();
+        while (itr.hasNext()) {
+            Government government = (Government) itr.next();
+            if (government.isAlive())
+                this.winner = government;
+        }
+    }
 
     public Game(Map map) {
         this.map = map;
@@ -73,5 +98,11 @@ public class Game {
 
     public void setCurrentMapY(int currentMapY) {
         this.currentMapY = currentMapY;
+    }
+
+    public void setScores() {
+        for (Government government : getGovernments()) {
+            government.getUser().addHighScore(government.getHowManyTurnsSurvive()*100);
+        }
     }
 }

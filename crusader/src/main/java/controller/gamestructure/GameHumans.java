@@ -42,6 +42,7 @@ public class GameHumans {
         createSwordsman();
         createKnight();
         createLadderman();
+        addLord();
     }
 
     public static void addArabianMercenaries() {
@@ -55,6 +56,12 @@ public class GameHumans {
     }
 
     public static void addLord() {
+        int speed = Speed.EXTREMELY_SLOW.getRate();
+        int defenseRating = DefenseRating.HIGH.getRate();
+        int attackRating = AttackRating.HIGH.getRate();
+        Lord lord = new Lord(speed , defenseRating , 1 , attackRating , 0);
+        lord.setName("lord");
+        militaries.put("lord" , lord);
     }
 
     public static void createArcher() {

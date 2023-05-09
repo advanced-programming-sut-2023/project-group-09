@@ -1,22 +1,22 @@
 [
   {
-    "username": "Amirhossein2",
-    "password": "7e3d96e2c461017903c53269514ac9e7257c8a09929e94c7aaf7caa0d3b2c82e",
-    "nickname": "Amir",
-    "email": "something@gmail.com",
+    "username": "Farzam",
+    "password": "c99c1b2eaf6a4da65bc7d4313ff72dac05fecc90468b9f181af7e7a2c583d442",
+    "nickname": "FarzamBMW",
+    "email": "f@y.com",
     "highScore": 0,
     "passwordRecoveryQuestion": "What\u0027s my father\u0027s name?",
-    "passwordRecoveryAnswer": "hello",
-    "slogan": "In this game, knowledge is power!"
+    "passwordRecoveryAnswer": "Hossein",
+    "slogan": "The battle is won before it\u0027s ever fought!"
   },
   {
-    "username": "Farzam",
-    "password": "65bceb373b9a55696ead418c7a653c308ea0850fd6912ef6c61d31a0b363f5dd",
-    "nickname": "farzam",
-    "email": "another@gmail.com",
+    "username": "Sina",
+    "password": "b337c1e5f9c35f977ed0cf99e21dd45b4fd656b372c446be5f3099fcc30f007f",
+    "nickname": "SSS",
+    "email": "s@g.com",
     "highScore": 0,
     "passwordRecoveryQuestion": "What was my first pet\u0027s name?",
-    "passwordRecoveryAnswer": "hello",
-    "slogan": "In this game, knowledge is power!"
+    "passwordRecoveryAnswer": "Dog",
+    "slogan": "Use your resources wisely!"
   }
 ]

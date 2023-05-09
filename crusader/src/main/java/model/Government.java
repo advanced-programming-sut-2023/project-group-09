@@ -22,6 +22,7 @@ import java.util.LinkedHashMap;
 
 public class Government {
     private User user;
+    private int howManyTurnsSurvive = 0;
 
     private LinkedHashMap<String, Trade> receivedTrades = new LinkedHashMap<>();
     private LinkedHashMap<String, Trade> newReceivedTrades = new LinkedHashMap<>();
@@ -37,12 +38,32 @@ public class Government {
 
     private HashMap<String, Integer> properties;
     private HashMap<String, Storage> storages = new HashMap<>();
+
+    public int getHowManyTurnsSurvive() {
+        return howManyTurnsSurvive;
+    }
+
+    public void addTurnsSurvive() {
+        this.howManyTurnsSurvive++;
+    }
+
+
     private HashMap<String, BuildingCounter> buildings = new HashMap<>();
 
     private ArrayList<Tool> tools = new ArrayList<>();
     private ArrayList<Military> troops = new ArrayList<>();
     private ArrayList<Human> society = new ArrayList<>();
     private MainCastle mainCastle;
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
+    }
+
+    private boolean isAlive = true;
 
     private int foodRate;
 
@@ -305,14 +326,27 @@ public class Government {
     }
 
     public void updateAllBuildings() {
+        ArrayList<Human> unemployed = new ArrayList<>();
         for (String name : this.buildings.keySet()) {
             BuildingCounter bc = buildings.get(name);
             Iterator itr = bc.getBuildings().iterator();
             while (itr.hasNext()) {
                 Building building = (Building) itr.next();
                 if (building.isDestroyed()) {
+                    unemployed.addAll(building.getRequiredHumans());
                     MapController.deleteBuilding(building);
                 }
+            }
+        }
+        layingOffWorkers(unemployed);
+    }
+
+    public void layingOffWorkers(ArrayList<Human> humansOfBuilding) {
+        Iterator itr = humansOfBuilding.iterator();
+        while (itr.hasNext()) {
+            Human human = (Human)itr.next();
+            if (human instanceof Civilian) {
+                ((Civilian) human).setHasJob(false);
             }
         }
     }
@@ -322,6 +356,7 @@ public class Government {
         while (itr.hasNext()) {
             Human human = (Human) itr.next();
             if (human.getHealth() <= 0) {
+                itr.remove();
                 MapController.deleteHuman(human.getX(), human.getY(), (Civilian) human);
             }
         }
@@ -329,6 +364,7 @@ public class Government {
         while (itr.hasNext()) {
             Military military = (Military) itr.next();
             if (military.getHealth() <= 0) {
+                itr.remove();
                 MapController.deleteMilitary(military.getX(), military.getY(), military);
             }
         }
@@ -390,6 +426,18 @@ public class Government {
 
     public void removeTool(Tool tool) {
         tools.add(tool);
+    }
+
+    public void checkingGovernmentIsAlive() {
+        for (Military military : this.troops) {
+            if (military instanceof Lord) {
+                Lord lord = (Lord) military;
+                break;
+            }
+        }
+        if (lord.getHealth() <= 0) {
+            this.isAlive = false;
+        }
     }
 
 }

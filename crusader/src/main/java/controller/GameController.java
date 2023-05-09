@@ -329,8 +329,20 @@ public class GameController {
         return "Building " + building.getName() + " Selected!";
     }
 
+    public static int howManyGovermentsRemainsInGame() {
+        int numberOfGoverments = 0;
+        for (Government government : game.getGovernments()) {
+            if (government.isAlive()) {
+                government.addTurnsSurvive();
+                numberOfGoverments++;
+            }
+        }
+        return numberOfGoverments;
+    }
+
 
     public static String changeTurn() {
+        game.changeTurn();
         String nickname = game.getCurrentGovernment().getUser().getNickname();
         String result = "Lord " + nickname + " was played!\n";
         int indexOfCurrentGovernment = game.getGovernments().indexOf(game.getCurrentGovernment());
@@ -338,6 +350,7 @@ public class GameController {
             Government nowGovernment = game.getGovernments().get(0);
             result += "now Lord " + nowGovernment.getUser().getNickname() + " is playing\n";
             result += "new Turn started!\n";
+            game.setRound(game.getRound()+1);
             for (Government government : game.getGovernments()) {
                 government.updateAfterTurn();
             }
@@ -347,6 +360,19 @@ public class GameController {
                 routine work of buildings (such as producing some thing)
              */
             game.setCurrentGovernment(nowGovernment);
+            int numberOfRemainedGoverments = howManyGovermentsRemainsInGame();
+            if (numberOfRemainedGoverments == 1) {
+                game.setEndGame(true);
+                game.setWinner();
+                game.setScores();
+                result = "The Game Is Over!\nWinner : ****** Lord " +
+                        game.getWinner().getUser().getNickname() + " ******\n";
+            } else if (numberOfRemainedGoverments == 0) {
+                game.setEndGame(true);
+                game.setWinner();
+                game.setScores();
+                result = "The Game Is Over!\nThere's no winner in this war!\n";
+            }
             return result;
         } else {
             Government nowGovernment = game.getGovernments().get(indexOfCurrentGovernment + 1);
