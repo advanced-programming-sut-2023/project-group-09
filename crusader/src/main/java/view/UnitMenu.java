@@ -196,6 +196,10 @@ public class UnitMenu {
                         return;
                     }
                 }
+                if (direction != "w" && direction != "e" && direction != "n" && direction != "s") {
+                    System.out.println("invalid direction");
+                    continue;
+                }
                 output = GameController.pourOil(direction, engineers);
                 System.out.println(output);
             } else if (digTunnelMatcher.matches()) {
