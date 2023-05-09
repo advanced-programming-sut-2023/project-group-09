@@ -18,7 +18,7 @@ public enum GameMenuCommands {
     Y_ITEM(" -y (?<y>\\d+)"),
     TYPE_ITEM(" -type (?<type>(\"[^\"]+\"|\\S+))"),
     UNIT_TYPE_ITEM("( -type (?<type>(\"[^\"]+\"|\\S+)))?"),
-    ;
+    CONTINUE("continue");
     private final String regex;
 
     GameMenuCommands(String regex) {

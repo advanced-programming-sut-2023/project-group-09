@@ -33,6 +33,7 @@ public class GameMenu {
             Matcher backMatcher = Commands.getMatcher(input, Commands.BACK);
             Matcher exitMatcher = Commands.getMatcher(input, Commands.EXIT_CRUSADER);
             Matcher showMapM = MapCommands.SHOW_MAP.getMatcher(input);
+            Matcher continueM = GameMenuCommands.getMatcher(input, GameMenuCommands.CONTINUE);
             // to be continued.?
             if (dropBuildingMatcher.matches()) {
                 String items = dropBuildingMatcher.group("items");
@@ -110,6 +111,12 @@ public class GameMenu {
                 MainController.exitCrusader();
             } else if (input.equals("market menu")) {
                 MarketMenu.run(scanner);
+            } else if (continueM.matches()) {
+                System.out.println(GameController.changeTurn());
+                if (game.isEndGame()) {
+                    System.out.println("<< Main Menu >>");
+                    break;
+                }
             } else {
                 System.out.println(Answers.INVALID_COMMAND.getValue());
             }

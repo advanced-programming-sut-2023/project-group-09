@@ -54,7 +54,7 @@ public class Game {
     }
 
     public void addGovernment(Government government) {
-        if(currentGovernment == null){
+        if (currentGovernment == null) {
             currentGovernment = government;
         }
         this.governments.add(government);
@@ -78,10 +78,12 @@ public class Game {
 
     public void changeTurn() {
         int index = governments.indexOf(currentGovernment);
-        if(index + 1  == governments.size()){
+        if (index + 1 == governments.size()) {
             index = -1;
         }
         currentGovernment = governments.get(index + 1);
+        if (!currentGovernment.isAlive())
+            changeTurn();
     }
 
     public int getCurrentMapX() {
@@ -102,7 +104,7 @@ public class Game {
 
     public void setScores() {
         for (Government government : getGovernments()) {
-            government.getUser().addHighScore(government.getHowManyTurnsSurvive()*100);
+            government.getUser().addHighScore(government.getHowManyTurnsSurvive() * 100);
         }
     }
 }
