@@ -13,12 +13,12 @@ import model.human.Human;
 import model.human.civilian.Civilian;
 import model.human.military.Engineer;
 import model.human.military.Military;
+import model.human.military.Tunneler;
 import model.tools.Tool;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.Objects;
 
 public class Move {
     private Tuple startPair;
@@ -29,6 +29,8 @@ public class Move {
     private Tool tool;
     private boolean isAttacking = false;
     private boolean isPatrolStart = false;
+
+    private boolean wantDigTunnel = false;
     private String moveState;
     private LinkedList<Tuple> path;
 
@@ -55,25 +57,25 @@ public class Move {
         this.isDestinationConstant = isDestinationConstant;
         this.human = human;
     }
+
     public Move(int startX, int startY, Building building, boolean isDestinationConstant, Human human) {
         this.startPair = new Tuple(startY, startX);
         this.building = building;
         this.isDestinationConstant = isDestinationConstant;
         this.human = human;
     }
+
     public Move(int startX, int startY, Tool tool, boolean isDestinationConstant, Human human) {
         this.startPair = new Tuple(startY, startX);
         this.building = building;
         this.isDestinationConstant = isDestinationConstant;
         this.human = human;
     }
+
     public Tuple getStartPair() {
         return startPair;
     }
 
-    public void setStartPair(Tuple startPair) {
-        this.startPair = startPair;
-    }
 
     public int getStartX() {
         return startPair.getX();
@@ -116,7 +118,7 @@ public class Move {
         Map map = GameController.getGame().getMap();
         boolean beforeSate = false;
         for (int i = indexOfPath; i <= indexOfPath + human.getSpeed(); i++) {
-            if(i >= path.size() ){
+            if (i >= path.size()) {
                 return true;
             }
             Tuple pair = path.get(i);
@@ -132,7 +134,7 @@ public class Move {
             if (!tile.isPassable(human, pair.isOverhead())) {
                 return false;
             }
-            if (tile.isPit() && !tile.getPitGovernment().equals(human.getGovernment())){
+            if (tile.isPit() && !tile.getPitGovernment().equals(human.getGovernment())) {
                 killPits.add(tile);
             }
             beforeSate = pair.isOverhead();
@@ -143,13 +145,13 @@ public class Move {
     public boolean checkDestination() {
 
         if (!isDestinationConstant) {
-            if(enemy != null && enemy.getGovernment() == null){
+            if (enemy != null && enemy.getGovernment() == null) {
                 stopMove();
                 enemy = null;
                 return false;
             }
 
-            if(tool != null && tool.getGovernment() == null){
+            if (tool != null && tool.getGovernment() == null) {
                 stopMove();
                 tool = null;
                 return false;
@@ -166,11 +168,22 @@ public class Move {
             }
         }
 
-        if (building != null && building.getGovernment() == null){
+        if (building != null && building.getGovernment() == null) {
             stopMove();
             building = null;
             return false;
         }
+        if(human instanceof Tunneler tunneler && wantDigTunnel){
+            if (tunneler.getTargetTunnel().getGovernment() == null || tunneler.getTargetBuilding().getGovernment() == null){
+                stopMove();
+                tunneler.setTargetTunnel(null);
+                tunneler.setTargetBuilding(null);
+                building = null;
+                return false;
+            }
+        }
+
+
         Tuple lastPair = path.getLast();
         if (endPair.getX() != lastPair.getX() || endPair.getY() != lastPair.getY()) {
             endPair = new Tuple(enemy.getY(), enemy.getX());
@@ -179,99 +192,14 @@ public class Move {
         return false;
     }
 
-    public boolean takeDamageOfKillPit(){
+    public boolean takeDamageOfKillPit() {
         int killPitCount = killPits.size();
-        for (Tile tile: killPits){
+        for (Tile tile : killPits) {
             tile.setPit(false);
             tile.setPitGovernment(null);
         }
         return HumanController.takeDamage(killPitCount * 8, human);
     }
-    public void moveOneTurn() {
-
-        killPits.clear();
-        if (moveState.equals(MoveStates.STOP.getState()) || isAttacking) {
-            return;
-        }
-
-
-        if (checkDestination() || !checkIsPathValid()) {
-            updatePath();
-        }
-
-        if (path == null){
-            return;
-        }
-
-        if (takeDamageOfKillPit()){
-            return;
-        }
-
-
-        if (MoveStates.MOVING.getState().equals(moveState) || MoveStates.PATROL.getState().equals(moveState)) {
-            if (indexOfPath + human.getSpeed() < path.size()) {
-                moveBeforeDestination();
-                return;
-            }
-        }
-
-        if (MoveStates.MOVING.getState().equals(moveState) && !shouldGetOil) {
-            indexOfPath = 0;
-            if (human instanceof Military) {
-                MapController.moveMilitary(endPair.getX(), endPair.getY(), (Military) human);
-            } else {
-                MapController.moveHuman(endPair.getX(), endPair.getY(), (Civilian) human);
-            }
-            moveState = MoveStates.STOP.getState();
-            if(tool != null && shouldConnectToTool){
-                //TODO connect to tool
-            }
-        }
-
-        if (MoveStates.MOVING.getState().equals(moveState) && shouldGetOil) {
-            indexOfPath = 0;
-            if (human instanceof Engineer engineer) {
-                shouldGetOil = false;
-                if (building.isActive()){
-                    engineer.setHasOil(true);
-                }
-                MapController.moveMilitary(endPair.getX(), endPair.getY(), (Military) human);
-                building = null;
-                Collections.reverse(path);
-                Tuple temp = new Tuple(endPair.getY(), endPair.getX());
-                endPair = new Tuple(startPair.getY(), startPair.getX());
-                startPair = new Tuple(temp.getY(), temp.getX());
-            }
-        }
-
-
-        if (MoveStates.PATROL.getState().equals(moveState) && isPatrolStart) {
-            indexOfPath = 0;
-            if (human instanceof Military) {
-                MapController.moveMilitary(endPair.getX(), endPair.getY(), (Military) human);
-            } else {
-                MapController.moveHuman(endPair.getX(), endPair.getY(), (Civilian) human);
-            }
-            Collections.reverse(path);
-            Tuple temp = new Tuple(endPair.getY(), endPair.getX());
-            endPair = new Tuple(startPair.getY(), startPair.getX());
-            startPair = new Tuple(temp.getY(), temp.getX());
-        }
-
-        if (MoveStates.PATROL.getState().equals(moveState) && !isPatrolStart) {
-            indexOfPath = 0;
-            if (human instanceof Military) {
-                MapController.moveMilitary(endPair.getX(), endPair.getY(), (Military) human);
-            } else {
-                MapController.moveHuman(endPair.getX(), endPair.getY(), (Civilian) human);
-            }
-
-            startPair = new Tuple(endPair.getY(), endPair.getX());
-            endPair = new Tuple(patrolPair.getY(), patrolPair.getX());
-            isPatrolStart = true;
-        }
-    }
-
 
     public void updatePath() {
         Tuple startPair = new Tuple(human.getY(), human.getX());
@@ -349,5 +277,110 @@ public class Move {
 
     public void setShouldGetOil(boolean shouldGetOil) {
         this.shouldGetOil = shouldGetOil;
+    }
+
+    public boolean isWantDigTunnel() {
+        return wantDigTunnel;
+    }
+
+    public void setWantDigTunnel(boolean wantDigTunnel) {
+        this.wantDigTunnel = wantDigTunnel;
+    }
+
+    public void moveOneTurn() {
+
+        killPits.clear();
+        if (moveState.equals(MoveStates.STOP.getState()) || isAttacking) {
+            return;
+        }
+
+
+        if (checkDestination() || !checkIsPathValid()) {
+            updatePath();
+        }
+
+        if (path == null) {
+            return;
+        }
+
+        if (takeDamageOfKillPit()) {
+            return;
+        }
+
+
+        if (MoveStates.MOVING.getState().equals(moveState) || MoveStates.PATROL.getState().equals(moveState)) {
+            if (indexOfPath + human.getSpeed() < path.size()) {
+                moveBeforeDestination();
+                return;
+            }
+        }
+
+        if (MoveStates.MOVING.getState().equals(moveState) && wantDigTunnel) {
+            indexOfPath = 0;
+            if (human instanceof Military) {
+                MapController.moveMilitary(endPair.getX(), endPair.getY(), (Military) human);
+            }
+            assert human instanceof Tunneler;
+            ((Tunneler) human).digTunnel();
+            stopMove();
+        }
+
+        if (MoveStates.MOVING.getState().equals(moveState) && shouldGetOil) {
+            indexOfPath = 0;
+            if (human instanceof Engineer engineer) {
+                shouldGetOil = false;
+                if (building.isActive()) {
+                    engineer.setHasOil(true);
+                }
+                MapController.moveMilitary(endPair.getX(), endPair.getY(), (Military) human);
+                building = null;
+                Collections.reverse(path);
+                Tuple temp = new Tuple(endPair.getY(), endPair.getX());
+                endPair = new Tuple(startPair.getY(), startPair.getX());
+                startPair = new Tuple(temp.getY(), temp.getX());
+            }
+            return;
+        }
+        if (MoveStates.MOVING.getState().equals(moveState)) {
+            indexOfPath = 0;
+            if (human instanceof Military) {
+                MapController.moveMilitary(endPair.getX(), endPair.getY(), (Military) human);
+            } else {
+                MapController.moveHuman(endPair.getX(), endPair.getY(), (Civilian) human);
+            }
+            stopMove();
+            if (tool != null && shouldConnectToTool) {
+                //TODO connect to tool
+            }
+            return;
+        }
+
+
+        if (MoveStates.PATROL.getState().equals(moveState) && isPatrolStart) {
+            indexOfPath = 0;
+            if (human instanceof Military) {
+                MapController.moveMilitary(endPair.getX(), endPair.getY(), (Military) human);
+            } else {
+                MapController.moveHuman(endPair.getX(), endPair.getY(), (Civilian) human);
+            }
+            Collections.reverse(path);
+            Tuple temp = new Tuple(endPair.getY(), endPair.getX());
+            endPair = new Tuple(startPair.getY(), startPair.getX());
+            startPair = new Tuple(temp.getY(), temp.getX());
+            return;
+        }
+
+        if (MoveStates.PATROL.getState().equals(moveState)) {
+            indexOfPath = 0;
+            if (human instanceof Military) {
+                MapController.moveMilitary(endPair.getX(), endPair.getY(), (Military) human);
+            } else {
+                MapController.moveHuman(endPair.getX(), endPair.getY(), (Civilian) human);
+            }
+
+            startPair = new Tuple(endPair.getY(), endPair.getX());
+            endPair = new Tuple(patrolPair.getY(), patrolPair.getX());
+            isPatrolStart = true;
+        }
     }
 }

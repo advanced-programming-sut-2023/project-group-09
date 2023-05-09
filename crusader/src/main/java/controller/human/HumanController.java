@@ -3,6 +3,7 @@ package controller.human;
 
 import controller.GameController;
 import controller.MapController;
+import controller.gamestructure.GameBuildings;
 import enumeration.MilitaryStates;
 import enumeration.MoveStates;
 import model.Government;
@@ -10,11 +11,13 @@ import model.activity.Move;
 import model.building.Building;
 import model.building.castlebuildings.Wall;
 import model.game.Map;
+import model.game.Tile;
 import model.game.Tuple;
 import model.human.Human;
 import model.human.civilian.Civilian;
 import model.human.military.Engineer;
 import model.human.military.Military;
+import model.human.military.Tunneler;
 import model.tools.Tool;
 
 import java.util.ArrayList;
@@ -564,6 +567,27 @@ public class HumanController {
             }
             return false;
         }
+    }
+    public static boolean digTunnel(Building targetBuilding, Tunneler tunneler){
+        Tuple startTuple = new Tuple(tunneler.getY(), tunneler.getX());
+        LinkedList<Tuple> path = MoveController.getPathForBuilding(startTuple,targetBuilding,tunneler);
+        if (path == null){
+            return false;
+        }
+
+        Tuple buildingPosition = path.getLast();
+        int x = buildingPosition.getX();
+        int y = buildingPosition.getY();
+        Building tunnel = GameBuildings.getTunnel(GameController.getGame().getCurrentGovernment(),x, y);
+        Tile tile = GameController.getGame().getMap().getTile(x,y);
+        tile.setBuilding(tunnel);
+        tunneler.setTargetTunnel(tunnel);
+        tunneler.setTargetBuilding(targetBuilding);
+        Move move = new Move(startTuple.getX(),startTuple.getY(),path.getLast(),true,tunneler);
+        move.setPath(path);
+        move.setWantDigTunnel(true);
+        tunneler.setMove(move);
+        return true;
     }
     public static void setState(String state, ArrayList<Military> militaries) {
         for (Military military : militaries) {

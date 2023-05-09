@@ -15,6 +15,7 @@ import model.buildinghandler.BuildingCounter;
 import model.game.Map;
 import model.game.Tile;
 import model.human.civilian.Civilian;
+import model.human.military.Lord;
 import model.human.military.Military;
 import model.tools.Tool;
 
@@ -224,7 +225,9 @@ public class MapController {
         Tile tile = map.getTile(x, y);
         for (Military military : tile.getMilitaries()) {
             if (military.getGovernment().getColor().equals(government.getColor())) {
-                militaries.add(military);
+                if(!(military instanceof Lord) ){
+                    militaries.add(military);
+                }
             }
         }
         return militaries;
@@ -235,7 +238,9 @@ public class MapController {
         Tile tile = map.getTile(x, y);
         for (Military military : tile.getMilitaries()) {
             if (!military.getGovernment().getColor().equals(government.getColor())) {
-                militaries.add(military);
+                if(!military.isInvisible()){
+                    militaries.add(military);
+                }
             }
         }
         return militaries;

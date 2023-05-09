@@ -430,9 +430,18 @@ public class GameBuildings {
         buildings.put("poleTurner", producerBuilding);
     }
 
-    public static void createTunnelEntrance() {
+    public static Building getTunnel() {
+        Building building = new Building(0,0,"tunnel",10,1,1);
+        return building;
     }
-
+    public static Building getTunnel(Government government,int x,int y) {
+        Building building = getTunnel();
+        building.setGovernment(government);
+        building.setStartX(x);
+        building.setStartY(y);
+        building.setNeighborTiles();
+        return building;
+    }
     public static void createOilSmelter() {
         Building building = new Building(0,0,"oilSmelter",10,3,3);
         buildings.put("oilSmelter",building);

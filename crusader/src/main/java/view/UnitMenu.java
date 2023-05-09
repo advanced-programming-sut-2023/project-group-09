@@ -199,6 +199,9 @@ public class UnitMenu {
                     int y = Integer.parseInt(ViewController.resultMatcher.group("y"));
                     output = GameController.digTunnel(x, y);
                     System.out.println(output);
+                    if(output.equals("dig tunnel order recorded successfully!")){
+                        return;
+                    }
                 }
             } else if (buildMatcher.matches()) {
                 runBuild(scanner);

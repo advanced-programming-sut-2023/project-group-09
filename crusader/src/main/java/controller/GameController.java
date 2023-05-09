@@ -8,6 +8,7 @@ import enumeration.MilitaryStates;
 import model.Government;
 import model.activity.Move;
 import model.building.Building;
+import model.building.castlebuildings.CastleBuilding;
 import model.building.castlebuildings.Wall;
 import model.game.Game;
 import model.game.Map;
@@ -16,6 +17,7 @@ import model.game.Tuple;
 import model.human.Human;
 import model.human.civilian.Civilian;
 import model.human.military.Military;
+import model.human.military.Tunneler;
 import model.tools.Tool;
 import view.UnitMenu;
 
@@ -266,7 +268,75 @@ public class GameController {
     }
 
     public static String digTunnel(int x, int y) {
-        return "";
+        String message = validateXAndY(x, y);
+        if (message != null) {
+            return message;
+        }
+        ArrayList<Military> militaries = MapController.getOneTypeOfMilitariesOfGovernment(UnitMenu.x,UnitMenu.y,"tunneler",game.getCurrentGovernment());
+        if(militaries.size() == 0){
+            return "no tunneler between selected troops!";
+        }
+        Random random= new Random();
+        Tunneler tunneler = (Tunneler) militaries.get(random.nextInt(militaries.size()));
+
+        Tile tile = game.getMap().getTile(x,y);
+        if (!tile.getCanPutBuilding()){
+            return "this position is not suitable !";
+        }
+
+        Building targetBuilding = aroundBuilding(x, y);
+        if (targetBuilding == null) {
+            return "no enemy's castle building is around here!";
+        }
+        boolean checkPath = HumanController.digTunnel(targetBuilding,tunneler);
+        if (!checkPath) {
+            return "no path to position!";
+        }
+
+        return "dig tunnel order recorded successfully!";
+    }
+
+    public static Building aroundBuilding(int x, int y) {
+        Building targetBuilding = null;
+        x--;
+        y--;
+        Tile tile = game.getMap().getTile(x, y);
+        boolean check = true;
+
+
+        if (0 < x && check) {
+            Tile neighbor = game.getMap().getTile(x - 1, y);
+            Building neighborBuilding = neighbor.getBuilding();
+            if (neighborBuilding instanceof CastleBuilding && !neighborBuilding.getGovernment().equals(game.getCurrentGovernment())) {
+                targetBuilding = neighborBuilding;
+                check = false;
+            }
+        }
+        if (0 < y && check) {
+            Tile neighbor = game.getMap().getTile(x, y - 1);
+            Building neighborBuilding = neighbor.getBuilding();
+            if (neighborBuilding instanceof CastleBuilding  && !neighborBuilding.getGovernment().equals(game.getCurrentGovernment())) {
+                targetBuilding = neighborBuilding;
+                check = false;
+            }
+        }
+
+        if (x < game.getMap().getWidth() - 1 && check) {
+            Tile neighbor = game.getMap().getTile(x + 1, y);
+            Building neighborBuilding = neighbor.getBuilding();
+            if (neighborBuilding instanceof CastleBuilding && !neighborBuilding.getGovernment().equals(game.getCurrentGovernment())) {
+                targetBuilding = neighborBuilding;
+                check = false;
+            }
+        }
+        if (y < game.getMap().getLength() - 1 && check) {
+            Tile neighbor = game.getMap().getTile(x, y + 1);
+            Building neighborBuilding = neighbor.getBuilding();
+            if (neighborBuilding instanceof CastleBuilding && !neighborBuilding.getGovernment().equals(game.getCurrentGovernment())) {
+                targetBuilding = neighborBuilding;
+            }
+        }
+        return targetBuilding;
     }
 
     public static String buildEquipment(int equipmentNumber, int x, int y) {
@@ -350,7 +420,7 @@ public class GameController {
             Government nowGovernment = game.getGovernments().get(0);
             result += "now Lord " + nowGovernment.getUser().getNickname() + " is playing\n";
             result += "new Turn started!\n";
-            game.setRound(game.getRound()+1);
+            game.setRound(game.getRound() + 1);
             for (Government government : game.getGovernments()) {
                 government.updateAfterTurn();
             }
