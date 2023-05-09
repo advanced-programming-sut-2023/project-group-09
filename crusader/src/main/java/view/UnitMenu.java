@@ -4,10 +4,12 @@ import controller.EngineerController;
 import controller.GameController;
 import controller.MapController;
 import controller.ViewController;
+import controller.human.HumanController;
 import enumeration.answers.Answers;
 import enumeration.commands.Commands;
 import enumeration.commands.UnitMenuCommands;
 import model.game.Game;
+import model.human.military.ArabianMercenary;
 import model.human.military.Engineer;
 import model.human.military.Military;
 import model.tools.Moat;
@@ -188,7 +190,23 @@ public class UnitMenu {
                 }
             } else if (pourOilMatcher.matches()) {
                 String direction = pourOilMatcher.group("direction");
-                output = GameController.pourOil(direction);
+                ArrayList<Engineer> engineers = getEngineersOfTile();
+                if (engineers.size() == 0) {
+                    System.out.println("invalid command");
+                    return;
+                }
+                for (int i = 0; i < engineers.size(); i++) {
+                    if (engineers.get(i).isInTool()) {
+                        System.out.println("some of the selected engineers are in a tool");
+                        return;
+                    }
+                }
+                output = "";
+                for (int i = 0; i < engineers.size(); i++) {
+                    if (HumanController.pourOilDirection(engineers.get(i), direction, engineers.get(i).getMilitaryState()))
+                        output = "poured oil successfully";
+                    else output = "can't pour oil";
+                }
                 System.out.println(output);
             } else if (digTunnelMatcher.matches()) {
                 String items = digTunnelMatcher.group("items");
