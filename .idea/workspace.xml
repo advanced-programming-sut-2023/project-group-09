@@ -4,13 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="ending of game + scores + scoreboard">
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="worker distribution was called in next turn.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/MapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/MapController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/Government.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/Government.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/CastleBuilding.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/CastleBuilding.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/producerbuildings/ProducerBuilding.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/producerbuildings/ProducerBuilding.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/human/civilian/Civilian.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/human/civilian/Civilian.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -199,7 +194,7 @@
       <workItem from="1683581790202" duration="5293000" />
       <workItem from="1683626274596" duration="107000" />
       <workItem from="1683626585666" duration="143000" />
-      <workItem from="1683646489636" duration="3624000" />
+      <workItem from="1683646489636" duration="11525000" />
     </task>
     <task id="LOCAL-00001" summary="...">
       <created>1681925358549</created>
@@ -502,7 +497,42 @@
       <option name="project" value="LOCAL" />
       <updated>1683591226404</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="popularity + update population">
+      <created>1683650178434</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1683650178434</updated>
+    </task>
+    <task id="LOCAL-00045" summary="update population completed">
+      <created>1683652179278</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1683652179278</updated>
+    </task>
+    <task id="LOCAL-00046" summary="food distribution">
+      <created>1683654913257</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1683654913257</updated>
+    </task>
+    <task id="LOCAL-00047" summary="attacking damage in next turn&#10;move of humans in next turn&#10;gate house automatic opening or closing in next turn">
+      <created>1683656297174</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1683656297174</updated>
+    </task>
+    <task id="LOCAL-00048" summary="worker distribution was called in next turn.">
+      <created>1683657658240</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1683657658240</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -518,13 +548,23 @@
         </entry>
       </map>
     </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="User">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="*" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="a bug solved." />
-    <MESSAGE value="Building menu and Buildings dictionary. (first try)" />
-    <MESSAGE value="Building menu (second try)" />
-    <MESSAGE value="a commit to sove a problem." />
-    <MESSAGE value="a commit to solve a problem." />
     <MESSAGE value="building menu edited." />
     <MESSAGE value="adding tree to Tile class" />
     <MESSAGE value="just commit" />
@@ -545,7 +585,12 @@
     <MESSAGE value="adding Lord to militaries (humans)" />
     <MESSAGE value="Laying off workers after destroying their buildings." />
     <MESSAGE value="ending of game + scores + scoreboard" />
-    <option name="LAST_COMMIT_MESSAGE" value="ending of game + scores + scoreboard" />
+    <MESSAGE value="popularity + update population" />
+    <MESSAGE value="update population completed" />
+    <MESSAGE value="food distribution" />
+    <MESSAGE value="attacking damage in next turn&#10;move of humans in next turn&#10;gate house automatic opening or closing in next turn" />
+    <MESSAGE value="worker distribution was called in next turn." />
+    <option name="LAST_COMMIT_MESSAGE" value="worker distribution was called in next turn." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

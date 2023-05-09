@@ -9,6 +9,7 @@ import model.Government;
 import model.activity.Move;
 import model.building.Building;
 import model.building.castlebuildings.CastleBuilding;
+import model.building.castlebuildings.Gatehouse;
 import model.building.castlebuildings.Wall;
 import model.game.Game;
 import model.game.Map;
@@ -265,8 +266,12 @@ public class GameController {
     }
 
 
-    public static String pourOil(String direction) {
-        return "";
+    public static String pourOil(String direction, ArrayList<Engineer> engineers) {
+        for (int i = 0; i < engineers.size(); i++) {
+            if (!HumanController.pourOilDirection(engineers.get(i), direction, engineers.get(i).getMilitaryState()))
+                return "can't pour oil";
+        }
+        return "poured oil successfully";
     }
 
     public static String digTunnel(int x, int y) {
@@ -438,6 +443,7 @@ public class GameController {
             return "there is no tool of your government here!";
         }
         ToolMenu.tool = tool;
+        ToolMenu.tool = tool;
         return "tool " + tool.getName() + " selected";
     }
 
@@ -451,6 +457,49 @@ public class GameController {
         }
         return numberOfGovernments;
     }
+
+    private static void moveOfHumansAndTools() {
+        for (Government government : game.getGovernments()) {
+            for (Human human : government.getSociety()) {
+                if (human.getMove() != null) {
+                    human.getMove().moveOneTurn();
+                }
+            }
+            for (Military military : government.getTroops()) {
+                if (military.getMove() != null) {
+                    military.getMove().moveOneTurn();
+                }
+            }
+            for (Tool tool : government.getTools()) {
+                if (tool.getToolMove() != null) {
+                    tool.getToolMove().moveOneTurn();
+                }
+            }
+        }
+    }
+
+    private static void attackOfMilitariesAndTools() {
+        for (Government government : game.getGovernments()) {
+            for (Military military : government.getTroops()) {
+                military.getAttack().doAttack();
+            }
+            for (Tool tool : government.getTools()) {
+                tool.getToolAttack().doAttack();
+            }
+        }
+    }
+
+    private static void gateHouseAutomaticOrder() {
+        for (Government government : game.getGovernments()) {
+            for (Building gatehouse : government.getBuildingData("smallStoneGatehouse").getBuildings()) {
+                ((Gatehouse) gatehouse).checkToCloseGateHouse();
+            }
+            for (Building gatehouse : government.getBuildingData("bigStoneGatehouse").getBuildings()) {
+                ((Gatehouse) gatehouse).checkToCloseGateHouse();
+            }
+        }
+    }
+
 
 
     public static String changeTurn() {
@@ -466,11 +515,9 @@ public class GameController {
             for (Government government : game.getGovernments()) {
                 government.updateAfterTurn();
             }
-            // TODO : next turn rules
-            /*
-                attacking and defending damages to Buildings and Humans
-                routine work of buildings (such as producing some thing)
-             */
+            gateHouseAutomaticOrder();
+            moveOfHumansAndTools();
+            attackOfMilitariesAndTools();
             game.setCurrentGovernment(nowGovernment);
             int numberOfRemainedGoverments = howManyGovernmentsRemainsInGame();
             if (numberOfRemainedGoverments == 1) {
@@ -714,4 +761,6 @@ public class GameController {
     private static boolean checkNullFields(int input) {
         return input == -1;
     }
+
+
 }

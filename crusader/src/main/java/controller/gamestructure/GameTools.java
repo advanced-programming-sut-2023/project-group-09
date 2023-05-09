@@ -21,9 +21,9 @@ public class GameTools {
     public static void createPortableShield() {
         int speed = Speed.VERY_FAST.getRate();
         int damage = AttackRating.NONE.getRate();
-        Tool portableShield = new Tool(1, speed,
+        Tool portableShield = new Tool("portableShield", 1, speed,
                 0, damage);
-        tools.put("portableShield",portableShield);
+        tools.put("portableShield", portableShield);
         portableShield.setName("portableShield");
     }
 
@@ -31,18 +31,18 @@ public class GameTools {
         int speed = Speed.AVERAGE.getRate();
 //        TODO: correct damage
         int damage = AttackRating.NONE.getRate();
-        Tool batteringRam = new Tool(4, speed,
+        Tool batteringRam = new Tool("batteringRam", 4, speed,
                 0, damage);
-        tools.put("batteringRam",batteringRam);
+        tools.put("batteringRam", batteringRam);
         batteringRam.setName("batteringRam");
     }
 
     public static void createSiegeTower() {
         int speed = Speed.FAST.getRate();
         int damage = AttackRating.NONE.getRate();
-        Tool siegeTower = new Tool(4, speed,
+        Tool siegeTower = new Tool("siegeTower", 4, speed,
                 0, damage);
-        tools.put("siegeTower",siegeTower);
+        tools.put("siegeTower", siegeTower);
         siegeTower.setName("siegeTower");
     }
 
@@ -50,9 +50,9 @@ public class GameTools {
         int speed = Speed.AVERAGE.getRate();
 //        TODO: correct damage
         int damage = AttackRating.HIGH.getRate();
-        Tool catapult = new Tool(2, speed,
+        Tool catapult = new Tool("catapult", 2, speed,
                 10, damage);
-        tools.put("catapult",catapult);
+        tools.put("catapult", catapult);
         catapult.setName("catapult");
     }
 
@@ -60,9 +60,9 @@ public class GameTools {
         int speed = Speed.STATIONARY.getRate();
 //        TODO: correct damage
         int damage = AttackRating.VERY_HIGH.getRate();
-        Tool trebuchet = new Tool(3, speed,
+        Tool trebuchet = new Tool("trebuchet", 3, speed,
                 15, damage);
-        tools.put("trebuchet",trebuchet);
+        tools.put("trebuchet", trebuchet);
         trebuchet.setName("trebuchet");
     }
 
@@ -70,14 +70,14 @@ public class GameTools {
         int speed = Speed.SLOW.getRate();
 //        TODO: correct damage
         int damage = AttackRating.VERY_HIGH.getRate();
-        Tool fireBallista = new Tool(2, speed,
+        Tool fireBallista = new Tool("fireBallista", 2, speed,
                 10, damage);
-        tools.put("fireBallista",fireBallista);
+        tools.put("fireBallista", fireBallista);
         fireBallista.setName("fireBallista");
     }
 
-    public static Tool getClone(Tool tool){
-        if(tool != null){
+    public static Tool getClone(Tool tool) {
+        if (tool != null) {
             return new Tool(tool);
         }
         return null;

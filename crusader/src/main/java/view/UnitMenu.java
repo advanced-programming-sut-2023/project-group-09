@@ -7,10 +7,8 @@ import controller.ViewController;
 import enumeration.answers.Answers;
 import enumeration.commands.Commands;
 import enumeration.commands.UnitMenuCommands;
-import model.game.Game;
 import model.human.military.Engineer;
 import model.human.military.Military;
-import model.tools.Moat;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -38,11 +36,10 @@ public class UnitMenu {
             Matcher attackBuildingMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.ATTACK_BUILDING);
             Matcher airAttackToolMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.AIR_ATTACK_TOOL);
             Matcher attackToolMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.ATTACK_TOOL);
-            Matcher useToolMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.USE_TOOL);
+            Matcher enterToolMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.ENTER_TOOL);
             Matcher pourOilMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.POUR_OIL);
             Matcher digTunnelMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.DIG_TUNNEL);
             Matcher buildMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.BUILD);
-            Matcher enterToolMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.ENTER_TOOL);
             Matcher digMoatMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.DIG_MOAT);
             Matcher disbandUnitMatcher = UnitMenuCommands.getMatcher(input, UnitMenuCommands.DISBAND_UNIT);
             Matcher backMatcher = Commands.getMatcher(input, Commands.BACK);
@@ -172,7 +169,7 @@ public class UnitMenu {
                         return;
                     }
                 }
-            } else if (useToolMatcher.matches()) {
+            } else if (enterToolMatcher.matches()) {
                 String items = airAttackToolMatcher.group("items");
                 ArrayList<String> itemsPattern = new ArrayList<>();
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
@@ -188,7 +185,22 @@ public class UnitMenu {
                 }
             } else if (pourOilMatcher.matches()) {
                 String direction = pourOilMatcher.group("direction");
-                output = GameController.pourOil(direction);
+                ArrayList<Engineer> engineers = getEngineersOfTile();
+                if (engineers.size() == 0) {
+                    System.out.println("invalid command");
+                    return;
+                }
+                for (int i = 0; i < engineers.size(); i++) {
+                    if (engineers.get(i).isInTool()) {
+                        System.out.println("some of the selected engineers are in a tool");
+                        return;
+                    }
+                }
+                if (direction != "w" && direction != "e" && direction != "n" && direction != "s") {
+                    System.out.println("invalid direction");
+                    continue;
+                }
+                output = GameController.pourOil(direction, engineers);
                 System.out.println(output);
             } else if (digTunnelMatcher.matches()) {
                 String items = digTunnelMatcher.group("items");
@@ -206,28 +218,6 @@ public class UnitMenu {
                 }
             } else if (buildMatcher.matches()) {
                 runBuild(scanner);
-            } else if (enterToolMatcher.matches()) {
-                ArrayList<Engineer> engineers = getEngineersOfTile();
-                if (engineers.size() == 0) {
-                    System.out.println("invalid command");
-                    return;
-                }
-                for (int i = 0; i < engineers.size(); i++) {
-                    if (engineers.get(i).isInTool()) {
-                        System.out.println("some of the selected engineers are in a tool");
-                        return;
-                    }
-                }
-                String items = enterToolMatcher.group("content");
-                ArrayList<String> itemsPattern = new ArrayList<>();
-                itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
-                itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
-                if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = Integer.parseInt(ViewController.resultMatcher.group("x"));
-                    int y = Integer.parseInt(ViewController.resultMatcher.group("y"));
-                    output = EngineerController.enterTool(GameController.getGame().getMap().getTile(x, y).getTool());
-                    System.out.println(output);
-                }
             } else if (digMoatMatcher.matches()) {
                 ArrayList<Engineer> engineers = getEngineersOfTile();
                 if (engineers.size() == 0) {

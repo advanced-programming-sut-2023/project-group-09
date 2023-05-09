@@ -1,10 +1,15 @@
 package model;
 
 import controller.BuildingController;
+import controller.GameController;
+import controller.GovernmentController;
 import controller.MapController;
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameGoods;
+import controller.gamestructure.GameMaps;
+import controller.human.MoveController;
 import enumeration.dictionary.Colors;
+import model.activity.Move;
 import model.building.Building;
 import model.building.castlebuildings.CastleBuilding;
 import model.building.castlebuildings.MainCastle;
@@ -125,6 +130,13 @@ public class Government {
         ((MainCastle) (this.getBuildings().get("MainCastle").getBuildings().get(0))).setLord(lord);
     }
 
+    public ArrayList<Tool> getTools() {
+        return tools;
+    }
+
+    public void setTools(ArrayList<Tool> tools) {
+        this.tools = tools;
+    }
 
     public void addAmountToProperties(String itemName, String itemType, int amount) {
         this.getProperties().put(itemName, this.getProperties().get(itemName) + amount);
@@ -235,8 +247,6 @@ public class Government {
         this.color = color;
     }
 
-    public void changePopulation() {
-    }
 
 
     public int getPropertyAmount(String name) {
@@ -376,9 +386,11 @@ public class Government {
         this.updateCowAndHorseNumber();
         this.producerBuildingsAction();
         this.outOfStockNotification();
-        this.workersNeededNotification();
         this.updateMaxPopularity();
-
+        this.updatePeopleAfterTurn();
+        this.foodDistribution();
+        this.workerDistribution();
+        this.workersNeededNotification();
     }
 
     public void updateCowAndHorseNumber() {
@@ -441,10 +453,15 @@ public class Government {
         }
     }
 
+    public void updatePopulationWithAdd(int wanted) {
+        int counterOfAddedPeople = wanted - population;
+        this.mainCastle.makeUnemployed(counterOfAddedPeople);
+    }
 
 
-    public void updatePopulation() {
-        int counterOfRemovedPeople = maxPopulation - population;
+
+    public void updatePopulationWithRemove(int wanted) {
+        int counterOfRemovedPeople = population - wanted;
         if (counterOfRemovedPeople != 0) {
             Iterator itr = this.society.iterator();
             while (itr.hasNext()) {
@@ -471,7 +488,34 @@ public class Government {
                 }
             }
         }
+    }
 
+    public void updatePeopleAfterTurn() {
+        // maxPopularity : 25 --- minPopularity : -37
+        double ratio = (double)(this.getPopularity() + 37)/(25+37);
+        int checker = (int)ratio*100;
+        int number;
+        if (checker < 20) {
+            // 30%
+            number = (int)(0.3f * maxPopulation);
+        } else if (checker < 40) {
+            // 50%
+            number = (int)(0.5f * maxPopulation);
+        } else if (checker < 60) {
+            // 70%
+            number = (int)(0.7f * maxPopulation);
+        } else if (checker < 80) {
+            // 90%
+            number = (int)(0.9f * maxPopulation);
+        } else {
+            // 100%
+            number = (int)(1 * maxPopulation);
+        }
+        if (number > population) {
+            this.updatePopulationWithAdd(number);
+        } else if (number < population) {
+            this.updatePopulationWithRemove(number);
+        }
     }
 
     public int getPopularity() {
@@ -484,6 +528,47 @@ public class Government {
                     this.religionRate++;
             }
         }
-        return this.fearRate + this.taxRate + this.foodRate + this.religionRate;
+        return this.fearRate + GovernmentController.getTaxPopularity(this.taxRate)
+                + GovernmentController.getFoodPopularity(this.foodRate) + this.religionRate;
     }
+
+    public void foodDistribution() {
+        int foodsNeeded = (int)(GovernmentController.getFoodRate(this.foodRate)*population);
+        int foodWeHave = this.properties.get("meat") + this.properties.get("bread") +
+                this.properties.get("apple") + this.properties.get("cheese");
+        if (foodsNeeded > foodWeHave) {
+            this.foodRate = -2;
+            System.out.println("Not enough food!");
+        }
+        int consumedFoods = Math.min(foodsNeeded , foodWeHave);
+        consumeFoods(consumedFoods);
+    }
+
+    public int consumeSupposedFood(int amountOfFoods , String nameOfFood) {
+        int amount = Math.min(amountOfFoods , this.getPropertyAmount(nameOfFood));
+        GovernmentController.consumeProduct(this , nameOfFood , amount);
+        amountOfFoods -= amount;
+        return amountOfFoods;
+    }
+
+    public void consumeFoods(int amountOfFoods) {
+        int amount = consumeSupposedFood(amountOfFoods , "bread");
+        amountOfFoods -= amount;
+        amount = consumeSupposedFood(amountOfFoods , "cheese");
+        amountOfFoods -= amount;
+        amount = consumeSupposedFood(amountOfFoods , "apple");
+        amountOfFoods -= amount;
+        amount = consumeSupposedFood(amountOfFoods , "meat");
+        amountOfFoods -= amount;
+
+    }
+
+    public void workerDistribution() {
+        for (BuildingCounter bc : buildings.values()) {
+            for (Building building : bc.getBuildings()) {
+                GameController.workerDistribution(building);
+            }
+        }
+    }
+
 }

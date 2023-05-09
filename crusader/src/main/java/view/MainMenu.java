@@ -13,7 +13,7 @@ public class MainMenu {
         while (true) {
             System.out.println("1.create game\n" +
                     "2.profile menu\n" +
-                    "3.show scoreboard" +
+                    "3.show scoreboard\n" +
                     "4.logout\n" +
                     "5.exit");
             String input = scanner.nextLine();
