@@ -115,6 +115,9 @@ public class GovernmentController {
         Goods product = GameGoods.getProduct(name);
         int rate = amount;
         ArrayList<Building> storages = government.getBuildings().get(product.getNameOfStorage()).getBuildings();
+        if(storages.size() == 0){
+            return -1;
+        }
         for (Building building : storages) {
             if (amount == 0) {
                 break;
