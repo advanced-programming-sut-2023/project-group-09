@@ -40,11 +40,12 @@ public class MapController {
         String result = "";
         for (int i = y1; i <= y2; i++) {
             for (int j = x1; j <= x2; j++) {
-                Tile tile = map.getTile(i, j);
+                Tile tile = map.getTile(j, i);
                 if ((tile.getTree() != null && !type.equals(Textures.EARTH) && !type.equals(Textures.EARTH_AND_SAND) && !type.equals(Textures.GRASS) &&
                         !type.equals(Textures.THICK_GRASS) && !type.equals(Textures.OASIS_GRASS) && !type.equals(Textures.BEACH)) ||
                         (tile.getRockDirection() != null && (type.equals(Textures.SMALL_POND) || type.equals(Textures.LARGE_POND))))
                     result += "you can't change texture of tile (" + (i + 1) + ", " + (j + 1) + ") to " + type.getTextureName() + "\n";
+                tile.setTexture(type);
             }
         }
         return result + "texture of tiles from (" + (x1 + 1) + ", " + (y1 + 1) + ") to (" + (x2 + 1) + ", " + (y2 + 1) + ") changed to "
@@ -67,7 +68,7 @@ public class MapController {
     public static String dropRock(int x, int y, RockDirections direction) {
         Tile tile = map.getTile(x, y);
         if (!tile.getTexture().equals(Textures.SMALL_POND) && !tile.getTexture().equals(Textures.LARGE_POND) && tile.getTree() == null && tile.getBuilding() == null
-                && tile.getMilitaries().size() == 0) {
+                && tile.getMilitaries().size() == 0 && tile.getBuilding() == null && tile.getTree() == null) {
             tile.setRockDirection(direction);
             tile.setCanPutBuilding(false);
             tile.setPassable(false);
@@ -79,8 +80,8 @@ public class MapController {
     public static String dropTree(int x, int y, Trees tree) {
         Tile tile = map.getTile(x, y);
         if ((tile.getTexture().equals(Textures.EARTH) || tile.getTexture().equals(Textures.EARTH_AND_SAND) || tile.getTexture().equals(Textures.GRASS) ||
-                tile.getTexture().equals(Textures.THICK_GRASS) || tile.getTexture().equals(Textures.OASIS_GRASS) || tile.getTexture().equals(Textures.BEACH) &&
-                tile.getBuilding() == null && tile.getRockDirection() == null)) {
+                tile.getTexture().equals(Textures.THICK_GRASS) || tile.getTexture().equals(Textures.OASIS_GRASS) || tile.getTexture().equals(Textures.BEACH)) &&
+                tile.getBuilding() == null && tile.getRockDirection() == null) {
             tile.setTree(tree);
             tile.setCanPutBuilding(false);
             return tree.getTreeName() + " added to (" + (x + 1) + ", " + (y + 1) + ") successfully";

@@ -21,13 +21,17 @@ public class EditMapEnvironmentMenu {
             Matcher dropTreeM = MapCommands.DROP_TREE.getMatcher(input);
             Matcher dropRockM = MapCommands.DROP_ROCK.getMatcher(input);
             Matcher clearTileM = MapCommands.CLEAR_TILE.getMatcher(input);
+            Matcher showMapM = MapCommands.SHOW_MAP.getMatcher(input); //////////////////////
 
             if (setTextureM.matches()) runSetTexture(setTextureM);
             else if (dropTreeM.matches()) runDropTree(dropTreeM);
             else if (dropRockM.matches()) runDropRock(dropRockM);
             else if (clearTileM.matches()) MapMenu.runShowMapOrShowDetailsOrClearLand(clearTileM, 2);
             else if (MapCommands.CONTINUE.getMatcher(input).matches()) return;
-            else System.out.println("invalid command!");
+            else if (showMapM.matches()) {
+                MapMenu.runShowMapOrShowDetailsOrClearLand(showMapM, 10);
+                MapMenu.run(scanner);
+            } else System.out.println("invalid command!");
         }
     }
 

@@ -1,12 +1,14 @@
 package view;
 
 import controller.*;
+import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameMaps;
 import enumeration.Pair;
 import enumeration.commands.MapCommands;
 import enumeration.dictionary.Colors;
 import model.Government;
 import model.User;
+import model.building.castlebuildings.MainCastle;
 import model.game.Game;
 import model.game.Map;
 
@@ -177,17 +179,20 @@ public class CreateGameMenu {
                 }
                 break;
             }
-            int x = castles.get(castleNumber - 1).getFirst();
-            int y = castles.get(castleNumber - 1).getSecond();
+            int x = castles.get(castleNumber - 1).getFirst() - 1;
+            int y = castles.get(castleNumber - 1).getSecond() - 1;
             Government government = new Government(lord, x, y, colors.get(colorNumber - 1));
             MapController.dropMilitary(x, y, "lord", government);
             government.addAmountToProperties("wood", "resource", 100);
             government.addAmountToProperties("stone", "resource", 50);
             government.addAmountToProperties("bread", "food", 60);
             government.setGold(4000);
-//            TODO: add primary units
             game.addGovernment(government);
             MapController.dropBuilding(x, y, "mainCastle", government);
+//            MainCastle mainCastle = (MainCastle) GameBuildings.getBuilding("mainCastle");
+//            mainCastle.setGovernment(government);
+//            government.setMainCastle(mainCastle);
+//            government.getMainCastle().makeUnemployed(30);
             castles.remove(castleNumber - 1);
             colors.remove(colorNumber - 1);
             EditMapMenu.currentGovernment = government;
