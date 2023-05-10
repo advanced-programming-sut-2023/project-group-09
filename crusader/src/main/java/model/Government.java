@@ -567,7 +567,7 @@ public class Government {
     public void checkFirstStorage(Building building){
         String name = building.getName();
         BuildingCounter buildingCounter = getBuildingData(name);
-        if (buildingCounter.getNumber() != 0 ){
+        if (buildingCounter.getNumber() != 1 ){
             return;
         }
         StorageBuilding storageBuilding = (StorageBuilding) building;
