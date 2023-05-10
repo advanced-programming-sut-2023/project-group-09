@@ -621,6 +621,71 @@ public class GameController {
         return result;
     }
 
+    public static String showMap2(int x, int y, Map map) {
+        if (y - 3 < 0) y = 3;
+        else if (y + 3 >= map.getLength()) y = map.getLength() - 1;
+        if (x - 9 < 0) x = 9;
+        else if (x + 9 >= map.getWidth()) x = map.getWidth() - 1;
+//        game.setCurrentMapX(x);
+//        game.setCurrentMapY(y);
+
+        String result = "";
+        result += "-";
+        for (int i = 0; i < 19 * 6; i++) {
+            result += "-";
+        }
+        result += "\n";
+        for (int i = y - 3; i <= y + 3; i++) {
+            for (int j = 0; j < 2; j++) {
+                result += "|";
+                for (int k = x - 9; k <= x + 9; k++) {
+                    for (int l = 0; l < 5; l++) {
+                        Tile tile = map.getTile(k, i);
+                        String sign = " ";
+                        if (tile.getTool() != null) {
+                            sign = tile.getTool().getGovernment().getColorRgb() + "A";
+                        } else if (tile.getMilitaries().size() != 0) {
+                            HashMap<Government, Integer> numberOfMilitariesOnTile = new HashMap<>();
+                            for (int m = 0; m < game.getGovernments().size(); m++) {
+                                numberOfMilitariesOnTile.put(game.getGovernments().get(m), 0);
+                            }
+                            for (int m = 0; m < tile.getMilitaries().size(); m++) {
+                                Military military = tile.getMilitaries().get(m);
+                                numberOfMilitariesOnTile.replace(military.getGovernment(), numberOfMilitariesOnTile.get(military.getGovernment()) + 1);
+                            }
+                            int max = Collections.max(numberOfMilitariesOnTile.values());
+                            int numberOfMax = 0;
+                            Government maxMilitariesGovernment = null;
+                            for (Government government : numberOfMilitariesOnTile.keySet()) {
+                                if (numberOfMilitariesOnTile.get(government) == max) {
+                                    numberOfMax++;
+                                    maxMilitariesGovernment = government;
+                                }
+                            }
+                            if (numberOfMax == 1) sign = maxMilitariesGovernment.getColorRgb() + "S";
+                            else sign = "S";
+                        } else if (tile.getBuilding() != null && !(tile.getBuilding() instanceof Wall))
+                            sign = tile.getBuilding().getGovernment().getColorRgb() + "B";
+                        else if (tile.getBuilding() != null && tile.getBuilding() instanceof Wall)
+                            sign = tile.getBuilding().getGovernment().getColorRgb() + "W";
+                        else if (tile.getTree() != null) sign = "T";
+                        else if (tile.getRockDirection() != null) sign = "R";
+                        result += tile.getTexture().getColor() + sign + "\u001B[0m";
+                    }
+                    result += "|";
+                }
+                result += "\n";
+            }
+            result += "-";
+            for (int j = 0; j < 19 * 6; j++) {
+                result += "-";
+            }
+            result += "\n";
+        }
+
+        return result;
+    }
+
     public static String showPreviewOfMap(Map map) {
         String result = "";
         for (int k = 1; k < map.getLength(); k++) {

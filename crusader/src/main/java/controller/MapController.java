@@ -67,7 +67,7 @@ public class MapController {
     public static String dropRock(int x, int y, RockDirections direction) {
         Tile tile = map.getTile(x, y);
         if (!tile.getTexture().equals(Textures.SMALL_POND) && !tile.getTexture().equals(Textures.LARGE_POND) && tile.getTree() == null && tile.getBuilding() == null
-                && tile.getMilitaries().size() == 0) {
+                && tile.getMilitaries().size() == 0 && tile.getBuilding() == null && tile.getTree() == null) {
             tile.setRockDirection(direction);
             tile.setCanPutBuilding(false);
             tile.setPassable(false);
@@ -79,8 +79,8 @@ public class MapController {
     public static String dropTree(int x, int y, Trees tree) {
         Tile tile = map.getTile(x, y);
         if ((tile.getTexture().equals(Textures.EARTH) || tile.getTexture().equals(Textures.EARTH_AND_SAND) || tile.getTexture().equals(Textures.GRASS) ||
-                tile.getTexture().equals(Textures.THICK_GRASS) || tile.getTexture().equals(Textures.OASIS_GRASS) || tile.getTexture().equals(Textures.BEACH) &&
-                tile.getBuilding() == null && tile.getRockDirection() == null)) {
+                tile.getTexture().equals(Textures.THICK_GRASS) || tile.getTexture().equals(Textures.OASIS_GRASS) || tile.getTexture().equals(Textures.BEACH)) &&
+                tile.getBuilding() == null && tile.getRockDirection() == null) {
             tile.setTree(tree);
             tile.setCanPutBuilding(false);
             return tree.getTreeName() + " added to (" + (x + 1) + ", " + (y + 1) + ") successfully";

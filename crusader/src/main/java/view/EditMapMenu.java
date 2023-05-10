@@ -2,6 +2,7 @@ package view;
 
 import controller.GameController;
 import controller.MapController;
+import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameHumans;
 import enumeration.Textures;
 import enumeration.commands.MapCommands;
@@ -22,11 +23,15 @@ public class EditMapMenu {
             String input = scanner.nextLine();
             Matcher dropBuildingM = MapCommands.DROP_BUILDING.getMatcher(input);
             Matcher dropUnitM = MapCommands.DROP_UNIT.getMatcher(input);
+            Matcher showMapM = MapCommands.SHOW_MAP.getMatcher(input); //////////////////////
 
             if (dropBuildingM.matches()) runDropBuilding(dropBuildingM);
             else if (dropUnitM.matches()) runDropUnit(dropUnitM);
             else if (MapCommands.CONTINUE.getMatcher(input).matches()) return;
-            else System.out.println("invalid command");
+            else if (showMapM.matches()) {
+                MapMenu.runShowMapOrShowDetailsOrClearLand(showMapM, 10);
+                MapMenu.run(scanner);
+            } else System.out.println("invalid command");
         }
     }
 
@@ -54,6 +59,10 @@ public class EditMapMenu {
         int x = Integer.parseInt(xM.group("x")) - 1;
         int y = Integer.parseInt(yM.group("y")) - 1;
         String type = typeM.group("type");
+        if (GameBuildings.getBuilding(type) == null) {
+            System.out.println("invalid building type!");
+            return;
+        }
         if (MapController.checkCanPutBuilding(x, y, type, currentGovernment)) {
             MapController.dropBuilding(x, y, type, currentGovernment);
             System.out.println("building dropped successfully!");
