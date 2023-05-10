@@ -1,4 +1,27 @@
 {
+  "mainCastle" : {
+    "cagedWarDogs": {
+      "cost": {},
+      "requiredHumans": [],
+      "price": 0,
+      "numberOfRequiredWorkers": 0,
+      "numberOfRequiredEngineers": 0,
+      "buildingImpassableLength": -1,
+      "hasSpecialTexture": false,
+      "suitableTextures": [],
+      "shouldBeOne": false,
+      "name": "mainCastle",
+      "neighborTiles": [],
+      "maxHp": 100,
+      "hp": 100,
+      "startX": 0,
+      "startY": 0,
+      "endX": 0,
+      "endY": 0,
+      "width": 18,
+      "length": 12
+    }
+  },
   "cagedWarDogs": {
     "cost": {},
     "requiredHumans": [],

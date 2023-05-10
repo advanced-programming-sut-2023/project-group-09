@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="worker distribution was called in next turn.">
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="an error solved.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/files/model/buildings/other.json" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/files/model/buildings/other.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,7 +195,8 @@
       <workItem from="1683581790202" duration="5293000" />
       <workItem from="1683626274596" duration="107000" />
       <workItem from="1683626585666" duration="143000" />
-      <workItem from="1683646489636" duration="11525000" />
+      <workItem from="1683646489636" duration="12236000" />
+      <workItem from="1683748071501" duration="747000" />
     </task>
     <task id="LOCAL-00001" summary="...">
       <created>1681925358549</created>
@@ -532,7 +534,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683657658240</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="an error solved.">
+      <created>1683658158757</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1683658158757</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -565,8 +574,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="building menu edited." />
-    <MESSAGE value="adding tree to Tile class" />
     <MESSAGE value="just commit" />
     <MESSAGE value="Building menu updated&#10;and some enums edited." />
     <MESSAGE value="the last commits before checkpoint 1 ..." />
@@ -590,7 +597,9 @@
     <MESSAGE value="food distribution" />
     <MESSAGE value="attacking damage in next turn&#10;move of humans in next turn&#10;gate house automatic opening or closing in next turn" />
     <MESSAGE value="worker distribution was called in next turn." />
-    <option name="LAST_COMMIT_MESSAGE" value="worker distribution was called in next turn." />
+    <MESSAGE value="one error solved." />
+    <MESSAGE value="an error solved." />
+    <option name="LAST_COMMIT_MESSAGE" value="an error solved." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
