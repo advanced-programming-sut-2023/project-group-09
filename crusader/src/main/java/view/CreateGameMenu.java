@@ -189,8 +189,10 @@ public class CreateGameMenu {
             government.setGold(4000);
             game.addGovernment(government);
             MapController.dropBuilding(x, y, "mainCastle", government);
-            government.setMainCastle((MainCastle) GameBuildings.getBuilding("mainCastle"));
-            government.getMainCastle().makeUnemployed(30);
+//            MainCastle mainCastle = (MainCastle) GameBuildings.getBuilding("mainCastle");
+//            mainCastle.setGovernment(government);
+//            government.setMainCastle(mainCastle);
+//            government.getMainCastle().makeUnemployed(30);
             castles.remove(castleNumber - 1);
             colors.remove(colorNumber - 1);
             EditMapMenu.currentGovernment = government;

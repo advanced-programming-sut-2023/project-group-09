@@ -12,7 +12,8 @@ public enum TradeMenuCommands {
     AMOUNT_ITEM(" -a (?<amount>\\d*)"),
     PRICE_ITEM(" -p (?<price>\\d*)"),
     MESSAGE_ITEM(" -m (?<message>(\"[^\"]*\"|\\S*))"),
-    ID_ITEM(" -a (?<id>(\"[^\"]*\"|\\S*))");
+    ID_ITEM(" -i (?<id>(\"[^\"]*\"|\\S*))"),
+    SEND_REQUEST("send request");
     private final String regex;
 
     TradeMenuCommands(String regex){

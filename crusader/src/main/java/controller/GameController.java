@@ -505,7 +505,7 @@ public class GameController {
     public static String changeTurn() {
         game.changeTurn();
         String nickname = game.getCurrentGovernment().getUser().getNickname();
-        String result = "Lord " + nickname + " was played!\n";
+        String result = "Lord " + nickname + " was playing!\n";
         int indexOfCurrentGovernment = game.getGovernments().indexOf(game.getCurrentGovernment());
         if (indexOfCurrentGovernment == 7) {
             Government nowGovernment = game.getGovernments().get(0);
@@ -518,7 +518,6 @@ public class GameController {
             gateHouseAutomaticOrder();
             moveOfHumansAndTools();
             attackOfMilitariesAndTools();
-            game.setCurrentGovernment(nowGovernment);
             int numberOfRemainedGoverments = howManyGovernmentsRemainsInGame();
             if (numberOfRemainedGoverments == 1) {
                 game.setEndGame(true);
@@ -532,12 +531,10 @@ public class GameController {
                 game.setScores();
                 result = "The Game Is Over!\nThere's no winner in this war!\n";
             }
-            return result;
+            return result.substring(0, result.length() - 1);
         } else {
-            Government nowGovernment = game.getGovernments().get(indexOfCurrentGovernment + 1);
-            result += "now Lord " + nowGovernment.getUser().getNickname() + " is playing\n";
-            game.setCurrentGovernment(nowGovernment);
-            return result;
+            result += "now Lord " + game.getNicknameOfNextGovernment() + " is playing\n";
+            return result.substring(0, result.length() - 1);
         }
     }
 
