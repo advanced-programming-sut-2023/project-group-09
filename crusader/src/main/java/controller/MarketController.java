@@ -29,6 +29,12 @@ public class MarketController {
         Government government = GameController.getGame().getCurrentGovernment();
         if (cost > government.getGold()) return "you don't have enough gold!";
         int addedCount = GovernmentController.generateProduct(government, name, amount);
+
+        cost = product.getPrice() * addedCount;
+        if (addedCount == 0)
+            return "storage is full!";
+
+
         government.addGold(-cost);
         if (addedCount != amount)
             return "storage is full!\n" + addedCount + " " + name + " bought successfully!";
@@ -46,7 +52,7 @@ public class MarketController {
 
         boolean check = GovernmentController.consumeProduct(government, name, amount);
         if (!check) {
-            return "your resource is not enough";
+            return "your resource is not enough!";
         }
         government.addGold(cost);
         return amount + " " + name + " sold successfully!";

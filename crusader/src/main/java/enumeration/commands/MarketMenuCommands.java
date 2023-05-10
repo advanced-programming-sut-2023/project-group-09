@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public enum MarketMenuCommands {
 
     SHOW_PRICE_LIST("show price list"),
-    BUY("buy(?<items>).+)"),
+    BUY("buy(?<items>.+)"),
     SELL("sell(?<items>.+)"),
     NAME_ITEM(" -i (?<name>(\"[^\"]*\"|\\S*))"),
     AMOUNT_ITEM(" -a (?<amount>\\d*)"),

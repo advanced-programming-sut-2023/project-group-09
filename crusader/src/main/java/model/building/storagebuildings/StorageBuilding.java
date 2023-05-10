@@ -63,7 +63,7 @@ public class StorageBuilding extends Building {
     }
 
     public void addItem(String key, int value) {
-        int currentValue = items.get(key);
+        int currentValue = items.get(key) != null ?items.get(key) : 0;
         items.put(key, currentValue + value);
     }
 

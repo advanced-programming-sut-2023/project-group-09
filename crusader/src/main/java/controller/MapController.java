@@ -407,7 +407,10 @@ public class MapController {
         int endX = x + storageBuilding.getWidth();
         int endY = y + storageBuilding.getLength();
         Government government = GameController.getGame().getCurrentGovernment();
-
+        BuildingCounter buildingCounter = government.getBuildingData(storageBuilding.getName());
+        if (buildingCounter.getNumber() == 0){
+            return true;
+        }
         if (y != 0) {
             for (int j = x; j <= endX; j++) {
                 Tile tile = map.getTile(j, y - 1);
