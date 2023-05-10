@@ -40,11 +40,12 @@ public class MapController {
         String result = "";
         for (int i = y1; i <= y2; i++) {
             for (int j = x1; j <= x2; j++) {
-                Tile tile = map.getTile(i, j);
+                Tile tile = map.getTile(j, i);
                 if ((tile.getTree() != null && !type.equals(Textures.EARTH) && !type.equals(Textures.EARTH_AND_SAND) && !type.equals(Textures.GRASS) &&
                         !type.equals(Textures.THICK_GRASS) && !type.equals(Textures.OASIS_GRASS) && !type.equals(Textures.BEACH)) ||
                         (tile.getRockDirection() != null && (type.equals(Textures.SMALL_POND) || type.equals(Textures.LARGE_POND))))
                     result += "you can't change texture of tile (" + (i + 1) + ", " + (j + 1) + ") to " + type.getTextureName() + "\n";
+                tile.setTexture(type);
             }
         }
         return result + "texture of tiles from (" + (x1 + 1) + ", " + (y1 + 1) + ") to (" + (x2 + 1) + ", " + (y2 + 1) + ") changed to "

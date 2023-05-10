@@ -86,6 +86,16 @@ public class Game {
             changeTurn();
     }
 
+    public String getNicknameOfNextGovernment() {
+        int index = governments.indexOf(currentGovernment);
+        if (index + 1 == governments.size()) {
+            index = -1;
+        }
+        if (!governments.get(index + 1).isAlive())
+            return getNicknameOfNextGovernment();
+        return governments.get(index + 1).getUser().getNickname();
+    }
+
     public int getCurrentMapX() {
         return currentMapX;
     }

@@ -99,6 +99,7 @@ public class GameBuildings {
         createDefenseTurret();
         createSquareTower();
         createRoundTower();
+        createMainCastle();
     }
 
     public static void addBarracks(){
