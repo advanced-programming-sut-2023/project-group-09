@@ -1,6 +1,7 @@
 package view;
 
 import controller.GameController;
+import controller.MapController;
 import controller.ToolsController;
 import controller.human.HumanController;
 import enumeration.commands.ToolMenuCommands;
@@ -101,6 +102,7 @@ public class ToolMenu {
                     Engineer engineer = tool.getEngineers().get(i);
                     engineer.setInTool(false);
                     engineer.setInvisible(false);
+                    MapController.moveMilitary(tool.getX(), tool.getY(), engineer);
                 }
                 tool.getEngineers().clear();
             } else if (ToolMenuCommands.ADD_STONE.getMatcher(input).matches()) {

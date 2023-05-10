@@ -70,4 +70,8 @@ public class StorageBuilding extends Building {
     public int getItemAmount(String key) {
         return items.get(key);
     }
+
+    public String getItemType() {
+        return itemType;
+    }
 }

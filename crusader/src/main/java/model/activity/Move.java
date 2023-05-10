@@ -173,8 +173,8 @@ public class Move {
             building = null;
             return false;
         }
-        if(human instanceof Tunneler tunneler && wantDigTunnel){
-            if (tunneler.getTargetTunnel().getGovernment() == null || tunneler.getTargetBuilding().getGovernment() == null){
+        if (human instanceof Tunneler tunneler && wantDigTunnel) {
+            if (tunneler.getTargetTunnel().getGovernment() == null || tunneler.getTargetBuilding().getGovernment() == null) {
                 stopMove();
                 tunneler.setTargetTunnel(null);
                 tunneler.setTargetBuilding(null);
@@ -350,7 +350,11 @@ public class Move {
             }
             stopMove();
             if (tool != null && shouldConnectToTool) {
-                //TODO connect to tool
+                assert human instanceof Engineer;
+                Engineer engineer = (Engineer) human;
+                tool.addEngineer(engineer);
+                engineer.setInTool(true);
+                engineer.setInvisible(true);
             }
             return;
         }

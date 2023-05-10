@@ -134,13 +134,13 @@ public class EngineerController {
     public static String buildFireBallista(int x, int y) {
         if (MapController.checkCanPutBuilding(x, y, "siegeTent", currentEngineer.getGovernment()))
             MapController.dropBuilding(x, y, "siegeTent", currentEngineer.getGovernment());
-        else return "you can't put a tool here";
+        else return "you can't put a tool here!";
 
         Building tent = GameController.getGame().getMap().getTile(x, y).getBuilding();
         Move move = new Move(currentEngineer.getX(), currentEngineer.getY(), tent, true, currentEngineer);
         LinkedList<Tuple> path = MoveController.getPathForBuilding(new Tuple(currentEngineer.getY(), currentEngineer.getX()),
                 tent, currentEngineer);
-        if (path == null) return "engineer can't go there";
+        if (path == null) return "engineer can't go there!";
         move.setPath(path);
         currentEngineer.setMove(move);
 
@@ -149,6 +149,6 @@ public class EngineerController {
             MapController.dropBuilding(x, y, "fireBallista", currentEngineer.getGovernment());
         GameController.getGame().getMap().getTile(x, y).getTool().addEngineer(currentEngineer);
         currentEngineer.setInTool(true);
-        return "fire ballista added successfully";
+        return "fire ballista added successfully!";
     }
 }

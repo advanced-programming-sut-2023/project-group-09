@@ -1,19 +1,15 @@
 package model;
 
-import controller.BuildingController;
 import controller.GameController;
 import controller.GovernmentController;
 import controller.MapController;
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameGoods;
-import controller.gamestructure.GameMaps;
-import controller.human.MoveController;
 import enumeration.dictionary.Colors;
-import model.activity.Move;
 import model.building.Building;
-import model.building.castlebuildings.CastleBuilding;
 import model.building.castlebuildings.MainCastle;
 import model.building.producerbuildings.ProducerBuilding;
+import model.building.storagebuildings.StorageBuilding;
 import model.buildinghandler.BuildingCounter;
 import model.buildinghandler.Storage;
 import model.human.Human;
@@ -22,10 +18,7 @@ import model.human.military.Lord;
 import model.human.military.Military;
 import model.tools.Tool;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 public class Government {
     private User user;
@@ -35,25 +28,8 @@ public class Government {
     private LinkedHashMap<String, Trade> newReceivedTrades = new LinkedHashMap<>();
     private LinkedHashMap<String, Trade> sentTrades = new LinkedHashMap<>();
 
-    public HashMap<String, Integer> getProperties() {
-        return properties;
-    }
-
-    public HashMap<String, Storage> getStorages() {
-        return storages;
-    }
-
     private HashMap<String, Integer> properties;
     private HashMap<String, Storage> storages = new HashMap<>();
-
-    public int getHowManyTurnsSurvive() {
-        return howManyTurnsSurvive;
-    }
-
-    public void addTurnsSurvive() {
-        this.howManyTurnsSurvive++;
-    }
-
 
     private HashMap<String, BuildingCounter> buildings = new HashMap<>();
 
@@ -62,9 +38,6 @@ public class Government {
     private ArrayList<Human> society = new ArrayList<>();
     private MainCastle mainCastle;
 
-    public boolean isAlive() {
-        return isAlive;
-    }
 
     public void setAlive(boolean alive) {
         isAlive = alive;
@@ -125,6 +98,18 @@ public class Government {
     }
 
 
+    public int getHowManyTurnsSurvive() {
+        return howManyTurnsSurvive;
+    }
+
+    public void addTurnsSurvive() {
+        this.howManyTurnsSurvive++;
+    }
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
     public void setLord(Lord lord) {
         this.lord = lord;
         ((MainCastle) (this.getBuildings().get("MainCastle").getBuildings().get(0))).setLord(lord);
@@ -136,6 +121,14 @@ public class Government {
 
     public void setTools(ArrayList<Tool> tools) {
         this.tools = tools;
+    }
+
+    public HashMap<String, Integer> getProperties() {
+        return properties;
+    }
+
+    public HashMap<String, Storage> getStorages() {
+        return storages;
     }
 
     public void addAmountToProperties(String itemName, String itemType, int amount) {
@@ -248,7 +241,6 @@ public class Government {
     }
 
 
-
     public int getPropertyAmount(String name) {
         return properties.get(name);
     }
@@ -353,7 +345,7 @@ public class Government {
     public void layingOffWorkers(ArrayList<Human> humansOfBuilding) {
         Iterator itr = humansOfBuilding.iterator();
         while (itr.hasNext()) {
-            Human human = (Human)itr.next();
+            Human human = (Human) itr.next();
             if (human instanceof Civilian) {
                 ((Civilian) human).setHasJob(false);
             }
@@ -375,6 +367,7 @@ public class Government {
             if (military.getHealth() <= 0) {
                 itr.remove();
                 MapController.deleteMilitary(military.getX(), military.getY(), military);
+                military.setGovernment(null);
             }
         }
     }
@@ -459,7 +452,6 @@ public class Government {
     }
 
 
-
     public void updatePopulationWithRemove(int wanted) {
         int counterOfRemovedPeople = population - wanted;
         if (counterOfRemovedPeople != 0) {
@@ -471,7 +463,8 @@ public class Government {
                 if (human instanceof Civilian && !((Civilian) human).isHasJob()) {
                     counterOfRemovedPeople++;
                     itr.remove();
-                    MapController.deleteHuman(human.getX() , human.getY() , (Civilian) human);
+                    MapController.deleteHuman(human.getX(), human.getY(), (Civilian) human);
+                    human.setGovernment(null);
                 }
             }
         }
@@ -484,7 +477,7 @@ public class Government {
                 if (human instanceof Civilian) {
                     counterOfRemovedPeople++;
                     itr.remove();
-                    MapController.deleteHuman(human.getX() , human.getY() , (Civilian) human);
+                    MapController.deleteHuman(human.getX(), human.getY(), (Civilian) human);
                 }
             }
         }
@@ -492,24 +485,24 @@ public class Government {
 
     public void updatePeopleAfterTurn() {
         // maxPopularity : 25 --- minPopularity : -37
-        double ratio = (double)(this.getPopularity() + 37)/(25+37);
-        int checker = (int)ratio*100;
+        double ratio = (double) (this.getPopularity() + 37) / (25 + 37);
+        int checker = (int) ratio * 100;
         int number;
         if (checker < 20) {
             // 30%
-            number = (int)(0.3f * maxPopulation);
+            number = (int) (0.3f * maxPopulation);
         } else if (checker < 40) {
             // 50%
-            number = (int)(0.5f * maxPopulation);
+            number = (int) (0.5f * maxPopulation);
         } else if (checker < 60) {
             // 70%
-            number = (int)(0.7f * maxPopulation);
+            number = (int) (0.7f * maxPopulation);
         } else if (checker < 80) {
             // 90%
-            number = (int)(0.9f * maxPopulation);
+            number = (int) (0.9f * maxPopulation);
         } else {
             // 100%
-            number = (int)(1 * maxPopulation);
+            number = (int) (1 * maxPopulation);
         }
         if (number > population) {
             this.updatePopulationWithAdd(number);
@@ -533,32 +526,32 @@ public class Government {
     }
 
     public void foodDistribution() {
-        int foodsNeeded = (int)(GovernmentController.getFoodRate(this.foodRate)*population);
+        int foodsNeeded = (int) (GovernmentController.getFoodRate(this.foodRate) * population);
         int foodWeHave = this.properties.get("meat") + this.properties.get("bread") +
                 this.properties.get("apple") + this.properties.get("cheese");
         if (foodsNeeded > foodWeHave) {
             this.foodRate = -2;
             System.out.println("Not enough food!");
         }
-        int consumedFoods = Math.min(foodsNeeded , foodWeHave);
+        int consumedFoods = Math.min(foodsNeeded, foodWeHave);
         consumeFoods(consumedFoods);
     }
 
-    public int consumeSupposedFood(int amountOfFoods , String nameOfFood) {
-        int amount = Math.min(amountOfFoods , this.getPropertyAmount(nameOfFood));
-        GovernmentController.consumeProduct(this , nameOfFood , amount);
+    public int consumeSupposedFood(int amountOfFoods, String nameOfFood) {
+        int amount = Math.min(amountOfFoods, this.getPropertyAmount(nameOfFood));
+        GovernmentController.consumeProduct(this, nameOfFood, amount);
         amountOfFoods -= amount;
         return amountOfFoods;
     }
 
     public void consumeFoods(int amountOfFoods) {
-        int amount = consumeSupposedFood(amountOfFoods , "bread");
+        int amount = consumeSupposedFood(amountOfFoods, "bread");
         amountOfFoods -= amount;
-        amount = consumeSupposedFood(amountOfFoods , "cheese");
+        amount = consumeSupposedFood(amountOfFoods, "cheese");
         amountOfFoods -= amount;
-        amount = consumeSupposedFood(amountOfFoods , "apple");
+        amount = consumeSupposedFood(amountOfFoods, "apple");
         amountOfFoods -= amount;
-        amount = consumeSupposedFood(amountOfFoods , "meat");
+        amount = consumeSupposedFood(amountOfFoods, "meat");
         amountOfFoods -= amount;
 
     }
@@ -571,4 +564,33 @@ public class Government {
         }
     }
 
+    public void checkFirstStorage(Building building){
+        String name = building.getName();
+        BuildingCounter buildingCounter = getBuildingData(name);
+        if (buildingCounter.getNumber() != 0 ){
+            return;
+        }
+        StorageBuilding storageBuilding = (StorageBuilding) building;
+        String type = storageBuilding.getItemType();
+        Set<String> keys;
+
+        switch (type){
+            case "food":
+                keys = GameGoods.foods.keySet();
+                break;
+            case "resource":
+                keys = GameGoods.resources.keySet();
+                break;
+            case "weapon":
+                keys = GameGoods.weapons.keySet();
+                break;
+            default:
+                return;
+        }
+
+        for (String key : keys){
+            int count = properties.get(key);
+            storageBuilding.addItem(key,count);
+        }
+    }
 }

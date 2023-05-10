@@ -107,30 +107,32 @@ public class MapController {
         if (building instanceof StorageBuilding && !checkCanPutStorage(x, y, (StorageBuilding) building)) {
             return false;
         }
+
+        if (building.getName().equals("stairs") && building instanceof Wall) {
+            int height = Wall.heightOfStairs(x, y);
+            if (height == 0 || height == -1) {
+                return false;
+            }
+        }
+
+
+        if (building.getName().equals("crenulatedWall") && building instanceof Wall) {
+            if (!Wall.canDropCrenulatedWall(x, y)) {
+                return false;
+            }
+        }
+
+        if (building.getName().equals("drawBridge")) {
+            if (Gatehouse.canDropDrawBridge(x, y) == null) {
+                return false;
+            }
+        }
+
         for (int i = y; i < y + building.getLength(); i++) {
             for (int j = x; j < x + building.getWidth(); j++) {
                 Tile tile = map.getTile(j, i);
                 if (tile.getMilitaries().size() != 0 || tile.getCivilian().size() != 0) {
                     return false;
-                }
-                if (building.getName().equals("stairs") && building instanceof Wall) {
-                    int height = Wall.heightOfStairs(x, y);
-                    if (height == 0 || height == -1) {
-                        return false;
-                    }
-                }
-
-
-                if (building.getName().equals("crenulatedWall") && building instanceof Wall) {
-                    if (!Wall.canDropCrenulatedWall(x, y)) {
-                        return false;
-                    }
-                }
-
-                if (building.getName().equals("drawBridge")) {
-                    if (Gatehouse.canDropDrawBridge(x, y) == null) {
-                        return false;
-                    }
                 }
 
                 if (building instanceof CastleBuilding && !(building instanceof Wall)) {
@@ -178,10 +180,8 @@ public class MapController {
             dropKillingPit(x, y);
             return;
         }
-        if (building.getName().equals("hovel")) {
-            government.updateMaxPopularity();
-        }
-        for (int i = y; i < y + Objects.requireNonNull(building).getLength(); i++) {
+        assert building != null;
+        for (int i = y; i < y + building.getLength(); i++) {
             for (int j = x; j < x + building.getWidth(); j++) {
                 Tile tile = map.getTile(j, i);
 
@@ -217,7 +217,14 @@ public class MapController {
                 }
             }
         }
-        government.getBuildings().get(type).addBuilding(building);
+        government.getBuildingData(type).addBuilding(building);
+        if (building.getName().equals("hovel")) {
+            government.updateMaxPopularity();
+        }
+
+        if (building instanceof StorageBuilding) {
+            government.checkFirstStorage(building);
+        }
     }
 
     public static void dropTool(int x, int y, String type, Government government) {
@@ -474,6 +481,9 @@ public class MapController {
         BuildingCounter buildingCounter = building.getGovernment().getBuildingData(building.getName());
         if (buildingCounter != null) {
             buildingCounter.deleteBuilding(building);
+        }
+        if (building instanceof StorageBuilding){
+            ((StorageBuilding) building).deleteStorage();
         }
     }
 
