@@ -68,7 +68,7 @@ public class StorageBuilding extends Building {
     }
 
     public int getItemAmount(String key) {
-        return items.get(key);
+        return items.get(key) != null ?items.get(key) : 0;
     }
 
     public String getItemType() {
