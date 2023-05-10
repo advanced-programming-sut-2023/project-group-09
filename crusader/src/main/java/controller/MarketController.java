@@ -34,7 +34,7 @@ public class MarketController {
         if (addedCount == 0)
             return "storage is full!";
         if (addedCount == -1)
-            return "no " + product.getNameOfStorage() + " to store this item!";
+            return "no " + product.getNameOfStorage() + " to store this product!";
 
         government.addGold(-cost);
         if (addedCount != amount)
