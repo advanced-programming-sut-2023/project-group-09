@@ -44,7 +44,7 @@ public class MapController {
                 if ((tile.getTree() != null && !type.equals(Textures.EARTH) && !type.equals(Textures.EARTH_AND_SAND) && !type.equals(Textures.GRASS) &&
                         !type.equals(Textures.THICK_GRASS) && !type.equals(Textures.OASIS_GRASS) && !type.equals(Textures.BEACH)) ||
                         (tile.getRockDirection() != null && (type.equals(Textures.SMALL_POND) || type.equals(Textures.LARGE_POND))))
-                    result += "you can't change texture of tile (" + (i + 1) + ", " + (j + 1) + ") to " + type.getTextureName() + "\n";
+                    result += "you can't change texture of tile (" + (j + 1) + ", " + (i + 1) + ") to " + type.getTextureName() + "\n";
                 tile.setTexture(type);
             }
         }
@@ -61,8 +61,8 @@ public class MapController {
             Building building = tile.getBuilding();
             deleteBuilding(building);
         }
-
-        return "tile (" + x + ", " + y + ") cleared successfully";
+        tile.setTree(null);
+        return "tile (" + (x+1) + ", " + (y+1) + ") cleared successfully";
     }
 
     public static String dropRock(int x, int y, RockDirections direction) {
