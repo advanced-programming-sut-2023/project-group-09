@@ -143,7 +143,7 @@ public class GameBuildings {
 
     public static void createStairs() {
         Wall stairs = new Wall(0, 0, "stairs",
-                0, 0, 1, 0); // height of this building varies where it is.
+                0, 1, 1, 0); // height of this building varies where it is.
         // use methods in this class to choosing the suitable height
         stairs.addCost("stone", 1);
         castleBuildings.put("stairs", stairs);

@@ -166,7 +166,7 @@
     "attackRating": 5,
     "militaryState": "standing",
     "usesHorse": false,
-    "usesLadder": false,
+    "usesLadder": true,
     "digsMoat": true,
     "weapon": "mace",
     "armours": [

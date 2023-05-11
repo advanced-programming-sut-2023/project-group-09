@@ -127,6 +127,7 @@ public class GameHumans {
         maceman.enableDigsMoat();
         maceman.setDefenseRange(4);
         maceman.setAggressiveRange(7);
+        maceman.setUsesLadder(true);
         militaries.put("maceman",maceman);
     }
 

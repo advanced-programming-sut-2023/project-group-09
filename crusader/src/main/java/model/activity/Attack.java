@@ -319,7 +319,7 @@ public class Attack {
             tool = null;
         }
 
-        if (targetBuilding != null && targetBuilding.getGovernment() != null){
+        if (targetBuilding != null && targetBuilding.getGovernment() == null){
             targetBuilding = null;
         }
 

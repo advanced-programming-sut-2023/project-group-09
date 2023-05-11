@@ -25,8 +25,8 @@ public class makeSample {
         Map map = maps.get(0);
         MapController.map = map;
         ArrayList<Pair<Integer, Integer>> castles = map.getDefaultCastles();
-        User user = Application.getUserByUsername("Farzam");
-        User user1 = Application.getUserByUsername("Sina");
+        User user = Application.getUserByUsername("Farzammm");
+        User user1 = Application.getUserByUsername("Amirhossein");
         Government government = new Government(user, castles.get(0).getFirst(), castles.get(0).getSecond(), Colors.RED);
         Government government1 = new Government(user1, castles.get(1).getFirst(), castles.get(1).getSecond(), Colors.BLUE);
 
@@ -50,59 +50,82 @@ public class makeSample {
         MapController.dropBuilding(0, 1, "lowWall", government1);
 
 
-        MapController.dropMilitary(5, 1, "ladderman", government);
-        selectUnit(6, 2, null, game);
-        System.out.println(GameController.attackBuilding(4, 2));
-        Military military = map.getTile(5, 1).getMilitaries().get(0);
-        military.getMove().moveOneTurn();
-        military.getAttack().doAttack();
-
-        MapController.dropMilitary(2, 1, "ladderman", government);
-        selectUnit(3, 2, null, game);
-        System.out.println(GameController.attackBuilding(4, 3));
-        Military military1 = map.getTile(2, 1).getMilitaries().get(0);
-        military1.getMove().moveOneTurn();
-        military1.getAttack().doAttack();
-
-        MapController.dropMilitary(100, 100, "archer", government);
-        selectUnit(101, 101, null, game);
+        MapController.dropBuilding(4, 1, "stairs", government1);
+        MapController.dropBuilding(5, 1, "stairs", government1);
+        MapController.dropBuilding(6, 1, "stairs", government1);
+        System.out.println(GameController.showMap(0,0));
 
 
-        System.out.println(GameController.moveUnit(3, 2));
-        Military military2 = map.getTile(100, 100).getMilitaries().get(0);
+
+
+        MapController.dropMilitary(0, 1, "slave", government1);
+        Military military1 = map.getTile(0, 1).getMilitaries().get(0);
+
+
+        MapController.dropMilitary(99, 0, "maceman", government);
+        selectUnit(100, 1, null, game, government);
+
+        Military military2 = map.getTile(99, 0).getMilitaries().get(0);
+        System.out.println(military2.isUsesLadder());
+        System.out.println(HumanController.attack(military1));
+
         military2.getMove().moveOneTurn();
         military2.getMove().moveOneTurn();
         military2.getMove().moveOneTurn();
         military2.getMove().moveOneTurn();
         military2.getMove().moveOneTurn();
-        military2.getMove().moveOneTurn();
-        military2.getMove().moveOneTurn();
-        System.out.println(military2.getX() + " " + military2.getY());
-
-
-
-        MapController.dropMilitary(5, 3, "spearman", government1);
-        Military military3 = map.getTile(5, 3).getMilitaries().get(0);
+        MapController.dropMilitary(3, 4, "archer", government1);
+        Military military3 = map.getTile(3, 4).getMilitaries().get(0);
         military3.getAttack().doAttack();
-        military2.getAttack().doAttack();
+        military2.getMove().moveOneTurn();
+        military3.getAttack().doAttack();
+        System.out.println(military2.getHealth());
+        military2.getMove().moveOneTurn();
+        military3.getAttack().doAttack();
+        System.out.println(military2.getHealth());
+        military2.getMove().moveOneTurn();
+        military3.getAttack().doAttack();
+        System.out.println(military2.getHealth());
+        military2.getMove().moveOneTurn();
+        military3.getAttack().doAttack();
+        System.out.println(military2.getHealth());
+        military2.getMove().moveOneTurn();
+        military3.getAttack().doAttack();
+        System.out.println(military2.getHealth());
+        military2.getMove().moveOneTurn();
+        military3.getAttack().doAttack();
+        System.out.println(military2.getHealth());
+        military2.getMove().moveOneTurn();
+        military3.getAttack().doAttack();
+        System.out.println(military2.getHealth());
+        military2.getMove().moveOneTurn();
+        military3.getAttack().doAttack();
+        military2.getMove().moveOneTurn();
+        military3.getAttack().doAttack();
+        military2.getMove().moveOneTurn();
+        System.out.println(military2.getHealth());
+        military3.getAttack().doAttack();
+        military2.getMove().moveOneTurn();
+        military3.getAttack().doAttack();
+        military2.getMove().moveOneTurn();
+        military3.getAttack().doAttack();
+
+        System.out.println(military2.getHealth());
 
 
-        military2.getMove().moveOneTurn();
-        military2.getAttack().doAttack();
-        military2.getMove().moveOneTurn();
+
 
         System.out.println(GameController.showMap(0,0));
-        System.out.println(military2.getHealth());
     }
 
-    public static String selectUnit(int x, int y, String type, Game game) {
+    public static String selectUnit(int x, int y, String type, Game game,Government government) {
         ArrayList<Military> militaries;
         if (type == null) {
-            militaries = MapController.getMilitariesOfGovernment(x - 1, y - 1, game.getCurrentGovernment());
+            militaries = MapController.getMilitariesOfGovernment(x - 1, y - 1, government);
         } else if (GameHumans.getUnit(type) == null) {
             return "invalid type!";
         } else {
-            militaries = MapController.getOneTypeOfMilitariesOfGovernment(x - 1, y - 1, type, game.getCurrentGovernment());
+            militaries = MapController.getOneTypeOfMilitariesOfGovernment(x - 1, y - 1, type, government);
         }
 
         if (militaries.size() == 0) {

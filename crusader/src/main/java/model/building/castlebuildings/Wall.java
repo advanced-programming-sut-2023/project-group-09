@@ -53,19 +53,19 @@ public class Wall extends CastleBuilding {
             }
         }
         if (map.getTile(x , y+1).getBuilding() instanceof Wall) {
-            Wall wall = (Wall)map.getTile(x+1 , y).getBuilding();
+            Wall wall = (Wall)map.getTile(x , y+1).getBuilding();
             if (wall.height > height && height != 8) {
                 height = wall.height;
             }
         }
         if (map.getTile(x-1 , y).getBuilding() instanceof Wall) {
-            Wall wall = (Wall)map.getTile(x+1 , y).getBuilding();
+            Wall wall = (Wall)map.getTile(x-1 , y).getBuilding();
             if (wall.height > height && height != 8) {
                 height = wall.height;
             }
         }
         if (map.getTile(x , y-1).getBuilding() instanceof Wall) {
-            Wall wall = (Wall)map.getTile(x+1 , y).getBuilding();
+            Wall wall = (Wall)map.getTile(x , y-1).getBuilding();
             if (wall.height > height && height != 8) {
                 height = wall.height;
             }
