@@ -594,12 +594,39 @@ public class GameController {
                                     maxMilitariesGovernment = government;
                                 }
                             }
-                            if (numberOfMax == 1) sign = maxMilitariesGovernment.getColorRgb() + "S";
-                            else sign = "S";
+                            // walking civilians C
+                            // walking militaries M
+                            // standing civilians c
+                            // standing militaries m
+                            int walking = 0 , standing = 0 , civilians = 0 , militaries = 0;
+                            for (Human human : tile.getMilitaries()) {
+                                if (human.getMove() != null && human.getMove().isMoving())
+                                    walking++;
+                                else
+                                    standing++;
+                                if (human instanceof Civilian)
+                                    civilians++;
+                                else
+                                    militaries++;
+                            }
+                            String humansChar = "";
+                            if (walking >= standing) {
+                                if (militaries >= civilians)
+                                    humansChar = "M";
+                                else
+                                    humansChar = "C";
+                            } else {
+                                if (militaries >= civilians)
+                                    humansChar = "m";
+                                else
+                                    humansChar = "c";
+                            }
+                            if (numberOfMax == 1) sign = maxMilitariesGovernment.getColorRgb() + humansChar;
+                            else sign = humansChar;
                         } else if (tile.getBuilding() != null && !(tile.getBuilding() instanceof Wall))
                             sign = tile.getBuilding().getGovernment().getColorRgb() + "B";
                         else if (tile.getBuilding() != null && tile.getBuilding() instanceof Wall)
-                            sign = tile.getBuilding().getGovernment().getColorRgb() + "W";
+                            sign = tile.getBuilding().getGovernment().getColorRgb() + ((Wall)tile.getBuilding()).getHeight();
                         else if (tile.getTree() != null) sign = "T";
                         else if (tile.getRockDirection() != null) sign = "R";
                         result += tile.getTexture().getColor() + sign + "\u001B[0m";
@@ -664,7 +691,7 @@ public class GameController {
                         } else if (tile.getBuilding() != null && !(tile.getBuilding() instanceof Wall))
                             sign = tile.getBuilding().getGovernment().getColorRgb() + "B";
                         else if (tile.getBuilding() != null && tile.getBuilding() instanceof Wall)
-                            sign = tile.getBuilding().getGovernment().getColorRgb() + "W";
+                            sign = tile.getBuilding().getGovernment().getColorRgb() + ((Wall)tile.getBuilding()).getHeight();
                         else if (tile.getTree() != null) sign = "T";
                         else if (tile.getRockDirection() != null) sign = "R";
                         result += tile.getTexture().getColor() + sign + "\u001B[0m";

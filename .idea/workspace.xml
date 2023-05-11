@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="some errors solved">
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="error of crenulatedWall checking solved.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/enumeration/Paths.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/enumeration/Paths.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/Wall.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/building/castlebuildings/Wall.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -200,13 +200,6 @@
       <workItem from="1683748071501" duration="864000" />
       <workItem from="1683749525652" duration="898000" />
       <workItem from="1683806837751" duration="3513000" />
-    </task>
-    <task id="LOCAL-00003" summary="some enums are edited.">
-      <created>1681995637116</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1681995637116</updated>
     </task>
     <task id="LOCAL-00004" summary="Resources added.">
       <created>1681999798822</created>
@@ -544,7 +537,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683834546896</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="error of crenulatedWall checking solved.">
+      <created>1683840367806</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1683840367806</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -577,7 +577,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="the last commits before checkpoint 1 ..." />
     <MESSAGE value="Repair added to Building controller." />
     <MESSAGE value="some features added to Government and its controller&#10;try for creating template maps" />
     <MESSAGE value="Map 1 (400*400) created." />
@@ -602,7 +601,8 @@
     <MESSAGE value="an error solved." />
     <MESSAGE value="main Castle added to file of buildings" />
     <MESSAGE value="some errors solved" />
-    <option name="LAST_COMMIT_MESSAGE" value="some errors solved" />
+    <MESSAGE value="error of crenulatedWall checking solved." />
+    <option name="LAST_COMMIT_MESSAGE" value="error of crenulatedWall checking solved." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
