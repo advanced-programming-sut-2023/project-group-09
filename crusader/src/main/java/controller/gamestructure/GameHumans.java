@@ -36,6 +36,7 @@ public class GameHumans {
         createSwordsman();
         createKnight();
         createLadderman();
+        createBlackMonk();
         addLord();
     }
 
@@ -55,6 +56,8 @@ public class GameHumans {
         int attackRating = AttackRating.HIGH.getRate();
         Lord lord = new Lord(speed , defenseRating , 1 , attackRating , 0);
         lord.setName("lord");
+        lord.setDefenseRange(3);
+        lord.setAggressiveRange(6);
         militaries.put("lord" , lord);
     }
 
@@ -67,6 +70,8 @@ public class GameHumans {
         archer.setWeapon("bow");
         archer.enableDigsMoat();
         archer.enableUsesLadder();
+        archer.setDefenseRange(13);
+        archer.setAggressiveRange(16);
         militaries.put("archer",archer);
     }
 
@@ -74,10 +79,12 @@ public class GameHumans {
         int speed = Speed.SLOW.getRate();
         int defenseRating = DefenseRating.MEDIUM.getRate();
         int attackRating = AttackRating.LOW.getRate();
-        EuropeanTroop crossbowman = new EuropeanTroop(speed, defenseRating, 10, attackRating, 20);
+        EuropeanTroop crossbowman = new EuropeanTroop(speed, defenseRating, 17, attackRating, 20);
         crossbowman.setName("crossbowman");
         crossbowman.setWeapon("crossbow");
         crossbowman.addArmour("leatherArmour");
+        crossbowman.setDefenseRange(10);
+        crossbowman.setAggressiveRange(13);
         militaries.put("crossbowman",crossbowman);
     }
 
@@ -90,6 +97,8 @@ public class GameHumans {
         spearman.setWeapon("spear");
         spearman.enableUsesLadder();
         spearman.enableDigsMoat();
+        spearman.setDefenseRange(4);
+        spearman.setAggressiveRange(7);
         militaries.put("spearman",spearman);
     }
 
@@ -102,6 +111,8 @@ public class GameHumans {
         pikeman.setWeapon("pike");
         pikeman.addArmour("metalArmour");
         pikeman.enableDigsMoat();
+        pikeman.setDefenseRange(4);
+        pikeman.setAggressiveRange(7);
         militaries.put("pikeman",pikeman);
     }
 
@@ -114,6 +125,8 @@ public class GameHumans {
         maceman.setWeapon("mace");
         maceman.addArmour("leatherArmour");
         maceman.enableDigsMoat();
+        maceman.setDefenseRange(4);
+        maceman.setAggressiveRange(7);
         militaries.put("maceman",maceman);
     }
 
@@ -125,6 +138,8 @@ public class GameHumans {
         swordsman.setName("swordsman");
         swordsman.setWeapon("sword");
         swordsman.addArmour("metalArmour");
+        swordsman.setDefenseRange(4);
+        swordsman.setAggressiveRange(7);
         militaries.put("swordsman",swordsman);
     }
 
@@ -136,6 +151,8 @@ public class GameHumans {
         knight.setName("knight");
         knight.setWeapon("sword");
         knight.addArmour("metalArmour");
+        knight.setDefenseRange(4);
+        knight.setAggressiveRange(7);
         militaries.put("knight",knight);
     }
 
@@ -145,6 +162,8 @@ public class GameHumans {
         int attackRating = AttackRating.MEDIUM.getRate();
         Tunneler tunneler = new Tunneler(speed, defenseRating, 1, attackRating, 30);
         tunneler.setName("tunneler");
+        tunneler.setDefenseRange(4);
+        tunneler.setAggressiveRange(7);
         militaries.put("tunneler",tunneler);
     }
 
@@ -164,6 +183,8 @@ public class GameHumans {
         Engineer engineer = new Engineer(speed, defenseRating, 1, attackRating, 30);
         engineer.setName("engineer");
         engineer.enableDigsMoat();
+        engineer.setDefenseRange(5);
+        engineer.setAggressiveRange(5);
         militaries.put("engineer" , engineer);
     }
 
@@ -173,6 +194,8 @@ public class GameHumans {
         int attackRating = AttackRating.MEDIUM.getRate();
         EuropeanTroop blackmonk = new EuropeanTroop(speed, defenseRating, 1, attackRating, 10);
         blackmonk.setName("blackmonk");
+        blackmonk.setDefenseRange(4);
+        blackmonk.setAggressiveRange(7);
         militaries.put("blackmonk",blackmonk);
     }
 
@@ -184,6 +207,8 @@ public class GameHumans {
         archerBow.setName("archerbow");
         archerBow.setWeapon("bow");
         archerBow.enableDigsMoat();
+        archerBow.setDefenseRange(13);
+        archerBow.setAggressiveRange(16);
         militaries.put("archerBow",archerBow);
     }
 
@@ -203,6 +228,8 @@ public class GameHumans {
         int attackRating = AttackRating.LOW.getRate();
         ArabianMercenary slinger = new ArabianMercenary(speed, defenseRating, 5, attackRating, 12);
         slinger.setName("slinger");
+        slinger.setDefenseRange(8);
+        slinger.setAggressiveRange(11);
         militaries.put("slinger ",slinger );
     }
 
@@ -212,8 +239,11 @@ public class GameHumans {
         int attackRating = AttackRating.MEDIUM.getRate();
         ArabianMercenary assassin = new ArabianMercenary(speed, defenseRating, 1, attackRating, 60);
         assassin.setName("assassin");
-        militaries.put("assassin",assassin);
+        assassin.setDefenseRange(4);
+        assassin.setAggressiveRange(7);
         assassin.enableInvisible();
+        militaries.put("assassin",assassin);
+
     }
 
     public static void createHorseArcher() {
@@ -223,6 +253,8 @@ public class GameHumans {
         ArabianMercenary horseArcher = new ArabianMercenary(speed, defenseRating, 10, attackRating, 80);
         horseArcher.setName("horseArcher");
         horseArcher.setWeapon("bow");
+        horseArcher.setDefenseRange(13);
+        horseArcher.setAggressiveRange(16);
         militaries.put("horseArcher",horseArcher);
     }
 
@@ -233,6 +265,8 @@ public class GameHumans {
         ArabianMercenary arabianSwordsman = new ArabianMercenary(speed, defenseRating, 1, attackRating, 80);
         arabianSwordsman.setName("arabianSwordsman");
         arabianSwordsman.addArmour("metalArmour");
+        arabianSwordsman.setDefenseRange(4);
+        arabianSwordsman.setAggressiveRange(7);
         militaries.put("arabianSwordsman",arabianSwordsman);
     }
 
@@ -242,6 +276,8 @@ public class GameHumans {
         int attackRating = AttackRating.HIGH.getRate();
         ArabianMercenary fireThrower = new ArabianMercenary(speed, defenseRating, 5, attackRating, 100);
         fireThrower.setName("fireThrower");
+        fireThrower.setDefenseRange(4);
+        fireThrower.setAggressiveRange(7);
         militaries.put("fireThrower",fireThrower);
     }
 

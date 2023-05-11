@@ -60,8 +60,10 @@ public class GameMenu {
                     int x = ViewController.getNumberOfRegex("x");
                     int y = ViewController.getNumberOfRegex("y");
                     output = GameController.selectBuilding(x, y);
-                    BuildingMenu.run(scanner);
                     System.out.println(output);
+                    if (!output.equals("There is no building of your government here!")){
+                        BuildingMenu.run(scanner);
+                    }
                 }
 
             } else if (selectUnitMatcher.matches()) {

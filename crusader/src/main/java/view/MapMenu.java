@@ -25,7 +25,10 @@ public class MapMenu {
             else if (MapCommands.BACK.getMatcher(input).matches()) {
                 System.out.println("<< Game Menu >>");
                 return;
-            } else System.out.println("invalid command");
+            } else {
+                System.out.println("invalid command!");
+                return;
+            }
         }
     }
 
