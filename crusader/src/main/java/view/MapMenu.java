@@ -26,9 +26,10 @@ public class MapMenu {
             else if (MapCommands.BACK.getMatcher(input).matches()) {
                 System.out.println("<< Game Menu >>");
                 return;
-            } else {
-                System.out.println("invalid command!");
-            }
+            } else if (MapCommands.SHOW_CURRENT_COORDINATES.getMatcher(input).matches()) {
+                System.out.println("x of center: " + (GameController.getGame().getCurrentMapX() + 1) +
+                        "\ny of center: " + (GameController.getGame().getCurrentMapY() + 1));
+            } else System.out.println("invalid command!");
         }
     }
 

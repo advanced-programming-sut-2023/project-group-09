@@ -27,6 +27,7 @@ public enum MapCommands {
     DROP_BUILDING("drop building (?<content>.+)"),
     DROP_UNIT("drop unit (?<content>.+)"),
     CONTINUE("continue"),
+    SHOW_CURRENT_COORDINATES("show current coordinates"),
     BACK("back");
     private String regex;
 
