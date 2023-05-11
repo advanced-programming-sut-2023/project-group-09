@@ -181,11 +181,12 @@ public class MapController {
             dropKillingPit(x, y);
             return;
         }
+
         assert building != null;
         for (int i = y; i < y + building.getLength(); i++) {
             for (int j = x; j < x + building.getWidth(); j++) {
                 Tile tile = map.getTile(j, i);
-
+                System.out.println(building.getName());
                 if (building.isShouldBeOne()) {
                     deleteOtherBuildingWithThisType(building);
                 }
@@ -198,6 +199,7 @@ public class MapController {
 
                 tile.setBuilding(building);
                 if (building.getName().equals("stairs") && building instanceof Wall) {
+
                     ((Wall) building).setHeight(Wall.heightOfStairs(x, y));
                     tile.setPassable(false);
                     tile.setTexture(textures);
