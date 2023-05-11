@@ -509,7 +509,7 @@ public class GameController {
         int indexOfCurrentGovernment = game.getGovernments().indexOf(game.getCurrentGovernment());
         if (indexOfCurrentGovernment == 7) {
             Government nowGovernment = game.getGovernments().get(0);
-            result += "now Lord " + nowGovernment.getUser().getNickname() + " is playing\n";
+            result += "now Lord " + game.getNicknameOfNextGovernment() + " is playing\n";
             result += "new Turn started!\n";
             game.setRound(game.getRound() + 1);
             for (Government government : game.getGovernments()) {

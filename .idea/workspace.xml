@@ -4,9 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="an error solved.">
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="main Castle added to file of buildings">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/files/model/buildings/other.json" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/files/model/buildings/other.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/files/user/currentUser.json" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/files/user/currentUser.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/files/user/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/files/user/users.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/enumeration/Paths.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/enumeration/Paths.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/view/LoginMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/view/LoginMenu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -196,14 +201,9 @@
       <workItem from="1683626274596" duration="107000" />
       <workItem from="1683626585666" duration="143000" />
       <workItem from="1683646489636" duration="12236000" />
-      <workItem from="1683748071501" duration="747000" />
-    </task>
-    <task id="LOCAL-00001" summary="...">
-      <created>1681925358549</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1681925358549</updated>
+      <workItem from="1683748071501" duration="864000" />
+      <workItem from="1683749525652" duration="898000" />
+      <workItem from="1683806837751" duration="3513000" />
     </task>
     <task id="LOCAL-00002" summary="some tests added.">
       <created>1681944373098</created>
@@ -541,7 +541,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683658158757</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="main Castle added to file of buildings">
+      <created>1683748922150</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1683748922150</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -574,7 +581,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="just commit" />
     <MESSAGE value="Building menu updated&#10;and some enums edited." />
     <MESSAGE value="the last commits before checkpoint 1 ..." />
     <MESSAGE value="Repair added to Building controller." />
@@ -599,7 +605,8 @@
     <MESSAGE value="worker distribution was called in next turn." />
     <MESSAGE value="one error solved." />
     <MESSAGE value="an error solved." />
-    <option name="LAST_COMMIT_MESSAGE" value="an error solved." />
+    <MESSAGE value="main Castle added to file of buildings" />
+    <option name="LAST_COMMIT_MESSAGE" value="main Castle added to file of buildings" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

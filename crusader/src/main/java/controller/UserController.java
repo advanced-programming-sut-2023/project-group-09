@@ -285,7 +285,7 @@ public class UserController {
             return LoginAnswers.USER_DOESNT_EXIST_MESSAGE.getMessage();
         }
         User user = Application.getUserByUsername(username);
-        return user.getPasswordRecoveryQuestion();
+        return user.getPasswordRecoveryQuestion().replace("my" , "your");
     }
 
     public static String changePasswordWithSecurityQuestion(String username, String newPassword, String newPasswordConfirmation) {
@@ -512,6 +512,10 @@ public class UserController {
     }
 
     public static String displaySlogan() {
+        if (Application.getCurrentUser().getSlogan() == null ||
+            Application.getCurrentUser().getSlogan().equals("")) {
+            return "slogan: Slogan is empty!";
+        }
         return "slogan: " + Application.getCurrentUser().getSlogan();
     }
 
@@ -520,7 +524,7 @@ public class UserController {
         String output = "username: " + user.getUsername() + "\n";
         output += "nickname: " + user.getNickname() + "\n";
         output += "email: " + user.getEmail() + "\n";
-        output += "slogan: " + user.getSlogan() + "\n";
+        output += "slogan: " + ((user.getSlogan() == null || user.getSlogan().equals("")) ? "Slogan is empty!" : user.getSlogan()) + "\n";
         output += "highscore: " + user.getHighScore() + "\n";
         output += "rank: " + getRank();
 
@@ -587,7 +591,7 @@ public class UserController {
         ArrayList<User> sortedUsers = getSortedListOfUsers();
         int rank = 1;
         for (User user : sortedUsers) {
-            result += rank + ". " + user.getUsername() + "\n";
+            result += rank + ". " + user.getUsername() + " ***** highscore : " + user.getHighScore() + "\n";
             rank++;
         }
         return result;
