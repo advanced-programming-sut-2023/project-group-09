@@ -65,6 +65,17 @@ public class MoveController extends HumanController {
                 }
             }
         }
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                if (wave[i][j] == null) {
+                    System.out.print("null      ");
+                    continue;
+                }
+                System.out.format("(%3d,%3d) ", wave[i][j].getX(), wave[i][j].getY());
+            }
+            System.out.println();
+        }
+        System.out.println();
         return makePath(wave, startPair, endPair);
     }
 
@@ -117,7 +128,6 @@ public class MoveController extends HumanController {
     public static LinkedList<Tuple> makePath(Tuple[][] wave, Tuple start, Tuple end) {
         LinkedList<Tuple> result = new LinkedList<>();
         Tuple nextPair = end;
-
         result.add(nextPair);
         while (!nextPair.equals(start)) {
             nextPair = findNextNode(nextPair, wave);
@@ -263,7 +273,6 @@ public class MoveController extends HumanController {
         if (checkUsualPath) {
             return getPath(startPair, endPair, null);
         }
-        checkUsualPath = true;
         return null;
     }
 
@@ -274,10 +283,14 @@ public class MoveController extends HumanController {
             return null;
         }
         if (checkLadderPath) {
-            Military military = GameHumans.getUnit("archer",militaries.get(0).getGovernment(),0,0);
-            return getPath(startPair, endPair, military);
+
+            for (Military military : militaries) {
+                if (military.isUsesLadder() && !military.getName().equals("ladderman")) {
+                    return getPath(startPair, endPair, military);
+                }
+            }
+
         }
-        checkLadderPath = true;
         return null;
     }
 
@@ -288,10 +301,12 @@ public class MoveController extends HumanController {
             return null;
         }
         if (checkAssassinPath) {
-            Military military = GameHumans.getUnit("assassin",militaries.get(0).getGovernment(),0,0);
-            return getPath(startPair, endPair, military);
+            for (Military military : militaries) {
+                if (military.getName().equals("assassin")) {
+                    return getPath(startPair, endPair, military);
+                }
+            }
         }
-        checkAssassinPath = true;
         return null;
     }
 
@@ -383,7 +398,7 @@ public class MoveController extends HumanController {
         return militaries;
     }
 
-    public static boolean setOverHeadOfCoordinate(Tuple tuple){
+    public static boolean setOverHeadOfCoordinate(Tuple tuple) {
         Tile tile = GameController.getGame().getMap().getTile(tuple.getX(), tuple.getY());
         Building building = tile.getBuilding();
         return building instanceof CastleBuilding castleBuilding && !castleBuilding.getName().equals("drawBridge");

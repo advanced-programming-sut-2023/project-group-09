@@ -33,7 +33,9 @@ public class BuildingMenu {
             if (unselectBuildingMatcher.matches()) {
                 break;
             }
-            if (isThisBuildingSelected(Buildings.MAIN_CASTLE)) {
+            if (command.equals("back")) {
+                return;
+            } else if (isThisBuildingSelected(Buildings.MAIN_CASTLE)) {
                 Matcher changeTaxRateMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.CHANGE_TAX_RATE);
                 Matcher showTaxRateMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.SHOW_TAX_RATE);
                 if (changeTaxRateMatcher.matches()) {
@@ -110,13 +112,18 @@ public class BuildingMenu {
                 }
             } else if (isThisBuildingSelected(Buildings.CAGED_WAR_DOGS)) {
                 Matcher unleashWarDogsMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.UNLEASH_WAR_DOGS);
-                System.out.println(GameController.unleashWarDogs());
-                return;
-            }else if (command.equals("back")){
-                return;
-            }else{
+
+                if (unleashWarDogsMatcher.matches()) {
+                    System.out.println(GameController.unleashWarDogs());
+                    return;
+                } else {
+                    System.out.println(Answers.INVALID_COMMAND.getValue());
+                }
+            } else {
                 System.out.println(Answers.INVALID_COMMAND.getValue());
-            }// else if (isThisBuildingSelected(Buildings.GRANARY)) {
+            }
+
+            // else if (isThisBuildingSelected(Buildings.GRANARY)) {
             // TODO: Not now...
             //}
         }

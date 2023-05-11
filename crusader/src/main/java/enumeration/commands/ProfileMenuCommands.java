@@ -11,7 +11,7 @@ public enum ProfileMenuCommands {
     CHANGE_PASSWORD_TYPE2("profile change password -n (?<newPassword>(\"[^\"]*\")|(\\S*)) -o (?<oldPassword>(\"[^\"]*\")|(\\S*))"),
     CHANGE_EMAIL("profile change -e (?<email>(\"[^\"]*\")|(\\S*))"),
     CHANGE_SLOGAN("profile change slogan -s (?<slogan>(\"[^\"]*\")|(\\S*))"),
-    REMOVE_SLOGAN("Profile remove slogan"),
+    REMOVE_SLOGAN("profile remove slogan"),
     SHOW_HIGHSCORE("profile display highscore"),
     SHOW_RANK("profile display rank"),
     SHOW_SLOGAN("profile display slogan"),

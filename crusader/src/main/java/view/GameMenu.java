@@ -60,8 +60,10 @@ public class GameMenu {
                     int x = ViewController.getNumberOfRegex("x");
                     int y = ViewController.getNumberOfRegex("y");
                     output = GameController.selectBuilding(x, y);
-                    BuildingMenu.run(scanner);
                     System.out.println(output);
+                    if (!output.equals("There is no building of your government here!")){
+                        BuildingMenu.run(scanner);
+                    }
                 }
 
             } else if (selectUnitMatcher.matches()) {
@@ -126,6 +128,8 @@ public class GameMenu {
                 MainController.exitCrusader();
             } else if (input.equals("market menu")) {
                 MarketMenu.run(scanner);
+            } else if (input.equals("show gold")) {
+                System.out.println(game.getCurrentGovernment().getGold());
             } else if (continueM.matches()) {
                 System.out.println(GameController.changeTurn());
                 if (game.isEndGame()) {

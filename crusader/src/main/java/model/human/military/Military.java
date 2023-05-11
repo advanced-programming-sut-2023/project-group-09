@@ -18,9 +18,9 @@ public abstract class Military extends Human{
     private int price;
     private int defenseRange;
     private int aggressiveRange;
-    private Attack attack;
+     Attack attack;
 
-    //
+
     public Military(int speed, int defenseRating, int shootingRange, int attackRating, int price) {
         super(speed, defenseRating, shootingRange);
         this.attackRating = attackRating;
@@ -145,7 +145,6 @@ public abstract class Military extends Human{
             attack = new Attack(this);
         }
         return attack;
-        //return null;
     }
 
     @Override

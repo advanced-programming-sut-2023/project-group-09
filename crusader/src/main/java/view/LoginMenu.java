@@ -23,6 +23,7 @@ public class LoginMenu {
         } catch (InterruptedException ie) {
             Thread.currentThread().interrupt();
         }
+        System.out.println("now, Try again!");
     }
 
     public static void run(Scanner scanner) {

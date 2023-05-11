@@ -286,6 +286,9 @@ public class Government {
     }
 
     public int getPopularityOfAleCoverage() {
+        if (population == 0){
+            return 0;
+        }
         int countOfBuilding = buildings.get("inn").getNumber();
         double coverage = Math.min(countOfBuilding * 5 / population, 1);
         return (int) Math.ceil(coverage * 3);
