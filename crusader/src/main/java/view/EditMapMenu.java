@@ -87,7 +87,10 @@ public class EditMapMenu {
             System.out.println("type field is empty");
             return;
         }
-
+        if (typeM.group("type").equals("lord")) {
+            System.out.println("you can't drop lord!");
+            return;
+        }
         String validation = MapMenu.validateCoordinates(xM, yM);
         if (!validation.isEmpty()) {
             System.out.println(validation);

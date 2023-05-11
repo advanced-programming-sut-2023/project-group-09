@@ -5,6 +5,7 @@ import controller.MapController;
 import controller.gamestructure.GameHumans;
 import controller.gamestructure.GameMaps;
 import controller.human.HumanController;
+import controller.human.MoveController;
 import enumeration.Pair;
 import enumeration.dictionary.Colors;
 import model.Government;
@@ -54,69 +55,35 @@ public class makeSample {
         MapController.dropBuilding(4, 1, "stairs", government1);
         MapController.dropBuilding(5, 1, "stairs", government1);
         MapController.dropBuilding(6, 1, "stairs", government1);
+
+
+
+        MapController.dropMilitary(4, 3, "maceman", government);
         System.out.println(GameController.showMap(0,0));
-
-
-
-        MapController.dropMilitary(0, 1, "maceman", government);
-        selectUnit(1, 2, null, game, government);
-        Military military2 = map.getTile(0, 1).getMilitaries().get(0);
-        System.out.println(HumanController.move(new Tuple(5,5)));
-
-
+        Military military2 = map.getTile(4, 3).getMilitaries().get(0);
+        selectUnit(5,4,null,game,government);
+        System.out.println(HumanController.patrolUnit(5,5,8,1));
         System.out.println(military2.getMove().getMoveState());
-        MapController.dropMilitary(3, 0, "archer", government1);
-        Military military3 = map.getTile(3, 0).getMilitaries().get(0);
-
-        military2.getMove().moveOneTurn();
-        military3.getAttack().doAttack();
-        military2.getAttack().doAttack();
-        military2.getMove().moveOneTurn();
-        military3.getAttack().doAttack();
-        military2.getAttack().doAttack();
-        military2.getMove().moveOneTurn();
-        military3.getAttack().doAttack();
-        military2.getAttack().doAttack();
-
-        military2.getMove().moveOneTurn();
-        military3.getAttack().doAttack();
-        military2.getAttack().doAttack();
-
-        military2.setMilitaryState("offensive");
-
-        System.out.println(military2.getMove().getMoveState());
-        MapController.dropMilitary(3, 3, "spearman", government1);
-        military3 = map.getTile(3, 3).getMilitaries().get(0);
-        military3.setMilitaryState("defensive");
 
 
-        System.out.println(GameController.showMap(0,0));
-        military2.getMove().moveOneTurn();
-        //military3.getMove().moveOneTurn();
-        military3.getAttack().doAttack();
-        military2.getAttack().doAttack();
+
         military2.getMove().moveOneTurn();
         System.out.println(GameController.showMap(0,0));
-        //military3.getMove().moveOneTurn();
-        military3.getAttack().doAttack();
-        military2.getAttack().doAttack();
         military2.getMove().moveOneTurn();
-        //military3.getMove().moveOneTurn();
-        military3.getAttack().doAttack();
-        military2.getAttack().doAttack();
+        System.out.println(GameController.showMap(0,0));
+        military2.getMove().moveOneTurn();
+        System.out.println(GameController.showMap(0,0));
+        military2.getMove().moveOneTurn();
+        System.out.println(GameController.showMap(0,0));
+        military2.getMove().moveOneTurn();
+        System.out.println(GameController.showMap(0,0));
+        military2.getMove().moveOneTurn();
+        System.out.println(GameController.showMap(0,0));
+        military2.getMove().moveOneTurn();
+        System.out.println(GameController.showMap(0,0));
+        military2.getMove().moveOneTurn();
         System.out.println(GameController.showMap(0,0));
 
-//        military2.getMove().moveOneTurn();
-//        System.out.println(GameController.showMap(0,0));
-//        //military3.getMove().moveOneTurn();
-//        //military3.getMove().moveOneTurn();
-//        System.out.println(GameController.showMap(0,0));
-//        military3.getAttack().doAttack();
-//        military2.getAttack().doAttack();
-
-
-
-        System.out.println(GameController.showMap(0,0));
     }
 
     public static String selectUnit(int x, int y, String type, Game game,Government government) {

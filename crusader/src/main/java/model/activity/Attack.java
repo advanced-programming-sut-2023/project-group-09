@@ -149,6 +149,11 @@ public class Attack {
         this.targetBuilding = targetBuilding;
     }
 
+    public boolean checkCanAttack(Military enemy){
+        boolean overHeadOfPoint =MoveController.setOverHeadOfCoordinate(new Tuple(military.getY(), military.getX()));
+        boolean overHeadOfEnemy =  MoveController.setOverHeadOfCoordinate(new Tuple(enemy.getY(), enemy.getX()));
+        return overHeadOfPoint == overHeadOfEnemy;
+    }
 
     //methods
     public boolean isInRange(int x, int y, int range) {
@@ -178,19 +183,23 @@ public class Attack {
 
         if (militaries.size() != 0) {
             if (military.getMove() != null && military.getMove().getEnemy() != null && militaries.contains(military.getMove().getEnemy())) {
-                this.enemy = military.getMove().getEnemy();
-                return true;
+                if(checkCanAttack(military.getMove().getEnemy())){
+                    this.enemy = military.getMove().getEnemy();
+                    return true;
+                }
             }
             for (Military enemy : militaries) {
                 double distance = MoveController.getDistance(enemy.getX(), enemy.getY(), military.getX(), military.getY());
-                if (distance < minDistance && Math.abs(minDistance - distance) > 0.5) {
+                if (distance < minDistance && Math.abs(minDistance - distance) > 0.5 && checkCanAttack(enemy)) {
                     minDistance = distance;
                     enemies.clear();
                     enemies.add(enemy);
                 }
             }
         }
-
+        if (enemies.size() == 0 && nearestTool == null){
+            return false;
+        }
 
         if (nearestTool != null) {
             if (minDistance > MoveController.getDistance(nearestTool.getX(), nearestTool.getY(), military.getX(), military.getY())) {
@@ -282,6 +291,16 @@ public class Attack {
             military.setUsesLadder(true);
             return;
         }
+
+
+        if (military.getName().equals("slave")) {
+            MapController.deleteBuilding(targetBuilding);
+            targetBuilding.setGovernment(null);
+            targetBuilding = null;
+            return;
+        }
+
+
         int hp = targetBuilding.takeDamage(military.getAttackRating());
         if (hp < 0) {
             MapController.deleteBuilding(targetBuilding);

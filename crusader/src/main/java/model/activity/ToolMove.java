@@ -8,6 +8,7 @@ import model.building.Building;
 import model.game.Map;
 import model.game.Tile;
 import model.game.Tuple;
+import model.human.military.Tunneler;
 import model.tools.Tool;
 
 import java.util.Collections;
@@ -103,7 +104,13 @@ public class ToolMove{
         return true;
     }
 
-
+    public boolean checkDestination() {
+        Tuple lastPair = path.getLast();
+        if (endPair.getX() != lastPair.getX() || endPair.getY() != lastPair.getY()) {
+            return true;
+        }
+        return false;
+    }
 
     public void moveOneTurn() {
         if (moveState.equals(MoveStates.STOP.getState()) || isAttacking) {
@@ -111,7 +118,10 @@ public class ToolMove{
         }
 
 
-        if (!checkIsPathValid()) {
+        if (path != null &&!checkIsPathValid()) {
+            updatePath();
+        }
+        if (path != null && checkDestination()){
             updatePath();
         }
 
