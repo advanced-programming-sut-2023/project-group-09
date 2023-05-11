@@ -16,6 +16,7 @@ public class MapMenu {
 //        0: showMap - 1: showDetails - 2: clearLand
 
         while (true) {
+            System.out.println("<< Map Menu >>");
             String input = scanner.nextLine();
             Matcher moveMapM = MapCommands.MOVE_MAP.getMatcher(input);
             Matcher showDetailsOfLandM = MapCommands.SHOW_DETAILS_OF_TILE.getMatcher(input);
@@ -25,10 +26,10 @@ public class MapMenu {
             else if (MapCommands.BACK.getMatcher(input).matches()) {
                 System.out.println("<< Game Menu >>");
                 return;
-            } else {
-                System.out.println("invalid command!");
-                return;
-            }
+            } else if (MapCommands.SHOW_CURRENT_COORDINATES.getMatcher(input).matches()) {
+                System.out.println("x of center: " + (GameController.getGame().getCurrentMapX() + 1) +
+                        "\ny of center: " + (GameController.getGame().getCurrentMapY() + 1));
+            } else System.out.println("invalid command!");
         }
     }
 
@@ -88,7 +89,7 @@ public class MapMenu {
     }
 
     public static String validateCoordinates(Matcher xM, Matcher yM) {
-        if (!xM.find() || !yM.find()) return "invalid command";
+        if (!xM.find() || !yM.find()) return "invalid command!";
 
         String result = "";
         if (xM.group("x").isEmpty()) result += "x coordinate field is empty\n";

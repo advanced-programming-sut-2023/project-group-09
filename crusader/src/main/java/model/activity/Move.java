@@ -186,7 +186,6 @@ public class Move {
 
         Tuple lastPair = path.getLast();
         if (endPair.getX() != lastPair.getX() || endPair.getY() != lastPair.getY()) {
-            endPair = new Tuple(enemy.getY(), enemy.getX());
             return true;
         }
         return false;

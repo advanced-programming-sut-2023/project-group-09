@@ -501,7 +501,6 @@ public class GameController {
     }
 
 
-
     public static String changeTurn() {
         game.changeTurn();
         String nickname = game.getCurrentGovernment().getUser().getNickname();
@@ -555,9 +554,9 @@ public class GameController {
     public static String showMap(int x, int y) {
         Map map = game.getMap();
         if (y - 3 < 0) y = 3;
-        else if (y + 3 >= map.getLength()) y = map.getLength() - 1;
+        else if (y + 3 >= map.getLength()) y = map.getLength() - 4;
         if (x - 9 < 0) x = 9;
-        else if (x + 9 >= map.getWidth()) x = map.getWidth() - 1;
+        else if (x + 9 >= map.getWidth()) x = map.getWidth() - 10;
         game.setCurrentMapX(x);
         game.setCurrentMapY(y);
 
@@ -642,7 +641,7 @@ public class GameController {
             result += "\n";
         }
 
-        return result;
+        return result.substring(0, result.length() - 1);
     }
 
     public static String showMap2(int x, int y, Map map) {

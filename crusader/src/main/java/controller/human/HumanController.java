@@ -33,7 +33,6 @@ public class HumanController {
 
         Tuple startPair = MoveController.getStartPair();
         MoveController.shouldCheckOtherPath();
-        System.out.println(MoveController.checkUsualPath + " " + MoveController.checkLadderPath + " " + MoveController.checkAssassinPath);
         LinkedList<Tuple> path = MoveController.checkHasPath(startPair, endPair);
         LinkedList<Tuple> ladderPath = MoveController.checkHasLadderPath(startPair, endPair, path);
         LinkedList<Tuple> assassinPath = MoveController.checkAssassinPath(startPair, endPair, path);
@@ -86,7 +85,6 @@ public class HumanController {
                 }
                 if (military.isUsesLadder()) {
                     Move move = new Move(military.getX(), military.getY(), enemy, false, military);
-                    System.out.println(ladderPath.size());
                     move.setPath(ladderPath);
                     military.setMove(move);
                     count++;
@@ -311,14 +309,14 @@ public class HumanController {
         }
         if (path == null) {
             for (Military military : militaries) {
-                if (military.isUsesLadder()) {
+                if (military.isUsesLadder() && !military.getName().equals("ladderman")) {
                     Move move = new Move(military.getX(), military.getY(), endPair, true, military);
                     move.setPath(ladderPath);
                     move.setMovePatrol(patrolPair);
                     military.setMove(move);
                 }
 
-                if (military.isUsesLadder()) {
+                if (military.getName().equals("assassin")) {
                     Move move = new Move(military.getX(), military.getY(), endPair, true, military);
                     move.setPath(assassinPath);
                     move.setMovePatrol(patrolPair);
