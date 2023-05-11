@@ -2,10 +2,7 @@ package view;
 
 import controller.GameController;
 import controller.MapController;
-import enumeration.Textures;
 import enumeration.commands.MapCommands;
-import model.game.Game;
-import model.game.Map;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -25,6 +22,9 @@ public class MapMenu {
             else if (MapCommands.BACK.getMatcher(input).matches()) {
                 System.out.println("<< Game Menu >>");
                 return;
+            } else if (MapCommands.SHOW_CURRENT_COORDINATES.getMatcher(input).matches()) {
+                System.out.println("x of center: " + (GameController.getGame().getCurrentMapX() + 1) +
+                        "\ny of center: " + (GameController.getGame().getCurrentMapY() + 1));
             } else System.out.println("invalid command");
         }
     }
