@@ -186,7 +186,6 @@ public class MapController {
         for (int i = y; i < y + building.getLength(); i++) {
             for (int j = x; j < x + building.getWidth(); j++) {
                 Tile tile = map.getTile(j, i);
-                System.out.println(building.getName());
                 if (building.isShouldBeOne()) {
                     deleteOtherBuildingWithThisType(building);
                 }

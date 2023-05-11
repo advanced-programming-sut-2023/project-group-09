@@ -48,7 +48,7 @@ public class Attack {
         if (endY + 1 >= map.getLength()) {
             endY = map.getLength() - 1;
         }
-        return HumanController.getEnemiesOfArea(startX, startY, endX, endY,military.getGovernment());
+        return HumanController.getEnemiesOfArea(startX, startY, endX, endY, military.getGovernment());
     }
 
 
@@ -84,7 +84,7 @@ public class Attack {
                 ArrayList<Civilian> civilians = MapController.getCiviliansOfOtherGovernment(i, j, military.getGovernment());
                 if (civilians.size() != 0) {
                     Civilian civilian = civilians.get(0);
-                    MapController.deleteHuman(civilian.getX(),civilian.getY(),civilian);
+                    MapController.deleteHuman(civilian.getX(), civilian.getY(), civilian);
                     civilian.setGovernment(null);
                     return;
                 }
@@ -178,8 +178,7 @@ public class Attack {
 
         if (militaries.size() != 0) {
             if (military.getMove() != null && military.getMove().getEnemy() != null && militaries.contains(military.getMove().getEnemy())) {
-                Military targetTroop = military.getMove().getEnemy();
-                this.enemy = militaries.get(militaries.indexOf(targetTroop));
+                this.enemy = military.getMove().getEnemy();
                 return true;
             }
             for (Military enemy : militaries) {
@@ -304,32 +303,37 @@ public class Attack {
     //this should use in nextTurn for each troop if troop has government so far
     public void doAttack() {
 
+        if (military.getGovernment() == null) {
+            return;
+        }
+
+
         if (military instanceof Engineer engineer) {
-            if(engineer.isHasOil()){
-                HumanController.pourOilDirection(engineer,null, engineer.getMilitaryState());
+            if (engineer.isHasOil()) {
+                HumanController.pourOilDirection(engineer, null, engineer.getMilitaryState());
             }
             return;
         }
 
-        if (enemy != null && enemy.getGovernment() == null){
+        if (enemy != null && enemy.getGovernment() == null) {
             enemy = null;
         }
 
-        if(tool != null && tool.getGovernment() == null){
+        if (tool != null && tool.getGovernment() == null) {
             tool = null;
         }
 
-        if (targetBuilding != null && targetBuilding.getGovernment() == null){
+        if (targetBuilding != null && targetBuilding.getGovernment() == null) {
             targetBuilding = null;
         }
 
         //if enemy is very near to military
         Move move = military.getMove();
-        if (shouldAttack(2)) {
+        if (shouldAttack(1)) {
             if (move != null && move.isMoving()) {
                 move.setAttacking(true);
             }
-            if (military.getName().equals("assassin")){
+            if (military.getName().equals("assassin")) {
                 military.setInvisible(false);
             }
             attackEnemy();
@@ -355,7 +359,7 @@ public class Attack {
             return;
         }
 
-        tool = null;
+//        tool = null;
         //continue moving if you don't need to defend yourself
         if (move != null && !move.getMoveState().equals(MoveStates.STOP.getState())) {
             if (move.isAttacking()) {
@@ -366,11 +370,11 @@ public class Attack {
 
         //attack
         if (shouldAttack()) {
-            if (military.getName().equals("assassin")){
+            if (military.getName().equals("assassin")) {
                 military.setInvisible(false);
             }
             attack();
-        }else {
+        } else {
             attackCiviliansOfRange(military.getX(), military.getY(), 2);
         }
     }

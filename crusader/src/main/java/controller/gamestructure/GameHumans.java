@@ -65,13 +65,13 @@ public class GameHumans {
         int speed = Speed.FAST.getRate();
         int defenseRating = DefenseRating.LOW.getRate();
         int attackRating = AttackRating.LOW.getRate();
-        EuropeanTroop archer = new EuropeanTroop(speed, defenseRating, 10, attackRating, 12);
+        EuropeanTroop archer = new EuropeanTroop(speed, defenseRating, 5, attackRating, 12);
         archer.setName("archer");
         archer.setWeapon("bow");
         archer.enableDigsMoat();
         archer.enableUsesLadder();
-        archer.setDefenseRange(13);
-        archer.setAggressiveRange(16);
+        archer.setDefenseRange(8);
+        archer.setAggressiveRange(11);
         militaries.put("archer",archer);
     }
 
@@ -79,12 +79,12 @@ public class GameHumans {
         int speed = Speed.SLOW.getRate();
         int defenseRating = DefenseRating.MEDIUM.getRate();
         int attackRating = AttackRating.LOW.getRate();
-        EuropeanTroop crossbowman = new EuropeanTroop(speed, defenseRating, 17, attackRating, 20);
+        EuropeanTroop crossbowman = new EuropeanTroop(speed, defenseRating, 3, attackRating, 20);
         crossbowman.setName("crossbowman");
         crossbowman.setWeapon("crossbow");
         crossbowman.addArmour("leatherArmour");
-        crossbowman.setDefenseRange(10);
-        crossbowman.setAggressiveRange(13);
+        crossbowman.setDefenseRange(6);
+        crossbowman.setAggressiveRange(9);
         militaries.put("crossbowman",crossbowman);
     }
 
@@ -204,12 +204,12 @@ public class GameHumans {
         int speed = Speed.FAST.getRate();
         int defenseRating = DefenseRating.LOW.getRate();
         int attackRating = AttackRating.LOW.getRate();
-        ArabianMercenary archerBow = new ArabianMercenary(speed, defenseRating, 10, attackRating, 75);
+        ArabianMercenary archerBow = new ArabianMercenary(speed, defenseRating, 5, attackRating, 75);
         archerBow.setName("archerbow");
         archerBow.setWeapon("bow");
         archerBow.enableDigsMoat();
-        archerBow.setDefenseRange(13);
-        archerBow.setAggressiveRange(16);
+        archerBow.setDefenseRange(8);
+        archerBow.setAggressiveRange(11);
         militaries.put("archerBow",archerBow);
     }
 

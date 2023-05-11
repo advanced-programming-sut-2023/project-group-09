@@ -295,13 +295,22 @@ public class Move {
         }
 
 
-        if (checkDestination() || !checkIsPathValid()) {
+        if (path != null && checkDestination()) {
             updatePath();
         }
 
+        if (path != null && !checkIsPathValid()) {
+            updatePath();
+        }
         if (path == null) {
             return;
         }
+
+
+        if (human.getGovernment() == null) {
+            return;
+        }
+
 
         if (takeDamageOfKillPit()) {
             return;

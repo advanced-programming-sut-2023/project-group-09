@@ -1,11 +1,11 @@
 package enumeration;
 
 public enum Speed {
-    EXTREMELY_SLOW(3),
-    SLOW(8),
-    AVERAGE(10),
-    FAST(15),
-    VERY_FAST(20),
+    EXTREMELY_SLOW(1),
+    SLOW(2),
+    AVERAGE(3),
+    FAST(5),
+    VERY_FAST(10),
     STATIONARY(0);
     private final int rate;
 
