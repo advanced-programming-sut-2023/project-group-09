@@ -1,14 +1,10 @@
 package view;
 
-import controller.GameController;
 import controller.MapController;
 import controller.gamestructure.GameBuildings;
-import controller.gamestructure.GameHumans;
-import enumeration.Textures;
 import enumeration.commands.MapCommands;
 import model.Government;
 
-import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -123,7 +119,6 @@ public class EditMapMenu {
             System.out.println("unit dropped successfully!");
         } else {
             System.out.println("you can't put a unit here!");
-            return;
         }
     }
 }
