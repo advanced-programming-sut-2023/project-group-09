@@ -128,6 +128,8 @@ public class GameMenu {
                 MainController.exitCrusader();
             } else if (input.equals("market menu")) {
                 MarketMenu.run(scanner);
+            } else if (input.equals("show gold")) {
+                System.out.println(game.getCurrentGovernment().getGold());
             } else if (continueM.matches()) {
                 System.out.println(GameController.changeTurn());
                 if (game.isEndGame()) {

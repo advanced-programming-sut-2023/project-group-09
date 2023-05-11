@@ -18,20 +18,20 @@ public abstract class Military extends Human{
     private int price;
     private int defenseRange;
     private int aggressiveRange;
-    //private Attack attack;
+     Attack attack;
 
 
     public Military(int speed, int defenseRating, int shootingRange, int attackRating, int price) {
         super(speed, defenseRating, shootingRange);
         this.attackRating = attackRating;
         this.price = price;
-        //attack = new Attack(this);
+        attack = new Attack(this);
     }
     public Military(Military military) {
         super(military.getSpeed(), military.getDefenseRating(), military.getShootingRange());
         this.attackRating = military.getAttackRating();
         this.price = military.getPrice();
-        //attack = new Attack(this);
+        attack = new Attack(this);
         armours = military.getArmours();
     }
 
@@ -141,11 +141,10 @@ public abstract class Military extends Human{
     }
 
     public Attack getAttack() {
-//        if(attack == null){
-//            attack = new Attack(this);
-//        }
-//        return attack;
-        return null;
+        if(attack == null){
+            attack = new Attack(this);
+        }
+        return attack;
     }
 
     @Override

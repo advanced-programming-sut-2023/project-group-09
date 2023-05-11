@@ -26,7 +26,7 @@ public class makeSample {
         MapController.map = map;
         ArrayList<Pair<Integer, Integer>> castles = map.getDefaultCastles();
         User user = Application.getUserByUsername("Farzam");
-        User user1 = Application.getUserByUsername("Amirhossein");
+        User user1 = Application.getUserByUsername("Sina");
         Government government = new Government(user, castles.get(0).getFirst(), castles.get(0).getSecond(), Colors.RED);
         Government government1 = new Government(user1, castles.get(1).getFirst(), castles.get(1).getSecond(), Colors.BLUE);
 

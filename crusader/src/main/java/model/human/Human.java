@@ -24,7 +24,7 @@ public abstract class Human implements Cloneable {
     private int shootingRange;
 
     private boolean isInvisible = false;
-    //private Move move;
+     private Move move;
 
     public Human(int speed, int defenseRating, int shootingRange) {
         this.speed = speed;
@@ -43,12 +43,11 @@ public abstract class Human implements Cloneable {
     }
 
     public Move getMove() {
-        return null;
-        //return move;
+        return move;
     }
 
     public void setMove(Move move) {
-        //this.move = move;
+        this.move = move;
     }
 
 
