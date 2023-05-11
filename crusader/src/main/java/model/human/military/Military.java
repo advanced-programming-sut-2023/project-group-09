@@ -150,6 +150,6 @@ public abstract class Military extends Human{
     @Override
     public void setMove(Move move) {
         super.setMove(move);
-        //attack = new Attack(this);
+        attack = new Attack(this);
     }
 }
