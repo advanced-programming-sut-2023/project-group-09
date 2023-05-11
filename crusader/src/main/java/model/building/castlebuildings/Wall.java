@@ -81,10 +81,10 @@ public class Wall extends CastleBuilding {
         if (map.getTile(x , y+1).getBuilding() instanceof Wall) {
             return true;
         }
-        if (map.getTile(x-1 , y).getBuilding() instanceof Wall) {
+        if (x-1 >= 0 && map.getTile(x-1 , y).getBuilding() instanceof Wall) {
             return true;
         }
-        if (map.getTile(x , y-1).getBuilding() instanceof Wall) {
+        if (y-1 >= 0 && map.getTile(x , y-1).getBuilding() instanceof Wall) {
             return true;
         }
         return false;
