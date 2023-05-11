@@ -1,4 +1,3 @@
-import controller.DeletedController;
 import controller.MainController;
 
 public class Main {

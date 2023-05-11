@@ -16,6 +16,7 @@ public class MapMenu {
 //        0: showMap - 1: showDetails - 2: clearLand
 
         while (true) {
+            System.out.println("<< Map Menu >>");
             String input = scanner.nextLine();
             Matcher moveMapM = MapCommands.MOVE_MAP.getMatcher(input);
             Matcher showDetailsOfLandM = MapCommands.SHOW_DETAILS_OF_TILE.getMatcher(input);
@@ -27,7 +28,6 @@ public class MapMenu {
                 return;
             } else {
                 System.out.println("invalid command!");
-                return;
             }
         }
     }
@@ -88,7 +88,7 @@ public class MapMenu {
     }
 
     public static String validateCoordinates(Matcher xM, Matcher yM) {
-        if (!xM.find() || !yM.find()) return "invalid command";
+        if (!xM.find() || !yM.find()) return "invalid command!";
 
         String result = "";
         if (xM.group("x").isEmpty()) result += "x coordinate field is empty\n";
