@@ -114,11 +114,9 @@ public class ToolMove {
 
 
         if (path != null && !checkIsPathValid()) {
-            System.out.println("111111111111111111111111111111111");
             updatePath();
         }
         if (path != null && checkDestination()) {
-            System.out.println("2222222222222222222222222222222222");
             updatePath();
         }
 
@@ -192,7 +190,7 @@ public class ToolMove {
     }
 
     public boolean isMoving() {
-        return !moveState.equals(MoveStates.STOP.getState()) && !isAttacking;
+        return !moveState.equals(MoveStates.STOP.getState());
     }
 
     public boolean isAttacking() {
@@ -201,5 +199,9 @@ public class ToolMove {
 
     public void setAttacking(boolean attacking) {
         isAttacking = attacking;
+    }
+
+    public void setPatrolStart(boolean check) {
+        isPatrolStart = check;
     }
 }
