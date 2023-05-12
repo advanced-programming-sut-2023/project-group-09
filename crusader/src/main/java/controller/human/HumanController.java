@@ -73,6 +73,7 @@ public class HumanController {
         LinkedList<Tuple> path = MoveController.checkHasPath(startPair, endPair);
         LinkedList<Tuple> ladderPath = MoveController.checkHasLadderPath(startPair, endPair, path);
         LinkedList<Tuple> assassinPath = MoveController.checkAssassinPath(startPair, endPair, path);
+        System.out.println(ladderPath.size());
         if (path == null && assassinPath == null && ladderPath == null) {
             return false;
         }
@@ -603,5 +604,26 @@ public class HumanController {
                 military.setMilitaryState(state);
             }
         }
+    }
+
+
+    public static boolean attack(Military enemy ,Military military) {
+        LinkedList<Tuple> path = MoveController.getPath(new Tuple(military.getX(), military.getY()),new Tuple(enemy.getX(), enemy.getX()),military);
+        if (path != null){
+            Move move = new Move(military.getX(), military.getY(),enemy,false,military);
+            move.setPath(path);
+            military.setMove(move);
+        }
+        return false;
+    }
+
+    public static boolean attack(Tool tool,Military military) {
+        LinkedList<Tuple> path = MoveController.getPath(new Tuple(military.getX(), military.getY()),new Tuple(tool.getX(), tool.getX()),military);
+        if (path != null){
+            Move move = new Move(military.getX(), military.getY(),tool,false,military);
+            move.setPath(path);
+            military.setMove(move);
+        }
+        return false;
     }
 }

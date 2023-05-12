@@ -15,6 +15,7 @@ import model.human.military.Military;
 import model.tools.Tool;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 
 public class Attack {
@@ -124,7 +125,7 @@ public class Attack {
         for (int i = startX; i <= endX; i++) {
             for (int j = startY; j <= endY; j++) {
                 Tool tool = GameController.getGame().getMap().getTile(i, j).getTool();
-                if (tool == null || tool.getGovernment().equals(military.getGovernment())) {
+                if (tool == null || tool.getGovernment().equals(military.getGovernment()) || !tool.isActive()) {
                     continue;
                 }
                 Tool targetTool = military.getMove().getTool();
@@ -183,20 +184,22 @@ public class Attack {
 
         if (militaries.size() != 0) {
             if (military.getMove() != null && military.getMove().getEnemy() != null && militaries.contains(military.getMove().getEnemy())) {
-                if(checkCanAttack(military.getMove().getEnemy())){
+                if(range != 1 || checkCanAttack(military.getMove().getEnemy())){
                     this.enemy = military.getMove().getEnemy();
                     return true;
                 }
             }
             for (Military enemy : militaries) {
                 double distance = MoveController.getDistance(enemy.getX(), enemy.getY(), military.getX(), military.getY());
-                if (distance < minDistance && Math.abs(minDistance - distance) > 0.5 && checkCanAttack(enemy)) {
+                if (distance < minDistance && Math.abs(minDistance - distance) > 0.5 && (range != 1 || checkCanAttack(enemy))) {
                     minDistance = distance;
                     enemies.clear();
                     enemies.add(enemy);
                 }
             }
         }
+
+
         if (enemies.size() == 0 && nearestTool == null){
             return false;
         }
@@ -210,7 +213,6 @@ public class Attack {
 
         Random random = new Random();
         int index = random.nextInt(enemies.size());
-
         this.enemy = enemies.get(index);
         return true;
     }
@@ -246,7 +248,7 @@ public class Attack {
             if (military.canAirAttack()) {
                 attackToTool();
             } else {
-                HumanController.attack(tool);
+                HumanController.attack(tool,military);
                 tool = null;
                 enemy = null;
             }
@@ -256,7 +258,7 @@ public class Attack {
             if (military.canAirAttack()) {
                 attackEnemy();
             } else {
-                HumanController.attack(enemy);
+                HumanController.attack(enemy,military);
                 enemy = null;
                 tool = null;
             }

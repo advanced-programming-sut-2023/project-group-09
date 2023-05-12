@@ -11,7 +11,7 @@ import model.human.military.Military;
 import java.util.ArrayList;
 
 public class Gatehouse extends CastleBuilding {
-    private boolean isRightSide;
+    private boolean isRightSide = true;
     private boolean isOpen = true;
     private String typeOfGate;
     private Gatehouse drawBridge_gatehouse; // if gatehouse has drawbridge

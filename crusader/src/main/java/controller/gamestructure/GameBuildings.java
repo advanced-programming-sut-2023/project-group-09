@@ -151,7 +151,7 @@ public class GameBuildings {
 
     public static void createSmallStoneGatehouse() {
         Gatehouse smallStoneGatehouse = new Gatehouse(0, 0,
-                "smallStoneGatehouse", 1000, 4, 4, 8);
+                "smallStoneGatehouse", 1000, 3, 3, 8);
         smallStoneGatehouse.addCost("stone", 10);
         castleBuildings.put("smallStoneGatehouse", smallStoneGatehouse);
         buildings.put("smallStoneGatehouse", smallStoneGatehouse);
@@ -159,7 +159,7 @@ public class GameBuildings {
 
     public static void createBigStoneGatehouse() {
         Gatehouse bigStoneGatehouse = new Gatehouse(0, 0,
-                "bigStoneGatehouse", 2000, 6, 6, 10);
+                "bigStoneGatehouse", 2000, 5, 5, 10);
         bigStoneGatehouse.addCost("stone", 20);
         castleBuildings.put("bigStoneGatehouse", bigStoneGatehouse);
         buildings.put("bigStoneGatehouse", bigStoneGatehouse);
