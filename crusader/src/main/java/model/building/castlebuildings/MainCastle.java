@@ -73,7 +73,6 @@ public class MainCastle extends CastleBuilding {
         }
         x += this.getStartX();
         y += this.getStartY();
-        System.out.println(x + " " + y);
         return new Tuple(y, x);
     }
 }
