@@ -52,11 +52,11 @@ public class GameController {
         }
         ArrayList<Military> militaries;
         if (type == null) {
-            militaries = MapController.getMilitariesOfGovernment(x - 1, y - 1, game.getCurrentGovernment());
+            militaries = MapController.getMilitariesOfGovernment(x, y, game.getCurrentGovernment());
         } else if (GameHumans.getUnit(type) == null) {
             return "invalid type!";
         } else {
-            militaries = MapController.getOneTypeOfMilitariesOfGovernment(x - 1, y - 1, type, game.getCurrentGovernment());
+            militaries = MapController.getOneTypeOfMilitariesOfGovernment(x, y, type, game.getCurrentGovernment());
         }
 
         if (militaries.size() == 0) {
