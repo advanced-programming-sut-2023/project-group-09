@@ -839,6 +839,15 @@ public class GameController {
         return showMap(GameController.getGame().getCurrentMapX() + x, GameController.game.getCurrentMapY() + y);
     }
 
+    public static String showPlayer() {
+        return "now Lord " + game.getCurrentGovernment().getUser().getNickname() + " is playing!";
+    }
+
+    public static String showRound() {
+        return "round " + game.getRound();
+    }
+
+
     public static String showDetailsOfTile(int x, int y) {
         Tile tile = GameController.getGame().getMap().getTile(x, y);
 
@@ -860,14 +869,16 @@ public class GameController {
         if (tile.getCivilians().size() != 0) {
             details += "Civilian in details : \n";
             for (int i = 0; i != tile.getCivilians().size(); i++) {
-                details += "Civilian " + (i + 1) + ": HP : " + tile.getCivilians().get(i).getHealth() + "/" + "| from Lord " +
+                details += "Civilian " + (i + 1) + ": HP : " + tile.getCivilians().get(i).getHealth() + "/" +
+                        tile.getCivilians().get(i).getDefenseRating() + " | from Lord " +
                         tile.getCivilians().get(i).getGovernment().getUser().getNickname() + "\n";
             }
         }
         details += "Military number : " + tile.getMilitaries().size() + "\n";
         for (int i = 0; i != tile.getMilitaries().size(); i++) {
             details += "Military " + (i + 1) + ": type: " + tile.getMilitaries().get(i).getName() + " | Hp : " +
-                    tile.getMilitaries().get(i).getHealth() + " | from Lord " +
+                    tile.getMilitaries().get(i).getHealth() + "/" +
+                    tile.getMilitaries().get(i).getDefenseRange() + " | from Lord " +
                     tile.getMilitaries().get(i).getGovernment().getUser().getNickname() + "\n";
         }
         return details.substring(0, details.length() - 1);
