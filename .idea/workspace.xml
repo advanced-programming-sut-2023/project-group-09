@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="size of buildings on map edited.">
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="announce of drop building error (with reason)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/MapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/MapController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/view/EditMapMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/view/EditMapMenu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,13 +201,6 @@
       <workItem from="1683748071501" duration="864000" />
       <workItem from="1683749525652" duration="898000" />
       <workItem from="1683806837751" duration="3513000" />
-    </task>
-    <task id="LOCAL-00010" summary="Storage and producer buildings...">
-      <created>1682062460681</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1682062460681</updated>
     </task>
     <task id="LOCAL-00011" summary="Texture passable conditions ...">
       <created>1682063924968</created>
@@ -544,7 +538,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683894540338</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="announce of drop building error (with reason)">
+      <created>1683898124254</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1683898124254</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -577,7 +578,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Next turn first try.&#10;Worker distribution" />
     <MESSAGE value="Next turn second try" />
     <MESSAGE value="stay logged in - bug resolved" />
     <MESSAGE value="add main castles to map.&#10;select building done." />
@@ -602,7 +602,8 @@
     <MESSAGE value="civilians are shown on map now" />
     <MESSAGE value="show details edited." />
     <MESSAGE value="size of buildings on map edited." />
-    <option name="LAST_COMMIT_MESSAGE" value="size of buildings on map edited." />
+    <MESSAGE value="announce of drop building error (with reason)" />
+    <option name="LAST_COMMIT_MESSAGE" value="announce of drop building error (with reason)" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

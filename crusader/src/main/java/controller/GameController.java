@@ -476,7 +476,7 @@ public class GameController {
         if (!hasRequired(building.getCost())) {
             return "your resource is not enough!";
         }
-        if (!MapController.checkCanPutBuilding(x, y, type, GameController.getGame().getCurrentGovernment())) {
+        if (!MapController.checkCanPutBuilding2(x, y, type, GameController.getGame().getCurrentGovernment())) {
             return "this coordinate is not suitable!";
         }
         if (type.equals("mainCastle") && GameController.getGame().getCurrentGovernment().getBuildingData("mainCastle").getNumber() != 0) {
@@ -857,7 +857,7 @@ public class GameController {
         if (tile.getCivilians().size() != 0) {
             details += "Civilian in details : \n";
             for (int i = 0; i != tile.getCivilians().size(); i++) {
-                details += "Civilian " + (i + 1) + ": HP : " + tile.getCivilians().get(i).getHealth() + "| from Lord " +
+                details += "Civilian " + (i + 1) + ": HP : " + tile.getCivilians().get(i).getHealth() + "/" + "| from Lord " +
                         tile.getCivilians().get(i).getGovernment().getUser().getNickname() + "\n";
             }
         }
