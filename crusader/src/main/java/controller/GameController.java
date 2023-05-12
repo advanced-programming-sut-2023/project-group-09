@@ -854,13 +854,14 @@ public class GameController {
         if (tile.getCivilians().size() != 0) {
             details += "Civilian in details : \n";
             for (int i = 0; i != tile.getCivilians().size(); i++) {
-                details += "Civilian " + (i + 1) + ": from Lord " +
+                details += "Civilian " + (i + 1) + ": HP : " + tile.getCivilians().get(i).getHealth() + "| from Lord " +
                         tile.getCivilians().get(i).getGovernment().getUser().getNickname() + "\n";
             }
         }
         details += "Military number : " + tile.getMilitaries().size() + "\n";
         for (int i = 0; i != tile.getMilitaries().size(); i++) {
-            details += "Military " + (i + 1) + ": type: " + tile.getMilitaries().get(i).getName() + " | from Lord " +
+            details += "Military " + (i + 1) + ": type: " + tile.getMilitaries().get(i).getName() + " | Hp : " +
+                    tile.getMilitaries().get(i).getHealth() + " | from Lord " +
                     tile.getMilitaries().get(i).getGovernment().getUser().getNickname() + "\n";
         }
         return details.substring(0, details.length() - 1);
