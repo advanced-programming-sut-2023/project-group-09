@@ -208,6 +208,7 @@ public class AttackAndMoveTest {
         System.out.println(tool.getToolMove().getMoveState());
         System.out.println(GameController.showMap(0, 0));
     }
+
     @Test
     public void patrolTool() {
         Game game = makeSample.makeSampleGame();
@@ -234,7 +235,7 @@ public class AttackAndMoveTest {
         GameController.selectTool(12, 6);
         Tool tool = ToolMenu.tool;
         ToolsController.tool = tool;
-        System.out.println(ToolsController.patrolTool(11,0,8,8));
+        System.out.println(ToolsController.patrolTool(11, 0, 8, 8));
         tool.getToolMove().moveOneTurn();
         System.out.println(GameController.showMap(0, 0));
         tool.getToolMove().moveOneTurn();

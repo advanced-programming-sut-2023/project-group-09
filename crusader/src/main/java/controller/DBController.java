@@ -216,7 +216,6 @@ public class DBController {
         GameBuildings.buildings.putAll(storageBuildingHashMap);
         GameBuildings.buildings.putAll(buildingHashMap);
         GameBuildings.createQuarry();
-        GameBuildings.createOxTether();
         GameBuildings.createMainCastle();
 
 

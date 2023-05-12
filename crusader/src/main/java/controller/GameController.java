@@ -480,7 +480,7 @@ public class GameController {
         if (!hasRequired(building.getCost())) {
             return "your resource is not enough!";
         }
-        if (!MapController.checkCanPutBuilding2(x - 1, y - 1, type, GameController.getGame().getCurrentGovernment())) {
+        if (!MapController.checkCanPutBuilding2(x, y, type, GameController.getGame().getCurrentGovernment())) {
             return "this coordinate is not suitable!";
         }
         if (type.equals("mainCastle") && GameController.getGame().getCurrentGovernment().getBuildingData("mainCastle").getNumber() != 0) {
@@ -488,7 +488,7 @@ public class GameController {
         }
         consumeRequired(building.getCost());
 
-        MapController.dropBuilding(x - 1, y - 1, type, GameController.getGame().getCurrentGovernment());
+        MapController.dropBuilding(x, y, type, GameController.getGame().getCurrentGovernment());
         return "building dropped successfully!";
     }
 
