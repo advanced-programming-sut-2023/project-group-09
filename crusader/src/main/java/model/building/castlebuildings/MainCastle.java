@@ -23,6 +23,7 @@ public class MainCastle extends CastleBuilding {
                 mainCastle.getMaxHp(), mainCastle.getWidth(), mainCastle.getLength());
         this.capacity = 10;
         super.setCost(mainCastle.getCost());
+        this.setBuildingImpassableLength(5);
     }
 
     public void taxDistribution() {
@@ -67,7 +68,7 @@ public class MainCastle extends CastleBuilding {
         Random random = new Random();
         int x = random.nextInt(this.getWidth());
         int y = random.nextInt(this.getLength());
-        while (x < this.getBuildingImpassableLength() && y < this.getBuildingImpassableLength()) {
+        while (x < 5 && y < 5) {
             x = random.nextInt(this.getWidth());
             y = random.nextInt(this.getLength());
         }

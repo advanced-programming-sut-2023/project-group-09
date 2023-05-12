@@ -28,7 +28,7 @@ public class Barrack extends Building {
                 barrack.getMaxHp(), barrack.getWidth(), barrack.getLength());
         this.changeShouldBeOne();
         this.units = barrack.units;
-        this.setBuildingImpassableLength(4);
+        this.setBuildingImpassableLength(barrack.getBuildingImpassableLength());
         super.setCost(barrack.getCost());
     }
 
