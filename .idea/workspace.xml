@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="show player and show round added.">
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="an error solved">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/enumeration/Paths.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/enumeration/Paths.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/files/model/buildings/gateHouses.json" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/files/model/buildings/gateHouses.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/files/model/buildings/towers.json" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/files/model/buildings/towers.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/files/model/buildings/walls.json" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/files/model/buildings/walls.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/Government.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/Government.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -200,13 +202,6 @@
       <workItem from="1683748071501" duration="864000" />
       <workItem from="1683749525652" duration="898000" />
       <workItem from="1683806837751" duration="3513000" />
-    </task>
-    <task id="LOCAL-00013" summary="Walls, Draw bridge and gatehouses are added.">
-      <created>1682115730401</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1682115730401</updated>
     </task>
     <task id="LOCAL-00014" summary="Towers added.">
       <created>1682165652089</created>
@@ -544,7 +539,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683903752050</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="an error solved">
+      <created>1683909188731</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1683909188731</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -595,21 +597,21 @@
     <MESSAGE value="error of crenulatedWall checking solved." />
     <MESSAGE value="humans ad militaries in move and standing state in show map&#10;wall height in show map" />
     <MESSAGE value="humans ad militaries in move and standing state in show map&#10;wall height in show map (resume)" />
-    <MESSAGE value="an error solved" />
     <MESSAGE value="civilians are shown on map now" />
     <MESSAGE value="show details edited." />
     <MESSAGE value="size of buildings on map edited." />
     <MESSAGE value="announce of drop building error (with reason)" />
     <MESSAGE value="solved :/" />
     <MESSAGE value="show player and show round added." />
-    <option name="LAST_COMMIT_MESSAGE" value="show player and show round added." />
+    <MESSAGE value="an error solved" />
+    <option name="LAST_COMMIT_MESSAGE" value="an error solved" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/crusader/src/main/java/controller/GameController.java</url>
-          <line>584</line>
+          <line>587</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
