@@ -9,7 +9,6 @@ import enumeration.commands.GameMenuCommands;
 import enumeration.commands.MapCommands;
 import enumeration.commands.UnitMenuCommands;
 import model.game.Game;
-import model.tools.Tool;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -44,8 +43,8 @@ public class GameMenu {
                 itemsPattern.add(GameMenuCommands.Y_ITEM.getRegex());
                 itemsPattern.add(GameMenuCommands.TYPE_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = ViewController.getNumberOfRegex("x");
-                    int y = ViewController.getNumberOfRegex("y");
+                    int x = ViewController.getNumberOfRegex("x") - 1;
+                    int y = ViewController.getNumberOfRegex("y") - 1;
                     String type = ViewController.resultMatcher.group("type");
                     type = ViewController.editItem(type);
                     output = GameController.dropBuilding(x, y, type);
@@ -57,11 +56,11 @@ public class GameMenu {
                 itemsPattern.add(GameMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(GameMenuCommands.Y_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = ViewController.getNumberOfRegex("x");
-                    int y = ViewController.getNumberOfRegex("y");
+                    int x = ViewController.getNumberOfRegex("x") - 1;
+                    int y = ViewController.getNumberOfRegex("y") - 1;
                     output = GameController.selectBuilding(x, y);
                     System.out.println(output);
-                    if (!output.equals("There is no building of your government here!")){
+                    if (!output.equals("There is no building of your government here!")) {
                         BuildingMenu.run(scanner);
                     }
                 }
@@ -73,8 +72,8 @@ public class GameMenu {
                 itemsPattern.add(GameMenuCommands.Y_ITEM.getRegex());
                 itemsPattern.add(GameMenuCommands.UNIT_TYPE_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = ViewController.getNumberOfRegex("x");
-                    int y = ViewController.getNumberOfRegex("y");
+                    int x = ViewController.getNumberOfRegex("x") - 1;
+                    int y = ViewController.getNumberOfRegex("y") - 1;
                     String type = ViewController.resultMatcher.group("type");
                     output = GameController.selectUnit(x, y, type, scanner);
                     System.out.println(output);
@@ -85,8 +84,8 @@ public class GameMenu {
                 itemsPattern.add(GameMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(GameMenuCommands.Y_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = ViewController.getNumberOfRegex("x");
-                    int y = ViewController.getNumberOfRegex("y");
+                    int x = ViewController.getNumberOfRegex("x") - 1;
+                    int y = ViewController.getNumberOfRegex("y") - 1;
                     output = GameController.selectTool(x, y);
                     if (output.charAt(1) == 'h') continue;
                     System.out.println(output);
@@ -99,8 +98,8 @@ public class GameMenu {
                 itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.S_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = ViewController.getNumberOfRegex("x");
-                    int y = ViewController.getNumberOfRegex("y");
+                    int x = ViewController.getNumberOfRegex("x") - 1;
+                    int y = ViewController.getNumberOfRegex("y") - 1;
                     String state = ViewController.resultMatcher.group("type");
                     state = ViewController.editItem(state);
                     output = GameController.setStateOfMilitary(x, y, state);
