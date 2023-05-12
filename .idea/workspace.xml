@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="humans ad militaries in move and standing state in show map&#10;wall height in show map">
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/GameController.java" afterDir="false" />
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="humans ad militaries in move and standing state in show map&#10;wall height in show map (resume)">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/MapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/MapController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/enumeration/Paths.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/enumeration/Paths.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -198,13 +200,6 @@
       <workItem from="1683748071501" duration="864000" />
       <workItem from="1683749525652" duration="898000" />
       <workItem from="1683806837751" duration="3513000" />
-    </task>
-    <task id="LOCAL-00005" summary="Foods">
-      <created>1682000666231</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1682000666231</updated>
     </task>
     <task id="LOCAL-00006" summary="Foods are added.">
       <created>1682001101623</created>
@@ -542,7 +537,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683847664203</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="humans ad militaries in move and standing state in show map&#10;wall height in show map (resume)">
+      <created>1683847767661</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1683847767661</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -575,7 +577,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="some features added to Government and its controller&#10;try for creating template maps" />
     <MESSAGE value="Map 1 (400*400) created." />
     <MESSAGE value="Show preview map (Trial)" />
     <MESSAGE value="add defaults castles to Show preview map (Trial)" />
@@ -600,7 +601,8 @@
     <MESSAGE value="some errors solved" />
     <MESSAGE value="error of crenulatedWall checking solved." />
     <MESSAGE value="humans ad militaries in move and standing state in show map&#10;wall height in show map" />
-    <option name="LAST_COMMIT_MESSAGE" value="humans ad militaries in move and standing state in show map&#10;wall height in show map" />
+    <MESSAGE value="humans ad militaries in move and standing state in show map&#10;wall height in show map (resume)" />
+    <option name="LAST_COMMIT_MESSAGE" value="humans ad militaries in move and standing state in show map&#10;wall height in show map (resume)" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

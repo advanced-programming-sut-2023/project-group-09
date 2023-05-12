@@ -175,10 +175,16 @@ public class MapController {
         tile.setPitGovernment(GameController.getGame().getCurrentGovernment());
     }
 
+
     public static void dropBuilding(int x, int y, String type, Government government) {
         Building building = GameBuildings.getBuilding(type, government, x, y);
         if (type.equals("killingPit")) {
             dropKillingPit(x, y);
+            return;
+        }
+
+        if (type.equals("mainCastle") && government.getBuildingData("mainCastle").getNumber() != 0) {
+            System.out.println("a government just can have one main Castle!");
             return;
         }
 
