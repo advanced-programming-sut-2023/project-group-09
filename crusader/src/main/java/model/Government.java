@@ -408,10 +408,14 @@ public class Government {
         int workersNeeded = 0;
         for (String name : buildings.keySet()) {
             for (Building building : buildings.get(name).getBuildings()) {
-                workersNeeded += building.getNumberOfRequiredWorkers() - building.howManyWorkersHave();
+                if (!building.getName().equals("castleBuildings")) {
+                    workersNeeded += building.getNumberOfRequiredWorkers() - building.howManyWorkersHave();
+                }
             }
         }
-        System.out.println("Lord " + this.getUser().getNickname() + " : " + workersNeeded + " workers we need!");
+        if (workersNeeded != 0) {
+            System.out.println("Lord " + this.getUser().getNickname() + " : " + workersNeeded + " workers we need!");
+        }
     }
 
     public void producerBuildingsAction() {
