@@ -94,6 +94,9 @@ public class GovernmentController {
             String storageName = property.getNameOfStorage();
             government.addAmountToProperties(product, property.getType(), -amount);
             ArrayList<Building> storages = government.getBuildings().get(storageName).getBuildings();
+            if (storages.size() == 0){
+                return false;
+            }
             for (Building building : storages) {
                 if (amount == 0) {
                     break;
