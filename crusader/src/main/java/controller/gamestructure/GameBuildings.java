@@ -54,7 +54,6 @@ public class GameBuildings {
         addStorageBuilding();
         addCastleBuildings();
         addBarracks();
-        createSiegeTent();
         createStable();
         createCagedWarDogs();
         createOilSmelter();

@@ -347,36 +347,24 @@ public class GameController {
     }
 
     public static String buildEquipment(int equipmentNumber, ArrayList<Engineer> engineers, int x, int y) {
+        Random random = new Random();
+        if (engineers.size() == 0) {
+            return "no engineer in this place!";
+
+        }
+        EngineerController.currentEngineer = engineers.get(random.nextInt(engineers.size()));
         if (equipmentNumber == 1) {
-            for (int i = 0; i < engineers.size(); i++) {
-                EngineerController.currentEngineer = engineers.get(i);
-                return EngineerController.buildCatapult(x, y);
-            }
+            return EngineerController.buildTool("catapult", x, y);
         } else if (equipmentNumber == 2) {
-            for (int i = 0; i < engineers.size(); i++) {
-                EngineerController.currentEngineer = engineers.get(i);
-                return EngineerController.buildTrebuchet(x, y);
-            }
+            return EngineerController.buildTool("trebuchet", x, y);
         } else if (equipmentNumber == 3) {
-            for (int i = 0; i < engineers.size(); i++) {
-                EngineerController.currentEngineer = engineers.get(i);
-                return EngineerController.buildSiegeTower(x, y);
-            }
+            return EngineerController.buildTool("siegeTower", x, y);
         } else if (equipmentNumber == 4) {
-            for (int i = 0; i < engineers.size(); i++) {
-                EngineerController.currentEngineer = engineers.get(i);
-                return EngineerController.buildBatteringRam(x, y);
-            }
+            return EngineerController.buildTool("batteringRam", x, y);
         } else if (equipmentNumber == 5) {
-            for (int i = 0; i < engineers.size(); i++) {
-                EngineerController.currentEngineer = engineers.get(i);
-                return EngineerController.buildPortableShield(x, y);
-            }
+            return EngineerController.buildTool("portableShield", x, y);
         } else if (equipmentNumber == 6) {
-            for (int i = 0; i < engineers.size(); i++) {
-                EngineerController.currentEngineer = engineers.get(i);
-                return EngineerController.buildFireBallista(x, y);
-            }
+            return EngineerController.buildTool("fireBallista", x, y);
         }
         return "";
     }
@@ -597,7 +585,7 @@ public class GameController {
                             // walking militaries M
                             // standing civilians c
                             // standing militaries m
-                            int walking = 0 , standing = 0 , civilians = 0 , militaries = 0;
+                            int walking = 0, standing = 0, civilians = 0, militaries = 0;
                             for (Human human : tile.getMilitaries()) {
                                 if (human.getMove() != null && human.getMove().isMoving())
                                     walking++;
@@ -625,7 +613,7 @@ public class GameController {
                         } else if (tile.getBuilding() != null && !(tile.getBuilding() instanceof Wall))
                             sign = tile.getBuilding().getGovernment().getColorRgb() + "B";
                         else if (tile.getBuilding() != null && tile.getBuilding() instanceof Wall)
-                            sign = tile.getBuilding().getGovernment().getColorRgb() + ((Wall)tile.getBuilding()).getHeight();
+                            sign = tile.getBuilding().getGovernment().getColorRgb() + ((Wall) tile.getBuilding()).getHeight();
                         else if (tile.getTree() != null) sign = "T";
                         else if (tile.getRockDirection() != null) sign = "R";
                         result += tile.getTexture().getColor() + sign + "\u001B[0m";
@@ -685,7 +673,7 @@ public class GameController {
                                     maxMilitariesGovernment = government;
                                 }
                             }
-                            int walking = 0 , standing = 0 , civilians = 0 , militaries = 0;
+                            int walking = 0, standing = 0, civilians = 0, militaries = 0;
                             for (Human human : tile.getMilitaries()) {
                                 if (human.getMove() != null && human.getMove().isMoving())
                                     walking++;
@@ -713,7 +701,7 @@ public class GameController {
                         } else if (tile.getBuilding() != null && !(tile.getBuilding() instanceof Wall))
                             sign = tile.getBuilding().getGovernment().getColorRgb() + "B";
                         else if (tile.getBuilding() != null && tile.getBuilding() instanceof Wall)
-                            sign = tile.getBuilding().getGovernment().getColorRgb() + ((Wall)tile.getBuilding()).getHeight();
+                            sign = tile.getBuilding().getGovernment().getColorRgb() + ((Wall) tile.getBuilding()).getHeight();
                         else if (tile.getTree() != null) sign = "T";
                         else if (tile.getRockDirection() != null) sign = "R";
                         result += tile.getTexture().getColor() + sign + "\u001B[0m";

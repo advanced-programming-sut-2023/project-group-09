@@ -277,7 +277,7 @@ public class UnitMenu {
                 continue;
             }
             if (number < 1 || number > 7) {
-                System.out.println("invalid number\nreenter a number:");
+                System.out.println("invalid number!\nreenter a number:");
                 continue;
             }
             if (number == 7) back = true;

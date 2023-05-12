@@ -154,27 +154,6 @@
     "width": 4,
     "length": 4
   },
-  "siegeTent": {
-    "cost": {},
-    "requiredHumans": [],
-    "price": 0,
-    "numberOfRequiredWorkers": 0,
-    "numberOfRequiredEngineers": 1,
-    "buildingImpassableLength": -1,
-    "hasSpecialTexture": false,
-    "suitableTextures": [],
-    "shouldBeOne": false,
-    "name": "siegeTent",
-    "neighborTiles": [],
-    "maxHp": 0,
-    "hp": 0,
-    "startX": 0,
-    "startY": 0,
-    "endX": 0,
-    "endY": 0,
-    "width": 3,
-    "length": 3
-  },
   "oilSmelter": {
     "cost": {},
     "requiredHumans": [],

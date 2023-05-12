@@ -112,7 +112,7 @@ public class EditMapMenu {
         int x = Integer.parseInt(xM.group("x"));
         int y = Integer.parseInt(yM.group("y"));
         String type = typeM.group("type");
-        if (MapController.checkCanPutMilitary(x - 1, y - 1, type, currentGovernment)) {
+        if (MapController.checkCanPutMilitary(x - 1, y - 1, type)) {
             for (int i = 0; i < count; i++) {
                 MapController.dropMilitary(x - 1, y - 1, type, currentGovernment);
             }

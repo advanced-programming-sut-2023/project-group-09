@@ -2,6 +2,7 @@ package controller;
 
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameHumans;
+import controller.gamestructure.GameTools;
 import enumeration.Textures;
 import enumeration.dictionary.RockDirections;
 import enumeration.dictionary.Trees;
@@ -20,7 +21,6 @@ import model.human.military.Military;
 import model.tools.Tool;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class MapController {
     public static Map map;
@@ -62,7 +62,7 @@ public class MapController {
             deleteBuilding(building);
         }
         tile.setTree(null);
-        return "tile (" + (x+1) + ", " + (y+1) + ") cleared successfully";
+        return "tile (" + (x + 1) + ", " + (y + 1) + ") cleared successfully";
     }
 
     public static String dropRock(int x, int y, RockDirections direction) {
@@ -144,7 +144,7 @@ public class MapController {
                     return false;
                 }
                 if (building.getHasSpecialTexture()) {
-                    if (!building.getSuitableTextures().contains(map.getTile(j,i).getTexture())) {
+                    if (!building.getSuitableTextures().contains(map.getTile(j, i).getTexture())) {
                         return false;
                     }
                 }
@@ -230,51 +230,18 @@ public class MapController {
     }
 
     public static void dropTool(int x, int y, String type, Government government) {
-        Building building = GameBuildings.getBuilding(type, government, x, y);
-        if (type.equals("killingPit")) {
-            dropKillingPit(x, y);
-            return;
+        Tool tool = GameTools.getTool(type, government, x, y);
+        Tile tile = map.getTile(x, y);
+        tile.setTool(tool);
+        government.addTool(tool);
+    }
+    public static boolean checkCanPutTool(int x, int y, String type) {
+        Tool tool = GameTools.getTool(type);
+        if (tool == null) {
+            return false;
         }
-        if (building.getName().equals("hovel")) {
-            government.updateMaxPopularity();
-        }
-        for (int i = y; i < y + Objects.requireNonNull(building).getLength(); i++) {
-            for (int j = x; j < x + building.getWidth(); j++) {
-                Tile tile = map.getTile(j, i);
-
-                if (building.isShouldBeOne()) {
-                    deleteOtherBuildingWithThisType(building);
-                }
-
-                tile.setCanPutBuilding(false);
-                Textures textures = Textures.EARTH_AND_SAND;
-                if (building.getHasSpecialTexture()) {
-                    textures = building.getSuitableTextures().get(0);
-                }
-
-                tile.setBuilding(building);
-                if (building.getName().equals("stairs") && building instanceof Wall) {
-                    ((Wall) building).setHeight(Wall.heightOfStairs(x, y));
-                    tile.setPassable(false);
-                    tile.setTexture(textures);
-                    continue;
-                }
-
-
-                if (building.getBuildingImpassableLength() != -1) {
-                    if (i >= building.getBuildingImpassableLength() || j >= building.getBuildingImpassableLength()) {
-                        tile.setPassable(true);
-                    } else {
-                        tile.setPassable(false);
-                        tile.setTexture(textures);
-                    }
-                } else {
-                    tile.setPassable(false);
-                    tile.setTexture(textures);
-                }
-            }
-        }
-        government.getBuildings().get(type).addBuilding(building);
+        Tile tile = map.getTile(x, y);
+        return tile.isPassable();
     }
 
     public static ArrayList<Military> getMilitariesOfGovernment(int x, int y, Government government) {
@@ -325,7 +292,7 @@ public class MapController {
         return militaries;
     }
 
-    public static boolean checkCanPutMilitary(int x, int y, String type, Government government) {
+    public static boolean checkCanPutMilitary(int x, int y, String type) {
         Military military = GameHumans.getUnit(type);
         if (military == null) {
             return false;
@@ -410,7 +377,7 @@ public class MapController {
         int endY = y + storageBuilding.getLength();
         Government government = GameController.getGame().getCurrentGovernment();
         BuildingCounter buildingCounter = government.getBuildingData(storageBuilding.getName());
-        if (buildingCounter.getNumber() == 0){
+        if (buildingCounter.getNumber() == 0) {
             return true;
         }
         if (y != 0) {
@@ -487,7 +454,7 @@ public class MapController {
         if (buildingCounter != null) {
             buildingCounter.deleteBuilding(building);
         }
-        if (building instanceof StorageBuilding){
+        if (building instanceof StorageBuilding) {
             ((StorageBuilding) building).deleteStorage();
         }
     }

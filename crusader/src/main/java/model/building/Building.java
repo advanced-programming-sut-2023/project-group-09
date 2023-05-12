@@ -1,7 +1,6 @@
 package model.building;
 
 import controller.GameController;
-import enumeration.BuildingStates;
 import enumeration.Textures;
 import model.Government;
 import model.Permission;
@@ -12,7 +11,7 @@ import model.human.civilian.Civilian;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
+
 
 public class Building implements Cloneable {
     private Government government = null;
@@ -24,7 +23,6 @@ public class Building implements Cloneable {
     private int price = 0;
     private int numberOfRequiredWorkers;
     private int numberOfRequiredEngineers;
-    private BuildingStates state;
 
     private int buildingImpassableLength = -1;
     private boolean hasSpecialTexture = false;
@@ -41,15 +39,6 @@ public class Building implements Cloneable {
     private int startX, startY;
     private int endX, endY;
     private int width, length;
-
-    public BuildingStates getState() {
-        return state;
-    }
-
-    public void setState(BuildingStates state) {
-        this.state = state;
-    }
-
     public String getName() {
         return name;
     }

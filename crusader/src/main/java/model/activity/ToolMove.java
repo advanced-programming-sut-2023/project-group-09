@@ -97,7 +97,7 @@ public class ToolMove{
         for (int i = indexOfPath; i <= indexOfPath + tool.getSpeed(); i++) {
             Tuple pair = path.get(i);
             Tile tile = map.getTile(pair.getX(), pair.getY());
-            if (!tile.isPassable()) {
+            if (!tile.isPassable() || tile.getTool() != null) {
                 return false;
             }
         }

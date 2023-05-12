@@ -9,7 +9,7 @@ import model.human.military.Engineer;
 
 import java.util.ArrayList;
 
-public class Tool{
+public class Tool {
     private Government government = null;
 
     private boolean canMove;
@@ -26,11 +26,11 @@ public class Tool{
     private int numberOfRequiredEngineers;
     private int speed;
 
-    private final ArrayList<Engineer> engineers = new ArrayList<>();
+    private ArrayList<Engineer> engineers = new ArrayList<>();
     private int shootingRange;
     private int damage;
-    private int hp;
-    private int stoneNumber;
+    private int hp = 20;
+    private int stoneNumber = 0;
     private ToolMove toolMove;
     private ToolAttack toolAttack;
 
@@ -57,6 +57,7 @@ public class Tool{
         this.useStone = tool.useStone;
         toolAttack = new ToolAttack(this);
     }
+
 
     public Government getGovernment() {
         return government;
@@ -109,7 +110,9 @@ public class Tool{
     public ArrayList<Engineer> getEngineers() {
         return engineers;
     }
-
+    public void setEngineers(ArrayList<Engineer>engineers) {
+        this.engineers = engineers;
+    }
     public void addEngineer(Engineer engineer) {
         if (engineers.size() == numberOfRequiredEngineers) {
             return;
@@ -196,40 +199,43 @@ public class Tool{
     public void setUseStone(boolean useStone) {
         this.useStone = useStone;
     }
+
     public void setStoneNumber(int stoneNumber) {
         this.stoneNumber = stoneNumber;
     }
+
     public void decreaseStoneNumber(int stoneNumber) {
         this.stoneNumber -= stoneNumber;
     }
 
-    public boolean chargeStone(){
-        if (stoneNumber != 0){
+    public boolean chargeStone() {
+        if (stoneNumber != 0) {
             return true;
         }
 
-        if(GovernmentController.consumeProduct(government,"stone",8)){
+        if (GovernmentController.consumeProduct(government, "stone", 8)) {
             stoneNumber = 8;
             return true;
         }
         return false;
     }
 
-    public boolean isActive(){
+    public boolean isActive() {
         engineers.removeIf(i -> i.getGovernment() == null);
         return engineers.size() == numberOfRequiredEngineers;
     }
 
-    public int takeDamage(int damage){
-         hp -= damage;
-         if(hp < 0){
-             for (Engineer engineer : engineers){
-                 MapController.deleteMilitary(engineer.getX(),engineer.getY(),engineer);
-                 engineer.setGovernment(null);
-             }
-         }
-         return hp;
+    public int takeDamage(int damage) {
+        hp -= damage;
+        if (hp < 0) {
+            for (Engineer engineer : engineers) {
+                MapController.deleteMilitary(engineer.getX(), engineer.getY(), engineer);
+                engineer.setGovernment(null);
+            }
+        }
+        return hp;
     }
+
     public boolean isAttackToBuilding() {
         return attackToBuilding;
     }
@@ -245,4 +251,5 @@ public class Tool{
     public void setAttackToHuman(boolean attackToHuman) {
         this.attackToHuman = attackToHuman;
     }
+
 }
