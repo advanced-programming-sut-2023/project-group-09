@@ -419,8 +419,8 @@ public class MapController {
         Tile tile = map.getTile(x, y);
         tool.setY(y);
         tool.setX(x);
-        tool.getGovernment().removeTool(tool);
-        tile.setTool(null);
+        tool.getGovernment().addTool(tool);
+        tile.setTool(tool);
     }
 
     public static void moveTool(int x, int y, Tool tool) {

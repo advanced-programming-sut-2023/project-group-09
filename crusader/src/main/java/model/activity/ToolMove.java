@@ -8,29 +8,24 @@ import model.building.Building;
 import model.game.Map;
 import model.game.Tile;
 import model.game.Tuple;
-import model.human.military.Tunneler;
 import model.tools.Tool;
 
 import java.util.Collections;
 import java.util.LinkedList;
 
 
-public class ToolMove{
+public class ToolMove {
+    private final boolean isDestinationConstant;
+    private final Tool tool;
+    int indexOfPath = 0;
     private Tuple startPair;
     private Tuple endPair;
     private Tuple patrolPair;
-    private final boolean isDestinationConstant;
-
-
-    private final Tool tool;
-
     private boolean isAttacking = false;
     private boolean isPatrolStart = false;
     private String moveState;
     private LinkedList<Tuple> path;
-
     private Building building;
-    int indexOfPath = 0;
 
 
     public ToolMove(int startX, int startY, Tuple endPair, boolean isDestinationConstant, Tool tool) {
@@ -86,7 +81,7 @@ public class ToolMove{
 
     public boolean checkIsPathValid() {
 
-        if (building != null && building.getGovernment() == null){
+        if (building != null && building.getGovernment() == null) {
             stopMove();
             building = null;
             return true;
@@ -95,12 +90,12 @@ public class ToolMove{
 
         Map map = GameController.getGame().getMap();
         for (int i = indexOfPath; i <= indexOfPath + tool.getSpeed(); i++) {
-            if (path == null || path.size() < i + 1){
+            if (path == null || path.size() < i + 1) {
                 return true;
             }
             Tuple pair = path.get(i);
             Tile tile = map.getTile(pair.getX(), pair.getY());
-            if (!tile.isPassable() || tile.getTool() != null) {
+            if (!tile.isPassable() || (tile.getTool() != null && !tool.equals(tile.getTool()))) {
                 return false;
             }
         }
@@ -109,10 +104,7 @@ public class ToolMove{
 
     public boolean checkDestination() {
         Tuple lastPair = path.getLast();
-        if (endPair.getX() != lastPair.getX() || endPair.getY() != lastPair.getY()) {
-            return true;
-        }
-        return false;
+        return endPair.getX() != lastPair.getX() || endPair.getY() != lastPair.getY();
     }
 
     public void moveOneTurn() {
@@ -121,14 +113,16 @@ public class ToolMove{
         }
 
 
-        if (path != null &&!checkIsPathValid()) {
+        if (path != null && !checkIsPathValid()) {
+            System.out.println("111111111111111111111111111111111");
             updatePath();
         }
-        if (path != null && checkDestination()){
+        if (path != null && checkDestination()) {
+            System.out.println("2222222222222222222222222222222222");
             updatePath();
         }
 
-        if (path == null){
+        if (path == null) {
             return;
         }
 
@@ -201,12 +195,11 @@ public class ToolMove{
         return !moveState.equals(MoveStates.STOP.getState()) && !isAttacking;
     }
 
-    public void setAttacking(boolean attacking) {
-        isAttacking = attacking;
-    }
-
-
     public boolean isAttacking() {
         return isAttacking;
+    }
+
+    public void setAttacking(boolean attacking) {
+        isAttacking = attacking;
     }
 }
