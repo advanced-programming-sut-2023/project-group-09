@@ -69,7 +69,7 @@ public class Move {
 
     public Move(int startX, int startY, Tool tool, boolean isDestinationConstant, Human human) {
         this.startPair = new Tuple(startY, startX);
-        this.building = building;
+        this.tool = tool;
         this.isDestinationConstant = isDestinationConstant;
         this.human = human;
     }
@@ -371,6 +371,7 @@ public class Move {
             }
             return;
         }
+
         if (MoveStates.MOVING.getState().equals(moveState)) {
             indexOfPath = 0;
             if (human instanceof Military) {
@@ -378,10 +379,10 @@ public class Move {
             } else {
                 MapController.moveHuman(endPair.getX(), endPair.getY(), (Civilian) human);
             }
-            stopMove();
             if (tool != null && shouldConnectToTool) {
                 assert human instanceof Engineer;
                 Engineer engineer = (Engineer) human;
+
                 tool.addEngineer(engineer);
                 engineer.setInTool(true);
                 engineer.setInvisible(true);
@@ -396,6 +397,7 @@ public class Move {
                 Tile tile = GameController.getGame().getMap().getTile(endPair.getX(), endPair.getY());
                 tile.setMoat(false);
             }
+            stopMove();
             return;
         }
 

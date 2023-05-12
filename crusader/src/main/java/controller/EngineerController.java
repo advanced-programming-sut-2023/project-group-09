@@ -59,6 +59,9 @@ public class EngineerController {
 
         Tool tool = GameTools.getTool(type,currentEngineer.getGovernment(),x,y);
         SiegeTent tent = new SiegeTent();
+        tent.setGovernment(currentEngineer.getGovernment());
+        tent.setX(x);
+        tent.setY(y);
         assert tool != null;
         tent.setConvertTool(tool);
         tent.addEngineer(currentEngineer);

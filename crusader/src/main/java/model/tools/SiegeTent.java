@@ -11,13 +11,10 @@ public class SiegeTent extends Tool{
         this.setHp(1);
     }
 
-    public Tool getConvertTool() {
-        return convertTool;
-    }
-
     public void setConvertTool(Tool convertTool) {
         this.convertTool = convertTool;
         this.setNumberOfRequiredEngineers(convertTool.getNumberOfRequiredEngineers());
+        System.out.println(convertTool.getName());
     }
 
     public void addEngineer(Engineer engineer) {

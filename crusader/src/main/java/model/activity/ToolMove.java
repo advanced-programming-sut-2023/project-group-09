@@ -22,7 +22,7 @@ public class ToolMove{
     private final boolean isDestinationConstant;
 
 
-    private Tool tool;
+    private final Tool tool;
 
     private boolean isAttacking = false;
     private boolean isPatrolStart = false;
@@ -95,6 +95,9 @@ public class ToolMove{
 
         Map map = GameController.getGame().getMap();
         for (int i = indexOfPath; i <= indexOfPath + tool.getSpeed(); i++) {
+            if (path == null || path.size() < i + 1){
+                return true;
+            }
             Tuple pair = path.get(i);
             Tile tile = map.getTile(pair.getX(), pair.getY());
             if (!tile.isPassable() || tile.getTool() != null) {

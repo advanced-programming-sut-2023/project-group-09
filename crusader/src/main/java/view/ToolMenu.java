@@ -12,6 +12,7 @@ import model.building.castlebuildings.Wall;
 import model.game.Tile;
 import model.game.Tuple;
 import model.human.military.Engineer;
+import model.tools.SiegeTent;
 import model.tools.Tool;
 
 import java.util.LinkedList;
@@ -22,6 +23,11 @@ public class ToolMenu {
     public static Tool tool;
 
     public static void run(Scanner scanner) {
+        if (tool instanceof SiegeTent || !tool.isActive()) {
+            System.out.println("tool is not active or you can't select it!");
+            return;
+        }
+
         System.out.println("<< Tool Menu >>");
 
         while (true) {

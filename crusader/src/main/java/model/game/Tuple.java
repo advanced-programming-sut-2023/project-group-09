@@ -14,7 +14,11 @@ public class Tuple {
         this.overhead = overhead;
         parentPair = tuple;
     }
-
+    public Tuple(int y,int x,Tuple tuple) {
+        this.x = x;
+        this.y = y;
+        parentPair = tuple;
+    }
     public Tuple(int y,int x) {
         this.x = x;
         this.y = y;
