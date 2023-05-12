@@ -8,6 +8,7 @@ import enumeration.MilitaryStates;
 import model.Government;
 import model.activity.Move;
 import model.building.Building;
+import model.building.castlebuildings.CastleBuilding;
 import model.building.castlebuildings.Gatehouse;
 import model.building.castlebuildings.Wall;
 import model.game.Game;
@@ -941,7 +942,10 @@ public class GameController {
                     numberOfRequiredWorkers--;
                     Move move = new Move(human.getX(), human.getY(), building,
                             true, human);
-                    move.setPath(MoveController.getPathForBuilding(move.getStartPair(), building, human));
+                    if (MoveController.getPathForBuilding(move.getStartPair() , building , human) != null) {
+                        move.setPath(MoveController.getPathForBuilding(move.getStartPair(), building, human));
+                    }
+                    ((Civilian)human).setMove(move);
                     ((Civilian) human).setHasJob(true);
                 }
             }
