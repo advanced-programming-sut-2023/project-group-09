@@ -592,14 +592,14 @@ public class GameController {
             gateHouseAutomaticOrder();
             moveOfHumansAndTools();
             attackOfMilitariesAndTools();
-            int numberOfRemainedGoverments = howManyGovernmentsRemainsInGame();
-            if (numberOfRemainedGoverments == 1) {
+            int numberOfRemainedGovernments = howManyGovernmentsRemainsInGame();
+            if (numberOfRemainedGovernments == 1) {
                 game.setEndGame(true);
                 game.setWinner();
                 game.setScores();
                 result = "The Game Is Over!\nWinner : ****** Lord " +
                         game.getWinner().getUser().getNickname() + " ******\n";
-            } else if (numberOfRemainedGoverments == 0) {
+            } else if (numberOfRemainedGovernments == 0) {
                 game.setEndGame(true);
                 game.setWinner();
                 game.setScores();
