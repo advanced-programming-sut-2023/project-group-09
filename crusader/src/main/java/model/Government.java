@@ -67,6 +67,8 @@ public class Government {
         this.color = color;
         properties = GameGoods.getHashMapOfGovernment();
         buildings = GameBuildings.getGovernmentBuildingHashMap();
+        this.maxPopulation = 10;
+        this.population = 10;
     }
 
     public void setUser(User user) {
@@ -286,7 +288,7 @@ public class Government {
     }
 
     public int getPopularityOfAleCoverage() {
-        if (population == 0){
+        if (population == 0) {
             return 0;
         }
         int countOfBuilding = buildings.get("inn").getNumber();
@@ -567,17 +569,17 @@ public class Government {
         }
     }
 
-    public void checkFirstStorage(Building building){
+    public void checkFirstStorage(Building building) {
         String name = building.getName();
         BuildingCounter buildingCounter = getBuildingData(name);
-        if (buildingCounter.getNumber() != 1 ){
+        if (buildingCounter.getNumber() != 1) {
             return;
         }
         StorageBuilding storageBuilding = (StorageBuilding) building;
         String type = storageBuilding.getItemType();
         Set<String> keys;
 
-        switch (type){
+        switch (type) {
             case "food":
                 keys = GameGoods.foods.keySet();
                 break;
@@ -591,9 +593,9 @@ public class Government {
                 return;
         }
 
-        for (String key : keys){
+        for (String key : keys) {
             int count = properties.get(key);
-            storageBuilding.addItem(key,count);
+            storageBuilding.addItem(key, count);
         }
     }
 }
