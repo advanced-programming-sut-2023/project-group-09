@@ -8,7 +8,6 @@ import enumeration.MilitaryStates;
 import model.Government;
 import model.activity.Move;
 import model.building.Building;
-import model.building.castlebuildings.CastleBuilding;
 import model.building.castlebuildings.Gatehouse;
 import model.building.castlebuildings.Wall;
 import model.game.Game;
@@ -651,22 +650,22 @@ public class GameController {
                         String sign = " ";
                         if (tile.getTool() != null) {
                             sign = tile.getTool().getGovernment().getColorRgb() + "A";
-                        } else if (tile.getMilitaries().size() != 0) {
-                            HashMap<Government, Integer> numberOfMilitariesOnTile = new HashMap<>();
+                        } else if (tile.getHumans().size() != 0) {
+                            HashMap<Government, Integer> numberOfHumansOnTile = new HashMap<>();
                             for (int m = 0; m < game.getGovernments().size(); m++) {
-                                numberOfMilitariesOnTile.put(game.getGovernments().get(m), 0);
+                                numberOfHumansOnTile.put(game.getGovernments().get(m), 0);
                             }
-                            for (int m = 0; m < tile.getMilitaries().size(); m++) {
-                                Military military = tile.getMilitaries().get(m);
-                                numberOfMilitariesOnTile.replace(military.getGovernment(), numberOfMilitariesOnTile.get(military.getGovernment()) + 1);
+                            for (int m = 0; m < tile.getHumans().size(); m++) {
+                                Human human = tile.getHumans().get(m);
+                                numberOfHumansOnTile.replace(human.getGovernment(), numberOfHumansOnTile.get(human.getGovernment()) + 1);
                             }
-                            int max = Collections.max(numberOfMilitariesOnTile.values());
+                            int max = Collections.max(numberOfHumansOnTile.values());
                             int numberOfMax = 0;
-                            Government maxMilitariesGovernment = null;
-                            for (Government government : numberOfMilitariesOnTile.keySet()) {
-                                if (numberOfMilitariesOnTile.get(government) == max) {
+                            Government maxHumansGovernment = null;
+                            for (Government government : numberOfHumansOnTile.keySet()) {
+                                if (numberOfHumansOnTile.get(government) == max) {
                                     numberOfMax++;
-                                    maxMilitariesGovernment = government;
+                                    maxHumansGovernment = government;
                                 }
                             }
                             // walking civilians C
@@ -674,7 +673,7 @@ public class GameController {
                             // standing civilians c
                             // standing militaries m
                             int walking = 0, standing = 0, civilians = 0, militaries = 0;
-                            for (Human human : tile.getMilitaries()) {
+                            for (Human human : tile.getHumans()) {
                                 if (human.getMove() != null && human.getMove().isMoving())
                                     walking++;
                                 else
@@ -696,7 +695,7 @@ public class GameController {
                                 else
                                     humansChar = "c";
                             }
-                            if (numberOfMax == 1) sign = maxMilitariesGovernment.getColorRgb() + humansChar;
+                            if (numberOfMax == 1) sign = maxHumansGovernment.getColorRgb() + humansChar;
                             else sign = humansChar;
                         } else if (tile.getBuilding() != null && !(tile.getBuilding() instanceof Wall))
                             sign = tile.getBuilding().getGovernment().getColorRgb() + "B";
@@ -743,26 +742,26 @@ public class GameController {
                         String sign = " ";
                         if (tile.getTool() != null) {
                             sign = tile.getTool().getGovernment().getColorRgb() + "A";
-                        } else if (tile.getMilitaries().size() != 0) {
-                            HashMap<Government, Integer> numberOfMilitariesOnTile = new HashMap<>();
+                        } else if (tile.getHumans().size() != 0) {
+                            HashMap<Government, Integer> numberOfHumansOnTile = new HashMap<>();
                             for (int m = 0; m < game.getGovernments().size(); m++) {
-                                numberOfMilitariesOnTile.put(game.getGovernments().get(m), 0);
+                                numberOfHumansOnTile.put(game.getGovernments().get(m), 0);
                             }
-                            for (int m = 0; m < tile.getMilitaries().size(); m++) {
-                                Military military = tile.getMilitaries().get(m);
-                                numberOfMilitariesOnTile.replace(military.getGovernment(), numberOfMilitariesOnTile.get(military.getGovernment()) + 1);
+                            for (int m = 0; m < tile.getHumans().size(); m++) {
+                                Human human = tile.getHumans().get(m);
+                                numberOfHumansOnTile.replace(human.getGovernment(), numberOfHumansOnTile.get(human.getGovernment()) + 1);
                             }
-                            int max = Collections.max(numberOfMilitariesOnTile.values());
+                            int max = Collections.max(numberOfHumansOnTile.values());
                             int numberOfMax = 0;
-                            Government maxMilitariesGovernment = null;
-                            for (Government government : numberOfMilitariesOnTile.keySet()) {
-                                if (numberOfMilitariesOnTile.get(government) == max) {
+                            Government maxHuamnsGovernment = null;
+                            for (Government government : numberOfHumansOnTile.keySet()) {
+                                if (numberOfHumansOnTile.get(government) == max) {
                                     numberOfMax++;
-                                    maxMilitariesGovernment = government;
+                                    maxHuamnsGovernment = government;
                                 }
                             }
                             int walking = 0, standing = 0, civilians = 0, militaries = 0;
-                            for (Human human : tile.getMilitaries()) {
+                            for (Human human : tile.getHumans()) {
                                 if (human.getMove() != null && human.getMove().isMoving())
                                     walking++;
                                 else
@@ -784,7 +783,7 @@ public class GameController {
                                 else
                                     humansChar = "c";
                             }
-                            if (numberOfMax == 1) sign = maxMilitariesGovernment.getColorRgb() + humansChar;
+                            if (numberOfMax == 1) sign = maxHuamnsGovernment.getColorRgb() + humansChar;
                             else sign = humansChar;
                         } else if (tile.getBuilding() != null && !(tile.getBuilding() instanceof Wall))
                             sign = tile.getBuilding().getGovernment().getColorRgb() + "B";
