@@ -313,6 +313,10 @@ public class MapController {
             return false;
         }
         Tile tile = map.getTile(x, y);
+        Building building = tile.getBuilding();
+        if (building instanceof CastleBuilding && !building.getName().equals("drawBridge")){
+            return true;
+        }
         return tile.isPassable();
     }
 
