@@ -95,20 +95,14 @@ public class MapController {
         if (type.equals("killingPit")) {
             return checkKillingPit(x, y);
         }
-        if (type.equals("mainCastle") && government.getBuildingData("mainCastle").getNumber() != 0) {
-            System.out.println("reason : a government just can have one mainCastle!");
-            return false;
-        }
         if (building == null) {
             return false;
         }
 
         if (x + building.getWidth() >= map.getWidth()) {
-            System.out.println("reason : your building may get off the edge of the map");
             return false;
         }
         if (y + building.getLength() >= map.getLength()) {
-            System.out.println("reason : your building may get off the edge of the map");
             return false;
         }
         if (building instanceof StorageBuilding && !checkCanPutStorage(x, y, (StorageBuilding) building)) {
@@ -119,7 +113,6 @@ public class MapController {
         if (building.getName().equals("stairs") && building instanceof Wall) {
             int height = Wall.heightOfStairs(x, y);
             if (height == 0 || height == -1) {
-                System.out.println("reason : there is no higher wall or stairs to put a new stair!");
                 return false;
             }
         }
@@ -127,14 +120,12 @@ public class MapController {
 
         if (building.getName().equals("crenulatedWall") && building instanceof Wall) {
             if (!Wall.canDropCrenulatedWall(x, y)) {
-                System.out.println("reason : crenulatedWall must be next to a stoneWall or lowWall!");
                 return false;
             }
         }
 
         if (building.getName().equals("drawBridge")) {
             if (Gatehouse.canDropDrawBridge(x, y) == null) {
-                System.out.println("reason : drawBridge must be next to a gatehouse!");
                 return false;
             }
         }
@@ -143,22 +134,18 @@ public class MapController {
             for (int j = x; j < x + building.getWidth(); j++) {
                 Tile tile = map.getTile(j, i);
                 if (tile.getMilitaries().size() != 0 || tile.getCivilian().size() != 0) {
-                    System.out.println("reason : there is some humans in this tile!");
                     return false;
                 }
 
                 if (building instanceof CastleBuilding && !(building instanceof Wall)) {
                     if (!canPutCastleBuilding(j, i)) {
-                        System.out.println("reason : the texture of this tile isn't suitable to drop building or this building has rock!");
                         return false;
                     }
                 } else if (!map.getTile(j, i).getCanPutBuilding()) {
-                    System.out.println("reason : the texture of this tile isn't suitable to drop building or this building has rock!");
                     return false;
                 }
                 if (building.getHasSpecialTexture()) {
                     if (!building.getSuitableTextures().contains(map.getTile(j, i).getTexture())) {
-                        System.out.println("reason : the texture of this tile isn't suitable for this building!");
                         return false;
                     }
                 }
@@ -260,6 +247,10 @@ public class MapController {
         Building building = GameBuildings.getBuilding(type, government, x, y);
         if (type.equals("killingPit")) {
             dropKillingPit(x, y);
+            return;
+        }
+        if (type.equals("mainCastle") && government.getBuildingData("mainCastle").getNumber() != 0) {
+            System.out.println("a government just can have one main Castle!");
             return;
         }
 
@@ -513,7 +504,6 @@ public class MapController {
                 }
             }
         }
-        System.out.println("reason : storages must be next to each other!");
         return false;
     }
 

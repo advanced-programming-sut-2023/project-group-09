@@ -55,7 +55,6 @@ public class ToolAttack {
         if (enemyHp <= 0) {
             MapController.deleteMilitary(enemy.getX(), enemy.getY(), enemy);
             enemy.setGovernment(null);
-            enemy = null;
         }
     }
 

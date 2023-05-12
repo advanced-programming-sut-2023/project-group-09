@@ -152,7 +152,7 @@ public class GameController {
         if (message != null) {
             return message;
         }
-        List<Military> enemies = MapController.getMilitariesOfOtherGovernment(x, y, GameController.getGame().getCurrentGovernment());
+        List<Military> enemies = MapController.getMilitariesOfOtherGovernment(x-1, y-1, GameController.getGame().getCurrentGovernment());
         if (enemies.size() == 0) {
             return "there is no enemy in this position!";
         }

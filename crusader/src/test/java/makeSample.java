@@ -34,6 +34,30 @@ public class makeSample {
         game.addGovernment(government);
         game.addGovernment(government1);
         GameController.setGame(game);
+        MapController.dropBuilding(0, 0, "lowWall", government1);
+        MapController.dropBuilding(1, 0, "lowWall", government1);
+        MapController.dropBuilding(2, 0, "lowWall", government1);
+        MapController.dropBuilding(3, 0, "lowWall", government1);
+        MapController.dropBuilding(4, 0, "lowWall", government1);
+        MapController.dropBuilding(5, 0, "lowWall", government1);
+        MapController.dropBuilding(6, 0, "lowWall", government1);
+        MapController.dropBuilding(6, 1, "lowWall", government1);
+        MapController.dropBuilding(6, 2, "lowWall", government1);
+        MapController.dropBuilding(6, 3, "lowWall", government1);
+        MapController.dropBuilding(6, 4, "lowWall", government1);
+        MapController.dropBuilding(6, 5, "lowWall", government1);
+        MapController.dropBuilding(6, 6, "lowWall", government1);
+        MapController.dropBuilding(5, 6, "lowWall", government1);
+        MapController.dropBuilding(4, 6, "lowWall", government1);
+        MapController.dropBuilding(3, 6, "lowWall", government1);
+        MapController.dropBuilding(2, 6, "lowWall", government1);
+        MapController.dropBuilding(1, 6, "lowWall", government1);
+        MapController.dropBuilding(0, 6, "lowWall", government1);
+        MapController.dropBuilding(0, 5, "lowWall", government1);
+        MapController.dropBuilding(0, 4, "lowWall", government1);
+        MapController.dropBuilding(0, 3, "lowWall", government1);
+        MapController.dropBuilding(0, 2, "lowWall", government1);
+        MapController.dropBuilding(0, 1, "lowWall", government1);
         return game;
 
     }
