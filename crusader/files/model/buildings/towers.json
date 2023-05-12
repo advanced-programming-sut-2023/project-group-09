@@ -77,8 +77,8 @@
     "startY": 0,
     "endX": 0,
     "endY": 0,
-    "width": 10,
-    "length": 10
+    "width": 7,
+    "length": 7
   },
   "squareTower": {
     "fireRange": 50,
@@ -104,8 +104,8 @@
     "startY": 0,
     "endX": 0,
     "endY": 0,
-    "width": 10,
-    "length": 10
+    "width": 7,
+    "length": 7
   },
   "defenseTurret": {
     "fireRange": 40,

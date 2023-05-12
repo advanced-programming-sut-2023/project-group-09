@@ -151,7 +151,7 @@ public class GameBuildings {
 
     public static void createSmallStoneGatehouse() {
         Gatehouse smallStoneGatehouse = new Gatehouse(0, 0,
-                "smallStoneGatehouse", 1000, 5, 5, 8);
+                "smallStoneGatehouse", 1000, 4, 4, 8);
         smallStoneGatehouse.addCost("stone", 10);
         castleBuildings.put("smallStoneGatehouse", smallStoneGatehouse);
         buildings.put("smallStoneGatehouse", smallStoneGatehouse);
@@ -159,7 +159,7 @@ public class GameBuildings {
 
     public static void createBigStoneGatehouse() {
         Gatehouse bigStoneGatehouse = new Gatehouse(0, 0,
-                "bigStoneGatehouse", 2000, 7, 7, 10);
+                "bigStoneGatehouse", 2000, 6, 6, 10);
         bigStoneGatehouse.addCost("stone", 20);
         castleBuildings.put("bigStoneGatehouse", bigStoneGatehouse);
         buildings.put("bigStoneGatehouse", bigStoneGatehouse);
@@ -202,7 +202,7 @@ public class GameBuildings {
 
     public static void createRoundTower() {
         Tower roundTower = new Tower(0, 0, "roundTower",
-                2000, 10, 10, 50, 50, 20);
+                2000, 7, 7, 50, 50, 20);
         roundTower.addCost("stone", 40);
         roundTower.setCanKeepRidingEquipment(true);
         castleBuildings.put("roundTower", roundTower);
@@ -211,7 +211,7 @@ public class GameBuildings {
 
     public static void createSquareTower() {
         Tower squareTower = new Tower(0, 0, "squareTower",
-                1600, 10, 10, 50, 50, 20);
+                1600, 7, 7, 50, 50, 20);
         squareTower.addCost("stone", 35);
         squareTower.setCanKeepRidingEquipment(true);
         castleBuildings.put("squareTower", squareTower);
@@ -230,7 +230,7 @@ public class GameBuildings {
 
     public static void createBarrack() {
         Barrack barrack = new Barrack(0, 0,
-                "barrack", 80, 9, 9);
+                "barrack", 80, 7, 7);
         barrack.addUnit("archer");
         barrack.addUnit("crossbowman");
         barrack.addUnit("spearman");
@@ -245,7 +245,7 @@ public class GameBuildings {
 
     public static void createMercenaryPost() {
         Barrack barrack = new Barrack(0, 0,
-                "mercenaryPost", 80, 9, 9);
+                "mercenaryPost", 80, 7, 7);
         barrack.addUnit("archerBow");
         barrack.addUnit("slave");
         barrack.addUnit("spearman");
@@ -261,7 +261,7 @@ public class GameBuildings {
 
     public static void createEngineerGuild() {
         Barrack barrack = new Barrack(0,0,
-                "engineerGuild",80,4,11);
+                "engineerGuild",80,4,7);
         barrack.addUnit("engineer");
         barrack.addUnit("ladderman");
         barrack.addCost("wood",10);
@@ -343,14 +343,14 @@ public class GameBuildings {
     }
 
     public static void createChurch() {
-        Building building = new Building(0, 0, "church", 70, 15, 15);
+        Building building = new Building(0, 0, "church", 70, 12, 12);
         building.setPrice(500);
         buildings.put("church", building);
     }
 
     public static void createCathedral() {
         Barrack barrack = new Barrack(0, 0,
-                "cathedral", 100, 20, 20);
+                "cathedral", 100, 15, 15);
 
         barrack.addUnit("blackmonk");
         barrack.changeShouldBeOne();

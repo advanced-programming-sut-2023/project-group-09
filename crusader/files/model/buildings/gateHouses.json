@@ -22,8 +22,8 @@
     "startY": 0,
     "endX": 0,
     "endY": 0,
-    "width": 5,
-    "length": 5
+    "width": 4,
+    "length": 4
   },
   "drawBridge": {
     "isRightSide": false,
@@ -74,7 +74,7 @@
     "startY": 0,
     "endX": 0,
     "endY": 0,
-    "width": 7,
-    "length": 7
+    "width": 6,
+    "length": 6
   }
 }

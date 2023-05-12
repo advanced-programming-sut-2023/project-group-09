@@ -128,8 +128,8 @@
     "startY": 0,
     "endX": 0,
     "endY": 0,
-    "width": 15,
-    "length": 15
+    "width": 12,
+    "length": 12
   },
   "hovel": {
     "cost": {
