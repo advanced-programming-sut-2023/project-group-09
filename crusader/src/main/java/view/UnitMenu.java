@@ -185,7 +185,7 @@ public class UnitMenu {
                         return;
                     }
                 }
-            }  else if (oilSmelterMatcher.matches()) {
+            } else if (oilSmelterMatcher.matches()) {
                 String items = oilSmelterMatcher.group("items");
                 ArrayList<String> itemsPattern = new ArrayList<>();
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
@@ -287,6 +287,10 @@ public class UnitMenu {
                 return;
             }
         }
+        if (!GameController.getGame().getMap().getTile(x, y).getCanPutBuilding()) {
+            System.out.println("you can't build a tool here!");
+            return;
+        }
 
         String message = "select one of the following tools:\n";
         message += "1.Catapult\n";
@@ -299,7 +303,7 @@ public class UnitMenu {
         System.out.println(message);
 
         boolean back = false;
-        int number = 0, x = 0, y = 0;
+        int number = 0;
         while (true) {
             try {
                 number = Integer.parseInt(scanner.nextLine());
@@ -316,21 +320,6 @@ public class UnitMenu {
         }
 
         if (back) return;
-
-        while (true) {
-            System.out.println("enter the x and y coordinates:");
-            String coords = scanner.nextLine();
-            Matcher xMatcher = UnitMenuCommands.getMatcher(coords, UnitMenuCommands.X_ITEM);
-            Matcher yMatcher = UnitMenuCommands.getMatcher(coords, UnitMenuCommands.Y_ITEM);
-
-            if (!xMatcher.find() || !yMatcher.find()) {
-                System.out.println("invalid command");
-                continue;
-            }
-            x = Integer.parseInt(xMatcher.group("x"));
-            y = Integer.parseInt(yMatcher.group("y"));
-            break;
-        }
 
         System.out.println(GameController.buildEquipment(number, engineers, x, y));
     }
@@ -355,7 +344,7 @@ public class UnitMenu {
 
     public static ArrayList<Engineer> getEngineersOfTile() {
         ArrayList<Engineer> engineers = new ArrayList<>();
-        ArrayList<Military> militaries = MapController.getOneTypeOfMilitariesOfGovernment(x,y,"engineer",GameController.getGame().getCurrentGovernment());
+        ArrayList<Military> militaries = MapController.getOneTypeOfMilitariesOfGovernment(x, y, "engineer", GameController.getGame().getCurrentGovernment());
         for (Military military : militaries) {
             engineers.add((Engineer) military);
         }

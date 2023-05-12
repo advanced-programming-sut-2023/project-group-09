@@ -440,12 +440,7 @@ public class GameController {
 
     public static String buildEquipment(int equipmentNumber, ArrayList<Engineer> engineers, int x, int y) {
         Random random = new Random();
-        if (engineers.size() == 0) {
-            return "no engineer in this place!";
-
-        }
-        x--;
-        y--;
+        if (engineers.size() == 0) return "no engineer in this place!";
         EngineerController.currentEngineer = engineers.get(random.nextInt(engineers.size()));
         if (equipmentNumber == 1) {
             return EngineerController.buildTool("catapult", x, y);
