@@ -543,17 +543,20 @@ public class GameController {
 
     private static void moveOfHumansAndTools() {
         for (Government government : game.getGovernments()) {
-            for (Human human : government.getSociety()) {
+            ArrayList<Human> humans = new ArrayList<>(government.getSociety());
+            for (Human human : humans) {
                 if (human.getMove() != null) {
                     human.getMove().moveOneTurn();
                 }
             }
-            for (Military military : government.getTroops()) {
+            ArrayList<Military>militaries = new ArrayList<>(government.getTroops());
+            for (Military military : militaries) {
                 if (military.getMove() != null) {
                     military.getMove().moveOneTurn();
                 }
             }
-            for (Tool tool : government.getTools()) {
+            ArrayList<Tool> tools = new ArrayList<>(government.getTools());
+            for (Tool tool : tools) {
                 if (tool.getToolMove() != null) {
                     tool.getToolMove().moveOneTurn();
                 }
@@ -941,7 +944,9 @@ public class GameController {
                     numberOfRequiredWorkers--;
                     Move move = new Move(human.getX(), human.getY(), building,
                             true, human);
-                    move.setPath(MoveController.getPathForBuilding(move.getStartPair(), building, human));
+                    LinkedList<Tuple> path = MoveController.getPathForBuilding(move.getStartPair(), building, human);
+                    move.setPath(path);
+                    human.setMove(move);
                     ((Civilian) human).setHasJob(true);
                 }
             }

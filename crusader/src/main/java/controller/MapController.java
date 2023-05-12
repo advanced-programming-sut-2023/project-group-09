@@ -387,7 +387,7 @@ public class MapController {
         if (building instanceof CastleBuilding && !building.getName().equals("drawBridge")) {
             return true;
         }
-        if (tile.isPassable() == false) {
+        if (!tile.isPassable()) {
             System.out.println("reason : tile is not passable");
         }
         return tile.isPassable();
@@ -445,9 +445,6 @@ public class MapController {
     public static void deleteHuman(int x, int y, Civilian civilian) {
         Tile tile = map.getTile(x, y);
         civilian.getGovernment().removeHuman(civilian);
-        if (civilian.isHasJob()) {
-            civilian.getOriginBuilding().getRequiredHumans().remove(civilian);
-        }
         tile.removeHuman(civilian);
     }
 

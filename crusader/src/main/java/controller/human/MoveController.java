@@ -110,6 +110,17 @@ public class MoveController extends HumanController {
         if (endPair == null) {
             return null;
         }
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                if (wave[i][j] == null) {
+                    System.out.print("null      ");
+                    continue;
+                }
+                System.out.format("(%3d,%3d) ", wave[i][j].getX(), wave[i][j].getY());
+            }
+            System.out.println();
+        }
+        System.out.println();
         return makePath(wave, startPair, endPair);
     }
 
@@ -153,8 +164,8 @@ public class MoveController extends HumanController {
             int y = pair.getY();
             int x = pair.getX();
             boolean isOverHead = pair.isOverhead();
-            Tile tile = map.getTile(x,y);
-            if (tile.getBuilding() instanceof  Gatehouse gatehouse && gatehouse.isOpen() && !gatehouse.getName().equals("drawBridge")){
+            Tile tile = map.getTile(x, y);
+            if (checkOverHead(tile.getBuilding())) {
                 if (y != 0) {
                     if (map.getTile(x, y - 1).isPassable(human, !isOverHead) && !checkArray[y - 1][x]) {
                         secondPairs.add(new Tuple(y - 1, x, !isOverHead, pair));
@@ -240,6 +251,15 @@ public class MoveController extends HumanController {
         return secondPairs;
     }
 
+    public static boolean checkOverHead(Building building) {
+        if (building == null) {
+            return false;
+        }
+        if (building instanceof Gatehouse gatehouse && gatehouse.isOpen() && !gatehouse.getName().equals("drawBridge"))
+            return true;
+        if (building instanceof MainCastle) return true;
+        return false;
+    }
 
     public static void shouldCheckOtherPath() {
 
