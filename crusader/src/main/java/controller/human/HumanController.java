@@ -346,18 +346,18 @@ public class HumanController {
         return counter != 0;
     }
 
-    public static void disbandUnits(ArrayList<Military> militaries) {
+    public static void disbandUnits(ArrayList<Military> militaries, Government government) {
         for (Military military : militaries) {
             MapController.deleteMilitary(military.getX(), military.getY(), military);
-            Civilian civilian = new Civilian(military.getX(), military.getY(), false);
+            Civilian civilian = new Civilian(military.getX(), military.getY(), false, government);
             MapController.addHuman(military.getX(), military.getY(), civilian);
         }
     }
 
-    public static void disbandEngineers(ArrayList<Engineer> engineers) {
+    public static void disbandEngineers(ArrayList<Engineer> engineers, Government government) {
         for (Engineer engineer : engineers) {
             MapController.deleteMilitary(engineer.getX(), engineer.getY(), engineer);
-            Civilian civilian = new Civilian(engineer.getX(), engineer.getY(), false);
+            Civilian civilian = new Civilian(engineer.getX(), engineer.getY(), false, government);
             MapController.addHuman(engineer.getX(), engineer.getY(), civilian);
         }
     }

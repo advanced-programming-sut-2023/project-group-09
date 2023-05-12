@@ -1,9 +1,10 @@
 {
-  "username": "Farzammm",
-  "password": "09ffcd67f5108ce206d39cf9c67272d5ccb86deb11d81fc597c6ad92a586b4dd",
-  "nickname": "Imposter",
-  "email": "f@f.f",
+  "username": "Amirhossein",
+  "password": "8b509b17e5408d6a2443a24681bad8b9b66530ec4d2ce27e7105b4379d7dea87",
+  "nickname": "Amir",
+  "email": "some@gmail.com",
   "highScore": 0,
-  "passwordRecoveryQuestion": "What was my first pet\u0027s name?",
-  "passwordRecoveryAnswer": "30c238ae8ae249d2bd2a9935084897cf6dadfdbbd32422eb1fba497079779412"
+  "passwordRecoveryQuestion": "What\u0027s my father\u0027s name?",
+  "passwordRecoveryAnswer": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
+  "slogan": "Think long term, act short term!"
 }

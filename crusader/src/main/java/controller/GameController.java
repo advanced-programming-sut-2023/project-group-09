@@ -53,19 +53,19 @@ public class GameController {
         }
         ArrayList<Military> militaries;
         if (type == null) {
-            militaries = MapController.getMilitariesOfGovernment(x - 1, y - 1, game.getCurrentGovernment());
+            militaries = MapController.getMilitariesOfGovernment(x, y, game.getCurrentGovernment());
         } else if (GameHumans.getUnit(type) == null) {
             return "invalid type!";
         } else {
-            militaries = MapController.getOneTypeOfMilitariesOfGovernment(x - 1, y - 1, type, game.getCurrentGovernment());
+            militaries = MapController.getOneTypeOfMilitariesOfGovernment(x, y, type, game.getCurrentGovernment());
         }
 
         if (militaries.size() == 0) {
             return "There is no troop in this place!";
         }
         HumanController.militaries = militaries;
-        UnitMenu.x = x - 1;
-        UnitMenu.y = y - 1;
+        UnitMenu.x = x;
+        UnitMenu.y = y;
         UnitMenu.type = type;
         UnitMenu.run(scanner);
         return "";
@@ -111,7 +111,7 @@ public class GameController {
             return message;
         }
 
-        ArrayList<Military> militaries = MapController.getMilitariesOfGovernment(x - 1, y - 1, game.getCurrentGovernment());
+        ArrayList<Military> militaries = MapController.getMilitariesOfGovernment(x, y, game.getCurrentGovernment());
         if (militaries.size() == 0) {
             return "There is no troop in this place!";
         }
@@ -382,7 +382,7 @@ public class GameController {
     }
 
     public static String disbandUnit() {
-        HumanController.disbandUnits(HumanController.militaries);
+        HumanController.disbandUnits(HumanController.militaries, game.getCurrentGovernment());
         return "unit disbanded successfully!";
     }
 
@@ -502,15 +502,13 @@ public class GameController {
 
 
     public static String changeTurn() {
-        game.changeTurn();
         String nickname = game.getCurrentGovernment().getUser().getNickname();
         String result = "Lord " + nickname + " was playing!\n";
-        int indexOfCurrentGovernment = game.getGovernments().indexOf(game.getCurrentGovernment());
-        if (indexOfCurrentGovernment == 7) {
-            Government nowGovernment = game.getGovernments().get(0);
-            result += "now Lord " + game.getNicknameOfNextGovernment() + " is playing\n";
+        int round = game.getRound();
+        game.changeTurn();
+        if (game.getRound() != round) {
+            result += "now Lord " + game.getCurrentGovernment().getUser().getNickname() + " is playing\n";
             result += "new Turn started!\n";
-            game.setRound(game.getRound() + 1);
             for (Government government : game.getGovernments()) {
                 government.updateAfterTurn();
             }
@@ -532,7 +530,7 @@ public class GameController {
             }
             return result.substring(0, result.length() - 1);
         } else {
-            result += "now Lord " + game.getNicknameOfNextGovernment() + " is playing\n";
+            result += "now Lord " + game.getCurrentGovernment().getUser().getNickname() + " is playing\n";
             return result.substring(0, result.length() - 1);
         }
     }
@@ -799,10 +797,10 @@ public class GameController {
         if (checkNullFields(y)) {
             return "y is required!";
         }
-        if (x < 1 || x > map.getWidth()) {
+        if (x < 0 || x >= map.getWidth()) {
             return "invalid x!";
         }
-        if (y < 1 || y > map.getLength()) {
+        if (y < 0 || y >= map.getLength()) {
             return "invalid y!";
         }
         return null;

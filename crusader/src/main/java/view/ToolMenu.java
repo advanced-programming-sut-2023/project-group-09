@@ -59,7 +59,7 @@ public class ToolMenu {
                 tool.setToolMove(move);
             } else if (ToolMenuCommands.DISBAND.getMatcher(input).matches()) {
                 GameController.getGame().getCurrentGovernment().removeTool(tool);
-                HumanController.disbandEngineers(tool.getEngineers());
+                HumanController.disbandEngineers(tool.getEngineers(), tool.getGovernment());
 //                TODO: update graphics
             } else if (ToolMenuCommands.STOP.getMatcher(input).matches()) {
                 ToolsController.stop(tool);

@@ -4,6 +4,7 @@ package model.human.civilian;
 import controller.human.MoveController;
 import enumeration.DefenseRating;
 import enumeration.Speed;
+import model.Government;
 import model.activity.Move;
 import model.building.Building;
 import model.building.castlebuildings.MainCastle;
@@ -21,11 +22,12 @@ public class Civilian extends Human {
     private int destinationX, destinationY;
     private boolean isGoingToDestination;
 
-    public Civilian(int x, int y, boolean hasJob) {
+    public Civilian(int x, int y, boolean hasJob, Government government) {
         super(Speed.AVERAGE.getRate(), DefenseRating.VERY_LOW.getRate(), 0);
         this.setX(x);
         this.setY(y);
         this.hasJob = hasJob;
+        this.setGovernment(government);
         shouldGoToCastle();
     }
 
