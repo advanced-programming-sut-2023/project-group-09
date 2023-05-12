@@ -311,7 +311,7 @@ public class Move {
     public void moveOneTurn() {
 
         killPits.clear();
-        if (moveState.equals(MoveStates.STOP.getState()) || isAttacking) {
+        if (moveState != null && moveState.equals(MoveStates.STOP.getState()) || isAttacking) {
             return;
         }
 

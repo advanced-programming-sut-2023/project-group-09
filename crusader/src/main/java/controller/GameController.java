@@ -8,6 +8,7 @@ import enumeration.MilitaryStates;
 import model.Government;
 import model.activity.Move;
 import model.building.Building;
+import model.building.castlebuildings.CastleBuilding;
 import model.building.castlebuildings.Gatehouse;
 import model.building.castlebuildings.Wall;
 import model.game.Game;
