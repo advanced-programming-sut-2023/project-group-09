@@ -71,6 +71,12 @@ public class Tile {
         return militaries;
     }
 
+    public ArrayList<Human> getHumans() {
+        ArrayList<Human> humans = new ArrayList<Human>(militaries);
+        humans.addAll(civilians);
+        return humans;
+    }
+
     public void setMilitaries(ArrayList<Military> militaries) {
         this.militaries = militaries;
     }

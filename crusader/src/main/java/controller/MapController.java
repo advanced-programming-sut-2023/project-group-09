@@ -182,7 +182,6 @@ public class MapController {
             dropKillingPit(x, y);
             return;
         }
-
         if (type.equals("mainCastle") && government.getBuildingData("mainCastle").getNumber() != 0) {
             System.out.println("a government just can have one main Castle!");
             return;
