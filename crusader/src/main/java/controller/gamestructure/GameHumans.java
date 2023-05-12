@@ -4,20 +4,15 @@ import enumeration.AttackRating;
 import enumeration.DefenseRating;
 import enumeration.Speed;
 import model.Government;
-import model.building.Building;
-import model.human.Human;
 import model.human.military.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
-import java.util.regex.Matcher;
 
 public class GameHumans {
     public static HashMap<String, Military> militaries = new HashMap<>();
 
     public static Military getUnit(String name, Government government, int x, int y) {
-        Military military= getClone(militaries.get(name));
+        Military military = getClone(militaries.get(name));
         military.setGovernment(government);
         military.setX(x);
         military.setY(y);
@@ -27,6 +22,7 @@ public class GameHumans {
     public static Military getUnit(String name) {
         return militaries.get(name);
     }
+
     public static void addEuropeanTroops() {
         createArcher();
         createCrossbowman();
@@ -54,11 +50,11 @@ public class GameHumans {
         int speed = Speed.EXTREMELY_SLOW.getRate();
         int defenseRating = DefenseRating.HIGH.getRate();
         int attackRating = AttackRating.HIGH.getRate();
-        Lord lord = new Lord(speed , defenseRating , 1 , attackRating , 0);
+        Lord lord = new Lord(speed, defenseRating, 1, attackRating, 0);
         lord.setName("lord");
         lord.setDefenseRange(3);
         lord.setAggressiveRange(6);
-        militaries.put("lord" , lord);
+        militaries.put("lord", lord);
     }
 
     public static void createArcher() {
@@ -72,7 +68,7 @@ public class GameHumans {
         archer.enableUsesLadder();
         archer.setDefenseRange(8);
         archer.setAggressiveRange(11);
-        militaries.put("archer",archer);
+        militaries.put("archer", archer);
     }
 
     public static void createCrossbowman() {
@@ -85,7 +81,7 @@ public class GameHumans {
         crossbowman.addArmour("leatherArmour");
         crossbowman.setDefenseRange(6);
         crossbowman.setAggressiveRange(9);
-        militaries.put("crossbowman",crossbowman);
+        militaries.put("crossbowman", crossbowman);
     }
 
     public static void createSpearman() {
@@ -99,7 +95,7 @@ public class GameHumans {
         spearman.enableDigsMoat();
         spearman.setDefenseRange(4);
         spearman.setAggressiveRange(7);
-        militaries.put("spearman",spearman);
+        militaries.put("spearman", spearman);
     }
 
     public static void createPikeman() {
@@ -113,7 +109,7 @@ public class GameHumans {
         pikeman.enableDigsMoat();
         pikeman.setDefenseRange(4);
         pikeman.setAggressiveRange(7);
-        militaries.put("pikeman",pikeman);
+        militaries.put("pikeman", pikeman);
     }
 
     public static void createMaceman() {
@@ -128,7 +124,7 @@ public class GameHumans {
         maceman.setDefenseRange(4);
         maceman.setAggressiveRange(7);
         maceman.setUsesLadder(true);
-        militaries.put("maceman",maceman);
+        militaries.put("maceman", maceman);
     }
 
     public static void createSwordsman() {
@@ -141,7 +137,7 @@ public class GameHumans {
         swordsman.addArmour("metalArmour");
         swordsman.setDefenseRange(4);
         swordsman.setAggressiveRange(7);
-        militaries.put("swordsman",swordsman);
+        militaries.put("swordsman", swordsman);
     }
 
     public static void createKnight() {
@@ -154,7 +150,7 @@ public class GameHumans {
         knight.addArmour("metalArmour");
         knight.setDefenseRange(4);
         knight.setAggressiveRange(7);
-        militaries.put("knight",knight);
+        militaries.put("knight", knight);
     }
 
     public static void createTunneler() {
@@ -165,7 +161,7 @@ public class GameHumans {
         tunneler.setName("tunneler");
         tunneler.setDefenseRange(4);
         tunneler.setAggressiveRange(7);
-        militaries.put("tunneler",tunneler);
+        militaries.put("tunneler", tunneler);
     }
 
     public static void createLadderman() {
@@ -174,7 +170,7 @@ public class GameHumans {
         int attackRating = AttackRating.NONE.getRate();
         EuropeanTroop ladderman = new EuropeanTroop(speed, defenseRating, 1, attackRating, 4);
         ladderman.setName("ladderman");
-        militaries.put("ladderman" , ladderman);
+        militaries.put("ladderman", ladderman);
     }
 
     public static void createEngineer() {
@@ -186,7 +182,7 @@ public class GameHumans {
         engineer.enableDigsMoat();
         engineer.setDefenseRange(5);
         engineer.setAggressiveRange(5);
-        militaries.put("engineer" , engineer);
+        militaries.put("engineer", engineer);
     }
 
     public static void createBlackMonk() {
@@ -197,7 +193,7 @@ public class GameHumans {
         blackmonk.setName("blackmonk");
         blackmonk.setDefenseRange(4);
         blackmonk.setAggressiveRange(7);
-        militaries.put("blackmonk",blackmonk);
+        militaries.put("blackmonk", blackmonk);
     }
 
     public static void createArcherBow() {
@@ -210,7 +206,7 @@ public class GameHumans {
         archerBow.enableDigsMoat();
         archerBow.setDefenseRange(8);
         archerBow.setAggressiveRange(11);
-        militaries.put("archerBow",archerBow);
+        militaries.put("archerBow", archerBow);
     }
 
     public static void createSlave() {
@@ -220,7 +216,7 @@ public class GameHumans {
         ArabianMercenary slave = new ArabianMercenary(speed, defenseRating, 1, attackRating, 5);
         slave.setName("slave");
         slave.enableDigsMoat();
-        militaries.put("slave",slave);
+        militaries.put("slave", slave);
     }
 
     public static void createSlinger() {
@@ -231,7 +227,7 @@ public class GameHumans {
         slinger.setName("slinger");
         slinger.setDefenseRange(8);
         slinger.setAggressiveRange(11);
-        militaries.put("slinger ",slinger );
+        militaries.put("slinger", slinger);
     }
 
     public static void createAssassin() {
@@ -243,7 +239,7 @@ public class GameHumans {
         assassin.setDefenseRange(4);
         assassin.setAggressiveRange(7);
         assassin.enableInvisible();
-        militaries.put("assassin",assassin);
+        militaries.put("assassin", assassin);
 
     }
 
@@ -256,7 +252,7 @@ public class GameHumans {
         horseArcher.setWeapon("bow");
         horseArcher.setDefenseRange(13);
         horseArcher.setAggressiveRange(16);
-        militaries.put("horseArcher",horseArcher);
+        militaries.put("horseArcher", horseArcher);
     }
 
     public static void createArabianSwordsman() {
@@ -268,7 +264,7 @@ public class GameHumans {
         arabianSwordsman.addArmour("metalArmour");
         arabianSwordsman.setDefenseRange(4);
         arabianSwordsman.setAggressiveRange(7);
-        militaries.put("arabianSwordsman",arabianSwordsman);
+        militaries.put("arabianSwordsman", arabianSwordsman);
     }
 
     public static void createFireThrower() {
@@ -279,26 +275,26 @@ public class GameHumans {
         fireThrower.setName("fireThrower");
         fireThrower.setDefenseRange(4);
         fireThrower.setAggressiveRange(7);
-        militaries.put("fireThrower",fireThrower);
+        militaries.put("fireThrower", fireThrower);
     }
 
 
-    public static Military getClone(Military military){
-        if(military instanceof Engineer){
+    public static Military getClone(Military military) {
+        if (military instanceof Engineer) {
             return new Engineer((Engineer) military);
         }
 
-        if(military instanceof  Tunneler){
+        if (military instanceof Tunneler) {
             return new Tunneler((Tunneler) military);
         }
 
-        if(military instanceof  EuropeanTroop){
+        if (military instanceof EuropeanTroop) {
             return new EuropeanTroop((EuropeanTroop) military);
         }
-        if(military instanceof  ArabianMercenary){
+        if (military instanceof ArabianMercenary) {
             return new ArabianMercenary((ArabianMercenary) military);
         }
-        if(military instanceof Lord){
+        if (military instanceof Lord) {
             return new Lord((Lord) military);
         }
         return null;

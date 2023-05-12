@@ -34,6 +34,7 @@ public class BuildingMenu {
                 break;
             }
             if (command.equals("back")) {
+                System.out.println("<< Game Menu >>");
                 return;
             } else if (isThisBuildingSelected(Buildings.MAIN_CASTLE)) {
                 Matcher changeTaxRateMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.CHANGE_TAX_RATE);

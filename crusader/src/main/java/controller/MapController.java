@@ -257,6 +257,9 @@ public class MapController {
         assert building != null;
         for (int i = y; i < y + building.getLength(); i++) {
             for (int j = x; j < x + building.getWidth(); j++) {
+                if (j >= map.getWidth() || i >= map.getLength()) {
+                    System.out.println("you can't put a building here");
+                }
                 Tile tile = map.getTile(j, i);
                 if (building.isShouldBeOne()) {
                     deleteOtherBuildingWithThisType(building);
@@ -381,7 +384,7 @@ public class MapController {
         }
         Tile tile = map.getTile(x, y);
         Building building = tile.getBuilding();
-        if (building instanceof CastleBuilding && !building.getName().equals("drawBridge")){
+        if (building instanceof CastleBuilding && !building.getName().equals("drawBridge")) {
             return true;
         }
         if (tile.isPassable() == false) {

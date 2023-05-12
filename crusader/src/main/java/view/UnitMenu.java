@@ -172,7 +172,7 @@ public class UnitMenu {
                     }
                 }
             } else if (enterToolMatcher.matches()) {
-                String items = airAttackToolMatcher.group("items");
+                String items = enterToolMatcher.group("items");
                 ArrayList<String> itemsPattern = new ArrayList<>();
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
