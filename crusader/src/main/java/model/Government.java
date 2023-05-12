@@ -420,7 +420,7 @@ public class Government {
                 }
             }
         }
-        if (workersNeeded != 0) {
+        if (workersNeeded > 0) {
             System.out.println("Lord " + this.getUser().getNickname() + " : " + workersNeeded + " workers we need!");
         }
     }

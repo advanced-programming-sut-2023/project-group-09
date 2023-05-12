@@ -595,7 +595,7 @@ public class GameBuildings {
     }
 
     public static void createOxTether() {
-        Building building = new Building(0, 0, "oxTether", 10, 2, 2);
+        Building building = new Building(1, 0, "oxTether", 10, 2, 2);
         buildings.put("oxTether", building);
     }
 

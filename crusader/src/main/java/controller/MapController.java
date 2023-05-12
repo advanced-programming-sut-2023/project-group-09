@@ -385,7 +385,7 @@ public class MapController {
             return true;
         }
         if (tile.isPassable() == false) {
-            return "reason : tile is not passable."
+            System.out.println("reason : tile is not passable");
         }
         return tile.isPassable();
     }

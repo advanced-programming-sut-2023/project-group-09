@@ -47,7 +47,7 @@
     "cost": {},
     "requiredHumans": [],
     "price": 0,
-    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredWorkers": 1,
     "numberOfRequiredEngineers": 0,
     "buildingImpassableLength": -1,
     "hasSpecialTexture": false,
