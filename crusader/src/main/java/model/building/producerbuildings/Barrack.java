@@ -110,6 +110,8 @@ public class Barrack extends Building {
             x = random.nextInt(this.getWidth());
             y = random.nextInt(this.getLength());
         }
+        x += this.getStartX();
+        y += this.getStartY();
         return new int[]{x, y};
     }
 }

@@ -288,7 +288,7 @@ public class GameController {
 
         Tile tile = game.getMap().getTile(x, y);
         if (!tile.getCanPutBuilding()) {
-            return "this position is not suitable !";
+            return "this position is not suitable!";
         }
 
         Building targetBuilding = aroundBuilding(x, y);
@@ -391,14 +391,13 @@ public class GameController {
         Building targetBuilding = null;
         x--;
         y--;
-        Tile tile = game.getMap().getTile(x, y);
         boolean check = true;
 
 
-        if (0 < x && check) {
+        if (0 < x) {
             Tile neighbor = game.getMap().getTile(x - 1, y);
             Building neighborBuilding = neighbor.getBuilding();
-            if (neighborBuilding instanceof CastleBuilding && !neighborBuilding.getGovernment().equals(game.getCurrentGovernment())) {
+            if ( checkCanDigTunnel(neighborBuilding) && !neighborBuilding.getGovernment().equals(game.getCurrentGovernment())) {
                 targetBuilding = neighborBuilding;
                 check = false;
             }
@@ -406,7 +405,7 @@ public class GameController {
         if (0 < y && check) {
             Tile neighbor = game.getMap().getTile(x, y - 1);
             Building neighborBuilding = neighbor.getBuilding();
-            if (neighborBuilding instanceof CastleBuilding && !neighborBuilding.getGovernment().equals(game.getCurrentGovernment())) {
+            if (checkCanDigTunnel(neighborBuilding) && !neighborBuilding.getGovernment().equals(game.getCurrentGovernment())) {
                 targetBuilding = neighborBuilding;
                 check = false;
             }
@@ -415,7 +414,7 @@ public class GameController {
         if (x < game.getMap().getWidth() - 1 && check) {
             Tile neighbor = game.getMap().getTile(x + 1, y);
             Building neighborBuilding = neighbor.getBuilding();
-            if (neighborBuilding instanceof CastleBuilding && !neighborBuilding.getGovernment().equals(game.getCurrentGovernment())) {
+            if (checkCanDigTunnel(neighborBuilding) && !neighborBuilding.getGovernment().equals(game.getCurrentGovernment())) {
                 targetBuilding = neighborBuilding;
                 check = false;
             }
@@ -423,11 +422,18 @@ public class GameController {
         if (y < game.getMap().getLength() - 1 && check) {
             Tile neighbor = game.getMap().getTile(x, y + 1);
             Building neighborBuilding = neighbor.getBuilding();
-            if (neighborBuilding instanceof CastleBuilding && !neighborBuilding.getGovernment().equals(game.getCurrentGovernment())) {
+            if (checkCanDigTunnel(neighborBuilding) && !neighborBuilding.getGovernment().equals(game.getCurrentGovernment())) {
                 targetBuilding = neighborBuilding;
             }
         }
         return targetBuilding;
+    }
+
+    public static boolean checkCanDigTunnel(Building neighborBuilding){
+        if (neighborBuilding.getName().equals("perimeterTurret") || neighborBuilding.getName().equals("defenseTurret")){
+            return true;
+        }
+        return neighborBuilding instanceof Wall;
     }
 
     public static String buildEquipment(int equipmentNumber, ArrayList<Engineer> engineers, int x, int y) {

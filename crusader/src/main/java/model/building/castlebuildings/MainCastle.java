@@ -1,14 +1,10 @@
 package model.building.castlebuildings;
 
 import controller.MapController;
-import controller.gamestructure.GameHumans;
-import enumeration.Pair;
-import enumeration.Speed;
 import model.Government;
 import model.game.Tuple;
 import model.human.civilian.Civilian;
 import model.human.military.Lord;
-import model.human.military.Military;
 
 import java.util.Random;
 
@@ -75,6 +71,9 @@ public class MainCastle extends CastleBuilding {
             x = random.nextInt(this.getWidth());
             y = random.nextInt(this.getLength());
         }
+        x += this.getStartX();
+        y += this.getStartY();
+        System.out.println(x + " " + y);
         return new Tuple(y, x);
     }
 }

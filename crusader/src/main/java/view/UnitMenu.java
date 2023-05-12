@@ -355,10 +355,9 @@ public class UnitMenu {
 
     public static ArrayList<Engineer> getEngineersOfTile() {
         ArrayList<Engineer> engineers = new ArrayList<>();
-        for (int i = 0; i < GameController.getGame().getMap().getTile(x, y).getMilitaries().size(); i++) {
-            Military military = GameController.getGame().getMap().getTile(x, y).getMilitaries().get(i);
-            if (military instanceof Engineer && military.getGovernment().equals(GameController.getGame().getCurrentGovernment()))
-                engineers.add((Engineer) military);
+        ArrayList<Military> militaries = MapController.getOneTypeOfMilitariesOfGovernment(x,y,"engineer",GameController.getGame().getCurrentGovernment());
+        for (Military military : militaries) {
+            engineers.add((Engineer) military);
         }
         return engineers;
     }

@@ -244,6 +244,7 @@ public class MapController {
         tile.setTool(tool);
         government.addTool(tool);
     }
+
     public static boolean checkCanPutTool(int x, int y, String type) {
         Tool tool = GameTools.getTool(type);
         if (tool == null) {
