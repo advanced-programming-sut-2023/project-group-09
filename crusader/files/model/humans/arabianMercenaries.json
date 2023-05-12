@@ -57,7 +57,7 @@
     "shootingRange": 10,
     "isInvisible": false
   },
-  "slinger ": {
+  "slinger": {
     "attackRating": 3,
     "militaryState": "standing",
     "usesHorse": false,
