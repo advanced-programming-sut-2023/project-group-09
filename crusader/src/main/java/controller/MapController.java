@@ -135,6 +135,9 @@ public class MapController {
                 if (tile.getMilitaries().size() != 0 || tile.getCivilian().size() != 0) {
                     return false;
                 }
+                if (building.getHasSpecialTexture()) {
+                    return building.getSuitableTextures().contains(map.getTile(j, i).getTexture());
+                }
 
                 if (building instanceof CastleBuilding && !(building instanceof Wall)) {
                     if (!canPutCastleBuilding(j, i)) {
@@ -143,11 +146,7 @@ public class MapController {
                 } else if (!map.getTile(j, i).getCanPutBuilding()) {
                     return false;
                 }
-                if (building.getHasSpecialTexture()) {
-                    if (!building.getSuitableTextures().contains(map.getTile(j, i).getTexture())) {
-                        return false;
-                    }
-                }
+
             }
         }
         return true;
@@ -443,7 +442,7 @@ public class MapController {
         Tile tile = map.getTile(x, y);
         if (tile.getCanPutBuilding()) {
             return true;
-        } else return tile.getBuilding() instanceof Wall;
+        } else return tile.getBuilding() instanceof Wall && tile.getBuilding().getGovernment().equals(GameController.getGame().getCurrentGovernment());
     }
 
     public static void deleteOtherBuildingWithThisType(Building building) {

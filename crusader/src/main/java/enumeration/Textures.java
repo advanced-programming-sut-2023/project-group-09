@@ -9,7 +9,7 @@ public enum Textures {
     GRASS("grass", true, true, "\u001b[48;5;40m",73, 234, 27),
     THICK_GRASS("thickGrass", true, true, "\u001b[48;5;28m",73, 234, 27),
     OASIS_GRASS("oasisGrass", true, false, "\u001b[48;5;22m",73, 234, 27),
-    OIL("oil", true, true, "\u001b[48;5;17m",140, 140, 140),
+    OIL("oil", true, false, "\u001b[48;5;17m",140, 140, 140),
     MARSH("marsh", false, false, "\u001b[48;5;37m",255, 233, 126),
     PLAIN_TEXTURE("plainTexture", true, true, "",256,256,256),
     LOW_DEPTH_WATER("lowDepthWater", true, false, "\u001b[48;5;123m",149, 198, 248),
