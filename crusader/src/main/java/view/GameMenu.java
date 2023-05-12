@@ -113,11 +113,9 @@ public class GameMenu {
                 output = GameController.changeTurn();
                 System.out.println(output);
             } else if (showPlayerMatcher.matches()) {
-                output = GameController.changeTurn();
-                System.out.println(output);
+                System.out.println(GameController.showPlayer());
             } else if (showRoundMatcher.matches()) {
-                output = GameController.changeTurn();
-                System.out.println(output);
+                System.out.println(GameController.showRound());
             } else if (showMapM.matches()) {
                 MapMenu.runShowMapOrShowDetailsOrClearLand(showMapM, 0);
                 MapMenu.run(scanner);
