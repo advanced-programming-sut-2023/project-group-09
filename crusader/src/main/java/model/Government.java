@@ -7,6 +7,7 @@ import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameGoods;
 import enumeration.dictionary.Colors;
 import model.building.Building;
+import model.building.castlebuildings.CastleBuilding;
 import model.building.castlebuildings.MainCastle;
 import model.building.producerbuildings.ProducerBuilding;
 import model.building.storagebuildings.StorageBuilding;
@@ -67,6 +68,12 @@ public class Government {
         this.color = color;
         properties = GameGoods.getHashMapOfGovernment();
         buildings = GameBuildings.getGovernmentBuildingHashMap();
+        this.maxPopulation = 10;
+        this.population = 10;
+        this.foodRate = 1;
+        this.fearRate = 0;
+        this.taxRate = 0;
+        this.religionRate = 0;
     }
 
     public void setUser(User user) {
@@ -181,7 +188,7 @@ public class Government {
 
     public void setTaxRate(int taxRate) {
         this.taxRate = taxRate;
-        ((MainCastle) (this.getBuildings().get("MainCastle").getBuildings().get(0))).setTaxRate(taxRate);
+        ((MainCastle) (this.getBuildings().get("mainCastle").getBuildings().get(0))).setTaxRate(taxRate);
     }
 
     public void addGold(int amount) {
@@ -286,7 +293,7 @@ public class Government {
     }
 
     public int getPopularityOfAleCoverage() {
-        if (population == 0){
+        if (population == 0) {
             return 0;
         }
         int countOfBuilding = buildings.get("inn").getNumber();
@@ -468,7 +475,7 @@ public class Government {
                     break;
                 Human human = (Human) itr.next();
                 if (human instanceof Civilian && !((Civilian) human).isHasJob()) {
-                    counterOfRemovedPeople++;
+                    counterOfRemovedPeople--;
                     itr.remove();
                     MapController.deleteHuman(human.getX(), human.getY(), (Civilian) human);
                     human.setGovernment(null);
@@ -482,7 +489,7 @@ public class Government {
                     break;
                 Human human = (Human) itr.next();
                 if (human instanceof Civilian) {
-                    counterOfRemovedPeople++;
+                    counterOfRemovedPeople--;
                     itr.remove();
                     MapController.deleteHuman(human.getX(), human.getY(), (Civilian) human);
                 }
@@ -493,7 +500,7 @@ public class Government {
     public void updatePeopleAfterTurn() {
         // maxPopularity : 25 --- minPopularity : -37
         double ratio = (double) (this.getPopularity() + 37) / (25 + 37);
-        int checker = (int) ratio * 100;
+        int checker = (int) (ratio * 100);
         int number;
         if (checker < 20) {
             // 30%
@@ -566,22 +573,23 @@ public class Government {
     public void workerDistribution() {
         for (BuildingCounter bc : buildings.values()) {
             for (Building building : bc.getBuildings()) {
+                if (!(building instanceof CastleBuilding))
                 GameController.workerDistribution(building);
             }
         }
     }
 
-    public void checkFirstStorage(Building building){
+    public void checkFirstStorage(Building building) {
         String name = building.getName();
         BuildingCounter buildingCounter = getBuildingData(name);
-        if (buildingCounter.getNumber() != 1 ){
+        if (buildingCounter.getNumber() != 1) {
             return;
         }
         StorageBuilding storageBuilding = (StorageBuilding) building;
         String type = storageBuilding.getItemType();
         Set<String> keys;
 
-        switch (type){
+        switch (type) {
             case "food":
                 keys = GameGoods.foods.keySet();
                 break;
@@ -595,9 +603,9 @@ public class Government {
                 return;
         }
 
-        for (String key : keys){
+        for (String key : keys) {
             int count = properties.get(key);
-            storageBuilding.addItem(key,count);
+            storageBuilding.addItem(key, count);
         }
     }
 }

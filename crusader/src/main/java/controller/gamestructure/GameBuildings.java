@@ -22,9 +22,9 @@ public class GameBuildings {
     public static HashMap<String, Building> storageBuildings = new HashMap<>();
     public static HashMap<String, Building> castleBuildings = new HashMap<>();
 
-    public static Building getBuilding(String name, Government government,int x,int y){
+    public static Building getBuilding(String name, Government government, int x, int y) {
         Building building = getClone(buildings.get(name));
-        if (building == null){
+        if (building == null) {
             return null;
         }
         building.setGovernment(government);
@@ -34,14 +34,14 @@ public class GameBuildings {
         return building;
     }
 
-    public static Building getBuilding(String name){
+    public static Building getBuilding(String name) {
         return buildings.get(name);
     }
 
-    public static HashMap<String, BuildingCounter> getGovernmentBuildingHashMap(){
+    public static HashMap<String, BuildingCounter> getGovernmentBuildingHashMap() {
         HashMap<String, BuildingCounter> result = new HashMap<>();
-        for (String key : buildings.keySet()){
-            result.put(key,new BuildingCounter());
+        for (String key : buildings.keySet()) {
+            result.put(key, new BuildingCounter());
         }
         return result;
     }
@@ -101,16 +101,17 @@ public class GameBuildings {
         createMainCastle();
     }
 
-    public static void addBarracks(){
+    public static void addBarracks() {
         createBarrack();
         createEngineerGuild();
         createTunnelersGuild();
         createMercenaryPost();
         createCathedral();
     }
+
     public static void createMainCastle() {
         MainCastle mainCastle = new MainCastle(0, 0,
-                "castleBuildings", 10000000, 5, 12);
+                "castleBuildings", 100, 5, 12);
         // if one object of this created, please call setLord() and setTaxRate() for its government.
         castleBuildings.put("mainCastle", mainCastle);
         buildings.put("mainCastle", mainCastle);
@@ -118,7 +119,7 @@ public class GameBuildings {
 
     public static void createLowWall() {
         Wall lowWall = new Wall(0, 0,
-                "lowWall", 10, 1, 1, 3);
+                "lowWall", 20, 1, 1, 3);
         lowWall.addCost("stone", 1);
         castleBuildings.put("lowWall", lowWall);
         buildings.put("lowWall", lowWall);
@@ -126,14 +127,15 @@ public class GameBuildings {
 
     public static void createStoneWall() {
         Wall stoneWall = new Wall(0, 0,
-                "stoneWall", 10, 1, 1, 6);
+                "stoneWall", 25, 1, 1, 6);
         stoneWall.addCost("stone", 1);
         castleBuildings.put("stoneWall", stoneWall);
         buildings.put("stoneWall", stoneWall);
     }
+
     public static void createCrenulatedWall() {
         Wall crenulatedWall = new Wall(0, 0,
-                "crenulatedWall", 15, 1, 1, 8);
+                "crenulatedWall", 30, 1, 1, 8);
         crenulatedWall.addCost("stone", 1);
         // this wall must be next to a stoneWall --- using method in the class
         castleBuildings.put("crenulatedWall", crenulatedWall);
@@ -142,7 +144,7 @@ public class GameBuildings {
 
     public static void createStairs() {
         Wall stairs = new Wall(0, 0, "stairs",
-                10, 1, 1, 0); // height of this building varies where it is.
+                20, 1, 1, 0); // height of this building varies where it is.
         // use methods in this class to choosing the suitable height
         stairs.addCost("stone", 1);
         castleBuildings.put("stairs", stairs);
@@ -151,7 +153,7 @@ public class GameBuildings {
 
     public static void createSmallStoneGatehouse() {
         Gatehouse smallStoneGatehouse = new Gatehouse(0, 0,
-                "smallStoneGatehouse", 30, 3, 3, 8);
+                "smallStoneGatehouse", 50, 3, 3, 8);
         smallStoneGatehouse.addCost("stone", 10);
         castleBuildings.put("smallStoneGatehouse", smallStoneGatehouse);
         buildings.put("smallStoneGatehouse", smallStoneGatehouse);
@@ -159,7 +161,7 @@ public class GameBuildings {
 
     public static void createBigStoneGatehouse() {
         Gatehouse bigStoneGatehouse = new Gatehouse(0, 0,
-                "bigStoneGatehouse", 30, 5, 5, 10);
+                "bigStoneGatehouse", 100, 5, 5, 10);
         bigStoneGatehouse.addCost("stone", 20);
         castleBuildings.put("bigStoneGatehouse", bigStoneGatehouse);
         buildings.put("bigStoneGatehouse", bigStoneGatehouse);
@@ -167,7 +169,7 @@ public class GameBuildings {
 
     public static void createDrawBridge() {
         Gatehouse drawBridge = new Gatehouse(0, 0,
-                "drawBridge", 10, 4, 4, 0);
+                "drawBridge", 50, 4, 4, 0);
         drawBridge.addCost("wood", 10);
         castleBuildings.put("drawBridge", drawBridge);
         buildings.put("drawBridge", drawBridge);
@@ -184,7 +186,7 @@ public class GameBuildings {
 
     public static void createPerimeterTurret() {
         Tower perimeterTurret = new Tower(0, 0, "perimeterTurret",
-                30, 5, 5, 40, 40, 10);
+                250, 5, 5, 40, 40, 10);
         perimeterTurret.addCost("stone", 10);
         perimeterTurret.setCanKeepRidingEquipment(false);
         castleBuildings.put("perimeterTurret", perimeterTurret);
@@ -193,7 +195,7 @@ public class GameBuildings {
 
     public static void createDefenseTurret() {
         Tower defenseTurret = new Tower(0, 0, "defenseTurret",
-                30, 5, 5, 40, 40, 10);
+                300, 5, 5, 40, 40, 10);
         defenseTurret.addCost("stone", 15);
         defenseTurret.setCanKeepRidingEquipment(false);
         castleBuildings.put("defenseTurret", defenseTurret);
@@ -202,7 +204,7 @@ public class GameBuildings {
 
     public static void createRoundTower() {
         Tower roundTower = new Tower(0, 0, "roundTower",
-                30, 7, 7, 50, 50, 20);
+                300, 7, 7, 50, 50, 20);
         roundTower.addCost("stone", 40);
         roundTower.setCanKeepRidingEquipment(true);
         castleBuildings.put("roundTower", roundTower);
@@ -211,7 +213,7 @@ public class GameBuildings {
 
     public static void createSquareTower() {
         Tower squareTower = new Tower(0, 0, "squareTower",
-                30, 7, 7, 50, 50, 20);
+                300, 7, 7, 50, 50, 20);
         squareTower.addCost("stone", 35);
         squareTower.setCanKeepRidingEquipment(true);
         castleBuildings.put("squareTower", squareTower);
@@ -239,8 +241,8 @@ public class GameBuildings {
         barrack.addUnit("swordsman");
         barrack.addUnit("knight");
         barrack.setBuildingImpassableLength(5);
-        barrack.addCost("stone",15);
-        buildings.put("barrack",barrack);
+        barrack.addCost("stone", 15);
+        buildings.put("barrack", barrack);
     }
 
     public static void createMercenaryPost() {
@@ -255,18 +257,18 @@ public class GameBuildings {
         barrack.addUnit("arabianSwordsman");
         barrack.addUnit("fireThrower");
         barrack.setBuildingImpassableLength(5);
-        barrack.addCost("wood",10);
-        buildings.put("mercenaryPost",barrack);
+        barrack.addCost("wood", 10);
+        buildings.put("mercenaryPost", barrack);
     }
 
     public static void createEngineerGuild() {
-        Barrack barrack = new Barrack(0,0,
-                "engineerGuild",80,4,7);
+        Barrack barrack = new Barrack(0, 0,
+                "engineerGuild", 80, 4, 7);
         barrack.addUnit("engineer");
         barrack.addUnit("ladderman");
-        barrack.addCost("wood",10);
+        barrack.addCost("wood", 10);
         barrack.setPrice(100);
-        buildings.put("engineerGuild",barrack);
+        buildings.put("engineerGuild", barrack);
     }
 
     public static void createInn() {
@@ -308,7 +310,7 @@ public class GameBuildings {
         ProducerBuilding producerBuilding = new ProducerBuilding(1, 0, "pitchRig",
                 40, 3, 3, 5, "stockPile", "resource", "pitch");
 
-        producerBuilding.addCost("wood",20);
+        producerBuilding.addCost("wood", 20);
 
         producerBuilding.enableHasSpecialTexture();
         producerBuilding.addTexture(Textures.OIL);
@@ -434,10 +436,11 @@ public class GameBuildings {
     }
 
     public static Building getTunnel() {
-        Building building = new Building(0,0,"tunnel",10,1,1);
+        Building building = new Building(0, 0, "tunnel", 10, 1, 1);
         return building;
     }
-    public static Building getTunnel(Government government,int x,int y) {
+
+    public static Building getTunnel(Government government, int x, int y) {
         Building building = getTunnel();
         building.setGovernment(government);
         building.setStartX(x);
@@ -445,21 +448,21 @@ public class GameBuildings {
         building.setNeighborTiles();
         return building;
     }
+
     public static void createOilSmelter() {
-        Building building = new Building(0,1,"oilSmelter",10,3,3);
-        buildings.put("oilSmelter",building);
+        Building building = new Building(0, 1, "oilSmelter", 10, 3, 3);
+        buildings.put("oilSmelter", building);
     }
 
     public static void createCagedWarDogs() {
-        Building building = new Building(0,0,"cagedWarDogs",10,2,2);
-        buildings.put("cagedWarDogs",building);
+        Building building = new Building(0, 0, "cagedWarDogs", 10, 2, 2);
+        buildings.put("cagedWarDogs", building);
     }
 
-    public static void createSiegeTent() {
-//        TODO: correct hp
-        Building building = new Building(0, 1, "siegeTent", 0, 3, 3);
-        buildings.put("siegeTent",building);
-    }
+//    public static void createSiegeTent() {
+//        Building building = new Building(0, 1, "siegeTent", 10, 3, 3);
+//        buildings.put("siegeTent",building);
+//    }
 
     public static void createStable() {
         Building building = new Building(0, 0, "stable", 70, 5, 5);
@@ -475,12 +478,12 @@ public class GameBuildings {
         barrack.addUnit("tunneler");
         barrack.addCost("wood", 10);
         barrack.setPrice(100);
-        buildings.put("tunnelersGuild",barrack);
+        buildings.put("tunnelersGuild", barrack);
     }
 
     public static void createAppleGarden() {
-        ProducerBuilding producerBuilding = new ProducerBuilding(1,0,"appleGarden",
-                40,9,9,5,"granary","food","apple");
+        ProducerBuilding producerBuilding = new ProducerBuilding(1, 0, "appleGarden",
+                40, 9, 9, 5, "granary", "food", "apple");
 
         producerBuilding.addCost("wood", 5);
 
@@ -495,10 +498,10 @@ public class GameBuildings {
     }
 
     public static void createDairyProducts() {
-        ProducerBuilding producerBuilding = new ProducerBuilding(1,0,"dairyProducts",
-                40,9,9,3,"granary","food","cheese");
+        ProducerBuilding producerBuilding = new ProducerBuilding(1, 0, "dairyProducts",
+                40, 9, 9, 3, "granary", "food", "cheese");
 
-        producerBuilding.addCost("wood",10);
+        producerBuilding.addCost("wood", 10);
 
         producerBuilding.enableHasSpecialTexture();
         producerBuilding.addTexture(Textures.THICK_GRASS);
@@ -511,8 +514,8 @@ public class GameBuildings {
     }
 
     public static void createHopFarm() {
-        ProducerBuilding producerBuilding = new ProducerBuilding(1,0,"hopFarm",
-                40,9,9,5,"stockPile","resource","hop");
+        ProducerBuilding producerBuilding = new ProducerBuilding(1, 0, "hopFarm",
+                40, 9, 9, 5, "stockPile", "resource", "hop");
 
         producerBuilding.addCost("wood", 15);
 
@@ -527,8 +530,8 @@ public class GameBuildings {
     }
 
     public static void createHuntingPost() {
-        ProducerBuilding producerBuilding = new ProducerBuilding(1,0,"huntingPost",
-                40,3,3,3,"granary","food","meat");
+        ProducerBuilding producerBuilding = new ProducerBuilding(1, 0, "huntingPost",
+                40, 3, 3, 3, "granary", "food", "meat");
 
         producerBuilding.addCost("wood", 5);
 
@@ -540,8 +543,8 @@ public class GameBuildings {
     }
 
     public static void createWheatFarm() {
-        ProducerBuilding producerBuilding = new ProducerBuilding(1,0,"wheatFarm",
-                40,9,9,5,"stockPile","resource","wheat");
+        ProducerBuilding producerBuilding = new ProducerBuilding(1, 0, "wheatFarm",
+                40, 9, 9, 5, "stockPile", "resource", "wheat");
 
         producerBuilding.addCost("wood", 15);
         producerBuilding.setBuildingImpassableLength(3);
@@ -555,8 +558,8 @@ public class GameBuildings {
     }
 
     public static void createBakery() {
-        ProducerBuilding producerBuilding = new ProducerBuilding(1,0,"bakery",
-                40,4,4,3,"granary","food","bread");
+        ProducerBuilding producerBuilding = new ProducerBuilding(1, 0, "bakery",
+                40, 4, 4, 3, "granary", "food", "bread");
 
         producerBuilding.addCost("wood", 10);
 
@@ -567,8 +570,8 @@ public class GameBuildings {
     }
 
     public static void createBrewery() {
-        ProducerBuilding producerBuilding = new ProducerBuilding(1,0,"brewery",
-                40,4,4,3,"stockPile","resource","ale");
+        ProducerBuilding producerBuilding = new ProducerBuilding(1, 0, "brewery",
+                40, 4, 4, 3, "stockPile", "resource", "ale");
 
         producerBuilding.addCost("wood", 10);
 
@@ -586,45 +589,45 @@ public class GameBuildings {
         buildings.put("granary", storageBuilding);
     }
 
-    public static void createQuarry(){
+    public static void createQuarry() {
         Quarry quarry = new Quarry();
-        buildings.put("quarry",quarry);
+        buildings.put("quarry", quarry);
     }
 
-    public static void createOxTether(){
-        Building building = new Building(0,0,"oxTether",10,2,2);
-        buildings.put("oxTether",building);
+    public static void createOxTether() {
+        Building building = new Building(0, 0, "oxTether", 10, 2, 2);
+        buildings.put("oxTether", building);
     }
 
-    public static Building getClone(Building building){
-        if (building instanceof MainCastle){
+    public static Building getClone(Building building) {
+        if (building instanceof MainCastle) {
             return new MainCastle((MainCastle) building);
         }
-        if(building instanceof Wall){
+        if (building instanceof Wall) {
             return new Wall((Wall) building);
         }
-        if(building instanceof Tower){
+        if (building instanceof Tower) {
             return new Tower((Tower) building);
         }
-        if(building instanceof Gatehouse){
+        if (building instanceof Gatehouse) {
             return new Gatehouse((Gatehouse) building);
         }
-        if(building instanceof Barrack){
+        if (building instanceof Barrack) {
             return new Barrack((Barrack) building);
         }
-        if(building instanceof WeaponProducer){
+        if (building instanceof WeaponProducer) {
             return new WeaponProducer((WeaponProducer) building);
         }
-        if(building instanceof Quarry){
+        if (building instanceof Quarry) {
             return new Quarry();
         }
-        if(building instanceof ProducerBuilding){
+        if (building instanceof ProducerBuilding) {
             return new ProducerBuilding((ProducerBuilding) building);
         }
-        if(building instanceof StorageBuilding){
+        if (building instanceof StorageBuilding) {
             return new StorageBuilding((StorageBuilding) building);
         }
-        if(building != null){
+        if (building != null) {
             return new Building(building);
         }
         return null;
