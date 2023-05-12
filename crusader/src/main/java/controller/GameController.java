@@ -938,21 +938,23 @@ public class GameController {
     public static void workerDistribution(Building building) {
         Government government = building.getGovernment();
         int numberOfRequiredWorkers = building.getNumberOfRequiredWorkers() - building.howManyWorkersHave();
-        for (Human human : government.getSociety()) {
-            if (human instanceof Civilian) {
-                if (!((Civilian) human).isHasJob()) {
-                    building.addHuman(human);
-                    numberOfRequiredWorkers--;
-                    Move move = new Move(human.getX(), human.getY(), building,
-                            true, human);
-                    LinkedList<Tuple> path = MoveController.getPathForBuilding(move.getStartPair(), building, human);
-                    move.setPath(path);
-                    human.setMove(move);
-                    ((Civilian) human).setHasJob(true);
+        if (numberOfRequiredWorkers != 0) {
+            for (Human human : government.getSociety()) {
+                if (human instanceof Civilian) {
+                    if (!((Civilian) human).isHasJob()) {
+                        building.addHuman(human);
+                        numberOfRequiredWorkers--;
+                        Move move = new Move(human.getX(), human.getY(), building,
+                                true, human);
+                        LinkedList<Tuple> path = MoveController.getPathForBuilding(move.getStartPair(), building, human);
+                        move.setPath(path);
+                        human.setMove(move);
+                        ((Civilian) human).setHasJob(true);
+                    }
                 }
-            }
-            if (numberOfRequiredWorkers == 0) {
-                return;
+                if (numberOfRequiredWorkers == 0) {
+                    return;
+                }
             }
         }
     }
