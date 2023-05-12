@@ -59,7 +59,7 @@ public class EditMapMenu {
             System.out.println("invalid building type!");
             return;
         }
-        if (MapController.checkCanPutBuilding(x, y, type, currentGovernment)) {
+        if (MapController.checkCanPutBuilding2(x, y, type, currentGovernment)) {
             MapController.dropBuilding(x, y, type, currentGovernment);
             System.out.println("building dropped successfully!");
         } else {

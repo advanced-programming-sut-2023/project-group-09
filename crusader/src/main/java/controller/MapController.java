@@ -90,10 +90,77 @@ public class MapController {
     }
 
 
+    public static boolean checkCanPutBuilding2(int x, int y, String type, Government government) {
+        Building building = GameBuildings.getBuilding(type, government, x, y);
+        if (type.equals("killingPit")) {
+            return checkKillingPit(x, y);
+        }
+        if (building == null) {
+            return false;
+        }
+
+        if (x + building.getWidth() >= map.getWidth()) {
+            return false;
+        }
+        if (y + building.getLength() >= map.getLength()) {
+            return false;
+        }
+        if (building instanceof StorageBuilding && !checkCanPutStorage(x, y, (StorageBuilding) building)) {
+            System.out.println("reason: this tile is pit or is moat or the texture is not suitable!");
+            return false;
+        }
+
+        if (building.getName().equals("stairs") && building instanceof Wall) {
+            int height = Wall.heightOfStairs(x, y);
+            if (height == 0 || height == -1) {
+                return false;
+            }
+        }
+
+
+        if (building.getName().equals("crenulatedWall") && building instanceof Wall) {
+            if (!Wall.canDropCrenulatedWall(x, y)) {
+                return false;
+            }
+        }
+
+        if (building.getName().equals("drawBridge")) {
+            if (Gatehouse.canDropDrawBridge(x, y) == null) {
+                return false;
+            }
+        }
+
+        for (int i = y; i < y + building.getLength(); i++) {
+            for (int j = x; j < x + building.getWidth(); j++) {
+                Tile tile = map.getTile(j, i);
+                if (tile.getMilitaries().size() != 0 || tile.getCivilian().size() != 0) {
+                    return false;
+                }
+
+                if (building instanceof CastleBuilding && !(building instanceof Wall)) {
+                    if (!canPutCastleBuilding(j, i)) {
+                        return false;
+                    }
+                } else if (!map.getTile(j, i).getCanPutBuilding()) {
+                    return false;
+                }
+                if (building.getHasSpecialTexture()) {
+                    if (!building.getSuitableTextures().contains(map.getTile(j, i).getTexture())) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     public static boolean checkCanPutBuilding(int x, int y, String type, Government government) {
         Building building = GameBuildings.getBuilding(type, government, x, y);
         if (type.equals("killingPit")) {
             return checkKillingPit(x, y);
+        }
+        if (type.equals("mainCastle") && government.getBuildingData("mainCastle").getNumber() != 0) {
+            return false;
         }
         if (building == null) {
             return false;
@@ -317,6 +384,7 @@ public class MapController {
         if (building instanceof CastleBuilding && !building.getName().equals("drawBridge")){
             return true;
         }
+        System.out.println("reason : tile is not passable!");
         return tile.isPassable();
     }
 
