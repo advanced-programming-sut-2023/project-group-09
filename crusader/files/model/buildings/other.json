@@ -159,7 +159,7 @@
     "requiredHumans": [],
     "price": 0,
     "numberOfRequiredWorkers": 0,
-    "numberOfRequiredEngineers": 0,
+    "numberOfRequiredEngineers": 1,
     "buildingImpassableLength": -1,
     "hasSpecialTexture": false,
     "suitableTextures": [],

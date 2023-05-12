@@ -205,6 +205,15 @@ public class MapController {
                     continue;
                 }
 
+                if (building.getName().equals("drawBridge")) {
+                    Gatehouse gatehouse = Gatehouse.canDropDrawBridge(x, y);
+                    assert gatehouse != null;
+                    gatehouse.setDrawBridge_gatehouse((Gatehouse) building);
+                    tile.setMoat(true);
+                    tile.setBuilding(building);
+                    continue;
+                }
+
 
                 if (building.getBuildingImpassableLength() != -1) {
                     if (i >= building.getBuildingImpassableLength() || j >= building.getBuildingImpassableLength()) {

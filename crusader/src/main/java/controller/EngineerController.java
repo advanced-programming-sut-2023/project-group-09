@@ -9,6 +9,7 @@ import model.building.Building;
 import model.game.Tile;
 import model.game.Tuple;
 import model.human.military.Engineer;
+import model.human.military.Military;
 import model.tools.SiegeTent;
 import model.tools.Tool;
 import model.tools.Moat;
@@ -18,16 +19,29 @@ import java.util.LinkedList;
 public class EngineerController {
     public static Engineer currentEngineer;
 
-    public static void digMoat() {
-        for (int i = 0; i < Moat.getTilesToBeMoat().size(); i++) {
-            int x = Moat.getTilesToBeMoat().get(i).getX();
-            int y = Moat.getTilesToBeMoat().get(i).getY();
-            if (!HumanController.move(new Tuple(y, x))) continue;
-            GameController.getGame().getMap().getTile(x, y).setMoat(true);
+    public static boolean digMoat(int x, int y,Military military) {
+        LinkedList<Tuple> path = MoveController.getPath(new Tuple(military.getY(), military.getX()),new Tuple(y,x),military);
+        if (path == null){
+            return false;
         }
+        Move move = new Move(military.getX(), military.getY(),new Tuple(y,x),true,military);
+        move.setShouldDigMoat(true);
+        move.setPath(path);
+        military.setMove(move);
+        return true;
     }
 
-
+    public static boolean fillMoat(int x, int y,Military military) {
+        LinkedList<Tuple> path = MoveController.getPath(new Tuple(military.getY(), military.getX()),new Tuple(y,x),military);
+        if (path == null){
+            return false;
+        }
+        Move move = new Move(military.getX(), military.getY(),new Tuple(y,x),true,military);
+        move.setShouldFillMoat(true);
+        move.setPath(path);
+        military.setMove(move);
+        return true;
+    }
 
     public static String buildTool(String type,int x, int y){
 

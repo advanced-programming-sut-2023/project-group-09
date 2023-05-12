@@ -30,6 +30,8 @@ public class Move {
     private boolean isAttacking = false;
     private boolean isPatrolStart = false;
 
+    private boolean shouldDigMoat = false;
+    private boolean shouldFillMoat = false;
     private boolean wantDigTunnel = false;
     private String moveState;
     private LinkedList<Tuple> path;
@@ -286,6 +288,22 @@ public class Move {
         this.wantDigTunnel = wantDigTunnel;
     }
 
+    public boolean isShouldDigMoat() {
+        return shouldDigMoat;
+    }
+
+    public void setShouldDigMoat(boolean shouldDigMoat) {
+        this.shouldDigMoat = shouldDigMoat;
+    }
+
+    public boolean isShouldConnectToTool() {
+        return shouldConnectToTool;
+    }
+
+    public void setShouldFillMoat(boolean shouldFillMoat) {
+        this.shouldFillMoat = shouldFillMoat;
+    }
+
     public void moveOneTurn() {
 
         killPits.clear();
@@ -363,6 +381,11 @@ public class Move {
                 tool.addEngineer(engineer);
                 engineer.setInTool(true);
                 engineer.setInvisible(true);
+            }
+
+            if (tool != null && shouldDigMoat) {
+                Tile tile = GameController.getGame().getMap().getTile(endPair.getX(), endPair.getY());
+                tile.setMoat(true);
             }
             return;
         }

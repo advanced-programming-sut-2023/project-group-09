@@ -303,6 +303,90 @@ public class GameController {
         return "dig tunnel order recorded successfully!";
     }
 
+    public static String digMoat(int x, int y) {
+        String message = validateXAndY(x, y);
+        if (message != null) {
+            return message;
+        }
+        Military digger = null;
+        Tile tile = GameController.getGame().getMap().getTile(x, y);
+        if (!tile.isPassable()) {
+            return "here is not suitable position for moat!";
+        }
+        for (Military military : HumanController.militaries) {
+            if (military instanceof Engineer engineer && engineer.isHasOil()) {
+                continue;
+            }
+            if (military.isDigsMoat()) {
+                digger = military;
+                break;
+            }
+        }
+        if (digger == null) {
+            System.out.println("there is no unit to dig moat!");
+        }
+        boolean check = EngineerController.digMoat(x, y, digger);
+        if (!check) {
+            return "can't move to this position!";
+        }
+        return "dig moat order recorded successfully!";
+    }
+
+    public static String fillMoat(int x, int y) {
+        String message = validateXAndY(x, y);
+        if (message != null) {
+            return message;
+        }
+        Military digger = null;
+        Tile tile = GameController.getGame().getMap().getTile(x, y);
+        if (!tile.isPassable()) {
+            return "here is not suitable position for moat!";
+        }
+        for (Military military : HumanController.militaries) {
+            if (military instanceof Engineer engineer && engineer.isHasOil()) {
+                continue;
+            }
+            if (military.isDigsMoat()) {
+                digger = military;
+                break;
+            }
+        }
+        if (digger == null) {
+            System.out.println("there is no unit to fill moat!");
+        }
+        boolean check = EngineerController.fillMoat(x, y, digger);
+        if (!check) {
+            return "can't move to this position!";
+        }
+        return "fill moat order recorded successfully!";
+    }
+
+    public static String goToOilSmelter(int x, int y) {
+        String message = validateXAndY(x, y);
+        if (message != null) {
+            return message;
+        }
+        Tile tile = GameController.getGame().getMap().getTile(x, y);
+        Building building = tile.getBuilding();
+        if (building == null || !building.getName().equals("oilSmelter")) {
+            return "you should select an oilSmelter building!";
+        }
+        ArrayList<Engineer> engineers = UnitMenu.getEngineersOfTile();
+        if (engineers.size() == 0) {
+            return "no engineer in this place!";
+        }
+        Engineer engineer;
+        Random random = new Random();
+        engineer = engineers.get(random.nextInt(engineers.size()));
+        if (engineer.isHasOil()) {
+            return "this engineer has oil can't work inn oilSmelter,try again later!";
+        }
+        building.addHuman(engineer);
+        MapController.moveMilitary(building.getStartX(), building.getStartY(), engineer);
+        engineer.setInvisible(true);
+        return "engineer now works in this oilSmelter!";
+    }
+
     public static Building aroundBuilding(int x, int y) {
         Building targetBuilding = null;
         x--;
