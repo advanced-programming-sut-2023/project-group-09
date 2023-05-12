@@ -69,6 +69,10 @@ public class Government {
         buildings = GameBuildings.getGovernmentBuildingHashMap();
         this.maxPopulation = 10;
         this.population = 10;
+        this.foodRate = 1;
+        this.fearRate = 0;
+        this.taxRate = 0;
+        this.religionRate = 0;
     }
 
     public void setUser(User user) {
@@ -183,7 +187,7 @@ public class Government {
 
     public void setTaxRate(int taxRate) {
         this.taxRate = taxRate;
-        ((MainCastle) (this.getBuildings().get("MainCastle").getBuildings().get(0))).setTaxRate(taxRate);
+        ((MainCastle) (this.getBuildings().get("mainCastle").getBuildings().get(0))).setTaxRate(taxRate);
     }
 
     public void addGold(int amount) {
@@ -470,7 +474,7 @@ public class Government {
                     break;
                 Human human = (Human) itr.next();
                 if (human instanceof Civilian && !((Civilian) human).isHasJob()) {
-                    counterOfRemovedPeople++;
+                    counterOfRemovedPeople--;
                     itr.remove();
                     MapController.deleteHuman(human.getX(), human.getY(), (Civilian) human);
                     human.setGovernment(null);
@@ -484,7 +488,7 @@ public class Government {
                     break;
                 Human human = (Human) itr.next();
                 if (human instanceof Civilian) {
-                    counterOfRemovedPeople++;
+                    counterOfRemovedPeople--;
                     itr.remove();
                     MapController.deleteHuman(human.getX(), human.getY(), (Civilian) human);
                 }
@@ -495,7 +499,7 @@ public class Government {
     public void updatePeopleAfterTurn() {
         // maxPopularity : 25 --- minPopularity : -37
         double ratio = (double) (this.getPopularity() + 37) / (25 + 37);
-        int checker = (int) ratio * 100;
+        int checker = (int) (ratio * 100);
         int number;
         if (checker < 20) {
             // 30%
