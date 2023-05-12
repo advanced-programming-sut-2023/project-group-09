@@ -7,6 +7,7 @@ import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameGoods;
 import enumeration.dictionary.Colors;
 import model.building.Building;
+import model.building.castlebuildings.CastleBuilding;
 import model.building.castlebuildings.MainCastle;
 import model.building.producerbuildings.ProducerBuilding;
 import model.building.storagebuildings.StorageBuilding;
@@ -572,6 +573,7 @@ public class Government {
     public void workerDistribution() {
         for (BuildingCounter bc : buildings.values()) {
             for (Building building : bc.getBuildings()) {
+                if (!(building instanceof CastleBuilding))
                 GameController.workerDistribution(building);
             }
         }
