@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="files updated.">
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="ar error solved.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crusader/src/main/java/enumeration/Paths.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/enumeration/Paths.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/model/Government.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/model/Government.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,13 +199,6 @@
       <workItem from="1683748071501" duration="864000" />
       <workItem from="1683749525652" duration="898000" />
       <workItem from="1683806837751" duration="3513000" />
-    </task>
-    <task id="LOCAL-00015" summary="castle buildings changed.">
-      <created>1682168093012</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1682168093012</updated>
     </task>
     <task id="LOCAL-00016" summary="castle buildings final change.">
       <created>1682172406877</created>
@@ -544,7 +536,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683912971942</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="ar error solved.">
+      <created>1683914077546</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1683914077546</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -577,7 +576,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="try to merge." />
     <MESSAGE value="a regex edited." />
     <MESSAGE value="adding Lord to militaries (humans)" />
     <MESSAGE value="Laying off workers after destroying their buildings." />
@@ -602,7 +600,8 @@
     <MESSAGE value="show player and show round added." />
     <MESSAGE value="an error solved" />
     <MESSAGE value="files updated." />
-    <option name="LAST_COMMIT_MESSAGE" value="files updated." />
+    <MESSAGE value="ar error solved." />
+    <option name="LAST_COMMIT_MESSAGE" value="ar error solved." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -610,7 +609,7 @@
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/crusader/src/main/java/controller/GameController.java</url>
           <line>587</line>
-          <option name="timeStamp" value="4" />
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

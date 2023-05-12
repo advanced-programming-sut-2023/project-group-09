@@ -384,7 +384,9 @@ public class MapController {
         if (building instanceof CastleBuilding && !building.getName().equals("drawBridge")){
             return true;
         }
-        System.out.println("reason : tile is not passable!");
+        if (tile.isPassable() == false) {
+            return "reason : tile is not passable."
+        }
         return tile.isPassable();
     }
 
