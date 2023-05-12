@@ -479,6 +479,9 @@ public class GameController {
         if (!MapController.checkCanPutBuilding(x, y, type, GameController.getGame().getCurrentGovernment())) {
             return "this coordinate is not suitable!";
         }
+        if (type.equals("mainCastle") && GameController.getGame().getCurrentGovernment().getBuildingData("mainCastle").getNumber() != 0) {
+            return "a government just can have one main Castle!";
+        }
         consumeRequired(building.getCost());
 
         MapController.dropBuilding(x, y, type, GameController.getGame().getCurrentGovernment());
