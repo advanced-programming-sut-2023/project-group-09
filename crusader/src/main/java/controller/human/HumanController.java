@@ -73,7 +73,6 @@ public class HumanController {
         LinkedList<Tuple> path = MoveController.checkHasPath(startPair, endPair);
         LinkedList<Tuple> ladderPath = MoveController.checkHasLadderPath(startPair, endPair, path);
         LinkedList<Tuple> assassinPath = MoveController.checkAssassinPath(startPair, endPair, path);
-        System.out.println(ladderPath.size());
         if (path == null && assassinPath == null && ladderPath == null) {
             return false;
         }
@@ -561,13 +560,16 @@ public class HumanController {
         if (human instanceof Military military) {
             int hp = military.takeDamage(damage);
             if (hp <= 0) {
+                System.out.println("one troop killed with killing pit!");
                 MapController.deleteMilitary(military.getX(), military.getY(), military);
                 military.setGovernment(null);
                 return true;
             }
+            System.out.println("one troop damaged with killing pit!");
             return false;
         } else {
             if (damage != 0) {
+                System.out.println("one civilian killed with killing pit!");
                 MapController.deleteHuman(human.getX(), human.getY(), (Civilian) human);
                 human.setGovernment(null);
                 return true;

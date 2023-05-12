@@ -95,20 +95,21 @@ public class AttackAndMoveTest {
         System.out.println(GameController.showMap(0,0));
     }
 
+    @Test
     public void digTunnelTest(){
         Game game = makeSample.makeSampleGame();
         Map map = game.getMap();
         Government government = game.getGovernments().get(0);
         Government government1 = game.getGovernments().get(1);
-        MapController.dropBuilding(5, 1, "smallStoneGatehouse", government);
+        MapController.dropBuilding(5, 1, "smallStoneGatehouse", government1);
 
-        MapController.dropMilitary(7, 6, "maceman", government1);
+        MapController.dropMilitary(12, 6, "maceman", government);
         System.out.println(GameController.showMap(0,0));
 
 
-        Military military2 = map.getTile(7, 6).getMilitaries().get(0);
-        makeSample.selectUnit(8,7,null,game,government1);
-        System.out.println(HumanController.move(new Tuple(5,1)));
+        Military military2 = map.getTile(12, 6).getMilitaries().get(0);
+        makeSample.selectUnit(13,7,null,game,government);
+        System.out.println(GameController.digMoat(8,1));
         military2.getMove().moveOneTurn();
         System.out.println(GameController.showMap(0,0));
         military2.getMove().moveOneTurn();
@@ -116,35 +117,13 @@ public class AttackAndMoveTest {
         military2.getMove().moveOneTurn();
         System.out.println(GameController.showMap(0,0));
         military2.getMove().moveOneTurn();
-
-        MapController.dropMilitary(6, 5, "archer", government);
-        makeSample.selectUnit(7,6,null,game,government);
-        System.out.println(GameController.airAttack(2,6));
-        Military military3 = map.getTile(6, 5).getMilitaries().get(0);
-        military2.setMilitaryState(MilitaryStates.AGGRESSIVE_STANCE.getState());
-        military2.getAttack().doAttack();
-        military3.getAttack().doAttack();
+        System.out.println(GameController.showMap(0,0));
         military2.getMove().moveOneTurn();
         System.out.println(GameController.showMap(0,0));
-        military2.getAttack().doAttack();
-        military3.getAttack().doAttack();
         military2.getMove().moveOneTurn();
         System.out.println(GameController.showMap(0,0));
-        military2.getAttack().doAttack();
-        military3.getAttack().doAttack();
         military2.getMove().moveOneTurn();
         System.out.println(GameController.showMap(0,0));
-        military2.getAttack().doAttack();
-        military3.getAttack().doAttack();
-        military2.getMove().moveOneTurn();
-        System.out.println(GameController.showMap(0,0));
-        military2.getAttack().doAttack();
-        military3.getAttack().doAttack();
-        military2.getMove().moveOneTurn();
-        System.out.println(GameController.showMap(0,0));
-        military2.getAttack().doAttack();
-        military3.getAttack().doAttack();
-        military2.getMove().moveOneTurn();
-        System.out.println(GameController.showMap(0,0));
+        System.out.println(GameController.showDetailsOfTile(7,0));
     }
 }

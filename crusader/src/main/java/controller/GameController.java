@@ -52,11 +52,11 @@ public class GameController {
         }
         ArrayList<Military> militaries;
         if (type == null) {
-            militaries = MapController.getMilitariesOfGovernment(x, y, game.getCurrentGovernment());
+            militaries = MapController.getMilitariesOfGovernment(x - 1, y - 1, game.getCurrentGovernment());
         } else if (GameHumans.getUnit(type) == null) {
             return "invalid type!";
         } else {
-            militaries = MapController.getOneTypeOfMilitariesOfGovernment(x, y, type, game.getCurrentGovernment());
+            militaries = MapController.getOneTypeOfMilitariesOfGovernment(x - 1, y - 1, type, game.getCurrentGovernment());
         }
 
         if (militaries.size() == 0) {
@@ -110,7 +110,7 @@ public class GameController {
             return message;
         }
 
-        ArrayList<Military> militaries = MapController.getMilitariesOfGovernment(x, y, game.getCurrentGovernment());
+        ArrayList<Military> militaries = MapController.getMilitariesOfGovernment(x - 1, y - 1, game.getCurrentGovernment());
         if (militaries.size() == 0) {
             return "There is no troop in this place!";
         }
@@ -136,7 +136,7 @@ public class GameController {
         if (message != null) {
             return message;
         }
-        Military enemy = UnitMenu.getEnemy(x, y, scanner);
+        Military enemy = UnitMenu.getEnemy(x - 1, y - 1, scanner);
         if (enemy == null) {
             return "your input is not valid please try again later!";
         }
@@ -152,12 +152,12 @@ public class GameController {
         if (message != null) {
             return message;
         }
-        List<Military> enemies = MapController.getMilitariesOfOtherGovernment(x-1, y-1, GameController.getGame().getCurrentGovernment());
+        List<Military> enemies = MapController.getMilitariesOfOtherGovernment(x - 1, y - 1, GameController.getGame().getCurrentGovernment());
         if (enemies.size() == 0) {
             return "there is no enemy in this position!";
         }
 
-        boolean canAttack = HumanController.airAttack(x, y, enemies);
+        boolean canAttack = HumanController.airAttack(x - 1, y - 1, enemies);
         if (!canAttack) {
             return "can't attack with this type of unit or position!";
         }
@@ -188,7 +188,7 @@ public class GameController {
         if (message != null) {
             return message;
         }
-        Building building = game.getMap().getTile(x, y).getBuilding();
+        Building building = game.getMap().getTile(x - 1, y - 1).getBuilding();
         if (building == null) {
             return "no building in this place!";
         }
@@ -207,7 +207,7 @@ public class GameController {
         if (message != null) {
             return message;
         }
-        Tool tool = game.getMap().getTile(x, y).getTool();
+        Tool tool = game.getMap().getTile(x - 1, y - 1).getTool();
         if (tool == null) {
             return "no tool in this place!";
         }
@@ -226,7 +226,7 @@ public class GameController {
         if (message != null) {
             return message;
         }
-        Tool tool = game.getMap().getTile(x, y).getTool();
+        Tool tool = game.getMap().getTile(x - 1, y - 1).getTool();
         if (tool == null) {
             return "no tool in this place!";
         }
@@ -245,7 +245,7 @@ public class GameController {
         if (message != null) {
             return message;
         }
-        Tool tool = game.getMap().getTile(x, y).getTool();
+        Tool tool = game.getMap().getTile(x - 1, y - 1).getTool();
         if (tool == null) {
             return "no tool in this place!";
         }
@@ -285,12 +285,12 @@ public class GameController {
         Random random = new Random();
         Tunneler tunneler = (Tunneler) militaries.get(random.nextInt(militaries.size()));
 
-        Tile tile = game.getMap().getTile(x, y);
+        Tile tile = game.getMap().getTile(x - 1, y - 1);
         if (!tile.getCanPutBuilding()) {
             return "this position is not suitable!";
         }
 
-        Building targetBuilding = aroundBuilding(x, y);
+        Building targetBuilding = aroundBuilding(x - 1, y - 1);
         if (targetBuilding == null) {
             return "no enemy's castle building is around here!";
         }
@@ -308,7 +308,7 @@ public class GameController {
             return message;
         }
         Military digger = null;
-        Tile tile = GameController.getGame().getMap().getTile(x, y);
+        Tile tile = GameController.getGame().getMap().getTile(x - 1, y - 1);
         if (!tile.isPassable()) {
             return "here is not suitable position for moat!";
         }
@@ -324,7 +324,7 @@ public class GameController {
         if (digger == null) {
             System.out.println("there is no unit to dig moat!");
         }
-        boolean check = EngineerController.digMoat(x, y, digger);
+        boolean check = EngineerController.digMoat(x - 1, y - 1, digger);
         if (!check) {
             return "can't move to this position!";
         }
@@ -336,6 +336,8 @@ public class GameController {
         if (message != null) {
             return message;
         }
+        x--;
+        y--;
         Military digger = null;
         Tile tile = GameController.getGame().getMap().getTile(x, y);
         if (!tile.isPassable()) {
@@ -365,6 +367,8 @@ public class GameController {
         if (message != null) {
             return message;
         }
+        x--;
+        y--;
         Tile tile = GameController.getGame().getMap().getTile(x, y);
         Building building = tile.getBuilding();
         if (building == null || !building.getName().equals("oilSmelter")) {
@@ -396,7 +400,7 @@ public class GameController {
         if (0 < x) {
             Tile neighbor = game.getMap().getTile(x - 1, y);
             Building neighborBuilding = neighbor.getBuilding();
-            if ( checkCanDigTunnel(neighborBuilding) && !neighborBuilding.getGovernment().equals(game.getCurrentGovernment())) {
+            if (checkCanDigTunnel(neighborBuilding) && !neighborBuilding.getGovernment().equals(game.getCurrentGovernment())) {
                 targetBuilding = neighborBuilding;
                 check = false;
             }
@@ -428,8 +432,8 @@ public class GameController {
         return targetBuilding;
     }
 
-    public static boolean checkCanDigTunnel(Building neighborBuilding){
-        if (neighborBuilding.getName().equals("perimeterTurret") || neighborBuilding.getName().equals("defenseTurret")){
+    public static boolean checkCanDigTunnel(Building neighborBuilding) {
+        if (neighborBuilding.getName().equals("perimeterTurret") || neighborBuilding.getName().equals("defenseTurret")) {
             return true;
         }
         return neighborBuilding instanceof Wall;
@@ -441,6 +445,8 @@ public class GameController {
             return "no engineer in this place!";
 
         }
+        x--;
+        y--;
         EngineerController.currentEngineer = engineers.get(random.nextInt(engineers.size()));
         if (equipmentNumber == 1) {
             return EngineerController.buildTool("catapult", x, y);
@@ -476,7 +482,7 @@ public class GameController {
         if (!hasRequired(building.getCost())) {
             return "your resource is not enough!";
         }
-        if (!MapController.checkCanPutBuilding2(x, y, type, GameController.getGame().getCurrentGovernment())) {
+        if (!MapController.checkCanPutBuilding2(x - 1, y - 1, type, GameController.getGame().getCurrentGovernment())) {
             return "this coordinate is not suitable!";
         }
         if (type.equals("mainCastle") && GameController.getGame().getCurrentGovernment().getBuildingData("mainCastle").getNumber() != 0) {
@@ -484,7 +490,7 @@ public class GameController {
         }
         consumeRequired(building.getCost());
 
-        MapController.dropBuilding(x, y, type, GameController.getGame().getCurrentGovernment());
+        MapController.dropBuilding(x - 1, y - 1, type, GameController.getGame().getCurrentGovernment());
         return "building dropped successfully!";
     }
 
@@ -522,7 +528,6 @@ public class GameController {
         if (tool == null || !tool.getGovernment().equals(game.getCurrentGovernment())) {
             return "there is no tool of your government here!";
         }
-        ToolMenu.tool = tool;
         ToolMenu.tool = tool;
         return "tool " + tool.getName() + " selected";
     }
