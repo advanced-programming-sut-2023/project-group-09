@@ -52,7 +52,6 @@ public class Attack {
         return HumanController.getEnemiesOfArea(startX, startY, endX, endY, military.getGovernment());
     }
 
-
     public void attackCiviliansOfRange(int x, int y, int range) {
         Map map = GameController.getGame().getMap();
         int startX = x - range;
@@ -380,7 +379,7 @@ public class Attack {
             return;
         }
 
-//        tool = null;
+        tool = null;
         //continue moving if you don't need to defend yourself
         if (move != null && !move.getMoveState().equals(MoveStates.STOP.getState())) {
             if (move.isAttacking()) {
@@ -396,7 +395,7 @@ public class Attack {
             }
             attack();
         } else {
-            attackCiviliansOfRange(military.getX(), military.getY(), 2);
+            attackCiviliansOfRange(military.getX(), military.getY(), 1);
         }
     }
 

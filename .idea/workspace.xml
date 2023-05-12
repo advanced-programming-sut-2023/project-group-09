@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="show details edited.">
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="size of buildings on map edited.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/files/model/buildings/barracks.json" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/files/model/buildings/barracks.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/files/model/buildings/gateHouses.json" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/files/model/buildings/gateHouses.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/files/model/buildings/towers.json" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/files/model/buildings/towers.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameBuildings.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/gamestructure/GameBuildings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/enumeration/Paths.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/enumeration/Paths.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/MapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/MapController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,13 +200,6 @@
       <workItem from="1683748071501" duration="864000" />
       <workItem from="1683749525652" duration="898000" />
       <workItem from="1683806837751" duration="3513000" />
-    </task>
-    <task id="LOCAL-00009" summary="stay logged in.">
-      <created>1682021001755</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1682021001755</updated>
     </task>
     <task id="LOCAL-00010" summary="Storage and producer buildings...">
       <created>1682062460681</created>
@@ -547,7 +537,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683893112540</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="size of buildings on map edited.">
+      <created>1683894540338</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1683894540338</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -580,7 +577,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="just a commit for merge" />
     <MESSAGE value="Next turn first try.&#10;Worker distribution" />
     <MESSAGE value="Next turn second try" />
     <MESSAGE value="stay logged in - bug resolved" />
@@ -605,7 +601,8 @@
     <MESSAGE value="an error solved" />
     <MESSAGE value="civilians are shown on map now" />
     <MESSAGE value="show details edited." />
-    <option name="LAST_COMMIT_MESSAGE" value="show details edited." />
+    <MESSAGE value="size of buildings on map edited." />
+    <option name="LAST_COMMIT_MESSAGE" value="size of buildings on map edited." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
