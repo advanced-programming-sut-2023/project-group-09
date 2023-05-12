@@ -392,7 +392,7 @@ public class Government {
     public void updateCowAndHorseNumber() {
         int cows = buildings.get("dairyProducts").getNumber() * 3;
         int horses = buildings.get("stable").getNumber() * 4;
-        this.addAmountToProperties("cow", "cow", cows - this.getPropertyAmount("cows"));
+        this.addAmountToProperties("cow", "cow", cows - this.getPropertyAmount("cow"));
         this.addAmountToProperties("horse", "horse", horses - this.getPropertyAmount("horse"));
     }
 
