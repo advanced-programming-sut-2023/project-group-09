@@ -126,9 +126,6 @@ public class MoveController extends HumanController {
 
             result.addFirst(nextPair);
         }
-        for (Tuple pair : result) {
-            System.out.println(pair.getX() + " " + pair.getY());
-        }
         return result;
     }
 

@@ -151,6 +151,12 @@ public class ToolsController {
         Tuple patrolPair = new Tuple(y2, x2);
         Tuple endPair = new Tuple(y1, x1);
         Tuple startPair = MoveController.getStartPair();
+        boolean check = false;
+        if (endPair.equals(startPair)){
+            endPair = new Tuple(y2,x2);
+            check = true;
+        }
+
         MoveController.shouldCheckOtherPath();
         LinkedList<Tuple> path = MoveController.checkHasPath(startPair, endPair);
 
@@ -158,7 +164,7 @@ public class ToolsController {
             return false;
         }
 
-        if (!MoveController.checkPatrolPath(endPair, patrolPair)) {
+        if (!MoveController.checkPatrolPath(endPair, patrolPair) && !check) {
             return false;
         }
 
@@ -166,7 +172,7 @@ public class ToolsController {
         move.setPath(path);
         move.setMovePatrol(patrolPair);
         tool.setToolMove(move);
-
+        move.setPatrolStart(check);
         return true;
     }
 

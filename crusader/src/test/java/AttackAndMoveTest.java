@@ -10,14 +10,12 @@ import model.game.Map;
 import model.game.Tuple;
 import model.human.military.Engineer;
 import model.human.military.Military;
-import model.tools.SiegeTent;
 import model.tools.Tool;
 import org.junit.Assert;
 import org.junit.Test;
 import view.ToolMenu;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedList;
 
 
@@ -172,7 +170,7 @@ public class AttackAndMoveTest {
     }
 
     @Test
-    public void makeTool() {
+    public void makeToolAndMove() {
         Game game = makeSample.makeSampleGame();
         Map map = game.getMap();
         Government government = game.getGovernments().get(0);
@@ -182,33 +180,76 @@ public class AttackAndMoveTest {
         MapController.dropMilitary(12, 6, "engineer", government);
 
 
-
         Military military2 = map.getTile(12, 6).getMilitaries().get(0);
         ArrayList<Engineer> engineers = new ArrayList<>();
         engineers.add((Engineer) military2);
 
         makeSample.selectUnit(13, 7, null, game, government);
-        System.out.println(GameController.buildEquipment(1,engineers,13,7));
+        System.out.println(GameController.buildEquipment(1, engineers, 13, 7));
         System.out.println(GameController.showMap(0, 0));
 
 
         MapController.dropMilitary(12, 5, "engineer", government);
         Military military3 = map.getTile(12, 5).getMilitaries().get(0);
         makeSample.selectUnit(13, 6, null, game, government);
-        System.out.println(GameController.useTool(13,7));
+        System.out.println(GameController.useTool(13, 7));
         military3.getMove().moveOneTurn();
-        GameController.selectTool(12,6);
+        GameController.selectTool(12, 6);
         Tool tool = ToolMenu.tool;
         System.out.println(tool.getName());
-        toolMove(7,0);
+        toolMove(7, 0);
         tool.getToolMove().moveOneTurn();
+        System.out.println(tool.getToolMove().getMoveState());
+        System.out.println(GameController.showMap(0, 0));
         tool.getToolMove().moveOneTurn();
+        System.out.println(tool.getX() + " " + tool.getY());
+        System.out.println(GameController.showMap(0, 0));
         tool.getToolMove().moveOneTurn();
+        System.out.println(tool.getToolMove().getMoveState());
         System.out.println(GameController.showMap(0, 0));
     }
 
+    @Test
+    public void patrolTool() {
+        Game game = makeSample.makeSampleGame();
+        Map map = game.getMap();
+        Government government = game.getGovernments().get(0);
+        Government government1 = game.getGovernments().get(1);
+        MapController.dropBuilding(5, 1, "smallStoneGatehouse", government1);
 
-    public void toolMove(int x,int y){
+        MapController.dropMilitary(12, 6, "engineer", government);
+
+
+        Military military2 = map.getTile(12, 6).getMilitaries().get(0);
+        ArrayList<Engineer> engineers = new ArrayList<>();
+        engineers.add((Engineer) military2);
+
+        makeSample.selectUnit(13, 7, null, game, government);
+        System.out.println(GameController.buildEquipment(1, engineers, 13, 7));
+
+        MapController.dropMilitary(12, 5, "engineer", government);
+        Military military3 = map.getTile(12, 5).getMilitaries().get(0);
+        makeSample.selectUnit(13, 6, null, game, government);
+        System.out.println(GameController.useTool(13, 7));
+        military3.getMove().moveOneTurn();
+        GameController.selectTool(12, 6);
+        Tool tool = ToolMenu.tool;
+        ToolsController.tool = tool;
+        System.out.println(ToolsController.patrolTool(11, 0, 8, 8));
+        tool.getToolMove().moveOneTurn();
+        System.out.println(GameController.showMap(0, 0));
+        tool.getToolMove().moveOneTurn();
+        System.out.println(GameController.showMap(0, 0));
+        tool.getToolMove().moveOneTurn();
+        System.out.println(GameController.showMap(0, 0));
+        tool.getToolMove().moveOneTurn();
+        System.out.println(GameController.showMap(0, 0));
+        tool.getToolMove().moveOneTurn();
+        System.out.println(GameController.showMap(5, 5));
+
+    }
+
+    public void toolMove(int x, int y) {
         Tool tool = ToolMenu.tool;
         LinkedList<Tuple> path = ToolsController.getPathTools(new Tuple(tool.getY(), tool.getX()), new Tuple(y, x));
         if (path == null) {
