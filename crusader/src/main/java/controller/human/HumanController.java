@@ -294,6 +294,11 @@ public class HumanController {
         Tuple patrolPair = new Tuple(y2, x2);
         Tuple endPair = new Tuple(y1, x1);
         Tuple startPair = MoveController.getStartPair();
+        boolean check = false;
+        if (endPair.equals(startPair)){
+            endPair = new Tuple(y2,x2);
+            check = true;
+        }
         MoveController.shouldCheckOtherPath();
         LinkedList<Tuple> path = MoveController.checkHasPath(startPair, endPair);
         LinkedList<Tuple> assassinPath = MoveController.checkAssassinPath(startPair, endPair, path);
@@ -304,7 +309,7 @@ public class HumanController {
             return false;
         }
 
-        if (!MoveController.checkPatrolPath(endPair, patrolPair)) {
+        if (!check && !MoveController.checkPatrolPath(endPair, patrolPair)) {
             return false;
         }
         if (path == null) {
@@ -313,6 +318,7 @@ public class HumanController {
                     Move move = new Move(military.getX(), military.getY(), endPair, true, military);
                     move.setPath(ladderPath);
                     move.setMovePatrol(patrolPair);
+                    move.setPatrolStart(check);
                     military.setMove(move);
                 }
 
@@ -320,6 +326,7 @@ public class HumanController {
                     Move move = new Move(military.getX(), military.getY(), endPair, true, military);
                     move.setPath(assassinPath);
                     move.setMovePatrol(patrolPair);
+                    move.setPatrolStart(check);
                     military.setMove(move);
 
                 }
@@ -329,6 +336,7 @@ public class HumanController {
                 Move move = new Move(military.getX(), military.getY(), endPair, true, military);
                 move.setPath(path);
                 move.setMovePatrol(patrolPair);
+                move.setPatrolStart(check);
                 military.setMove(move);
             }
         }
@@ -565,7 +573,7 @@ public class HumanController {
                 military.setGovernment(null);
                 return true;
             }
-            System.out.println("one troop damaged with killing pit!");
+            if (damage != 0)System.out.println("one troop damaged with killing pit!");
             return false;
         } else {
             if (damage != 0) {
@@ -578,16 +586,14 @@ public class HumanController {
         }
     }
 
-    public static boolean digTunnel(Building targetBuilding, Tunneler tunneler) {
+    public static boolean digTunnel(Building targetBuilding,int x,int y, Tunneler tunneler) {
         Tuple startTuple = new Tuple(tunneler.getY(), tunneler.getX());
-        LinkedList<Tuple> path = MoveController.getPathForBuilding(startTuple, targetBuilding, tunneler);
+        LinkedList<Tuple> path = MoveController.getPath(startTuple, new Tuple(y,x), tunneler);
         if (path == null) {
             return false;
         }
 
-        Tuple buildingPosition = path.getLast();
-        int x = buildingPosition.getX();
-        int y = buildingPosition.getY();
+
         Building tunnel = GameBuildings.getTunnel(GameController.getGame().getCurrentGovernment(), x, y);
         Tile tile = GameController.getGame().getMap().getTile(x, y);
         tile.setBuilding(tunnel);

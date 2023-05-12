@@ -224,7 +224,7 @@ public class Tile {
     }
 
     public void setMoat(boolean moat) {
-        passable = false;
+        passable = !moat;
         isMoat = moat;
     }
 

@@ -304,6 +304,10 @@ public class Move {
         this.shouldFillMoat = shouldFillMoat;
     }
 
+    public void setPatrolStart(boolean patrolStart) {
+        isPatrolStart = patrolStart;
+    }
+
     public void moveOneTurn() {
 
         killPits.clear();
@@ -386,6 +390,11 @@ public class Move {
             if (tool != null && shouldDigMoat) {
                 Tile tile = GameController.getGame().getMap().getTile(endPair.getX(), endPair.getY());
                 tile.setMoat(true);
+            }
+
+            if (tool != null && shouldFillMoat) {
+                Tile tile = GameController.getGame().getMap().getTile(endPair.getX(), endPair.getY());
+                tile.setMoat(false);
             }
             return;
         }

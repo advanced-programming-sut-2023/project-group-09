@@ -294,7 +294,7 @@ public class GameController {
         if (targetBuilding == null) {
             return "no enemy's castle building is around here!";
         }
-        boolean checkPath = HumanController.digTunnel(targetBuilding, tunneler);
+        boolean checkPath = HumanController.digTunnel(targetBuilding, x - 1, y - 1, tunneler);
         if (!checkPath) {
             return "no path to position!";
         }
@@ -392,8 +392,6 @@ public class GameController {
 
     public static Building aroundBuilding(int x, int y) {
         Building targetBuilding = null;
-        x--;
-        y--;
         boolean check = true;
 
 

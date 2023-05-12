@@ -45,7 +45,7 @@ public class Tunneler extends EuropeanTroop {
         MapController.deleteBuilding(targetTunnel);
         int hp = targetBuilding.takeDamage(getAttackRating());
 
-        if (hp < 0){
+        if (hp <= 0){
             MapController.deleteBuilding(targetBuilding);
             targetBuilding.setGovernment(null);
         }
