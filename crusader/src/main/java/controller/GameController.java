@@ -546,8 +546,6 @@ public class GameController {
         if (message != null) {
             return message;
         }
-        x--;
-        y--;
         Tool tool = game.getMap().getTile(x, y).getTool();
         if (tool == null || !tool.getGovernment().equals(game.getCurrentGovernment())) {
             return "there is no tool of your government here!";
