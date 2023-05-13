@@ -49,6 +49,8 @@ public class GameController {
         if (message != null) {
             return message;
         }
+        x--;
+        y--;
         ArrayList<Military> militaries;
         if (type == null) {
             militaries = MapController.getMilitariesOfGovernment(x, y, game.getCurrentGovernment());
@@ -474,7 +476,8 @@ public class GameController {
         if (message != null) {
             return message;
         }
-
+        x--;
+        y--;
         Building building = GameBuildings.getBuilding(type);
         if (building == null) {
             return "building type is invalid!";
@@ -531,6 +534,12 @@ public class GameController {
 
 
     public static String selectBuilding(int x, int y) {
+        String message = validateXAndY(x, y);
+        if (message != null) {
+            return message;
+        }
+        x--;
+        y--;
         Government nowGovernment = game.getCurrentGovernment();
         Building building = game.getMap().getTile(x, y).getBuilding();
         if (building == null || !building.getGovernment().equals(nowGovernment)) {
@@ -546,6 +555,8 @@ public class GameController {
         if (message != null) {
             return message;
         }
+        x--;
+        y--;
         Tool tool = game.getMap().getTile(x, y).getTool();
         if (tool == null || !tool.getGovernment().equals(game.getCurrentGovernment())) {
             return "there is no tool of your government here!";
@@ -846,10 +857,10 @@ public class GameController {
         if (checkNullFields(y)) {
             return "y is required!";
         }
-        if (x < 0 || x >= map.getWidth()) {
+        if (x < 1 || x >= map.getWidth()) {
             return "invalid x!";
         }
-        if (y < 0 || y >= map.getLength()) {
+        if (y < 1 || y >= map.getLength()) {
             return "invalid y!";
         }
         return null;
