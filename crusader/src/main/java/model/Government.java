@@ -541,7 +541,7 @@ public class Government {
                 this.properties.get("apple") + this.properties.get("cheese");
         if (foodsNeeded > foodWeHave) {
             this.foodRate = -2;
-            System.out.println("Not enough food!");
+            System.out.println("Lord " + this.user.getNickname() + " : Not enough food!");
         }
         int consumedFoods = Math.min(foodsNeeded, foodWeHave);
         consumeFoods(consumedFoods);
@@ -606,6 +606,7 @@ public class Government {
     }
 
     public void beingDead() {
+        System.out.println("Lord " + this.user.getNickname() + " is Dead!");
         for (BuildingCounter bc : buildings.values()) {
             Iterator itr = bc.getBuildings().iterator();
             while (itr.hasNext()){
