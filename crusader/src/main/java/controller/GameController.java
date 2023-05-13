@@ -9,6 +9,7 @@ import model.Government;
 import model.activity.Move;
 import model.building.Building;
 import model.building.castlebuildings.Gatehouse;
+import model.building.castlebuildings.MainCastle;
 import model.building.castlebuildings.Wall;
 import model.game.Game;
 import model.game.Map;
@@ -173,6 +174,9 @@ public class GameController {
         Building building = game.getMap().getTile(x - 1, y - 1).getBuilding();
         if (building == null) {
             return "no building in this place!";
+        }
+        if (building instanceof MainCastle) {
+            return "you can't attack to mainCastle";
         }
         if (building.getGovernment().equals(game.getCurrentGovernment())) {
             return "this building is yours!";
@@ -860,10 +864,10 @@ public class GameController {
         if (checkNullFields(y)) {
             return "y is required!";
         }
-        if (x < 1 || x >= map.getWidth()) {
+        if (x < 1 || x > map.getWidth()) {
             return "invalid x!";
         }
-        if (y < 1 || y >= map.getLength()) {
+        if (y < 1 || y > map.getLength()) {
             return "invalid y!";
         }
         return null;
