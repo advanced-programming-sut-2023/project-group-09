@@ -114,6 +114,7 @@ public class Government {
     }
 
     public boolean isAlive() {
+        checkingGovernmentIsAlive();
         return isAlive;
     }
 
@@ -451,11 +452,11 @@ public class Government {
     public void checkingGovernmentIsAlive() {
         for (Military military : this.troops) {
             if (military instanceof Lord) {
-                Lord lord = (Lord) military;
+                this.lord = (Lord) military;
                 break;
             }
         }
-        if (lord.getHealth() <= 0) {
+        if (this.lord.getHealth() <= 0) {
             this.isAlive = false;
         }
     }
@@ -574,7 +575,7 @@ public class Government {
         for (BuildingCounter bc : buildings.values()) {
             for (Building building : bc.getBuildings()) {
                 if (!(building instanceof CastleBuilding))
-                GameController.workerDistribution(building);
+                    GameController.workerDistribution(building);
             }
         }
     }

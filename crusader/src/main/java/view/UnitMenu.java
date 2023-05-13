@@ -339,7 +339,10 @@ public class UnitMenu {
             System.out.println(i + 1 + "." + military.getName() + " (" + military.getGovernment().getColor() + ") hp: " + military.getHealth());
         }
         String input = scanner.nextLine();
-        int index = ViewController.getNumberOfRegex(input);
+        int index = -1;
+        try {
+            index = Integer.parseInt(input);
+        } catch (Exception e) {}
         if (index < 1 || index > militaries.size()) {
             return null;
         }

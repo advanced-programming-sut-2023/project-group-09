@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="move of worker has error!">
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="error of worker distribution solved.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/src/main/java/controller/GameController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,17 +45,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Sharif/Term2/AP/Project/Project-Phase-1&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/Sharif/Term2/AP/Project/Project-Phase-1/crusader",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="model" />
@@ -199,13 +198,6 @@
       <workItem from="1683748071501" duration="864000" />
       <workItem from="1683749525652" duration="898000" />
       <workItem from="1683806837751" duration="3513000" />
-    </task>
-    <task id="LOCAL-00019" summary="Building menu and Buildings dictionary. (first try)">
-      <created>1682255351548</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1682255351548</updated>
     </task>
     <task id="LOCAL-00020" summary="Building menu (second try)">
       <created>1682289033211</created>
@@ -543,7 +535,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683923907187</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="error of worker distribution solved.">
+      <created>1683925715143</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1683925715143</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -576,7 +575,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="adding Lord to militaries (humans)" />
     <MESSAGE value="Laying off workers after destroying their buildings." />
     <MESSAGE value="ending of game + scores + scoreboard" />
     <MESSAGE value="popularity + update population" />
@@ -601,7 +599,8 @@
     <MESSAGE value="files updated." />
     <MESSAGE value="ar error solved." />
     <MESSAGE value="move of worker has error!" />
-    <option name="LAST_COMMIT_MESSAGE" value="move of worker has error!" />
+    <MESSAGE value="error of worker distribution solved." />
+    <option name="LAST_COMMIT_MESSAGE" value="error of worker distribution solved." />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
