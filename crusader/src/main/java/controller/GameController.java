@@ -556,12 +556,15 @@ public class GameController {
         return result;
     }
 
+
     public static int howManyGovernmentsRemainsInGame() {
         int numberOfGovernments = 0;
         for (Government government : game.getGovernments()) {
             if (government.isAlive()) {
                 government.addTurnsSurvive();
                 numberOfGovernments++;
+            } else {
+                government.beingDead();
             }
         }
         return numberOfGovernments;
