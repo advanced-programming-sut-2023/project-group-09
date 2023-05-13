@@ -70,7 +70,7 @@ public class EditMapMenu {
                     if (MapController.checkCanPutBuilding(x, y, type, currentGovernment)) {
                         MapController.dropBuilding(x, y, type, currentGovernment);
                         building = MapController.map.getTile(x, y).getBuilding();
-                        if (!(building instanceof Gatehouse gatehouse)){
+                        if (!(building instanceof Gatehouse gatehouse)) {
                             System.out.println("you can't drop a building here!");
                             return;
                         }
@@ -81,11 +81,11 @@ public class EditMapMenu {
                     }
                     return;
                 }
-            }else{
+            } else {
                 System.out.println("side field is required!");
                 return;
             }
-        } else if (sideM.find()){
+        } else if (sideM.find()) {
             System.out.println("side field is not for this type of building!");
             return;
         }
@@ -139,12 +139,12 @@ public class EditMapMenu {
             return;
         }
 
-        int x = Integer.parseInt(xM.group("x"));
-        int y = Integer.parseInt(yM.group("y"));
+        int x = Integer.parseInt(xM.group("x")) - 1;
+        int y = Integer.parseInt(yM.group("y")) - 1;
         String type = typeM.group("type");
-        if (MapController.checkCanPutMilitary(x - 1, y - 1, type)) {
+        if (MapController.checkCanPutMilitary(x, y, type)) {
             for (int i = 0; i < count; i++) {
-                MapController.dropMilitary(x - 1, y - 1, type, currentGovernment);
+                MapController.dropMilitary(x, y, type, currentGovernment);
             }
             System.out.println("unit dropped successfully!");
         } else {
