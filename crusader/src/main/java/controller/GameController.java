@@ -269,7 +269,7 @@ public class GameController {
     public static String pourOil(String direction, ArrayList<Engineer> engineers) {
         Random random = new Random();
         Engineer engineer = engineers.get(random.nextInt(engineers.size()));
-        if (!engineer.isHasOil()){
+        if (!engineer.isHasOil()) {
             if (!HumanController.pourOilDirection(engineer, direction, engineer.getMilitaryState()))
                 return "can't pour oil!";
             return "one engineer go to oilSmelter!";
@@ -705,13 +705,13 @@ public class GameController {
                                 sign = tile.getTool().getGovernment().getColorRgb() + "a";
                             }
 
-                        } else if (tile.getHumans().size() != 0) {
+                        } else if (filteredHumansList(tile.getHumans()).size() != 0) {
                             HashMap<Government, Integer> numberOfHumansOnTile = new HashMap<>();
                             for (int m = 0; m < game.getGovernments().size(); m++) {
                                 numberOfHumansOnTile.put(game.getGovernments().get(m), 0);
                             }
-                            for (int m = 0; m < tile.getHumans().size(); m++) {
-                                Human human = tile.getHumans().get(m);
+                            for (int m = 0; m < filteredHumansList(tile.getHumans()).size(); m++) {
+                                Human human = filteredHumansList(tile.getHumans()).get(m);
                                 numberOfHumansOnTile.replace(human.getGovernment(), numberOfHumansOnTile.get(human.getGovernment()) + 1);
                             }
                             int max = Collections.max(numberOfHumansOnTile.values());
@@ -728,7 +728,7 @@ public class GameController {
                             // standing civilians c
                             // standing militaries m
                             int walking = 0, standing = 0, civilians = 0, militaries = 0;
-                            for (Human human : tile.getHumans()) {
+                            for (Human human : filteredHumansList(tile.getHumans())) {
                                 if (human.getMove() != null && human.getMove().isMoving())
                                     walking++;
                                 else
@@ -842,12 +842,12 @@ public class GameController {
                         tile.getCivilians().get(i).getGovernment().getUser().getNickname() + "\n";
             }
         }
-        details += "Military number : " + tile.getMilitaries().size() + "\n";
-        for (int i = 0; i != tile.getMilitaries().size(); i++) {
-            details += "Military " + (i + 1) + ": type: " + tile.getMilitaries().get(i).getName() + " | Hp : " +
-                    tile.getMilitaries().get(i).getHealth() + "/" +
-                    tile.getMilitaries().get(i).getDefenseRange() + " | from Lord " +
-                    tile.getMilitaries().get(i).getGovernment().getUser().getNickname() + "\n";
+        details += "Military number : " + filteredMilitariesList(tile.getMilitaries()).size() + "\n";
+        for (int i = 0; i != filteredMilitariesList(tile.getMilitaries()).size(); i++) {
+            Military human = filteredMilitariesList(tile.getMilitaries()).get(i);
+            details += "Military " + (i + 1) + ": type: " + human.getName() + " | Hp : " +
+                    human.getHealth() + "/" + human.getDefenseRange() + " | from Lord " +
+                    human.getGovernment().getUser().getNickname() + "\n";
         }
         return details.substring(0, details.length() - 1);
     }
@@ -938,5 +938,30 @@ public class GameController {
         return input == -1 || input == -2;
     }
 
+    private static boolean checkToShowOnMap(Human human) {
+        if (human instanceof Engineer) return true;
+        if (!human.isInvisible())
+            return true;
+        if (human.getGovernment().equals(game.getCurrentGovernment()))
+            return true;
+        return false;
+    }
 
+    private static ArrayList<Human> filteredHumansList(ArrayList<Human> humans) {
+        ArrayList<Human> filteredList = new ArrayList<>();
+        for (Human human : humans) {
+            if (checkToShowOnMap(human))
+                filteredList.add(human);
+        }
+        return filteredList;
+    }
+
+    private static ArrayList<Military> filteredMilitariesList(ArrayList<Military> militaries) {
+        ArrayList<Military> filteredList = new ArrayList<>();
+        for (Military military : militaries) {
+            if (checkToShowOnMap(military))
+                filteredList.add(military);
+        }
+        return filteredList;
+    }
 }
