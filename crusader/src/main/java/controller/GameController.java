@@ -834,7 +834,7 @@ public class GameController {
         for (int i = 0; i != filteredMilitariesList(tile.getMilitaries()).size(); i++) {
             Military human = filteredMilitariesList(tile.getMilitaries()).get(i);
             details += "Military " + (i + 1) + ": type: " + human.getName() + " | Hp : " +
-                    human.getHealth() + "/" + human.getDefenseRange() + " | from Lord " +
+                    human.getHealth() + "/" + human.getDefenseRating() + " | from Lord " +
                     human.getGovernment().getUser().getNickname() + "\n";
         }
         return details.substring(0, details.length() - 1);
