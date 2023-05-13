@@ -47,7 +47,7 @@ public class PixelCanvas extends Canvas {
         }else{
             return new Color(tile.getTexture().getR(), tile.getTexture().getB(), tile.getTexture().getG());
         }
-        //return new Color(143, 14, 2);
+        //return new Color(25, 71, 96);
     }
 
     public Color getGovernmentColor(String color){
