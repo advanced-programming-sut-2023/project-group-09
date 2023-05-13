@@ -80,7 +80,7 @@ public class TradeController {
             trade.getSender().addGold(-trade.getPrice());
             GovernmentController.generateProduct(trade.getSender(), trade.getType(), trade.getAmount());
         } else GovernmentController.generateProduct(currentGovernment, trade.getType(), trade.getAmount());
-        return "request accepted successfully";
+        return "request accepted successfully!";
     }
 
     public static String showTradeList() {

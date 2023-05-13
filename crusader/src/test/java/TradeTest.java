@@ -3,6 +3,7 @@ import controller.gamestructure.GameMaps;
 import enumeration.Pair;
 import enumeration.dictionary.Colors;
 import model.Government;
+import model.Trade;
 import model.User;
 import model.game.Game;
 import model.game.Map;
@@ -10,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 public class TradeTest {
     public static Game makeSampleGame() {
@@ -54,6 +56,7 @@ public class TradeTest {
         Government government1 = game.getGovernments().get(1);
         Government government2 = game.getGovernments().get(2);
         TradeController.setTargetGovernment(government1);
+        //================================= trade goods
         String output = TradeController.tradeGoods(null,1,500,"thanks");
         String output1 = TradeController.tradeGoods("hello",-1,500,"thanks");
         String output2 = TradeController.tradeGoods("hello",1,-1,"thanks");
@@ -68,6 +71,33 @@ public class TradeTest {
         Assert.assertEquals(output4,"resource type is invalid!");
         Assert.assertEquals(output5,"amount value can not be 0!");
         Assert.assertEquals(output6,"your gold isn't enough!");
-
+        String output7 = TradeController.tradeGoods("meat",1,50,"thanks");
+        Assert.assertEquals("request sent successfully!",output7);
+        Assert.assertEquals(TradeController.allTrades.size() , 1);
+        Assert.assertEquals(government.getSentTrades().size(),1);
+        Assert.assertEquals(government1.getReceivedTrades().size(),1);
+        Set<String> IDs = TradeController.allTrades.keySet();
+        String id = null;
+        String id1 = null;
+        for (String ID:IDs){
+            id = ID;
+            break;
+        }
+        Trade trade = TradeController.allTrades.get(id);
+        TradeController.tradeGoods("bread",1,50,"thanks");
+        game.setCurrentGovernment(government1);
+        //================================= accept trade
+        output = TradeController.acceptTrade(null,"ok");
+        output1 = TradeController.acceptTrade(id,null);
+        output2 = TradeController.acceptTrade("ssdfs","ok");
+        trade.setIsAccepted(true);
+        output3 = TradeController.acceptTrade(id,"ok");
+        trade.setIsAccepted(false);
+        output4 = TradeController.acceptTrade(id,"ok");
+        Assert.assertEquals(output,"id field is required!");
+        Assert.assertEquals(output1,"message field is required!");
+        Assert.assertEquals(output2,"no trade with this id exist!");
+        Assert.assertEquals(output3,"this trade was accepted before!");
+        Assert.assertEquals(output4,"your resource is not enough!");
     }
 }
