@@ -40,7 +40,6 @@ public class TradeMenu {
                     canSendRequest = true;
                 } else {
                     System.out.println("<< Trade Menu >>");
-                    continue;
                 }
             } else if (tradeMatcher.matches()) {
                 if (!canSendRequest) {

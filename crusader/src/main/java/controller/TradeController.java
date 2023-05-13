@@ -149,7 +149,9 @@ public class TradeController {
         if (GameGoods.getProduct(resourceType) == null) {
             return "resource type is invalid!";
         }
-
+        if (price > GameController.getGame().getCurrentGovernment().getGold()){
+            return "your gold isn't enough!";
+        }
         if (resourceAmount == 0) {
             return "amount value can not be 0!";
         }
