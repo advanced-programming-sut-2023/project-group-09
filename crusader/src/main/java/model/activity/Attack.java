@@ -7,6 +7,7 @@ import controller.human.MoveController;
 import enumeration.MilitaryStates;
 import enumeration.MoveStates;
 import model.building.Building;
+import model.building.castlebuildings.MainCastle;
 import model.game.Map;
 import model.game.Tuple;
 import model.human.civilian.Civilian;
@@ -288,6 +289,9 @@ public class Attack {
     }
 
     public void attackToBuilding() {
+        if (targetBuilding instanceof MainCastle){
+            return;
+        }
         if (military.getName().equals("ladderman")) {
             military.setUsesLadder(true);
             return;
