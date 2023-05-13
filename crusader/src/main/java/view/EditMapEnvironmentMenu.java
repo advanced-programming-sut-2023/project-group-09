@@ -1,6 +1,5 @@
 package view;
 
-import controller.GameController;
 import controller.MapController;
 import enumeration.Textures;
 import enumeration.commands.MapCommands;
@@ -70,6 +69,10 @@ public class EditMapEnvironmentMenu {
         if (validation1.isEmpty())
             System.out.println(MapController.setTexture(Integer.parseInt(xM.group("x")) - 1, Integer.parseInt(yM.group("y")) - 1, texture));
         else {
+            if (texture.equals(Textures.LARGE_POND) || texture.equals(Textures.SMALL_POND)) {
+                System.out.println("size of ponds are fixed");
+                return;
+            }
             int x1 = Integer.parseInt(x1M.group("x1")) - 1;
             int x2 = Integer.parseInt(x2M.group("x2")) - 1;
             int y1 = Integer.parseInt(y1M.group("y1")) - 1;
