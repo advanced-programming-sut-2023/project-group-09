@@ -97,6 +97,9 @@ public abstract class Military extends Human{
 
     public int getAttackRating() {
         if(this.getGovernment() != null){
+            if (this.getGovernment().getFearRate() > 0){
+                return attackRating;
+            }
             return this.getGovernment().getFearRate() * (-1) + attackRating;
         }
         return attackRating;

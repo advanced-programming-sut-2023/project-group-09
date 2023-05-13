@@ -69,6 +69,9 @@ public class Civilian extends Human {
 
     public int getSpeed() {
         if (this.getGovernment() != null && hasJob) {
+            if (this.getGovernment().getFearRate() > 0){
+                return super.getSpeed();
+            }
             return this.getGovernment().getFearRate() * (-1) + super.getSpeed();
         }
         return super.getSpeed();
