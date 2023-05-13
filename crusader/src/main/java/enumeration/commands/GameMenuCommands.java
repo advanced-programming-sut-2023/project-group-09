@@ -20,7 +20,6 @@ public enum GameMenuCommands {
     SIDE_ITEM("( -s (?<side>(\"[^\"]+\"|\\S+)))?"),
     TYPE_ITEM(" -type (?<type>(\"[^\"]+\"|\\S+))"),
     UNIT_TYPE_ITEM("( -type (?<type>(\"[^\"]+\"|\\S+)))?"),
-    MARK_TO_DIG_MOAT("dig(?<items>.+)"),
     CONTINUE("continue");
     private final String regex;
 
