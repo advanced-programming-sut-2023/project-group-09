@@ -53,9 +53,6 @@ public class MapMenu {
         else if (whichFunction == 2)
             System.out.println(MapController.clearTile(Integer.parseInt(xM.group("x")) - 1,
                     Integer.parseInt(yM.group("y")) - 1));
-        else if (whichFunction == 10)
-            System.out.println(GameController.showMap2(Integer.parseInt(xM.group("x")) - 1,
-                    Integer.parseInt(yM.group("y")) - 1, MapController.map));
     }
 
     private static void runMoveMap(Matcher matcher) {

@@ -521,7 +521,7 @@ public class GameController {
         if (tool == null || !tool.getGovernment().equals(game.getCurrentGovernment())) {
             return "there is no tool of your government here!";
         }
-        ToolMenu.tool = tool;
+        ToolsController.tool = tool;
         return "tool " + tool.getName() + " selected";
     }
 
@@ -726,94 +726,6 @@ public class GameController {
         }
 
         return result.substring(0, result.length() - 1);
-    }
-
-    public static String showMap2(int x, int y, Map map) {
-        if (y - 3 < 0) y = 3;
-        else if (y + 3 >= map.getLength()) y = map.getLength() - 1;
-        if (x - 9 < 0) x = 9;
-        else if (x + 9 >= map.getWidth()) x = map.getWidth() - 1;
-//        game.setCurrentMapX(x);
-//        game.setCurrentMapY(y);
-
-        String result = "";
-        result += "-";
-        for (int i = 0; i < 19 * 6; i++) {
-            result += "-";
-        }
-        result += "\n";
-        for (int i = y - 3; i <= y + 3; i++) {
-            for (int j = 0; j < 2; j++) {
-                result += "|";
-                for (int k = x - 9; k <= x + 9; k++) {
-                    for (int l = 0; l < 5; l++) {
-                        Tile tile = map.getTile(k, i);
-                        String sign = " ";
-                        if (tile.getTool() != null) {
-                            sign = tile.getTool().getGovernment().getColorRgb() + "A";
-                        } else if (tile.getHumans().size() != 0) {
-                            HashMap<Government, Integer> numberOfHumansOnTile = new HashMap<>();
-                            for (int m = 0; m < game.getGovernments().size(); m++) {
-                                numberOfHumansOnTile.put(game.getGovernments().get(m), 0);
-                            }
-                            for (int m = 0; m < tile.getHumans().size(); m++) {
-                                Human human = tile.getHumans().get(m);
-                                numberOfHumansOnTile.replace(human.getGovernment(), numberOfHumansOnTile.get(human.getGovernment()) + 1);
-                            }
-                            int max = Collections.max(numberOfHumansOnTile.values());
-                            int numberOfMax = 0;
-                            Government maxHuamnsGovernment = null;
-                            for (Government government : numberOfHumansOnTile.keySet()) {
-                                if (numberOfHumansOnTile.get(government) == max) {
-                                    numberOfMax++;
-                                    maxHuamnsGovernment = government;
-                                }
-                            }
-                            int walking = 0, standing = 0, civilians = 0, militaries = 0;
-                            for (Human human : tile.getHumans()) {
-                                if (human.getMove() != null && human.getMove().isMoving())
-                                    walking++;
-                                else
-                                    standing++;
-                                if (human instanceof Civilian)
-                                    civilians++;
-                                else
-                                    militaries++;
-                            }
-                            String humansChar = "";
-                            if (walking >= standing) {
-                                if (militaries >= civilians)
-                                    humansChar = "M";
-                                else
-                                    humansChar = "C";
-                            } else {
-                                if (militaries >= civilians)
-                                    humansChar = "m";
-                                else
-                                    humansChar = "c";
-                            }
-                            if (numberOfMax == 1) sign = maxHuamnsGovernment.getColorRgb() + humansChar;
-                            else sign = humansChar;
-                        } else if (tile.getBuilding() != null && !(tile.getBuilding() instanceof Wall))
-                            sign = tile.getBuilding().getGovernment().getColorRgb() + "B";
-                        else if (tile.getBuilding() != null && tile.getBuilding() instanceof Wall)
-                            sign = tile.getBuilding().getGovernment().getColorRgb() + ((Wall) tile.getBuilding()).getHeight();
-                        else if (tile.getTree() != null) sign = "T";
-                        else if (tile.getRockDirection() != null) sign = "R";
-                        result += tile.getTexture().getColor() + sign + "\u001B[0m";
-                    }
-                    result += "|";
-                }
-                result += "\n";
-            }
-            result += "-";
-            for (int j = 0; j < 19 * 6; j++) {
-                result += "-";
-            }
-            result += "\n";
-        }
-
-        return result;
     }
 
     public static String showPreviewOfMap(Map map) {
