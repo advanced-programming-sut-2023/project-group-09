@@ -11,6 +11,8 @@ import model.human.military.Engineer;
 import model.human.military.Military;
 import model.tools.Tool;
 
+import java.util.ArrayList;
+
 
 public class ToolAttack {
 
@@ -114,16 +116,20 @@ public class ToolAttack {
                 attackToTool(tool);
                 count++;
             }
-            for (Military military : tile.getMilitaries()) {
-                if (!military.getGovernment().equals(this.tool.getGovernment()) && !military.isInvisible()) {
+            ArrayList<Military> militaries= new ArrayList<>(tile.getMilitaries());
+            for (Military military : militaries) {
+                if (military.getGovernment() != null &&!military.getGovernment().equals(this.tool.getGovernment())) {
+                    if (military instanceof Engineer && military.isInvisible()){
+                        continue;
+                    }
+                    military.setInvisible(false);
                     attackToMilitary(military);
                     count++;
-                    if (!(military instanceof Engineer)) {
-                        military.setInvisible(false);
-                    }
+
                 }
             }
-            for (Civilian civilian : tile.getCivilian()) {
+            ArrayList<Civilian> civilians = new ArrayList<>(tile.getCivilian());
+            for (Civilian civilian : civilians) {
                 if (!civilian.getGovernment().equals(this.tool.getGovernment())) {
                     attackToCivilian(civilian);
                     count++;

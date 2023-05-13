@@ -192,7 +192,6 @@ public class Attack {
                     minDistance = distance;
                     enemies.clear();
                     enemies.add(enemy);
-                    System.out.println("===============================" + minDistance);
                 }
             }
         }

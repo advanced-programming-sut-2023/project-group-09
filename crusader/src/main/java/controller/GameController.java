@@ -49,6 +49,8 @@ public class GameController {
         if (message != null) {
             return message;
         }
+        x--;
+        y--;
         ArrayList<Military> militaries;
         if (type == null) {
             militaries = MapController.getMilitariesOfGovernment(x, y, game.getCurrentGovernment());
@@ -265,11 +267,17 @@ public class GameController {
 
 
     public static String pourOil(String direction, ArrayList<Engineer> engineers) {
-        for (int i = 0; i < engineers.size(); i++) {
-            if (!HumanController.pourOilDirection(engineers.get(i), direction, engineers.get(i).getMilitaryState()))
-                return "can't pour oil";
+        Random random = new Random();
+        Engineer engineer = engineers.get(random.nextInt(engineers.size()));
+        if (!engineer.isHasOil()){
+            if (!HumanController.pourOilDirection(engineer, direction, engineer.getMilitaryState()))
+                return "can't pour oil!";
+            return "one engineer go to oilSmelter!";
         }
-        return "poured oil successfully";
+        if (!HumanController.pourOilDirection(engineer, direction, engineer.getMilitaryState()))
+            return "can't pour oil!";
+
+        return "poured oil successfully!";
     }
 
     public static String digTunnel(int x, int y) {
@@ -339,8 +347,8 @@ public class GameController {
         y--;
         Military digger = null;
         Tile tile = GameController.getGame().getMap().getTile(x, y);
-        if (!tile.isPassable()) {
-            return "here is not suitable position for moat!";
+        if (!tile.isMoat()) {
+            return "no moat in position!";
         }
         for (Military military : HumanController.militaries) {
             if (military instanceof Engineer engineer && engineer.isHasOil()) {
@@ -354,7 +362,9 @@ public class GameController {
         if (digger == null) {
             System.out.println("there is no unit to fill moat!");
         }
+        tile.setMoat(false);
         boolean check = EngineerController.fillMoat(x, y, digger);
+        tile.setMoat(true);
         if (!check) {
             return "can't move to this position!";
         }
@@ -466,7 +476,8 @@ public class GameController {
         if (message != null) {
             return message;
         }
-
+        x--;
+        y--;
         Building building = GameBuildings.getBuilding(type);
         if (building == null) {
             return "building type is invalid!";
@@ -482,7 +493,7 @@ public class GameController {
         if (building instanceof Gatehouse && !building.getName().equals("drawBridge")) {
             if (side != null && (side.equals("right") || side.equals("left"))) {
                 if (side.equals("left")) {
-                    if (!MapController.checkCanPutBuilding2(x, y, type, GameController.getGame().getCurrentGovernment())) {
+                    if (!MapController.checkCanPutBuilding(x, y, type, GameController.getGame().getCurrentGovernment())) {
                         return "this coordinate is not suitable!";
                     }
                     MapController.dropBuilding(x, y, type, GameController.getGame().getCurrentGovernment());
@@ -497,7 +508,7 @@ public class GameController {
 
 
         consumeRequired(building.getCost());
-        if (!MapController.checkCanPutBuilding2(x, y, type, GameController.getGame().getCurrentGovernment())) {
+        if (!MapController.checkCanPutBuilding(x, y, type, GameController.getGame().getCurrentGovernment())) {
             return "this coordinate is not suitable!";
         }
         MapController.dropBuilding(x, y, type, GameController.getGame().getCurrentGovernment());
@@ -523,6 +534,12 @@ public class GameController {
 
 
     public static String selectBuilding(int x, int y) {
+        String message = validateXAndY(x, y);
+        if (message != null) {
+            return message;
+        }
+        x--;
+        y--;
         Government nowGovernment = game.getCurrentGovernment();
         Building building = game.getMap().getTile(x, y).getBuilding();
         if (building == null || !building.getGovernment().equals(nowGovernment)) {
@@ -534,6 +551,12 @@ public class GameController {
     }
 
     public static String selectTool(int x, int y) {
+        String message = validateXAndY(x, y);
+        if (message != null) {
+            return message;
+        }
+        x--;
+        y--;
         Tool tool = game.getMap().getTile(x, y).getTool();
         if (tool == null || !tool.getGovernment().equals(game.getCurrentGovernment())) {
             return "there is no tool of your government here!";
@@ -834,10 +857,10 @@ public class GameController {
         if (checkNullFields(y)) {
             return "y is required!";
         }
-        if (x < 0 || x >= map.getWidth()) {
+        if (x < 1 || x >= map.getWidth()) {
             return "invalid x!";
         }
-        if (y < 0 || y >= map.getLength()) {
+        if (y < 1 || y >= map.getLength()) {
             return "invalid y!";
         }
         return null;
@@ -909,7 +932,7 @@ public class GameController {
     }
 
     private static boolean checkNullFields(int input) {
-        return input == -1;
+        return input == -1 || input == -2;
     }
 
 
