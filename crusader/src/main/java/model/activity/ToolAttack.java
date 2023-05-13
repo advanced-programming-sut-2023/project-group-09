@@ -4,6 +4,7 @@ import controller.GameController;
 import controller.MapController;
 import enumeration.MoveStates;
 import model.building.Building;
+import model.building.castlebuildings.MainCastle;
 import model.game.Tile;
 import model.game.Tuple;
 import model.human.civilian.Civilian;
@@ -72,6 +73,9 @@ public class ToolAttack {
     }
 
     public void attackToBuilding(Building building) {
+        if (targetBuilding instanceof MainCastle){
+            return;
+        }
         if (tool.getName().equals("siegeTower")) {
             tool.setCanMove(false);
             return;
