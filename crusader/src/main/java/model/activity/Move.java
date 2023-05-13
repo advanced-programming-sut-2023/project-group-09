@@ -133,6 +133,10 @@ public class Move {
 
 
             Tile tile = map.getTile(pair.getX(), pair.getY());
+            if (shouldFillMoat && new Tuple(pair.getY(), pair.getX()).equals(endPair) && tile.isMoat()){
+                return true;
+            }
+
             if (!tile.isPassable(human, pair.isOverhead())) {
                 return false;
             }
@@ -387,12 +391,12 @@ public class Move {
                 engineer.setInvisible(true);
             }
 
-            if (tool != null && shouldDigMoat) {
+            if (shouldDigMoat) {
                 Tile tile = GameController.getGame().getMap().getTile(endPair.getX(), endPair.getY());
                 tile.setMoat(true);
             }
 
-            if (tool != null && shouldFillMoat) {
+            if (shouldFillMoat) {
                 Tile tile = GameController.getGame().getMap().getTile(endPair.getX(), endPair.getY());
                 tile.setMoat(false);
             }

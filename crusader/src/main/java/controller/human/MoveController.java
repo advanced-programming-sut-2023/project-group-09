@@ -239,7 +239,6 @@ public class MoveController extends HumanController {
         }
         return secondPairs;
     }
-
     public static boolean checkOverHead(Building building) {
         if (building == null) {
             return false;

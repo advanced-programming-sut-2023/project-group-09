@@ -347,8 +347,8 @@ public class GameController {
         y--;
         Military digger = null;
         Tile tile = GameController.getGame().getMap().getTile(x, y);
-        if (!tile.isPassable()) {
-            return "here is not suitable position for moat!";
+        if (!tile.isMoat()) {
+            return "no moat in position!";
         }
         for (Military military : HumanController.militaries) {
             if (military instanceof Engineer engineer && engineer.isHasOil()) {
@@ -362,7 +362,9 @@ public class GameController {
         if (digger == null) {
             System.out.println("there is no unit to fill moat!");
         }
+        tile.setMoat(false);
         boolean check = EngineerController.fillMoat(x, y, digger);
+        tile.setMoat(true);
         if (!check) {
             return "can't move to this position!";
         }
