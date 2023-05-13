@@ -111,7 +111,7 @@ public class GameBuildings {
 
     public static void createMainCastle() {
         MainCastle mainCastle = new MainCastle(0, 0,
-                "castleBuildings", 100, 5, 12);
+                "castleBuildings", 10000, 5, 12);
         // if one object of this created, please call setLord() and setTaxRate() for its government.
         castleBuildings.put("mainCastle", mainCastle);
         buildings.put("mainCastle", mainCastle);
