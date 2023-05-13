@@ -49,7 +49,7 @@ public class GameMenu {
                     String type = ViewController.resultMatcher.group("type");
                     String side = ViewController.resultMatcher.group("side");
                     type = ViewController.editItem(type);
-                    output = GameController.dropBuilding(x, y, type,side);
+                    output = GameController.dropBuilding(x, y, type, side);
                     System.out.println(output);
                 }
             } else if (selectBuildingMatcher.matches()) {
@@ -89,7 +89,7 @@ public class GameMenu {
                     int x = ViewController.getNumberOfRegex("x") - 1;
                     int y = ViewController.getNumberOfRegex("y") - 1;
                     output = GameController.selectTool(x, y);
-                    if (output.charAt(1) == 'h'){
+                    if (output.charAt(1) == 'h') {
                         System.out.println("no tool in this place!");
                         continue;
                     }
@@ -115,8 +115,11 @@ public class GameMenu {
             } else if (tradeMenuMatcher.matches()) {
                 TradeMenu.run(scanner);
             } else if (nextTurnMatcher.matches()) {
-                output = GameController.changeTurn();
-                System.out.println(output);
+                System.out.println(GameController.changeTurn());
+                if (game.isEndGame()) {
+                    System.out.println("<< Main Menu >>");
+                    break;
+                }
             } else if (showPlayerMatcher.matches()) {
                 System.out.println(GameController.showPlayer());
             } else if (showRoundMatcher.matches()) {

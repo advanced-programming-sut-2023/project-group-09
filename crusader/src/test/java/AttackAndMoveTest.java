@@ -195,7 +195,7 @@ public class AttackAndMoveTest {
         System.out.println(GameController.useTool(13, 7));
         military3.getMove().moveOneTurn();
         GameController.selectTool(12, 6);
-        Tool tool = ToolMenu.tool;
+        Tool tool = ToolsController.tool;
         System.out.println(tool.getName());
         toolMove(7, 0);
         tool.getToolMove().moveOneTurn();
@@ -234,7 +234,7 @@ public class AttackAndMoveTest {
         System.out.println(GameController.useTool(13, 7));
         military3.getMove().moveOneTurn();
         GameController.selectTool(12, 6);
-        Tool tool = ToolMenu.tool;
+        Tool tool = ToolsController.tool;
         ToolsController.tool = tool;
         System.out.println(ToolsController.patrolTool(11, 0, 8, 8));
         tool.getToolMove().moveOneTurn();
@@ -273,8 +273,8 @@ public class AttackAndMoveTest {
         System.out.println(GameController.useTool(13, 7));
         military3.getMove().moveOneTurn();
         GameController.selectTool(12, 6);
-        ToolsController.tool = ToolMenu.tool;
-        Tool tool = ToolMenu.tool;
+        ToolsController.tool = ToolsController.tool;
+        Tool tool = ToolsController.tool;
         MapController.dropMilitary(12, 0, "maceman", government1);
 
         Military military4 = map.getTile(12, 0).getMilitaries().get(0);
@@ -318,15 +318,15 @@ public class AttackAndMoveTest {
         System.out.println(GameController.useTool(13, 7));
         military3.getMove().moveOneTurn();
         GameController.selectTool(12, 6);
-        ToolsController.tool = ToolMenu.tool;
-        Tool tool = ToolMenu.tool;
+        ToolsController.tool = ToolsController.tool;
+        Tool tool = ToolsController.tool;
         tool.setStoneNumber(12);
-        System.out.println(ToolMenu.attack(6,6));
+        System.out.println(ToolMenu.attack(6, 6));
         tool.getToolAttack().doAttack();
         tool.getToolAttack().doAttack();
 
         System.out.println(GameController.showMap(0, 0));
-        System.out.println(GameController.showDetailsOfTile(6,6));
+        System.out.println(GameController.showDetailsOfTile(6, 6));
     }
 
     @Test
@@ -366,14 +366,11 @@ public class AttackAndMoveTest {
         military5.getMove().moveOneTurn();
 
 
-
-
-
         GameController.selectTool(12, 6);
-        ToolsController.tool = ToolMenu.tool;
-        Tool tool = ToolMenu.tool;
+        ToolsController.tool = ToolsController.tool;
+        Tool tool = ToolsController.tool;
         System.out.println(tool.getEngineers().size());
-        System.out.println(ToolMenu.attack(6,0));
+        System.out.println(ToolMenu.attack(6, 0));
         tool.getToolMove().moveOneTurn();
         tool.getToolAttack().doAttack();
         System.out.println(GameController.showMap(0, 0));
@@ -386,8 +383,9 @@ public class AttackAndMoveTest {
         tool.getToolMove().moveOneTurn();
         tool.getToolAttack().doAttack();
         System.out.println(GameController.showMap(0, 0));
-        System.out.println(GameController.showDetailsOfTile(6,0));
+        System.out.println(GameController.showDetailsOfTile(6, 0));
     }
+
     @Test
     public void attackToolWithSiegeTower() {
         Game game = makeSample.makeSampleGame();
@@ -426,10 +424,10 @@ public class AttackAndMoveTest {
 
 
         GameController.selectTool(12, 6);
-        ToolsController.tool = ToolMenu.tool;
-        Tool tool = ToolMenu.tool;
+        ToolsController.tool = ToolsController.tool;
+        Tool tool = ToolsController.tool;
         System.out.println(tool.getEngineers().size());
-        System.out.println(ToolMenu.attack(6,0));
+        System.out.println(ToolMenu.attack(6, 0));
         tool.getToolMove().moveOneTurn();
         tool.getToolAttack().doAttack();
         System.out.println(GameController.showMap(0, 0));
@@ -442,14 +440,14 @@ public class AttackAndMoveTest {
         tool.getToolMove().moveOneTurn();
         tool.getToolAttack().doAttack();
         System.out.println(GameController.showMap(0, 0));
-        System.out.println(GameController.showDetailsOfTile(6,0));
+        System.out.println(GameController.showDetailsOfTile(6, 0));
 
 
         MapController.dropMilitary(12, 0, "maceman", government);
 
         Military military6 = map.getTile(12, 0).getMilitaries().get(0);
         makeSample.selectUnit(13, 1, null, game, government);
-        System.out.println(GameController.moveUnit(3,2));
+        System.out.println(GameController.moveUnit(3, 2));
         military6.getMove().moveOneTurn();
         System.out.println(GameController.showMap(0, 0));
         military6.getMove().moveOneTurn();
@@ -463,7 +461,7 @@ public class AttackAndMoveTest {
 
 
     public void toolMove(int x, int y) {
-        Tool tool = ToolMenu.tool;
+        Tool tool = ToolsController.tool;
         LinkedList<Tuple> path = ToolsController.getPathTools(new Tuple(tool.getY(), tool.getX()), new Tuple(y, x));
         if (path == null) {
             System.out.println("there is no available way to move tool");
