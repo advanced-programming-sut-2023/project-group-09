@@ -199,7 +199,7 @@ public class AttackAndMoveTest {
         makeSample.selectUnit(13, 6, null, game, government);
         System.out.println(GameController.useTool(13, 7));
         military3.getMove().moveOneTurn();
-        GameController.selectTool(12, 6);
+        GameController.selectTool(13, 7);
         Tool tool = ToolsController.tool;
         System.out.println(tool.getName());
         toolMove(7, 0);
