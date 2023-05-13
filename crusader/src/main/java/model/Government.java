@@ -345,8 +345,8 @@ public class Government {
                 Building building = (Building) itr.next();
                 if (building.isDestroyed()) {
                     unemployed.addAll(building.getRequiredHumans());
-                    MapController.deleteBuilding(building);
                     itr.remove();
+                    MapController.deleteBuilding(building);
                 }
             }
         }
@@ -370,6 +370,7 @@ public class Government {
             if (human.getHealth() <= 0) {
                 itr.remove();
                 MapController.deleteHuman(human.getX(), human.getY(), (Civilian) human);
+                human.setGovernment(null);
             }
         }
         itr = this.troops.iterator();
@@ -601,6 +602,31 @@ public class Government {
         for (String key : keys) {
             int count = properties.get(key);
             storageBuilding.addItem(key, count);
+        }
+    }
+
+    public void beingDead() {
+        for (BuildingCounter bc : buildings.values()) {
+            Iterator itr = bc.getBuildings().iterator();
+            while (itr.hasNext()){
+                Building building = (Building)itr.next();
+                itr.remove();
+                MapController.deleteBuilding(building);
+            }
+        }
+        Iterator itr = getSociety().iterator();
+        while (itr.hasNext()){
+            Human human = (Human)itr.next();
+            itr.remove();
+            MapController.deleteHuman(human.getX() , human.getY() , (Civilian) human);
+            human.setGovernment(null);
+        }
+        itr = getTroops().iterator();
+        while (itr.hasNext()){
+            Military military = (Military)itr.next();
+            itr.remove();
+            MapController.deleteMilitary(military.getX() , military.getY() , military);
+            military.setGovernment(null);
         }
     }
 }
