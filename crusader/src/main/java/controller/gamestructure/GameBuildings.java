@@ -250,7 +250,6 @@ public class GameBuildings {
                 "mercenaryPost", 80, 7, 7);
         barrack.addUnit("archerBow");
         barrack.addUnit("slave");
-        barrack.addUnit("spearman");
         barrack.addUnit("slinger");
         barrack.addUnit("assassin");
         barrack.addUnit("horseArcher");
