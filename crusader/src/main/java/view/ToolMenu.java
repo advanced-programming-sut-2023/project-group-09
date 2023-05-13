@@ -9,7 +9,6 @@ import enumeration.commands.ToolMenuCommands;
 import model.activity.ToolAttack;
 import model.activity.ToolMove;
 import model.building.Building;
-import model.building.castlebuildings.Wall;
 import model.game.Tile;
 import model.game.Tuple;
 import model.human.military.Engineer;
@@ -23,9 +22,9 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class ToolMenu {
-    public static Tool tool;
-
     public static void run(Scanner scanner) {
+        Tool tool = ToolsController.tool;
+
         if (tool instanceof SiegeTent || !tool.isActive()) {
             System.out.println("tool is not active or you can't select it!");
             return;
@@ -60,8 +59,8 @@ public class ToolMenu {
                     continue;
                 }
 
-                int x = Integer.parseInt(xM.group("x"));
-                int y = Integer.parseInt(yM.group("y"));
+                int x = Integer.parseInt(xM.group("x")) - 1;
+                int y = Integer.parseInt(yM.group("y")) - 1;
                 LinkedList<Tuple> path = ToolsController.getPathTools(new Tuple(tool.getY(), tool.getX()), new Tuple(y, x));
                 if (path == null) {
                     System.out.println("there is no available way to move tool");
@@ -99,8 +98,8 @@ public class ToolMenu {
                     continue;
                 }
 
-                if (ToolsController.patrolTool(Integer.parseInt(x1M.group("x1")), Integer.parseInt(y1M.group("y1")),
-                        Integer.parseInt(x2M.group("x2")), Integer.parseInt(y2M.group("y2"))))
+                if (ToolsController.patrolTool(Integer.parseInt(x1M.group("x1")) - 1, Integer.parseInt(y1M.group("y1")) - 1,
+                        Integer.parseInt(x2M.group("x2")) - 1, Integer.parseInt(y2M.group("y2")) - 1))
                     System.out.println("patrol started successfully");
                 else System.out.println("invalid patrol");
             } else if (attackM.matches()) {
@@ -114,7 +113,7 @@ public class ToolMenu {
                     continue;
                 }
 
-                System.out.println(attack(Integer.parseInt(xM.group("x")), Integer.parseInt(yM.group("y"))));
+                System.out.println(attack(Integer.parseInt(xM.group("x")) - 1, Integer.parseInt(yM.group("y")) - 1));
             } else if (ToolMenuCommands.FREE.getMatcher(input).matches()) {
                 for (int i = 0; i < tool.getEngineers().size(); i++) {
                     Engineer engineer = tool.getEngineers().get(i);
@@ -177,12 +176,13 @@ public class ToolMenu {
     }
 
     public static String attack(int x, int y) {
+        Tool tool = ToolsController.tool;
         if (tool.getName().equals("portableShield"))
             return "invalid command!";
         Tile tile = GameController.getGame().getMap().getTile(x, y);
         Building building = tile.getBuilding();
         if (tool.getName().equals("batteringRam") || tool.getName().equals("siegeTower")) {
-            if (building == null || building.getGovernment().equals(tool.getGovernment())){
+            if (building == null || building.getGovernment().equals(tool.getGovernment())) {
                 return "please select one building of enemy!";
             }
             LinkedList<Tuple> path = ToolsController.getPathForBuilding(new Tuple(tool.getY(), tool.getX()), building, tool);
@@ -202,10 +202,9 @@ public class ToolMenu {
             return "this point is out of range!";
 
 
-
-        if (tool.getName().equals("fireBallista")){
-            ArrayList<Military> militaries = MapController.getMilitariesOfOtherGovernment(x,y,tool.getGovernment());
-            if (militaries.size() == 0){
+        if (tool.getName().equals("fireBallista")) {
+            ArrayList<Military> militaries = MapController.getMilitariesOfOtherGovernment(x, y, tool.getGovernment());
+            if (militaries.size() == 0) {
                 return "please select one point with enemy!";
             }
         }

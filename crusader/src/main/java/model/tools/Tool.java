@@ -29,6 +29,7 @@ public class Tool {
     private ArrayList<Engineer> engineers = new ArrayList<>();
     private int shootingRange;
     private int damage;
+    private int maxHp = 20;
     private int hp = 20;
     private int stoneNumber = 0;
     private ToolMove toolMove;
@@ -99,6 +100,14 @@ public class Tool {
         this.numberOfRequiredEngineers = numberOfRequiredEngineers;
     }
 
+    public int getMaxHp() {
+        return maxHp;
+    }
+
+    public void setMaxHp(int maxHp) {
+        this.maxHp = maxHp;
+    }
+
     public int getSpeed() {
         return speed;
     }
@@ -110,9 +119,11 @@ public class Tool {
     public ArrayList<Engineer> getEngineers() {
         return engineers;
     }
-    public void setEngineers(ArrayList<Engineer>engineers) {
+
+    public void setEngineers(ArrayList<Engineer> engineers) {
         this.engineers = engineers;
     }
+
     public void addEngineer(Engineer engineer) {
         if (engineers.size() == numberOfRequiredEngineers) {
             return;
