@@ -11,6 +11,7 @@ import model.User;
 import model.building.castlebuildings.MainCastle;
 import model.game.Game;
 import model.game.Map;
+import model.human.military.Lord;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -183,6 +184,9 @@ public class CreateGameMenu {
             int y = castles.get(castleNumber - 1).getSecond() - 1;
             Government government = new Government(lord, x, y, colors.get(colorNumber - 1));
             MapController.dropMilitary(x, y, "lord", government);
+            Lord lordMilitary = (Lord) game.getMap().getTile(x, y).getMilitaries().get(0);
+            lordMilitary.setGovernment(government);
+            government.setLord(lordMilitary);
             government.addAmountToProperties("wood", "resource", 100);
             government.addAmountToProperties("stone", "resource", 50);
             government.addAmountToProperties("bread", "food", 60);

@@ -64,6 +64,8 @@ public class EngineerController {
         currentEngineer.setInTool(true);
         currentEngineer.setInvisible(true);
         tile.setTool(tent);
+        if (tool.getName().equals("trebuchet") || tool.getName().equals("catapult"))
+            tool.setStoneNumber(20);
 
         return "siegeTent put for this goal successfully!";
     }
