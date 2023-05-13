@@ -26,6 +26,7 @@ public class GovernmentMenu {
             Matcher setFoodRateMatcher = GovernmentMenuCommands.getMatcher(input, GovernmentMenuCommands.FOOD_RATE);
             Matcher setFearRateMatcher = GovernmentMenuCommands.getMatcher(input, GovernmentMenuCommands.FEAR_RATE);
             Matcher setTaxRateMatcher = GovernmentMenuCommands.getMatcher(input, GovernmentMenuCommands.TAX_RATE);
+            Matcher showPropertiesMatcher = GovernmentMenuCommands.getMatcher(input , GovernmentMenuCommands.SHOW_PROPERTIES);
             Matcher backMatcher = Commands.getMatcher(input, Commands.BACK);
 
 
@@ -65,6 +66,8 @@ public class GovernmentMenu {
                 }
                 output = GovernmentController.changeFearRate(rate);
                 System.out.println(output);
+            } else if (showPropertiesMatcher.matches()) {
+                System.out.println(GovernmentController.showProperties());
             } else if (setTaxRateMatcher.matches()) {
                 int rate;
                 try {
@@ -77,7 +80,7 @@ public class GovernmentMenu {
             } else if (backMatcher.matches()) {
                 System.out.println("<< Game Menu >>");
                 return;
-            }else {
+            } else {
                 System.out.println(Answers.INVALID_COMMAND.getValue());
             }
 

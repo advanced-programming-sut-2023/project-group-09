@@ -346,6 +346,7 @@ public class Government {
                 if (building.isDestroyed()) {
                     unemployed.addAll(building.getRequiredHumans());
                     MapController.deleteBuilding(building);
+                    itr.remove();
                 }
             }
         }
