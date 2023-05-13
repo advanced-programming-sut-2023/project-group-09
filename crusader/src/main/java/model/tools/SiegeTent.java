@@ -1,13 +1,15 @@
 package model.tools;
 
 import controller.GameController;
+import controller.MapController;
 import model.game.Tile;
 import model.human.military.Engineer;
 
-public class SiegeTent extends Tool{
+public class SiegeTent extends Tool {
     Tool convertTool;
+
     public SiegeTent() {
-        super("siegeTent",0,0,0,0);
+        super("siegeTent", 0, 0, 0, 0);
         this.setHp(1);
     }
 
@@ -19,9 +21,8 @@ public class SiegeTent extends Tool{
     public void addEngineer(Engineer engineer) {
         super.addEngineer(engineer);
         if (this.getEngineers().size() == this.getNumberOfRequiredEngineers()) {
-            Tile tile = GameController.getGame().getMap().getTile(this.getX(),this.getY());
-            tile.setTool(convertTool);
-            getGovernment().addTool(convertTool);
+            MapController.deleteTool(getX(), getY(), this);
+            MapController.addTool(getX(), getY(), convertTool);
             convertTool.setEngineers(this.getEngineers());
         }
     }

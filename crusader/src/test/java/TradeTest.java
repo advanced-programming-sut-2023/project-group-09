@@ -35,11 +35,11 @@ public class TradeTest {
         government.addAmountToProperties("stone", "resource", 50);
         government.addAmountToProperties("bread", "food", 60);
         government.setGold(4000);
-        MapController.dropBuilding(0,0,"granary",government);
-        System.out.println(GameController.showMap(0,0));
+        MapController.dropBuilding(0, 0, "granary", government);
         government1.addAmountToProperties("wood", "resource", 100);
         government1.addAmountToProperties("stone", "resource", 50);
         government1.addAmountToProperties("bread", "food", 60);
+        MapController.dropBuilding(0, 0, "granary", government1);
 
         government2.addAmountToProperties("wood", "resource", 100);
         government2.addAmountToProperties("stone", "resource", 50);
@@ -81,12 +81,12 @@ public class TradeTest {
         Set<String> IDs = TradeController.allTrades.keySet();
         String id = null;
         String id1 = null;
-        int count  = 1;
+        int count = 1;
         for (String ID : IDs) {
-            if (count == 1){
+            if (count == 1) {
                 id = ID;
             }
-            if (count == 2){
+            if (count == 2) {
                 id1 = ID;
             }
             count++;
@@ -95,6 +95,7 @@ public class TradeTest {
 
         game.setCurrentGovernment(government1);
         //================================= accept trade
+        System.out.println(TradeController.showTradeList());
         output = TradeController.acceptTrade(null, "ok");
         output1 = TradeController.acceptTrade(id, null);
         output2 = TradeController.acceptTrade("ssdfs", "ok");
@@ -108,7 +109,8 @@ public class TradeTest {
         Assert.assertEquals(output3, "this trade was accepted before!");
         Assert.assertEquals(output4, "your resource is not enough!");
         output5 = TradeController.acceptTrade(id1, "ok");
-        System.out.println(id + " " + id1);
-        Assert.assertEquals(output5,"request accepted successfully!");
+        Assert.assertEquals(output5, "request accepted successfully!");
+        System.out.println(TradeController.showTradeHistory());
+
     }
 }
