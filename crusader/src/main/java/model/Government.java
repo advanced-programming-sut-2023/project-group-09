@@ -391,7 +391,7 @@ public class Government {
         this.updateCowAndHorseNumber();
         this.producerBuildingsAction();
         this.outOfStockNotification();
-        this.updateMaxPopularity();
+        this.updateMaxPopulation();
         this.updatePeopleAfterTurn();
         this.foodDistribution();
         this.workerDistribution();
@@ -438,7 +438,7 @@ public class Government {
         }
     }
 
-    public void updateMaxPopularity() {
+    public void updateMaxPopulation() {
         maxPopulation = 10 + buildings.get("hovel").getNumber() * 8;
     }
 
@@ -495,6 +495,7 @@ public class Government {
 
     public void updatePeopleAfterTurn() {
         // maxPopularity : 25 --- minPopularity : -37
+
         double ratio = (double) (this.getPopularity() + 37) / (25 + 37);
         int checker = (int) (ratio * 100);
         int number;

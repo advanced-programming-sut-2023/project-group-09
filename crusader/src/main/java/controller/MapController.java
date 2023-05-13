@@ -241,7 +241,7 @@ public class MapController {
         }
         government.getBuildingData(type).addBuilding(building);
         if (building.getName().equals("hovel")) {
-            government.updateMaxPopularity();
+            government.updateMaxPopulation();
         }
 
         if (building instanceof StorageBuilding) {
