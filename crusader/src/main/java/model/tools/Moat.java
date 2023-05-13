@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Moat {
     private static ArrayList<Tuple> tilesToBeMoat = new ArrayList<>();
 
-    public void addTile(int x, int y) {
+    public static void addTile(int x, int y) {
         Tile tile = GameController.getGame().getMap().getTile(x, y);
         if (tile.getBuilding() == null && tile.isMoat() == false && tile.isPit() == false &&
                 (tile.getTexture().equals(Textures.EARTH) || tile.getTexture().equals(Textures.EARTH_AND_SAND)

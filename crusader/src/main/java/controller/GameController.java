@@ -478,6 +478,11 @@ public class GameController {
         }
         x--;
         y--;
+        if (type.equals("killingPit")) {
+            game.getMap().getTile(x, y).setPit(true);
+            game.getMap().getTile(x, y).setPitGovernment(game.getCurrentGovernment());
+            return "killing pit dropped successfully";
+        }
         Building building = GameBuildings.getBuilding(type);
         if (building == null) {
             return "building type is invalid!";
@@ -860,10 +865,10 @@ public class GameController {
         if (checkNullFields(y)) {
             return "y is required!";
         }
-        if (x < 1 || x >= map.getWidth()) {
+        if (x < 1 || x > map.getWidth()) {
             return "invalid x!";
         }
-        if (y < 1 || y >= map.getLength()) {
+        if (y < 1 || y > map.getLength()) {
             return "invalid y!";
         }
         return null;
