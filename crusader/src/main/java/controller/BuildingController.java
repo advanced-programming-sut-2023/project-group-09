@@ -1,5 +1,6 @@
 package controller;
 
+import controller.human.HumanController;
 import controller.human.MoveController;
 import enumeration.answers.BuildingAnswers;
 import model.Government;
@@ -79,11 +80,43 @@ public class BuildingController {
         if (!canRepaired) {
             return "You don't have enough " + itemNeeded + " for repair!";
         }
+
+        ArrayList<Military> enemies = getEnemyOfRange(building.getStartX(), building.getStartY(), 5, building.getGovernment());
+        if (enemies.size() != 0) {
+            return "there are some enemies around here!";
+        }
+
+
         for (String item : building.getCost().keySet()) {
             GovernmentController.consumeProduct(government, item, (int) (rateOfRepairNeeded * building.getCost().get(item)));
         }
         building.setHp(building.getMaxHp());
         return "Successfully repaired!";
+    }
+
+    public static ArrayList<Military> getEnemyOfRange(int x, int y, int range, Government government) {
+        int endX = x + range;
+        int endY = y + range;
+
+        Map map = GameController.getGame().getMap();
+        if (endX + 1 >= map.getWidth()) {
+            endX = map.getWidth() - 1;
+        }
+
+        if (endY + 1 >= map.getLength()) {
+            endY = map.getLength() - 1;
+        }
+
+        int startX = x - range;
+        int startY = y - range;
+        if (x - range < 0) {
+            startX = 0;
+        }
+
+        if (y - range < 0) {
+            startY = 0;
+        }
+        return HumanController.getEnemiesOfArea(startX, startY, endX, endY, government);
     }
 
     public static String showStateOfGate() {
@@ -192,7 +225,7 @@ public class BuildingController {
                 ArrayList<Civilian> civilians = MapController.getCiviliansOfOtherGovernment(i, j, building.getGovernment());
                 if (civilians.size() != 0) {
                     Civilian civilian = civilians.get(0);
-                    distance = MoveController.getDistance(x,y, i, j);
+                    distance = MoveController.getDistance(x, y, i, j);
                     if (minDistance > distance) {
                         minDistance = distance;
                         targetCivilian = civilian;
