@@ -20,7 +20,6 @@ import model.human.military.Engineer;
 import model.human.military.Military;
 import model.human.military.Tunneler;
 import model.tools.Tool;
-import view.ToolMenu;
 import view.UnitMenu;
 
 import java.util.*;
@@ -521,8 +520,11 @@ public class GameController {
         if (tool == null || !tool.getGovernment().equals(game.getCurrentGovernment())) {
             return "there is no tool of your government here!";
         }
+        String result = "tool " + tool.getName() + " selected";
+        if (tool.getName().equals("trebuchet") || tool.getName().equals("catapult"))
+            result += "\nnumber of stones: " + tool.getStoneNumber();
         ToolsController.tool = tool;
-        return "tool " + tool.getName() + " selected";
+        return result;
     }
 
     public static int howManyGovernmentsRemainsInGame() {
