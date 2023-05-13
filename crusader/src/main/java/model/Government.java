@@ -15,7 +15,7 @@ import model.buildinghandler.BuildingCounter;
 import model.buildinghandler.Storage;
 import model.human.Human;
 import model.human.civilian.Civilian;
-import model.human.military.Lord;
+import model.human.military.EuropeanTroop;
 import model.human.military.Military;
 import model.tools.Tool;
 
@@ -59,7 +59,7 @@ public class Government {
     private int population, maxPopulation;
     private int castleX, castleY;
     private Colors color;
-    private Lord lord;
+    private EuropeanTroop lord;
 
     public Government(User user, int castleX, int castleY, Colors color) {
         this.user = user;
@@ -118,9 +118,8 @@ public class Government {
         return isAlive;
     }
 
-    public void setLord(Lord lord) {
+    public void setLord(EuropeanTroop lord) {
         this.lord = lord;
-        ((MainCastle) (this.getBuildings().get("MainCastle").getBuildings().get(0))).setLord(lord);
     }
 
     public ArrayList<Tool> getTools() {
@@ -155,7 +154,7 @@ public class Government {
         this.society = society;
     }
 
-    public Lord getLord() {
+    public EuropeanTroop getLord() {
         return lord;
     }
 
@@ -450,12 +449,6 @@ public class Government {
     }
 
     public void checkingGovernmentIsAlive() {
-        for (Military military : this.troops) {
-            if (military instanceof Lord) {
-                this.lord = (Lord) military;
-                break;
-            }
-        }
         if (this.lord.getHealth() <= 0) {
             this.isAlive = false;
         }

@@ -50,7 +50,7 @@ public class GameHumans {
         int speed = Speed.EXTREMELY_SLOW.getRate();
         int defenseRating = DefenseRating.HIGH.getRate();
         int attackRating = AttackRating.HIGH.getRate();
-        Lord lord = new Lord(speed, defenseRating, 1, attackRating, 0);
+        EuropeanTroop lord = new EuropeanTroop(speed, defenseRating, 1, attackRating, 0);
         lord.setName("lord");
         lord.setDefenseRange(3);
         lord.setAggressiveRange(6);
@@ -293,9 +293,6 @@ public class GameHumans {
         }
         if (military instanceof ArabianMercenary) {
             return new ArabianMercenary((ArabianMercenary) military);
-        }
-        if (military instanceof Lord) {
-            return new Lord((Lord) military);
         }
         return null;
     }

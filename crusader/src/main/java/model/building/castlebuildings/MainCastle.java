@@ -4,12 +4,13 @@ import controller.MapController;
 import model.Government;
 import model.game.Tuple;
 import model.human.civilian.Civilian;
-import model.human.military.Lord;
+import model.human.military.EuropeanTroop;
+
 
 import java.util.Random;
 
 public class MainCastle extends CastleBuilding {
-    private Lord lord;
+    private EuropeanTroop lord;
     private int taxRate;
 
     public MainCastle(int numberOfRequiredWorkers, int numberOfRequiredEngineers, String type, int maxHp, int width, int length) {
@@ -46,7 +47,7 @@ public class MainCastle extends CastleBuilding {
         this.taxRate = rate;
     }
 
-    public void setLord(Lord lord) {
+    public void setLord(EuropeanTroop lord) {
         this.lord = lord;
     }
 

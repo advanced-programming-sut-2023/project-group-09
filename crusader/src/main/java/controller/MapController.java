@@ -17,7 +17,6 @@ import model.game.Map;
 import model.game.Tile;
 import model.human.civilian.Civilian;
 import model.human.military.Engineer;
-import model.human.military.Lord;
 import model.human.military.Military;
 import model.tools.Tool;
 
@@ -336,7 +335,7 @@ public class MapController {
         Tile tile = map.getTile(x, y);
         for (Military military : tile.getMilitaries()) {
             if (military.getGovernment().getColor().equals(government.getColor())) {
-                if (!(military instanceof Lord) && !((military instanceof Engineer engineer) && engineer.isInTool())) {
+                if (!(military.getName().equals("lord")) && !((military instanceof Engineer engineer) && engineer.isInTool())) {
                     militaries.add(military);
                 }
             }
