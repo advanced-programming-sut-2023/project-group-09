@@ -16,14 +16,14 @@
     "shouldBeOne": false,
     "name": "smallStoneGatehouse",
     "neighborTiles": [],
-    "maxHp": 1000,
-    "hp": 1000,
+    "maxHp": 30,
+    "hp": 30,
     "startX": 0,
     "startY": 0,
     "endX": 0,
     "endY": 0,
-    "width": 4,
-    "length": 4
+    "width": 3,
+    "length": 3
   },
   "drawBridge": {
     "isRightSide": false,
@@ -42,14 +42,14 @@
     "shouldBeOne": false,
     "name": "drawBridge",
     "neighborTiles": [],
-    "maxHp": 50,
-    "hp": 50,
+    "maxHp": 20,
+    "hp": 20,
     "startX": 0,
     "startY": 0,
     "endX": 0,
     "endY": 0,
-    "width": 3,
-    "length": 3
+    "width": 1,
+    "length": 1
   },
   "bigStoneGatehouse": {
     "isRightSide": false,
@@ -68,8 +68,8 @@
     "shouldBeOne": false,
     "name": "bigStoneGatehouse",
     "neighborTiles": [],
-    "maxHp": 100,
-    "hp": 100,
+    "maxHp": 30,
+    "hp": 30,
     "startX": 0,
     "startY": 0,
     "endX": 0,

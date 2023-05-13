@@ -462,7 +462,7 @@ public class GameController {
         return "unit disbanded successfully!";
     }
 
-    public static String dropBuilding(int x, int y, String type) {
+    public static String dropBuilding(int x, int y, String type, String side) {
         String message = validateXAndY(x, y);
         if (message != null) {
             return message;
@@ -475,14 +475,32 @@ public class GameController {
         if (!hasRequired(building.getCost())) {
             return "your resource is not enough!";
         }
-        if (!MapController.checkCanPutBuilding2(x, y, type, GameController.getGame().getCurrentGovernment())) {
-            return "this coordinate is not suitable!";
-        }
+
         if (type.equals("mainCastle") && GameController.getGame().getCurrentGovernment().getBuildingData("mainCastle").getNumber() != 0) {
             return "a government just can have one main Castle!";
         }
-        consumeRequired(building.getCost());
 
+        if (building instanceof Gatehouse && !building.getName().equals("drawBridge")) {
+            if (side != null && (side.equals("right") || side.equals("left"))) {
+                if (side.equals("left")) {
+                    if (!MapController.checkCanPutBuilding2(x, y, type, GameController.getGame().getCurrentGovernment())) {
+                        return "this coordinate is not suitable!";
+                    }
+                    MapController.dropBuilding(x, y, type, GameController.getGame().getCurrentGovernment());
+                    return "building dropped successfully!";
+                }
+            } else {
+                return "side field is required!";
+            }
+        } else if (side != null) {
+            return "side field is not for this type of building!";
+        }
+
+
+        consumeRequired(building.getCost());
+        if (!MapController.checkCanPutBuilding2(x, y, type, GameController.getGame().getCurrentGovernment())) {
+            return "this coordinate is not suitable!";
+        }
         MapController.dropBuilding(x, y, type, GameController.getGame().getCurrentGovernment());
         return "building dropped successfully!";
     }

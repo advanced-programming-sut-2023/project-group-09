@@ -48,7 +48,7 @@ public class GameHumans {
 
     public static void addLord() {
         int speed = Speed.EXTREMELY_SLOW.getRate();
-        int defenseRating = DefenseRating.HIGH.getRate();
+        int defenseRating = DefenseRating.VERY_HIGH.getRate();
         int attackRating = AttackRating.HIGH.getRate();
         Lord lord = new Lord(speed, defenseRating, 1, attackRating, 0);
         lord.setName("lord");

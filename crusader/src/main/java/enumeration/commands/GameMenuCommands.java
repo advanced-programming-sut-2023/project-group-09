@@ -17,6 +17,7 @@ public enum GameMenuCommands {
     SHOW_ROUND("show round"),
     X_ITEM(" -x (?<x>\\d+)"),
     Y_ITEM(" -y (?<y>\\d+)"),
+    SIDE_ITEM("( -s (?<side>(\"[^\"]+\"|\\S+)))?"),
     TYPE_ITEM(" -type (?<type>(\"[^\"]+\"|\\S+))"),
     UNIT_TYPE_ITEM("( -type (?<type>(\"[^\"]+\"|\\S+)))?"),
     CONTINUE("continue");
