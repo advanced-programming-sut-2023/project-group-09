@@ -295,8 +295,8 @@ public class HumanController {
         Tuple endPair = new Tuple(y1, x1);
         Tuple startPair = MoveController.getStartPair();
         boolean check = false;
-        if (endPair.equals(startPair)){
-            endPair = new Tuple(y2,x2);
+        if (endPair.equals(startPair)) {
+            endPair = new Tuple(y2, x2);
             check = true;
         }
         MoveController.shouldCheckOtherPath();
@@ -407,44 +407,49 @@ public class HumanController {
             }
             return getOil(engineer);
         } else {
-            int enemiesCount = 0;
             int maxEnemy = 0;
+
+            ArrayList<Military> militaries = engineer.getAttack().getEnemyOfRange(engineer.getX(), engineer.getY(), 5);
+            if (state.equals(MilitaryStates.AGGRESSIVE_STANCE.getState()) && militaries.size() == 0) {
+                return true;
+            } else if (state.equals(MilitaryStates.DEFENSIVE_STANCE.getState()) && militaries.size() < 3) {
+                return true;
+            }
+
+
             ArrayList<Military> directionEnemy;
             directionEnemy = getEnemyOfRight(engineer.getX(), engineer.getY(), engineer.getGovernment());
-            enemiesCount += directionEnemy.size();
 
             if (directionEnemy.size() > maxEnemy) {
                 enemies = new ArrayList<>(directionEnemy);
+                maxEnemy = directionEnemy.size();
             }
 
 
             directionEnemy = getEnemyOfLeft(engineer.getX(), engineer.getY(), engineer.getGovernment());
-            enemiesCount += directionEnemy.size();
 
             if (directionEnemy.size() > maxEnemy) {
                 enemies = new ArrayList<>(directionEnemy);
+                maxEnemy = directionEnemy.size();
             }
 
             directionEnemy = getEnemyOfDown(engineer.getX(), engineer.getY(), engineer.getGovernment());
-            enemiesCount += directionEnemy.size();
 
             if (directionEnemy.size() > maxEnemy) {
                 enemies = new ArrayList<>(directionEnemy);
+                maxEnemy = directionEnemy.size();
             }
             directionEnemy = getEnemyOfUp(engineer.getX(), engineer.getY(), engineer.getGovernment());
-            enemiesCount += directionEnemy.size();
 
             if (directionEnemy.size() > maxEnemy) {
                 enemies = new ArrayList<>(directionEnemy);
             }
-
-            if (state.equals(MilitaryStates.AGGRESSIVE_STANCE.getState()) && enemiesCount > 0) {
-                attackWithOil(enemies);
-                getOil(engineer);
-            } else if (state.equals(MilitaryStates.DEFENSIVE_STANCE.getState()) && enemiesCount > 3) {
-                attackWithOil(enemies);
-                getOil(engineer);
+            if (enemies == null){
+                return true;
             }
+
+            attackWithOil(enemies);
+            getOil(engineer);
         }
         return true;
     }
@@ -573,7 +578,7 @@ public class HumanController {
                 military.setGovernment(null);
                 return true;
             }
-            if (damage != 0)System.out.println("one troop damaged with killing pit!");
+            if (damage != 0) System.out.println("one troop damaged with killing pit!");
             return false;
         } else {
             if (damage != 0) {
@@ -586,9 +591,9 @@ public class HumanController {
         }
     }
 
-    public static boolean digTunnel(Building targetBuilding,int x,int y, Tunneler tunneler) {
+    public static boolean digTunnel(Building targetBuilding, int x, int y, Tunneler tunneler) {
         Tuple startTuple = new Tuple(tunneler.getY(), tunneler.getX());
-        LinkedList<Tuple> path = MoveController.getPath(startTuple, new Tuple(y,x), tunneler);
+        LinkedList<Tuple> path = MoveController.getPath(startTuple, new Tuple(y, x), tunneler);
         if (path == null) {
             return false;
         }
@@ -615,20 +620,20 @@ public class HumanController {
     }
 
 
-    public static boolean attack(Military enemy ,Military military) {
-        LinkedList<Tuple> path = MoveController.getPath(new Tuple(military.getX(), military.getY()),new Tuple(enemy.getX(), enemy.getX()),military);
-        if (path != null){
-            Move move = new Move(military.getX(), military.getY(),enemy,false,military);
+    public static boolean attack(Military enemy, Military military) {
+        LinkedList<Tuple> path = MoveController.getPath(new Tuple(military.getX(), military.getY()), new Tuple(enemy.getX(), enemy.getX()), military);
+        if (path != null) {
+            Move move = new Move(military.getX(), military.getY(), enemy, false, military);
             move.setPath(path);
             military.setMove(move);
         }
         return false;
     }
 
-    public static boolean attack(Tool tool,Military military) {
-        LinkedList<Tuple> path = MoveController.getPath(new Tuple(military.getX(), military.getY()),new Tuple(tool.getX(), tool.getX()),military);
-        if (path != null){
-            Move move = new Move(military.getX(), military.getY(),tool,false,military);
+    public static boolean attack(Tool tool, Military military) {
+        LinkedList<Tuple> path = MoveController.getPath(new Tuple(military.getX(), military.getY()), new Tuple(tool.getX(), tool.getX()), military);
+        if (path != null) {
+            Move move = new Move(military.getX(), military.getY(), tool, false, military);
             move.setPath(path);
             military.setMove(move);
         }

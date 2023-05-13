@@ -203,11 +203,11 @@ public class UnitMenu {
                 String direction = pourOilMatcher.group("direction");
                 ArrayList<Engineer> engineers = getEngineersOfTile();
                 if (engineers.size() == 0) {
-                    System.out.println("invalid command");
+                    System.out.println("invalid command!");
                     return;
                 }
-                for (int i = 0; i < engineers.size(); i++) {
-                    if (engineers.get(i).isInTool()) {
+                for (Engineer engineer : engineers) {
+                    if (engineer.isInTool()) {
                         System.out.println("some of the selected engineers are in a tool");
                         return;
                     }

@@ -74,8 +74,8 @@ public class GameMenu {
                 itemsPattern.add(GameMenuCommands.Y_ITEM.getRegex());
                 itemsPattern.add(GameMenuCommands.UNIT_TYPE_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = ViewController.getNumberOfRegex("x") - 1;
-                    int y = ViewController.getNumberOfRegex("y") - 1;
+                    int x = ViewController.getNumberOfRegex("x");
+                    int y = ViewController.getNumberOfRegex("y");
                     String type = ViewController.resultMatcher.group("type");
                     output = GameController.selectUnit(x, y, type, scanner);
                     System.out.println(output);
@@ -86,8 +86,8 @@ public class GameMenu {
                 itemsPattern.add(GameMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(GameMenuCommands.Y_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = ViewController.getNumberOfRegex("x") - 1;
-                    int y = ViewController.getNumberOfRegex("y") - 1;
+                    int x = ViewController.getNumberOfRegex("x");
+                    int y = ViewController.getNumberOfRegex("y");
                     output = GameController.selectTool(x, y);
                     if (output.charAt(1) == 'h') {
                         System.out.println("no tool in this place!");

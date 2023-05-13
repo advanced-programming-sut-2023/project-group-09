@@ -67,7 +67,7 @@ public class EditMapMenu {
             if (sideM.find()) {
                 String side = sideM.group("side");
                 if (side.equals("left")) {
-                    if (MapController.checkCanPutBuilding2(x, y, type, currentGovernment)) {
+                    if (MapController.checkCanPutBuilding(x, y, type, currentGovernment)) {
                         MapController.dropBuilding(x, y, type, currentGovernment);
                         building = MapController.map.getTile(x, y).getBuilding();
                         if (!(building instanceof Gatehouse gatehouse)){
@@ -90,7 +90,7 @@ public class EditMapMenu {
             return;
         }
 
-        if (MapController.checkCanPutBuilding2(x, y, type, currentGovernment)) {
+        if (MapController.checkCanPutBuilding(x, y, type, currentGovernment)) {
             MapController.dropBuilding(x, y, type, currentGovernment);
             System.out.println("building dropped successfully!");
         } else {

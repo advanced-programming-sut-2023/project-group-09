@@ -5,6 +5,7 @@ import controller.human.HumanController;
 import enumeration.MilitaryStates;
 import model.Government;
 import model.activity.ToolMove;
+import model.building.Building;
 import model.game.Game;
 import model.game.Map;
 import model.game.Tuple;
@@ -424,7 +425,6 @@ public class AttackAndMoveTest {
 
 
         GameController.selectTool(12, 6);
-        ToolsController.tool = ToolsController.tool;
         Tool tool = ToolsController.tool;
         System.out.println(tool.getEngineers().size());
         System.out.println(ToolMenu.attack(6, 0));
@@ -459,6 +459,81 @@ public class AttackAndMoveTest {
 
     }
 
+
+    @Test
+    public void pourOilTest() {
+        Game game = makeSample.makeSampleGame();
+        Map map = game.getMap();
+        Government government = game.getGovernments().get(0);
+        Government government1 = game.getGovernments().get(1);
+        MapController.dropBuilding(6, 1, "smallStoneGatehouse", government1);
+        MapController.dropBuilding(13, 1, "oilSmelter", government1);
+        game.setCurrentGovernment(government1);
+
+
+        MapController.dropMilitary(6, 5, "engineer", government1);
+        Military military2 = map.getTile(6, 5).getMilitaries().get(0);
+        //makeSample.selectUnit(7, 8, null, game, government);
+
+        MapController.dropMilitary(8, 5, "engineer", government1);
+        Military military3 = map.getTile(8, 5).getMilitaries().get(0);
+        makeSample.selectUnit(9, 6, null, game, government1);
+
+        System.out.println(GameController.showMap(0, 0));
+
+
+        System.out.println(HumanController.militaries.size());
+        System.out.println(GameController.goToOilSmelter(14,2));
+
+        Building building = game.getMap().getTile(13,1).getBuilding();
+        System.out.println(building.isActive());
+        ArrayList<Engineer> engineers = new ArrayList<>();
+        engineers.add((Engineer) military2);
+        System.out.println(GameController.pourOil("e",engineers));
+        military2.getMove().moveOneTurn();
+        System.out.println(GameController.showMap(0, 0));
+        military2.getMove().moveOneTurn();
+        System.out.println(GameController.showMap(0, 0));
+        military2.getMove().moveOneTurn();
+        System.out.println(GameController.showMap(0, 0));
+        military2.getMove().moveOneTurn();
+        System.out.println(GameController.showMap(0, 0));
+        military2.getMove().moveOneTurn();
+        System.out.println(GameController.showMap(0, 0));
+        military2.getMove().moveOneTurn();
+        System.out.println(GameController.showMap(0, 0));
+        military2.setMilitaryState(MilitaryStates.DEFENSIVE_STANCE.getState());
+        System.out.println(military2.getMilitaryState());
+
+        MapController.dropMilitary(7, 6, "maceman", government);
+        Military military4 = map.getTile(7, 6).getMilitaries().get(0);
+        MapController.dropMilitary(7, 5, "maceman", government);
+        Military military5 = map.getTile(7, 5).getMilitaries().get(0);
+        MapController.dropMilitary(7, 4, "maceman", government);
+        Military military6 = map.getTile(7, 4).getMilitaries().get(0);
+        System.out.println(GameController.showMap(0, 0));
+        military2.getAttack().doAttack();
+        military2.getMove().moveOneTurn();
+        System.out.println(GameController.showMap(0, 0));
+        military2.getAttack().doAttack();
+        military2.getMove().moveOneTurn();
+        System.out.println(GameController.showMap(0, 0));
+        military2.getAttack().doAttack();
+        military2.getMove().moveOneTurn();
+        System.out.println(GameController.showMap(0, 0));
+        military2.getAttack().doAttack();
+        military2.getMove().moveOneTurn();
+        System.out.println(GameController.showMap(0, 0));
+        military2.getAttack().doAttack();
+        military2.getMove().moveOneTurn();
+        System.out.println(GameController.showMap(0, 0));
+        military2.getAttack().doAttack();
+        military2.getMove().moveOneTurn();
+        System.out.println(GameController.showMap(0, 0));
+        military2.getAttack().doAttack();
+        military2.getMove().moveOneTurn();
+        System.out.println(GameController.showMap(0, 0));
+    }
 
     public void toolMove(int x, int y) {
         Tool tool = ToolsController.tool;
