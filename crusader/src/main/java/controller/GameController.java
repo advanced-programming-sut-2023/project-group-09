@@ -49,8 +49,6 @@ public class GameController {
         if (message != null) {
             return message;
         }
-        x--;
-        y--;
         ArrayList<Military> militaries;
         if (type == null) {
             militaries = MapController.getMilitariesOfGovernment(x, y, game.getCurrentGovernment());
