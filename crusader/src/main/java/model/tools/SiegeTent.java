@@ -14,7 +14,6 @@ public class SiegeTent extends Tool{
     public void setConvertTool(Tool convertTool) {
         this.convertTool = convertTool;
         this.setNumberOfRequiredEngineers(convertTool.getNumberOfRequiredEngineers());
-        System.out.println(convertTool.getName());
     }
 
     public void addEngineer(Engineer engineer) {
@@ -22,6 +21,7 @@ public class SiegeTent extends Tool{
         if (this.getEngineers().size() == this.getNumberOfRequiredEngineers()) {
             Tile tile = GameController.getGame().getMap().getTile(this.getX(),this.getY());
             tile.setTool(convertTool);
+            getGovernment().addTool(convertTool);
             convertTool.setEngineers(this.getEngineers());
         }
     }

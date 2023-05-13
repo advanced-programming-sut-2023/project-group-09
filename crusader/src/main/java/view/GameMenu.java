@@ -87,7 +87,10 @@ public class GameMenu {
                     int x = ViewController.getNumberOfRegex("x") - 1;
                     int y = ViewController.getNumberOfRegex("y") - 1;
                     output = GameController.selectTool(x, y);
-                    if (output.charAt(1) == 'h') continue;
+                    if (output.charAt(1) == 'h'){
+                        System.out.println("no tool in this place!");
+                        continue;
+                    }
                     System.out.println(output);
                     ToolMenu.run(scanner);
                 }

@@ -227,7 +227,7 @@ public class HumanController {
         if (path == null) {
             return false;
         }
-        int count = 0;
+
         for (Military military : militaries) {
             if (!military.getName().equals("engineer")) {
                 continue;
@@ -236,9 +236,9 @@ public class HumanController {
             move.setPath(path);
             move.setShouldConnectToTool(true);
             military.setMove(move);
-            count++;
+            return true;
         }
-        return count != 0;
+        return false;
     }
 
     public static boolean airAttack(int x, int y, List<Military> enemies) {

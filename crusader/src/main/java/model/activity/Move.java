@@ -382,7 +382,6 @@ public class Move {
             if (tool != null && shouldConnectToTool) {
                 assert human instanceof Engineer;
                 Engineer engineer = (Engineer) human;
-
                 tool.addEngineer(engineer);
                 engineer.setInTool(true);
                 engineer.setInvisible(true);

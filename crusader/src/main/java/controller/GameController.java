@@ -8,7 +8,6 @@ import enumeration.MilitaryStates;
 import model.Government;
 import model.activity.Move;
 import model.building.Building;
-import model.building.castlebuildings.CastleBuilding;
 import model.building.castlebuildings.Gatehouse;
 import model.building.castlebuildings.Wall;
 import model.game.Game;
@@ -545,7 +544,7 @@ public class GameController {
                     human.getMove().moveOneTurn();
                 }
             }
-            ArrayList<Military>militaries = new ArrayList<>(government.getTroops());
+            ArrayList<Military> militaries = new ArrayList<>(government.getTroops());
             for (Military military : militaries) {
                 if (military.getMove() != null) {
                     military.getMove().moveOneTurn();
@@ -654,7 +653,12 @@ public class GameController {
                         Tile tile = map.getTile(k, i);
                         String sign = " ";
                         if (tile.getTool() != null) {
-                            sign = tile.getTool().getGovernment().getColorRgb() + "A";
+                            if (tile.getTool().getToolMove() != null && tile.getTool().getToolMove().isMoving()) {
+                                sign = tile.getTool().getGovernment().getColorRgb() + "A";
+                            } else {
+                                sign = tile.getTool().getGovernment().getColorRgb() + "a";
+                            }
+
                         } else if (tile.getHumans().size() != 0) {
                             HashMap<Government, Integer> numberOfHumansOnTile = new HashMap<>();
                             for (int m = 0; m < game.getGovernments().size(); m++) {
@@ -864,6 +868,13 @@ public class GameController {
                     " | HP: " + tile.getBuilding().getHp() + "/" +
                     tile.getBuilding().getMaxHp() + "\n";
         } else details += "there is no building on this tile\n";
+        if (tile.getTool() != null) {
+            details += "tool " + tile.getTool().getName() + " from Lord " +
+                    tile.getTool().getGovernment().getUser().getNickname() +
+                    " | HP: " + tile.getTool().getHp() + "/20\n";
+        } else details += "there is no tool on this tile\n";
+
+
         details += "Civilian number : " + tile.getCivilians().size() + "\n";
         if (tile.getCivilians().size() != 0) {
             details += "Civilian in details : \n";

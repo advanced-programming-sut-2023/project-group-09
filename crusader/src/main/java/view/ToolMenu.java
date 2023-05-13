@@ -70,12 +70,17 @@ public class ToolMenu {
                 ToolMove move = new ToolMove(tool.getX(), tool.getY(), new Tuple(y, x), true, tool);
                 move.setPath(path);
                 tool.setToolMove(move);
+                System.out.println("move recorded successfully!");
+                return;
             } else if (ToolMenuCommands.DISBAND.getMatcher(input).matches()) {
-                GameController.getGame().getCurrentGovernment().removeTool(tool);
+                MapController.deleteTool(tool.getX(), tool.getY(), tool);
                 HumanController.disbandEngineers(tool.getEngineers(), tool.getGovernment());
-//                TODO: update graphics
+                System.out.println("tool disband successfully!");
+                return;
             } else if (ToolMenuCommands.STOP.getMatcher(input).matches()) {
                 ToolsController.stop(tool);
+                System.out.println("tool stopped successfully!");
+                return;
             } else if (patrolM.matches()) {
                 String content = patrolM.group("content");
                 Matcher x1M = ToolMenuCommands.X1_COORDINATE.getMatcher(content);
@@ -118,18 +123,18 @@ public class ToolMenu {
                     MapController.moveMilitary(tool.getX(), tool.getY(), engineer);
                 }
                 tool.getEngineers().clear();
+                System.out.println("done!");
+                return;
             } else if (ToolMenuCommands.ADD_STONE.getMatcher(input).matches()) {
-                int rockNumber = tool.getGovernment().getPropertyAmount("rock");
-                if (rockNumber < 10) {
+                if (tool.chargeStone()) {
                     System.out.println("you can't add stones to tool");
-                    continue;
                 }
-                tool.getGovernment().addAmountToProperties("rock", "resource", -10);
-                tool.addStone(20);
+                System.out.println("stone added successfully!");
+                return;
             } else if (ToolMenuCommands.BACK.getMatcher(input).matches()) {
                 System.out.println("<< Game Menu >>");
                 return;
-            } else System.out.println("invalid command");
+            } else System.out.println("invalid command!");
         }
     }
 

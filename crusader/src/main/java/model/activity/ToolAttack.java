@@ -161,7 +161,7 @@ public class ToolAttack {
 
         //attack
         if (attackPoint != null) {
-            if (tool.isUseStone() && !tool.chargeStone()) {
+            if (tool.isUseStone() && tool.getStoneNumber() == 0) {
                 return;
             }
             if (attackToPoint()) {

@@ -110,17 +110,6 @@ public class MoveController extends HumanController {
         if (endPair == null) {
             return null;
         }
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                if (wave[i][j] == null) {
-                    System.out.print("null      ");
-                    continue;
-                }
-                System.out.format("(%3d,%3d) ", wave[i][j].getX(), wave[i][j].getY());
-            }
-            System.out.println();
-        }
-        System.out.println();
         return makePath(wave, startPair, endPair);
     }
 

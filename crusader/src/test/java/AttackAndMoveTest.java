@@ -185,7 +185,7 @@ public class AttackAndMoveTest {
         engineers.add((Engineer) military2);
 
         makeSample.selectUnit(13, 7, null, game, government);
-        System.out.println(GameController.buildEquipment(1, engineers, 13, 7));
+        System.out.println(GameController.buildEquipment(1, engineers, 12, 6));
         System.out.println(GameController.showMap(0, 0));
 
 
@@ -226,7 +226,7 @@ public class AttackAndMoveTest {
         engineers.add((Engineer) military2);
 
         makeSample.selectUnit(13, 7, null, game, government);
-        System.out.println(GameController.buildEquipment(1, engineers, 13, 7));
+        System.out.println(GameController.buildEquipment(1, engineers, 12, 6));
 
         MapController.dropMilitary(12, 5, "engineer", government);
         Military military3 = map.getTile(12, 5).getMilitaries().get(0);
@@ -265,7 +265,7 @@ public class AttackAndMoveTest {
         engineers.add((Engineer) military2);
 
         makeSample.selectUnit(13, 7, null, game, government);
-        System.out.println(GameController.buildEquipment(1, engineers, 13, 7));
+        System.out.println(GameController.buildEquipment(1, engineers, 12, 6));
 
         MapController.dropMilitary(12, 5, "engineer", government);
         Military military3 = map.getTile(12, 5).getMilitaries().get(0);
@@ -310,7 +310,7 @@ public class AttackAndMoveTest {
         engineers.add((Engineer) military2);
 
         makeSample.selectUnit(13, 7, null, game, government);
-        System.out.println(GameController.buildEquipment(1, engineers, 13, 7));
+        System.out.println(GameController.buildEquipment(1, engineers, 12, 6));
 
         MapController.dropMilitary(12, 5, "engineer", government);
         Military military3 = map.getTile(12, 5).getMilitaries().get(0);
@@ -345,7 +345,7 @@ public class AttackAndMoveTest {
         engineers.add((Engineer) military2);
 
         makeSample.selectUnit(13, 7, null, game, government);
-        System.out.println(GameController.buildEquipment(4, engineers, 13, 7));
+        System.out.println(GameController.buildEquipment(4, engineers, 12, 6));
 
         MapController.dropMilitary(12, 5, "engineer", government);
         Military military3 = map.getTile(12, 5).getMilitaries().get(0);
@@ -404,7 +404,7 @@ public class AttackAndMoveTest {
         engineers.add((Engineer) military2);
 
         makeSample.selectUnit(13, 7, null, game, government);
-        System.out.println(GameController.buildEquipment(3, engineers, 13, 7));
+        System.out.println(GameController.buildEquipment(3, engineers, 12, 6));
 
         MapController.dropMilitary(12, 5, "engineer", government);
         Military military3 = map.getTile(12, 5).getMilitaries().get(0);
@@ -423,9 +423,6 @@ public class AttackAndMoveTest {
         makeSample.selectUnit(13, 6, null, game, government);
         System.out.println(GameController.useTool(13, 7));
         military5.getMove().moveOneTurn();
-
-
-
 
 
         GameController.selectTool(12, 6);

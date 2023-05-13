@@ -16,6 +16,7 @@ import model.buildinghandler.BuildingCounter;
 import model.game.Map;
 import model.game.Tile;
 import model.human.civilian.Civilian;
+import model.human.military.Engineer;
 import model.human.military.Lord;
 import model.human.military.Military;
 import model.tools.Tool;
@@ -291,8 +292,9 @@ public class MapController {
 
 
                 if (building.getBuildingImpassableLength() != -1) {
-                    if (i >= building.getBuildingImpassableLength() || j >= building.getBuildingImpassableLength()) {
+                    if (i >= building.getBuildingImpassableLength() + y || j >= building.getBuildingImpassableLength() + x) {
                         tile.setPassable(true);
+                        tile.setBuilding(null);
                     } else {
                         tile.setPassable(false);
                         tile.setTexture(textures);
@@ -334,7 +336,7 @@ public class MapController {
         Tile tile = map.getTile(x, y);
         for (Military military : tile.getMilitaries()) {
             if (military.getGovernment().getColor().equals(government.getColor())) {
-                if (!(military instanceof Lord)) {
+                if (!(military instanceof Lord) && !((military instanceof Engineer engineer) && engineer.isInTool())) {
                     militaries.add(military);
                 }
             }
@@ -433,6 +435,9 @@ public class MapController {
         addTool(x, y, tool);
         tool.setX(x);
         tool.setY(y);
+        for (Engineer engineer : tool.getEngineers()) {
+            moveMilitary(x, y, engineer);
+        }
     }
 
     public static void moveMilitary(int x, int y, Military military) {

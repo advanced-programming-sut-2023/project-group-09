@@ -233,7 +233,10 @@ public class UnitMenu {
                     }
                 }
             } else if (buildMatcher.matches()) {
-                runBuild(scanner);
+                boolean check = runBuild(scanner);
+                if(check){
+                    return;
+                }
             } else if (digMoatMatcher.matches()) {
                 String items = digMoatMatcher.group("items");
                 ArrayList<String> itemsPattern = new ArrayList<>();
@@ -275,21 +278,21 @@ public class UnitMenu {
         }
     }
 
-    private static void runBuild(Scanner scanner) {
+    private static boolean runBuild(Scanner scanner) {
         ArrayList<Engineer> engineers = getEngineersOfTile();
         if (engineers.size() == 0) {
             System.out.println("invalid command");
-            return;
+            return false;
         }
         for (int i = 0; i < engineers.size(); i++) {
             if (engineers.get(i).isInTool()) {
                 System.out.println("some of the selected engineers are in a tool");
-                return;
+                return false;
             }
         }
         if (!GameController.getGame().getMap().getTile(x, y).getCanPutBuilding()) {
             System.out.println("you can't build a tool here!");
-            return;
+            return false;
         }
 
         String message = "select one of the following tools:\n";
@@ -319,9 +322,10 @@ public class UnitMenu {
             break;
         }
 
-        if (back) return;
-
-        System.out.println(GameController.buildEquipment(number, engineers, x, y));
+        if (back) return false;
+        String output = GameController.buildEquipment(number, engineers, x, y);
+        System.out.println(output);
+        return output.equals("siegeTent put for this goal successfully!");
     }
 
     public static Military getEnemy(int x, int y, Scanner scanner) {
