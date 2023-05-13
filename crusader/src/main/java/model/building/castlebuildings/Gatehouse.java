@@ -1,10 +1,9 @@
 package model.building.castlebuildings;
 
 import controller.GameController;
+import controller.MapController;
 import controller.human.HumanController;
-import model.Government;
 import model.building.Building;
-import model.game.Game;
 import model.game.Map;
 import model.human.military.Military;
 
@@ -54,6 +53,7 @@ public class Gatehouse extends CastleBuilding {
         super(numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, width, length);
         this.capacity = capacity;
     }
+
     public Gatehouse(Gatehouse gatehouse) {
         super(gatehouse.getNumberOfRequiredWorkers(), gatehouse.getNumberOfRequiredEngineers(), gatehouse.getName(),
                 gatehouse.getMaxHp(), gatehouse.getWidth(), gatehouse.getLength());
@@ -71,30 +71,54 @@ public class Gatehouse extends CastleBuilding {
 
     public static Gatehouse canDropDrawBridge(int x, int y) { // it returned the gatehouse that connects to new draw bridge
         Map map = GameController.getGame().getMap();
-        Building building = map.getTile(x+1 , y).getBuilding();
-        if (building instanceof Gatehouse &&
-                (((Gatehouse) building).getTypeOfGate().equals("gatehouse")) &&
-                !((Gatehouse)building).isRightSide) {
-            return (Gatehouse) building;
+        Building building = map.getTile(x + 1, y).getBuilding();
+        if (x < MapController.map.getWidth() - 1) {
+            if (building instanceof Gatehouse gatehouse &&
+                    (!gatehouse.getName().equals("drawBridge")) &&
+                    !gatehouse.isRightSide) {
+                int checkY = (building.getLength() + building.getStartY()) / 2;
+                if (y == checkY) {
+                    return (Gatehouse) building;
+                }
+                return null;
+
+            }
         }
-        building = map.getTile(x-1 , y).getBuilding();
-        if (building instanceof Gatehouse &&
-                (((Gatehouse) building).getTypeOfGate().equals("gatehouse")) &&
-                !((Gatehouse)building).isRightSide) {
-            return (Gatehouse) building;
+
+        if (0 < x) {
+            building = map.getTile(x - 1, y).getBuilding();
+            if (building instanceof Gatehouse gatehouse &&
+                    (!gatehouse.getName().equals("drawBridge")) &&
+                    !gatehouse.isRightSide) {
+                int checkY = (building.getLength() + building.getStartY()) / 2;
+                if (y == checkY) {
+                    return (Gatehouse) building;
+                }
+            }
         }
-        building = map.getTile(x , y+1).getBuilding();
-        if (building instanceof Gatehouse &&
-                (((Gatehouse) building).getTypeOfGate().equals("gatehouse")) &&
-                ((Gatehouse)building).isRightSide) {
-            return (Gatehouse) building;
+        if (y < MapController.map.getLength() - 1) {
+            building = map.getTile(x, y + 1).getBuilding();
+            if (building instanceof Gatehouse gatehouse &&
+                    (!gatehouse.getName().equals("drawBridge")) &&
+                    gatehouse.isRightSide) {
+                int checkX = (building.getWidth() + building.getStartX()) / 2;
+                if (x == checkX) {
+                    return (Gatehouse) building;
+                }
+            }
         }
-        building = map.getTile(x , y-1).getBuilding();
-        if (building instanceof Gatehouse &&
-                (((Gatehouse) building).getTypeOfGate().equals("gatehouse")) &&
-                ((Gatehouse)building).isRightSide) {
-            return (Gatehouse) building;
+        if (0 < y) {
+            building = map.getTile(x, y - 1).getBuilding();
+            if (building instanceof Gatehouse gatehouse &&
+                    (!gatehouse.getName().equals("drawBridge")) &&
+                    gatehouse.isRightSide) {
+                int checkX = (building.getWidth() + building.getStartX()) / 2;
+                if (x == checkX) {
+                    return (Gatehouse) building;
+                }
+            }
         }
+
         return null;
     }
 
@@ -104,7 +128,7 @@ public class Gatehouse extends CastleBuilding {
     }
 
 
-    public void checkToCloseGateHouse(){
+    public void checkToCloseGateHouse() {
         int startX = getStartX() - 25;
         int startY = getStartY() - 25;
         int endX = getStartX() + 25;
@@ -125,8 +149,8 @@ public class Gatehouse extends CastleBuilding {
         if (endY + 1 >= map.getLength()) {
             endY = map.getLength() - 1;
         }
-        ArrayList<Military> militaries = HumanController.getEnemiesOfArea(startX,startY,endX,endY,getGovernment());
-        if (militaries.size() != 0){
+        ArrayList<Military> militaries = HumanController.getEnemiesOfArea(startX, startY, endX, endY, getGovernment());
+        if (militaries.size() != 0) {
             openOrCloseGatehouse(false);
         }
     }

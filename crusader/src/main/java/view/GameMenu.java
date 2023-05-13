@@ -42,12 +42,14 @@ public class GameMenu {
                 itemsPattern.add(GameMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(GameMenuCommands.Y_ITEM.getRegex());
                 itemsPattern.add(GameMenuCommands.TYPE_ITEM.getRegex());
+                itemsPattern.add(GameMenuCommands.SIDE_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = ViewController.getNumberOfRegex("x") - 1;
-                    int y = ViewController.getNumberOfRegex("y") - 1;
+                    int x = ViewController.getNumberOfRegex("x");
+                    int y = ViewController.getNumberOfRegex("y");
                     String type = ViewController.resultMatcher.group("type");
+                    String side = ViewController.resultMatcher.group("side");
                     type = ViewController.editItem(type);
-                    output = GameController.dropBuilding(x, y, type);
+                    output = GameController.dropBuilding(x, y, type,side);
                     System.out.println(output);
                 }
             } else if (selectBuildingMatcher.matches()) {

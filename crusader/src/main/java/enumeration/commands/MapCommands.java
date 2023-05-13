@@ -17,6 +17,7 @@ public enum MapCommands {
     TYPE("-t (?<type>[\\S]+)"),
     DIRECTION("-d (?<direction>[\\S]+)"),
     COUNT("-c (?<count>[\\d]*)"),
+    SIDE("-s (?<side>(right)|(left))"),
     X1_COORDINATE("-x1 (?<x1>[\\d]*)"),
     X2_COORDINATE("-x2 (?<x2>[\\d]*)"),
     Y1_COORDINATE("-y1 (?<y1>[\\d]*)"),
