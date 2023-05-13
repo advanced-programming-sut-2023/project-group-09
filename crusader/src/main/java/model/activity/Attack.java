@@ -15,7 +15,6 @@ import model.human.military.Military;
 import model.tools.Tool;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Random;
 
 public class Attack {
@@ -127,9 +126,8 @@ public class Attack {
                 if (tool == null || tool.getGovernment().equals(military.getGovernment()) || !tool.isActive()) {
                     continue;
                 }
-                Tool targetTool = military.getMove().getTool();
                 double distance = MoveController.getDistance(tool.getX(), tool.getY(), military.getX(), military.getY());
-                if (tool.equals(targetTool)) {
+                if (military.getMove() != null && tool.equals(military.getMove().getTool())) {
                     return tool;
                 } else if (distance < minDistance) {
                     minDistance = distance;
@@ -149,9 +147,9 @@ public class Attack {
         this.targetBuilding = targetBuilding;
     }
 
-    public boolean checkCanAttack(Military enemy){
-        boolean overHeadOfPoint =MoveController.setOverHeadOfCoordinate(new Tuple(military.getY(), military.getX()));
-        boolean overHeadOfEnemy =  MoveController.setOverHeadOfCoordinate(new Tuple(enemy.getY(), enemy.getX()));
+    public boolean checkCanAttack(Military enemy) {
+        boolean overHeadOfPoint = MoveController.setOverHeadOfCoordinate(new Tuple(military.getY(), military.getX()));
+        boolean overHeadOfEnemy = MoveController.setOverHeadOfCoordinate(new Tuple(enemy.getY(), enemy.getX()));
         return overHeadOfPoint == overHeadOfEnemy;
     }
 
@@ -183,7 +181,7 @@ public class Attack {
 
         if (militaries.size() != 0) {
             if (military.getMove() != null && military.getMove().getEnemy() != null && militaries.contains(military.getMove().getEnemy())) {
-                if(range != 1 || checkCanAttack(military.getMove().getEnemy())){
+                if (range != 1 || checkCanAttack(military.getMove().getEnemy())) {
                     this.enemy = military.getMove().getEnemy();
                     return true;
                 }
@@ -194,17 +192,20 @@ public class Attack {
                     minDistance = distance;
                     enemies.clear();
                     enemies.add(enemy);
+                    System.out.println("===============================" + minDistance);
                 }
             }
         }
 
 
-        if (enemies.size() == 0 && nearestTool == null){
+        if (enemies.size() == 0 && nearestTool == null) {
             return false;
         }
 
         if (nearestTool != null) {
+
             if (minDistance > MoveController.getDistance(nearestTool.getX(), nearestTool.getY(), military.getX(), military.getY())) {
+
                 this.tool = nearestTool;
                 return true;
             }
@@ -247,7 +248,7 @@ public class Attack {
             if (military.canAirAttack()) {
                 attackToTool();
             } else {
-                HumanController.attack(tool,military);
+                HumanController.attack(tool, military);
                 tool = null;
                 enemy = null;
             }
@@ -257,7 +258,7 @@ public class Attack {
             if (military.canAirAttack()) {
                 attackEnemy();
             } else {
-                HumanController.attack(enemy,military);
+                HumanController.attack(enemy, military);
                 enemy = null;
                 tool = null;
             }
@@ -303,7 +304,7 @@ public class Attack {
 
 
         int hp = targetBuilding.takeDamage(military.getAttackRating());
-        if (hp < 0) {
+        if (hp <= 0) {
             MapController.deleteBuilding(targetBuilding);
             targetBuilding.setGovernment(null);
             targetBuilding = null;
@@ -312,7 +313,7 @@ public class Attack {
 
     public void attackToTool() {
         int hp = tool.takeDamage(military.getAttackRating());
-        if (hp < 0) {
+        if (hp <= 0) {
             MapController.deleteTool(tool.getX(), tool.getY(), tool);
             tool.setGovernment(null);
             tool = null;

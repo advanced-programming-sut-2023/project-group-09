@@ -12,8 +12,8 @@
     "numberOfRequiredEngineers": 4,
     "speed": 3,
     "engineers": [],
-    "shootingRange": 0,
-    "damage": 0,
+    "shootingRange": 1,
+    "damage": 10,
     "hp": 20,
     "stoneNumber": 20
   },

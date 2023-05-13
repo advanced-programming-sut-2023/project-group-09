@@ -61,6 +61,8 @@ public class EngineerController {
         assert tool != null;
         tent.setConvertTool(tool);
         tent.addEngineer(currentEngineer);
+        currentEngineer.setInTool(true);
+        currentEngineer.setInvisible(true);
         tile.setTool(tent);
 
         return "siegeTent put for this goal successfully!";

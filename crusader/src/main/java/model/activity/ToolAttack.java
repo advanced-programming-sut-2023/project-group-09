@@ -66,8 +66,7 @@ public class ToolAttack {
         if (tool.isCanAirAttack()) {
             return isInRange(building.getStartX(), building.getStartY(), tool.getShootingRange());
         }
-        Tile tile = GameController.getGame().getMap().getTile(tool.getX(), tool.getY());
-        return building.getNeighborTiles().contains(tile);
+        return building.getNeighborTiles().contains(new Tuple(tool.getY(), tool.getX()));
     }
 
     public void attackToBuilding(Building building) {
@@ -76,7 +75,7 @@ public class ToolAttack {
             return;
         }
         int hp = building.takeDamage(tool.getDamage());
-        if (hp < 0) {
+        if (hp <= 0) {
             MapController.deleteBuilding(building);
             building.setGovernment(null);
             if (building == targetBuilding) {
@@ -104,7 +103,7 @@ public class ToolAttack {
         Tool tool;
         int count = 0;
         if (this.tool.isAttackToBuilding()) {
-            if ((building = tile.getBuilding()) != null) {
+            if ((building = tile.getBuilding()) != null && !building.getGovernment().equals(this.tool.getGovernment())) {
                 attackToBuilding(building);
                 count++;
             }
@@ -116,7 +115,7 @@ public class ToolAttack {
                 count++;
             }
             for (Military military : tile.getMilitaries()) {
-                if (!military.getGovernment().equals(this.tool.getGovernment())) {
+                if (!military.getGovernment().equals(this.tool.getGovernment()) && !military.isInvisible()) {
                     attackToMilitary(military);
                     count++;
                     if (!(military instanceof Engineer)) {
@@ -142,17 +141,16 @@ public class ToolAttack {
         }
 
 
-        if (targetBuilding != null && targetBuilding.getGovernment() != null) {
+        if (targetBuilding != null && targetBuilding.getGovernment() == null) {
             targetBuilding = null;
         }
 
 
         ToolMove move = tool.getToolMove();
-
         //building attack
         if (targetBuilding != null && buildingIsInRange(targetBuilding)) {
-            move.stopMove();
             attackToBuilding(targetBuilding);
+            move.stopMove();
             return;
         }
 

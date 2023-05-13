@@ -227,7 +227,7 @@ public class Tool {
 
     public int takeDamage(int damage) {
         hp -= damage;
-        if (hp < 0) {
+        if (hp <= 0) {
             for (Engineer engineer : engineers) {
                 MapController.deleteMilitary(engineer.getX(), engineer.getY(), engineer);
                 engineer.setGovernment(null);

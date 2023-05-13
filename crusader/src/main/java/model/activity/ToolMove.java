@@ -65,6 +65,7 @@ public class ToolMove {
             moveState = MoveStates.STOP.getState();
             return;
         }
+        endPair = path.getLast();
         moveState = MoveStates.MOVING.getState();
     }
 

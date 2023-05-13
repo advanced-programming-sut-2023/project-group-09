@@ -4,6 +4,7 @@ import controller.GameController;
 import controller.MapController;
 import controller.ToolsController;
 import controller.human.HumanController;
+import controller.human.MoveController;
 import enumeration.commands.ToolMenuCommands;
 import model.activity.ToolAttack;
 import model.activity.ToolMove;
@@ -12,9 +13,11 @@ import model.building.castlebuildings.Wall;
 import model.game.Tile;
 import model.game.Tuple;
 import model.human.military.Engineer;
+import model.human.military.Military;
 import model.tools.SiegeTent;
 import model.tools.Tool;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -50,6 +53,10 @@ public class ToolMenu {
 
                 if (tool.getName().equals("trebuchet")) {
                     System.out.println("you can't move a trebuchet");
+                    continue;
+                }
+                if (!tool.isCanMove()) {
+                    System.out.println("you can't move");
                     continue;
                 }
 
@@ -164,33 +171,43 @@ public class ToolMenu {
         return "";
     }
 
-    private static String attack(int x, int y) {
+    public static String attack(int x, int y) {
         if (tool.getName().equals("portableShield"))
-            return "invalid command";
+            return "invalid command!";
         Tile tile = GameController.getGame().getMap().getTile(x, y);
-        if (tile.getBuilding() != null) {
-            if (tool.getName().equals("batteringRam"))
-                return "invalid command";
+        Building building = tile.getBuilding();
+        if (tool.getName().equals("batteringRam") || tool.getName().equals("siegeTower")) {
+            if (building == null || building.getGovernment().equals(tool.getGovernment())){
+                return "please select one building of enemy!";
+            }
+            LinkedList<Tuple> path = ToolsController.getPathForBuilding(new Tuple(tool.getY(), tool.getX()), building, tool);
+            if (path == null) {
+                return "there is no available way to move tool!";
+            }
             ToolAttack attack = new ToolAttack(tool);
-            attack.setAttackPoint(new Tuple(y, x));
             tool.setToolAttack(attack);
-        } else {
-            Building building = tile.getBuilding();
-            if (!(building instanceof Wall) && tool.getName().equals("siegeTower"))
-                return "invalid command";
-            ToolAttack attack = new ToolAttack(tool);
+            ToolMove move = new ToolMove(tool.getX(), tool.getY(), building, true, tool);
+            move.setPath(path);
             attack.setTargetBuilding(building);
-            tool.setToolAttack(attack);
-            if (tool.getName().equals("batteringRam") || tool.getName().equals("siegeTower")) {
-                LinkedList<Tuple> path = ToolsController.getPathForBuilding(new Tuple(tool.getY(), tool.getX()), building, tool);
-                if (path == null) {
-                    return "there is no available way to move tool";
-                }
-                ToolMove move = new ToolMove(tool.getX(), tool.getY(), new Tuple(y, x), true, tool);
-                move.setPath(path);
-                tool.setToolMove(move);
+            tool.setToolMove(move);
+            return "attack command applied successfully!";
+        }
+
+        if (MoveController.getDistance(x, y, tool.getX(), tool.getY()) > tool.getShootingRange())
+            return "this point is out of range!";
+
+
+
+        if (tool.getName().equals("fireBallista")){
+            ArrayList<Military> militaries = MapController.getMilitariesOfOtherGovernment(x,y,tool.getGovernment());
+            if (militaries.size() == 0){
+                return "please select one point with enemy!";
             }
         }
-        return "attack command applied successfully";
+
+        ToolAttack attack = new ToolAttack(tool);
+        attack.setAttackPoint(new Tuple(y, x));
+        tool.setToolAttack(attack);
+        return "attack command applied successfully!";
     }
 }
