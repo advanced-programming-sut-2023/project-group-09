@@ -44,8 +44,8 @@ public class GameMenu {
                 itemsPattern.add(GameMenuCommands.TYPE_ITEM.getRegex());
                 itemsPattern.add(GameMenuCommands.SIDE_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = ViewController.getNumberOfRegex("x");
-                    int y = ViewController.getNumberOfRegex("y");
+                    int x = ViewController.getNumberOfRegex("x") - 1;
+                    int y = ViewController.getNumberOfRegex("y") - 1;
                     String type = ViewController.resultMatcher.group("type");
                     String side = ViewController.resultMatcher.group("side");
                     type = ViewController.editItem(type);
@@ -58,8 +58,8 @@ public class GameMenu {
                 itemsPattern.add(GameMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(GameMenuCommands.Y_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = ViewController.getNumberOfRegex("x");
-                    int y = ViewController.getNumberOfRegex("y");
+                    int x = ViewController.getNumberOfRegex("x") - 1;
+                    int y = ViewController.getNumberOfRegex("y") - 1;
                     output = GameController.selectBuilding(x, y);
                     System.out.println(output);
                     if (!output.equals("There is no building of your government here!")) {
@@ -74,8 +74,8 @@ public class GameMenu {
                 itemsPattern.add(GameMenuCommands.Y_ITEM.getRegex());
                 itemsPattern.add(GameMenuCommands.UNIT_TYPE_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = ViewController.getNumberOfRegex("x");
-                    int y = ViewController.getNumberOfRegex("y");
+                    int x = ViewController.getNumberOfRegex("x") - 1;
+                    int y = ViewController.getNumberOfRegex("y") - 1;
                     String type = ViewController.resultMatcher.group("type");
                     output = GameController.selectUnit(x, y, type, scanner);
                     System.out.println(output);
@@ -86,8 +86,8 @@ public class GameMenu {
                 itemsPattern.add(GameMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(GameMenuCommands.Y_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = ViewController.getNumberOfRegex("x");
-                    int y = ViewController.getNumberOfRegex("y");
+                    int x = ViewController.getNumberOfRegex("x") - 1;
+                    int y = ViewController.getNumberOfRegex("y") - 1;
                     output = GameController.selectTool(x, y);
                     if (output.charAt(1) == 'h') {
                         System.out.println("no tool in this place!");
@@ -103,8 +103,8 @@ public class GameMenu {
                 itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.S_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = ViewController.getNumberOfRegex("x");
-                    int y = ViewController.getNumberOfRegex("y");
+                    int x = ViewController.getNumberOfRegex("x") - 1;
+                    int y = ViewController.getNumberOfRegex("y") - 1;
                     String state = ViewController.resultMatcher.group("type");
                     state = ViewController.editItem(state);
                     output = GameController.setStateOfMilitary(x, y, state);

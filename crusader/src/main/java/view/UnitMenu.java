@@ -71,10 +71,10 @@ public class UnitMenu {
                 itemsPattern.add(UnitMenuCommands.X2_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.Y2_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x1 = ViewController.getNumberOfRegex("x1");
-                    int y1 = ViewController.getNumberOfRegex("y1");
-                    int x2 = ViewController.getNumberOfRegex("x2");
-                    int y2 = ViewController.getNumberOfRegex("y2");
+                    int x1 = ViewController.getNumberOfRegex("x1") - 1;
+                    int y1 = ViewController.getNumberOfRegex("y1") - 1;
+                    int x2 = ViewController.getNumberOfRegex("x2") - 1;
+                    int y2 = ViewController.getNumberOfRegex("y2") - 1;
                     output = GameController.patrolUnit(x1, y1, x2, y2);
                     System.out.println(output);
                     if (output.equals("patrol started successfully!")) {
@@ -91,8 +91,8 @@ public class UnitMenu {
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = ViewController.getNumberOfRegex("x");
-                    int y = ViewController.getNumberOfRegex("y");
+                    int x = ViewController.getNumberOfRegex("x") - 1;
+                    int y = ViewController.getNumberOfRegex("y") - 1;
                     output = GameController.attackEnemy(x, y, scanner);
                     System.out.println(output);
                     if (output.equals("attack order has been recorded successfully!")) {
@@ -105,8 +105,8 @@ public class UnitMenu {
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = ViewController.getNumberOfRegex("x");
-                    int y = ViewController.getNumberOfRegex("y");
+                    int x = ViewController.getNumberOfRegex("x") - 1;
+                    int y = ViewController.getNumberOfRegex("y") - 1;
                     output = GameController.airAttack(x, y);
                     System.out.println(output);
                     if (output.equals("attack order has been recorded successfully!")) {
@@ -119,8 +119,8 @@ public class UnitMenu {
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = ViewController.getNumberOfRegex("x");
-                    int y = ViewController.getNumberOfRegex("y");
+                    int x = ViewController.getNumberOfRegex("x") - 1;
+                    int y = ViewController.getNumberOfRegex("y") - 1;
                     output = GameController.attackBuilding(x, y);
                     System.out.println(output);
                     if (output.equals("attack order has been recorded successfully!")) {
@@ -134,8 +134,8 @@ public class UnitMenu {
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = ViewController.getNumberOfRegex("x");
-                    int y = ViewController.getNumberOfRegex("y");
+                    int x = ViewController.getNumberOfRegex("x") - 1;
+                    int y = ViewController.getNumberOfRegex("y") - 1;
                     output = GameController.airAttackBuilding(x, y);
                     System.out.println(output);
                     if (output.equals("attack order has been recorded successfully!")) {
@@ -148,8 +148,8 @@ public class UnitMenu {
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = ViewController.getNumberOfRegex("x");
-                    int y = ViewController.getNumberOfRegex("y");
+                    int x = ViewController.getNumberOfRegex("x") - 1;
+                    int y = ViewController.getNumberOfRegex("y") - 1;
                     output = GameController.attackTool(x, y);
                     System.out.println(output);
                     if (output.equals("attack order has been recorded successfully!")) {
@@ -163,8 +163,8 @@ public class UnitMenu {
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = ViewController.getNumberOfRegex("x");
-                    int y = ViewController.getNumberOfRegex("y");
+                    int x = ViewController.getNumberOfRegex("x") - 1;
+                    int y = ViewController.getNumberOfRegex("y") - 1;
                     output = GameController.airAttackTool(x, y);
                     System.out.println(output);
                     if (output.equals("attack order has been recorded successfully!")) {
@@ -177,8 +177,8 @@ public class UnitMenu {
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = ViewController.getNumberOfRegex("x");
-                    int y = ViewController.getNumberOfRegex("y");
+                    int x = ViewController.getNumberOfRegex("x") - 1;
+                    int y = ViewController.getNumberOfRegex("y") - 1;
                     output = GameController.useTool(x, y);
                     System.out.println(output);
                     if (output.equals("order record successfully!")) {
@@ -191,8 +191,8 @@ public class UnitMenu {
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = ViewController.getNumberOfRegex("x");
-                    int y = ViewController.getNumberOfRegex("y");
+                    int x = ViewController.getNumberOfRegex("x") - 1;
+                    int y = ViewController.getNumberOfRegex("y") - 1;
                     output = GameController.goToOilSmelter(x, y);
                     System.out.println(output);
                     if (output.equals("engineer now works in this oilSmelter!")) {
@@ -224,8 +224,8 @@ public class UnitMenu {
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = Integer.parseInt(ViewController.resultMatcher.group("x"));
-                    int y = Integer.parseInt(ViewController.resultMatcher.group("y"));
+                    int x = Integer.parseInt(ViewController.resultMatcher.group("x")) - 1;
+                    int y = Integer.parseInt(ViewController.resultMatcher.group("y")) - 1;
                     output = GameController.digTunnel(x, y);
                     System.out.println(output);
                     if (output.equals("dig tunnel order recorded successfully!")) {
@@ -243,8 +243,8 @@ public class UnitMenu {
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = Integer.parseInt(ViewController.resultMatcher.group("x"));
-                    int y = Integer.parseInt(ViewController.resultMatcher.group("y"));
+                    int x = Integer.parseInt(ViewController.resultMatcher.group("x")) - 1;
+                    int y = Integer.parseInt(ViewController.resultMatcher.group("y")) - 1;
                     output = GameController.digMoat(x, y);
                     System.out.println(output);
                     if (output.equals("dig moat order recorded successfully!")) {
@@ -257,8 +257,8 @@ public class UnitMenu {
                 itemsPattern.add(UnitMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(UnitMenuCommands.Y_ITEM.getRegex());
                 if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = Integer.parseInt(ViewController.resultMatcher.group("x"));
-                    int y = Integer.parseInt(ViewController.resultMatcher.group("y"));
+                    int x = Integer.parseInt(ViewController.resultMatcher.group("x")) - 1;
+                    int y = Integer.parseInt(ViewController.resultMatcher.group("y")) - 1;
                     output = GameController.fillMoat(x, y);
                     System.out.println(output);
                     if (output.equals("fill moat order recorded successfully!")) {
