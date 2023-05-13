@@ -79,7 +79,7 @@ public class GameMenu {
                     System.out.println(output);
                 }
             } else if (selectToolMatcher.matches()) {
-                String items = selectBuildingMatcher.group("items");
+                String items = selectToolMatcher.group("items");
                 ArrayList<String> itemsPattern = new ArrayList<>();
                 itemsPattern.add(GameMenuCommands.X_ITEM.getRegex());
                 itemsPattern.add(GameMenuCommands.Y_ITEM.getRegex());
