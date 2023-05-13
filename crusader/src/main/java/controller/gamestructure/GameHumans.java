@@ -240,7 +240,6 @@ public class GameHumans {
         assassin.setAggressiveRange(7);
         assassin.enableInvisible();
         militaries.put("assassin", assassin);
-
     }
 
     public static void createHorseArcher() {

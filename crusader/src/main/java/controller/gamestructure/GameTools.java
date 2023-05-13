@@ -52,7 +52,7 @@ public class GameTools {
 
     public static void createBatteringRam() {
         int speed = Speed.AVERAGE.getRate();
-        int damage = AttackRating.NONE.getRate();
+        int damage = AttackRating.HIGH.getRate();
         Tool batteringRam = new Tool("batteringRam", 4, speed,
                 0, damage);
         batteringRam.setCanAttack(true);

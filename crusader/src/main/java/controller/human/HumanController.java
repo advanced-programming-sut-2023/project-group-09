@@ -94,6 +94,7 @@ public class HumanController {
                     Move move = new Move(military.getX(), military.getY(), enemy, false, military);
                     move.setPath(assassinPath);
                     military.setMove(move);
+                    military.setInvisible(false);
                     count++;
                 }
             }
@@ -106,6 +107,8 @@ public class HumanController {
                 move.setPath(path);
                 military.setMove(move);
                 count++;
+
+                if (military.getName().equals("assassin")) military.setInvisible(false);
             }
         }
         if (count == 0) {
@@ -144,6 +147,7 @@ public class HumanController {
                     move.setPath(assassinPath);
                     military.setMove(move);
                     military.getAttack().setTargetBuilding(building);
+                    military.setInvisible(false);
                     count++;
                 }
             }
@@ -162,6 +166,8 @@ public class HumanController {
                 military.setMove(move);
                 military.getAttack().setTargetBuilding(building);
                 count++;
+
+                if (military.getName().equals("assassin")) military.setInvisible(false);
             }
         }
         if (count == 0) {
@@ -199,6 +205,7 @@ public class HumanController {
                     Move move = new Move(military.getX(), military.getY(), tool, false, military);
                     move.setPath(assassinPath);
                     military.setMove(move);
+                    military.setInvisible(false);
                     count++;
                 }
             }
@@ -211,6 +218,8 @@ public class HumanController {
                 move.setPath(path);
                 military.setMove(move);
                 count++;
+
+                if (military.getName().equals("assassin")) military.setInvisible(false);
             }
         }
         if (count == 0) {
@@ -444,7 +453,7 @@ public class HumanController {
             if (directionEnemy.size() > maxEnemy) {
                 enemies = new ArrayList<>(directionEnemy);
             }
-            if (enemies == null){
+            if (enemies == null) {
                 return true;
             }
 

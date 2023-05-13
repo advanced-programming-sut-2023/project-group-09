@@ -23,14 +23,15 @@ public abstract class Human implements Cloneable {
 
     private int shootingRange;
 
-    private boolean isInvisible = false;
-     private Move move;
+    private boolean isInvisible;
+    private Move move;
 
     public Human(int speed, int defenseRating, int shootingRange) {
         this.speed = speed;
         this.defenseRating = defenseRating;
         this.health = defenseRating;
         this.shootingRange = shootingRange;
+        this.isInvisible = false;
     }
 
 
