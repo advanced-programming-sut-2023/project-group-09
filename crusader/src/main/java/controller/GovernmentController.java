@@ -204,4 +204,14 @@ public class GovernmentController {
         };
     }
 
+    public static String showProperties() {
+        String result = "";
+        int counter = 1;
+        for (String itemName : currentGovernment.getProperties().keySet()) {
+            result += counter + ". " + itemName.toUpperCase() + " : " + currentGovernment.getPropertyAmount(itemName) + "\n";
+            counter++;
+        }
+        result += counter + ". GOLD : " + currentGovernment.getGold();
+        return result;
+    }
 }

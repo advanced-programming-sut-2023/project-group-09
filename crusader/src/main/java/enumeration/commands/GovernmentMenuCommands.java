@@ -12,7 +12,8 @@ public enum GovernmentMenuCommands {
     TAX_RATE("tax rate -r (?<rate>\\-?\\d*)"),
     SHOW_TAX_RATE("show tax rate"),
     FEAR_RATE("fear rate -r (?<rate>\\-?\\d*)"),
-    SHOW_FEAR_RATE("show fear rate")
+    SHOW_FEAR_RATE("show fear rate"),
+    SHOW_PROPERTIES("show properties")
     ;
     private final String regex;
 
