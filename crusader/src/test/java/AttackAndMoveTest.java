@@ -125,15 +125,19 @@ public class AttackAndMoveTest {
         System.out.println(GameController.showMap(0, 0));
         military2.getMove().moveOneTurn();
         System.out.println(GameController.showMap(0, 0));
+        Assert.assertTrue(game.getMap().getTile(7,0).isMoat());
+        System.out.println(GameController.moveUnit(10,2));
+        military2.getMove().moveOneTurn();
+        System.out.println(GameController.showMap(0, 0));
+
+        System.out.println(GameController.fillMoat(8, 1));
         military2.getMove().moveOneTurn();
         System.out.println(GameController.showMap(0, 0));
         military2.getMove().moveOneTurn();
         System.out.println(GameController.showMap(0, 0));
         military2.getMove().moveOneTurn();
         System.out.println(GameController.showMap(0, 0));
-        military2.getMove().moveOneTurn();
-        System.out.println(GameController.showMap(0, 0));
-        System.out.println(GameController.showDetailsOfTile(7, 0));
+        Assert.assertFalse(game.getMap().getTile(7, 0).isMoat());
     }
 
     @Test
