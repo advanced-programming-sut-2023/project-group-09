@@ -392,7 +392,6 @@ public class Move {
             }
 
             if (shouldDigMoat) {
-                System.out.println("================");
                 Tile tile = GameController.getGame().getMap().getTile(endPair.getX(), endPair.getY());
                 tile.setMoat(true);
             }
