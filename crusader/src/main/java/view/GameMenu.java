@@ -127,7 +127,23 @@ public class GameMenu {
                 MapMenu.runShowMapOrShowDetailsOrClearLand(showMapM, 0);
                 MapMenu.run(scanner);
             } else if (backMatcher.matches()) {
-                break;
+                System.out.println("are you sure you want to quit?\n1.yes\n2.cancel");
+                int number = 0;
+                while (true) {
+                    try {
+                        number = Integer.parseInt(scanner.nextLine());
+                    } catch (Exception e) {
+                        System.out.println("enter a number!");
+                        continue;
+                    }
+                    if (number != 1 && number != 2) {
+                        System.out.println("invalid number!");
+                        continue;
+                    }
+                    break;
+                }
+                if (number == 2) continue;
+                else break;
             } else if (exitMatcher.matches()) {
                 MainController.exitCrusader();
             } else if (input.equals("show gold")) {
