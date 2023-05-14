@@ -316,6 +316,7 @@ public class MapController {
     public static boolean checkCanPutMilitary(int x, int y, String type) {
         Military military = GameHumans.getUnit(type);
         if (military == null) {
+            System.out.println("reason : military with this name doesn't exist!");
             return false;
         }
         Tile tile = map.getTile(x, y);

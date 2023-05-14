@@ -165,6 +165,7 @@ public class BuildingMenu {
                     System.out.println(Answers.INVALID_COMMAND.getValue());
                 }
             } else if (input.equals("n") || input.equals("no")) {
+                System.out.println(" << Game Menu >> ");
                 return;
             } else if (input.equals(Commands.BACK.getRegex())) {
                 return;
