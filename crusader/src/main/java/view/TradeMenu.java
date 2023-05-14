@@ -121,7 +121,7 @@ public class TradeMenu {
         String result = "notifications:\n";
         for (String key : trades.keySet()) {
             Trade trade = trades.get(key);
-            result += "id: " + key + " | type: " + trade.getTradeType() + " | sender: " +
+            result += "id: " + key + " | type: " + trade.getTradeType() + "amount: " + trade.getAmount() + " | price: " + trade.getPrice() + " | sender: " +
                     trade.getSender().getUser().getUsername() + " (" + trade.getSender().getColor() + ") | message: " + trade.getRequestMessage() + "\n";
         }
         government.clearTradeCash();

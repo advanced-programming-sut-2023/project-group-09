@@ -516,10 +516,10 @@ public class GameController {
         }
 
 
-        consumeRequired(building.getCost());
         if (!MapController.checkCanPutBuilding(x, y, type, GameController.getGame().getCurrentGovernment())) {
             return "this coordinate is not suitable!";
         }
+        consumeRequired(building.getCost());
         MapController.dropBuilding(x, y, type, GameController.getGame().getCurrentGovernment());
         return "building dropped successfully!";
     }
