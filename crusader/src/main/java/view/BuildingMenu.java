@@ -28,7 +28,7 @@ public class BuildingMenu {
         nameOfBuilding = building.getName();
 
         while (true) {
-            String command = null;
+            String command = "";
             if (!(building instanceof WeaponProducer || isThisBuildingSelected(Buildings.SHOP)))
                 command = scanner.nextLine();
 
