@@ -55,8 +55,8 @@ public class EditMapMenu {
             return;
         }
 
-        int x = Integer.parseInt(xM.group("x"));
-        int y = Integer.parseInt(yM.group("y"));
+        int x = Integer.parseInt(xM.group("x")) - 1;
+        int y = Integer.parseInt(yM.group("y")) - 1;
         String type = typeM.group("type");
         Building building = GameBuildings.getBuilding(type);
         if (building == null) {

@@ -35,7 +35,7 @@ public class GameMenu {
             Matcher exitMatcher = Commands.getMatcher(input, Commands.EXIT_CRUSADER);
             Matcher showMapM = MapCommands.SHOW_MAP.getMatcher(input);
             Matcher continueM = GameMenuCommands.getMatcher(input, GameMenuCommands.CONTINUE);
-            // to be continued.?
+
             if (dropBuildingMatcher.matches()) {
                 String items = dropBuildingMatcher.group("items");
                 ArrayList<String> itemsPattern = new ArrayList<>();
@@ -66,7 +66,6 @@ public class GameMenu {
                         BuildingMenu.run(scanner);
                     }
                 }
-
             } else if (selectUnitMatcher.matches()) {
                 String items = selectUnitMatcher.group("items");
                 ArrayList<String> itemsPattern = new ArrayList<>();
@@ -131,8 +130,6 @@ public class GameMenu {
                 break;
             } else if (exitMatcher.matches()) {
                 MainController.exitCrusader();
-            } else if (input.equals("market menu")) {
-                MarketMenu.run(scanner);
             } else if (input.equals("show gold")) {
                 System.out.println(game.getCurrentGovernment().getGold());
             } else if (continueM.matches()) {
