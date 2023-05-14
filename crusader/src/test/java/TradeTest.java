@@ -77,7 +77,9 @@ public class TradeTest {
         Assert.assertEquals(TradeController.allTrades.size(), 1);
         Assert.assertEquals(government.getSentTrades().size(), 1);
         Assert.assertEquals(government1.getReceivedTrades().size(), 1);
-        TradeController.tradeGoods("bread", 1, 50, "thanks");
+        TradeController.tradeGoods("bread", 5, 50, "thanks");
+        System.out.println(TradeController.showTradeList());
+        System.out.println(TradeController.showTradeHistory());
         Set<String> IDs = TradeController.allTrades.keySet();
         String id = null;
         String id1 = null;
@@ -94,11 +96,14 @@ public class TradeTest {
         Trade trade = TradeController.allTrades.get(id);
 
         game.setCurrentGovernment(government1);
-        //================================= accept trade
+        //================================= accept trade===============================
         System.out.println(TradeController.showTradeList());
         output = TradeController.acceptTrade(null, "ok");
         output1 = TradeController.acceptTrade(id, null);
         output2 = TradeController.acceptTrade("ssdfs", "ok");
+        government.setGold(0);
+        output5 = TradeController.acceptTrade(id1, "ok");
+        government.setGold(4000);
         trade.setIsAccepted(true);
         output3 = TradeController.acceptTrade(id, "ok");
         trade.setIsAccepted(false);
@@ -108,9 +113,45 @@ public class TradeTest {
         Assert.assertEquals(output2, "no trade with this id exist!");
         Assert.assertEquals(output3, "this trade was accepted before!");
         Assert.assertEquals(output4, "your resource is not enough!");
+        Assert.assertEquals(output5, "sender doesn't have enough money!");
         output5 = TradeController.acceptTrade(id1, "ok");
         Assert.assertEquals(output5, "request accepted successfully!");
         System.out.println(TradeController.showTradeHistory());
+        Assert.assertEquals(government.getPropertyAmount("bread"),65);
+        //===============================
+        Assert.assertEquals(TradeController.getTargetGovernment(),government1);
+
+
+        TradeController.setTargetGovernment(government2);
+        output7 = TradeController.tradeGoods("bread", 10, 0, "thanks");
+        Assert.assertEquals(output7,"request sent successfully!");
+        TradeController.setTargetGovernment(government);
+        output7 = TradeController.tradeGoods("bread", 10, 0, "thanks");
+        Assert.assertEquals(output7,"request sent successfully!");
+
+
+        Set<String> keys = government1.getSentTrades().keySet();
+        Assert.assertEquals(government1.getSentTrades().size(),2);
+        id = null;
+        id1 = null;
+        count = 1;
+        for (String key : keys){
+            if (count == 1) {
+                id = key;
+            }
+            if (count == 2) {
+                id1 = key;
+            }
+            count++;
+        }
+
+        game.setCurrentGovernment(government2);
+        output1 = TradeController.acceptTrade(id,"tnx");
+        Assert.assertEquals("you don't have capacity to store!",output1);
+        game.setCurrentGovernment(government);
+        output1 = TradeController.acceptTrade(id1,"tnx");
+        Assert.assertEquals("request accepted successfully!",output1);
+        Assert.assertEquals(government.getPropertyAmount("bread"),75);
 
     }
 }
