@@ -41,7 +41,8 @@ public class Tool {
         this.shootingRange = shootingRange;
         this.damage = damage;
         this.name = name;
-        stoneNumber = 20;
+        this.stoneNumber = 20;
+        this.toolAttack = new ToolAttack(this);
     }
 
     public Tool(Tool tool) {
@@ -56,7 +57,7 @@ public class Tool {
         this.attackToHuman = tool.attackToHuman;
         this.attackToBuilding = tool.attackToBuilding;
         this.useStone = tool.useStone;
-        toolAttack = new ToolAttack(this);
+        this.toolAttack = new ToolAttack(this);
     }
 
 
@@ -220,12 +221,8 @@ public class Tool {
     }
 
     public boolean chargeStone() {
-        if (stoneNumber != 0) {
-            return true;
-        }
-
-        if (GovernmentController.consumeProduct(government, "stone", 8)) {
-            stoneNumber = 8;
+        if (GovernmentController.consumeProduct(government, "stone", 10)) {
+            stoneNumber += 10;
             return true;
         }
         return false;

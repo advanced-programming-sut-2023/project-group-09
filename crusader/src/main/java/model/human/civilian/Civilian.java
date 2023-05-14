@@ -23,7 +23,7 @@ public class Civilian extends Human {
     private boolean isGoingToDestination;
 
     public Civilian(int x, int y, boolean hasJob, Government government) {
-        super(Speed.AVERAGE.getRate(), DefenseRating.VERY_LOW.getRate(), 0);
+        super(Speed.FAST.getRate(), DefenseRating.VERY_LOW.getRate(), 0);
         this.setX(x);
         this.setY(y);
         this.hasJob = hasJob;

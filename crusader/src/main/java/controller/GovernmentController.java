@@ -94,7 +94,7 @@ public class GovernmentController {
             String storageName = property.getNameOfStorage();
             government.addAmountToProperties(product, property.getType(), -amount);
             ArrayList<Building> storages = government.getBuildings().get(storageName).getBuildings();
-            if (storages.size() == 0){
+            if (storages.size() == 0) {
                 return false;
             }
             for (Building building : storages) {
@@ -118,7 +118,7 @@ public class GovernmentController {
         Goods product = GameGoods.getProduct(name);
         int rate = amount;
         ArrayList<Building> storages = government.getBuildings().get(product.getNameOfStorage()).getBuildings();
-        if(storages.size() == 0){
+        if (storages.size() == 0) {
             return -1;
         }
         for (Building building : storages) {

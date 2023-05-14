@@ -125,8 +125,9 @@ public class ToolMenu {
                 System.out.println("done!");
                 return;
             } else if (ToolMenuCommands.ADD_STONE.getMatcher(input).matches()) {
-                if (tool.chargeStone()) {
+                if (!tool.chargeStone()) {
                     System.out.println("you can't add stones to tool");
+                    continue;
                 }
                 System.out.println("stone added successfully!");
                 return;
