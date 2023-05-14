@@ -123,10 +123,6 @@ public class BuildingMenu {
             } else {
                 System.out.println(Answers.INVALID_COMMAND.getValue());
             }
-
-            // else if (isThisBuildingSelected(Buildings.GRANARY)) {
-            // TODO: Not now...
-            //}
         }
     }
 

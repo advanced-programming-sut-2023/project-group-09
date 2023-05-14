@@ -516,10 +516,10 @@ public class GameController {
         }
 
 
-        consumeRequired(building.getCost());
         if (!MapController.checkCanPutBuilding(x, y, type, GameController.getGame().getCurrentGovernment())) {
             return "this coordinate is not suitable!";
         }
+        consumeRequired(building.getCost());
         MapController.dropBuilding(x, y, type, GameController.getGame().getCurrentGovernment());
         return "building dropped successfully!";
     }
@@ -669,20 +669,6 @@ public class GameController {
             result += "now Lord " + game.getCurrentGovernment().getUser().getNickname() + " is playing\n";
             return result.substring(0, result.length() - 1);
         }
-    }
-
-
-    public static Building getInstanceOfBuilding(int x, int y, String typeOfBuilding) {
-        return null;
-        // TODO: this method must check (x, y) and typeOfBuilding and returned correct value.
-    }
-
-    public static String dropCastleBuildings(int x, int y, String type) {
-        return ""; // *********************************
-    }
-
-    public static String dropUnit(int x, int y, String type, int count) {
-        return ""; // *********************************
     }
 
     public static String showMap(int x, int y) {

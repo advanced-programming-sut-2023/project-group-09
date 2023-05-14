@@ -35,7 +35,7 @@ public class GameMenu {
             Matcher exitMatcher = Commands.getMatcher(input, Commands.EXIT_CRUSADER);
             Matcher showMapM = MapCommands.SHOW_MAP.getMatcher(input);
             Matcher continueM = GameMenuCommands.getMatcher(input, GameMenuCommands.CONTINUE);
-            // to be continued.?
+
             if (dropBuildingMatcher.matches()) {
                 String items = dropBuildingMatcher.group("items");
                 ArrayList<String> itemsPattern = new ArrayList<>();
@@ -66,7 +66,6 @@ public class GameMenu {
                         BuildingMenu.run(scanner);
                     }
                 }
-
             } else if (selectUnitMatcher.matches()) {
                 String items = selectUnitMatcher.group("items");
                 ArrayList<String> itemsPattern = new ArrayList<>();
@@ -128,11 +127,25 @@ public class GameMenu {
                 MapMenu.runShowMapOrShowDetailsOrClearLand(showMapM, 0);
                 MapMenu.run(scanner);
             } else if (backMatcher.matches()) {
-                break;
+                System.out.println("are you sure you want to quit?\n1.yes\n2.cancel");
+                int number = 0;
+                while (true) {
+                    try {
+                        number = Integer.parseInt(scanner.nextLine());
+                    } catch (Exception e) {
+                        System.out.println("enter a number!");
+                        continue;
+                    }
+                    if (number != 1 && number != 2) {
+                        System.out.println("invalid number!");
+                        continue;
+                    }
+                    break;
+                }
+                if (number == 2) continue;
+                else break;
             } else if (exitMatcher.matches()) {
                 MainController.exitCrusader();
-            } else if (input.equals("market menu")) {
-                MarketMenu.run(scanner);
             } else if (input.equals("show gold")) {
                 System.out.println(game.getCurrentGovernment().getGold());
             } else if (continueM.matches()) {
