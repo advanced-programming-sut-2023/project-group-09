@@ -713,7 +713,6 @@ public class GameController {
                             } else {
                                 sign = tile.getTool().getGovernment().getColorRgb() + "a";
                             }
-
                         } else if (filteredHumansList(tile.getHumans()).size() != 0) {
                             HashMap<Government, Integer> numberOfHumansOnTile = new HashMap<>();
                             for (int m = 0; m < game.getGovernments().size(); m++) {
@@ -765,9 +764,14 @@ public class GameController {
                             sign = tile.getBuilding().getGovernment().getColorRgb() + "B";
                         else if (tile.getBuilding() != null && tile.getBuilding() instanceof Wall)
                             sign = tile.getBuilding().getGovernment().getColorRgb() + ((Wall) tile.getBuilding()).getHeight();
+                        else if (tile.isPit() && tile.getPitGovernment().equals(game.getCurrentGovernment()))
+                            sign = tile.getPitGovernment().getColorRgb() + "P";
                         else if (tile.getTree() != null) sign = "T";
                         else if (tile.getRockDirection() != null) sign = "R";
-                        result += tile.getTexture().getColor() + sign + "\u001B[0m";
+
+                        if (tile.isMoat())
+                            result += "\u001B[48;2;47;108;173m" + sign + "\u001B[0m";
+                        else result += tile.getTexture().getColor() + sign + "\u001B[0m";
                     }
                     result += "|";
                 }
@@ -858,6 +862,9 @@ public class GameController {
                     human.getHealth() + "/" + human.getDefenseRating() + " | from Lord " +
                     human.getGovernment().getUser().getNickname() + "\n";
         }
+
+        if (tile.isPit()) details += "there is a killing pit here\n";
+        if (tile.isMoat()) details += "there is a moat here\n";
         return details.substring(0, details.length() - 1);
     }
 

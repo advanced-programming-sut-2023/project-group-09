@@ -50,6 +50,12 @@ public class GameMaps {
         for (int i = 105; i <= 155; i++) {
             map1.getTile(i, 50 + (i - 105)).setTexture(Textures.RIVER);
         }
+        for (int i = 105; i <= 155; i++) {
+            map1.getTile(i+1, 50 + (i - 105)).setTexture(Textures.RIVER);
+        }
+        for (int i = 105; i <= 155; i++) {
+            map1.getTile(i+2, 50 + (i - 105)).setTexture(Textures.RIVER);
+        }
         changeTextureOfSomeTiles(10, 40, 138, 142, map1, Textures.GRASS);
         map1.getTile(95, 80).setTree(Trees.OLIVE_TREE);
         changeTextureOfSomeTiles(120, 200, 105, 110, map1, Textures.THICK_GRASS);

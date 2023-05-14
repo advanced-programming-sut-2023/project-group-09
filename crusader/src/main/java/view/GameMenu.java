@@ -9,7 +9,6 @@ import enumeration.commands.GameMenuCommands;
 import enumeration.commands.MapCommands;
 import enumeration.commands.UnitMenuCommands;
 import model.game.Game;
-import model.tools.Moat;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -32,7 +31,6 @@ public class GameMenu {
             Matcher nextTurnMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.NEXT_TURN);
             Matcher showPlayerMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.SHOW_PLAYER);
             Matcher showRoundMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.SHOW_ROUND);
-            Matcher markToDigMoatMatcher = GameMenuCommands.getMatcher(input, GameMenuCommands.MARK_TO_DIG_MOAT);
             Matcher backMatcher = Commands.getMatcher(input, Commands.BACK);
             Matcher exitMatcher = Commands.getMatcher(input, Commands.EXIT_CRUSADER);
             Matcher showMapM = MapCommands.SHOW_MAP.getMatcher(input);
@@ -129,17 +127,6 @@ public class GameMenu {
             } else if (showMapM.matches()) {
                 MapMenu.runShowMapOrShowDetailsOrClearLand(showMapM, 0);
                 MapMenu.run(scanner);
-            } else if (markToDigMoatMatcher.matches()) {
-                String items = markToDigMoatMatcher.group("items");
-                ArrayList<String> itemsPattern = new ArrayList<>();
-                itemsPattern.add(GameMenuCommands.X_ITEM.getRegex());
-                itemsPattern.add(GameMenuCommands.Y_ITEM.getRegex());
-                if (ViewController.isItemMatch(items, itemsPattern)) {
-                    int x = ViewController.getNumberOfRegex("x") - 1;
-                    int y = ViewController.getNumberOfRegex("y") - 1;
-                    Moat.addTile(x, y);
-                    System.out.println("tile added successfully\nyou can use engineers to to dig moat");
-                }
             } else if (backMatcher.matches()) {
                 break;
             } else if (exitMatcher.matches()) {

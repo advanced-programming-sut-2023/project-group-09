@@ -63,7 +63,7 @@ public class EngineerController {
         tent.addEngineer(currentEngineer);
         currentEngineer.setInTool(true);
         currentEngineer.setInvisible(true);
-        MapController.addTool(x,y,tent);
+        MapController.addTool(x, y, tent);
         if (tool.getName().equals("trebuchet") || tool.getName().equals("catapult"))
             tool.setStoneNumber(20);
 
