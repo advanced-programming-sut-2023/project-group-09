@@ -671,20 +671,6 @@ public class GameController {
         }
     }
 
-
-    public static Building getInstanceOfBuilding(int x, int y, String typeOfBuilding) {
-        return null;
-        // TODO: this method must check (x, y) and typeOfBuilding and returned correct value.
-    }
-
-    public static String dropCastleBuildings(int x, int y, String type) {
-        return ""; // *********************************
-    }
-
-    public static String dropUnit(int x, int y, String type, int count) {
-        return ""; // *********************************
-    }
-
     public static String showMap(int x, int y) {
         Map map = game.getMap();
         if (y - 3 < 0) y = 3;

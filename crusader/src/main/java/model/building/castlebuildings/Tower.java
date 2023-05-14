@@ -57,8 +57,4 @@ public class Tower extends CastleBuilding {
     public void setDefendRange(int defendRange) {
         this.defendRange = defendRange;
     }
-
-    public void attackTower() {
-        // TODO: this method will attack all enemies who are in the range of defense and attack
-    }
 }
