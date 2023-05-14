@@ -97,6 +97,7 @@ public class BuildingMenu {
                 }
             } else if (isThisBuildingSelected(Buildings.SHOP)) {
                 MarketMenu.run(scanner);
+                return;
             } else if (isThisBuildingSelected(Buildings.STOCK_PILE)) {
                 Matcher showSavedGoodsMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.SHOW_GOODS_SAVED);
                 if (showSavedGoodsMatcher.matches()) {
@@ -107,6 +108,7 @@ public class BuildingMenu {
 
             } else if (building instanceof WeaponProducer weaponProducer) {
                 changeWeapon(scanner, weaponProducer);
+                return;
             } else if (isThisBuildingSelected(Buildings.STABLE)) {
                 Matcher howManyHorsesMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.HOW_MANY_HORSES);
                 if (howManyHorsesMatcher.matches()) {
@@ -134,7 +136,7 @@ public class BuildingMenu {
         String currentWeapon;
         while (true) {
             int i = 1;
-            currentWeapon = weaponProducer.getName();
+            currentWeapon = weaponProducer.getItemName();
             System.out.println("this building can produce this weapons :");
             for (String name : names) {
                 if (currentWeapon.equals(name)) {
