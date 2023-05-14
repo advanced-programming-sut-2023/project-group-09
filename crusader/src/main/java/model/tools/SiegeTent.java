@@ -2,6 +2,7 @@ package model.tools;
 
 import controller.GameController;
 import controller.MapController;
+import model.activity.ToolAttack;
 import model.game.Tile;
 import model.human.military.Engineer;
 
@@ -11,6 +12,7 @@ public class SiegeTent extends Tool {
     public SiegeTent() {
         super("siegeTent", 0, 0, 0, 0);
         this.setHp(1);
+        this.setToolAttack(new ToolAttack(this));
     }
 
     public void setConvertTool(Tool convertTool) {
