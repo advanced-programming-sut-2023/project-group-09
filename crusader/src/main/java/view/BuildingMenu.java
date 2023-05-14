@@ -28,7 +28,10 @@ public class BuildingMenu {
         nameOfBuilding = building.getName();
 
         while (true) {
-            String command = scanner.nextLine();
+            String command = "";
+            if (!(building instanceof WeaponProducer || isThisBuildingSelected(Buildings.SHOP)))
+                command = scanner.nextLine();
+
             Matcher unselectBuildingMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.UNSELECT_BUILDING);
             if (unselectBuildingMatcher.matches()) {
                 break;
@@ -94,6 +97,7 @@ public class BuildingMenu {
                 }
             } else if (isThisBuildingSelected(Buildings.SHOP)) {
                 MarketMenu.run(scanner);
+                return;
             } else if (isThisBuildingSelected(Buildings.STOCK_PILE)) {
                 Matcher showSavedGoodsMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.SHOW_GOODS_SAVED);
                 if (showSavedGoodsMatcher.matches()) {
@@ -104,6 +108,7 @@ public class BuildingMenu {
 
             } else if (building instanceof WeaponProducer weaponProducer) {
                 changeWeapon(scanner, weaponProducer);
+                return;
             } else if (isThisBuildingSelected(Buildings.STABLE)) {
                 Matcher howManyHorsesMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.HOW_MANY_HORSES);
                 if (howManyHorsesMatcher.matches()) {
@@ -131,7 +136,7 @@ public class BuildingMenu {
         String currentWeapon;
         while (true) {
             int i = 1;
-            currentWeapon = weaponProducer.getName();
+            currentWeapon = weaponProducer.getItemName();
             System.out.println("this building can produce this weapons :");
             for (String name : names) {
                 if (currentWeapon.equals(name)) {
@@ -157,14 +162,14 @@ public class BuildingMenu {
                         System.out.println("product changed successfully!");
                     }
                 } catch (Exception e) {
-                    System.out.println(Answers.INVALID_COMMAND);
+                    System.out.println(Answers.INVALID_COMMAND.getValue());
                 }
             } else if (input.equals("n") || input.equals("no")) {
                 return;
             } else if (input.equals(Commands.BACK.getRegex())) {
                 return;
             } else {
-                System.out.println(Answers.INVALID_COMMAND);
+                System.out.println(Answers.INVALID_COMMAND.getValue());
             }
         }
     }
