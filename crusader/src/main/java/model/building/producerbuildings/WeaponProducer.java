@@ -20,6 +20,7 @@ public class WeaponProducer extends ProducerBuilding{
               weaponProducer.getRate(), weaponProducer.getNameOfStorage(), weaponProducer.getItemType(), weaponProducer.getItemName());
       super.setCost(weaponProducer.getCost());
       super.setRequired(weaponProducer.getRequired());
+      this.weapons = weaponProducer.weapons;
     }
 
     public void addWeapon(String weapon){

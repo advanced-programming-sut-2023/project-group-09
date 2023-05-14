@@ -28,7 +28,10 @@ public class BuildingMenu {
         nameOfBuilding = building.getName();
 
         while (true) {
-            String command = scanner.nextLine();
+            String command = null;
+            if (!(building instanceof WeaponProducer || isThisBuildingSelected(Buildings.SHOP)))
+                command = scanner.nextLine();
+
             Matcher unselectBuildingMatcher = BuildingMenuCommands.getMatcher(command, BuildingMenuCommands.UNSELECT_BUILDING);
             if (unselectBuildingMatcher.matches()) {
                 break;
@@ -157,14 +160,14 @@ public class BuildingMenu {
                         System.out.println("product changed successfully!");
                     }
                 } catch (Exception e) {
-                    System.out.println(Answers.INVALID_COMMAND);
+                    System.out.println(Answers.INVALID_COMMAND.getValue());
                 }
             } else if (input.equals("n") || input.equals("no")) {
                 return;
             } else if (input.equals(Commands.BACK.getRegex())) {
                 return;
             } else {
-                System.out.println(Answers.INVALID_COMMAND);
+                System.out.println(Answers.INVALID_COMMAND.getValue());
             }
         }
     }

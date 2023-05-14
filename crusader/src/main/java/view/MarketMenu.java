@@ -48,7 +48,7 @@ public class MarketMenu {
                     System.out.println(output);
                 }
             } else if (backMatcher.matches()) {
-                System.out.println("<< Game Menu >>");
+                System.out.println("<< Building Menu >>");
                 break;
             } else {
                 System.out.println(Answers.INVALID_COMMAND.getValue());
