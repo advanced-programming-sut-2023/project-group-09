@@ -31,7 +31,7 @@ public class MainMenu extends Application {
 
     public void makeScene() throws IOException {
         BorderPane pane = FXMLLoader.load(
-                new URL(Objects.requireNonNull(LoginMenu.class.getResource("/fxml/main-menu.fxml")).toExternalForm()));
+                new URL(Objects.requireNonNull(LoginMenu.class.getResource("/fxml/mainMenu.fxml")).toExternalForm()));
 
         root = ViewController.makeScreen(stage,pane,1000,-1);
 
