@@ -1,7 +1,5 @@
 package model.game;
 
-import enumeration.Pair;
-
 public class Tuple {
     int x;
     int y;

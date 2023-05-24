@@ -1,6 +1,5 @@
 package controller;
 
-import controller.gamestructure.GameMaps;
 import model.building.castlebuildings.MainCastle;
 import model.game.Map;
 import model.game.Tile;

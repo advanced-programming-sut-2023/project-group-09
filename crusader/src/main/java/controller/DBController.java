@@ -1,14 +1,14 @@
 package controller;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameGoods;
 import controller.gamestructure.GameHumans;
 import controller.gamestructure.GameTools;
 import enumeration.Paths;
 import model.User;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import model.building.Building;
 import model.building.castlebuildings.Gatehouse;
 import model.building.castlebuildings.Tower;

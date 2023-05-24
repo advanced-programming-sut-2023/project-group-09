@@ -1,6 +1,13 @@
 package controller;
 
-import javax.crypto.*;
+import enumeration.Paths;
+import model.captcha.Captcha;
+import org.apache.commons.codec.binary.Base64;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
@@ -12,11 +19,6 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 import java.util.Scanner;
-
-import enumeration.Paths;
-import lombok.SneakyThrows;
-import model.captcha.Captcha;
-import org.apache.commons.codec.binary.Base64;
 
 public class CaptchaController {
 

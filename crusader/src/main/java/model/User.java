@@ -2,9 +2,6 @@ package model;
 
 import controller.UserController;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 public class User {
     private String username;
     private String password;

@@ -1,4 +1,4 @@
-package enumeration;
+package enumeration.dictionary;
 
 public enum SecurityQuestions {
     QUESTION1(1, "What's my father's name?"),

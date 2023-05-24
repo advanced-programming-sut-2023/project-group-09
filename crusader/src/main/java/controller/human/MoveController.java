@@ -14,7 +14,7 @@ import model.game.Tuple;
 import model.human.Human;
 import model.human.military.Military;
 import model.tools.Tool;
-import view.UnitMenu;
+import viewphase1.UnitMenu;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

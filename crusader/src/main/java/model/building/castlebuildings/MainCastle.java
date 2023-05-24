@@ -6,7 +6,6 @@ import model.game.Tuple;
 import model.human.civilian.Civilian;
 import model.human.military.EuropeanTroop;
 
-
 import java.util.Random;
 
 public class MainCastle extends CastleBuilding {

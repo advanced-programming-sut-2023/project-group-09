@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="error of worker distribution solved.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/files/user/currentUser.json" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/files/user/currentUser.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/src/main/java/controller/DeletedController.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +53,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Sharif/Term2/AP/Project/Project-Phase-1/crusader",
+    "last_opened_file_path": "D:/University/Semester2/project-group-09/crusader",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "editor.preferences.fonts.default"
   }
@@ -136,6 +138,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="project-group-09" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="project-group-09" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
@@ -198,6 +213,9 @@
       <workItem from="1683748071501" duration="864000" />
       <workItem from="1683749525652" duration="898000" />
       <workItem from="1683806837751" duration="3513000" />
+      <workItem from="1684692671244" duration="1000" />
+      <workItem from="1684741745600" duration="19000" />
+      <workItem from="1684741835893" duration="175000" />
     </task>
     <task id="LOCAL-00020" summary="Building menu (second try)">
       <created>1682289033211</created>

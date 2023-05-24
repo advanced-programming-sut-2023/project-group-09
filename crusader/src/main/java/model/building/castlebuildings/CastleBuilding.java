@@ -1,7 +1,6 @@
 package model.building.castlebuildings;
 
 import model.building.Building;
-import model.Government;
 
 public class CastleBuilding extends Building {
     protected int capacity;

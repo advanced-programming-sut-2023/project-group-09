@@ -3,8 +3,6 @@ package Controller;
 import controller.Application;
 import controller.DBController;
 import controller.UserController;
-import lombok.ToString;
-import model.User;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 

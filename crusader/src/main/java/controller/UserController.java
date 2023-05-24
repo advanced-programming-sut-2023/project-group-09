@@ -1,19 +1,16 @@
 package controller;
 
+import enumeration.dictionary.SecurityQuestions;
 import enumeration.answers.LoginAnswers;
-import enumeration.SecurityQuestions;
 import enumeration.commands.SignupMenuCommands;
 import enumeration.dictionary.Slogans;
 import model.User;
-import view.ProfileMenu;
-import view.SignupMenu;
+import viewphase1.ProfileMenu;
+import viewphase1.SignupMenu;
 
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

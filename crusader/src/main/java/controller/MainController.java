@@ -1,11 +1,10 @@
 package controller;
 
-import controller.Application;
-import controller.DBController;
 import controller.gamestructure.GameMaps;
-import model.User;
-import view.MainMenu;
-import view.PrimaryMenu;
+import javafx.stage.Stage;
+import view.menus.LoginMenu;
+import view.menus.MainMenu;
+import viewphase1.PrimaryMenu;
 
 import java.util.Scanner;
 
@@ -16,20 +15,19 @@ public class MainController {
         DBController.loadAllUsers();
         DBController.loadCurrentUser();
         DBController.loadGoods();
-        DBController.loadMilitary();
+        //DBController.loadMilitary();
         DBController.loadBuildings();
         DBController.loadTools();
         GameMaps.createMaps();
     }
 
-    public static void run(){
-        Scanner scanner = new Scanner(System.in);
+    public static void run(Stage stage) throws Exception {
         loadGame();
         if (Application.getCurrentUser() == null){
-            PrimaryMenu.run(scanner);
+            new LoginMenu().start(stage);
         }else{
             Application.setStayLoggedIn(true);
-            MainMenu.run(scanner);
+            new MainMenu().start(stage);
         }
     }
 

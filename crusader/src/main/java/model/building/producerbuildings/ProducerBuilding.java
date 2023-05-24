@@ -6,13 +6,10 @@ import model.Government;
 import model.building.Building;
 import model.building.storagebuildings.StorageBuilding;
 import model.buildinghandler.BuildingCounter;
-import model.game.Tuple;
-import model.human.Human;
 import model.human.civilian.Civilian;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 
 public class ProducerBuilding extends Building {
 

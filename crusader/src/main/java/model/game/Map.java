@@ -3,7 +3,6 @@ package model.game;
 import enumeration.Pair;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 
 public class Map {
     private int length, width;

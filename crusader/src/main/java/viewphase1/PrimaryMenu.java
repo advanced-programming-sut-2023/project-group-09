@@ -1,4 +1,4 @@
-package view;
+package viewphase1;
 
 import controller.Application;
 import controller.DBController;
@@ -20,7 +20,7 @@ public class PrimaryMenu {
             if (input.equals("1") || input.equals("login menu")) {
                 LoginMenu.run(scanner);
             } else if (input.equals("2") || input.equals("signup menu")) {
-                SignupMenu2.run(scanner);
+                SignupMenu.run(scanner);
             } else if (input.equals("3") || exitGameMatcher.matches()) {
                 Application.setCurrentUser(null);
                 Application.setStayLoggedIn(false);

@@ -1,23 +1,11 @@
 package controller.gamestructure;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import controller.DBController;
-import controller.GameController;
-import controller.MapController;
-import enumeration.Paths;
 import enumeration.Textures;
-import enumeration.commands.MapCommands;
 import enumeration.dictionary.RockDirections;
 import enumeration.dictionary.Trees;
-import model.game.Game;
 import model.game.Map;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class GameMaps {
     public static ArrayList<Map> smallMaps = new ArrayList<>();

@@ -1,9 +1,7 @@
 package model.tools;
 
-import controller.GameController;
 import controller.MapController;
 import model.activity.ToolAttack;
-import model.game.Tile;
 import model.human.military.Engineer;
 
 public class SiegeTent extends Tool {
