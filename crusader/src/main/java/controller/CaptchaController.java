@@ -1,7 +1,7 @@
 package controller;
 
 import enumeration.Paths;
-import model.captcha.Captcha;
+import model.captcha.captchaPhase1.*;
 import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.BadPaddingException;
