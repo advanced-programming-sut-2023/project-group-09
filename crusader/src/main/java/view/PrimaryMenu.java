@@ -5,6 +5,7 @@ import controller.DBController;
 import controller.MainController;
 import enumeration.answers.Answers;
 import enumeration.commands.Commands;
+import viewphase1.SignupMenu;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -20,7 +21,7 @@ public class PrimaryMenu {
             if (input.equals("1") || input.equals("login menu")) {
                 LoginMenu.run(scanner);
             } else if (input.equals("2") || input.equals("signup menu")) {
-                SignupMenu2.run(scanner);
+                SignupMenu.run(scanner);
             } else if (input.equals("3") || exitGameMatcher.matches()) {
                 Application.setCurrentUser(null);
                 Application.setStayLoggedIn(false);
