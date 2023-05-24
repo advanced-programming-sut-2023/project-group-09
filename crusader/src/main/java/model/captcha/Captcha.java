@@ -1,11 +1,13 @@
 package model.captcha;
 
 import controller.GameController;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import view.controllers.CaptchaController;
 
-import javax.swing.text.html.ImageView;
-import java.awt.*;
+
 import java.io.IOException;
 
 public class Captcha extends StackPane {
@@ -22,4 +24,19 @@ public class Captcha extends StackPane {
         return CaptchaController.isInputCorrect();
     }
 
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public ImageView getCaptchaImage() {
+        return captchaImage;
+    }
+
+    public void setCaptchaImage(ImageView captchaImage) {
+        this.captchaImage = captchaImage;
+    }
 }

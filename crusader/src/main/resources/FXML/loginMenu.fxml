@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.text.Text?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="view.menus.SignupMenu"
+          prefHeight="800" prefWidth="1500"
+          alignment="CENTER" hgap="10" vgap="10">
+
+    <Text fx:id="signupText" GridPane.rowIndex="0" GridPane.columnIndex="0" >Signup</Text>
+    <Label fx:id="usernameLabel" GridPane.rowIndex="0" GridPane.columnIndex="0">username</Label>
+
+    <TextField/>
+</GridPane>
