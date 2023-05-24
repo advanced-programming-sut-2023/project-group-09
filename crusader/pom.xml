@@ -73,5 +73,12 @@
             <artifactId>javafx-media</artifactId>
             <version>16</version>
         </dependency>
+        <dependency>
+            <groupId>org.python</groupId>
+            <artifactId>jython-standalone</artifactId>
+            <version>2.7.3</version>
+        </dependency>
+
+
     </dependencies>
 </project>

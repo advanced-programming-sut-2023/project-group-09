@@ -1,28 +1,23 @@
 package model.captcha;
 
-import controller.CaptchaController;
+import javafx.scene.layout.StackPane;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import java.io.IOException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
+import javax.swing.text.html.ImageView;
+import java.awt.*;
 
-public class Captcha {
-    String value;
-
+public class Captcha extends StackPane {
+    private int number;
+    private ImageView captchaImage;
+    private ImageView refreshButton;
+    private Label numberLabel;
+    private TextField numberText;
     public Captcha() {
-        this.value = CaptchaController.makeRandomNumber();
+
+    }
+    public boolean isInputCorrect() {
+        try Integer.parseInt(numberText.getText()) {
+
+        }
     }
 
-    public boolean isCaptchaTrue(String input) {
-        return value.equals(input);
-    }
-
-    public String getCaptchaImage() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, IOException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
-        String picture = CaptchaController.makePictureWithoutNoise(value);
-        return CaptchaController.addNoise(picture, value);
-    }
 }
