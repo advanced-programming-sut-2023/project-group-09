@@ -20,6 +20,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.User;
 
 import java.io.IOException;
 import java.util.regex.Pattern;
@@ -421,11 +422,22 @@ public class SignupMenu extends Application {
         if (!passwordError.getText().equals("") && passwordError.getFill().equals(Color.RED)) return;
         if (!confirmPasswordError.getFill().equals("") && confirmPasswordError.getFill().equals(Color.RED)) return;
         if (validateEmptyFields()) return;
+
+        boolean validEmail = Pattern.compile("[a-zA-Z\\d_\\.]+@[a-zA-Z\\d_\\.]+\\.[a-zA-Z\\d_\\.]+").matcher(email.getText()).matches();
+        if (!validEmail) {
+            emailError.setFill(Color.RED);
+            emailError.setText("invalid email!");
+            return;
+        }
         if (controller.Application.isUserExistsByEmail(email.getText())) {
             emailError.setFill(Color.RED);
             emailError.setText("email already exists!");
             return;
         }
+
+        String sloganValue = (isSlogan.isSelected()) ? (String) slogan.getValue() : null;
+        User newUser = new User(username.getText(), password.getText(), nickname.getText(), email.getText(), sloganValue);
+//        TODO: run security question menu
     }
 
     public boolean validateEmptyFields() {
