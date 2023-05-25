@@ -18,24 +18,14 @@
     <Label fx:id="nicknameLabel" GridPane.rowIndex="1" GridPane.columnIndex="3" GridPane.halignment="RIGHT">
         Nickname
     </Label>
-    <TextField fx:id="nickname" GridPane.rowIndex="1" GridPane.columnIndex="4" prefWidth="200"/>
-    <Text fx:id="nicknameError" GridPane.rowIndex="2" GridPane.columnIndex="4"/>
     <Label fx:id="emailLabel" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.halignment="RIGHT">Email
     </Label>
-    <TextField fx:id="email" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-    <Text fx:id="emailError" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
     <Label fx:id="sloganLabel" GridPane.rowIndex="3" GridPane.columnIndex="3" GridPane.halignment="RIGHT">Slogan
     </Label>
-    <Text fx:id="sloganError" GridPane.rowIndex="4" GridPane.columnIndex="4"/>
     <Label fx:id="passwordLabel" GridPane.rowIndex="5" GridPane.columnIndex="0" GridPane.halignment="RIGHT">
         Password
     </Label>
-    <Text fx:id="passwordError" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
     <Label fx:id="confirmPasswordLabel" GridPane.rowIndex="7" GridPane.columnIndex="0" GridPane.halignment="RIGHT">
         Confirm Password
     </Label>
-    <Text fx:id="confirmPasswordError" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
-    <Button fx:id="signup" GridPane.rowIndex="10" GridPane.columnIndex="0" GridPane.columnSpan="5"
-            GridPane.halignment="CENTER">Signup
-    </Button>
 </GridPane>
