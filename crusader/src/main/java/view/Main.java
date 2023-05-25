@@ -10,13 +10,6 @@ import java.io.IOException;
 
 public class Main extends Application {
     public static void main(String[] args) {
-        System.out.println("wow");
-        try {
-            CaptchaController.createCaptcha();
-            System.out.println(CaptchaController.getCaptcha().getNumber());
-        } catch (Exception e) {
-
-        }
         launch();
     }
 
