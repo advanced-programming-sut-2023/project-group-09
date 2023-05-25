@@ -10,13 +10,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import model.captcha.Captcha;
+import view.menus.MainMenu;
 
 import javax.accessibility.AccessibleHyperlink;
-import java.io.CharArrayReader;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -51,13 +51,31 @@ public class CaptchaController {
         }
     }
 
-    public static void changingCaptcha() {
-        final File folder = new File(CaptchaController.class.getResource(Paths.CAPTCHA_IMAGES.getPath())
-                .toExternalForm().substring(6));
-        File captchaFile = listFilesForFolder(folder);
+    private static void deleteFilesInFolder(File folder) {
+        ArrayList<File> captcha = new ArrayList<>();
+        for (final File fileEntry : folder.listFiles()) {
+            captcha.add(fileEntry);
+        }
+        Iterator itr = captcha.iterator();
+        while (itr.hasNext()) {
+            File file = (File)itr.next();
+            System.out.println(file.getName());
+            itr.remove();
+            file.delete();
+        }
+    }
 
-        captcha.getCaptchaImage().setImage(new Image(CaptchaController.class.getResource
-                (Paths.CAPTCHA_IMAGES.getPath() + captchaFile.getName()).toExternalForm()));
+    public static void changingCaptcha() {
+        File folder = new File(Paths.CAPTCHA_IMAGES.getPath());
+        deleteFilesInFolder(folder);
+        folder = new File(Paths.CAPTCHA_IMAGES.getPath());
+        runPythonFile();
+        File captchaFile = listFilesForFolder(folder);
+        try {
+            captcha.getCaptchaImage().setImage(new Image(captchaFile.toURI().toURL().toExternalForm()));
+        } catch (Exception e) {
+            System.out.println("an error occurred in captcha loading");
+        }
 
         Matcher matcher = Pattern.compile("(?<number>[\\d]+)\\.png").matcher
                 (captchaFile.getName());
@@ -68,13 +86,31 @@ public class CaptchaController {
         captcha.setNumber(number);
     }
 
+    private static void runPythonFile() {
+        try {
+            Process p = Runtime.getRuntime().exec("python files/captcha/data/main.py");
+            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            int ret = new Integer(in.readLine());
+            System.out.println(ret);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
     public static void createCaptcha() throws MalformedURLException {
-        final File folder = new File(CaptchaController.class.getResource(Paths.CAPTCHA_IMAGES.getPath())
-                .toExternalForm().substring(6));
+        File folder = new File(Paths.CAPTCHA_IMAGES.getPath());
+        deleteFilesInFolder(folder);
+        folder = new File(Paths.CAPTCHA_IMAGES.getPath());
+        runPythonFile();
         File captchaFile = listFilesForFolder(folder);
 
-        captcha.setCaptchaImage(new ImageView(new Image(CaptchaController.class.getResource
-                (Paths.CAPTCHA_IMAGES.getPath() + captchaFile.getName()).toExternalForm())));
+        try {
+            captcha.setCaptchaImage(new ImageView());
+            captcha.getCaptchaImage().setImage(new Image(captchaFile.toURI().toURL().toExternalForm()));
+        } catch (Exception e) {
+            System.out.println("an error occurred in captcha loading");
+        }
 
         Matcher matcher = Pattern.compile("(?<number>[\\d]+)\\.png").matcher
                 (captchaFile.getName());
@@ -86,16 +122,13 @@ public class CaptchaController {
     }
 
     public static File listFilesForFolder(final File folder) {
+        System.out.println(folder.getAbsolutePath());
         ArrayList<File> captcha = new ArrayList<>();
         for (final File fileEntry : folder.listFiles()) {
             captcha.add(fileEntry);
         }
-        Random random = new Random();
-        int randomIndex;
-        do {
-            randomIndex = Math.abs(random.nextInt()) % captcha.size();
-        } while (CaptchaController.getCaptcha().getNumber() == randomIndex);
-        return captcha.get(randomIndex);
+        System.out.println();
+        return captcha.get(Math.abs(new Random().nextInt()) % captcha.size());
     }
 
     private static void showingAlertOfWrongAnswer() {
@@ -118,6 +151,7 @@ public class CaptchaController {
         captcha.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                System.out.println("change");
                     changingCaptcha();
             }
         });

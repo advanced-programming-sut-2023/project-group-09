@@ -10,6 +10,7 @@ import view.controllers.CaptchaController;
 
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 public class Captcha extends StackPane {
     private int number;
@@ -27,7 +28,7 @@ public class Captcha extends StackPane {
         this.setHeight(400);
      
     }
-    public boolean isInputCorrect() {
+    public boolean isInputCorrect() throws MalformedURLException {
         return CaptchaController.isInputCorrect();
     }
 
