@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import model.captcha.Captcha;
 
+import javax.accessibility.AccessibleHyperlink;
 import java.io.CharArrayReader;
 import java.io.File;
 import java.io.IOException;
@@ -50,6 +51,23 @@ public class CaptchaController {
         }
     }
 
+    public static void changingCaptcha() {
+        final File folder = new File(CaptchaController.class.getResource(Paths.CAPTCHA_IMAGES.getPath())
+                .toExternalForm().substring(6));
+        File captchaFile = listFilesForFolder(folder);
+
+        captcha.getCaptchaImage().setImage(new Image(CaptchaController.class.getResource
+                (Paths.CAPTCHA_IMAGES.getPath() + captchaFile.getName()).toExternalForm()));
+
+        Matcher matcher = Pattern.compile("(?<number>[\\d]+)\\.png").matcher
+                (captchaFile.getName());
+        int number = 0;
+        if (matcher.find()) {
+            number = Integer.parseInt(matcher.group("number"));
+        }
+        captcha.setNumber(number);
+    }
+
     public static void createCaptcha() throws MalformedURLException {
         final File folder = new File(CaptchaController.class.getResource(Paths.CAPTCHA_IMAGES.getPath())
                 .toExternalForm().substring(6));
@@ -73,11 +91,15 @@ public class CaptchaController {
             captcha.add(fileEntry);
         }
         Random random = new Random();
-        int randomIndex = Math.abs(random.nextInt()) % captcha.size();
+        int randomIndex;
+        do {
+            randomIndex = Math.abs(random.nextInt()) % captcha.size();
+        } while (CaptchaController.getCaptcha().getNumber() == randomIndex);
         return captcha.get(randomIndex);
     }
 
     private static void showingAlertOfWrongAnswer() {
+        changingCaptcha();
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Captcha Error");
         alert.setHeaderText("Captcha Error");
@@ -93,7 +115,12 @@ public class CaptchaController {
         captcha.getRefreshButton().setScaleX(0.02);
         captcha.getRefreshButton().setTranslateX(75);
         captcha.getRefreshButton().setTranslateY(20);
-
+        captcha.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                    changingCaptcha();
+            }
+        });
     }
 
 
@@ -105,6 +132,6 @@ public class CaptchaController {
         captcha.setNumberText(new TextField());
         captcha.getNumberText().setTranslateX(50);
         captcha.getNumberText().setTranslateY(55);
-        captcha.getNumberText().setScaleX(0.2);
+        captcha.getNumberText().setMaxWidth(80);
     }
 }
