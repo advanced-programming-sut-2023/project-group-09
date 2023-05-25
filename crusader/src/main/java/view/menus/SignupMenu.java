@@ -31,6 +31,7 @@ public class SignupMenu extends Application {
     public Label usernameLabel;
     public TextField username;
     public Text usernameError;
+    public boolean usernameLiveInvalid = false;
     public Label nicknameLabel;
     public TextField nickname;
     public Text nicknameError;
@@ -44,11 +45,13 @@ public class SignupMenu extends Application {
     public PasswordField password;
     public TextField passwordTextField;
     public Text passwordError;
+    public boolean passwordLiveInvalid = false;
     public CheckBox showPassword;
     public Label confirmPasswordLabel;
     public PasswordField confirmPassword;
     public TextField confirmPasswordTextField;
     public Text confirmPasswordError;
+    public boolean confirmPasswordLiveInvalid = false;
     public CheckBox showConfirmPassword;
     public CheckBox isSlogan;
     public Button randomSlogan;
@@ -180,6 +183,7 @@ public class SignupMenu extends Application {
                 slogan.setDisable(!newValue);
                 randomSlogan.setDisable(!newValue);
                 slogan.setValue("");
+                if (!newValue) sloganError.setText("");
             }
         });
 
@@ -311,16 +315,22 @@ public class SignupMenu extends Application {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
                 usernameError.setText("");
-                if (newValue == "") return;
+                if (newValue == "") {
+                    usernameLiveInvalid = false;
+                    return;
+                }
                 if (!newValue.matches("([a-z]|[A-Z]|[0-9]|_)*")) {
                     usernameError.setFill(Color.RED);
                     usernameError.setText("invalid username!");
+                    usernameLiveInvalid = true;
                 } else if (controller.Application.isUserExistsByName(newValue)) {
                     usernameError.setFill(Color.RED);
                     usernameError.setText("username already exists!");
+                    usernameLiveInvalid = true;
                 } else {
                     usernameError.setFill(Color.GREEN);
                     usernameError.setText("valid username");
+                    usernameLiveInvalid = false;
                 }
             }
         });
@@ -332,7 +342,10 @@ public class SignupMenu extends Application {
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
                 passwordError.setText("");
                 passwordTextField.setText(newValue);
-                if (newValue == "") return;
+                if (newValue == "") {
+                    passwordLiveInvalid = false;
+                    return;
+                }
                 boolean smallLetter = Pattern.compile("[a-z]").matcher(newValue).find();
                 boolean capitalLetter = Pattern.compile("[A-Z]").matcher(newValue).find();
                 boolean digit = Pattern.compile("[0-9]").matcher(newValue).find();
@@ -340,15 +353,19 @@ public class SignupMenu extends Application {
                 if (newValue.contains(" ")) {
                     passwordError.setFill(Color.RED);
                     passwordError.setText("you can't user space!");
+                    passwordLiveInvalid = true;
                 } else if (newValue.length() < 6) {
                     passwordError.setFill(Color.RED);
                     passwordError.setText("password is too short!");
+                    passwordLiveInvalid = true;
                 } else if (!smallLetter || !capitalLetter || !digit || !specialCharacter) {
                     passwordError.setFill(Color.RED);
                     passwordError.setText("weak password!");
+                    passwordLiveInvalid = true;
                 } else {
                     passwordError.setFill(Color.GREEN);
                     passwordError.setText("strong password");
+                    passwordLiveInvalid = false;
                 }
             }
         });
@@ -358,7 +375,10 @@ public class SignupMenu extends Application {
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
                 passwordError.setText("");
                 password.setText(newValue);
-                if (newValue == "") return;
+                if (newValue == "") {
+                    passwordLiveInvalid = false;
+                    return;
+                }
                 boolean smallLetter = Pattern.compile("[a-z]").matcher(newValue).find();
                 boolean capitalLetter = Pattern.compile("[A-Z]").matcher(newValue).find();
                 boolean digit = Pattern.compile("[0-9]").matcher(newValue).find();
@@ -366,15 +386,19 @@ public class SignupMenu extends Application {
                 if (newValue.contains(" ")) {
                     passwordError.setFill(Color.RED);
                     passwordError.setText("you can't user space!");
+                    passwordLiveInvalid = true;
                 } else if (newValue.length() < 6) {
                     passwordError.setFill(Color.RED);
                     passwordError.setText("password is too short!");
+                    passwordLiveInvalid = true;
                 } else if (!smallLetter || !capitalLetter || !digit || !specialCharacter) {
                     passwordError.setFill(Color.RED);
                     passwordError.setText("weak password!");
+                    passwordLiveInvalid = true;
                 } else {
                     passwordError.setFill(Color.GREEN);
                     passwordError.setText("strong password");
+                    passwordLiveInvalid = false;
                 }
             }
         });
@@ -386,13 +410,18 @@ public class SignupMenu extends Application {
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
                 confirmPasswordError.setText("");
                 confirmPasswordTextField.setText(newValue);
-                if (newValue == "") return;
+                if (newValue == "") {
+                    confirmPasswordLiveInvalid = false;
+                    return;
+                }
                 if (!newValue.equals(password.getText())) {
                     confirmPasswordError.setFill(Color.RED);
                     confirmPasswordError.setText("passwords don't match!");
+                    confirmPasswordLiveInvalid = true;
                 } else {
                     confirmPasswordError.setFill(Color.GREEN);
                     confirmPasswordError.setText("passwords match");
+                    confirmPasswordLiveInvalid = false;
                 }
             }
         });
@@ -402,13 +431,18 @@ public class SignupMenu extends Application {
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
                 confirmPasswordError.setText("");
                 confirmPassword.setText(newValue);
-                if (newValue == "") return;
+                if (newValue == "") {
+                    confirmPasswordLiveInvalid = false;
+                    return;
+                }
                 if (!newValue.equals(password.getText())) {
                     confirmPasswordError.setFill(Color.RED);
                     confirmPasswordError.setText("passwords don't match!");
+                    confirmPasswordLiveInvalid = true;
                 } else {
                     confirmPasswordError.setFill(Color.GREEN);
                     confirmPasswordError.setText("passwords match");
+                    confirmPasswordLiveInvalid = false;
                 }
             }
         });
@@ -418,9 +452,9 @@ public class SignupMenu extends Application {
         nicknameError.setText("");
         emailError.setText("");
         sloganError.setText("");
-        if (!usernameError.getText().equals("") && usernameError.getFill().equals(Color.RED)) return;
-        if (!passwordError.getText().equals("") && passwordError.getFill().equals(Color.RED)) return;
-        if (!confirmPasswordError.getFill().equals("") && confirmPasswordError.getFill().equals(Color.RED)) return;
+        if (usernameLiveInvalid) return;
+        if (passwordLiveInvalid) return;
+        if (confirmPasswordLiveInvalid) return;
         if (validateEmptyFields()) return;
 
         boolean validEmail = Pattern.compile("[a-zA-Z\\d_\\.]+@[a-zA-Z\\d_\\.]+\\.[a-zA-Z\\d_\\.]+").matcher(email.getText()).matches();
