@@ -14,7 +14,7 @@ import model.human.military.Military;
 import model.tools.Tool;
 import org.junit.Assert;
 import org.junit.Test;
-import view.ToolMenu;
+import viewphase1.ToolMenu;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

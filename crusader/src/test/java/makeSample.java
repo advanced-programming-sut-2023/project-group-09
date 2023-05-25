@@ -15,7 +15,7 @@ import model.game.Map;
 import model.game.Tuple;
 import model.human.military.Military;
 import org.junit.Test;
-import view.UnitMenu;
+import viewphase1.UnitMenu;
 
 import java.util.ArrayList;
 
