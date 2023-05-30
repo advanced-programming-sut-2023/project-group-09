@@ -1,17 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="view.menus.SignupMenu"
           prefHeight="800" prefWidth="1500"
-          alignment="CENTER" hgap="10" vgap="10">
+          alignment="CENTER" hgap="15" vgap="10">
 
-    <Text fx:id="signupText" GridPane.rowIndex="0" GridPane.columnIndex="0" >Signup</Text>
-    <Label fx:id="usernameLabel" GridPane.rowIndex="0" GridPane.columnIndex="0">username</Label>
-    <Te
-    <TextField/>
+    <Text fx:id="signupText" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="5"
+          GridPane.halignment="CENTER">Signup
+    </Text>
+    <Label fx:id="usernameLabel" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.halignment="RIGHT">
+        Username
+    </Label>
+    <Label fx:id="nicknameLabel" GridPane.rowIndex="1" GridPane.columnIndex="3" GridPane.halignment="RIGHT">
+        Nickname
+    </Label>
+    <Label fx:id="emailLabel" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.halignment="RIGHT">Email
+    </Label>
+    <Label fx:id="sloganLabel" GridPane.rowIndex="3" GridPane.columnIndex="3" GridPane.halignment="RIGHT">Slogan
+    </Label>
+    <Label fx:id="passwordLabel" GridPane.rowIndex="5" GridPane.columnIndex="0" GridPane.halignment="RIGHT">
+        Password
+    </Label>
+    <Label fx:id="confirmPasswordLabel" GridPane.rowIndex="7" GridPane.columnIndex="0" GridPane.halignment="RIGHT">
+        Confirm Password
+    </Label>
 </GridPane>

@@ -13,7 +13,7 @@ public enum Paths {
     ARABIAN_MERCENARY_PATH("files/model/humans/arabianMercenaries.json"),
     BUILDINGS_PATH("files/model/buildings/"),
     TOOLS_PATH("files/model/tools/tools.json"),
-    CAPTCHA_IMAGES("/images/captchaImages/"),
+    CAPTCHA_IMAGES("files/captcha/images/"),
     USER_ICONS("/images/icons/usericons/")
     ;
     private final String path;

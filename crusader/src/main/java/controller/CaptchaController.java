@@ -31,24 +31,25 @@ public class CaptchaController {
     private static Cipher cipher;
 
 
-    public static void makeControllerVariable(){
+    public static void makeControllerVariable() {
         try {
             ivParameterSpec = new IvParameterSpec(SECRET_KEY_1.getBytes("UTF-8"));
             secretKeySpec = new SecretKeySpec(SECRET_KEY_2.getBytes("UTF-8"), "AES");
             cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-        }catch (NoSuchPaddingException | NoSuchAlgorithmException | UnsupportedEncodingException e1){
+        } catch (NoSuchPaddingException | NoSuchAlgorithmException | UnsupportedEncodingException e1) {
             System.out.println("An error occurred.[make controller variables]");
         }
 
     }
 
 
-    public static String decrypt(String encrypted){
+    public static String decrypt(String encrypted) {
         try {
             cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
             byte[] decryptedBytes = cipher.doFinal(Base64.decodeBase64(encrypted));
             return new String(decryptedBytes);
-        }catch (InvalidAlgorithmParameterException| InvalidKeyException| IllegalBlockSizeException| BadPaddingException e){
+        } catch (InvalidAlgorithmParameterException | InvalidKeyException | IllegalBlockSizeException |
+                 BadPaddingException e) {
             System.out.println("An error occurred.[decrypt]");
         }
         return "";
@@ -73,13 +74,13 @@ public class CaptchaController {
             String cipherText = new String(Files.readAllBytes(Path.of(path)));
             CaptchaController.makeControllerVariable();
             return decrypt(cipherText);
-        }catch (IOException e){
+        } catch (IOException e) {
             System.out.println("An error occurred.[make captcha]");
         }
         return "";
     }
 
-    public static String makePictureWithoutNoise(String value){
+    public static String makePictureWithoutNoise(String value) {
         char[] valueChars = value.toCharArray();
         String[] picture = {"", "", "", "", "", ""};
 
@@ -129,13 +130,14 @@ public class CaptchaController {
             Captcha captcha = new Captcha();
             System.out.println(captcha.getCaptchaImage());
             return captcha;
-        }catch (InvalidAlgorithmParameterException| NoSuchPaddingException| IllegalBlockSizeException| IOException| NoSuchAlgorithmException| BadPaddingException |InvalidKeyException e){
+        } catch (InvalidAlgorithmParameterException | NoSuchPaddingException | IllegalBlockSizeException | IOException |
+                 NoSuchAlgorithmException | BadPaddingException | InvalidKeyException e) {
             System.out.println("An error occurred.[make captcha]");
         }
         return null;
     }
 
-    public static boolean isCaptchaTrue(Scanner scanner){
+    public static boolean isCaptchaTrue(Scanner scanner) {
         Captcha captcha = createCaptcha();
         String input;
         int counter = 1;
