@@ -13,7 +13,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import model.captcha.Captcha;
+import model.menugui.MenuBox;
 import model.menugui.MenuButton;
+import model.menugui.MenuTextField;
 import view.controllers.CaptchaController;
 import view.controllers.ViewController;
 
@@ -33,7 +35,13 @@ public class LoginMenu extends Application {
         captcha.setTranslate(200 , 200);
         pane.getChildren().add(captcha);*/
         MenuButton menuButton = new MenuButton("Start" , pane , 200 , 200);
+        MenuTextField menuTextField = new MenuTextField(pane , "username"
+                , "Username : " , 250 , 5);
+        menuTextField.handlingError("Passwordet Daghoone Badbakht");
+        pane.getChildren().add(menuTextField);
         pane.getChildren().add(menuButton);
+        MenuBox menuBox = new MenuBox("Home" , 20 , 20 , 200 , 200);
+        pane.getChildren().add(menuBox);
         stage.setTitle("Login Menu");
         stage.setScene(scene);
         stage.show();

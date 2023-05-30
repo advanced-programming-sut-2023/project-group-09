@@ -100,6 +100,7 @@ public class MenuButton extends Button {
     private void playSoundOfHovering() {
         Media media = new Media(getClass().getResource(Paths.MENU_IMAGES.getPath()) + "swordSound.mp3");
         MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setVolume(0.2);
         mediaPlayer.setCycleCount(1);
         mediaPlayer.play();
     }
