@@ -1,6 +1,7 @@
 package view.menus;
 
 import controller.GameController;
+import enumeration.Paths;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -14,26 +15,31 @@ import javafx.stage.Stage;
 import model.captcha.Captcha;
 import model.menugui.MenuButton;
 import view.controllers.CaptchaController;
+import view.controllers.ViewController;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 
 public class LoginMenu extends Application {
     public static Stage stage;
+    public static Pane loginPane;
 
     @Override
     public void start(Stage stage) throws Exception {
         LoginMenu.stage = stage;
-        Pane loginPane = FXMLLoader.load(LoginMenu.class.getResource("/FXML/loginMenu.fxml"));
-        Scene scene = new Scene(loginPane);
+        Pane pane = FXMLLoader.load(LoginMenu.class.getResource("/FXML/loginMenu.fxml"));
+        loginPane = ViewController.makePaneScreen(stage , pane , 1000 , -1);
+        Scene scene = new Scene(pane);
         Captcha captcha = new Captcha();
         captcha.setTranslate(200 , 200);
-        loginPane.getChildren().add(captcha);
-        MenuButton menuButton = new MenuButton("Start");
-        loginPane.getChildren().add(menuButton);
+        pane.getChildren().add(captcha);
+        MenuButton menuButton = new MenuButton("Start" , loginPane);
+        menuButton.setTranslateY(200);
+        menuButton.setTranslateX(100);
+        pane.getChildren().add(menuButton);
+
         stage.setTitle("Login Menu");
         stage.setScene(scene);
-
-
         stage.show();
     }
 
