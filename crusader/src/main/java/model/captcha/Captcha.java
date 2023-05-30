@@ -1,6 +1,7 @@
 package model.captcha;
 
 import controller.GameController;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -26,6 +27,7 @@ public class Captcha extends StackPane {
         this.getChildren().addAll(this.captchaImage , this.numberLabel , this.refreshButton , this.numberText);
         this.setWidth(500);
         this.setHeight(400);
+        this.setPadding(new Insets(50));
      
     }
     public boolean isInputCorrect() throws MalformedURLException {
@@ -70,5 +72,10 @@ public class Captcha extends StackPane {
 
     public void setNumberLabel(Label numberLabel) {
         this.numberLabel = numberLabel;
+    }
+
+    public void setTranslate(double x , double y) {
+        this.setTranslateX(x);
+        this.setTranslateY(y);
     }
 }

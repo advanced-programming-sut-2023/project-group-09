@@ -148,7 +148,7 @@ public class CaptchaController {
         captcha.getRefreshButton().setScaleX(0.02);
         captcha.getRefreshButton().setTranslateX(75);
         captcha.getRefreshButton().setTranslateY(20);
-        captcha.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        captcha.getRefreshButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 System.out.println("change");

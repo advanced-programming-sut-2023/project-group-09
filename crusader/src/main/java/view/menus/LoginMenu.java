@@ -8,25 +8,28 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import model.captcha.Captcha;
+import model.menugui.MenuButton;
 import view.controllers.CaptchaController;
 
 import java.net.MalformedURLException;
 
 public class LoginMenu extends Application {
     public static Stage stage;
-    public StackPane captchaStackPane;
 
     @Override
     public void start(Stage stage) throws Exception {
         LoginMenu.stage = stage;
-        BorderPane loginPane = FXMLLoader.load(LoginMenu.class.getResource("/FXML/loginMenu.fxml"));
+        Pane loginPane = FXMLLoader.load(LoginMenu.class.getResource("/FXML/loginMenu.fxml"));
         Scene scene = new Scene(loginPane);
         Captcha captcha = new Captcha();
-        captchaStackPane = captcha;
-
+        captcha.setTranslate(200 , 200);
+        loginPane.getChildren().add(captcha);
+        MenuButton menuButton = new MenuButton("Start");
+        loginPane.getChildren().add(menuButton);
         stage.setTitle("Login Menu");
         stage.setScene(scene);
 

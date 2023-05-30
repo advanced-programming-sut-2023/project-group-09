@@ -1,0 +1,7 @@
+Button , Label , TextField , PasswordField , Hyperlink {
+    -fx-font-size: 20;
+}
+
+Label {
+    -fx-max-width: 140;
+}
