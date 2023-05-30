@@ -10,6 +10,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -21,7 +23,8 @@ import java.awt.*;
 public class MenuButton extends Button {
 
     private Pane pane;
-    public MenuButton(String text , Pane pane) {
+    private ImageView axImage;
+    public MenuButton(String text , Pane pane , double x , double y) {
         BackgroundImage backgroundImage =
                 new BackgroundImage( new Image( getClass().getResource
                         (Paths.MENU_IMAGES.getPath()).toExternalForm() + "button.jpg"),
@@ -36,6 +39,9 @@ public class MenuButton extends Button {
         this.setTextFill(Color.WHITE);
         this.setFont(Font.font("Times New Roman" , FontWeight.BOLD , 25));
         this.setBackground(background);
+        this.setTranslateX(x);
+        this.setTranslateY(y);
+        this.pane = pane;
         hoverEvent();
     }
 
@@ -50,6 +56,7 @@ public class MenuButton extends Button {
                                 BackgroundPosition.DEFAULT,
                                 new BackgroundSize(1.0, 1.0, true, true, false, false));
                 Background background = new Background(backgroundImage);
+                playSoundOfHovering();
                 addAxToButton();
                 setBackground(background);
             }
@@ -79,14 +86,22 @@ public class MenuButton extends Button {
     }
 
     private void addAxToButton() {
-        ImageView axImage = new ImageView(new Image(getClass().getResource
-                (Paths.MENU_IMAGES.getPath()).toExternalForm() + "ax.jpg"));
-        axImage.setTranslateX(this.getTranslateX());
-        axImage.setTranslateY(this.getTranslateY());
+        axImage = new ImageView(new Image(getClass().getResource
+                (Paths.MENU_IMAGES.getPath()).toExternalForm() + "ax.png"));
+        axImage.setX(this.getTranslateX()-105);
+        axImage.setY(this.getTranslateY()-15);
         pane.getChildren().add(axImage);
     }
 
     private void removeAxFromButton() {
-        // TODO : remove ax from button after hovering;
+        pane.getChildren().remove(axImage);
     }
+
+    private void playSoundOfHovering() {
+        Media media = new Media(getClass().getResource(Paths.MENU_IMAGES.getPath()) + "swordSound.mp3");
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(1);
+        mediaPlayer.play();
+    }
+
 }

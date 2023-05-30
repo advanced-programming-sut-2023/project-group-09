@@ -28,16 +28,12 @@ public class LoginMenu extends Application {
     public void start(Stage stage) throws Exception {
         LoginMenu.stage = stage;
         Pane pane = FXMLLoader.load(LoginMenu.class.getResource("/FXML/loginMenu.fxml"));
-        loginPane = ViewController.makePaneScreen(stage , pane , 1000 , -1);
         Scene scene = new Scene(pane);
-        Captcha captcha = new Captcha();
+        /*Captcha captcha = new Captcha();
         captcha.setTranslate(200 , 200);
-        pane.getChildren().add(captcha);
-        MenuButton menuButton = new MenuButton("Start" , loginPane);
-        menuButton.setTranslateY(200);
-        menuButton.setTranslateX(100);
+        pane.getChildren().add(captcha);*/
+        MenuButton menuButton = new MenuButton("Start" , pane , 200 , 200);
         pane.getChildren().add(menuButton);
-
         stage.setTitle("Login Menu");
         stage.setScene(scene);
         stage.show();
