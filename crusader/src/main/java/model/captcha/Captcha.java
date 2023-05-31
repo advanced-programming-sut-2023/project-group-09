@@ -28,7 +28,6 @@ public class Captcha extends StackPane {
         this.setWidth(500);
         this.setHeight(400);
         this.setPadding(new Insets(50));
-     
     }
     public boolean isInputCorrect() throws MalformedURLException {
         return CaptchaController.isInputCorrect();

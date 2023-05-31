@@ -6,15 +6,14 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.captcha.Captcha;
 import model.menugui.MenuBox;
 import model.menugui.MenuButton;
+import model.menugui.MenuPasswordField;
 import model.menugui.MenuTextField;
 import view.controllers.CaptchaController;
 import view.controllers.ViewController;
@@ -30,18 +29,43 @@ public class LoginMenu extends Application {
     public void start(Stage stage) throws Exception {
         LoginMenu.stage = stage;
         Pane pane = FXMLLoader.load(LoginMenu.class.getResource("/FXML/loginMenu.fxml"));
+
+        loginPane = ViewController.makePaneScreen(stage , pane , 1000 , -1);
         Scene scene = new Scene(pane);
-        /*Captcha captcha = new Captcha();
-        captcha.setTranslate(200 , 200);
-        pane.getChildren().add(captcha);*/
-        MenuButton menuButton = new MenuButton("Start" , pane , 200 , 200);
-        MenuTextField menuTextField = new MenuTextField(pane , "username"
-                , "Username : " , 250 , 5);
-        menuTextField.handlingError("Passwordet Daghoone Badbakht");
-        pane.getChildren().add(menuTextField);
-        pane.getChildren().add(menuButton);
-        MenuBox menuBox = new MenuBox("Home" , 20 , 20 , 200 , 200);
+
+        MenuBox menuBox = new MenuBox("Login" , 300 , -20 , 500 , 500);
         pane.getChildren().add(menuBox);
+
+        MenuTextField userNameField = new MenuTextField(menuBox , "username" ,
+                "Username : " ,  50, -150);
+        menuBox.getChildren().add(userNameField);
+
+        MenuPasswordField passwordField = new MenuPasswordField(menuBox , "password" ,
+                "Passowrd : " , 50 , -70);
+        menuBox.getChildren().add(passwordField);
+
+        Hyperlink forgotPassword = new Hyperlink();
+        forgotPassword.setText("forgot my password");
+        forgotPassword.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                forgotPassword(mouseEvent);
+            }
+        });
+
+        forgotPassword.setTranslateY(-20);
+        forgotPassword.setBorder(Border.EMPTY);
+        forgotPassword.setStyle("-fx-font-size: 15");
+
+
+        menuBox.getChildren().add(forgotPassword);
+
+        Captcha captcha = new Captcha();
+        captcha.setTranslate(0 , 0);
+        menuBox.getChildren().add(captcha);
+
+
+
         stage.setTitle("Login Menu");
         stage.setScene(scene);
         stage.show();

@@ -2,6 +2,7 @@ package model.menugui;
 
 import enumeration.Paths;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -11,11 +12,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 
-public class MenuTextField extends TextField {
+public class MenuPasswordField extends PasswordField {
     private Pane pane;
     private String promptText;
     private Label errorLabel = new Label();
-    public MenuTextField(Pane pane , String promptText , String labelText , double x , double y) {
+    public MenuPasswordField(Pane pane , String promptText , String labelText , double x , double y) {
         this.promptText = promptText;
         this.setStyle("-fx-background-color: rgba(42 , 42 , 42 , 0.7); -fx-text-inner-color: white;");
         this.setTranslateX(x);

@@ -9,6 +9,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import model.captcha.Captcha;
 import view.menus.MainMenu;
 
@@ -146,7 +149,7 @@ public class CaptchaController {
                 (Paths.USER_ICONS.getPath() + "refreshIcon.png").toExternalForm()));
         captcha.getRefreshButton().setScaleY(0.02);
         captcha.getRefreshButton().setScaleX(0.02);
-        captcha.getRefreshButton().setTranslateX(75);
+        captcha.getRefreshButton().setTranslateX(70);
         captcha.getRefreshButton().setTranslateY(20);
         captcha.getRefreshButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -167,5 +170,10 @@ public class CaptchaController {
         captcha.getNumberText().setTranslateX(50);
         captcha.getNumberText().setTranslateY(55);
         captcha.getNumberText().setMaxWidth(80);
+        captcha.getNumberText().setFont(Font.font("Times New Roman" , FontWeight.BOLD , 15));
+        captcha.getNumberLabel().setFont(Font.font("Times New Roman" , FontWeight.BOLD , 15));
+        captcha.getNumberLabel().setTextFill(Color.BLACK);
+        captcha.getNumberText().setStyle
+                ("-fx-background-color: rgba(42 , 42 , 42 , 0.7); -fx-text-inner-color: white;");
     }
 }
