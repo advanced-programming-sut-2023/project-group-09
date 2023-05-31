@@ -7,16 +7,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.HPos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.User;
 import model.menugui.*;
@@ -39,11 +32,7 @@ public class SignupMenu extends Application {
     public static CheckBox isSlogan;
     public static MenuButton randomSlogan;
     public static MenuPasswordField passwordField;
-    public static MenuTextField passwordTextField;
-    public static CheckBox showPassword;
     public static MenuPasswordField confirmPasswordField;
-    public static MenuTextField confirmPasswordTextField;
-    public static CheckBox showConfirmPassword;
     public static MenuButton randomPassword;
     public static MenuButton signup;
 
@@ -91,40 +80,18 @@ public class SignupMenu extends Application {
 
         passwordField = new MenuPasswordField(menuBox, "password", "Password", 0, 85);
         menuBox.getChildren().add(passwordField);
-
-        passwordTextField = new MenuTextField(menuBox, "password", "Password", 0, 85);
-        passwordTextField.setVisible(false);
-        menuBox.getChildren().add(passwordTextField);
-
-        showPassword = new CheckBox("\uD83D\uDC41");
-        showPassword.setStyle("-fx-background-color: rgba(42, 42, 42, 0.7); -fx-text-fill: gray; -fx-font-size: 16; " +
-                "-fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-padding: 3; -fx-background-radius: 3");
-        showPassword.setTranslateX(185);
-        showPassword.setTranslateY(85);
-        passwordLiveValidate();
-        menuBox.getChildren().add(showPassword);
+        validatePassword();
 
         confirmPasswordField = new MenuPasswordField(menuBox, "confirmation", "Confirmation", 0, 145);
         menuBox.getChildren().add(confirmPasswordField);
-
-        confirmPasswordTextField = new MenuTextField(menuBox, "confirmaion", "Confirmation", 0, 145);
-        confirmPasswordTextField.setVisible(false);
-        menuBox.getChildren().add(confirmPasswordTextField);
-
-        showConfirmPassword = new CheckBox("\uD83D\uDC41");
-        showConfirmPassword.setStyle("-fx-background-color: rgba(42, 42, 42, 0.7); -fx-text-fill: gray; -fx-font-size: 16; " +
-                "-fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-padding: 3; -fx-background-radius: 3");
-        showConfirmPassword.setTranslateX(185);
-        showConfirmPassword.setTranslateY(145);
-        confirmPasswordLiveValidate();
-        menuBox.getChildren().add(showConfirmPassword);
+        validateConfirmPassword();
 
         randomPassword = new MenuButton("random password", menuBox, 75, 205, false);
         randomPassword.setScaleX(0.6);
         randomPassword.setScaleY(0.6);
         randomPassword.setOnAction(actionEvent -> {
-            this.showPassword.setSelected(true);
-            this.passwordTextField.setText(UserController.generateRandomPassword());
+            passwordField.getShowPassword().setSelected(true);
+            passwordField.getPasswordTextField().setText(UserController.generateRandomPassword());
         });
         menuBox.getChildren().add(randomPassword);
 
@@ -261,44 +228,6 @@ public class SignupMenu extends Application {
 //        signupPane.getChildren().add(randomSlogan2);
 //    }
 
-    private void passwordLiveValidate() {
-        showPassword.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
-                if (newValue) {
-                    passwordField.setVisible(false);
-                    passwordTextField.setVisible(true);
-                    passwordTextField.setText(passwordField.getText());
-                } else {
-                    passwordField.setVisible(true);
-                    passwordTextField.setVisible(false);
-                    passwordField.setText(passwordTextField.getText());
-                }
-            }
-        });
-
-        validatePassword();
-    }
-
-    private void confirmPasswordLiveValidate() {
-        showConfirmPassword.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
-                if (newValue) {
-                    confirmPasswordField.setVisible(false);
-                    confirmPasswordTextField.setVisible(true);
-                    confirmPasswordTextField.setText(confirmPasswordField.getText());
-                } else {
-                    confirmPasswordField.setVisible(true);
-                    confirmPasswordTextField.setVisible(false);
-                    confirmPasswordField.setText(confirmPasswordTextField.getText());
-                }
-            }
-        });
-
-        validateConfirmPassword();
-    }
-
     private void validateUsername() {
         usernameField.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -323,11 +252,11 @@ public class SignupMenu extends Application {
     }
 
     private void validatePassword() {
-        passwordTextField.textProperty().addListener(new ChangeListener<String>() {
+        passwordField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
                 passwordField.clearErrorOrMessage();
-                passwordTextField.setText(newValue);
+                passwordField.getPasswordTextField().setText(newValue);
                 if (newValue == "") {
                     passwordLiveInvalid = false;
                     return;
@@ -352,7 +281,7 @@ public class SignupMenu extends Application {
             }
         });
 
-        passwordTextField.textProperty().addListener(new ChangeListener<String>() {
+        passwordField.getPasswordTextField().textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
                 passwordField.clearErrorOrMessage();
@@ -387,7 +316,7 @@ public class SignupMenu extends Application {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
                 confirmPasswordField.clearErrorOrMessage();
-                confirmPasswordTextField.setText(newValue);
+                confirmPasswordField.getPasswordTextField().setText(newValue);
                 if (newValue == "") {
                     confirmPasswordLiveInvalid = false;
                     return;
@@ -402,7 +331,7 @@ public class SignupMenu extends Application {
             }
         });
 
-        confirmPasswordTextField.textProperty().addListener(new ChangeListener<String>() {
+        confirmPasswordField.getPasswordTextField().textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
                 confirmPasswordField.clearErrorOrMessage();

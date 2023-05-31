@@ -15,7 +15,7 @@ import javafx.scene.text.FontWeight;
 public class MenuTextField extends TextField {
     private Pane pane;
     private String promptText;
-    private Label errorLabel = new Label();
+    private Label errorLabel;
     public MenuTextField(Pane pane , String promptText , String labelText , double x , double y) {
         this.promptText = promptText;
         this.setStyle("-fx-background-color: rgba(42 , 42 , 42 , 0.7); -fx-text-inner-color: white;");
@@ -42,6 +42,7 @@ public class MenuTextField extends TextField {
     }
 
     private void createErrorOrMessage() {
+        errorLabel = new Label();
         errorLabel.setTranslateX(this.getTranslateX());
         errorLabel.setTranslateY(this.getTranslateY() + 33);
         errorLabel.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 15));
@@ -49,16 +50,16 @@ public class MenuTextField extends TextField {
     }
 
     public void handlingError(String errorText) {
-        errorLabel.setTextFill(Color.RED);
+        errorLabel.setTextFill(new Color(0.6, 0, 0.1, 1));
         errorLabel.setText(errorText);
     }
 
     public void handlingCorrect(String correctMessage) {
-        errorLabel.setTextFill(Color.GREEN);
+        errorLabel.setTextFill(new Color(0.2, 0.9, 0.2, 1));
         errorLabel.setText(correctMessage);
     }
 
     public void clearErrorOrMessage() {
-        pane.getChildren().remove(errorLabel);
+        errorLabel.setText("");
     }
 }

@@ -1,6 +1,9 @@
 package model.menugui;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.Pane;
@@ -12,10 +15,14 @@ import javafx.scene.text.FontWeight;
 public class MenuPasswordField extends PasswordField {
     private Pane pane;
     private String promptText;
-    private Label errorLabel = new Label();
+    private String labelText;
+    private Label errorLabel;
+    private MenuTextField passwordTextField;
+    private CheckBox showPassword;
 
     public MenuPasswordField(Pane pane, String promptText, String labelText, double x, double y) {
         this.promptText = promptText;
+        this.labelText = labelText;
         this.setStyle("-fx-background-color: rgba(42 , 42 , 42 , 0.7); -fx-text-inner-color: white;");
         this.setTranslateX(x);
         this.setTranslateY(y);
@@ -26,6 +33,37 @@ public class MenuPasswordField extends PasswordField {
         this.setFont(Font.font("Times New Roman", FontWeight.BOLD, 20));
         this.setPromptText(promptText);
         this.createErrorOrMessage();
+        this.createTextField();
+        this.createShowPassword();
+    }
+
+    private void createTextField() {
+        passwordTextField = new MenuTextField(pane, promptText, labelText, this.getTranslateX(), this.getTranslateY());
+        passwordTextField.setVisible(false);
+        pane.getChildren().add(passwordTextField);
+    }
+
+    private void createShowPassword() {
+        showPassword = new CheckBox("\uD83D\uDC41");
+        showPassword.setStyle("-fx-background-color: rgba(42, 42, 42, 0.7); -fx-text-fill: gray; -fx-font-size: 16; " +
+                "-fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-padding: 3; -fx-background-radius: 3");
+        showPassword.setTranslateX(this.getTranslateX() + 185);
+        showPassword.setTranslateY(this.getTranslateY());
+        showPassword.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
+                if (newValue) {
+                    setVisible(false);
+                    passwordTextField.setVisible(true);
+                    passwordTextField.setText(getText());
+                } else {
+                    setVisible(true);
+                    passwordTextField.setVisible(false);
+                    setText(passwordTextField.getText());
+                }
+            }
+        });
+        pane.getChildren().add(showPassword);
     }
 
     public void createLabel(String text) {
@@ -40,6 +78,7 @@ public class MenuPasswordField extends PasswordField {
     }
 
     private void createErrorOrMessage() {
+        errorLabel = new Label();
         errorLabel.setTranslateX(this.getTranslateX());
         errorLabel.setTranslateY(this.getTranslateY() + 33);
         errorLabel.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 15));
@@ -47,16 +86,32 @@ public class MenuPasswordField extends PasswordField {
     }
 
     public void handlingError(String errorText) {
-        errorLabel.setTextFill(Color.RED);
+        errorLabel.setTextFill(new Color(0.6, 0, 0.1, 1));
         errorLabel.setText(errorText);
     }
 
     public void handlingCorrect(String correctMessage) {
-        errorLabel.setTextFill(Color.GREEN);
+        errorLabel.setTextFill(new Color(0.2, 0.9, 0.2, 1));
         errorLabel.setText(correctMessage);
     }
 
     public void clearErrorOrMessage() {
-        pane.getChildren().remove(errorLabel);
+        errorLabel.setText("");
+    }
+
+    public MenuTextField getPasswordTextField() {
+        return passwordTextField;
+    }
+
+    public void setPasswordTextField(MenuTextField passwordTextField) {
+        this.passwordTextField = passwordTextField;
+    }
+
+    public CheckBox getShowPassword() {
+        return showPassword;
+    }
+
+    public void setShowPassword(CheckBox showPassword) {
+        this.showPassword = showPassword;
     }
 }
