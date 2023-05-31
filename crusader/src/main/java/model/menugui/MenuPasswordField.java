@@ -35,6 +35,7 @@ public class MenuPasswordField extends PasswordField {
         this.createErrorOrMessage();
         this.createTextField();
         this.createShowPassword();
+        updateFieldValues();
     }
 
     private void createTextField() {
@@ -55,11 +56,9 @@ public class MenuPasswordField extends PasswordField {
                 if (newValue) {
                     setVisible(false);
                     passwordTextField.setVisible(true);
-                    passwordTextField.setText(getText());
                 } else {
                     setVisible(true);
                     passwordTextField.setVisible(false);
-                    setText(passwordTextField.getText());
                 }
             }
         });
@@ -93,6 +92,22 @@ public class MenuPasswordField extends PasswordField {
     public void handlingCorrect(String correctMessage) {
         errorLabel.setTextFill(new Color(0.2, 0.9, 0.2, 1));
         errorLabel.setText(correctMessage);
+    }
+
+    private void updateFieldValues() {
+        this.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
+                passwordTextField.setText(newValue);
+            }
+        });
+
+        passwordTextField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
+                setText(newValue);
+            }
+        });
     }
 
     public void clearErrorOrMessage() {
