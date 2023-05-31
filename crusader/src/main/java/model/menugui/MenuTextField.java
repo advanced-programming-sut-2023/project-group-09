@@ -27,6 +27,7 @@ public class MenuTextField extends TextField {
         createLabel(labelText);
         this.setFont(Font.font("Times New Roman" , FontWeight.BOLD , 20));
         this.setPromptText(promptText);
+        createErrorOrMessage();
     }
 
     public void createLabel(String text) {
@@ -38,7 +39,6 @@ public class MenuTextField extends TextField {
         label.setMaxWidth(270);
         label.setAlignment(Pos.BASELINE_RIGHT);
         pane.getChildren().add(label);
-        createErrorOrMessage();
     }
 
     private void createErrorOrMessage() {

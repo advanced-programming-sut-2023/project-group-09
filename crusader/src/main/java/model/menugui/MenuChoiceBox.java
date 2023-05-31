@@ -24,6 +24,7 @@ public class MenuChoiceBox extends ChoiceBox {
         this.pane = pane;
         createLabel(labelText);
         this.setFocusTraversable(false);
+        createErrorOrMessage();
     }
 
     public void createLabel(String text) {
@@ -35,7 +36,6 @@ public class MenuChoiceBox extends ChoiceBox {
         label.setMaxWidth(270);
         label.setAlignment(Pos.BASELINE_RIGHT);
         pane.getChildren().add(label);
-        createErrorOrMessage();
     }
 
     private void createErrorOrMessage() {

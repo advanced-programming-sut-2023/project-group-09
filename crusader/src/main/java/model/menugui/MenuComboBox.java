@@ -25,6 +25,7 @@ public class MenuComboBox extends ComboBox {
         this.setEditable(true);
         createLabel(labelText);
         this.setFocusTraversable(false);
+        createErrorOrMessage();
     }
 
     public void createLabel(String text) {
@@ -36,7 +37,6 @@ public class MenuComboBox extends ComboBox {
         label.setMaxWidth(270);
         label.setAlignment(Pos.BASELINE_RIGHT);
         pane.getChildren().add(label);
-        createErrorOrMessage();
     }
 
     private void createErrorOrMessage() {
