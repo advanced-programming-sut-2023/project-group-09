@@ -20,6 +20,7 @@ public class Captcha extends ImageView {
     private ImageView refreshButton;
     private Label numberLabel;
     private TextField numberText;
+    private Label errorLabel;
     public Captcha(Pane pane , double x , double y) throws IOException {
         CaptchaController.setCaptcha(this);
         this.pane = pane;
@@ -78,5 +79,13 @@ public class Captcha extends ImageView {
 
     public void setPane(Pane pane) {
         this.pane = pane;
+    }
+
+    public Label getErrorLabel() {
+        return errorLabel;
+    }
+
+    public void setErrorLabel(Label errorLabel) {
+        this.errorLabel = errorLabel;
     }
 }

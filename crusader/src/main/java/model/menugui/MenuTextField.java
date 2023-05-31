@@ -30,7 +30,7 @@ public class MenuTextField extends TextField {
 
     public void createLabel(String text) {
         Label label = new Label(text);
-        label.setTranslateX(this.getTranslateX() - 200);
+        label.setTranslateX(this.getTranslateX() - 210);
         label.setTranslateY(this.getTranslateY());
         label.setFont(Font.font("Times New Roman" , FontWeight.BOLD , 20));
         label.setTextFill(Color.BLACK);

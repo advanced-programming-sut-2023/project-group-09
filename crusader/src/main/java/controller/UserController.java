@@ -8,9 +8,11 @@ import javafx.scene.control.Alert;
 import model.User;
 import view.controllers.ViewController;
 import view.menus.LoginMenu;
+import view.menus.MainMenu;
 import viewphase1.ProfileMenu;
 import viewphase1.SignupMenu;
 
+import javax.swing.text.View;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -270,20 +272,24 @@ public class UserController {
         DBController.loadAllUsers();
         if (!Application.isUserExistsByName(username)) {
             LoginMenu.username.handlingError(LoginAnswers.USER_DOESNT_EXIST_MESSAGE.getMessage());
+            view.controllers.CaptchaController.changingCaptcha();
             return LoginAnswers.USER_DOESNT_EXIST_MESSAGE.getMessage();
         }
         User user = Application.getUserByUsername(username);
         if (!user.isPasswordCorrect(password)) {
             LoginMenu.password.handlingError(LoginAnswers.WRONG_PASSWORD_MESSAGE.getMessage());
+            view.controllers.CaptchaController.changingCaptcha();
             return LoginAnswers.WRONG_PASSWORD_MESSAGE.getMessage();
         }
         if (view.controllers.CaptchaController.getCaptcha().isInputCorrect()) {
             Application.setCurrentUser(user);
             Application.setStayLoggedIn(stayedLoggedIn);
             DBController.saveCurrentUser();
-            ViewController.createAndShowAlert(Alert.AlertType.INFORMATION, "Login was successful!"
-                    , "Login was successful!", "You logged in successfully!");
-            // TODO : go to main menu
+            try {
+                new MainMenu().start(LoginMenu.stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             return LoginAnswers.SUCCESSFUL_LOGIN_MESSAGE.getMessage();
         }
         return "";
@@ -295,6 +301,10 @@ public class UserController {
         }
         User user = Application.getUserByUsername(username);
         return user.getPasswordRecoveryQuestion().replace("my" , "your");
+    }
+
+    public static String getSecurityQuestionWithUsername(String username) {
+        return Application.getUserByUsername(username).getPasswordRecoveryQuestion();
     }
 
     public static String changePasswordWithSecurityQuestion(String username, String newPassword, String newPasswordConfirmation) {
