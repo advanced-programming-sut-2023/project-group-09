@@ -66,6 +66,7 @@ public class LoginMenu extends Application {
         }
         User user = controller.Application.getUserByUsername(username.getText());
         loginPane.getChildren().clear();
+
         MenuBox menuBox = new MenuBox("Forgot Password" , 500, 150 , 500 , 500);
         Label label = new Label(UserController.getSecurityQuestionWithUsername(username.getText()));
         menuBox.getChildren().add(label);
@@ -183,6 +184,10 @@ public class LoginMenu extends Application {
     }
 
     private void setLoginMenu(Pane pane){
+        Button exitButton = ViewController.createExitButton();
+        pane.getChildren().add(exitButton);
+        exitButton.setTranslateY(750);
+        exitButton.setTranslateX(300);
         MenuBox menuBox = new MenuBox("Login" , 350, 0 , 500 , 500);
 
         MenuTextField userNameField = new MenuTextField(menuBox , "username" ,
