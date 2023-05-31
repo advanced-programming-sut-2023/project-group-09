@@ -35,24 +35,24 @@ public class MenuChoiceBox extends ChoiceBox {
         label.setMaxWidth(270);
         label.setAlignment(Pos.BASELINE_RIGHT);
         pane.getChildren().add(label);
+        createErrorOrMessage();
+    }
+
+    private void createErrorOrMessage() {
+        errorLabel.setTranslateX(this.getTranslateX());
+        errorLabel.setTranslateY(this.getTranslateY() + 33);
+        errorLabel.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 15));
+        pane.getChildren().add(errorLabel);
     }
 
     public void handlingError(String errorText) {
-        errorLabel.setTranslateX(this.getTranslateX());
-        errorLabel.setTranslateY(this.getTranslateY() + 33);
         errorLabel.setTextFill(Color.RED);
-        errorLabel.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 15));
         errorLabel.setText(errorText);
-        pane.getChildren().add(errorLabel);
     }
 
     public void handlingCorrect(String correctMessage) {
-        errorLabel.setTranslateX(this.getTranslateX());
-        errorLabel.setTranslateY(this.getTranslateY() + 33);
         errorLabel.setTextFill(Color.GREEN);
-        errorLabel.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 15));
         errorLabel.setText(correctMessage);
-        pane.getChildren().add(errorLabel);
     }
 
     public void clearErrorOrMessage() {
