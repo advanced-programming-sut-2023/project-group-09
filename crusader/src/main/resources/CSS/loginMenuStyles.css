@@ -38,29 +38,26 @@
 
 
 
-.combo-box > .label {
-    -fx-text-fill: gray;
-    -fx-font-family: "Times New Roman";
-    -fx-font-size: 20;
-    -fx-font-weight: bold;
-}
-
-.combo-box > . {
+.combo-box .list-cell {
     -fx-background-color: rgb(42, 42, 42);
-    -fx-background-radius: 5;
-}
-
-.combo-box .menu-item:focused {
-    -fx-background-color: rgb(50, 50, 50);
-}
-
-.combo-box .menu-item > .label {
     -fx-text-fill: gray;
     -fx-font-family: "Times New Roman";
+    -fx-font-size: 12;
     -fx-font-weight: bold;
-    -fx-font-size: 16;
 }
 
-.combo-box .menu-item:focused > .label {
-    -fx-background-color: rgb(50, 50, 50);
+.combo-box .text-field {
+    -fx-text-fill: gray;
+    -fx-font-family: "Times New Roman";
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+    -fx-background-color: rgba(42, 42, 42, 0.7);
+}
+
+.combo-box .list-cell:hover {
+    -fx-background-color: rgb(35, 35, 35);
+}
+
+.combo-box .list-cell:focused {
+    -fx-background-color: rgb(35, 35, 35);
 }
