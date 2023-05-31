@@ -59,7 +59,7 @@ public class LoginMenu extends Application {
 
         menuBox.getChildren().add(forgotPassword);
 
-        Captcha captcha = new Captcha(menuBox  , 0 , 40);
+        Captcha captcha = new Captcha(menuBox  , 0 , 100);
 
         MenuButton loginButton = new MenuButton("Login" , menuBox , 0 , 170);
         menuBox.getChildren().add(loginButton);

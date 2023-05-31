@@ -23,6 +23,8 @@ public class Captcha extends ImageView {
     public Captcha(Pane pane , double x , double y) throws IOException {
         CaptchaController.setCaptcha(this);
         this.pane = pane;
+        this.setTranslateX(x);
+        this.setTranslateY(y);
         pane.getChildren().add(this);
         CaptchaController.createCaptcha();
         CaptchaController.createRefreshButton();
