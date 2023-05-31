@@ -1,6 +1,7 @@
 package view.controllers;
 
 import enumeration.Paths;
+import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -51,5 +52,13 @@ public class ViewController {
         mediaPlayer.play();
         mediaPlayer.setCycleCount(-1);
         musicPlayer = mediaPlayer;
+    }
+
+    public static void createAndShowAlert(Alert.AlertType alertType , String title , String header , String content) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }

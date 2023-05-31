@@ -1,6 +1,7 @@
 package view.menus;
 
 import controller.GameController;
+import controller.UserController;
 import enumeration.Paths;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -22,6 +23,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 public class LoginMenu extends Application {
+    public static MenuTextField username;
+    public static MenuPasswordField password;
     public static Stage stage;
     public static Pane loginPane;
 
@@ -33,15 +36,17 @@ public class LoginMenu extends Application {
         loginPane = ViewController.makePaneScreen(stage , pane , 1000 , -1);
         Scene scene = new Scene(pane);
 
-        MenuBox menuBox = new MenuBox("Login" , 300 , -20 , 500 , 500);
+        MenuBox menuBox = new MenuBox("Login" , 350, 0 , 500 , 500);
 
         MenuTextField userNameField = new MenuTextField(menuBox , "username" ,
                 "Username : " ,  50, -150);
         menuBox.getChildren().add(userNameField);
+        username = userNameField;
 
         MenuPasswordField passwordField = new MenuPasswordField(menuBox , "password" ,
                 "Passowrd : " , 50 , -70);
         menuBox.getChildren().add(passwordField);
+        password = passwordField;
 
         Hyperlink forgotPassword = new Hyperlink();
         forgotPassword.setText("forgot my password");
@@ -59,11 +64,20 @@ public class LoginMenu extends Application {
 
         menuBox.getChildren().add(forgotPassword);
 
-        Captcha captcha = new Captcha(menuBox  , 0 , 100);
+        Captcha captcha = new Captcha(menuBox  , 0 , 40);
 
         MenuButton loginButton = new MenuButton("Login" , menuBox , 0 , 170);
         menuBox.getChildren().add(loginButton);
-        menuBox.requestFocus();
+        loginButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                try {
+                    login(mouseEvent);
+                } catch (MalformedURLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
 
         pane.getChildren().add(menuBox);
 
@@ -74,8 +88,12 @@ public class LoginMenu extends Application {
 
 
     public void forgotPassword(MouseEvent mouseEvent) {
+
     }
 
-    public void login(MouseEvent mouseEvent) {
+    public void login(MouseEvent mouseEvent) throws MalformedURLException {
+        username.clearErrorOrMessage();
+        password.clearErrorOrMessage();
+        UserController.loginUser(username.getText() , password.getText() , true);
     }
 }

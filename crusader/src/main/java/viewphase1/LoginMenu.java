@@ -4,6 +4,7 @@ import controller.UserController;
 import enumeration.answers.LoginAnswers;
 import enumeration.commands.LoginMenuCommands;
 
+import java.net.MalformedURLException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -26,7 +27,7 @@ public class LoginMenu {
         System.out.println("now, Try again!");
     }
 
-    public static void run(Scanner scanner) {
+    public static void run(Scanner scanner) throws MalformedURLException {
         System.out.println("<< Login Menu >>");
         delayTime = wrongPassTimes = 0;
         while (true) {

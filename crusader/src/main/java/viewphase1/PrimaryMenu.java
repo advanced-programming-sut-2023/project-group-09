@@ -6,11 +6,12 @@ import controller.MainController;
 import enumeration.answers.Answers;
 import enumeration.commands.Commands;
 
+import java.net.MalformedURLException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class PrimaryMenu {
-    public static void run(Scanner scanner) {
+    public static void run(Scanner scanner) throws MalformedURLException {
         String input;
         Matcher exitGameMatcher;
         while (true) {

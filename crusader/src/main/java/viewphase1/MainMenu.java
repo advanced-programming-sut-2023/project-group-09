@@ -6,10 +6,11 @@ import controller.MainController;
 import controller.UserController;
 import enumeration.answers.Answers;
 
+import java.net.MalformedURLException;
 import java.util.Scanner;
 
 public class MainMenu {
-    public static void run(Scanner scanner) {
+    public static void run(Scanner scanner) throws MalformedURLException {
         while (true) {
             System.out.println("1.create game\n" +
                     "2.profile menu\n" +
