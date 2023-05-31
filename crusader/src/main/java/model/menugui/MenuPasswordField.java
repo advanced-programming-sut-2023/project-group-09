@@ -1,11 +1,11 @@
 package model.menugui;
 
-import enumeration.Paths;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Pos;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -15,9 +15,14 @@ import javafx.scene.text.FontWeight;
 public class MenuPasswordField extends PasswordField {
     private Pane pane;
     private String promptText;
-    private Label errorLabel = new Label();
-    public MenuPasswordField(Pane pane , String promptText , String labelText , double x , double y) {
+    private String labelText;
+    private Label errorLabel;
+    private MenuTextField passwordTextField;
+    private CheckBox showPassword;
+
+    public MenuPasswordField(Pane pane, String promptText, String labelText, double x, double y) {
         this.promptText = promptText;
+        this.labelText = labelText;
         this.setStyle("-fx-background-color: rgba(42 , 42 , 42 , 0.7); -fx-text-inner-color: white;");
         this.setTranslateX(x);
         this.setTranslateY(y);
@@ -25,38 +30,88 @@ public class MenuPasswordField extends PasswordField {
         this.setMinWidth(300);
         this.pane = pane;
         createLabel(labelText);
-        this.setFont(Font.font("Times New Roman" , FontWeight.BOLD , 20));
+        this.setFont(Font.font("Times New Roman", FontWeight.BOLD, 20));
         this.setPromptText(promptText);
+        this.createErrorOrMessage();
+        this.createTextField();
+        this.createShowPassword();
+    }
+
+    private void createTextField() {
+        passwordTextField = new MenuTextField(pane, promptText, labelText, this.getTranslateX(), this.getTranslateY());
+        passwordTextField.setVisible(false);
+        pane.getChildren().add(passwordTextField);
+    }
+
+    private void createShowPassword() {
+        showPassword = new CheckBox("\uD83D\uDC41");
+        showPassword.setStyle("-fx-background-color: rgba(42, 42, 42, 0.7); -fx-text-fill: gray; -fx-font-size: 16; " +
+                "-fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-padding: 3; -fx-background-radius: 3");
+        showPassword.setTranslateX(this.getTranslateX() + 185);
+        showPassword.setTranslateY(this.getTranslateY());
+        showPassword.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
+                if (newValue) {
+                    setVisible(false);
+                    passwordTextField.setVisible(true);
+                    passwordTextField.setText(getText());
+                } else {
+                    setVisible(true);
+                    passwordTextField.setVisible(false);
+                    setText(passwordTextField.getText());
+                }
+            }
+        });
+        pane.getChildren().add(showPassword);
     }
 
     public void createLabel(String text) {
         Label label = new Label(text);
-        label.setTranslateX(this.getTranslateX() - 210);
+        label.setTranslateX(this.getTranslateX() - 300);
         label.setTranslateY(this.getTranslateY());
-        label.setFont(Font.font("Times New Roman" , FontWeight.BOLD , 20));
+        label.setFont(Font.font("Times New Roman", FontWeight.BOLD, 20));
         label.setTextFill(Color.BLACK);
+        label.setMaxWidth(270);
+        label.setAlignment(Pos.BASELINE_RIGHT);
         pane.getChildren().add(label);
     }
 
-    public void handlingError(String errorText) {
+    private void createErrorOrMessage() {
+        errorLabel = new Label();
         errorLabel.setTranslateX(this.getTranslateX());
         errorLabel.setTranslateY(this.getTranslateY() + 33);
-        errorLabel.setTextFill(Color.RED);
-        errorLabel.setFont(Font.font("Times New Roman" , FontWeight.BOLD , FontPosture.ITALIC , 15));
-        errorLabel.setText(errorText);
+        errorLabel.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 15));
         pane.getChildren().add(errorLabel);
+    }
+
+    public void handlingError(String errorText) {
+        errorLabel.setTextFill(new Color(0.6, 0, 0.1, 1));
+        errorLabel.setText(errorText);
     }
 
     public void handlingCorrect(String correctMessage) {
-        errorLabel.setTranslateX(this.getTranslateX());
-        errorLabel.setTranslateY(this.getTranslateY() + 33);
-        errorLabel.setTextFill(Color.GREEN);
-        errorLabel.setFont(Font.font("Times New Roman" , FontWeight.BOLD , FontPosture.ITALIC, 15));
+        errorLabel.setTextFill(new Color(0.2, 0.9, 0.2, 1));
         errorLabel.setText(correctMessage);
-        pane.getChildren().add(errorLabel);
     }
 
     public void clearErrorOrMessage() {
-        pane.getChildren().remove(errorLabel);
+        errorLabel.setText("");
+    }
+
+    public MenuTextField getPasswordTextField() {
+        return passwordTextField;
+    }
+
+    public void setPasswordTextField(MenuTextField passwordTextField) {
+        this.passwordTextField = passwordTextField;
+    }
+
+    public CheckBox getShowPassword() {
+        return showPassword;
+    }
+
+    public void setShowPassword(CheckBox showPassword) {
+        this.showPassword = showPassword;
     }
 }

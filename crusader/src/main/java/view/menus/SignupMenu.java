@@ -6,63 +6,35 @@ import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.HPos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.User;
-import model.menugui.MenuBox;
-import model.menugui.MenuChoiceBox;
-import model.menugui.MenuComboBox;
-import model.menugui.MenuTextField;
+import model.menugui.*;
+import model.menugui.MenuButton;
 import view.controllers.ViewController;
 
-import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class SignupMenu extends Application {
     public static Pane signupPane;
-    public Text signupText;
-    public Label usernameLabel;
-    public TextField username;
-    public Text usernameError;
     public boolean usernameLiveInvalid = false;
-    public Label nicknameLabel;
-    public TextField nickname;
-    public Text nicknameError;
-    public Label emailLabel;
-    public TextField email;
-    public Text emailError;
-    public Label sloganLabel;
-    public ComboBox slogan;
-    public Text sloganError;
-    public Label passwordLabel;
-    public PasswordField password;
-    public TextField passwordTextField;
-    public Text passwordError;
     public boolean passwordLiveInvalid = false;
-    public CheckBox showPassword;
-    public Label confirmPasswordLabel;
-    public PasswordField confirmPassword;
-    public TextField confirmPasswordTextField;
-    public Text confirmPasswordError;
     public boolean confirmPasswordLiveInvalid = false;
-    public CheckBox showConfirmPassword;
-    public CheckBox isSlogan;
-    public Button randomSlogan;
-    public Button randomPassword;
-    public Button signup;
+
+    public static MenuBox menuBox;
+    public static MenuTextField usernameField;
+    public static MenuTextField nicknameField;
+    public static MenuTextField emailField;
+    public static MenuComboBox sloganField;
+    public static CheckBox isSlogan;
+    public static MenuButton randomSlogan;
+    public static MenuPasswordField passwordField;
+    public static MenuPasswordField confirmPasswordField;
+    public static MenuButton randomPassword;
+    public static MenuButton signup;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -70,295 +42,209 @@ public class SignupMenu extends Application {
         signupPane = ViewController.makePaneScreen(stage, root, 1000, -1);
         Scene scene = new Scene(root);
 
-        MenuBox menuBox = new MenuBox("Signup", 400, 100, 700, 600);
+        menuBox = new MenuBox("Signup", 400, 130, 700, 600);
         root.getChildren().add(menuBox);
 
-        MenuTextField usernameField = new MenuTextField(menuBox, "username", "Username", 0, -200);
+        usernameField = new MenuTextField(menuBox, "username", "Username", 0, -210);
+        validateUsername();
         menuBox.getChildren().add(usernameField);
 
-        MenuTextField nicknameField = new MenuTextField(menuBox, "nickname", "Nickname", 0, -150);
+        nicknameField = new MenuTextField(menuBox, "nickname", "Nickname", 0, -150);
         menuBox.getChildren().add(nicknameField);
 
-        MenuTextField emailField = new MenuTextField(menuBox, "email", "Email", 0, -100);
+        emailField = new MenuTextField(menuBox, "email", "Email", 0, -90);
         menuBox.getChildren().add(emailField);
 
-        String[] items = {"Amirhossein", "Farzam", "Mitra"};
-        MenuComboBox sloganField = new MenuComboBox(menuBox, "Slogan", 0, -50,
-                FXCollections.observableArrayList(items));
-        menuBox.getChildren().add(sloganField);
-
-
-        stage.setTitle("Signup Menu");
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    public void initialize() {
-//        signupText.setFont(Font.font("Helvetica", FontWeight.BOLD, FontPosture.REGULAR, 24));
-//        usernameLabel.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
-//        nicknameLabel.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
-//        emailLabel.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
-//        sloganLabel.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
-//        passwordLabel.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
-//        confirmPasswordLabel.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
-    }
-
-    private void makeScene(Stage stage, BorderPane rootPane) throws IOException {
-        signupPane = makeSignupScreen(stage, rootPane, 1000, -1);
-        Scene scene = new Scene(rootPane);
-        stage.setTitle("Signup Menu");
-        stage.setScene(scene);
-        this.makeUsernameTextField();
-        this.makeNicknameTextField();
-        this.makeEmailTextField();
-        this.makeSloganCombobox();
-        this.makeRandomSloganButton();
-        this.makeIsSloganCheckbox();
-        this.makePasswordField();
-        this.makeConfirmPasswordField();
-        this.makeRandomPasswordButton();
-        this.makeSignupButton();
-        stage.show();
-    }
-
-    private GridPane makeSignupScreen(Stage stage, BorderPane pane, double width, double height) throws IOException {
-        stage.setFullScreen(true);
-        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-
-        pane.setStyle("-fx-background-color: #000");
-        GridPane gridPane = FXMLLoader.load(SignupMenu.class.getResource("/FXML/signupMenu.fxml"));
-        pane.setCenter(gridPane);
-        gridPane.setMaxWidth(width);
-        if (height != -1) {
-            gridPane.setMaxHeight(height);
-        }
-        gridPane.setStyle("-fx-background-color: #fff");
-        return gridPane;
-    }
-
-    private void makeUsernameTextField() {
-        username = new TextField();
-        GridPane.setRowIndex(username, 1);
-        GridPane.setColumnIndex(username, 1);
-        username.prefWidth(200);
-        username.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 14));
-
-        usernameError = new Text();
-        GridPane.setRowIndex(usernameError, 2);
-        GridPane.setColumnIndex(usernameError, 1);
-        usernameError.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.ITALIC, 14));
-
-        validateUsername();
-        signupPane.getChildren().addAll(username, usernameError);
-    }
-
-    private void makeNicknameTextField() {
-        nickname = new TextField();
-        GridPane.setRowIndex(nickname, 1);
-        GridPane.setColumnIndex(nickname, 4);
-        nickname.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 14));
-
-        nicknameError = new Text();
-        GridPane.setRowIndex(nicknameError, 2);
-        GridPane.setColumnIndex(nicknameError, 4);
-        nicknameError.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.ITALIC, 14));
-
-        signupPane.getChildren().addAll(nickname, nicknameError);
-    }
-
-    private void makeEmailTextField() {
-        email = new TextField();
-        GridPane.setRowIndex(email, 3);
-        GridPane.setColumnIndex(email, 1);
-        email.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 14));
-
-        emailError = new Text();
-        GridPane.setRowIndex(emailError, 4);
-        GridPane.setColumnIndex(emailError, 1);
-        emailError.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.ITALIC, 14));
-
-        signupPane.getChildren().addAll(email, emailError);
-    }
-
-    private void makeSloganCombobox() {
         String[] slogans = new String[17];
         for (int i = 1; i <= 17; i++) {
             slogans[i - 1] = Slogans.getSloganByNumber(i);
         }
-        slogan = new ComboBox<>(FXCollections.observableArrayList(slogans));
-        GridPane.setRowIndex(slogan, 3);
-        GridPane.setColumnIndex(slogan, 4);
-        slogan.setEditable(true);
-        slogan.setDisable(true);
+        sloganField = new MenuComboBox(menuBox, "Slogan", 0, -30,
+                FXCollections.observableArrayList(slogans));
+        sloganField.setDisable(true);
+        menuBox.getChildren().add(sloganField);
 
-        sloganError = new Text();
-        GridPane.setRowIndex(sloganError, 4);
-        GridPane.setColumnIndex(sloganError, 4);
-        sloganError.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.ITALIC, 14));
+        isSlogan = new CheckBox("slogan");
+        isSlogan.setStyle("-fx-background-color: rgba(42, 42, 42, 0.7); -fx-text-fill: gray; -fx-font-size: 14; " +
+                "-fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-padding: 3; -fx-background-radius: 3");
+        isSlogan.setTranslateX(-115);
+        isSlogan.setTranslateY(25);
+        checkIsSlogan();
+        menuBox.getChildren().add(isSlogan);
 
-        signupPane.getChildren().addAll(slogan, sloganError);
+        randomSlogan = new MenuButton("random slogan", menuBox, 75, 25, false);
+        randomSlogan.setScaleX(0.6);
+        randomSlogan.setScaleY(0.6);
+        randomSlogan.setDisable(true);
+        menuBox.getChildren().add(randomSlogan);
+
+        passwordField = new MenuPasswordField(menuBox, "password", "Password", 0, 85);
+        menuBox.getChildren().add(passwordField);
+        validatePassword();
+
+        confirmPasswordField = new MenuPasswordField(menuBox, "confirmation", "Confirmation", 0, 145);
+        menuBox.getChildren().add(confirmPasswordField);
+        validateConfirmPassword();
+
+        randomPassword = new MenuButton("random password", menuBox, 75, 205, false);
+        randomPassword.setScaleX(0.6);
+        randomPassword.setScaleY(0.6);
+        randomPassword.setOnAction(actionEvent -> {
+            passwordField.getShowPassword().setSelected(true);
+            passwordField.getPasswordTextField().setText(UserController.generateRandomPassword());
+        });
+        menuBox.getChildren().add(randomPassword);
+
+        signup = new MenuButton("Signup", menuBox, 0, 255, true);
+        signup.setOnAction(actionEvent -> signup());
+        menuBox.getChildren().add(signup);
+
+
+        stage.setTitle("Signup Menu");
+        stage.setScene(scene);
+        stage.show();
     }
 
-    private void makeIsSloganCheckbox() {
-        isSlogan = new CheckBox("slogan");
-        GridPane.setRowIndex(isSlogan, 5);
-        GridPane.setColumnIndex(isSlogan, 4);
-        isSlogan.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 14));
+//    private void makeScene(Stage stage, BorderPane rootPane) throws IOException {
+//        signupPane = makeSignupScreen(stage, rootPane, 1000, -1);
+//        Scene scene = new Scene(rootPane);
+//        stage.setTitle("Signup Menu");
+//        stage.setScene(scene);
+//        this.makeUsernameTextField();
+//        this.makeNicknameTextField();
+//        this.makeEmailTextField();
+//        this.makeSloganCombobox();
+//        this.makeRandomSloganButton();
+//        this.makeIsSloganCheckbox();
+//        this.makePasswordField();
+//        this.makeConfirmPasswordField();
+//        this.makeRandomPasswordButton();
+//        this.makeSignupButton();
+//        stage.show();
+//    }
 
+//    private GridPane makeSignupScreen(Stage stage, BorderPane pane, double width, double height) throws IOException {
+//        stage.setFullScreen(true);
+//        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+//
+//        pane.setStyle("-fx-background-color: #000");
+//        GridPane gridPane = FXMLLoader.load(SignupMenu.class.getResource("/FXML/signupMenu.fxml"));
+//        pane.setCenter(gridPane);
+//        gridPane.setMaxWidth(width);
+//        if (height != -1) {
+//            gridPane.setMaxHeight(height);
+//        }
+//        gridPane.setStyle("-fx-background-color: #fff");
+//        return gridPane;
+//    }
+
+//    private void makeUsernameTextField() {
+//        username = new TextField();
+//        GridPane.setRowIndex(username, 1);
+//        GridPane.setColumnIndex(username, 1);
+//        username.prefWidth(200);
+//        username.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 14));
+//
+//        usernameError = new Text();
+//        GridPane.setRowIndex(usernameError, 2);
+//        GridPane.setColumnIndex(usernameError, 1);
+//        usernameError.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.ITALIC, 14));
+//
+//        validateUsername();
+//        signupPane.getChildren().addAll(username, usernameError);
+//    }
+
+//    private void makeNicknameTextField() {
+//        nickname = new TextField();
+//        GridPane.setRowIndex(nickname, 1);
+//        GridPane.setColumnIndex(nickname, 4);
+//        nickname.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 14));
+//
+//        nicknameError = new Text();
+//        GridPane.setRowIndex(nicknameError, 2);
+//        GridPane.setColumnIndex(nicknameError, 4);
+//        nicknameError.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.ITALIC, 14));
+//
+//        signupPane.getChildren().addAll(nickname, nicknameError);
+//    }
+
+//    private void makeEmailTextField() {
+//        email = new TextField();
+//        GridPane.setRowIndex(email, 3);
+//        GridPane.setColumnIndex(email, 1);
+//        email.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 14));
+//
+//        emailError = new Text();
+//        GridPane.setRowIndex(emailError, 4);
+//        GridPane.setColumnIndex(emailError, 1);
+//        emailError.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.ITALIC, 14));
+//
+//        signupPane.getChildren().addAll(email, emailError);
+//    }
+
+//    private void makeSloganCombobox() {
+//        String[] slogans = new String[17];
+//        for (int i = 1; i <= 17; i++) {
+//            slogans[i - 1] = Slogans.getSloganByNumber(i);
+//        }
+//        slogan = new ComboBox<>(FXCollections.observableArrayList(slogans));
+//        GridPane.setRowIndex(slogan, 3);
+//        GridPane.setColumnIndex(slogan, 4);
+//        slogan.setEditable(true);
+//        slogan.setDisable(true);
+//
+//        sloganError = new Text();
+//        GridPane.setRowIndex(sloganError, 4);
+//        GridPane.setColumnIndex(sloganError, 4);
+//        sloganError.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.ITALIC, 14));
+//
+//        signupPane.getChildren().addAll(slogan, sloganError);
+//    }
+
+    private void checkIsSlogan() {
         isSlogan.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                slogan.setDisable(!newValue);
+                sloganField.setDisable(!newValue);
                 randomSlogan.setDisable(!newValue);
-                slogan.setValue("");
-                if (!newValue) sloganError.setText("");
+                sloganField.setValue("");
+                if (!newValue) sloganField.clearErrorOrMessage();
             }
         });
-
-        signupPane.getChildren().add(isSlogan);
     }
 
-    private void makeRandomSloganButton() {
-        randomSlogan = new Button("Random Slogan");
-        GridPane.setRowIndex(randomSlogan, 5);
-        GridPane.setColumnIndex(randomSlogan, 4);
-        GridPane.setHalignment(randomSlogan, HPos.RIGHT);
-        randomSlogan.setDisable(true);
-        randomSlogan.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 14));
-
-        randomSlogan.setOnAction(actionEvent -> {
-            this.slogan.setValue(UserController.generateRandomSlogan());
-        });
-
-        signupPane.getChildren().add(randomSlogan);
-    }
-
-    private void makePasswordField() {
-        password = new PasswordField();
-        GridPane.setRowIndex(password, 5);
-        GridPane.setColumnIndex(password, 1);
-
-        passwordTextField = new TextField();
-        GridPane.setRowIndex(passwordTextField, 5);
-        GridPane.setColumnIndex(passwordTextField, 1);
-        passwordTextField.setVisible(false);
-
-        showPassword = new CheckBox("\uD83D\uDC41");
-        GridPane.setRowIndex(showPassword, 5);
-        GridPane.setColumnIndex(showPassword, 2);
-
-        passwordError = new Text();
-        GridPane.setRowIndex(passwordError, 6);
-        GridPane.setColumnIndex(passwordError, 1);
-        showPassword.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
-                if (newValue) {
-                    password.setVisible(false);
-                    passwordTextField.setVisible(true);
-                    passwordTextField.setText(password.getText());
-                } else {
-                    password.setVisible(true);
-                    passwordTextField.setVisible(false);
-                    password.setText(passwordTextField.getText());
-                }
-            }
-        });
-
-        validatePassword();
-        password.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 14));
-        passwordTextField.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 14));
-        showPassword.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 16));
-        passwordError.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.ITALIC, 14));
-        signupPane.getChildren().addAll(password, passwordTextField, showPassword, passwordError);
-    }
-
-    private void makeConfirmPasswordField() {
-        confirmPassword = new PasswordField();
-        GridPane.setRowIndex(confirmPassword, 7);
-        GridPane.setColumnIndex(confirmPassword, 1);
-
-        confirmPasswordTextField = new TextField();
-        GridPane.setRowIndex(confirmPasswordTextField, 7);
-        GridPane.setColumnIndex(confirmPasswordTextField, 1);
-        confirmPasswordTextField.setVisible(false);
-
-        showConfirmPassword = new CheckBox("\uD83D\uDC41");
-        GridPane.setRowIndex(showConfirmPassword, 7);
-        GridPane.setColumnIndex(showConfirmPassword, 2);
-
-        confirmPasswordError = new Text();
-        GridPane.setRowIndex(confirmPasswordError, 8);
-        GridPane.setColumnIndex(confirmPasswordError, 1);
-        showConfirmPassword.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
-                if (newValue) {
-                    confirmPassword.setVisible(false);
-                    confirmPasswordTextField.setVisible(true);
-                    confirmPasswordTextField.setText(confirmPassword.getText());
-                } else {
-                    confirmPassword.setVisible(true);
-                    confirmPasswordTextField.setVisible(false);
-                    confirmPassword.setText(confirmPasswordTextField.getText());
-                }
-            }
-        });
-
-        validateConfirmPassword();
-        confirmPassword.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 14));
-        confirmPasswordTextField.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 14));
-        showConfirmPassword.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 16));
-        confirmPasswordError.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.ITALIC, 14));
-        signupPane.getChildren().addAll(confirmPassword, confirmPasswordTextField, showConfirmPassword, confirmPasswordError);
-    }
-
-    private void makeRandomPasswordButton() {
-        randomPassword = new Button("Random Password");
-        GridPane.setRowIndex(randomPassword, 9);
-        GridPane.setColumnIndex(randomPassword, 1);
-        randomPassword.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 14));
-
-        randomPassword.setOnAction(actionEvent -> {
-            this.showPassword.setSelected(true);
-            this.passwordTextField.setText(UserController.generateRandomPassword());
-        });
-
-        signupPane.getChildren().add(randomPassword);
-    }
-
-    private void makeSignupButton() {
-        signup = new Button("Signup");
-        GridPane.setRowIndex(signup, 10);
-        GridPane.setColumnIndex(signup, 0);
-        GridPane.setColumnSpan(signup, 5);
-        GridPane.setHalignment(signup, HPos.CENTER);
-        signup.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 16));
-        signup.setOnAction(actionEvent -> signup());
-        signupPane.getChildren().add(signup);
-    }
+//    private void makeRandomSloganButton() {
+//        randomSlogan2 = new Button("Random Slogan");
+//        GridPane.setRowIndex(randomSlogan2, 5);
+//        GridPane.setColumnIndex(randomSlogan2, 4);
+//        GridPane.setHalignment(randomSlogan2, HPos.RIGHT);
+//        randomSlogan2.setDisable(true);
+//        randomSlogan2.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 14));
+//
+//        randomSlogan2.setOnAction(actionEvent -> {
+//            this.slogan.setValue(UserController.generateRandomSlogan());
+//        });
+//
+//        signupPane.getChildren().add(randomSlogan2);
+//    }
 
     private void validateUsername() {
-        username.textProperty().addListener(new ChangeListener<String>() {
+        usernameField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                usernameError.setText("");
+                usernameField.clearErrorOrMessage();
                 if (newValue == "") {
                     usernameLiveInvalid = false;
                     return;
                 }
                 if (!newValue.matches("([a-z]|[A-Z]|[0-9]|_)*")) {
-                    usernameError.setFill(Color.RED);
-                    usernameError.setText("invalid username!");
+                    usernameField.handlingError("invalid username!");
                     usernameLiveInvalid = true;
                 } else if (controller.Application.isUserExistsByName(newValue)) {
-                    usernameError.setFill(Color.RED);
-                    usernameError.setText("username already exists!");
+                    usernameField.handlingError("username already exists!");
                     usernameLiveInvalid = true;
                 } else {
-                    usernameError.setFill(Color.GREEN);
-                    usernameError.setText("valid username");
+                    usernameField.handlingCorrect("valid username");
                     usernameLiveInvalid = false;
                 }
             }
@@ -366,11 +252,11 @@ public class SignupMenu extends Application {
     }
 
     private void validatePassword() {
-        password.textProperty().addListener(new ChangeListener<String>() {
+        passwordField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                passwordError.setText("");
-                passwordTextField.setText(newValue);
+                passwordField.clearErrorOrMessage();
+                passwordField.getPasswordTextField().setText(newValue);
                 if (newValue == "") {
                     passwordLiveInvalid = false;
                     return;
@@ -380,30 +266,26 @@ public class SignupMenu extends Application {
                 boolean digit = Pattern.compile("[0-9]").matcher(newValue).find();
                 boolean specialCharacter = Pattern.compile("[^a-zA-Z0-9]").matcher(newValue).find();
                 if (newValue.contains(" ")) {
-                    passwordError.setFill(Color.RED);
-                    passwordError.setText("you can't user space!");
+                    passwordField.handlingError("you can't user space!");
                     passwordLiveInvalid = true;
                 } else if (newValue.length() < 6) {
-                    passwordError.setFill(Color.RED);
-                    passwordError.setText("password is too short!");
+                    passwordField.handlingError("password is too short!");
                     passwordLiveInvalid = true;
                 } else if (!smallLetter || !capitalLetter || !digit || !specialCharacter) {
-                    passwordError.setFill(Color.RED);
-                    passwordError.setText("weak password!");
+                    passwordField.handlingError("weak password!");
                     passwordLiveInvalid = true;
                 } else {
-                    passwordError.setFill(Color.GREEN);
-                    passwordError.setText("strong password");
+                    passwordField.handlingCorrect("strong password");
                     passwordLiveInvalid = false;
                 }
             }
         });
 
-        passwordTextField.textProperty().addListener(new ChangeListener<String>() {
+        passwordField.getPasswordTextField().textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                passwordError.setText("");
-                password.setText(newValue);
+                passwordField.clearErrorOrMessage();
+                passwordField.setText(newValue);
                 if (newValue == "") {
                     passwordLiveInvalid = false;
                     return;
@@ -413,20 +295,16 @@ public class SignupMenu extends Application {
                 boolean digit = Pattern.compile("[0-9]").matcher(newValue).find();
                 boolean specialCharacter = Pattern.compile("[^a-zA-Z0-9]").matcher(newValue).find();
                 if (newValue.contains(" ")) {
-                    passwordError.setFill(Color.RED);
-                    passwordError.setText("you can't user space!");
+                    passwordField.handlingError("you can't user space!");
                     passwordLiveInvalid = true;
                 } else if (newValue.length() < 6) {
-                    passwordError.setFill(Color.RED);
-                    passwordError.setText("password is too short!");
+                    passwordField.handlingError("password is too short!");
                     passwordLiveInvalid = true;
                 } else if (!smallLetter || !capitalLetter || !digit || !specialCharacter) {
-                    passwordError.setFill(Color.RED);
-                    passwordError.setText("weak password!");
+                    passwordField.handlingError("weak password!");
                     passwordLiveInvalid = true;
                 } else {
-                    passwordError.setFill(Color.GREEN);
-                    passwordError.setText("strong password");
+                    passwordField.handlingCorrect("strong password");
                     passwordLiveInvalid = false;
                 }
             }
@@ -434,43 +312,39 @@ public class SignupMenu extends Application {
     }
 
     private void validateConfirmPassword() {
-        confirmPassword.textProperty().addListener(new ChangeListener<String>() {
+        confirmPasswordField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                confirmPasswordError.setText("");
-                confirmPasswordTextField.setText(newValue);
+                confirmPasswordField.clearErrorOrMessage();
+                confirmPasswordField.getPasswordTextField().setText(newValue);
                 if (newValue == "") {
                     confirmPasswordLiveInvalid = false;
                     return;
                 }
-                if (!newValue.equals(password.getText())) {
-                    confirmPasswordError.setFill(Color.RED);
-                    confirmPasswordError.setText("passwords don't match!");
+                if (!newValue.equals(passwordField.getText())) {
+                    confirmPasswordField.handlingError("passwords don't match!");
                     confirmPasswordLiveInvalid = true;
                 } else {
-                    confirmPasswordError.setFill(Color.GREEN);
-                    confirmPasswordError.setText("passwords match");
+                    confirmPasswordField.handlingCorrect("passwords match");
                     confirmPasswordLiveInvalid = false;
                 }
             }
         });
 
-        confirmPasswordTextField.textProperty().addListener(new ChangeListener<String>() {
+        confirmPasswordField.getPasswordTextField().textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                confirmPasswordError.setText("");
-                confirmPassword.setText(newValue);
+                confirmPasswordField.clearErrorOrMessage();
+                confirmPasswordField.setText(newValue);
                 if (newValue == "") {
                     confirmPasswordLiveInvalid = false;
                     return;
                 }
-                if (!newValue.equals(password.getText())) {
-                    confirmPasswordError.setFill(Color.RED);
-                    confirmPasswordError.setText("passwords don't match!");
+                if (!newValue.equals(passwordField.getText())) {
+                    confirmPasswordField.handlingError("passwords don't match!");
                     confirmPasswordLiveInvalid = true;
                 } else {
-                    confirmPasswordError.setFill(Color.GREEN);
-                    confirmPasswordError.setText("passwords match");
+                    confirmPasswordField.handlingCorrect("passwords match");
                     confirmPasswordLiveInvalid = false;
                 }
             }
@@ -478,62 +352,55 @@ public class SignupMenu extends Application {
     }
 
     public void signup() {
-        nicknameError.setText("");
-        emailError.setText("");
-        sloganError.setText("");
+        nicknameField.clearErrorOrMessage();
+        emailField.clearErrorOrMessage();
+        sloganField.clearErrorOrMessage();
         if (usernameLiveInvalid) return;
         if (passwordLiveInvalid) return;
         if (confirmPasswordLiveInvalid) return;
         if (validateEmptyFields()) return;
 
-        boolean validEmail = Pattern.compile("[a-zA-Z\\d_\\.]+@[a-zA-Z\\d_\\.]+\\.[a-zA-Z\\d_\\.]+").matcher(email.getText()).matches();
+        boolean validEmail = Pattern.compile("[a-zA-Z\\d_\\.]+@[a-zA-Z\\d_\\.]+\\.[a-zA-Z\\d_\\.]+").matcher(emailField.getText()).matches();
         if (!validEmail) {
-            emailError.setFill(Color.RED);
-            emailError.setText("invalid email!");
+            emailField.handlingError("invalid email!");
             return;
         }
-        if (controller.Application.isUserExistsByEmail(email.getText())) {
-            emailError.setFill(Color.RED);
-            emailError.setText("email already exists!");
+        if (controller.Application.isUserExistsByEmail(emailField.getText())) {
+            emailField.handlingError("email already exists!");
             return;
         }
 
-        String sloganValue = (isSlogan.isSelected()) ? (String) slogan.getValue() : null;
-        User newUser = new User(username.getText(), password.getText(), nickname.getText(), email.getText(), sloganValue);
+        String sloganValue = (isSlogan.isSelected()) ? (String) sloganField.getValue() : null;
+        User newUser = new User(usernameField.getText(), passwordField.getText(), nicknameField.getText(),
+                emailField.getText(), sloganValue);
 //        TODO: run security question menu
     }
 
     public boolean validateEmptyFields() {
         boolean emptyField = false;
-        if (username.getText().isEmpty()) {
+        if (usernameField.getText().isEmpty()) {
             emptyField = true;
-            usernameError.setFill(Color.RED);
-            usernameError.setText("username is required!");
+            usernameField.handlingError("username is required!");
         }
-        if (nickname.getText().isEmpty()) {
+        if (nicknameField.getText().isEmpty()) {
             emptyField = true;
-            nicknameError.setFill(Color.RED);
-            nicknameError.setText("nickname is required!");
+            nicknameField.handlingError("nickname is required!");
         }
-        if (email.getText().isEmpty()) {
+        if (emailField.getText().isEmpty()) {
             emptyField = true;
-            emailError.setFill(Color.RED);
-            emailError.setText("email is required!");
+            emailField.handlingError("email is required!");
         }
-        if (isSlogan.isSelected() && slogan.getValue().equals("")) {
+        if (isSlogan.isSelected() && sloganField.getValue().equals("")) {
             emptyField = true;
-            sloganError.setFill(Color.RED);
-            sloganError.setText("slogan is required!");
+            sloganField.handlingError("slogan is required!");
         }
-        if (password.getText().isEmpty()) {
+        if (passwordField.getText().isEmpty()) {
             emptyField = true;
-            passwordError.setFill(Color.RED);
-            passwordError.setText("password is required!");
+            passwordField.handlingError("password is required!");
         }
-        if (confirmPassword.getText().isEmpty()) {
+        if (confirmPasswordField.getText().isEmpty()) {
             emptyField = true;
-            confirmPasswordError.setFill(Color.RED);
-            confirmPasswordError.setText("confirmation is required!");
+            confirmPasswordField.handlingError("confirmation is required!");
         }
         return emptyField;
     }
