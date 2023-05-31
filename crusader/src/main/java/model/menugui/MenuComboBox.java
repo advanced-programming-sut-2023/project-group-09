@@ -21,7 +21,7 @@ public class MenuComboBox extends ComboBox {
         this.setMinWidth(300);
         this.setItems(items);
         this.pane = pane;
-//        this.setEditable(true);
+        this.setEditable(true);
         createLabel(labelText);
         this.setFocusTraversable(false);
     }
