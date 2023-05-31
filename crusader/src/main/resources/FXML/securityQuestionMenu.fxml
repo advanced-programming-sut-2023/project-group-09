@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.Label?>
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="view.menus.SecurityQuestionMenu"
           prefHeight="400.0" prefWidth="600.0"
           alignment="CENTER" hgap="15" vgap="10">
 
-
+    <Text fx:id="title" GridPane.rowIndex="0" GridPane.columnIndex="0">Security Question</Text>
+    <Label fx:id="questionLabel" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.halignment="RIGHT">Question</Label>
+    <Label fx:id="answerLabel" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.halignment="RIGHT">Answer</Label>
+    <Label fx:id="captchaLabel" GridPane.rowIndex="5" GridPane.columnIndex="0" GridPane.halignment="RIGHT">Captcha</Label>
 </GridPane>

@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -21,12 +22,17 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.User;
+import model.menugui.MenuBox;
+import model.menugui.MenuChoiceBox;
+import model.menugui.MenuComboBox;
+import model.menugui.MenuTextField;
+import view.controllers.ViewController;
 
 import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class SignupMenu extends Application {
-    public static GridPane signupPane;
+    public static Pane signupPane;
     public Text signupText;
     public Label usernameLabel;
     public TextField username;
@@ -60,19 +66,42 @@ public class SignupMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        BorderPane rootPane = new BorderPane();
-        makeScene(stage, rootPane);
+        Pane root = FXMLLoader.load(getClass().getResource("/FXML/signupMenu.fxml"));
+        signupPane = ViewController.makePaneScreen(stage, root, 1000, -1);
+        Scene scene = new Scene(root);
+
+        MenuBox menuBox = new MenuBox("Signup", 400, 100, 700, 600);
+        root.getChildren().add(menuBox);
+
+        MenuTextField usernameField = new MenuTextField(menuBox, "username", "Username", 0, -200);
+        menuBox.getChildren().add(usernameField);
+
+        MenuTextField nicknameField = new MenuTextField(menuBox, "nickname", "Nickname", 0, -150);
+        menuBox.getChildren().add(nicknameField);
+
+        MenuTextField emailField = new MenuTextField(menuBox, "email", "Email", 0, -100);
+        menuBox.getChildren().add(emailField);
+
+        String[] items = {"Amirhossein", "Farzam", "Mitra"};
+        MenuComboBox sloganField = new MenuComboBox(menuBox, "Slogan", 0, -50,
+                FXCollections.observableArrayList(items));
+        menuBox.getChildren().add(sloganField);
+
+
+        stage.setTitle("Signup Menu");
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
     public void initialize() {
-        signupText.setFont(Font.font("Helvetica", FontWeight.BOLD, FontPosture.REGULAR, 24));
-        usernameLabel.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
-        nicknameLabel.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
-        emailLabel.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
-        sloganLabel.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
-        passwordLabel.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
-        confirmPasswordLabel.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
+//        signupText.setFont(Font.font("Helvetica", FontWeight.BOLD, FontPosture.REGULAR, 24));
+//        usernameLabel.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
+//        nicknameLabel.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
+//        emailLabel.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
+//        sloganLabel.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
+//        passwordLabel.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
+//        confirmPasswordLabel.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
     }
 
     private void makeScene(Stage stage, BorderPane rootPane) throws IOException {

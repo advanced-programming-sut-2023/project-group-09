@@ -36,6 +36,7 @@ public class MenuButton extends Button {
         this.setPadding(new Insets(5));
         this.setText("  " + text);
         setScale();
+        this.pane = pane;
         this.setTextFill(Color.WHITE);
         this.setFont(Font.font("Times New Roman" , FontWeight.BOLD , 25));
         this.setBackground(background);
