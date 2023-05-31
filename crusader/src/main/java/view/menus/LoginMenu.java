@@ -66,7 +66,7 @@ public class LoginMenu extends Application {
 
         Captcha captcha = new Captcha(menuBox  , 0 , 40);
 
-        MenuButton loginButton = new MenuButton("Login" , menuBox , 0 , 170);
+        MenuButton loginButton = new MenuButton("Login" , menuBox , 0 , 170, true);
         menuBox.getChildren().add(loginButton);
         loginButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override

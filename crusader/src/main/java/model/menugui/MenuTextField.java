@@ -1,6 +1,7 @@
 package model.menugui;
 
 import enumeration.Paths;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
@@ -30,10 +31,12 @@ public class MenuTextField extends TextField {
 
     public void createLabel(String text) {
         Label label = new Label(text);
-        label.setTranslateX(this.getTranslateX() - 200);
+        label.setTranslateX(this.getTranslateX() - 300);
         label.setTranslateY(this.getTranslateY());
         label.setFont(Font.font("Times New Roman" , FontWeight.BOLD , 20));
         label.setTextFill(Color.BLACK);
+        label.setMaxWidth(270);
+        label.setAlignment(Pos.BASELINE_RIGHT);
         pane.getChildren().add(label);
     }
 

@@ -22,10 +22,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.User;
-import model.menugui.MenuBox;
-import model.menugui.MenuChoiceBox;
-import model.menugui.MenuComboBox;
-import model.menugui.MenuTextField;
+import model.menugui.*;
+import model.menugui.MenuButton;
 import view.controllers.ViewController;
 
 import java.io.IOException;
@@ -60,9 +58,13 @@ public class SignupMenu extends Application {
     public boolean confirmPasswordLiveInvalid = false;
     public CheckBox showConfirmPassword;
     public CheckBox isSlogan;
-    public Button randomSlogan;
+    public Button randomSlogan2;
     public Button randomPassword;
     public Button signup;
+
+
+
+    public MenuButton randomSlogan;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -82,10 +84,39 @@ public class SignupMenu extends Application {
         MenuTextField emailField = new MenuTextField(menuBox, "email", "Email", 0, -100);
         menuBox.getChildren().add(emailField);
 
-        String[] items = {"Amirhossein", "Farzam", "Mitra"};
+        String[] slogans = new String[17];
+        for (int i = 1; i <= 17; i++) {
+            slogans[i - 1] = Slogans.getSloganByNumber(i);
+        }
         MenuComboBox sloganField = new MenuComboBox(menuBox, "Slogan", 0, -50,
-                FXCollections.observableArrayList(items));
+                FXCollections.observableArrayList(slogans));
         menuBox.getChildren().add(sloganField);
+
+        CheckBox isSlogan = new CheckBox("slogan");
+        isSlogan.setStyle("-fx-background-color: rgba(42, 42, 42, 0.7); -fx-text-fill: gray; -fx-font-size: 14; " +
+                "-fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-padding: 3; -fx-background-radius: 3");
+        isSlogan.setTranslateX(-115);
+        isSlogan.setTranslateY(-5);
+        menuBox.getChildren().add(isSlogan);
+
+        randomSlogan = new MenuButton("random", menuBox, 75, -5, false);
+        randomSlogan.setScaleX(0.6);
+        randomSlogan.setScaleY(0.6);
+        menuBox.getChildren().add(randomSlogan);
+
+        MenuPasswordField passwordField = new MenuPasswordField(menuBox, "password", "Password", 0, 45);
+        menuBox.getChildren().add(passwordField);
+
+        MenuTextField passwordTextField = new MenuTextField(menuBox, "password", "Password", 0, 45);
+        passwordTextField.setVisible(false);
+        menuBox.getChildren().add(passwordTextField);
+
+        MenuPasswordField confirmPasswordField = new MenuPasswordField(menuBox, "confirmation", "Confirmation", 0, 95);
+        menuBox.getChildren().add(confirmPasswordField);
+
+        MenuTextField confirmPasswordTextField = new MenuTextField(menuBox, "confirmaion", "Confirmation", 0, 95);
+        confirmPasswordTextField.setVisible(false);
+        menuBox.getChildren().add(confirmPasswordTextField);
 
 
         stage.setTitle("Signup Menu");
@@ -210,7 +241,7 @@ public class SignupMenu extends Application {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 slogan.setDisable(!newValue);
-                randomSlogan.setDisable(!newValue);
+                randomSlogan2.setDisable(!newValue);
                 slogan.setValue("");
                 if (!newValue) sloganError.setText("");
             }
@@ -220,18 +251,18 @@ public class SignupMenu extends Application {
     }
 
     private void makeRandomSloganButton() {
-        randomSlogan = new Button("Random Slogan");
-        GridPane.setRowIndex(randomSlogan, 5);
-        GridPane.setColumnIndex(randomSlogan, 4);
-        GridPane.setHalignment(randomSlogan, HPos.RIGHT);
-        randomSlogan.setDisable(true);
-        randomSlogan.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 14));
+        randomSlogan2 = new Button("Random Slogan");
+        GridPane.setRowIndex(randomSlogan2, 5);
+        GridPane.setColumnIndex(randomSlogan2, 4);
+        GridPane.setHalignment(randomSlogan2, HPos.RIGHT);
+        randomSlogan2.setDisable(true);
+        randomSlogan2.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 14));
 
-        randomSlogan.setOnAction(actionEvent -> {
+        randomSlogan2.setOnAction(actionEvent -> {
             this.slogan.setValue(UserController.generateRandomSlogan());
         });
 
-        signupPane.getChildren().add(randomSlogan);
+        signupPane.getChildren().add(randomSlogan2);
     }
 
     private void makePasswordField() {
