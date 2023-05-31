@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import view.controllers.CaptchaController;
 
@@ -13,21 +14,21 @@ import view.controllers.CaptchaController;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-public class Captcha extends StackPane {
+public class Captcha extends ImageView {
+    private Pane pane;
     private int number;
-    private ImageView captchaImage;
     private ImageView refreshButton;
     private Label numberLabel;
     private TextField numberText;
-    public Captcha() throws IOException {
+    public Captcha(Pane pane , double x , double y) throws IOException {
         CaptchaController.setCaptcha(this);
+        this.pane = pane;
+        this.setTranslateX(x);
+        this.setTranslateY(y);
+        pane.getChildren().add(this);
         CaptchaController.createCaptcha();
         CaptchaController.createRefreshButton();
         CaptchaController.createLabelAndTextField();
-        this.getChildren().addAll(this.captchaImage , this.numberLabel , this.refreshButton , this.numberText);
-        this.setWidth(500);
-        this.setHeight(400);
-        this.setPadding(new Insets(50));
     }
     public boolean isInputCorrect() throws MalformedURLException {
         return CaptchaController.isInputCorrect();
@@ -41,13 +42,6 @@ public class Captcha extends StackPane {
         this.number = number;
     }
 
-    public ImageView getCaptchaImage() {
-        return captchaImage;
-    }
-
-    public void setCaptchaImage(ImageView captchaImage) {
-        this.captchaImage = captchaImage;
-    }
 
     public TextField getNumberText() {
         return numberText;
@@ -76,5 +70,13 @@ public class Captcha extends StackPane {
     public void setTranslate(double x , double y) {
         this.setTranslateX(x);
         this.setTranslateY(y);
+    }
+
+    public Pane getPane() {
+        return pane;
+    }
+
+    public void setPane(Pane pane) {
+        this.pane = pane;
     }
 }

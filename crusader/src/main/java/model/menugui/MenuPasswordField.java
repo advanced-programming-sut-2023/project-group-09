@@ -26,7 +26,6 @@ public class MenuPasswordField extends PasswordField {
         this.pane = pane;
         createLabel(labelText);
         this.setFont(Font.font("Times New Roman" , FontWeight.BOLD , 20));
-        this.setFocusTraversable(false);
         this.setPromptText(promptText);
     }
 

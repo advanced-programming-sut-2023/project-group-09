@@ -75,7 +75,7 @@ public class CaptchaController {
         runPythonFile();
         File captchaFile = listFilesForFolder(folder);
         try {
-            captcha.getCaptchaImage().setImage(new Image(captchaFile.toURI().toURL().toExternalForm()));
+            captcha.setImage(new Image(captchaFile.toURI().toURL().toExternalForm()));
         } catch (Exception e) {
             System.out.println("an error occurred in captcha loading");
         }
@@ -109,8 +109,7 @@ public class CaptchaController {
         File captchaFile = listFilesForFolder(folder);
 
         try {
-            captcha.setCaptchaImage(new ImageView());
-            captcha.getCaptchaImage().setImage(new Image(captchaFile.toURI().toURL().toExternalForm()));
+            captcha.setImage(new Image(captchaFile.toURI().toURL().toExternalForm()));
         } catch (Exception e) {
             System.out.println("an error occurred in captcha loading");
         }
@@ -149,8 +148,9 @@ public class CaptchaController {
                 (Paths.USER_ICONS.getPath() + "refreshIcon.png").toExternalForm()));
         captcha.getRefreshButton().setScaleY(0.02);
         captcha.getRefreshButton().setScaleX(0.02);
-        captcha.getRefreshButton().setTranslateX(70);
-        captcha.getRefreshButton().setTranslateY(20);
+        captcha.getRefreshButton().setTranslateX(captcha.getTranslateX() + 70);
+        captcha.getRefreshButton().setTranslateY(captcha.getTranslateY() + 20);
+        captcha.getPane().getChildren().add(captcha.getRefreshButton());
         captcha.getRefreshButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -164,16 +164,18 @@ public class CaptchaController {
 
     public static void createLabelAndTextField() {
         captcha.setNumberLabel(new Label("type the number :"));
-        captcha.getNumberLabel().setTranslateX(-50);
-        captcha.getNumberLabel().setTranslateY(55);
+        captcha.getNumberLabel().setTranslateX(captcha.getTranslateX() - 50);
+        captcha.getNumberLabel().setTranslateY(captcha.getTranslateY() + 55);
         captcha.setNumberText(new TextField());
-        captcha.getNumberText().setTranslateX(50);
-        captcha.getNumberText().setTranslateY(55);
+        captcha.getNumberText().setTranslateX(captcha.getTranslateX() + 50);
+        captcha.getNumberText().setTranslateY(captcha.getTranslateY() + 55);
         captcha.getNumberText().setMaxWidth(80);
         captcha.getNumberText().setFont(Font.font("Times New Roman" , FontWeight.BOLD , 15));
         captcha.getNumberLabel().setFont(Font.font("Times New Roman" , FontWeight.BOLD , 15));
         captcha.getNumberLabel().setTextFill(Color.BLACK);
         captcha.getNumberText().setStyle
                 ("-fx-background-color: rgba(42 , 42 , 42 , 0.7); -fx-text-inner-color: white;");
+        captcha.getPane().getChildren().add(captcha.getNumberText());
+        captcha.getPane().getChildren().add(captcha.getNumberLabel());
     }
 }

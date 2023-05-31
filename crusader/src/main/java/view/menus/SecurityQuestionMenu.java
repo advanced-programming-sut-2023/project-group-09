@@ -105,9 +105,9 @@ public class SecurityQuestionMenu extends Application {
     }
 
     public void makeCaptcha() throws IOException {
-        captcha = new Captcha();
+        /*captcha = new Captcha();
         GridPane.setRowIndex(captcha, 5);
         GridPane.setColumnIndex(captcha, 1);
-        pane.getChildren().add(captcha);
+        pane.getChildren().add(captcha);*/
     }
 }

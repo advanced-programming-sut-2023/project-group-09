@@ -34,7 +34,6 @@ public class LoginMenu extends Application {
         Scene scene = new Scene(pane);
 
         MenuBox menuBox = new MenuBox("Login" , 300 , -20 , 500 , 500);
-        pane.getChildren().add(menuBox);
 
         MenuTextField userNameField = new MenuTextField(menuBox , "username" ,
                 "Username : " ,  50, -150);
@@ -60,14 +59,13 @@ public class LoginMenu extends Application {
 
         menuBox.getChildren().add(forgotPassword);
 
-        Captcha captcha = new Captcha();
-        captcha.setTranslate(0 , 40);
-        menuBox.getChildren().add(captcha);
+        Captcha captcha = new Captcha(menuBox  , 0 , 100);
 
         MenuButton loginButton = new MenuButton("Login" , menuBox , 0 , 170);
         menuBox.getChildren().add(loginButton);
+        menuBox.requestFocus();
 
-
+        pane.getChildren().add(menuBox);
 
         stage.setTitle("Login Menu");
         stage.setScene(scene);
