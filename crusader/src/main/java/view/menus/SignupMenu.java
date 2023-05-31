@@ -256,7 +256,6 @@ public class SignupMenu extends Application {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
                 passwordField.clearErrorOrMessage();
-                passwordField.getPasswordTextField().setText(newValue);
                 if (newValue == "") {
                     passwordLiveInvalid = false;
                     return;
@@ -285,7 +284,6 @@ public class SignupMenu extends Application {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
                 passwordField.clearErrorOrMessage();
-                passwordField.setText(newValue);
                 if (newValue == "") {
                     passwordLiveInvalid = false;
                     return;
@@ -316,7 +314,6 @@ public class SignupMenu extends Application {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
                 confirmPasswordField.clearErrorOrMessage();
-                confirmPasswordField.getPasswordTextField().setText(newValue);
                 if (newValue == "") {
                     confirmPasswordLiveInvalid = false;
                     return;
@@ -335,7 +332,6 @@ public class SignupMenu extends Application {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
                 confirmPasswordField.clearErrorOrMessage();
-                confirmPasswordField.setText(newValue);
                 if (newValue == "") {
                     confirmPasswordLiveInvalid = false;
                     return;
