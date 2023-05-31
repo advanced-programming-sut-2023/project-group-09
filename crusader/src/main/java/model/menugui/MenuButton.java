@@ -88,8 +88,8 @@ public class MenuButton extends Button {
     private void addAxToButton() {
         axImage = new ImageView(new Image(getClass().getResource
                 (Paths.MENU_IMAGES.getPath()).toExternalForm() + "ax.png"));
-        axImage.setX(this.getTranslateX()-105);
-        axImage.setY(this.getTranslateY()-15);
+        axImage.setTranslateX(this.getTranslateX()-170);
+        axImage.setTranslateY(this.getTranslateY()+35);
         pane.getChildren().add(axImage);
     }
 
