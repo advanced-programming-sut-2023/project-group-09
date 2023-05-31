@@ -77,8 +77,8 @@ public class LoginMenu extends Application {
                 0 , 0);
         menuBox.getChildren().add(menuTextField);
 
-        MenuButton backButton = new MenuButton("Back" , menuBox , 0 , 75);
-        MenuButton nextButton = new MenuButton("Next" , menuBox , 0 , 125);
+        MenuButton backButton = new MenuButton("Back" , menuBox , 0 , 75 , true);
+        MenuButton nextButton = new MenuButton("Next" , menuBox , 0 , 125 , true);
 
         setEventForBackButton(backButton);
         setEventForNextButton(nextButton , user , menuTextField);
@@ -105,16 +105,16 @@ public class LoginMenu extends Application {
 
     private void setChangePassword(User user) {
         loginPane.getChildren().clear();
-        MenuBox menuBox = new MenuBox("Change Password" , 500, 150 , 500 , 500);
+        MenuBox menuBox = new MenuBox("Change Password" , 500, 150 , 600 , 500);
         MenuPasswordField passField = new MenuPasswordField(menuBox , "password" ,
-                "Password : " , 50 , -60);
+                "Password : " , 30 , -60);
         menuBox.getChildren().add(passField);
 
         MenuPasswordField confirmationField = new MenuPasswordField(menuBox , "confirmation",
-                "Confirmation : " , 50 , 0);
+                "Confirmation : " , 30 , 0);
         menuBox.getChildren().add(confirmationField);
 
-        MenuButton changeButton = new MenuButton("Change" , menuBox , 0 , 60);
+        MenuButton changeButton = new MenuButton("Change" , menuBox , 0 , 60 , true);
         setChangeButtonEvent(changeButton , passField , confirmationField , user);
         menuBox.getChildren().add(changeButton);
 
@@ -186,17 +186,31 @@ public class LoginMenu extends Application {
         MenuBox menuBox = new MenuBox("Login" , 350, 0 , 500 , 500);
 
         MenuTextField userNameField = new MenuTextField(menuBox , "username" ,
-                "Username : " ,  50, -150);
+                "Username : " ,  30, -150);
         menuBox.getChildren().add(userNameField);
         username = userNameField;
 
         MenuPasswordField passwordField = new MenuPasswordField(menuBox , "password" ,
-                "Passowrd : " , 50 , -70);
+                "Passowrd : " , 30 , -70);
         menuBox.getChildren().add(passwordField);
         password = passwordField;
 
         Hyperlink forgotPassword = new Hyperlink();
         forgotPassword.setText("forgot my password");
+
+        Hyperlink signup = new Hyperlink();
+        signup.setText("don't have an account? create a new one.");
+
+        signup.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                try {
+                    new SignupMenu().start(stage);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
         forgotPassword.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -204,12 +218,17 @@ public class LoginMenu extends Application {
             }
         });
 
-        forgotPassword.setTranslateY(-20);
+        forgotPassword.setTranslateY(-25);
         forgotPassword.setBorder(Border.EMPTY);
         forgotPassword.setStyle("-fx-font-size: 15");
 
+        signup.setTranslateY(-5);
+        signup.setBorder(Border.EMPTY);
+        signup.setStyle("-fx-font-size: 15");
+
 
         menuBox.getChildren().add(forgotPassword);
+        menuBox.getChildren().add(signup);
 
         try {
             Captcha captcha = new Captcha(menuBox  , 0 , 40);
@@ -219,6 +238,7 @@ public class LoginMenu extends Application {
 
         MenuButton loginButton = new MenuButton("Login" , menuBox , 0 , 170, true);
         menuBox.getChildren().add(loginButton);
+
         loginButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
