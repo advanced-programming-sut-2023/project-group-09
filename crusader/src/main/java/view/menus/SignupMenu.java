@@ -8,12 +8,13 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.User;
 import model.menugui.*;
-import model.menugui.MenuButton;
 import view.controllers.ViewController;
 
 import java.util.regex.Pattern;
@@ -45,6 +46,33 @@ public class SignupMenu extends Application {
         menuBox = new MenuBox("Signup", 400, 130, 700, 600);
         root.getChildren().add(menuBox);
 
+        makeCredentials();
+        makeSlogan();
+        makePassword();
+
+        signup = new MenuButton("Signup", menuBox, 0, 255, true);
+        signup.setOnAction(actionEvent -> signup());
+        menuBox.getChildren().add(signup);
+
+        Hyperlink toLoginMenu = new Hyperlink("You already have an account? Login...");
+        menuBox.getChildren().add(toLoginMenu);
+        toLoginMenu.setOnAction(actionEvent -> {
+            LoginMenu loginMenu = new LoginMenu();
+            try {
+                loginMenu.start(stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        toLoginMenu.setTextFill(Color.DARKBLUE);
+        toLoginMenu.setTranslateY(285);
+
+        stage.setTitle("Signup Menu");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    private void makeCredentials() {
         usernameField = new MenuTextField(menuBox, "username", "Username", 0, -210);
         validateUsername();
         menuBox.getChildren().add(usernameField);
@@ -54,7 +82,9 @@ public class SignupMenu extends Application {
 
         emailField = new MenuTextField(menuBox, "email", "Email", 0, -90);
         menuBox.getChildren().add(emailField);
+    }
 
+    private void makeSlogan() {
         String[] slogans = new String[17];
         for (int i = 1; i <= 17; i++) {
             slogans[i - 1] = Slogans.getSloganByNumber(i);
@@ -77,7 +107,9 @@ public class SignupMenu extends Application {
         randomSlogan.setScaleY(0.6);
         randomSlogan.setDisable(true);
         menuBox.getChildren().add(randomSlogan);
+    }
 
+    private void makePassword() {
         passwordField = new MenuPasswordField(menuBox, "password", "Password", 0, 85);
         menuBox.getChildren().add(passwordField);
         validatePassword();
@@ -94,112 +126,7 @@ public class SignupMenu extends Application {
             passwordField.getPasswordTextField().setText(UserController.generateRandomPassword());
         });
         menuBox.getChildren().add(randomPassword);
-
-        signup = new MenuButton("Signup", menuBox, 0, 255, true);
-        signup.setOnAction(actionEvent -> signup());
-        menuBox.getChildren().add(signup);
-
-
-        stage.setTitle("Signup Menu");
-        stage.setScene(scene);
-        stage.show();
     }
-
-//    private void makeScene(Stage stage, BorderPane rootPane) throws IOException {
-//        signupPane = makeSignupScreen(stage, rootPane, 1000, -1);
-//        Scene scene = new Scene(rootPane);
-//        stage.setTitle("Signup Menu");
-//        stage.setScene(scene);
-//        this.makeUsernameTextField();
-//        this.makeNicknameTextField();
-//        this.makeEmailTextField();
-//        this.makeSloganCombobox();
-//        this.makeRandomSloganButton();
-//        this.makeIsSloganCheckbox();
-//        this.makePasswordField();
-//        this.makeConfirmPasswordField();
-//        this.makeRandomPasswordButton();
-//        this.makeSignupButton();
-//        stage.show();
-//    }
-
-//    private GridPane makeSignupScreen(Stage stage, BorderPane pane, double width, double height) throws IOException {
-//        stage.setFullScreen(true);
-//        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-//
-//        pane.setStyle("-fx-background-color: #000");
-//        GridPane gridPane = FXMLLoader.load(SignupMenu.class.getResource("/FXML/signupMenu.fxml"));
-//        pane.setCenter(gridPane);
-//        gridPane.setMaxWidth(width);
-//        if (height != -1) {
-//            gridPane.setMaxHeight(height);
-//        }
-//        gridPane.setStyle("-fx-background-color: #fff");
-//        return gridPane;
-//    }
-
-//    private void makeUsernameTextField() {
-//        username = new TextField();
-//        GridPane.setRowIndex(username, 1);
-//        GridPane.setColumnIndex(username, 1);
-//        username.prefWidth(200);
-//        username.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 14));
-//
-//        usernameError = new Text();
-//        GridPane.setRowIndex(usernameError, 2);
-//        GridPane.setColumnIndex(usernameError, 1);
-//        usernameError.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.ITALIC, 14));
-//
-//        validateUsername();
-//        signupPane.getChildren().addAll(username, usernameError);
-//    }
-
-//    private void makeNicknameTextField() {
-//        nickname = new TextField();
-//        GridPane.setRowIndex(nickname, 1);
-//        GridPane.setColumnIndex(nickname, 4);
-//        nickname.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 14));
-//
-//        nicknameError = new Text();
-//        GridPane.setRowIndex(nicknameError, 2);
-//        GridPane.setColumnIndex(nicknameError, 4);
-//        nicknameError.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.ITALIC, 14));
-//
-//        signupPane.getChildren().addAll(nickname, nicknameError);
-//    }
-
-//    private void makeEmailTextField() {
-//        email = new TextField();
-//        GridPane.setRowIndex(email, 3);
-//        GridPane.setColumnIndex(email, 1);
-//        email.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 14));
-//
-//        emailError = new Text();
-//        GridPane.setRowIndex(emailError, 4);
-//        GridPane.setColumnIndex(emailError, 1);
-//        emailError.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.ITALIC, 14));
-//
-//        signupPane.getChildren().addAll(email, emailError);
-//    }
-
-//    private void makeSloganCombobox() {
-//        String[] slogans = new String[17];
-//        for (int i = 1; i <= 17; i++) {
-//            slogans[i - 1] = Slogans.getSloganByNumber(i);
-//        }
-//        slogan = new ComboBox<>(FXCollections.observableArrayList(slogans));
-//        GridPane.setRowIndex(slogan, 3);
-//        GridPane.setColumnIndex(slogan, 4);
-//        slogan.setEditable(true);
-//        slogan.setDisable(true);
-//
-//        sloganError = new Text();
-//        GridPane.setRowIndex(sloganError, 4);
-//        GridPane.setColumnIndex(sloganError, 4);
-//        sloganError.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.ITALIC, 14));
-//
-//        signupPane.getChildren().addAll(slogan, sloganError);
-//    }
 
     private void checkIsSlogan() {
         isSlogan.selectedProperty().addListener(new ChangeListener<Boolean>() {
@@ -212,21 +139,6 @@ public class SignupMenu extends Application {
             }
         });
     }
-
-//    private void makeRandomSloganButton() {
-//        randomSlogan2 = new Button("Random Slogan");
-//        GridPane.setRowIndex(randomSlogan2, 5);
-//        GridPane.setColumnIndex(randomSlogan2, 4);
-//        GridPane.setHalignment(randomSlogan2, HPos.RIGHT);
-//        randomSlogan2.setDisable(true);
-//        randomSlogan2.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 14));
-//
-//        randomSlogan2.setOnAction(actionEvent -> {
-//            this.slogan.setValue(UserController.generateRandomSlogan());
-//        });
-//
-//        signupPane.getChildren().add(randomSlogan2);
-//    }
 
     private void validateUsername() {
         usernameField.textProperty().addListener(new ChangeListener<String>() {
