@@ -81,12 +81,12 @@ public class ViewController {
     }
 
     public static void playMenuMusic() {
-//        Media media = new Media(ViewController.class.getResource(Paths.MENU_IMAGES.getPath())
-//                .toExternalForm() + "menuMusic.mp3");
-//        MediaPlayer mediaPlayer = new MediaPlayer(media);
-//        mediaPlayer.play();
-//        mediaPlayer.setCycleCount(-1);
-//        musicPlayer = mediaPlayer;
+        Media media = new Media(ViewController.class.getResource(Paths.MENU_IMAGES.getPath())
+                .toExternalForm() + "menuMusic.mp3");
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.play();
+        mediaPlayer.setCycleCount(-1);
+        musicPlayer = mediaPlayer;
     }
 
     public static void createAndShowAlert(Alert.AlertType alertType , String title , String header , String content) {
