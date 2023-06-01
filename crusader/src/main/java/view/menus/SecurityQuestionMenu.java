@@ -3,7 +3,6 @@ package view.menus;
 import enumeration.dictionary.SecurityQuestions;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
@@ -12,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -19,11 +19,15 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.User;
 import model.captcha.Captcha;
+import model.menugui.MenuBox;
+import model.menugui.MenuChoiceBox;
+import model.menugui.MenuTextField;
+import view.controllers.ViewController;
 
 import java.io.IOException;
 
 public class SecurityQuestionMenu extends Application {
-    public static GridPane pane;
+    public static Pane pane;
     public User user;
     public Text title;
     public Label questionLabel;
@@ -37,21 +41,35 @@ public class SecurityQuestionMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        BorderPane rootPane = new BorderPane();
-        makeScene(stage, rootPane);
-    }
+        Pane root = FXMLLoader.load(getClass().getResource("/FXML/securityQuestionMenu.fxml"));
+        pane = ViewController.makePaneScreen(stage, root, 1000, -1);
+        Scene scene = new Scene(root);
 
-    @FXML
-    public void initialize() {
-        title.setFont(Font.font("Helvetica", FontWeight.BOLD, FontPosture.REGULAR, 24));
-        questionLabel.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
-        answerLabel.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
-        captchaLabel.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
+        MenuBox menuBox = new MenuBox("Seurit", 400, 130, 700, 400);
+        root.getChildren().add(menuBox);
+
+        String[] questions = {SecurityQuestions.QUESTION1.getQuestion(),
+                SecurityQuestions.QUESTION2.getQuestion(), SecurityQuestions.QUESTION3.getQuestion()};
+        MenuChoiceBox securityQuestionField = new MenuChoiceBox(menuBox, "Security Question",
+                50, -200, FXCollections.observableArrayList(questions));
+        menuBox.getChildren().add(securityQuestionField);
+
+        MenuTextField answerField = new MenuTextField(menuBox, "answer", "Answer", 50, -150);
+        answerField.setDisable(true);
+        menuBox.getChildren().add(answerField);
+
+        Captcha captcha = new Captcha(menuBox, 0, 0);
+
+        stage.setTitle("Signup Menu");
+        stage.setScene(scene);
+        stage.show();
     }
 
     private void makeScene(Stage stage, BorderPane rootPane) throws IOException {
         pane = makeSignupScreen(stage, rootPane, 1000, -1);
         Scene scene = new Scene(rootPane);
+
+
         stage.setTitle("Security Question Menu");
         stage.setScene(scene);
         makeQuestionChoiceBox();
