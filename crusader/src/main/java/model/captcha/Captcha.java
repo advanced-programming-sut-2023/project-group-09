@@ -1,6 +1,7 @@
 package model.captcha;
 
 import controller.GameController;
+import enumeration.Paths;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -11,6 +12,7 @@ import javafx.scene.layout.StackPane;
 import view.controllers.CaptchaController;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -20,8 +22,10 @@ public class Captcha extends ImageView {
     private ImageView refreshButton;
     private Label numberLabel;
     private TextField numberText;
+    private Label errorLabel;
     public Captcha(Pane pane , double x , double y) throws IOException {
         CaptchaController.setCaptcha(this);
+        CaptchaController.deleteFilesInFolder(new File(Paths.CAPTCHA_IMAGES.getPath()));
         this.pane = pane;
         this.setTranslateX(x);
         this.setTranslateY(y);
@@ -78,5 +82,13 @@ public class Captcha extends ImageView {
 
     public void setPane(Pane pane) {
         this.pane = pane;
+    }
+
+    public Label getErrorLabel() {
+        return errorLabel;
+    }
+
+    public void setErrorLabel(Label errorLabel) {
+        this.errorLabel = errorLabel;
     }
 }

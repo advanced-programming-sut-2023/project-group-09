@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import model.captcha.Captcha;
 import view.menus.MainMenu;
@@ -54,7 +55,7 @@ public class CaptchaController {
         }
     }
 
-    private static void deleteFilesInFolder(File folder) {
+    public static void deleteFilesInFolder(File folder) {
         ArrayList<File> captcha = new ArrayList<>();
         for (final File fileEntry : folder.listFiles()) {
             captcha.add(fileEntry);
@@ -135,11 +136,11 @@ public class CaptchaController {
 
     private static void showingAlertOfWrongAnswer() {
         changingCaptcha();
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Captcha Error");
-        alert.setHeaderText("Captcha Error");
-        alert.setContentText("Your input doesn't match with captcha");
-        alert.showAndWait();
+        getCaptcha().getErrorLabel().setText("captcha doesn't match!");
+    }
+
+    public static void clearErrorOrMessage() {
+        getCaptcha().getErrorLabel().setText("");
     }
 
     public static void createRefreshButton() {
@@ -177,5 +178,12 @@ public class CaptchaController {
                 ("-fx-background-color: rgba(42 , 42 , 42 , 0.7); -fx-text-inner-color: white;");
         captcha.getPane().getChildren().add(captcha.getNumberText());
         captcha.getPane().getChildren().add(captcha.getNumberLabel());
+
+        captcha.setErrorLabel(new Label());
+        captcha.getErrorLabel().setTranslateX(captcha.getNumberText().getTranslateX());
+        captcha.getErrorLabel().setTranslateY(captcha.getNumberText().getTranslateY() + 20);
+        captcha.getErrorLabel().setTextFill(Color.RED);
+        captcha.getErrorLabel().setFont(Font.font("Times New Roman" , FontWeight.BOLD , FontPosture.ITALIC , 15));
+        captcha.getPane().getChildren().add(captcha.getErrorLabel());
     }
 }

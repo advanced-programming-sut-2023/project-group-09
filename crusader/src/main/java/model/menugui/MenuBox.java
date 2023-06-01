@@ -30,7 +30,7 @@ public class MenuBox extends StackPane {
         box.setStroke(Color.DARKRED);
         box.setArcHeight(20);
         box.setArcWidth(20);
-        box.setStyle("-fx-fill: rgba(150 , 150 , 150 , 0.4);");
+        box.setStyle("-fx-fill: rgba(150 , 150 , 150 , 0.5);");
         box.setStrokeWidth(5);
         this.box = box;
         this.getChildren().add(box);

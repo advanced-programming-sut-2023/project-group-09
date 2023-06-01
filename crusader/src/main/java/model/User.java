@@ -87,6 +87,8 @@ public class User {
         return UserController.convertPasswordToHash(password).equals(this.password);
     }
     public boolean isAnswerToSecurityQuestionCorrect(String answer) {
+        if (answer == null)
+            return false;
         answer = UserController.convertPasswordToHash(answer);
         return this.passwordRecoveryAnswer.hashCode() == answer.hashCode();
     }

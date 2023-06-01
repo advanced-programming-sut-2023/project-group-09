@@ -15,18 +15,16 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextAlignment;
-
-import javax.swing.*;
-import java.awt.*;
 
 public class MenuButton extends Button {
 
     private Pane pane;
     private ImageView axImage;
-    public MenuButton(String text , Pane pane , double x , double y) {
+    private boolean showAxOnHover;
+
+    public MenuButton(String text, Pane pane, double x, double y, boolean showAxOnHover) {
         BackgroundImage backgroundImage =
-                new BackgroundImage( new Image( getClass().getResource
+                new BackgroundImage(new Image(getClass().getResource
                         (Paths.MENU_IMAGES.getPath()).toExternalForm() + "button.jpg"),
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.REPEAT,
                         BackgroundPosition.DEFAULT,
@@ -38,11 +36,13 @@ public class MenuButton extends Button {
         setScale();
         this.pane = pane;
         this.setTextFill(Color.WHITE);
-        this.setFont(Font.font("Times New Roman" , FontWeight.BOLD , 25));
+        this.setFont(Font.font("Times New Roman", FontWeight.BOLD, 25));
         this.setBackground(background);
         this.setTranslateX(x);
         this.setTranslateY(y);
         this.pane = pane;
+        this.showAxOnHover = showAxOnHover;
+        if (this.showAxOnHover) createAx();
         hoverEvent();
     }
 
@@ -51,14 +51,14 @@ public class MenuButton extends Button {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 BackgroundImage backgroundImage =
-                        new BackgroundImage( new Image( getClass().getResource
+                        new BackgroundImage(new Image(getClass().getResource
                                 (Paths.MENU_IMAGES.getPath()).toExternalForm() + "buttonHover.jpg"),
                                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.REPEAT,
                                 BackgroundPosition.DEFAULT,
                                 new BackgroundSize(1.0, 1.0, true, true, false, false));
                 Background background = new Background(backgroundImage);
                 playSoundOfHovering();
-                addAxToButton();
+                if (showAxOnHover) addAxToButton();
                 setBackground(background);
             }
         });
@@ -67,35 +67,40 @@ public class MenuButton extends Button {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 BackgroundImage backgroundImage =
-                        new BackgroundImage( new Image( getClass().getResource
+                        new BackgroundImage(new Image(getClass().getResource
                                 (Paths.MENU_IMAGES.getPath()).toExternalForm() + "button.jpg"),
                                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.REPEAT,
                                 BackgroundPosition.DEFAULT,
                                 new BackgroundSize(1.0, 1.0, true, true, false, false));
                 Background background = new Background(backgroundImage);
-                removeAxFromButton();
+                if (showAxOnHover) removeAxFromButton();
                 setBackground(background);
             }
         });
     }
 
-    private void setScale(){
+    private void setScale() {
         this.setMaxWidth(250);
         this.setMinWidth(250);
         this.setMaxHeight(40);
         this.setMinHeight(40);
     }
 
-    private void addAxToButton() {
+    private void createAx() {
         axImage = new ImageView(new Image(getClass().getResource
                 (Paths.MENU_IMAGES.getPath()).toExternalForm() + "ax.png"));
-        axImage.setTranslateX(this.getTranslateX()-170);
-        axImage.setTranslateY(this.getTranslateY()+35);
+        axImage.setTranslateX(this.getTranslateX() - 170);
+        axImage.setTranslateY(this.getTranslateY() + 35);
+        axImage.setVisible(false);
         pane.getChildren().add(axImage);
     }
 
+    private void addAxToButton() {
+        axImage.setVisible(true);
+    }
+
     private void removeAxFromButton() {
-        pane.getChildren().remove(axImage);
+        axImage.setVisible(false);
     }
 
     private void playSoundOfHovering() {
@@ -106,4 +111,11 @@ public class MenuButton extends Button {
         mediaPlayer.play();
     }
 
+    public ImageView getAxImage() {
+        return axImage;
+    }
+
+    public void setAxImage(ImageView axImage) {
+        this.axImage = axImage;
+    }
 }
