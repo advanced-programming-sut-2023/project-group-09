@@ -9,10 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.User;
-import model.menugui.MenuBox;
-import model.menugui.MenuButton;
-import model.menugui.MenuPopUp;
-import model.menugui.MenuTextField;
+import model.menugui.*;
 import view.controllers.UserController;
 import view.controllers.ViewController;
 import view.menus.LoginMenu;
@@ -28,6 +25,7 @@ public class ChangeEmail extends Application {
     public static MenuBox menuBox;
     public static MenuTextField email;
     public static MenuButton submit;
+    public static MenuFingerBack back;
     User user;
 
     @Override
@@ -54,7 +52,17 @@ public class ChangeEmail extends Application {
         email.setText(user.getEmail());
         menuBox.getChildren().addAll(email,submit);
         setEvents();
+        back = new MenuFingerBack(-400,300);
+        back.setOnMouseClicked(mouseEvent -> {
+            try {
+                new ProfileMenu().start(stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         root.getChildren().add(menuBox);
+        root.getChildren().add(back);
         stage.show();
     }
 

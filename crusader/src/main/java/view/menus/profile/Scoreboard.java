@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.User;
 import model.menugui.MenuBox;
+import model.menugui.MenuFingerBack;
 import view.controllers.ViewController;
 
 import java.io.File;
@@ -33,7 +34,7 @@ public class Scoreboard extends Application {
     public static Stage stage;
     public static Pane root;
     public static MenuBox menuBox;
-
+    public static MenuFingerBack back;
     public static TableView<ScoreboardData> tableView;
     public static int firstIndex;
     public ArrayList<User> users;
@@ -66,8 +67,6 @@ public class Scoreboard extends Application {
         addLoader();
         root.getChildren().add(menuBox);
         menuBox.getChildren().add(tableView);
-
-        stage.show();
         Platform.runLater(() -> {
             ScrollBar verticalBar = (ScrollBar) tableView.lookup(".scroll-bar:vertical");
             verticalBar.valueProperty().addListener((obs, oldValue, newValue) -> {
@@ -80,6 +79,16 @@ public class Scoreboard extends Application {
                 }
             });
         });
+        back = new MenuFingerBack(100, (int) (stage.getHeight() / 2 + 300));
+        back.setOnMouseClicked(mouseEvent -> {
+            try {
+                new ProfileMenu().start(stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        root.getChildren().add(back);
+        stage.show();
     }
 
     public void setBackground() {
@@ -99,7 +108,7 @@ public class Scoreboard extends Application {
         setupTable();
         setScoreboardData();
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        TableColumn<ScoreboardData,ImageView> column = (TableColumn<ScoreboardData, ImageView>) tableView.getColumns().get(1);
+        TableColumn<ScoreboardData, ImageView> column = (TableColumn<ScoreboardData, ImageView>) tableView.getColumns().get(1);
 
     }
 
