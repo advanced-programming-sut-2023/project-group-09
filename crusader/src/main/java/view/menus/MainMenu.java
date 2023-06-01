@@ -1,6 +1,7 @@
 package view.menus;
 
 import controller.DBController;
+import controller.MainController;
 import enumeration.Paths;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -12,10 +13,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.User;
+import model.menugui.MenuBox;
 import model.menugui.MenuButton;
 import view.controllers.ViewController;
 import view.menus.profile.ProfileMenu;
 import view.menus.profile.Scoreboard;
+import viewphase1.PrimaryMenu;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -45,7 +48,16 @@ public class MainMenu extends Application {
         stage.setScene(scene);
         root = ViewController.makeStackPaneScreen(stage, pane, 1000, -1);
         setBackground();
-        MenuButton menuButton = new MenuButton("profile menu",root,0,0,true);
+
+        MenuButton startGameButton = new MenuButton("Start game" , root , 0 , -170 , true);
+        startGameButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                // TODO : call create game menu
+            }
+        });
+
+        MenuButton menuButton = new MenuButton("Profile menu",root,0,-100,true);
         menuButton.setOnMouseClicked(mouseEvent -> {
             try {
                 new ProfileMenu().start(stage);
@@ -54,7 +66,34 @@ public class MainMenu extends Application {
             }
         });
 
+        MenuButton logoutButton = new MenuButton("Logout" ,  root , 0 , -25 , true);
+
+        logoutButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                controller.Application.setCurrentUser(null);
+                controller.Application.setStayLoggedIn(false);
+                DBController.saveCurrentUser();
+                try {
+                    new LoginMenu().start(stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        MenuButton exitButton = new MenuButton("Exit" , root , 0 , 50 , true);
+        exitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                MainController.exitCrusader();
+            }
+        });
+
         root.getChildren().add(menuButton);
+        root.getChildren().add(logoutButton);
+        root.getChildren().add(exitButton);
+        root.getChildren().add(startGameButton);
 
         stage.show();
     }
