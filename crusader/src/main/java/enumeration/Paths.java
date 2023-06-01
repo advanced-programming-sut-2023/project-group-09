@@ -15,7 +15,10 @@ public enum Paths {
     TOOLS_PATH("files/model/tools/tools.json"),
     CAPTCHA_IMAGES("files/captcha/images/"),
     USER_ICONS("/images/icons/usericons/"),
-    MENU_IMAGES("/images/menu/")
+    ICONS("/images/icons/"),
+    MENU_IMAGES("/images/menu/"),
+    BACKGROUND_IMAGES("/images/background/"),
+    USER_AVATARS("files/img/avatars/")
     ;
     private final String path;
 

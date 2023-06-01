@@ -344,7 +344,7 @@ public class UserController {
         DBController.saveCurrentUser();
     }
 
-    private static String validateUsername(String username) {
+    public static String validateUsername(String username) {
         if (checkNullFields(username)) {
             return "username field is required!";
         }
@@ -357,7 +357,7 @@ public class UserController {
         return null;
     }
 
-    private static boolean checkUsernameChars(String username) {
+    public static boolean checkUsernameChars(String username) {
         Pattern pattern = Pattern.compile("[^a-zA-Z_\\d]");
         Matcher matcher = pattern.matcher(username);
         return matcher.find();
@@ -463,17 +463,17 @@ public class UserController {
         return "email changed successfully!";
     }
 
-    private static boolean checkNullFields(String input) {
+    public static boolean checkNullFields(String input) {
         return input == null || input.length() == 0;
     }
 
-    private static boolean checkEmailFormat(String email) {
+    public static boolean checkEmailFormat(String email) {
         Pattern pattern = Pattern.compile("[a-zA-Z_\\d]+@[a-zA-Z_\\d]+\\.[a-zA-Z_\\d]+");
         Matcher matcher = pattern.matcher(email);
         return !matcher.matches();
     }
 
-    private static String validateEmail(String email) {
+    public static String validateEmail(String email) {
         if (checkNullFields(email)) {
             return "email field is required!";
         }
@@ -487,11 +487,6 @@ public class UserController {
     }
 
     public static String changeSlogan(String newSlogan) {
-
-        if (checkNullFields(newSlogan)) {
-            return "slogan field is required!";
-        }
-
         if (newSlogan.equals("random")) {
             String slogan = generateRandomSlogan();
             Application.getCurrentUser().setSlogan(slogan);
@@ -500,7 +495,6 @@ public class UserController {
             Application.getCurrentUser().setSlogan(newSlogan);
             return "slogan changed successfully!";
         }
-
     }
 
     public static String removeSlogan() {
@@ -542,7 +536,7 @@ public class UserController {
 
 
     //profile menu functions
-    private static int getRank() {
+    public static int getRank() {
         ArrayList<User> users = getSortedListOfUsers();
         int index = 1;
         for (User user : users) {
@@ -554,7 +548,7 @@ public class UserController {
         return -1;
     }
 
-    private static ArrayList<User> getSortedListOfUsers() {
+    public static ArrayList<User> getSortedListOfUsers() {
         ArrayList<User> sortedList = new ArrayList<>(Application.getUsers());
         sortedList.sort((user1, user2) -> {
             if (user1.getHighScore() > user2.getHighScore()) {

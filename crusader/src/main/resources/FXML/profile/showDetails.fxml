@@ -6,11 +6,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane xmlns="http://javafx.com/javafx"
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.menus.LoginMenu"
-            prefHeight="800.0" prefWidth="1500.0"
-            stylesheets="@../CSS/style.css"
-            styleClass="background">
+            fx:controller="view.menus.profile.ShowDetails"
+            prefHeight="400.0" prefWidth="600.0">
 
-</Pane>
+</BorderPane>

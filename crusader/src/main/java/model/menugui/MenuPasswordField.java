@@ -15,7 +15,7 @@ import javafx.scene.text.FontWeight;
 public class MenuPasswordField extends PasswordField {
     private Pane pane;
     private String promptText;
-    private Label errorLabel = new Label();
+    public Label errorLabel = new Label();
     public MenuPasswordField(Pane pane , String promptText , String labelText , double x , double y) {
         this.promptText = promptText;
         this.setStyle("-fx-background-color: rgba(42 , 42 , 42 , 0.7); -fx-text-inner-color: white;");

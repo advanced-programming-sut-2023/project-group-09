@@ -15,7 +15,7 @@ public class MainController {
         DBController.loadAllUsers();
         DBController.loadCurrentUser();
         DBController.loadGoods();
-        //DBController.loadMilitary();
+        DBController.loadMilitary();
         DBController.loadBuildings();
         DBController.loadTools();
         GameMaps.createMaps();

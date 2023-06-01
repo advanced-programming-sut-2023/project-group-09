@@ -11,10 +11,15 @@ module crusader {
     opens view to javafx.fxml;
     exports view.menus;
     opens view.menus to javafx.fxml;
+    exports view.menus.profile;
+    opens view.menus.profile to javafx.fxml;
     exports model;
     opens model to com.google.gson;
+
     exports enumeration;
     opens enumeration to com.google.gson;
+
+
     exports enumeration.dictionary;
     opens enumeration.dictionary to com.google.gson;
 

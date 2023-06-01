@@ -2,6 +2,8 @@ package model;
 
 import controller.UserController;
 
+import java.util.Random;
+
 public class User {
     private String username;
     private String password;
@@ -12,12 +14,15 @@ public class User {
     private String passwordRecoveryAnswer;
     private String slogan;
 
+    private String path;
     public User(String username, String password, String nickname, String email, String slogan) {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
         this.email = email.toLowerCase();
         this.slogan = slogan;
+        Random random = new Random();
+        path = "files/img/avatars/"+(random.nextInt(4) + 1) + ".png";
     }
 
     public String getUsername() {
@@ -101,5 +106,11 @@ public class User {
         secondPassword = UserController.convertPasswordToHash(secondPassword);
         return password.hashCode() == secondPassword.hashCode();
     }
+    public String getPath() {
+        return path;
+    }
 
+    public void setPath(String path) {
+        this.path = path;
+    }
 }

@@ -43,7 +43,10 @@ public class MenuTextField extends TextField {
         errorLabel.setTextFill(Color.RED);
         errorLabel.setFont(Font.font("Times New Roman" , FontWeight.BOLD , FontPosture.ITALIC , 15));
         errorLabel.setText(errorText);
-        pane.getChildren().add(errorLabel);
+        if (!pane.getChildren().contains(errorLabel)){
+            pane.getChildren().add(errorLabel);
+        }
+
     }
 
     public void handlingCorrect(String correctMessage) {

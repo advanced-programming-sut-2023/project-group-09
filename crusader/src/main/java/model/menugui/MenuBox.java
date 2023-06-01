@@ -13,7 +13,8 @@ import javax.swing.*;
 
 public class MenuBox extends StackPane {
     private String title;
-
+    public Rectangle box;
+    public Label titleLabel;
     public MenuBox(String title , double x , double y , double width , double height) {
         this.title = title;
         this.setTranslateX(x);
@@ -31,6 +32,7 @@ public class MenuBox extends StackPane {
         box.setArcWidth(20);
         box.setStyle("-fx-fill: rgba(150 , 150 , 150 , 0.4);");
         box.setStrokeWidth(5);
+        this.box = box;
         this.getChildren().add(box);
     }
 
@@ -43,6 +45,7 @@ public class MenuBox extends StackPane {
         label.setMaxWidth(width);
         label.setAlignment(Pos.BASELINE_CENTER);
         label.setStyle("-fx-background-color: rgba(128,1,16,0.7); -fx-background-radius: 20 20 0 0");
+        titleLabel = label;
         this.getChildren().add(label);
     }
 }

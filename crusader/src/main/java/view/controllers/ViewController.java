@@ -5,6 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -34,24 +35,48 @@ public class ViewController {
     public static Pane makePaneScreen(Stage stage, Pane pane, double width, double height){
         stage.setFullScreen(true);
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-        //stage.setFullScreenExitHint(null);
         pane.setStyle("-fx-background-color: #000");
-        Pane borderPane = new Pane();
-        borderPane.setMaxWidth(width);
+        Pane newPane = new BorderPane();
+        newPane.setMaxWidth(width);
         if (height != -1){
-            borderPane.setMaxHeight(height);
+            newPane.setMaxHeight(height);
         }
-        borderPane.setStyle("-fx-background-color: #fff");
-        return borderPane;
+        newPane.setStyle("-fx-background-color: #fff");
+        pane.getChildren().add(newPane);
+        return newPane;
     }
 
+    public static Pane makePaneScreen(Stage stage, BorderPane pane, double width, double height){
+        stage.setFullScreen(true);
+        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+        pane.setStyle("-fx-background-color: #000");
+        Pane newPane = new Pane();
+        newPane.setMaxWidth(width);
+        if (height != -1){
+            newPane.setMaxHeight(height);
+        }
+        //newPane.setStyle("-fx-background-color: #fff");
+        pane.setCenter(newPane);
+        return newPane;
+    }
+    public static StackPane makeStackPaneScreen(Stage stage, BorderPane pane, double width, double height){
+        stage.setFullScreen(true);
+        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+        pane.setStyle("-fx-background-color: #000");
+        StackPane newPane = new StackPane();
+        newPane.setMaxWidth(width);
+        if (height != -1){
+            newPane.setMaxHeight(height);
+        }
+        pane.setCenter(newPane);
+        return newPane;
+    }
     public static void playMenuMusic() {
-        Media media = new Media(ViewController.class.getResource(Paths.MENU_IMAGES.getPath())
-                .toExternalForm() + "menuMusic.mp3");
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.play();
-        mediaPlayer.setCycleCount(-1);
-        musicPlayer = mediaPlayer;
+//        Media media = new Media(ViewController.class.getResource(Paths.MENU_IMAGES.getPath()).toExternalForm() + "menuMusic.mp3");
+//        MediaPlayer mediaPlayer = new MediaPlayer(media);
+//        mediaPlayer.play();
+//        mediaPlayer.setCycleCount(-1);
+//        musicPlayer = mediaPlayer;
     }
 
     public static void createAndShowAlert(Alert.AlertType alertType , String title , String header , String content) {
@@ -61,4 +86,5 @@ public class ViewController {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
 }

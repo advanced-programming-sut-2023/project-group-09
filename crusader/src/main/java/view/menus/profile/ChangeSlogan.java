@@ -1,36 +1,39 @@
-package view.menus;
+package view.menus.profile;
 
-import controller.DBController;
+import controller.UserController;
 import enumeration.Paths;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.User;
+import model.menugui.MenuBox;
 import model.menugui.MenuButton;
+import model.menugui.MenuPopUp;
+import model.menugui.MenuTextField;
 import view.controllers.ViewController;
-import view.menus.profile.ProfileMenu;
-import view.menus.profile.Scoreboard;
+import view.menus.LoginMenu;
+import view.menus.MainMenu;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Objects;
-import java.util.Random;
 
-public class MainMenu extends Application {
+public class ChangeSlogan extends Application {
     public static Stage stage;
     public static StackPane root;
+    public static MenuBox menuBox;
+    public static MenuTextField slogan;
+    public static MenuButton submit;
+    User user;
 
     @Override
     public void start(Stage stage) throws Exception {
-        MainMenu.stage = stage;
+        ChangeSlogan.stage = stage;
+        user = controller.Application.getCurrentUser();
         makeScene();
     }
 
@@ -40,25 +43,29 @@ public class MainMenu extends Application {
 
     public void makeScene() throws IOException {
         BorderPane pane = FXMLLoader.load(
-                new URL(Objects.requireNonNull(LoginMenu.class.getResource("/FXML/mainMenu.fxml")).toExternalForm()));
+                new URL(Objects.requireNonNull(LoginMenu.class.getResource("/FXML/profile/changeSlogan.fxml")).toExternalForm()));
         Scene scene = new Scene(pane);
         stage.setScene(scene);
         root = ViewController.makeStackPaneScreen(stage, pane, 1000, -1);
         setBackground();
-        MenuButton menuButton = new MenuButton("profile menu",root,0,0);
-        menuButton.setOnMouseClicked(mouseEvent -> {
-            try {
-                new ProfileMenu().start(stage);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-        root.getChildren().add(menuButton);
-
+        menuBox = new MenuBox("change slogan",0,0,500,400);
+        slogan = new MenuTextField(menuBox,"slogan...","slogan",50,-50);
+        submit = new MenuButton("save",menuBox,0,50);
+        slogan.setText(user.getSlogan());
+        menuBox.getChildren().addAll(slogan,submit);
+        setEvents();
+        root.getChildren().add(menuBox);
         stage.show();
     }
 
+    public void setEvents(){
+        submit.setOnMouseClicked(mouseEvent -> {
+            MenuPopUp menuPopUp = new MenuPopUp(root, 400, 400,
+                    "success", UserController.changeSlogan(slogan.getText()));
+            slogan.setText(user.getSlogan());
+            root.getChildren().add(menuPopUp);
+        });
+    }
     public void setBackground(){
         BackgroundImage backgroundImage =
                 new BackgroundImage( new Image( getClass().getResource
@@ -69,6 +76,4 @@ public class MainMenu extends Application {
         Background background = new Background(backgroundImage);
         root.setBackground(background);
     }
-
-
 }
