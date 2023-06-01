@@ -44,6 +44,7 @@ public class CaptchaController {
         try {
             int input = Integer.parseInt(captcha.getNumberText().getText());
             if (input == captcha.getNumber()) {
+                getCaptcha().getErrorLabel().setText("");
                 return true;
             } else {
                 showingAlertOfWrongAnswer();

@@ -1,5 +1,6 @@
 package view;
 
+import controller.DBController;
 import view.controllers.CaptchaController;
 import controller.MainController;
 import javafx.application.Application;
@@ -17,6 +18,10 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         ViewController.playMenuMusic();
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            DBController.saveAllUsers();
+            DBController.saveCurrentUser();
+        }));
         MainController.run(stage);
     }
 }

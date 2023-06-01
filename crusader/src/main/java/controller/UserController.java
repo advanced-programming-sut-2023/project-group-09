@@ -396,7 +396,7 @@ public class UserController {
         return "nickname changed successfully!";
     }
 
-    private static String validateChangePassword(String oldPassword, String newPassword) {
+    public static String validateChangePassword(String oldPassword, String newPassword) {
         if (checkNullFields(oldPassword)) {
             return "old password field is required!";
         }
@@ -407,10 +407,6 @@ public class UserController {
             return "current password is incorrect!";
         }
 
-        //============================
-        if (newPassword.equals("random")) {
-            return null;
-        }
         if (checkPasswordPower(newPassword)) {
             return "new password is weak!";
         }
@@ -420,7 +416,7 @@ public class UserController {
         return null;
     }
 
-    private static boolean checkPasswordPower(String password) {
+    public static boolean checkPasswordPower(String password) {
         if (password.length() < 6) {
             return true;
         }
@@ -441,25 +437,9 @@ public class UserController {
         if (message != null) {
             return message;
         }
-        boolean captchaVerification = CaptchaController.isCaptchaTrue(ProfileMenu.profileMenuScanner);
-        if (!captchaVerification) {
-            return "your behavior was not verified by captcha!";
-        }
-        boolean check;
-        if (newPassword.equals("random")) {
-            newPassword = generateRandomPassword();
-            check = ProfileMenu.acceptRandomPassword(newPassword);
-
-        } else {
-            check = ProfileMenu.acceptNewPassword(newPassword);
-        }
-
-        if (check) {
-            newPassword = convertPasswordToHash(newPassword);
-            Application.getCurrentUser().setPassword(newPassword);
-            return "password changed successfully!";
-        }
-        return "input does not match the new password![change password failed]";
+        newPassword = convertPasswordToHash(newPassword);
+        Application.getCurrentUser().setPassword(newPassword);
+        return "password changed successfully!";
     }
 
     public static String changeEmail(String newEmail) {

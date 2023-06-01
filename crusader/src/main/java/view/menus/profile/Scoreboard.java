@@ -11,10 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollBar;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -112,7 +109,7 @@ public class Scoreboard extends Application {
         dateCol.setPrefWidth(120);
         dateCol.setCellValueFactory(new PropertyValueFactory<>("rank"));
 
-        TableColumn<ScoreboardData, ImageView> value1Col = new TableColumn<>("avatar");
+        TableColumn<ScoreboardData, Button> value1Col = new TableColumn<>("avatar");
         value1Col.setPrefWidth(50);
         value1Col.setCellValueFactory(new PropertyValueFactory<>("avatar"));
 

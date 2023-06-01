@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import model.menugui.ChangePasswordDialog;
 import model.menugui.MenuButton;
 import view.controllers.ViewController;
 import view.menus.LoginMenu;
@@ -57,7 +58,6 @@ public class ProfileMenu extends Application {
         scoreboard = new MenuButton("scoreboard",root,0,180,true);
         changeAvatar = new MenuButton("change avatar",root,0,260,true);
         setButtonsEvent();
-        //root.getChildren().add(new ChangePasswordDialog(root));
         stage.show();
     }
 
@@ -107,6 +107,13 @@ public class ProfileMenu extends Application {
         profile.setOnMouseClicked(mouseEvent -> {
             try {
                 new ShowDetails().start(stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        changePassword.setOnMouseClicked(mouseEvent -> {
+            try {
+                root.getChildren().add(new ChangePasswordDialog(root));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
