@@ -47,7 +47,7 @@ public class MenuButton extends Button {
     }
 
     private void hoverEvent() {
-        this.setOnMouseEntered(new EventHandler<MouseEvent>() {
+        this.setOnMouseEntered(new EventHandler<>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 BackgroundImage backgroundImage =
@@ -63,7 +63,7 @@ public class MenuButton extends Button {
             }
         });
 
-        this.setOnMouseExited(new EventHandler<MouseEvent>() {
+        this.setOnMouseExited(new EventHandler<>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 BackgroundImage backgroundImage =

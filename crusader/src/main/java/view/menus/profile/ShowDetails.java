@@ -18,6 +18,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.User;
 import model.menugui.MenuBox;
+import model.menugui.MenuFingerBack;
 import view.controllers.ViewController;
 import view.menus.LoginMenu;
 
@@ -36,6 +37,7 @@ public class ShowDetails extends Application {
     public static Label email;
     public static Label slogan;
     public static Label highScore;
+    public static MenuFingerBack back;
     public static Label rank;
     User user;
 
@@ -83,7 +85,14 @@ public class ShowDetails extends Application {
         rank = new Label("rank: " + UserController.getRank());
         setEvents();
         menuBox.getChildren().addAll(profileImage,username,nickname,email,slogan,rank,highScore);
-
+        back = new MenuFingerBack(-400,300);
+        back.setOnMouseClicked(mouseEvent -> {
+            try {
+                new ProfileMenu().start(stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
 
         username.setTranslateY(0);
         nickname.setTranslateY(30);
@@ -92,6 +101,7 @@ public class ShowDetails extends Application {
         highScore.setTranslateY(120);
         rank.setTranslateY(150);
         root.getChildren().add(menuBox);
+        root.getChildren().add(back);
         stage.show();
     }
 

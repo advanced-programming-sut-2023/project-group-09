@@ -20,14 +20,17 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.User;
 import model.menugui.MenuBox;
+import model.menugui.MenuFingerBack;
 import view.controllers.ViewController;
 import view.menus.LoginMenu;
+import view.menus.MainMenu;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
 public class ChangeAvatar extends Application {
@@ -36,6 +39,7 @@ public class ChangeAvatar extends Application {
     public static Rectangle profilePhoto;
     public static GridPane avatarsGrid;
     public static MenuBox menuBox;
+    public static MenuFingerBack back;
     public static Rectangle fileChooser;
     User user;
 
@@ -126,7 +130,17 @@ public class ChangeAvatar extends Application {
         });
 
         menuBox.getChildren().addAll(profilePhoto, fileChooser);
+        back = new MenuFingerBack(-400,300);
+        back.setOnMouseClicked(mouseEvent -> {
+            try {
+                new ProfileMenu().start(stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         root.getChildren().add(menuBox);
+        root.getChildren().add(back);
         stage.setScene(scene);
         stage.show();
     }
@@ -140,7 +154,7 @@ public class ChangeAvatar extends Application {
         if (file != null) {
             String path = Paths.USER_AVATARS.getPath() + user.getUsername();
             boolean check = new File(path).mkdirs();
-            Files.copy(file.toPath(), (new File(path + "/" + file.getName())).toPath());
+            Files.copy(file.toPath(), (new File(path + "/" + file.getName())).toPath(), StandardCopyOption.REPLACE_EXISTING);
             user.setPath(path + "/" + file.getName());
             DBController.saveCurrentUser();
             DBController.saveAllUsers();

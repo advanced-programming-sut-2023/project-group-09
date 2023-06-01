@@ -24,6 +24,7 @@ import model.User;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 
 public class ScoreboardData {
@@ -110,7 +111,7 @@ public class ScoreboardData {
         String path = Paths.USER_AVATARS.getPath() + Application.getCurrentUser().getUsername();
         boolean check = new File(path).mkdirs();
         try {
-            Files.copy(file.toPath(), (new File(path + "/" + file.getName())).toPath());
+            Files.copy(file.toPath(), (new File(path + "/" + file.getName())).toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

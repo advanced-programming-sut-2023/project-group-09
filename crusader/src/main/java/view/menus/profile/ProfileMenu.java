@@ -2,16 +2,21 @@ package view.menus.profile;
 
 import enumeration.Paths;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.menugui.ChangePasswordDialog;
 import model.menugui.MenuButton;
+import model.menugui.MenuFingerBack;
 import view.controllers.ViewController;
 import view.menus.LoginMenu;
+import view.menus.MainMenu;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,7 +33,7 @@ public class ProfileMenu extends Application {
     public static MenuButton changeSlogan;
     public static MenuButton changeAvatar;
     public static MenuButton scoreboard;
-    public static MenuButton back;
+    public static MenuFingerBack back;
 
 
     @Override
@@ -57,7 +62,17 @@ public class ProfileMenu extends Application {
         changeNickname = new MenuButton("change nickname",root,0,100,true);
         scoreboard = new MenuButton("scoreboard",root,0,180,true);
         changeAvatar = new MenuButton("change avatar",root,0,260,true);
+        back = new MenuFingerBack(-400,300);
+        back.setOnMouseClicked(mouseEvent -> {
+            try {
+                new MainMenu().start(stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         setButtonsEvent();
+        root.getChildren().add(back);
         stage.show();
     }
 

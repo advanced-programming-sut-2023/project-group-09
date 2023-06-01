@@ -67,7 +67,6 @@ public class ChangePasswordDialog extends Pane {
     public void setFields() throws IOException {
         oldPassword = new MenuPasswordField(block , "old password..." ,
                 "current password : " , 50 , -120);
-        oldPassword.errorLabel.setTranslateX(-300);
         newPassword = new MenuPasswordField(block , "new password..." ,
                 "new password : " , 50 , -40);
         captcha = new Captcha(block  , 0 , 70);
