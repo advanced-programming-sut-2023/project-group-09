@@ -55,7 +55,7 @@ public class CaptchaController {
         }
     }
 
-    private static void deleteFilesInFolder(File folder) {
+    public static void deleteFilesInFolder(File folder) {
         ArrayList<File> captcha = new ArrayList<>();
         for (final File fileEntry : folder.listFiles()) {
             captcha.add(fileEntry);
