@@ -1,5 +1,6 @@
 package view.menus;
 
+import controller.DBController;
 import controller.UserController;
 import enumeration.dictionary.Slogans;
 import javafx.application.Application;
@@ -17,9 +18,11 @@ import model.User;
 import model.menugui.*;
 import view.controllers.ViewController;
 
+import java.util.Random;
 import java.util.regex.Pattern;
 
 public class SignupMenu extends Application {
+    private Stage stage;
     public static Pane signupPane;
     public boolean usernameLiveInvalid = false;
     public boolean passwordLiveInvalid = false;
@@ -39,6 +42,8 @@ public class SignupMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        this.stage = stage;
+        DBController.loadAllUsers();
         Pane root = FXMLLoader.load(getClass().getResource("/FXML/signupMenu.fxml"));
         signupPane = ViewController.makePaneScreen(stage, root, 1000, -1);
         Scene scene = new Scene(root);
@@ -106,6 +111,7 @@ public class SignupMenu extends Application {
         randomSlogan.setScaleX(0.6);
         randomSlogan.setScaleY(0.6);
         randomSlogan.setDisable(true);
+        randomSlogan.setOnAction(actionEvent -> randomSlogan());
         menuBox.getChildren().add(randomSlogan);
     }
 
@@ -126,6 +132,12 @@ public class SignupMenu extends Application {
             passwordField.getPasswordTextField().setText(UserController.generateRandomPassword());
         });
         menuBox.getChildren().add(randomPassword);
+    }
+
+    private void randomSlogan() {
+        sloganField.clearErrorOrMessage();
+        int sloganNumber = new Random().nextInt(Slogans.values().length) + 1;
+        sloganField.setValue(Slogans.getSloganByNumber(sloganNumber));
     }
 
     private void checkIsSlogan() {
@@ -152,7 +164,8 @@ public class SignupMenu extends Application {
                 if (!newValue.matches("([a-z]|[A-Z]|[0-9]|_)*")) {
                     usernameField.handlingError("invalid username!");
                     usernameLiveInvalid = true;
-                } else if (controller.Application.isUserExistsByName(newValue)) {
+                }
+                if (controller.Application.isUserExistsByName(newValue)) {
                     usernameField.handlingError("username already exists!");
                     usernameLiveInvalid = true;
                 } else {
@@ -279,9 +292,15 @@ public class SignupMenu extends Application {
         }
 
         String sloganValue = (isSlogan.isSelected()) ? (String) sloganField.getValue() : null;
-        User newUser = new User(usernameField.getText(), passwordField.getText(), nicknameField.getText(),
-                emailField.getText(), sloganValue);
-//        TODO: run security question menu
+        User newUser = new User(usernameField.getText(), UserController.convertPasswordToHash(passwordField.getText()),
+                nicknameField.getText(), emailField.getText(), sloganValue);
+        SecurityQuestionMenu.user = newUser;
+        SecurityQuestionMenu securityQuestionMenu = new SecurityQuestionMenu();
+        try {
+            securityQuestionMenu.start(this.stage);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public boolean validateEmptyFields() {
