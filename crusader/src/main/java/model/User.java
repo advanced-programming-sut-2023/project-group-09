@@ -9,7 +9,7 @@ public class User {
     private String password;
     private String nickname;
     private String email;
-    private int highScore = 0;
+    private int highScore;
     private String passwordRecoveryQuestion;
     private String passwordRecoveryAnswer;
     private String slogan;
@@ -22,6 +22,7 @@ public class User {
         this.email = email.toLowerCase();
         this.slogan = slogan;
         Random random = new Random();
+        this.highScore = 0;
         path = "files/img/avatars/"+(random.nextInt(4) + 1) + ".png";
     }
 
