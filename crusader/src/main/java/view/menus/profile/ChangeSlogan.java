@@ -50,7 +50,7 @@ public class ChangeSlogan extends Application {
         setBackground();
         menuBox = new MenuBox("change slogan",0,0,500,400);
         slogan = new MenuTextField(menuBox,"slogan...","slogan",50,-50);
-        submit = new MenuButton("save",menuBox,0,50);
+        submit = new MenuButton("save",menuBox,0,50,false);
         slogan.setText(user.getSlogan());
         menuBox.getChildren().addAll(slogan,submit);
         setEvents();

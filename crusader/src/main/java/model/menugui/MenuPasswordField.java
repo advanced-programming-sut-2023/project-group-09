@@ -16,7 +16,7 @@ public class MenuPasswordField extends PasswordField {
     private Pane pane;
     private String promptText;
     private String labelText;
-    private Label errorLabel;
+    public Label errorLabel;
     private MenuTextField passwordTextField;
     private CheckBox showPassword;
 

@@ -75,7 +75,7 @@ public class ChangePasswordDialog extends Pane {
     }
 
     public void setButton() {
-        MenuButton menuButton = new MenuButton("close", block, 0, 250);
+        MenuButton menuButton = new MenuButton("close", block, 0, 250,false);
         menuButton.setOnMouseClicked(mouseEvent -> closeDialog());
         block.getChildren().add(menuButton);
 

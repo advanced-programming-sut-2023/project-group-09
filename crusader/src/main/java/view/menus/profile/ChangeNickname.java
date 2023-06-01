@@ -49,7 +49,7 @@ public class ChangeNickname extends Application {
         setBackground();
         menuBox = new MenuBox("change nickname",0,0,500,400);
         nickname = new MenuTextField(menuBox,"nickname...","nickname",50,-50);
-        submit = new MenuButton("save",menuBox,0,50);
+        submit = new MenuButton("save",menuBox,0,50,false);
         nickname.setText(user.getNickname());
         menuBox.getChildren().addAll(nickname,submit);
         setEvents();

@@ -50,7 +50,7 @@ public class ChangeEmail extends Application {
         setBackground();
         menuBox = new MenuBox("change email",0,0,500,400);
         email = new MenuTextField(menuBox,"email...","email",50,-50);
-        submit = new MenuButton("save",menuBox,0,50);
+        submit = new MenuButton("save",menuBox,0,50,false);
         email.setText(user.getEmail());
         menuBox.getChildren().addAll(email,submit);
         setEvents();

@@ -101,7 +101,7 @@ public class MenuPopUp extends Pane {
     }
 
     public void setButton(){
-        MenuButton menuButton = new MenuButton("close",block,0,100);
+        MenuButton menuButton = new MenuButton("close",block,0,100,false);
         menuButton.setOnMouseClicked(mouseEvent -> closePopUp());
         block.getChildren().add(menuButton);
 

@@ -51,7 +51,7 @@ public class ChangeUsername extends Application {
         setBackground();
         menuBox = new MenuBox("change username",0,0,500,400);
         username = new MenuTextField(menuBox,"username...","username",50,-50);
-        submit = new MenuButton("save",menuBox,0,50);
+        submit = new MenuButton("save",menuBox,0,50,false);
         username.setText(user.getUsername());
         menuBox.getChildren().addAll(username,submit);
         setEvents();

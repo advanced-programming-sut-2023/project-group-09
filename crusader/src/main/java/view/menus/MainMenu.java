@@ -45,7 +45,7 @@ public class MainMenu extends Application {
         stage.setScene(scene);
         root = ViewController.makeStackPaneScreen(stage, pane, 1000, -1);
         setBackground();
-        MenuButton menuButton = new MenuButton("profile menu",root,0,0);
+        MenuButton menuButton = new MenuButton("profile menu",root,0,0,true);
         menuButton.setOnMouseClicked(mouseEvent -> {
             try {
                 new ProfileMenu().start(stage);

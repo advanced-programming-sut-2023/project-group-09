@@ -1,6 +1,7 @@
 package model.menugui;
 
 import enumeration.Paths;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
