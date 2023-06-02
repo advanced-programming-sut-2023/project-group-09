@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -78,14 +79,14 @@ public class SignupMenu extends Application {
     }
 
     private void makeCredentials() {
-        usernameField = new MenuTextField(menuBox, "username", "Username", 0, -210);
+        usernameField = new MenuTextField(menuBox, "username", "Username", 0, -210, 300);
         validateUsername();
         menuBox.getChildren().add(usernameField);
 
-        nicknameField = new MenuTextField(menuBox, "nickname", "Nickname", 0, -150);
+        nicknameField = new MenuTextField(menuBox, "nickname", "Nickname", 0, -150, 300);
         menuBox.getChildren().add(nicknameField);
 
-        emailField = new MenuTextField(menuBox, "email", "Email", 0, -90);
+        emailField = new MenuTextField(menuBox, "email", "Email", 0, -90, 300);
         menuBox.getChildren().add(emailField);
     }
 

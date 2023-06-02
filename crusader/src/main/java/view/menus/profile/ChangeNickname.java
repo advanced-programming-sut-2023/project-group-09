@@ -47,7 +47,7 @@ public class ChangeNickname extends Application {
         root = ViewController.makeStackPaneScreen(stage, pane, 1000, -1);
         setBackground();
         menuBox = new MenuBox("change nickname",0,0,500,400);
-        nickname = new MenuTextField(menuBox,"nickname...","nickname",50,-50);
+        nickname = new MenuTextField(menuBox,"nickname...","nickname",50,-50, 300);
         submit = new MenuButton("save",menuBox,0,50,false);
         nickname.setText(user.getNickname());
         menuBox.getChildren().addAll(nickname,submit);

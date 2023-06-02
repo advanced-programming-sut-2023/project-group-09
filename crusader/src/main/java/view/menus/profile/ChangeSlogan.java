@@ -47,7 +47,7 @@ public class ChangeSlogan extends Application {
         root = ViewController.makeStackPaneScreen(stage, pane, 1000, -1);
         setBackground();
         menuBox = new MenuBox("change slogan",0,0,500,400);
-        slogan = new MenuTextField(menuBox,"slogan...","slogan",50,-50);
+        slogan = new MenuTextField(menuBox,"slogan...","slogan",50,-50, 300);
         submit = new MenuButton("save",menuBox,0,50,false);
         slogan.setText(user.getSlogan());
         menuBox.getChildren().addAll(slogan,submit);

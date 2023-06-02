@@ -49,7 +49,7 @@ public class ChangeUsername extends Application {
         root = ViewController.makeStackPaneScreen(stage, pane, 1000, -1);
         setBackground();
         menuBox = new MenuBox("change username",0,0,500,400);
-        username = new MenuTextField(menuBox,"username...","username",50,-50);
+        username = new MenuTextField(menuBox,"username...","username",50,-50, 300);
         submit = new MenuButton("save",menuBox,0,50,false);
         username.setText(user.getUsername());
         menuBox.getChildren().addAll(username,submit);

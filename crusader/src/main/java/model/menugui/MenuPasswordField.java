@@ -39,7 +39,7 @@ public class MenuPasswordField extends PasswordField {
     }
 
     private void createTextField() {
-        passwordTextField = new MenuTextField(pane, promptText, labelText, this.getTranslateX(), this.getTranslateY());
+        passwordTextField = new MenuTextField(pane, promptText, labelText, this.getTranslateX(), this.getTranslateY(), 300);
         passwordTextField.setVisible(false);
         pane.getChildren().add(passwordTextField);
     }
@@ -79,7 +79,7 @@ public class MenuPasswordField extends PasswordField {
     private void createErrorOrMessage() {
         errorLabel = new Label();
         errorLabel.setTranslateX(this.getTranslateX());
-        errorLabel.setTranslateY(this.getTranslateY() + 33);
+        errorLabel.setTranslateY(this.getTranslateY() + 25);
         errorLabel.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 15));
         pane.getChildren().add(errorLabel);
     }

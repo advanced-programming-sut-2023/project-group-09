@@ -240,7 +240,7 @@ public class Government {
     }
 
     public String getColorRgb() {
-        return color.getRgb();
+        return color.getTextColor();
     }
 
     public void setColor(Colors color) {

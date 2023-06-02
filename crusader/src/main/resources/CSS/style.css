@@ -37,7 +37,6 @@
 }
 
 
-
 .combo-box .list-cell {
     -fx-background-color: rgb(42, 42, 42);
     -fx-text-fill: gray;
@@ -61,24 +60,38 @@
 .combo-box .list-cell:focused {
     -fx-background-color: rgb(35, 35, 35);
 }
+
 .table-column {
     -fx-alignment: CENTER-RIGHT;
 }
-.pop-up{
+
+.pop-up {
     -fx-background-color: #fff;
     -fx-background-radius: 20;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 15, -3, 0, 0);
 }
-.btn-label{
+
+.btn-label {
     -fx-font-size: 15;
 }
-.btn-label:hover{
+
+.btn-label:hover {
     -fx-cursor: pointer;
 }
-.profile-image{
+
+.profile-image {
     -fx-border-radius: 50;
     -fx-background-radius: 50;
     -fx-border-color: #802323;
     -fx-border-width: 2;
     -fx-border-style: solid;
+}
+
+.addButton {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+.addButton:hover {
+    -fx-background-color: #202020;
 }

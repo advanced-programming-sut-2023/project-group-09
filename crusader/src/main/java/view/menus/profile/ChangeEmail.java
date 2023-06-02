@@ -47,7 +47,7 @@ public class ChangeEmail extends Application {
         root = ViewController.makeStackPaneScreen(stage, pane, 1000, -1);
         setBackground();
         menuBox = new MenuBox("change email",0,0,500,400);
-        email = new MenuTextField(menuBox,"email...","email",50,-50);
+        email = new MenuTextField(menuBox,"email...","email",50,-50, 300);
         submit = new MenuButton("save",menuBox,0,50,false);
         email.setText(user.getEmail());
         menuBox.getChildren().addAll(email,submit);

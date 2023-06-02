@@ -16,13 +16,13 @@ public class MenuTextField extends TextField {
     private Pane pane;
     private String promptText;
     private Label errorLabel;
-    public MenuTextField(Pane pane , String promptText , String labelText , double x , double y) {
+    public MenuTextField(Pane pane , String promptText , String labelText , double x , double y, int width) {
         this.promptText = promptText;
         this.setStyle("-fx-background-color: rgba(42 , 42 , 42 , 0.7); -fx-text-inner-color: white;");
         this.setTranslateX(x);
         this.setTranslateY(y);
-        this.setMaxWidth(300);
-        this.setMinWidth(300);
+        this.setMaxWidth(width);
+        this.setMinWidth(width);
         this.pane = pane;
         createLabel(labelText);
         this.setFont(Font.font("Times New Roman" , FontWeight.BOLD , 20));
@@ -32,11 +32,11 @@ public class MenuTextField extends TextField {
 
     public void createLabel(String text) {
         Label label = new Label(text);
-        label.setTranslateX(this.getTranslateX() - 300);
+        label.setTranslateX(this.getTranslateX() - getMaxWidth());
         label.setTranslateY(this.getTranslateY());
         label.setFont(Font.font("Times New Roman" , FontWeight.BOLD , 20));
         label.setTextFill(Color.BLACK);
-        label.setMaxWidth(270);
+        label.setMaxWidth(getMaxWidth() - 30);
         label.setAlignment(Pos.BASELINE_RIGHT);
         pane.getChildren().add(label);
     }
@@ -44,7 +44,7 @@ public class MenuTextField extends TextField {
     private void createErrorOrMessage() {
         errorLabel = new Label();
         errorLabel.setTranslateX(this.getTranslateX());
-        errorLabel.setTranslateY(this.getTranslateY() + 33);
+        errorLabel.setTranslateY(this.getTranslateY() + 25);
         errorLabel.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 15));
         pane.getChildren().add(errorLabel);
     }

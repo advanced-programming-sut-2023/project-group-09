@@ -43,10 +43,10 @@ public class SecurityQuestionMenu extends Application {
         String[] questions = {SecurityQuestions.QUESTION1.getQuestion(),
                 SecurityQuestions.QUESTION2.getQuestion(), SecurityQuestions.QUESTION3.getQuestion()};
         securityQuestionField = new MenuChoiceBox(menuBox, "Security Question",
-                50, -120, FXCollections.observableArrayList(questions));
+                50, -120, FXCollections.observableArrayList(questions), 300);
         menuBox.getChildren().add(securityQuestionField);
 
-        answerField = new MenuTextField(menuBox, "answer", "Answer", 50, -20);
+        answerField = new MenuTextField(menuBox, "answer", "Answer", 50, -20, 300);
         answerField.setDisable(true);
         menuBox.getChildren().add(answerField);
 

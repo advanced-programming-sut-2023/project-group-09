@@ -42,7 +42,7 @@ public class MenuComboBox extends ComboBox {
     private void createErrorOrMessage() {
         errorLabel = new Label();
         errorLabel.setTranslateX(this.getTranslateX());
-        errorLabel.setTranslateY(this.getTranslateY() + 33);
+        errorLabel.setTranslateY(this.getTranslateY() + 25);
         errorLabel.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 15));
         pane.getChildren().add(errorLabel);
     }

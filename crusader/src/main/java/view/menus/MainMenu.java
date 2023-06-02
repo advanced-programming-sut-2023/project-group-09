@@ -53,7 +53,12 @@ public class MainMenu extends Application {
         startGameButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                // TODO : call create game menu
+                CreateGameMenu createGameMenu = new CreateGameMenu();
+                try {
+                    createGameMenu.start(stage);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 

@@ -75,7 +75,7 @@ public class LoginMenu extends Application {
         label.setTranslateY(-100);
 
         MenuTextField menuTextField = new MenuTextField(menuBox , "answer" , "Answer : " ,
-                0 , 0);
+                0 , 0, 300);
         menuBox.getChildren().add(menuTextField);
 
         MenuButton backButton = new MenuButton("Back" , menuBox , 0 , 75 , true);
@@ -191,7 +191,7 @@ public class LoginMenu extends Application {
         MenuBox menuBox = new MenuBox("Login" , 350, 0 , 500 , 500);
 
         MenuTextField userNameField = new MenuTextField(menuBox , "username" ,
-                "Username : " ,  30, -150);
+                "Username : " ,  30, -150, 300);
         menuBox.getChildren().add(userNameField);
         username = userNameField;
 
