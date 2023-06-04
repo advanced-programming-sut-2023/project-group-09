@@ -11,7 +11,10 @@ import view.menus.GameMenu;
 import view.menus.LoginMenu;
 
 public class GameViewController{
+
+    public static String nameOfPageInBar;
     public static void createShortcutBars(Pane gamePane , Text text) {
+        setCenterToCastleBuildings();
         ImageView castleBuildingsImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/castleBuildingsIcon.png");
         castleBuildingsImage.setTranslateX(375);
@@ -91,5 +94,45 @@ public class GameViewController{
                 GameMenu.hoveringBarStateText.setText("");
             }
         });
+        imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                setCenterOfBar();
+            }
+        });
+    }
+
+    public static void setCenterOfBar() {
+        switch (GameMenu.hoveringBarStateText.getText()) {
+            case "Castle Buildings" -> {
+                setCenterToCastleBuildings();
+            }
+        }
+    }
+
+    private static void setCenterToCastleBuildings() {
+        putImageView("stairsIcon" , "" , 325 , 720);
+        putImageView("smallWallIcon" , "" , 355 , 720);
+        putImageView("bigWallIcon" , "" , 400 , 700);
+        putImageView("crenulatedWallIcon" , "" , 460 , 680);
+        putImageView("barracksIcon" , "" , 545 , 720);
+        putImageView("mercenrayIcon" , "" , 605 , 740);
+        putImageView("armoryIcon" , "" , 690 , 710);
+        putImageView("towersIcon" , "" , 745 , 720);
+        putImageView("militaryIcon" , "" , 785 , 720);
+        putImageView("gatehouseIcon" , "" , 785 , 760);
+
+
+
+    }
+
+    private static void putImageView(String fileName , String name , double x ,double y) {
+        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/" + fileName + ".png");
+        icon.setTranslateX(x);
+        icon.setTranslateY(y);
+        icon.setScaleX(0.4);
+        icon.setScaleY(0.4);
+        GameMenu.gamePane.getChildren().add(icon);
     }
 }
