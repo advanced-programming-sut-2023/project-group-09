@@ -133,6 +133,6 @@ public class GameViewController{
         icon.setTranslateY(y);
         icon.setScaleX(0.4);
         icon.setScaleY(0.4);
-        GameMenu.gamePane.getChildren().add(icon);
+        GameMenu.menuBar.getChildren().add(icon);
     }
 }

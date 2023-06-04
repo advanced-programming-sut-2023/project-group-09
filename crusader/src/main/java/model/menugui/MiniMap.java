@@ -63,7 +63,7 @@ public class MiniMap extends StackPane {
             });
         });
         this.setOnMouseExited(mouseEvent -> {
-            GameMenu.gamePane.requestFocus();
+            GameMenu.menuBar.requestFocus();
             this.setOnKeyPressed(null);
         });
         paintMap();
