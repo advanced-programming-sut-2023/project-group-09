@@ -19,7 +19,6 @@ module crusader {
     exports enumeration;
     opens enumeration to com.google.gson;
 
-
     exports enumeration.dictionary;
     opens enumeration.dictionary to com.google.gson;
 
