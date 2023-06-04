@@ -35,6 +35,7 @@ public class CreateGameMenu extends Application {
     private ArrayList<Colors> colors;
     public MenuBox menuBox;
     public MenuChoiceBox mapsField;
+    public PreviewMap previewMap;
     public Text governmentTitle;
     public Button addGovernment;
     public ArrayList<MenuTextField> governmentUsernames = new ArrayList<>();
@@ -173,6 +174,9 @@ public class CreateGameMenu extends Application {
                         castles.add("Castle " + (i + 1) + " (" + selectedMap.getDefaultCastles().get(i).getFirst()
                                 + ", " + selectedMap.getDefaultCastles().get(i).getSecond() + ")");
                     castleNumbers.get(0).setItems(FXCollections.observableArrayList(castles));
+                    menuBox.getChildren().remove(previewMap);
+                    previewMap = new PreviewMap(selectedMap, 230, -120);
+                    menuBox.getChildren().add(previewMap);
                     MapController.map = selectedMap;
                     game = new Game(selectedMap);
                     GameController.setGame(game);
