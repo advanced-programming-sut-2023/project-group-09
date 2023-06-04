@@ -4,9 +4,7 @@ import controller.gamestructure.GameMaps;
 import javafx.stage.Stage;
 import view.menus.LoginMenu;
 import view.menus.MainMenu;
-import viewphase1.PrimaryMenu;
 
-import java.util.Scanner;
 
 public class MainController {
 

@@ -8,6 +8,7 @@ import controller.gamestructure.GameGoods;
 import controller.gamestructure.GameHumans;
 import controller.gamestructure.GameTools;
 import enumeration.Paths;
+import javafx.scene.paint.Color;
 import model.User;
 import model.building.Building;
 import model.building.castlebuildings.Gatehouse;
@@ -18,6 +19,8 @@ import model.building.producerbuildings.ProducerBuilding;
 import model.building.producerbuildings.WeaponProducer;
 import model.building.storagebuildings.StorageBuilding;
 import model.goods.Goods;
+import model.gsonmodels.ColorDeserializer;
+import model.gsonmodels.ColorSerializer;
 import model.human.military.ArabianMercenary;
 import model.human.military.EuropeanTroop;
 import model.tools.Tool;
@@ -37,7 +40,10 @@ public class DBController {
     // load & save users from files
     public static void loadAllUsers(){
         try {
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Color.class, new ColorSerializer())
+                    .registerTypeAdapter(Color.class, new ColorDeserializer())
+                    .create();;
             checkFileExist(Paths.USERS_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.USERS_PATH.getPath())));
             ArrayList<User> allUsers = gson.fromJson(text, new TypeToken<List<User>>(){}.getType());
@@ -73,7 +79,10 @@ public class DBController {
 
     public static void loadCurrentUser(){
         try {
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Color.class, new ColorSerializer())
+                    .registerTypeAdapter(Color.class, new ColorDeserializer())
+                    .create();;
             checkFileExist(Paths.CURRENT_USER_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.CURRENT_USER_PATH.getPath())));
             User user = gson.fromJson(text, User.class);
@@ -112,7 +121,10 @@ public class DBController {
     // load goods from file
     public static void loadGoods(){
         try {
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Color.class, new ColorSerializer())
+                    .registerTypeAdapter(Color.class, new ColorDeserializer())
+                    .create();;
             checkFileExist(Paths.GOODS_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.GOODS_PATH.getPath())));
             GameGoods.goods = gson.fromJson(text, new TypeToken<HashMap<String, Goods>>(){}.getType());
@@ -127,7 +139,10 @@ public class DBController {
 
     private static void loadFoods(){
         try {
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Color.class, new ColorSerializer())
+                    .registerTypeAdapter(Color.class, new ColorDeserializer())
+                    .create();;
             checkFileExist(Paths.FOODS_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.FOODS_PATH.getPath())));
             GameGoods.foods = gson.fromJson(text, new TypeToken<HashMap<String, Goods>>(){}.getType());
@@ -138,7 +153,10 @@ public class DBController {
     }
     private static void loadResources(){
         try {
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Color.class, new ColorSerializer())
+                    .registerTypeAdapter(Color.class, new ColorDeserializer())
+                    .create();;
             checkFileExist(Paths.RESOURCES_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.RESOURCES_PATH.getPath())));
             GameGoods.resources = gson.fromJson(text, new TypeToken<HashMap<String, Goods>>(){}.getType());
@@ -149,7 +167,10 @@ public class DBController {
     }
     private static void loadWeapons(){
         try {
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Color.class, new ColorSerializer())
+                    .registerTypeAdapter(Color.class, new ColorDeserializer())
+                    .create();;
             checkFileExist(Paths.WEAPONS_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.WEAPONS_PATH.getPath())));
             GameGoods.weapons = gson.fromJson(text, new TypeToken<HashMap<String, Goods>>(){}.getType());
@@ -173,7 +194,10 @@ public class DBController {
 
     public static HashMap<String, EuropeanTroop> loadEuropeanTroops(){
         try {
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Color.class, new ColorSerializer())
+                    .registerTypeAdapter(Color.class, new ColorDeserializer())
+                    .create();
             checkFileExist(Paths.EUROPEAN_TROOP_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.EUROPEAN_TROOP_PATH.getPath())));
             return gson.fromJson(text, new TypeToken<HashMap<String, EuropeanTroop>>(){}.getType());
@@ -186,7 +210,10 @@ public class DBController {
 
     public static HashMap<String, ArabianMercenary> loadArabianMercenaries(){
         try {
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Color.class, new ColorSerializer())
+                    .registerTypeAdapter(Color.class, new ColorDeserializer())
+                    .create();;
             checkFileExist(Paths.ARABIAN_MERCENARY_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.ARABIAN_MERCENARY_PATH.getPath())));
             return gson.fromJson(text, new TypeToken<HashMap<String, ArabianMercenary>>(){}.getType());
@@ -234,7 +261,10 @@ public class DBController {
 
     public static HashMap<String, Wall> loadWalls(){
         try {
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Color.class, new ColorSerializer())
+                    .registerTypeAdapter(Color.class, new ColorDeserializer())
+                    .create();;
             checkFileExist(Paths.BUILDINGS_PATH.getPath() + "walls.json");
             String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "walls.json")));
             return gson.fromJson(text, new TypeToken<HashMap<String, Wall>>(){}.getType());
@@ -247,7 +277,10 @@ public class DBController {
 
     public static HashMap<String, Gatehouse> loadGatehouses(){
         try {
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Color.class, new ColorSerializer())
+                    .registerTypeAdapter(Color.class, new ColorDeserializer())
+                    .create();;
             checkFileExist(Paths.BUILDINGS_PATH.getPath() + "gateHouses.json");
             String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "gateHouses.json")));
             return gson.fromJson(text, new TypeToken<HashMap<String, Gatehouse>>(){}.getType());
@@ -260,7 +293,10 @@ public class DBController {
 
     public static HashMap<String, Tower> loadTowers(){
         try {
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Color.class, new ColorSerializer())
+                    .registerTypeAdapter(Color.class, new ColorDeserializer())
+                    .create();;
             checkFileExist(Paths.BUILDINGS_PATH.getPath() + "towers.json");
             String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "towers.json")));
             return gson.fromJson(text, new TypeToken<HashMap<String, Tower>>(){}.getType());
@@ -273,7 +309,10 @@ public class DBController {
 
     public static HashMap<String, Barrack> loadBarracks(){
         try {
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Color.class, new ColorSerializer())
+                    .registerTypeAdapter(Color.class, new ColorDeserializer())
+                    .create();;
             checkFileExist(Paths.BUILDINGS_PATH.getPath() + "barracks.json");
             String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "barracks.json")));
             return gson.fromJson(text, new TypeToken<HashMap<String, Barrack>>(){}.getType());
@@ -286,7 +325,10 @@ public class DBController {
 
     public static HashMap<String, ProducerBuilding> loadProducerBuilding(){
         try {
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Color.class, new ColorSerializer())
+                    .registerTypeAdapter(Color.class, new ColorDeserializer())
+                    .create();;
             checkFileExist(Paths.BUILDINGS_PATH.getPath() + "producerBuildings.json");
             String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "producerBuildings.json")));
             return gson.fromJson(text, new TypeToken<HashMap<String, ProducerBuilding>>(){}.getType());
@@ -299,7 +341,10 @@ public class DBController {
 
     public static HashMap<String, WeaponProducer> loadWeaponProducer(){
         try {
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Color.class, new ColorSerializer())
+                    .registerTypeAdapter(Color.class, new ColorDeserializer())
+                    .create();;
             checkFileExist(Paths.BUILDINGS_PATH.getPath() + "weaponProducers.json");
             String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "weaponProducers.json")));
             return gson.fromJson(text, new TypeToken<HashMap<String, WeaponProducer>>(){}.getType());
@@ -312,7 +357,10 @@ public class DBController {
 
     public static HashMap<String, StorageBuilding> loadStorageBuilding(){
         try {
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Color.class, new ColorSerializer())
+                    .registerTypeAdapter(Color.class, new ColorDeserializer())
+                    .create();;
             checkFileExist(Paths.BUILDINGS_PATH.getPath() + "storageBuilding.json");
             String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "storageBuilding.json")));
             return gson.fromJson(text, new TypeToken<HashMap<String, StorageBuilding>>(){}.getType());
@@ -325,7 +373,10 @@ public class DBController {
 
     public static HashMap<String, Building> loadOther(){
         try {
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Color.class, new ColorSerializer())
+                    .registerTypeAdapter(Color.class, new ColorDeserializer())
+                    .create();;
             checkFileExist(Paths.BUILDINGS_PATH.getPath() + "other.json");
             String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "other.json")));
             return gson.fromJson(text, new TypeToken<HashMap<String, Building>>(){}.getType());
@@ -337,7 +388,10 @@ public class DBController {
     }
     public static void loadTools(){
         try {
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Color.class, new ColorSerializer())
+                    .registerTypeAdapter(Color.class, new ColorDeserializer())
+                    .create();
             checkFileExist(Paths.TOOLS_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.TOOLS_PATH.getPath())));
             GameTools.tools = gson.fromJson(text, new TypeToken<HashMap<String, Tool>>(){}.getType());
