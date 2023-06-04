@@ -1,58 +1,56 @@
 package enumeration;
 
+import javafx.scene.paint.Color;
+
 public enum Textures {
-    EARTH("earth", true, true, "\u001b[48;5;137m",255, 233, 126),
-    EARTH_AND_SAND("earthAndSand", true, true, "\u001b[48;5;173m",189, 168, 69),
-    BOULDER("boulder", true, true, "\u001b[48;5;94m",140, 115, 104),
-    ROCK_TEXTURE("rockTexture", true, false, "\u001b[48;2;148;63;6m",91, 9, 166),
-    IRON_TEXTURE("ironTexture", true, true, "\u001b[48;5;88m",143, 14, 2),
-    GRASS("grass", true, true, "\u001b[48;5;40m",73, 234, 27),
-    THICK_GRASS("thickGrass", true, true, "\u001b[48;5;28m",73, 234, 27),
-    OASIS_GRASS("oasisGrass", true, false, "\u001b[48;5;22m",73, 234, 27),
-    OIL("oil", true, false, "\u001b[48;5;17m",140, 140, 140),
-    MARSH("marsh", false, false, "\u001b[48;5;37m",25, 71, 96),
-    PLAIN_TEXTURE("plainTexture", true, true, "",256,256,256),
-    LOW_DEPTH_WATER("lowDepthWater", true, false, "\u001b[48;5;123m",149, 198, 248),
-    RIVER("river", false, false, "\u001b[48;5;45m",40, 142, 255),
-    SMALL_POND("smallPond", false, false, "\u001b[48;5;189m",83, 167, 255),
-    LARGE_POND("largePond", false, false, "\u001b[48;5;183m",83, 167, 255),
-    BEACH("beach", true, true, "\u001b[48;5;195m",82, 74, 58),
-    SEA("sea", false, false, "\u001b[48;5;27m",3, 54, 103);
+    EARTH("earth", true, true, Color.WHEAT, Color.ROSYBROWN, 4),
+    EARTH_AND_SAND("earthAndSand", true, true, Color.SLATEGRAY, Color.WHEAT, 2),
+    BOULDER("boulder", true, true, Color.WHITE, Color.WHEAT, 4),
+    ROCK_TEXTURE("rockTexture", true, false, Color.SADDLEBROWN, Color.WHEAT, 3),
+    IRON_TEXTURE("ironTexture", true, true, Color.BROWN, Color.WHEAT, 10),
+    GRASS("grass", true, true, Color.SEAGREEN, Color.WHEAT, 3),
+    THICK_GRASS("thickGrass", true, true, Color.WHEAT, Color.SEAGREEN, 3),
+    OASIS_GRASS("oasisGrass", true, false, Color.SEAGREEN, Color.DARKGREEN, 2),
+    OIL("oil", true, false, Color.SLATEGRAY, Color.BLACK, 4),
+    MARSH("marsh", false, false, Color.SLATEGRAY, Color.BLACK, 4),
+    LOW_DEPTH_WATER("lowDepthWater", true, false, Color.STEELBLUE, Color.WHEAT, 2),
+    RIVER("river", false, false, Color.SKYBLUE, Color.STEELBLUE, 6),
+    SMALL_POND("smallPond", false, false, Color.SILVER, Color.SILVER, 2),
+    LARGE_POND("largePond", false, false, Color.SILVER, Color.SILVER, 2),
+    BEACH("beach", true, true, Color.WHEAT, Color.WHEAT, 2),
+    SEA("sea", false, false, Color.STEELBLUE, Color.DARKBLUE, 6);
 
-    public int getR() {
-        return r;
-    }
-
-    public int getB() {
-        return b;
-    }
-
-    public int getG() {
-        return g;
-    }
 
     private String name;
     private boolean passable;
     private boolean canPutBuilding;
-    private String color;
-    int r,b,g;
+    private Color color;
+    private Color tempColor;
+    private int ratio;
 
-    private Textures(String name, boolean passable, boolean canPutBuilding, String color,int r, int b,int g) {
+    private Textures(String name, boolean passable, boolean canPutBuilding, Color color, Color tempColor, int ratio) {
         this.name = name;
         this.passable = passable;
         this.canPutBuilding = canPutBuilding;
         this.color = color;
-        this.r = r;
-        this.b = b;
-        this.g = g;
+        this.tempColor = tempColor;
+        this.ratio = ratio;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getColor() {
+    public Color getColor() {
         return color;
+    }
+
+    public Color getTempColor() {
+        return tempColor;
+    }
+
+    public int getRatio() {
+        return ratio;
     }
 
     public boolean isPassable() {

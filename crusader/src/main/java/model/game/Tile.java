@@ -3,6 +3,7 @@ package model.game;
 import enumeration.Textures;
 import enumeration.dictionary.RockDirections;
 import enumeration.dictionary.Trees;
+import javafx.scene.paint.Color;
 import model.Government;
 import model.building.Building;
 import model.building.castlebuildings.CastleBuilding;
@@ -15,16 +16,11 @@ import model.human.military.Military;
 import model.tools.Tool;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Tile {
-    public Tile() {
-        this.isMoat = false;
-        this.isPit = false;
-        tree = null;
-        rockDirection = null;
-    }
 
-    private Textures texture = Textures.EARTH;
+    private Textures texture;
     private Trees tree;
     private RockDirections rockDirection;
     private Tool tool;
@@ -33,9 +29,19 @@ public class Tile {
     private boolean isMoat;
     private boolean isPit;
 
+    private Color color;
+
     private Government pitGovernment;
     private boolean passable = true;
     private boolean canPutBuilding = true;
+    public Tile() {
+        this.isMoat = false;
+        this.isPit = false;
+        tree = null;
+        rockDirection = null;
+        setTexture(Textures.EARTH);
+    }
+
 
     public boolean isDefaultCastle() {
         return isDefaultCastle;
@@ -58,6 +64,7 @@ public class Tile {
             canPutBuilding = false;
         }
         this.tree = tree;
+
     }
 
     public boolean isCanPutBuilding() {
@@ -173,6 +180,15 @@ public class Tile {
             this.texture = texture;
             passable = texture.isPassable();
             canPutBuilding = texture.getCanPutBuilding();
+            Color prmColor = texture.getColor();
+            Color tmpColor = texture.getTempColor();
+            Random random = new Random();
+            int whichColor = random.nextInt(texture.getRatio());
+            if (whichColor == 0){
+                color = tmpColor;
+            }else{
+                color = prmColor;
+            }
         }
     }
 
@@ -185,6 +201,10 @@ public class Tile {
         this.building = building;
         isPit = false;
         pitGovernment = null;
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     public ArrayList<Civilian> getCivilian() {

@@ -2,6 +2,7 @@ package view.controllers;
 
 import enumeration.Paths;
 import javafx.event.EventHandler;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -14,6 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.menugui.MenuButton;
 import model.menugui.MenuTextField;
@@ -45,7 +47,10 @@ public class ViewController {
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         pane.setStyle("-fx-background-color: #000");
         Pane newPane = new BorderPane();
-        newPane.setMaxWidth(width);
+        if (width != -1){
+            newPane.setMaxWidth(width);
+        }
+
         if (height != -1){
             newPane.setMaxHeight(height);
         }
@@ -63,7 +68,7 @@ public class ViewController {
         if (height != -1){
             newPane.setMaxHeight(height);
         }
-        //newPane.setStyle("-fx-background-color: #fff");
+        newPane.setStyle("-fx-background-color: #fff");
         pane.setCenter(newPane);
         return newPane;
     }
@@ -154,4 +159,10 @@ public class ViewController {
 
     }
 
+    public static double getScreenHeight(){
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+        double screenHeight = bounds.getHeight();
+        return screenHeight;
+    }
 }

@@ -3,7 +3,8 @@ package enumeration.commands;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public enum LoginMenuCommands {LOGIN_REGEX("user login(?<contents>.+)"),
+public enum LoginMenuCommands {
+    LOGIN_REGEX("user login(?<contents>.+)"),
     USERNAME_REGEX("-u ((?<username>([^\\-\\s\"]+))|(\"(?<username2>([^\"]+))\"))"),
     PASSWORD_REGEX("-p ((?<password>([^\\s\\-\"]+))|\"(?<password2>([^\"]+))\")"),
     STAY_LOGGED_IN_REGEX("--stay-logged-in"),

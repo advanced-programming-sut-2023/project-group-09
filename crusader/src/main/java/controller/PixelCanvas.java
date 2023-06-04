@@ -44,7 +44,7 @@ public class PixelCanvas extends Canvas {
             }
             return new Color(0, 0, 0);
         }else{
-            return new Color(tile.getTexture().getR(), tile.getTexture().getB(), tile.getTexture().getG());
+            return new Color(0,0,0);
         }
         //return new Color(25, 71, 96);
     }
