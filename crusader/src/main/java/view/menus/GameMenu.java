@@ -72,7 +72,7 @@ public class GameMenu extends Application {
         barImage.setFitWidth(menuBar.getMaxWidth());
         barImage.setFitHeight(menuBar.getMaxHeight());
         menuBar.setTranslateX(0);
-        menuBar.setTranslateY(300);
+        menuBar.setTranslateY(290);
 
         MiniMap miniMap = new MiniMap(125, 143, 0, 0);
         menuBar.getChildren().add(miniMap);
@@ -89,7 +89,7 @@ public class GameMenu extends Application {
         menuBar.getChildren().add(hoveringButton);
         hoveringBarStateText = hoveringButton;
 
-        Rectangle clipRectangle = new Rectangle(1200, 900);
+        Rectangle clipRectangle = new Rectangle(1200, 800);
         root.setClip(clipRectangle);
 
         GameViewController.createShortcutBars(menuBar, hoveringButton);
