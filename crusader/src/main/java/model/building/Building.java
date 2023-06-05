@@ -308,7 +308,7 @@ public class Building implements Cloneable {
         return true;
     }
 
-    public void routinWork() {
-
+    public int getPrice() {
+        return price;
     }
 }

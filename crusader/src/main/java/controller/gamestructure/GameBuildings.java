@@ -450,6 +450,8 @@ public class GameBuildings {
 
     public static void createOilSmelter() {
         Building building = new Building(0, 1, "oilSmelter", 10, 3, 3);
+        building.setPrice(100);
+        building.addCost("iron" , 10);
         buildings.put("oilSmelter", building);
     }
 
