@@ -1,12 +1,17 @@
 package view.controllers;
 
+import controller.gamestructure.GameBuildings;
 import enumeration.Paths;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import model.building.Building;
 import view.menus.GameMenu;
 import view.menus.LoginMenu;
 
@@ -17,65 +22,65 @@ public class GameViewController{
         setCenterToCastleBuildings();
         ImageView castleBuildingsImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/castleBuildingsIcon.png");
-        castleBuildingsImage.setTranslateX(375);
-        castleBuildingsImage.setTranslateY(825);
+        castleBuildingsImage.setTranslateX(275);
+        castleBuildingsImage.setTranslateY(185);
         gamePane.getChildren().add(castleBuildingsImage);
         setHoverEventForBar(castleBuildingsImage , "Castle Buildings");
 
         ImageView industryBuildingsImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/industryBuildingsIcon.png");
-        industryBuildingsImage.setTranslateX(410);
-        industryBuildingsImage.setTranslateY(825);
+        industryBuildingsImage.setTranslateX(310);
+        industryBuildingsImage.setTranslateY(185);
         gamePane.getChildren().add(industryBuildingsImage);
         setHoverEventForBar(industryBuildingsImage , "Industry Buildings");
 
         ImageView farmBuildingsImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/farmBuildingsIcon.png");
-        farmBuildingsImage.setTranslateX(445);
-        farmBuildingsImage.setTranslateY(825);
+        farmBuildingsImage.setTranslateX(345);
+        farmBuildingsImage.setTranslateY(185);
         gamePane.getChildren().add(farmBuildingsImage);
         setHoverEventForBar(farmBuildingsImage , "Farm Buildings");
 
         ImageView townBuildingsImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/townBuildingsIcon.png");
-        townBuildingsImage.setTranslateX(480);
-        townBuildingsImage.setTranslateY(825);
+        townBuildingsImage.setTranslateX(380);
+        townBuildingsImage.setTranslateY(185);
         gamePane.getChildren().add(townBuildingsImage);
         setHoverEventForBar(townBuildingsImage , "Town Buildings");
 
         ImageView weaponsBuildingsImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/weaponsBuildingsIcon.png");
-        weaponsBuildingsImage.setTranslateX(515);
-        weaponsBuildingsImage.setTranslateY(825);
+        weaponsBuildingsImage.setTranslateX(415);
+        weaponsBuildingsImage.setTranslateY(185);
         gamePane.getChildren().add(weaponsBuildingsImage);
         setHoverEventForBar(weaponsBuildingsImage , "Weapons Buildings");
 
         ImageView foodProcessingImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/foodProcessingBuildingsIcon.png");
-        foodProcessingImage.setTranslateX(550);
-        foodProcessingImage.setTranslateY(825);
+        foodProcessingImage.setTranslateX(450);
+        foodProcessingImage.setTranslateY(185);
         gamePane.getChildren().add(foodProcessingImage);
         setHoverEventForBar(foodProcessingImage , "Food Processing Buildings");
 
         ImageView orderOfMeritImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/orderOfMeritIcon.png");
-        orderOfMeritImage.setTranslateX(775);
-        orderOfMeritImage.setTranslateY(825);
+        orderOfMeritImage.setTranslateX(675);
+        orderOfMeritImage.setTranslateY(185);
         gamePane.getChildren().add(orderOfMeritImage);
         setHoverEventForBar(orderOfMeritImage , "Order Of Merit");
 
 
         ImageView keyImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/keyIcon.png");
-        keyImage.setTranslateX(852);
-        keyImage.setTranslateY(730);
+        keyImage.setTranslateX(760);
+        keyImage.setTranslateY(85);
         gamePane.getChildren().add(keyImage);
         setHoverEventForBar(keyImage , "Game Options");
 
         ImageView deleteImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/deleteIcon.png");
-        deleteImage.setTranslateX(852);
-        deleteImage.setTranslateY(790);
+        deleteImage.setTranslateX(760);
+        deleteImage.setTranslateY(155);
         gamePane.getChildren().add(deleteImage);
         setHoverEventForBar(deleteImage , "Delete");
 
@@ -111,28 +116,85 @@ public class GameViewController{
     }
 
     private static void setCenterToCastleBuildings() {
-        putImageView("stairsIcon" , "" , 325 , 720);
-        putImageView("smallWallIcon" , "" , 355 , 720);
-        putImageView("bigWallIcon" , "" , 400 , 700);
-        putImageView("crenulatedWallIcon" , "" , 460 , 680);
-        putImageView("barracksIcon" , "" , 545 , 720);
-        putImageView("mercenrayIcon" , "" , 605 , 740);
-        putImageView("armoryIcon" , "" , 690 , 710);
-        putImageView("towersIcon" , "" , 745 , 720);
-        putImageView("militaryIcon" , "" , 785 , 720);
-        putImageView("gatehouseIcon" , "" , 785 , 760);
+        putImageView("stairsIcon" , "stairs" , "stairs", 240 , 80);
+        putImageView("smallWallIcon" , "low wall"  , "lowWall" ,265 , 80);
+        putImageView("bigWallIcon" , "stone wall" , "stoneWall", 310 , 60);
+        putImageView("crenulatedWallIcon" , "crenulated wall" , "crenulatedWall", 370 , 40);
+        putImageView("barracksIcon" , "barrack" , "barrack", 450 , 80);
+        putImageView("mercenrayIcon" , "mercenary post" , "mercenaryPost", 505 , 100);
+        putImageView("armoryIcon" , "armoury" , "armoury", 595 , 70);
+        putImageView("towersIcon" , "" , "" , 652 , 80);
+        putImageView("militaryIcon" , "" , "" , 692 , 80);
+        putImageView("gatehouseIcon" , "" , "" , 692 , 120);
 
 
 
     }
+    
+    private static Text getNumberOfResourceNeededText() {
+        Text text = new Text("");
+        text.setFill(Color.WHITE);
+        text.setFont(Font.font("Times New Roman", FontWeight.BOLD, 15));
+        text.setStrokeWidth(0.5);
+        text.setStroke(Color.BLACK);
+        return text;
+    }
 
-    private static void putImageView(String fileName , String name , double x ,double y) {
+    private static void putImageView(String fileName , String name , String buildingName, double x ,double y) {
         ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/" + fileName + ".png");
+        ImageView resourceIcon = new ImageView();
+        Text text = getNumberOfResourceNeededText();
         icon.setTranslateX(x);
         icon.setTranslateY(y);
         icon.setScaleX(0.4);
         icon.setScaleY(0.4);
         GameMenu.menuBar.getChildren().add(icon);
+        Building sampleBuilding = GameBuildings.getBuilding(buildingName);
+        icon.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                GameMenu.hoveringBarStateText.setText(name);
+                if (!buildingName.equals("")) {
+                    String item = "";
+                    for (String i : sampleBuilding.getCost().keySet()) {
+                        item = i;
+                        text.setText("(" + sampleBuilding.getCost().get(item).toString() + ")");
+                        break;
+                    }
+                    if (item.equals("wood")) {
+                        resourceIcon.setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).
+                                toExternalForm() + "icons/woodIcon.png"));
+                        resourceIcon.setTranslateY(GameMenu.hoveringBarStateText.getTranslateY() - 57);
+                        resourceIcon.setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 95);
+                    } else if (item.equals("stone")) {
+                        resourceIcon.setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
+                                + "icons/stoneIcon.png"));
+                        resourceIcon.setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 100);
+                        resourceIcon.setTranslateY(GameMenu.hoveringBarStateText.getTranslateY() - 47);
+                    }
+                    resourceIcon.setScaleX(0.2);
+                    resourceIcon.setScaleY(0.2);
+                    text.setTranslateY(70);
+                    text.setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 155);
+                    GameMenu.menuBar.getChildren().add(resourceIcon);
+                    GameMenu.menuBar.getChildren().add(text);
+                    }
+            }
+        });
+        icon.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                GameMenu.hoveringBarStateText.setText("");
+                GameMenu.menuBar.getChildren().remove(resourceIcon);
+                GameMenu.menuBar.getChildren().remove(text);
+            }
+        });
+        icon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                setCenterOfBar();
+            }
+        });
     }
 }

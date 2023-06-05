@@ -1,5 +1,6 @@
 package view.menus;
 
+import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameMaps;
 import enumeration.Paths;
 import javafx.application.Application;
@@ -48,6 +49,8 @@ public class GameMenu extends Application {
         Map map = GameMaps.largeMaps.get(0);
         GameMap gameMap = new GameMap(map, 0, 0);
 
+        GameBuildings.addBuildings();
+
 
 
 
@@ -74,7 +77,7 @@ public class GameMenu extends Application {
         miniMap.setTranslateX(813);
         menuBar.getChildren().add(barImage);
         Text hoveringButton = new Text("");
-        hoveringButton.setTranslateX(375);
+        hoveringButton.setTranslateX(275);
         hoveringButton.setTranslateY(70);
         hoveringButton.setFill(Color.WHITE);
         hoveringButton.setFont(Font.font("Times New Roman", FontWeight.BOLD, 15));
