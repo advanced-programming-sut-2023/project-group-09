@@ -1,5 +1,6 @@
 package view.controllers;
 
+import controller.CaptchaController;
 import controller.GameController;
 import controller.gamestructure.GameBuildings;
 import enumeration.Paths;
@@ -154,8 +155,19 @@ public class GameViewController{
                 GameMenu.createGameBar();
                 setCenterToMilitaryBuildings();
             }
+            case "Gatehouses" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar();
+                setCenterToGatehouses();
+            }
+            case "Industry Buildings" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar();
+                setCenterToIndustryBuildings();
+            }
         }
     }
+
 
     public static void setCenterOfBar(String destination) {
         switch (destination) {
@@ -174,7 +186,38 @@ public class GameViewController{
                 GameMenu.createGameBar();
                 setCenterToMilitaryBuildings();
             }
+            case "Gatehouses" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar();
+                setCenterToGatehouses();
+            }
+            case "Industry Buildings" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar();
+                setCenterToIndustryBuildings();
+            }
         }
+    }
+
+    private static void setCenterToIndustryBuildings() {
+        putBuildingImageView("stockPileIcon" , "Stockpile" , "stockPile", 180 , 70 , 0.25);
+        putBuildingImageView("woodCutterIcon" , "Wood Cutter" , "woodCutter", 220 , 0 , 0.25);
+        putBuildingImageView("quarryIcon" , "Quarry" , "quarry", 310 , -50 , 0.25);
+        putBuildingImageView("oxTetherIcon" , "Ox Tether" , "oxTether", 440 , 30 , 0.25);
+        putBuildingImageView("ironMineIcon" , "Iron Mine" , "ironMine", 400 , 10 , 0.25);
+        putBuildingImageView("pitchRigIcon" , "Pitch Rig" , "pitchRig", 465 , 30 , 0.25);
+        putBuildingImageView("shopIcon" , "Market Place" , "shop", 590 , 10 , 0.25);
+    }
+
+    private static void setCenterToGatehouses() {
+        putButtonImageViewWithDestination("backButtonIcon" , "Back To Castles" , "Castle Buildings" , 225 , 60, 0.2);
+        putBuildingImageView("smallGatehouseIcon" , "Small Gatehouse" , "smallStoneGatehouse", 250 , 0 , 0.25);
+        putBuildingImageView("bigGatehouseIcon" , "Big Gatehouse" , "bigStoneGatehouse", 290 , -50 , 0.25);
+        putBuildingImageView("drawBridgeIcon" , "Draw Bridge" , "drawBridge", 400 , 20 , 0.25);
+        putBuildingImageView("cageIcon" , "Caged Dogs" , "cagedWarDogs", 450 , 30 , 0.25);
+        putBuildingImageView("pitchDitchIcon" , "Pitch Ditch" , "", 530 , 50 , 0.25); // TODO:
+        putBuildingImageView("killingPitIcon" , "Killing Pit" , "", 530 , 90 , 0.25); // TODO:
+        putBuildingImageView("braizerIcon" , "Braizer" , "", 650 , 70 , 0.25); // braizer will added to game buildings
     }
 
     private static void setCenterToMilitaryBuildings() {
@@ -251,78 +294,80 @@ public class GameViewController{
         icon.setScaleY(size);
         GameMenu.menuBar.getChildren().add(icon);
         Building sampleBuilding = GameBuildings.getBuilding(buildingName);
-        for (int i = 0; i != sampleBuilding.getCost().size(); i++) {
-            resourceIcons.add(new ImageView());
-            resourceTexts.add(getNumberOfResourceNeededText());
-        }
-        if (sampleBuilding.getPrice() != 0) {
-            resourceIcons.add(new ImageView());
-            resourceTexts.add(getNumberOfResourceNeededText());
-        }
-        icon.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                GameMenu.hoveringBarStateText.setText(name);
-                int index = 0;
-                if (!buildingName.equals("")) {
-                    for (String i : sampleBuilding.getCost().keySet()) {
-                        resourceTexts.get(index).setText
-                                (sampleBuilding.getCost().get(i).toString());
-                        if (i.equals("wood")) {
-                            resourceIcons.get(index).setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).
-                                    toExternalForm() + "icons/woodIcon.png"));
-                            resourceIcons.get(index).setTranslateY(GameMenu.hoveringBarStateText.getTranslateY() - 57);
-                            resourceIcons.get(index).setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 95 + index*70);
-                        } else if (i.equals("stone")) {
-                            resourceIcons.get(index).setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
-                                    + "icons/stoneIcon.png"));
-                            resourceIcons.get(index).setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 100 + index*70);
-                            resourceIcons.get(index).setTranslateY(GameMenu.hoveringBarStateText.getTranslateY() - 50);
-                        } else if (i.equals("iron")) {
-                            resourceIcons.get(index).setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
-                                    + "icons/ironIcon.png"));
-                            resourceIcons.get(index).setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 100 + index*70);
-                            resourceIcons.get(index).setTranslateY(GameMenu.hoveringBarStateText.getTranslateY() - 56);
+        if (sampleBuilding != null) {
+            for (int i = 0; i != sampleBuilding.getCost().size(); i++) {
+                resourceIcons.add(new ImageView());
+                resourceTexts.add(getNumberOfResourceNeededText());
+            }
+            if (sampleBuilding.getPrice() != 0) {
+                resourceIcons.add(new ImageView());
+                resourceTexts.add(getNumberOfResourceNeededText());
+            }
+            icon.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    GameMenu.hoveringBarStateText.setText(name);
+                    int index = 0;
+                    if (!buildingName.equals("")) {
+                        for (String i : sampleBuilding.getCost().keySet()) {
+                            resourceTexts.get(index).setText
+                                    (sampleBuilding.getCost().get(i).toString());
+                            if (i.equals("wood")) {
+                                resourceIcons.get(index).setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).
+                                        toExternalForm() + "icons/woodIcon.png"));
+                                resourceIcons.get(index).setTranslateY(GameMenu.hoveringBarStateText.getTranslateY() - 57);
+                                resourceIcons.get(index).setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 95 + index * 70);
+                            } else if (i.equals("stone")) {
+                                resourceIcons.get(index).setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
+                                        + "icons/stoneIcon.png"));
+                                resourceIcons.get(index).setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 100 + index * 70);
+                                resourceIcons.get(index).setTranslateY(GameMenu.hoveringBarStateText.getTranslateY() - 50);
+                            } else if (i.equals("iron")) {
+                                resourceIcons.get(index).setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
+                                        + "icons/ironIcon.png"));
+                                resourceIcons.get(index).setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 100 + index * 70);
+                                resourceIcons.get(index).setTranslateY(GameMenu.hoveringBarStateText.getTranslateY() - 56);
+                            }
+                            resourceIcons.get(index).setScaleX(0.2);
+                            resourceIcons.get(index).setScaleY(0.2);
+                            resourceTexts.get(index).setTranslateY(70);
+                            resourceTexts.get(index).setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 115 + index * 70);
+                            GameMenu.menuBar.getChildren().add(resourceIcons.get(index));
+                            GameMenu.menuBar.getChildren().add(resourceTexts.get(index));
+                            index++;
                         }
-                        resourceIcons.get(index).setScaleX(0.2);
-                        resourceIcons.get(index).setScaleY(0.2);
-                        resourceTexts.get(index).setTranslateY(70);
-                        resourceTexts.get(index).setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 115 + index*70);
-                        GameMenu.menuBar.getChildren().add(resourceIcons.get(index));
-                        GameMenu.menuBar.getChildren().add(resourceTexts.get(index));
-                        index++;
-                    }
-                    if (sampleBuilding.getPrice() != 0) {
-                        resourceTexts.get(index).setText
-                                ("" + sampleBuilding.getPrice());
-                        resourceIcons.get(index).setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
-                                + "icons/coinIcon.png"));
-                        resourceIcons.get(index).setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 100 + index*70);
-                        resourceIcons.get(index).setTranslateY(GameMenu.hoveringBarStateText.getTranslateY() - 47);
-                        resourceIcons.get(index).setScaleX(0.2);
-                        resourceIcons.get(index).setScaleY(0.2);
-                        resourceTexts.get(index).setTranslateY(70);
-                        resourceTexts.get(index).setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 115 + index*70);
-                        GameMenu.menuBar.getChildren().add(resourceIcons.get(index));
-                        GameMenu.menuBar.getChildren().add(resourceTexts.get(index));
-                        index++;
-                    }
+                        if (sampleBuilding.getPrice() != 0) {
+                            resourceTexts.get(index).setText
+                                    ("" + sampleBuilding.getPrice());
+                            resourceIcons.get(index).setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
+                                    + "icons/coinIcon.png"));
+                            resourceIcons.get(index).setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 100 + index * 70);
+                            resourceIcons.get(index).setTranslateY(GameMenu.hoveringBarStateText.getTranslateY() - 47);
+                            resourceIcons.get(index).setScaleX(0.2);
+                            resourceIcons.get(index).setScaleY(0.2);
+                            resourceTexts.get(index).setTranslateY(70);
+                            resourceTexts.get(index).setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 115 + index * 70);
+                            GameMenu.menuBar.getChildren().add(resourceIcons.get(index));
+                            GameMenu.menuBar.getChildren().add(resourceTexts.get(index));
+                            index++;
+                        }
 
+                    }
                 }
-            }
-        });
-        icon.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                GameMenu.hoveringBarStateText.setText("");
-                for (Text text : resourceTexts) {
-                    GameMenu.menuBar.getChildren().remove(text);
+            });
+            icon.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    GameMenu.hoveringBarStateText.setText("");
+                    for (Text text : resourceTexts) {
+                        GameMenu.menuBar.getChildren().remove(text);
+                    }
+                    for (ImageView imageView : resourceIcons) {
+                        GameMenu.menuBar.getChildren().remove(imageView);
+                    }
                 }
-                for (ImageView imageView : resourceIcons) {
-                    GameMenu.menuBar.getChildren().remove(imageView);
-                }
-            }
-        });
+            });
+        }
         icon.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {

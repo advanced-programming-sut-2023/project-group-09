@@ -47,6 +47,7 @@ public class GameBuildings {
     }
 
     public static void addBuildings() {
+        createQuarry();
         createShop();
         createHovel();
         createChurch();
@@ -58,6 +59,7 @@ public class GameBuildings {
         createCagedWarDogs();
         createOilSmelter();
         createOxTether();
+
     }
 
     public static void addProducerBuildings() {
@@ -457,6 +459,8 @@ public class GameBuildings {
 
     public static void createCagedWarDogs() {
         Building building = new Building(0, 0, "cagedWarDogs", 10, 2, 2);
+        building.setPrice(100);
+        building.addCost("wood" , 10);
         buildings.put("cagedWarDogs", building);
     }
 
@@ -592,11 +596,13 @@ public class GameBuildings {
 
     public static void createQuarry() {
         Quarry quarry = new Quarry();
+        quarry.addCost("wood" , 100);
         buildings.put("quarry", quarry);
     }
 
     public static void createOxTether() {
         Building building = new Building(1, 0, "oxTether", 10, 2, 2);
+        building.addCost("wood" , 100);
         buildings.put("oxTether", building);
     }
 
