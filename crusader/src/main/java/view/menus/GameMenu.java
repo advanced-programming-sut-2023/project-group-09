@@ -1,5 +1,6 @@
 package view.menus;
 
+import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameMaps;
 import enumeration.Paths;
 import javafx.application.Application;
@@ -50,6 +51,8 @@ public class GameMenu extends Application {
         Map map = GameMaps.largeMaps.get(0);
         GameMap1 gameMap = new GameMap1(map, 0, 0);
 
+        GameBuildings.addBuildings();
+
 
 
 
@@ -58,11 +61,11 @@ public class GameMenu extends Application {
         menuBar.setMaxHeight(220);
         root.getChildren().addAll(gameMap, menuBar);
 
-        createGameBar();
+        GameViewController.setCenterOfBar();
         stage.show();
     }
 
-    private void createGameBar() {
+    public static void createGameBar() {
         ImageView barImage = new ImageView(new Image(LoginMenu.class.getResource
                 (Paths.BAR_IMAGES.getPath()).toExternalForm() + "bar.png"));
         barImage.setFitWidth(menuBar.getMaxWidth());
@@ -76,7 +79,7 @@ public class GameMenu extends Application {
         miniMap.setTranslateX(813);
         menuBar.getChildren().add(barImage);
         Text hoveringButton = new Text("");
-        hoveringButton.setTranslateX(375);
+        hoveringButton.setTranslateX(275);
         hoveringButton.setTranslateY(70);
         hoveringButton.setFill(Color.WHITE);
         hoveringButton.setFont(Font.font("Times New Roman", FontWeight.BOLD, 15));
