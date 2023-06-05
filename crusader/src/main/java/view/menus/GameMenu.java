@@ -88,7 +88,7 @@ public class GameMenu extends Application {
         menuBar.getChildren().add(hoveringButton);
         hoveringBarStateText = hoveringButton;
 
-        Rectangle clipRectangle = new Rectangle(1200, 800);
+        Rectangle clipRectangle = new Rectangle(1200, 900);
         root.setClip(clipRectangle);
 
         GameViewController.createShortcutBars(menuBar, hoveringButton);
