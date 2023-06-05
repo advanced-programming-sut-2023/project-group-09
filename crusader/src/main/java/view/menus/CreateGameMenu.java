@@ -54,12 +54,15 @@ public class CreateGameMenu extends Application {
         }
 
         DBController.loadAllUsers();
-        Pane root = FXMLLoader.load(getClass().getResource("/FXML/signupMenu.fxml"));
+        Pane root = FXMLLoader.load(getClass().getResource("/FXML/createGameMenu.fxml"));
         createGamePane = ViewController.makePaneScreen(stage, root, 1000, -1);
         Scene scene = new Scene(root);
 
-        menuBox = new MenuBox("Signup", 365, 100, 800, 700);
+        menuBox = new MenuBox("Create New Game", 365, 100, 800, 700);
         root.getChildren().add(menuBox);
+
+        MenuFlag menuFlag = new MenuFlag("red", 100, -200);
+        menuBox.getChildren().add(menuFlag);
 
         makeTitleStuff();
         makeGovernmentStuff();
