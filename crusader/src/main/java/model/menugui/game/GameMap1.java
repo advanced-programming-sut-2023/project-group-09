@@ -29,7 +29,7 @@ public class GameMap1 extends Pane {
         this.setOnMouseEntered(mouseEvent -> {
             this.requestFocus();
             this.setOnKeyPressed(null);
-            this.setOnKeyPressed(keyEvent -> {
+            this.setOnKeyReleased(keyEvent -> {
                 String keyName = keyEvent.getCode().getName();
                 if (keyName.equals("Right")) {
                     moveRight();
@@ -71,9 +71,9 @@ public class GameMap1 extends Pane {
         }
     }
 
-    private void moveRight() {
+    public void moveRight() {
         System.out.println("move right");
-        if (cameraX == map.getWidth()) {
+        if (cameraX == map.getWidth()-screenWidth) {
             return;
         }
         cameraX++;
@@ -81,7 +81,7 @@ public class GameMap1 extends Pane {
         this.setTranslateX(this.getTranslateX() - 30);
     }
 
-    private void moveLeft() {
+    public void moveLeft() {
         System.out.println("move left");
         if (cameraX == 0) return;
         cameraX--;
@@ -89,7 +89,7 @@ public class GameMap1 extends Pane {
         this.setTranslateX(this.getTranslateX() + 30);
     }
 
-    private void moveUp() {
+    public void moveUp() {
         System.out.println("move up");
         if (cameraY == 0) return;
         cameraY--;
@@ -97,9 +97,9 @@ public class GameMap1 extends Pane {
         this.setTranslateY(this.getTranslateY() + 9);
     }
 
-    private void moveDown() {
+    public void moveDown() {
         System.out.println("move down");
-        if (cameraY == map.getLength()) return;
+        if (cameraY == map.getLength() - screenHeight) return;
         cameraY++;
         loadMap();
         this.setTranslateY(this.getTranslateY() - 9);

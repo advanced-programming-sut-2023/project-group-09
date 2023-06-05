@@ -52,6 +52,7 @@ public class GameMenu extends Application {
         Map map = GameMaps.largeMaps.get(0);
         GameMap1 gameMap = new GameMap1(map, 0, 0);
 
+
         GameBuildings.addBuildings();
 
 
@@ -63,6 +64,7 @@ public class GameMenu extends Application {
         root.getChildren().addAll(gameMap, menuBar);
 
         GameViewController.setCenterOfBar();
+        GameViewController.createBorderRectangles(gameMap);
         stage.show();
     }
 

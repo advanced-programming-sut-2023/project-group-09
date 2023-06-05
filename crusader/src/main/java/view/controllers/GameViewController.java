@@ -4,24 +4,32 @@ import controller.CaptchaController;
 import controller.GameController;
 import controller.gamestructure.GameBuildings;
 import enumeration.Paths;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import model.building.Building;
+import model.menugui.game.GameMap;
+import model.menugui.game.GameMap1;
 import view.menus.GameMenu;
 import view.menus.LoginMenu;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class GameViewController{
 
     public static String nameOfPageInBar;
+    public static Timeline timeline;
     public static void createShortcutBars(Pane gamePane , Text text) {
         setCenterOfBar();
         ImageView castleBuildingsImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
@@ -439,6 +447,70 @@ public class GameViewController{
                 // TODO : select building
             }
         });
+    }
+
+    public static void createBorderRectangles(GameMap1 gameMap) {
+        Rectangle downRight = new Rectangle(10 , 10);
+        Rectangle upRight = new Rectangle(10 , 10);
+        Rectangle upLeft = new Rectangle(10 , 10);
+        Rectangle downLeft = new Rectangle(10 , 10);
+        Rectangle right = new Rectangle(10 , 780);
+        Rectangle up = new Rectangle(1180 , 10);
+        Rectangle left = new Rectangle(10 , 780);
+        Rectangle down = new Rectangle(1180 , 10);
+
+        setTranslateOfRectangle(downRight , 595 , 395);
+        setTranslateOfRectangle(upRight,595 , -395);
+        setTranslateOfRectangle(upLeft,-595 , -395);
+        setTranslateOfRectangle(downLeft,-595 , 395);
+        setTranslateOfRectangle(right , 595 , 0);
+        setTranslateOfRectangle(left , -595 , 0);
+        setTranslateOfRectangle(up , 0 , -395);
+        setTranslateOfRectangle(down , 0 , 395);
+
+
+        GameMenu.root.getChildren().addAll(downRight , downLeft , upRight , upLeft , right , left , up , down);
+
+        setEventForRectangles(downRight , 1 , -1 , gameMap);
+        setEventForRectangles(downLeft , -1 , -1 , gameMap);
+        setEventForRectangles(upRight , 1 , 1 , gameMap);
+        setEventForRectangles(upLeft , -1 , 1 , gameMap);
+
+        setEventForRectangles(down , 0 , -1 , gameMap);
+        setEventForRectangles(left , -1 , 0 , gameMap);
+        setEventForRectangles(up , 0 , 1 , gameMap);
+        setEventForRectangles(right , 1 , 0 , gameMap);
+
+
+
+    }
+
+    private static void setEventForRectangles(Rectangle rectangle , int horizontal , int vertical , GameMap1 gameMap) {
+        rectangle.setOnMouseEntered(e -> {
+            timeline = new Timeline(new KeyFrame(Duration.ZERO , actionEvent -> {
+                if (horizontal == 1)
+                    gameMap.moveRight();
+                else if (horizontal == -1)
+                    gameMap.moveLeft();
+                if (vertical == 1)
+                    gameMap.moveUp();
+                else if (vertical == -1)
+                    gameMap.moveDown();
+            }) , new KeyFrame(Duration.millis(100) , actionEvent -> {}));
+            timeline.setCycleCount(-1);
+            timeline.play();
+        });
+
+        rectangle.setOnMouseExited(e -> {
+            timeline.stop();
+        });
+
+    }
+
+    private static void setTranslateOfRectangle(Rectangle rectangle , double x , double y) {
+        rectangle.setTranslateX(x);
+        rectangle.setTranslateY(y);
+        rectangle.setFill(Color.TRANSPARENT);
     }
 
 }
