@@ -170,6 +170,11 @@ public class GameViewController{
                 GameMenu.createGameBar();
                 setCenterToFarmBuildings();
             }
+            case "Town Buildings" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar();
+                setCenterToTownBuildings();
+            }
         }
     }
 
@@ -205,7 +210,18 @@ public class GameViewController{
                 GameMenu.createGameBar();
                 setCenterToFarmBuildings();
             }
+            case "Town Buildings" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar();
+                setCenterToTownBuildings();
+            }
         }
+    }
+
+    private static void setCenterToTownBuildings() {
+        putBuildingImageView("hovelIcon" , "Hovel" , "hovel", 300 , 100 , 1);
+        putBuildingImageView("churchIcon" , "Church" , "church", 450 , 100 , 1);
+        putBuildingImageView("cathedralIcon" , "Cathedral" , "cathedral", 600 , 90 , 1);
     }
 
     private static void setCenterToFarmBuildings() {
