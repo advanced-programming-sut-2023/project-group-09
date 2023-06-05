@@ -16,6 +16,8 @@ import model.building.Building;
 import view.menus.GameMenu;
 import view.menus.LoginMenu;
 
+import java.util.ArrayList;
+
 public class GameViewController{
 
     public static String nameOfPageInBar;
@@ -147,6 +149,11 @@ public class GameViewController{
                 GameMenu.createGameBar();
                 setCenterToTowers();
             }
+            case "Military Buildings" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar();
+                setCenterToMilitaryBuildings();
+            }
         }
     }
 
@@ -162,7 +169,20 @@ public class GameViewController{
                 GameMenu.createGameBar();
                 setCenterToTowers();
             }
+            case "Military Buildings" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar();
+                setCenterToMilitaryBuildings();
+            }
         }
+    }
+
+    private static void setCenterToMilitaryBuildings() {
+        putButtonImageViewWithDestination("backButtonIcon" , "Back To Castles" , "Castle Buildings" , 225 , 60, 0.2);
+        putBuildingImageView("engineerGuildIcon" , "Engineer's Guild" , "engineerGuild", 220 , 20 , 0.25);
+        putBuildingImageView("stableIcon" , "Stable" , "stable", 300 , -5 , 0.25);
+        putBuildingImageView("tunnelerGuildIcon" , "Tunneler's Guild" , "tunnelersGuild", 450 , 5 , 0.25);
+        putBuildingImageView("oilSmelterIcon" , "Oil Smelter" , "oilSmelter", 540 , 5 , 0.25);
     }
 
     private static void setCenterToTowers() {
@@ -185,8 +205,6 @@ public class GameViewController{
         putImageView("towersIcon" , "Towers"  , 652 , 80);
         putImageView("militaryIcon" , "Military Buildings"  , 692 , 80);
         putImageView("gatehouseIcon" , "Gatehouses"  , 692 , 120);
-
-
 
     }
 
@@ -225,51 +243,84 @@ public class GameViewController{
     private static void putBuildingImageView(String fileName , String name , String buildingName, double x ,double y , double size) {
         ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/" + fileName + ".png");
-        ImageView resourceIcon = new ImageView();
-        Text text = getNumberOfResourceNeededText();
+        ArrayList<ImageView> resourceIcons = new ArrayList<>();
+        ArrayList<Text> resourceTexts = new ArrayList<>();
         icon.setTranslateX(x);
         icon.setTranslateY(y);
         icon.setScaleX(size);
         icon.setScaleY(size);
         GameMenu.menuBar.getChildren().add(icon);
         Building sampleBuilding = GameBuildings.getBuilding(buildingName);
+        for (int i = 0; i != sampleBuilding.getCost().size(); i++) {
+            resourceIcons.add(new ImageView());
+            resourceTexts.add(getNumberOfResourceNeededText());
+        }
+        if (sampleBuilding.getPrice() != 0) {
+            resourceIcons.add(new ImageView());
+            resourceTexts.add(getNumberOfResourceNeededText());
+        }
         icon.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 GameMenu.hoveringBarStateText.setText(name);
+                int index = 0;
                 if (!buildingName.equals("")) {
-                    String item = "";
                     for (String i : sampleBuilding.getCost().keySet()) {
-                        item = i;
-                        text.setText("(" + sampleBuilding.getCost().get(item).toString() + ")");
-                        break;
+                        resourceTexts.get(index).setText
+                                (sampleBuilding.getCost().get(i).toString());
+                        if (i.equals("wood")) {
+                            resourceIcons.get(index).setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).
+                                    toExternalForm() + "icons/woodIcon.png"));
+                            resourceIcons.get(index).setTranslateY(GameMenu.hoveringBarStateText.getTranslateY() - 57);
+                            resourceIcons.get(index).setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 95 + index*70);
+                        } else if (i.equals("stone")) {
+                            resourceIcons.get(index).setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
+                                    + "icons/stoneIcon.png"));
+                            resourceIcons.get(index).setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 100 + index*70);
+                            resourceIcons.get(index).setTranslateY(GameMenu.hoveringBarStateText.getTranslateY() - 50);
+                        } else if (i.equals("iron")) {
+                            resourceIcons.get(index).setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
+                                    + "icons/ironIcon.png"));
+                            resourceIcons.get(index).setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 100 + index*70);
+                            resourceIcons.get(index).setTranslateY(GameMenu.hoveringBarStateText.getTranslateY() - 56);
+                        }
+                        resourceIcons.get(index).setScaleX(0.2);
+                        resourceIcons.get(index).setScaleY(0.2);
+                        resourceTexts.get(index).setTranslateY(70);
+                        resourceTexts.get(index).setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 115 + index*70);
+                        GameMenu.menuBar.getChildren().add(resourceIcons.get(index));
+                        GameMenu.menuBar.getChildren().add(resourceTexts.get(index));
+                        index++;
                     }
-                    if (item.equals("wood")) {
-                        resourceIcon.setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).
-                                toExternalForm() + "icons/woodIcon.png"));
-                        resourceIcon.setTranslateY(GameMenu.hoveringBarStateText.getTranslateY() - 57);
-                        resourceIcon.setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 95);
-                    } else if (item.equals("stone")) {
-                        resourceIcon.setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
-                                + "icons/stoneIcon.png"));
-                        resourceIcon.setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 100);
-                        resourceIcon.setTranslateY(GameMenu.hoveringBarStateText.getTranslateY() - 47);
+                    if (sampleBuilding.getPrice() != 0) {
+                        resourceTexts.get(index).setText
+                                ("" + sampleBuilding.getPrice());
+                        resourceIcons.get(index).setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
+                                + "icons/coinIcon.png"));
+                        resourceIcons.get(index).setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 100 + index*70);
+                        resourceIcons.get(index).setTranslateY(GameMenu.hoveringBarStateText.getTranslateY() - 47);
+                        resourceIcons.get(index).setScaleX(0.2);
+                        resourceIcons.get(index).setScaleY(0.2);
+                        resourceTexts.get(index).setTranslateY(70);
+                        resourceTexts.get(index).setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 115 + index*70);
+                        GameMenu.menuBar.getChildren().add(resourceIcons.get(index));
+                        GameMenu.menuBar.getChildren().add(resourceTexts.get(index));
+                        index++;
                     }
-                    resourceIcon.setScaleX(0.2);
-                    resourceIcon.setScaleY(0.2);
-                    text.setTranslateY(70);
-                    text.setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 155);
-                    GameMenu.menuBar.getChildren().add(resourceIcon);
-                    GameMenu.menuBar.getChildren().add(text);
-                    }
+
+                }
             }
         });
         icon.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 GameMenu.hoveringBarStateText.setText("");
-                GameMenu.menuBar.getChildren().remove(resourceIcon);
-                GameMenu.menuBar.getChildren().remove(text);
+                for (Text text : resourceTexts) {
+                    GameMenu.menuBar.getChildren().remove(text);
+                }
+                for (ImageView imageView : resourceIcons) {
+                    GameMenu.menuBar.getChildren().remove(imageView);
+                }
             }
         });
         icon.setOnMouseClicked(new EventHandler<MouseEvent>() {

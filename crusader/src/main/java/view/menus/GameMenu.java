@@ -14,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -21,6 +22,7 @@ import javafx.stage.Stage;
 import model.game.Map;
 import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
+import model.menugui.game.GameMap1;
 import view.controllers.GameViewController;
 import view.controllers.ViewController;
 
@@ -47,7 +49,7 @@ public class GameMenu extends Application {
         root = ViewController.makeStackPaneScreen(stage, pane, 1200, 800);
         GameMaps.createMap1();
         Map map = GameMaps.largeMaps.get(0);
-        GameMap gameMap = new GameMap(map, 0, 0);
+        GameMap1 gameMap = new GameMap1(map, 0, 0);
 
         GameBuildings.addBuildings();
 
@@ -85,6 +87,10 @@ public class GameMenu extends Application {
         hoveringButton.setStroke(Color.BLACK);
         menuBar.getChildren().add(hoveringButton);
         hoveringBarStateText = hoveringButton;
+
+        Rectangle clipRectangle = new Rectangle(1200, 900);
+        root.setClip(clipRectangle);
+
         GameViewController.createShortcutBars(menuBar, hoveringButton);
     }
 
