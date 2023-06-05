@@ -60,9 +60,48 @@ public class GameMap1 extends Pane {
                         GameTile gameTile = new GameTile(tile, x * 30, y * 9 - 9);
                         this.getChildren().add(gameTile);
                     }
-                    load[y][x] = false;
+                    load[y][x] = true;
                 }
+            }
+        }
+    }
 
+    private void loadMapHorizontal(int move) {
+        int x = cameraX;
+        if (move == 1) { // 1 is right
+            x = cameraX + screenWidth;
+        }
+       for (int y = cameraY; y < Math.min(cameraY+ screenHeight , map.getLength()); y++) {
+           if (!load[y][x]) {
+               Tile tile = map.getTile(x, y);
+               if (y % 2 == 1) {
+                   GameTile gameTile = new GameTile(tile, x * 30 - 15, y * 9 - 9);
+                   this.getChildren().add(gameTile);
+               } else {
+                   GameTile gameTile = new GameTile(tile, x * 30, y * 9 - 9);
+                   this.getChildren().add(gameTile);
+               }
+               load[y][x] = true;
+           }
+       }
+    }
+
+    private void loadMapVertical(int move) {
+        int y = cameraY;
+        if (move == 1) { // 1 is down
+            y = cameraY + screenHeight;
+        }
+        for (int x = cameraX; x < Math.min(cameraX + screenWidth , map.getWidth()); x++) {
+            if (!load[y][x]) {
+                Tile tile = map.getTile(x, y);
+                if (y % 2 == 1) {
+                    GameTile gameTile = new GameTile(tile, x * 30 - 15, y * 9 - 9);
+                    this.getChildren().add(gameTile);
+                } else {
+                    GameTile gameTile = new GameTile(tile, x * 30, y * 9 - 9);
+                    this.getChildren().add(gameTile);
+                }
+                load[y][x] = true;
             }
         }
     }
@@ -73,7 +112,7 @@ public class GameMap1 extends Pane {
             return;
         }
         cameraX++;
-        loadMap();
+        loadMapHorizontal(1);
         this.setTranslateX(this.getTranslateX() - 30);
     }
 
@@ -81,7 +120,7 @@ public class GameMap1 extends Pane {
         System.out.println("move left");
         if (cameraX == 0) return;
         cameraX--;
-        loadMap();
+        loadMapHorizontal(-1);
         this.setTranslateX(this.getTranslateX() + 30);
     }
 
@@ -89,15 +128,15 @@ public class GameMap1 extends Pane {
         System.out.println("move up");
         if (cameraY == 0) return;
         cameraY--;
-        loadMap();
-        this.setTranslateX(this.getTranslateY() - 9);
+        loadMapVertical(1);
+        this.setTranslateY(this.getTranslateY() + 9);
     }
 
     private void moveDown() {
         System.out.println("move down");
         if (cameraY == map.getLength()) return;
         cameraY++;
-        loadMap();
-        this.setTranslateX(this.getTranslateY() + 9);
+        loadMapVertical(-1);
+        this.setTranslateY(this.getTranslateY() - 9);
     }
 }
