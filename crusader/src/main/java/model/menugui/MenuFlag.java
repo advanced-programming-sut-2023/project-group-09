@@ -7,12 +7,10 @@ import javafx.scene.image.ImageView;
 public class MenuFlag extends ImageView {
     private String color;
 
-    public MenuFlag(String color, int x, int y) {
+    public MenuFlag(String color) {
         this.setImage(new Image(MenuFlag.class.getResource(Paths.FLAG_IMAGES.getPath() +
                 color + "Flag.png").toExternalForm()));
         this.color = color;
-        this.setTranslateX(x);
-        this.setTranslateY(y);
         this.setViewOrder(-1);
         makeHoverBehavior();
     }
@@ -26,5 +24,14 @@ public class MenuFlag extends ImageView {
             this.setImage(new Image(MenuFlag.class.getResource(Paths.FLAG_IMAGES.getPath() +
                     color + "Flag.png").toExternalForm()));
         });
+    }
+
+    public void refresh() {
+        this.setImage(new Image(MenuFlag.class.getResource(Paths.FLAG_IMAGES.getPath() +
+                color + "Flag.png").toExternalForm()));
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

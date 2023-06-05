@@ -41,6 +41,8 @@ public class CreateGameMenu extends Application {
     public ArrayList<MenuTextField> governmentUsernames = new ArrayList<>();
     public ArrayList<MenuChoiceBox> governmentColors = new ArrayList<>();
     public ArrayList<MenuChoiceBox> castleNumbers = new ArrayList<>();
+    public ArrayList<MenuFlag> castleFlags = new ArrayList<>();
+    public ArrayList<String> addedGovernments = new ArrayList<>();
     public MenuButton startGame;
     public int governmentNumber;
 
@@ -60,9 +62,6 @@ public class CreateGameMenu extends Application {
 
         menuBox = new MenuBox("Create New Game", 365, 100, 800, 700);
         root.getChildren().add(menuBox);
-
-        MenuFlag menuFlag = new MenuFlag("red", 100, -200);
-        menuBox.getChildren().add(menuFlag);
 
         makeTitleStuff();
         makeGovernmentStuff();
@@ -112,6 +111,10 @@ public class CreateGameMenu extends Application {
             menuBox.getChildren().add(colorField);
             governmentColors.add(colorField);
             checkSelectedColor(colorField);
+
+            MenuFlag flag = new MenuFlag("transparent");
+            flag.setVisible(false);
+            castleFlags.add(flag);
 
             MenuChoiceBox castleNumber = new MenuChoiceBox(menuBox, "", 40, 60 * i - 190,
                     FXCollections.observableArrayList(new String[1]), 40);
@@ -173,18 +176,31 @@ public class CreateGameMenu extends Application {
                     GameMaps.createMaps();
                     Map selectedMap = (mapsField.getValue().equals("Map 1")) ?
                             GameMaps.largeMaps.get(0) : GameMaps.smallMaps.get(0);
-                    for (int i = 0; i < 8; i++)
-                        castles.add("Castle " + (i + 1) + " (" + selectedMap.getDefaultCastles().get(i).getFirst()
-                                + ", " + selectedMap.getDefaultCastles().get(i).getSecond() + ")");
-                    castleNumbers.get(0).setItems(FXCollections.observableArrayList(castles));
                     menuBox.getChildren().remove(previewMap);
                     previewMap = new PreviewMap(selectedMap, 230, -120);
                     menuBox.getChildren().add(previewMap);
+                    for (int i = 0; i < 8; i++) {
+                        castleFlags.get(i).setTranslateX(selectedMap.getDefaultCastles().get(i).getFirst() - selectedMap.getWidth() / 2);
+                        castleFlags.get(i).setTranslateY(selectedMap.getDefaultCastles().get(i).getSecond() - selectedMap.getWidth() / 2);
+                        castleFlags.get(i).setVisible(true);
+                        previewMap.getChildren().add(castleFlags.get(i));
+                        castles.add("Castle " + (i + 1));
+                        selectCastle(castleFlags.get(i));
+                    }
+                    castleNumbers.get(0).setItems(FXCollections.observableArrayList(castles));
                     MapController.map = selectedMap;
                     game = new Game(selectedMap);
                     GameController.setGame(game);
                 }
             }
+        });
+    }
+
+    private void selectCastle(MenuFlag flag) {
+        flag.setOnMouseClicked(mouseEvent -> {
+            int x = castleFlags.indexOf(flag);
+            if (castles.contains("Castle " + (x + 1)))
+                castleNumbers.get(governmentNumber - 1).setValue("Castle " + (x + 1));
         });
     }
 
@@ -208,6 +224,10 @@ public class CreateGameMenu extends Application {
             governmentUsernames.get(governmentNumber - 1).handlingError("username doesn't exist!");
             return;
         }
+        if (addedGovernments.contains(governmentUsernames.get(governmentNumber - 1).getText())){
+            governmentUsernames.get(governmentNumber - 1).handlingError("this government has been added!");
+            return;
+        }
         if (governmentColors.get(governmentNumber - 1).getValue() == null) {
             governmentUsernames.get(governmentNumber - 1).handlingError("color is required!");
             return;
@@ -220,8 +240,7 @@ public class CreateGameMenu extends Application {
         int castleNumber = Integer.parseInt(((String) castleNumbers.get(governmentNumber - 1).getValue()).substring(7, 8));
         int x = game.getMap().getDefaultCastles().get(castleNumber - 1).getFirst();
         int y = game.getMap().getDefaultCastles().get(castleNumber - 1).getSecond();
-        castles.remove("Castle " + castleNumber + " (" + game.getMap().getDefaultCastles().get(castleNumber - 1).getFirst()
-                + ", " + game.getMap().getDefaultCastles().get(castleNumber - 1).getSecond() + ")");
+        castles.remove("Castle " + castleNumber);
 
         Colors color = (Colors) governmentColors.get(governmentNumber - 1).getValue();
         colors.remove(color);
@@ -246,6 +265,9 @@ public class CreateGameMenu extends Application {
         governmentUsernames.get(governmentNumber - 1).setEditable(false);
         governmentColors.get(governmentNumber - 1).setDisable(true);
         castleNumbers.get(governmentNumber - 1).setDisable(true);
+        castleFlags.get(castleNumber - 1).setColor(color.getName());
+        castleFlags.get(castleNumber - 1).refresh();
+        addedGovernments.add(government.getUser().getUsername());
         if (governmentNumber == 7) addGovernment.setDisable(true);
         else {
             governmentNumber++;

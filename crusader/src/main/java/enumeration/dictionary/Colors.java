@@ -10,7 +10,7 @@ public enum Colors {
     ORANGE("orange", "\u001B[38;2;219;119;31m", "rgb(219, 119, 31)"),
     PURPLE("purple", "\u001B[38;2;131;31;219m", "rgb(131, 31, 219)"),
     GREY("grey", "\u001B[38;2;93;92;94m", "rgb(93, 92, 94)"),
-    SKY_BLUE("sky blue", "\u001B[38;2;52;247;234m", "rgb(52, 247, 234)");
+    SKY_BLUE("skyBlue", "\u001B[38;2;52;247;234m", "rgb(52, 247, 234)");
     private String name;
     private String textColor;
     private String rgb;
