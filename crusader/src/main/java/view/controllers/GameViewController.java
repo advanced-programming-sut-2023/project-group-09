@@ -165,6 +165,11 @@ public class GameViewController{
                 GameMenu.createGameBar();
                 setCenterToIndustryBuildings();
             }
+            case "Farm Buildings" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar();
+                setCenterToFarmBuildings();
+            }
         }
     }
 
@@ -195,8 +200,19 @@ public class GameViewController{
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar();
                 setCenterToIndustryBuildings();
+            } case "Farm Buildings" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar();
+                setCenterToFarmBuildings();
             }
         }
+    }
+
+    private static void setCenterToFarmBuildings() {
+        putBuildingImageView("dairyIcon" , "Dairy Farm" , "dairyProducts", 180 , 20 , 0.25);
+        putBuildingImageView("appleFarmIcon" , "Apple Orchard" , "appleGarden", 300 , 20 , 0.25);
+        putBuildingImageView("wheatFarmIcon" , "Wheat Farm" , "wheatFarm", 460 , 20 , 0.25);
+        putBuildingImageView("hopsFarmIcon" , "Hops Farm" , "hopFarm", 540 , 20 , 0.25);
     }
 
     private static void setCenterToIndustryBuildings() {
