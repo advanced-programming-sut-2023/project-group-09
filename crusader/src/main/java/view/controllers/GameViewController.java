@@ -180,6 +180,11 @@ public class GameViewController{
                 GameMenu.createGameBar();
                 setCenterToWeaponsBuildings();
             }
+            case "Food Processing Buildings" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar();
+                setCenterToFoodProcessingBuildings();
+            }
         }
     }
 
@@ -224,8 +229,20 @@ public class GameViewController{
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar();
                 setCenterToWeaponsBuildings();
+            } case "Food Processing Buildings" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar();
+                setCenterToFoodProcessingBuildings();
             }
         }
+    }
+
+    private static void setCenterToFoodProcessingBuildings() {
+        putBuildingImageView("granaryIcon" , "Granary" , "granary", 280 , 100 , 1);
+        putBuildingImageView("bakeryIcon" , "Bakery" , "bakery", 380 , 100 , 1);
+        putBuildingImageView("breweryIcon" , "Brewery" , "brewery", 480 , 100 , 1);
+        putBuildingImageView("millIcon" , "Mill" , "mill", 580 , 80 , 1);
+        putBuildingImageView("innIcon" , "Inn" , "inn", 660 , 90 , 1);
     }
 
     private static void setCenterToWeaponsBuildings() {
