@@ -59,11 +59,11 @@ public class GameMenu extends Application {
         menuBar.setMaxHeight(220);
         root.getChildren().addAll(gameMap, menuBar);
 
-        createGameBar();
+        GameViewController.setCenterOfBar();
         stage.show();
     }
 
-    private void createGameBar() {
+    public static void createGameBar() {
         ImageView barImage = new ImageView(new Image(LoginMenu.class.getResource
                 (Paths.BAR_IMAGES.getPath()).toExternalForm() + "bar.png"));
         barImage.setFitWidth(menuBar.getMaxWidth());
