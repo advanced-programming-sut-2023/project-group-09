@@ -2,6 +2,7 @@ package model.menugui.game;
 
 import enumeration.Paths;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -15,8 +16,8 @@ public class GameTile extends StackPane {
     private int tileY;
     private double width;
     private double height;
-    private Rectangle textureImage;
-    private Rectangle buildingImage;
+    private ImageView textureImage;
+    private ImageView buildingImage;
 
     public GameTile(Tile tile, double x, double y, int tileX, int tileY) {
         this.tileX = tileX;
@@ -30,10 +31,12 @@ public class GameTile extends StackPane {
         this.setMinHeight(height);
         this.setMaxWidth(width);
         this.setMinWidth(width);
-        textureImage = new Rectangle(width, height);
-        textureImage.setViewOrder(0);
+        textureImage = new ImageView();
+        textureImage.setFitWidth(width);
+        textureImage.setFitHeight(height);
         textureImage.setTranslateX(x);
         textureImage.setTranslateY(y);
+        textureImage.setViewOrder(0);
         refreshTile();
         this.getChildren().addAll(textureImage);
     }
@@ -44,18 +47,31 @@ public class GameTile extends StackPane {
     }
 
     public void setTexture() {
-        textureImage.setFill(new ImagePattern(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
-                + "textures/" + tile.getTexture().getName() + "/" + tile.getTextureNum() + ".png").toExternalForm())));
+        textureImage.setImage(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                + "textures/" + tile.getTexture().getName() + ".png").toExternalForm()));
     }
 
     public void setBuilding() {
+        if (tileX == 10 && tileY == 10) {
+            buildingImage = new ImageView(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                    + "buildings/tunnelersGuild.png").toExternalForm()));
+//            buildingImage.setFitWidth(width * 4);
+//            buildingImage.setFitHeight(height * 7);
+            buildingImage.setTranslateX(x);
+            buildingImage.setTranslateY(y);
+            this.setViewOrder(-1);
+            this.getChildren().add(buildingImage);
+        }
+
         if (tileX == 20 && tileY == 20) {
-            buildingImage = new Rectangle(width * 4, height * 7);
-            buildingImage.setFill(new ImagePattern(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
-                    + "buildings/tunnelersGuild.png").toExternalForm())));
+            buildingImage = new ImageView(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                    + "buildings/stockPile.png").toExternalForm()));
+//            buildingImage.setFitWidth(width * 2);
+//            buildingImage.setFitHeight(height * 2);
             buildingImage.setTranslateX(x);
             buildingImage.setTranslateY(y);
             buildingImage.setViewOrder(-1);
+            this.setViewOrder(-1);
             this.getChildren().add(buildingImage);
         }
     }
