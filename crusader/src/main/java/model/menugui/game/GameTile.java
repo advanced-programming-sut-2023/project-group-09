@@ -39,6 +39,7 @@ public class GameTile extends StackPane {
     }
 
 //    public void setBuilding() {
+//        if (tile.get)
 //        buildingImage = new Rectangle()
 //    }
 }
