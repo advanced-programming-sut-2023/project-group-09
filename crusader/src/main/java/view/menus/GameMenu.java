@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import model.game.Map;
 import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
+import model.menugui.game.GameMap1;
 import view.controllers.GameViewController;
 import view.controllers.ViewController;
 
@@ -36,6 +37,7 @@ public class GameMenu extends Application {
     public static StackPane root;
     public static MiniMap miniMap;
     public static GameMap gameMap;
+    public static GameMap1 gameMap1;
     public static Pane menuBar;
     public static Text hoveringBarStateText;
 
@@ -56,18 +58,18 @@ public class GameMenu extends Application {
         GameMaps.createMap1();
         Map map = GameMaps.largeMaps.get(0);
 
-        gameMap = new GameMap(map, 0, 0, 30, 18);
-        miniMap = new MiniMap(125, 143, 0, 0);
+        gameMap1 = new GameMap1(map,30,18,0,0);
+        //miniMap = new MiniMap(125, 143, 0, 0);
 
         GameBuildings.addBuildings();
 
         menuBar = new Pane();
         menuBar.setMaxWidth(1200);
         menuBar.setMaxHeight(220);
-        root.getChildren().addAll(gameMap, menuBar);
+        root.getChildren().addAll(gameMap1, menuBar);
 
         GameViewController.setCenterOfBar();
-        GameViewController.createBorderRectangles(gameMap,miniMap);
+        //GameViewController.createBorderRectangles(gameMap,miniMap);
         stage.show();
     }
 
