@@ -13,6 +13,7 @@ import model.building.castlebuildings.Wall;
 import model.human.Human;
 import model.human.civilian.Civilian;
 import model.human.military.Military;
+import model.menugui.game.GameTile;
 import model.tools.Tool;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class Tile {
     private Building building = null;
     private boolean isMoat;
     private boolean isPit;
-
+    private GameTile gameTile;
     private Color color;
 
     private Government pitGovernment;
@@ -270,5 +271,13 @@ public class Tile {
 
     public void setPitGovernment(Government pitGovernment) {
         this.pitGovernment = pitGovernment;
+    }
+
+    public GameTile getGameTile() {
+        return gameTile;
+    }
+
+    public void setGameTile(GameTile gameTile) {
+        this.gameTile = gameTile;
     }
 }

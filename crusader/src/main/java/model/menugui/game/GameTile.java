@@ -23,22 +23,17 @@ public class GameTile extends StackPane {
         image = new Rectangle(width, height);
         image.setTranslateX(x);
         image.setTranslateY(y);
-        if (tile.getTexture() == Textures.EARTH) {
-            image.setFill(new ImagePattern(
-                    new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()).toExternalForm() + "textures/earth.png")));
-        } else {
-            image.setFill(new ImagePattern(
-                    new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()).toExternalForm() + "textures/other.png")));
-        }
+        setTexture();
 
         this.getChildren().addAll(image);
     }
 
-    public static void refreshTile(Tile tile) {
-
+    public void refreshTile() {
+        setTexture();
     }
 
-    public static void setTexture(Tile tile) {
-        if (tile.getTexture() == Textures.EARTH);
+    public void setTexture() {
+        image.setFill(new ImagePattern(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+        + "textures/" + tile.getTexture().getName() + ".png").toExternalForm())));
     }
 }

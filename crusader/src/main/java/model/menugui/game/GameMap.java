@@ -73,9 +73,7 @@ public class GameMap extends Pane {
     }
 
     public void moveRight() {
-        if (cameraX == map.getWidth()-screenWidth) {
-            return;
-        }
+        if (cameraX == map.getWidth()-screenWidth) return;
         cameraX++;
         loadMap();
         this.setTranslateX(this.getTranslateX() - 30);
@@ -91,6 +89,7 @@ public class GameMap extends Pane {
     public void moveUp() {
         if (cameraY == 0) return;
         cameraY--;
+        loadMap();
         this.setTranslateX(this.getTranslateY() - 9);
     }
 
