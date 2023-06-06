@@ -67,7 +67,7 @@ public class GameMap extends Pane {
                         GameTile gameTile = new GameTile(tile, x * tileWidth - (tileWidth / 2),
                                 y * (tileHeight / 2) - (tileHeight / 2), x, y);
                         gameTiles[y][x] = gameTile;
-                        this.getChildren().add(gameTile);
+                        this.getChildren().add(0,gameTile);
                     } else {
                         GameTile gameTile = new GameTile(tile, x * tileWidth, y * (tileHeight / 2) - (tileHeight / 2), x, y);
                         gameTiles[y][x] = gameTile;

@@ -28,11 +28,13 @@ public class Tile {
     private Building building = null;
     private boolean isMoat;
     private boolean isPit;
+    private int textureNum;
     private Color color;
 
     private Government pitGovernment;
     private boolean passable = true;
     private boolean canPutBuilding = true;
+
     public Tile() {
         this.isMoat = false;
         this.isPit = false;
@@ -59,7 +61,7 @@ public class Tile {
     }
 
     public void setTree(Trees tree) {
-        if (tree != null){
+        if (tree != null) {
             canPutBuilding = false;
         }
         this.tree = tree;
@@ -92,7 +94,7 @@ public class Tile {
     }
 
     public void setRockDirection(RockDirections rockDirection) {
-        if (rockDirection != null){
+        if (rockDirection != null) {
             canPutBuilding = false;
             passable = false;
         }
@@ -182,10 +184,11 @@ public class Tile {
             Color prmColor = texture.getColor();
             Color tmpColor = texture.getTempColor();
             Random random = new Random();
+            textureNum = random.nextInt(texture.getCount());
             int whichColor = random.nextInt(texture.getRatio());
-            if (whichColor == 0){
+            if (whichColor == 0) {
                 color = tmpColor;
-            }else{
+            } else {
                 color = prmColor;
             }
         }
@@ -245,6 +248,10 @@ public class Tile {
     public void setMoat(boolean moat) {
         passable = !moat;
         isMoat = moat;
+    }
+
+    public int getTextureNum() {
+        return textureNum;
     }
 
     public boolean isPit() {
