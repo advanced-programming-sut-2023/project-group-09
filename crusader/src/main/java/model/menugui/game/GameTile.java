@@ -75,8 +75,8 @@ public class GameTile extends StackPane {
                     + "buildings/stockPile.png").toExternalForm()));
 //            buildingImage.setFitWidth(width * 2);
 //            buildingImage.setFitHeight(height * 2);
-            buildingImage.setScaleX(5.0 / 3);
-            buildingImage.setScaleY(5.0 / 3);
+//            buildingImage.setScaleX(5.0 / 3);
+//            buildingImage.setScaleY(5.0 / 3);
             buildingImage.setTranslateX(x);
             buildingImage.setTranslateY(y);
 //            buildingImage.setViewOrder(-1);
