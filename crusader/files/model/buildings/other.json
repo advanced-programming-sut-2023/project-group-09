@@ -18,8 +18,8 @@
       "startY": 0,
       "endX": 0,
       "endY": 0,
-      "width": 18,
-      "length": 12
+      "width": 7,
+      "length": 13
     }
   },
   "cagedWarDogs": {
@@ -40,8 +40,8 @@
     "startY": 0,
     "endX": 0,
     "endY": 0,
-    "width": 2,
-    "length": 2
+    "width": 3,
+    "length": 3
   },
   "oxTether": {
     "cost": {},
@@ -84,8 +84,8 @@
     "startY": 0,
     "endX": 0,
     "endY": 0,
-    "width": 5,
-    "length": 5
+    "width": 4,
+    "length": 4
   },
   "stable": {
     "cost": {
@@ -107,8 +107,8 @@
     "startY": 0,
     "endX": 0,
     "endY": 0,
-    "width": 5,
-    "length": 5
+    "width": 6,
+    "length": 6
   },
   "church": {
     "cost": {},
@@ -128,8 +128,8 @@
     "startY": 0,
     "endX": 0,
     "endY": 0,
-    "width": 12,
-    "length": 12
+    "width": 9,
+    "length": 9
   },
   "hovel": {
     "cost": {
@@ -172,7 +172,7 @@
     "startY": 0,
     "endX": 0,
     "endY": 0,
-    "width": 3,
-    "length": 3
+    "width": 4,
+    "length": 8
   }
 }

@@ -7,6 +7,7 @@ import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -21,6 +22,7 @@ import model.menugui.game.GameMap;
 import view.menus.GameMenu;
 import view.menus.LoginMenu;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class GameViewController {
@@ -444,9 +446,35 @@ public class GameViewController {
         icon.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                // TODO : select building
+
             }
         });
+
+        ImageView imageView = new ImageView(new Image(GameViewController.class.getResource(
+                Paths.BUILDING_IMAGES.getPath()).toExternalForm() + "armoury.png"));
+        imageView.setViewOrder(-10);
+
+        icon.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (!GameMenu.gameMap.getChildren().contains(imageView))
+                    GameMenu.gameMap.getChildren().add(imageView);
+
+                imageView.setTranslateX(mouseEvent.getScreenX() - (GameMenu.scene.getWidth()-1200)/2);
+                imageView.setTranslateY(mouseEvent.getScreenY() - (GameMenu.scene.getHeight()-800)/2);
+            }
+        });
+
+        icon.setOnMouseReleased(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                GameMenu.gameMap.getChildren().remove(imageView);
+            }
+        });
+
+
+
+
     }
 
     public static void createBorderRectangles(GameMap gameMap, MiniMap miniMap) {

@@ -23,8 +23,8 @@
     "startY": 0,
     "endX": 0,
     "endY": 0,
-    "width": 4,
-    "length": 7
+    "width": 5,
+    "length": 10
   },
   "mercenaryPost": {
     "units": [
@@ -55,8 +55,8 @@
     "startY": 0,
     "endX": 0,
     "endY": 0,
-    "width": 7,
-    "length": 7
+    "width": 5,
+    "length": 10
   },
   "tunnelersGuild": {
     "units": [
@@ -81,8 +81,8 @@
     "startY": 0,
     "endX": 0,
     "endY": 0,
-    "width": 4,
-    "length": 11
+    "width": 5,
+    "length": 10
   },
   "barrack": {
     "units": [
@@ -113,8 +113,8 @@
     "startY": 0,
     "endX": 0,
     "endY": 0,
-    "width": 7,
-    "length": 7
+    "width": 10,
+    "length": 10
   },
   "cathedral": {
     "units": [
@@ -137,7 +137,7 @@
     "startY": 0,
     "endX": 0,
     "endY": 0,
-    "width": 15,
-    "length": 15
+    "width": 13,
+    "length": 13
   }
 }

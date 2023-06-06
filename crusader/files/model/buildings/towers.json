@@ -50,8 +50,8 @@
     "startY": 0,
     "endX": 0,
     "endY": 0,
-    "width": 3,
-    "length": 3
+    "width": 4,
+    "length": 4
   },
   "roundTower": {
     "fireRange": 50,
@@ -77,8 +77,8 @@
     "startY": 0,
     "endX": 0,
     "endY": 0,
-    "width": 5,
-    "length": 5
+    "width": 6,
+    "length": 6
   },
   "squareTower": {
     "fireRange": 50,
@@ -104,8 +104,8 @@
     "startY": 0,
     "endX": 0,
     "endY": 0,
-    "width": 5,
-    "length": 5
+    "width": 6,
+    "length": 6
   },
   "defenseTurret": {
     "fireRange": 40,
@@ -131,7 +131,7 @@
     "startY": 0,
     "endX": 0,
     "endY": 0,
-    "width": 2,
-    "length": 2
+    "width": 5,
+    "length": 5
   }
 }

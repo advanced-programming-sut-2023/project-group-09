@@ -113,7 +113,7 @@ public class GameBuildings {
 
     public static void createMainCastle() {
         MainCastle mainCastle = new MainCastle(0, 0,
-                "castleBuildings", 10000, 5, 12);
+                "castleBuildings", 10000, 7, 13);
         // if one object of this created, please call setLord() and setTaxRate() for its government.
         castleBuildings.put("mainCastle", mainCastle);
         buildings.put("mainCastle", mainCastle);
@@ -155,7 +155,7 @@ public class GameBuildings {
 
     public static void createSmallStoneGatehouse() {
         Gatehouse smallStoneGatehouse = new Gatehouse(0, 0,
-                "smallStoneGatehouse", 50, 3, 3, 8);
+                "smallStoneGatehouse", 50, 5, 5, 8);
         smallStoneGatehouse.addCost("stone", 10);
         castleBuildings.put("smallStoneGatehouse", smallStoneGatehouse);
         buildings.put("smallStoneGatehouse", smallStoneGatehouse);
@@ -163,7 +163,7 @@ public class GameBuildings {
 
     public static void createBigStoneGatehouse() {
         Gatehouse bigStoneGatehouse = new Gatehouse(0, 0,
-                "bigStoneGatehouse", 100, 5, 5, 10);
+                "bigStoneGatehouse", 100, 7, 7, 10);
         bigStoneGatehouse.addCost("stone", 20);
         castleBuildings.put("bigStoneGatehouse", bigStoneGatehouse);
         buildings.put("bigStoneGatehouse", bigStoneGatehouse);
@@ -171,7 +171,7 @@ public class GameBuildings {
 
     public static void createDrawBridge() {
         Gatehouse drawBridge = new Gatehouse(0, 0,
-                "drawBridge", 50, 4, 4, 0);
+                "drawBridge", 50, 5, 5, 0);
         drawBridge.addCost("wood", 10);
         castleBuildings.put("drawBridge", drawBridge);
         buildings.put("drawBridge", drawBridge);
@@ -188,7 +188,7 @@ public class GameBuildings {
 
     public static void createPerimeterTurret() {
         Tower perimeterTurret = new Tower(0, 0, "perimeterTurret",
-                250, 5, 5, 40, 40, 10);
+                250, 4, 4, 40, 40, 10);
         perimeterTurret.addCost("stone", 10);
         perimeterTurret.setCanKeepRidingEquipment(false);
         castleBuildings.put("perimeterTurret", perimeterTurret);
@@ -206,7 +206,7 @@ public class GameBuildings {
 
     public static void createRoundTower() {
         Tower roundTower = new Tower(0, 0, "roundTower",
-                300, 7, 7, 50, 50, 20);
+                300, 6, 6, 50, 50, 20);
         roundTower.addCost("stone", 40);
         roundTower.setCanKeepRidingEquipment(true);
         castleBuildings.put("roundTower", roundTower);
@@ -215,7 +215,7 @@ public class GameBuildings {
 
     public static void createSquareTower() {
         Tower squareTower = new Tower(0, 0, "squareTower",
-                300, 7, 7, 50, 50, 20);
+                300, 6, 6, 50, 50, 20);
         squareTower.addCost("stone", 35);
         squareTower.setCanKeepRidingEquipment(true);
         castleBuildings.put("squareTower", squareTower);
@@ -234,7 +234,7 @@ public class GameBuildings {
 
     public static void createBarrack() {
         Barrack barrack = new Barrack(0, 0,
-                "barrack", 80, 7, 7);
+                "barrack", 80, 10, 10);
         barrack.addUnit("archer");
         barrack.addUnit("crossbowman");
         barrack.addUnit("spearman");
@@ -249,7 +249,7 @@ public class GameBuildings {
 
     public static void createMercenaryPost() {
         Barrack barrack = new Barrack(0, 0,
-                "mercenaryPost", 80, 7, 7);
+                "mercenaryPost", 80, 10, 10);
         barrack.addUnit("archerBow");
         barrack.addUnit("slave");
         barrack.addUnit("slinger");
@@ -264,7 +264,7 @@ public class GameBuildings {
 
     public static void createEngineerGuild() {
         Barrack barrack = new Barrack(0, 0,
-                "engineerGuild", 80, 4, 7);
+                "engineerGuild", 80, 5, 10);
         barrack.addUnit("engineer");
         barrack.addUnit("ladderman");
         barrack.addCost("wood", 10);
@@ -302,14 +302,14 @@ public class GameBuildings {
     }
 
     public static void createShop() {
-        Building building = new Building(1, 0, "shop", 70, 5, 5);
+        Building building = new Building(1, 0, "shop", 70, 4, 4);
         building.addCost("wood", 5);
         buildings.put("shop", building);
     }
 
     public static void createPitchRig() {
         ProducerBuilding producerBuilding = new ProducerBuilding(1, 0, "pitchRig",
-                40, 3, 3, 5, "stockPile", "resource", "pitch");
+                40, 4, 4, 5, "stockPile", "resource", "pitch");
 
         producerBuilding.addCost("wood", 20);
 
@@ -346,14 +346,14 @@ public class GameBuildings {
     }
 
     public static void createChurch() {
-        Building building = new Building(0, 0, "church", 70, 12, 12);
+        Building building = new Building(0, 0, "church", 70, 9, 9);
         building.setPrice(500);
         buildings.put("church", building);
     }
 
     public static void createCathedral() {
         Barrack barrack = new Barrack(0, 0,
-                "cathedral", 100, 15, 15);
+                "cathedral", 100, 13, 13);
 
         barrack.addUnit("blackmonk");
         barrack.changeShouldBeOne();
@@ -451,7 +451,7 @@ public class GameBuildings {
     }
 
     public static void createOilSmelter() {
-        Building building = new Building(0, 1, "oilSmelter", 10, 3, 3);
+        Building building = new Building(0, 1, "oilSmelter", 10, 4, 8);
         building.setPrice(100);
         building.addCost("iron" , 10);
         buildings.put("oilSmelter", building);
@@ -470,7 +470,7 @@ public class GameBuildings {
 //    }
 
     public static void createStable() {
-        Building building = new Building(0, 0, "stable", 70, 5, 5);
+        Building building = new Building(0, 0, "stable", 70, 6, 6);
         building.addCost("wood", 20);
         building.setPrice(400);
         producerBuildings.put("stable", building);
@@ -479,7 +479,7 @@ public class GameBuildings {
 
     public static void createTunnelersGuild() {
         Barrack barrack = new Barrack(0, 0,
-                "tunnelersGuild", 80, 4, 11);
+                "tunnelersGuild", 80, 5, 10);
         barrack.addUnit("tunneler");
         barrack.addCost("wood", 10);
         barrack.setPrice(100);
@@ -488,7 +488,7 @@ public class GameBuildings {
 
     public static void createAppleGarden() {
         ProducerBuilding producerBuilding = new ProducerBuilding(1, 0, "appleGarden",
-                40, 9, 9, 5, "granary", "food", "apple");
+                40, 11, 11, 5, "granary", "food", "apple");
 
         producerBuilding.addCost("wood", 5);
 
@@ -504,7 +504,7 @@ public class GameBuildings {
 
     public static void createDairyProducts() {
         ProducerBuilding producerBuilding = new ProducerBuilding(1, 0, "dairyProducts",
-                40, 9, 9, 3, "granary", "food", "cheese");
+                40, 10, 10, 3, "granary", "food", "cheese");
 
         producerBuilding.addCost("wood", 10);
 

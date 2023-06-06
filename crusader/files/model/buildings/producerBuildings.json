@@ -229,8 +229,8 @@
     "startY": 0,
     "endX": 0,
     "endY": 0,
-    "width": 3,
-    "length": 3
+    "width": 4,
+    "length": 4
   },
   "brewery": {
     "nameOfStorage": "stockPile",
@@ -330,8 +330,8 @@
     "startY": 0,
     "endX": 0,
     "endY": 0,
-    "width": 9,
-    "length": 9
+    "width": 10,
+    "length": 10
   },
   "appleGarden": {
     "nameOfStorage": "granary",
@@ -365,8 +365,8 @@
     "startY": 0,
     "endX": 0,
     "endY": 0,
-    "width": 9,
-    "length": 9
+    "width": 11,
+    "length": 11
   },
   "mill": {
     "nameOfStorage": "stockPile",

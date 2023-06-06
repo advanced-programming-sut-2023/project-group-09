@@ -21,7 +21,8 @@ public enum Paths {
     USER_AVATARS("files/img/avatars/"),
     BAR_IMAGES("/images/game/bar/"),
     MAP_IMAGES("/images/game/map/"),
-    FLAG_IMAGES("/images/flags/")
+    FLAG_IMAGES("/images/flags/"),
+    BUILDING_IMAGES("/images/game/map/buildings/")
     ;
     private final String path;
 
