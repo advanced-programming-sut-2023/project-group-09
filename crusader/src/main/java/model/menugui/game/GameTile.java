@@ -48,7 +48,7 @@ public class GameTile extends StackPane {
 
     public void setTexture() {
         textureImage.setImage(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
-                + "textures/" + tile.getTexture().getName() + ".png").toExternalForm()));
+                + "textures/" + tile.getTexture().getName() +"/"+tile.getTextureNum()+".png").toExternalForm()));
     }
 
     public void setBuilding() {
