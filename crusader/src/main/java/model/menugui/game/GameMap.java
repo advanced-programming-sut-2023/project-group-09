@@ -15,13 +15,14 @@ public class GameMap extends Pane {
     private int cameraX;
     private int cameraY;
     private int tilesLoaded;
-
+    private GameTile[][] gameTiles;
     private final boolean[][] load;
 
     public GameMap(Map map, double cameraX, double cameraY) {
         width = map.getWidth() * 30;
         height = map.getLength() * 18;
         this.map = map;
+        this.gameTiles = new GameTile[map.getWidth()][map.getWidth()];
         this.cameraX = (int) cameraX;
         this.cameraY = (int) cameraY;
         this.tilesLoaded = 0;

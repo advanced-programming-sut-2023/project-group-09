@@ -29,7 +29,6 @@ public class Tile {
     private Building building = null;
     private boolean isMoat;
     private boolean isPit;
-    private GameTile gameTile;
     private Color color;
 
     private Government pitGovernment;
@@ -271,13 +270,5 @@ public class Tile {
 
     public void setPitGovernment(Government pitGovernment) {
         this.pitGovernment = pitGovernment;
-    }
-
-    public GameTile getGameTile() {
-        return gameTile;
-    }
-
-    public void setGameTile(GameTile gameTile) {
-        this.gameTile = gameTile;
     }
 }
