@@ -13,7 +13,6 @@ import model.building.castlebuildings.Wall;
 import model.human.Human;
 import model.human.civilian.Civilian;
 import model.human.military.Military;
-import model.menugui.game.GameTile;
 import model.tools.Tool;
 
 import java.util.ArrayList;

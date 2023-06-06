@@ -488,17 +488,13 @@ public class GameViewController {
         rectangle.setOnMouseEntered(e -> {
             timeline = new Timeline(new KeyFrame(Duration.ZERO, actionEvent -> {
                 if (horizontal == 1) {
-                    gameMap.moveRight();
                     miniMap.moveRight();
                 } else if (horizontal == -1) {
-                    gameMap.moveLeft();
                     miniMap.moveLeft();
                 }
                 if (vertical == 1) {
-                    gameMap.moveUp();
                     miniMap.moveUp();
                 } else if (vertical == -1) {
-                    gameMap.moveDown();
                     miniMap.moveDown();
                 }
 

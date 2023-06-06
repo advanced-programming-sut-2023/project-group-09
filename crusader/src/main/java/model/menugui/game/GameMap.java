@@ -19,14 +19,14 @@ public class GameMap extends Pane {
     private final boolean[][] load;
 
     public GameMap(Map map, double cameraX, double cameraY, double tileWidth, double tileHeight) {
-        this.tileWidth = tileWidth;
-        this.tileHeight = tileHeight;
+        GameMap.tileWidth = tileWidth;
+        GameMap.tileHeight = tileHeight;
         this.screenWidth = (int) Math.ceil(1200 / tileWidth) + 1;
-        this.screenHeight = 2 * (int) Math.ceil(800 / tileHeight);
+        this.screenHeight = (int) Math.ceil(800 / (tileHeight/2));
         width = map.getWidth() * tileWidth;
-        height = map.getLength() * tileHeight;
+        height = map.getLength() * (tileHeight/2);
         this.map = map;
-        this.gameTiles = new GameTile[map.getWidth()][map.getWidth()];
+        gameTiles = new GameTile[map.getWidth()][map.getWidth()];
         this.cameraX = (int) cameraX;
         this.cameraY = (int) cameraY;
         this.tilesLoaded = 0;
@@ -64,12 +64,12 @@ public class GameMap extends Pane {
                 if (!load[y][x]) {
                     Tile tile = map.getTile(x, y);
                     if (y % 2 == 1) {
-                        GameTile gameTile = new GameTile(tile, x * tileWidth - tileWidth / 2,
-                                y * tileHeight / 2 - tileHeight / 2);
+                        GameTile gameTile = new GameTile(tile, x * tileWidth - (tileWidth / 2),
+                                y * (tileHeight / 2) - (tileHeight / 2));
                         gameTiles[y][x] = gameTile;
                         this.getChildren().add(gameTile);
                     } else {
-                        GameTile gameTile = new GameTile(tile, x * tileWidth, y * tileHeight / 2 - tileHeight / 2);
+                        GameTile gameTile = new GameTile(tile, x * tileWidth, y * (tileHeight / 2) - (tileHeight / 2));
                         gameTiles[y][x] = gameTile;
                         this.getChildren().add(gameTile);
                     }

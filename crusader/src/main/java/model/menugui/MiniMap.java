@@ -20,8 +20,8 @@ public class MiniMap extends StackPane {
 
     private final int width;
     private final int height;
-    private final int pointerWidth = 41;
-    private final int pointerHeight = 90;
+    private final int pointerWidth = (int) Math.ceil((double) 1200 / 50) + 1;
+    private final int pointerHeight = (int) Math.ceil((double) 800 / 15);
     private Rectangle pointer;
 
     private final Map map;
