@@ -109,16 +109,16 @@ public class GameMap extends Pane {
     }
 
     public void moveLeftUp() {
-        if (cameraX == 0 && cameraY == 0) return;
-        if (cameraX != 0) cameraX--;
-        if (cameraY != 0) cameraY--;
+        if (cameraX == 0 || cameraY == 0) return;
+        cameraX--;
+        cameraY--;
         loadMap();
         this.setTranslateX(this.getTranslateX() + tileWidth);
         this.setTranslateY(this.getTranslateY() + tileHeight / 2);
     }
 
     public void moveRightUp() {
-        if (cameraX == map.getWidth() - screenWidth && cameraY == 0) return;
+        if (cameraX == map.getWidth() - screenWidth || cameraY == 0) return;
         if (cameraX != map.getWidth() - screenWidth) cameraX++;
         if (cameraY != 0) cameraY--;
         loadMap();
@@ -127,7 +127,7 @@ public class GameMap extends Pane {
     }
 
     public void moveRightDown() {
-        if (cameraX == map.getWidth() - screenWidth && cameraY == map.getLength() - screenHeight) return;
+        if (cameraX == map.getWidth() - screenWidth || cameraY == map.getLength() - screenHeight) return;
         if (cameraX != map.getWidth() - screenWidth) cameraX++;
         if (cameraY != map.getLength() - screenHeight) cameraY++;
         loadMap();
@@ -136,7 +136,7 @@ public class GameMap extends Pane {
     }
 
     public void moveLeftDown() {
-        if (cameraX == 0 && cameraY == map.getLength() - screenHeight) return;
+        if (cameraX == 0 || cameraY == map.getLength() - screenHeight) return;
         if (cameraX != 0) cameraX--;
         if (cameraY != map.getLength() - screenHeight) cameraY++;
         loadMap();

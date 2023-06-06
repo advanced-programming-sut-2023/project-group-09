@@ -46,19 +46,19 @@ public class MiniMap extends StackPane {
             this.setOnKeyPressed(keyEvent -> {
                 String keyName = keyEvent.getCode().getName();
                 if (keyName.equals("Right")) {
-                    moveRight();
+                    moveRight(true);
                 }
 
                 if (keyName.equals("Left")) {
-                    moveLeft();
+                    moveLeft(true);
                 }
 
                 if (keyName.equals("Up")) {
-                    moveUp();
+                    moveUp(true);
                 }
 
                 if (keyName.equals("Down")) {
-                    moveDown();
+                    moveDown(true);
                 }
             });
         });
@@ -102,88 +102,137 @@ public class MiniMap extends StackPane {
     }
 
 
-    public void moveLeft() {
+    public void moveLeft(boolean moveMap) {
         if (startX + getX() == 0) {
             return;
         }
+        if (moveMap) {
+            GameMenu.gameMap.moveLeft();
+        }
         if (Math.abs(getX() - 25) < 0.5 && startX + getX() <= 25) {
             pointer.setTranslateX(pointer.getTranslateX() - 1);
-            GameMenu.gameMap.moveLeft();
             return;
         }
 
         if (Math.abs(getX() - 25) < 0.5) {
             startX -= 1;
             paintMap();
-            GameMenu.gameMap.moveLeft();
             return;
         }
-
         pointer.setTranslateX(pointer.getTranslateX() - 1);
-        GameMenu.gameMap.moveLeft();
     }
 
-    public void moveRight() {
+    public void moveRight(boolean moveMap) {
         if (startX + getX() == map.getWidth() - pointerWidth) {
             return;
         }
+        if (moveMap) {
+            GameMenu.gameMap.moveRight();
+        }
+
         if (Math.abs(getX() - (width - (pointerWidth + 25))) < 0.5 && map.getWidth() - (startX + getX()) <= (pointerWidth + 25)) {
             pointer.setTranslateX(pointer.getTranslateX() + 1);
-            GameMenu.gameMap.moveRight();
             return;
         }
 
         if (Math.abs(getX() - (width - (pointerWidth + 25))) < 0.5) {
             startX += 1;
             paintMap();
-            GameMenu.gameMap.moveRight();
             return;
         }
 
         pointer.setTranslateX(pointer.getTranslateX() + 1);
-        GameMenu.gameMap.moveRight();
     }
 
-    public void moveUp() {
+    public void moveUp(boolean moveMap) {
         if (startY + getY() == 0) {
             return;
         }
+        if (moveMap) {
+            GameMenu.gameMap.moveUp();
+        }
         if (Math.abs(getY() - 25) < 0.5 && startY + getY() <= 25) {
             pointer.setTranslateY(pointer.getTranslateY() - 1);
-            GameMenu.gameMap.moveUp();
             return;
         }
 
         if (Math.abs(getY() - 25) < 0.5) {
             startY -= 1;
             paintMap();
-            GameMenu.gameMap.moveUp();
             return;
         }
 
         pointer.setTranslateY(pointer.getTranslateY() - 1);
-        GameMenu.gameMap.moveUp();
     }
 
-    public void moveDown() {
+    public void moveDown(boolean moveMap) {
         if (startY + getY() == map.getLength() - pointerHeight) {
             return;
         }
+        if (moveMap) {
+            GameMenu.gameMap.moveDown();
+        }
         if (Math.abs(getY() - (height - (pointerHeight + 25))) < 0.5 && map.getLength() - (startY + getY()) <= (pointerHeight + 25)) {
             pointer.setTranslateY(pointer.getTranslateY() + 1);
-            GameMenu.gameMap.moveDown();
             return;
         }
 
         if (Math.abs(getY() - (height - (pointerHeight + 25))) < 0.5) {
             startY += 1;
             paintMap();
-            GameMenu.gameMap.moveDown();
             return;
         }
 
         pointer.setTranslateY(pointer.getTranslateY() + 1);
-        GameMenu.gameMap.moveDown();
+    }
+
+
+    public void moveLeftUp() {
+        if (startY + getY() == 0) {
+            return;
+        }
+        if (startX + getX() == 0) {
+            return;
+        }
+        moveLeft(false);
+        moveUp(false);
+        GameMenu.gameMap.moveLeftUp();
+    }
+
+    public void moveRightUp() {
+        if (startY + getY() == 0) {
+            return;
+        }
+        if (startX + getX() == map.getWidth() - pointerWidth) {
+            return;
+        }
+        moveRight(false);
+        moveUp(false);
+        GameMenu.gameMap.moveRightUp();
+    }
+
+    public void moveRightDown() {
+        if (startY + getY() == map.getLength() - pointerHeight) {
+            return;
+        }
+        if (startX + getX() == map.getWidth() - pointerWidth) {
+            return;
+        }
+        moveRight(false);
+        moveDown(false);
+        GameMenu.gameMap.moveRightDown();
+    }
+
+    public void moveLeftDown() {
+        if (startY + getY() == map.getLength() - pointerHeight) {
+            return;
+        }
+        if (startX + getX() == 0) {
+            return;
+        }
+        moveLeft(false);
+        moveDown(false);
+        GameMenu.gameMap.moveLeftDown();
     }
 
     private double getX() {
