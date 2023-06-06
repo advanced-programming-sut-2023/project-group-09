@@ -487,33 +487,14 @@ public class GameViewController {
     private static void setEventForRectangles(Rectangle rectangle, int horizontal, int vertical, GameMap gameMap, MiniMap miniMap) {
         rectangle.setOnMouseEntered(e -> {
             timeline = new Timeline(new KeyFrame(Duration.ZERO, actionEvent -> {
-                if (horizontal == 1 && vertical == 0) {
-                    gameMap.moveRight();
+                if (horizontal == 1) {
                     miniMap.moveRight();
-                } else if (horizontal == -1 && vertical == 0) {
-                    gameMap.moveLeft();
+                } else if (horizontal == -1) {
                     miniMap.moveLeft();
-                } else if (horizontal == 0 && vertical == 1) {
-                    gameMap.moveUp();
+                }
+                if (vertical == 1) {
                     miniMap.moveUp();
-                } else if (horizontal == 1 && vertical == 1) {
-                    gameMap.moveRightUp();
-                    miniMap.moveRight();
-                    miniMap.moveUp();
-                } else if (horizontal == -1 && vertical == 1) {
-                    gameMap.moveLeftUp();
-                    miniMap.moveLeft();
-                    miniMap.moveUp();
-                } else if (horizontal == 0 && vertical == -1) {
-                    gameMap.moveDown();
-                    miniMap.moveDown();
-                } else if (horizontal == 1 && vertical == -1) {
-                    gameMap.moveRightDown();
-                    miniMap.moveRight();
-                    miniMap.moveDown();
-                } else if (horizontal == -1 && vertical == -1) {
-                    gameMap.moveLeftDown();
-                    miniMap.moveLeft();
+                } else if (vertical == -1) {
                     miniMap.moveDown();
                 }
 
