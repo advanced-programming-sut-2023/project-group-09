@@ -11,27 +11,34 @@ import model.game.Tile;
 public class GameTile extends StackPane {
     Tile tile;
     double width = 30;
-    double height  = 18;
+    double height = 18;
     Rectangle image;
 
-    public GameTile(Tile tile,double x,double y) {
+    public GameTile(Tile tile, double x, double y) {
         this.tile = tile;
         this.setMaxHeight(height);
         this.setMinHeight(height);
         this.setMaxWidth(width);
         this.setMinWidth(width);
-        image = new Rectangle(width,height);
+        image = new Rectangle(width, height);
         image.setTranslateX(x);
         image.setTranslateY(y);
-        if (tile.getTexture() == Textures.EARTH){
+        if (tile.getTexture() == Textures.EARTH) {
             image.setFill(new ImagePattern(
-                    new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()).toExternalForm()+"textures/earth.png")));
-        }else{
+                    new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()).toExternalForm() + "textures/earth.png")));
+        } else {
             image.setFill(new ImagePattern(
-                    new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()).toExternalForm()+"textures/other.png")));
+                    new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()).toExternalForm() + "textures/other.png")));
         }
 
         this.getChildren().addAll(image);
+    }
 
+    public static void refreshTile(Tile tile) {
+
+    }
+
+    public static void setTexture(Tile tile) {
+        if (tile.getTexture() == Textures.EARTH);
     }
 }

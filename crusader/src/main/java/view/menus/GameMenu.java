@@ -59,6 +59,7 @@ public class GameMenu extends Application {
 
         GameMaps.createMap1();
         Map map = GameMaps.largeMaps.get(0);
+
         gameMap = new GameMap(map, 0, 0);
         miniMap = new MiniMap(125, 143, 0, 0);
 

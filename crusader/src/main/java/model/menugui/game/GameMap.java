@@ -1,6 +1,7 @@
 package model.menugui.game;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import model.game.Map;
 import model.game.Tile;
 import model.menugui.MiniMap;
@@ -90,8 +91,7 @@ public class GameMap extends Pane {
     public void moveUp() {
         if (cameraY == 0) return;
         cameraY--;
-        loadMap();
-        this.setTranslateY(this.getTranslateY() + 9);
+        this.setTranslateX(this.getTranslateY() - 9);
     }
 
     public void moveDown() {
