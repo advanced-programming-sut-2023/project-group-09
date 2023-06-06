@@ -98,14 +98,14 @@ public class GameMap extends Pane {
         if (cameraY == 0) return;
         cameraY--;
         loadMap();
-        this.setTranslateX(this.getTranslateY() - tileHeight);
+        this.setTranslateY(this.getTranslateY() + tileHeight / 2);
     }
 
     public void moveDown() {
         if (cameraY == map.getLength() - screenHeight) return;
         cameraY++;
         loadMap();
-        this.setTranslateY(this.getTranslateY() - tileHeight);
+        this.setTranslateY(this.getTranslateY() - tileHeight / 2);
     }
 
     public static GameTile getGameTile(int x, int y) {
