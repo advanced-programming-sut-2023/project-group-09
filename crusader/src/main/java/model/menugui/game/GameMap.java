@@ -65,11 +65,11 @@ public class GameMap extends Pane {
                     Tile tile = map.getTile(x, y);
                     if (y % 2 == 1) {
                         GameTile gameTile = new GameTile(tile, x * tileWidth - (tileWidth / 2),
-                                y * (tileHeight / 2) - (tileHeight / 2));
+                                y * (tileHeight / 2) - (tileHeight / 2), x, y);
                         gameTiles[y][x] = gameTile;
                         this.getChildren().add(gameTile);
                     } else {
-                        GameTile gameTile = new GameTile(tile, x * tileWidth, y * (tileHeight / 2) - (tileHeight / 2));
+                        GameTile gameTile = new GameTile(tile, x * tileWidth, y * (tileHeight / 2) - (tileHeight / 2), x, y);
                         gameTiles[y][x] = gameTile;
                         this.getChildren().add(gameTile);
                     }
