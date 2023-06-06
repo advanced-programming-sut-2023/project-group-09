@@ -6,6 +6,7 @@ import enumeration.Paths;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,8 +23,6 @@ import javafx.stage.Stage;
 import model.game.Map;
 import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
-import model.menugui.game.GameMap1;
-import model.menugui.game.GameMap2;
 import view.controllers.GameViewController;
 import view.controllers.ViewController;
 
@@ -35,6 +34,8 @@ public class GameMenu extends Application {
     public static Stage stage;
     public static Scene scene;
     public static StackPane root;
+    public static MiniMap miniMap;
+    public static GameMap gameMap;
     public static Pane menuBar;
     public static Text hoveringBarStateText;
 
@@ -48,10 +49,18 @@ public class GameMenu extends Application {
         stage.setFullScreen(true);
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         root = ViewController.makeStackPaneScreen(stage, pane, 1200, 800);
+
+        root.setOnMouseEntered(mouseEvent -> scene.setCursor(Cursor.DEFAULT));
+        root.setOnMouseExited(mouseEvent -> scene.setCursor(Cursor.NONE));
+
+
+
+
+
         GameMaps.createMap1();
         Map map = GameMaps.largeMaps.get(0);
-        GameMap1 gameMap = new GameMap1(map, 0, 0);
-
+        gameMap = new GameMap(map, 0, 0);
+        miniMap = new MiniMap(125, 143, 0, 0);
 
         GameBuildings.addBuildings();
 
@@ -64,7 +73,7 @@ public class GameMenu extends Application {
         root.getChildren().addAll(gameMap, menuBar);
 
         GameViewController.setCenterOfBar();
-        GameViewController.createBorderRectangles(gameMap);
+        GameViewController.createBorderRectangles(gameMap,miniMap);
         stage.show();
     }
 
@@ -76,7 +85,6 @@ public class GameMenu extends Application {
         menuBar.setTranslateX(0);
         menuBar.setTranslateY(290);
 
-        MiniMap miniMap = new MiniMap(125, 143, 0, 0);
         menuBar.getChildren().add(miniMap);
         miniMap.setTranslateY(66);
         miniMap.setTranslateX(813);

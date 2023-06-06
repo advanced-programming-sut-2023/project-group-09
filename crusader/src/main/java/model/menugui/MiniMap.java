@@ -20,8 +20,8 @@ public class MiniMap extends StackPane {
 
     private final int width;
     private final int height;
-    private final int pointerWidth = 50;
-    private final int pointerHeight = 60;
+    private final int pointerWidth = 41;
+    private final int pointerHeight = 90;
     private Rectangle pointer;
 
     private final Map map;
@@ -102,76 +102,88 @@ public class MiniMap extends StackPane {
     }
 
 
-    private void moveLeft() {
+    public void moveLeft() {
         if (startX + getX() == 0) {
             return;
         }
         if (Math.abs(getX() - 25) < 0.5 && startX + getX() <= 25) {
             pointer.setTranslateX(pointer.getTranslateX() - 1);
+            GameMenu.gameMap.moveLeft();
             return;
         }
 
         if (Math.abs(getX() - 25) < 0.5) {
             startX -= 1;
             paintMap();
+            GameMenu.gameMap.moveLeft();
             return;
         }
 
         pointer.setTranslateX(pointer.getTranslateX() - 1);
+        GameMenu.gameMap.moveLeft();
     }
 
-    private void moveRight() {
+    public void moveRight() {
         if (startX + getX() == map.getWidth() - pointerWidth) {
             return;
         }
         if (Math.abs(getX() - (width - (pointerWidth + 25))) < 0.5 && map.getWidth() - (startX + getX()) <= (pointerWidth + 25)) {
             pointer.setTranslateX(pointer.getTranslateX() + 1);
+            GameMenu.gameMap.moveRight();
             return;
         }
 
         if (Math.abs(getX() - (width - (pointerWidth + 25))) < 0.5) {
             startX += 1;
             paintMap();
+            GameMenu.gameMap.moveRight();
             return;
         }
 
         pointer.setTranslateX(pointer.getTranslateX() + 1);
+        GameMenu.gameMap.moveRight();
     }
 
-    private void moveUp() {
+    public void moveUp() {
         if (startY + getY() == 0) {
             return;
         }
         if (Math.abs(getY() - 25) < 0.5 && startY + getY() <= 25) {
             pointer.setTranslateY(pointer.getTranslateY() - 1);
+            GameMenu.gameMap.moveUp();
             return;
         }
 
         if (Math.abs(getY() - 25) < 0.5) {
             startY -= 1;
             paintMap();
+            GameMenu.gameMap.moveUp();
             return;
         }
 
         pointer.setTranslateY(pointer.getTranslateY() - 1);
+        GameMenu.gameMap.moveUp();
     }
 
-    private void moveDown() {
+    public void moveDown() {
         if (startY + getY() == map.getLength() - pointerHeight) {
             return;
         }
         if (Math.abs(getY() - (height - (pointerHeight + 25))) < 0.5 && map.getLength() - (startY + getY()) <= (pointerHeight + 25)) {
             pointer.setTranslateY(pointer.getTranslateY() + 1);
+            GameMenu.gameMap.moveDown();
             return;
         }
 
         if (Math.abs(getY() - (height - (pointerHeight + 25))) < 0.5) {
             startY += 1;
             paintMap();
+            GameMenu.gameMap.moveDown();
             return;
         }
 
         pointer.setTranslateY(pointer.getTranslateY() + 1);
+        GameMenu.gameMap.moveDown();
     }
 
     private double getX() {

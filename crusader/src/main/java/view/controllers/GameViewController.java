@@ -1,7 +1,5 @@
 package view.controllers;
 
-import controller.CaptchaController;
-import controller.GameController;
 import controller.gamestructure.GameBuildings;
 import enumeration.Paths;
 import javafx.animation.KeyFrame;
@@ -18,12 +16,11 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import model.building.Building;
+import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
-import model.menugui.game.GameMap1;
 import view.menus.GameMenu;
 import view.menus.LoginMenu;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class GameViewController{
@@ -346,7 +343,7 @@ public class GameViewController{
         GameMenu.menuBar.getChildren().add(icon);
         setHoverEventForBar(icon, destination , name);
     }
-    
+
     private static Text getNumberOfResourceNeededText() {
         Text text = new Text("");
         text.setFill(Color.WHITE);
@@ -449,7 +446,7 @@ public class GameViewController{
         });
     }
 
-    public static void createBorderRectangles(GameMap1 gameMap) {
+    public static void createBorderRectangles(GameMap gameMap, MiniMap miniMap) {
         Rectangle downRight = new Rectangle(10 , 10);
         Rectangle upRight = new Rectangle(10 , 10);
         Rectangle upLeft = new Rectangle(10 , 10);
@@ -471,31 +468,37 @@ public class GameViewController{
 
         GameMenu.root.getChildren().addAll(downRight , downLeft , upRight , upLeft , right , left , up , down);
 
-        setEventForRectangles(downRight , 1 , -1 , gameMap);
-        setEventForRectangles(downLeft , -1 , -1 , gameMap);
-        setEventForRectangles(upRight , 1 , 1 , gameMap);
-        setEventForRectangles(upLeft , -1 , 1 , gameMap);
+        setEventForRectangles(downRight , 1 , -1 , gameMap,miniMap);
+        setEventForRectangles(downLeft , -1 , -1 , gameMap,miniMap);
+        setEventForRectangles(upRight , 1 , 1 , gameMap,miniMap);
+        setEventForRectangles(upLeft , -1 , 1 , gameMap,miniMap);
 
-        setEventForRectangles(down , 0 , -1 , gameMap);
-        setEventForRectangles(left , -1 , 0 , gameMap);
-        setEventForRectangles(up , 0 , 1 , gameMap);
-        setEventForRectangles(right , 1 , 0 , gameMap);
+        setEventForRectangles(down , 0 , -1 , gameMap,miniMap);
+        setEventForRectangles(left , -1 , 0 , gameMap,miniMap);
+        setEventForRectangles(up , 0 , 1 , gameMap,miniMap);
+        setEventForRectangles(right , 1 , 0 , gameMap,miniMap);
 
 
 
     }
 
-    private static void setEventForRectangles(Rectangle rectangle , int horizontal , int vertical , GameMap1 gameMap) {
+    private static void setEventForRectangles(Rectangle rectangle , int horizontal , int vertical , GameMap gameMap,MiniMap miniMap) {
         rectangle.setOnMouseEntered(e -> {
             timeline = new Timeline(new KeyFrame(Duration.ZERO , actionEvent -> {
-                if (horizontal == 1)
+                if (horizontal == 1){
                     gameMap.moveRight();
-                else if (horizontal == -1)
+                    miniMap.moveRight();
+                }else if (horizontal == -1){
                     gameMap.moveLeft();
-                if (vertical == 1)
+                    miniMap.moveLeft();
+                }if (vertical == 1){
                     gameMap.moveUp();
-                else if (vertical == -1)
+                    miniMap.moveUp();
+                }else if (vertical == -1){
                     gameMap.moveDown();
+                    miniMap.moveDown();
+                }
+
             }) , new KeyFrame(Duration.millis(100) , actionEvent -> {}));
             timeline.setCycleCount(-1);
             timeline.play();
