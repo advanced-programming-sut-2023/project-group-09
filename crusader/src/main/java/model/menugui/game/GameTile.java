@@ -52,25 +52,34 @@ public class GameTile extends StackPane {
     }
 
     public void setBuilding() {
-        if (tileX == 10 && tileY == 10) {
+        if (tileX == 10 && tileY == 20) {
+            textureImage.setImage(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                    + "textures/red.png").toExternalForm()));
             buildingImage = new ImageView(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
                     + "buildings/tunnelersGuild.png").toExternalForm()));
-//            buildingImage.setFitWidth(width * 4);
-//            buildingImage.setFitHeight(height * 7);
+//            buildingImage.setFitWidth(width * 5);
+//            buildingImage.setFitHeight(height * 10);
+            buildingImage.setScaleX(0.5);
+            buildingImage.setScaleY(0.5);
             buildingImage.setTranslateX(x);
             buildingImage.setTranslateY(y);
+//            buildingImage.setViewOrder(-1);
             this.setViewOrder(-1);
             this.getChildren().add(buildingImage);
         }
 
         if (tileX == 20 && tileY == 20) {
+            textureImage.setImage(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                    + "textures/red.png").toExternalForm()));
             buildingImage = new ImageView(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
                     + "buildings/stockPile.png").toExternalForm()));
 //            buildingImage.setFitWidth(width * 2);
 //            buildingImage.setFitHeight(height * 2);
+            buildingImage.setScaleX(5.0 / 3);
+            buildingImage.setScaleY(5.0 / 3);
             buildingImage.setTranslateX(x);
             buildingImage.setTranslateY(y);
-            buildingImage.setViewOrder(-1);
+//            buildingImage.setViewOrder(-1);
             this.setViewOrder(-1);
             this.getChildren().add(buildingImage);
         }
