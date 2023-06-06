@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameMap1 extends Pane {
-    private static final int CHUNK_SIZE = 50;
+    private static final int CHUNK_SIZE = 100;
 
     private Map map;
     private int numChunksX;

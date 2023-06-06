@@ -58,18 +58,18 @@ public class GameMenu extends Application {
         GameMaps.createMap1();
         Map map = GameMaps.largeMaps.get(0);
 
-        gameMap1 = new GameMap1(map,30,18,0,0);
-        //miniMap = new MiniMap(125, 143, 0, 0);
+        gameMap = new GameMap(map, 0, 0, 30, 18);
+        miniMap = new MiniMap(125, 143, 0, 0);
 
         GameBuildings.addBuildings();
 
         menuBar = new Pane();
         menuBar.setMaxWidth(1200);
         menuBar.setMaxHeight(220);
-        root.getChildren().addAll(gameMap1, menuBar);
+        root.getChildren().addAll(gameMap, menuBar);
 
         GameViewController.setCenterOfBar();
-        //GameViewController.createBorderRectangles(gameMap,miniMap);
+        GameViewController.createBorderRectangles(gameMap, miniMap);
         stage.show();
     }
 

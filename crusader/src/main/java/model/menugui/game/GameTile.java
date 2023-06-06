@@ -4,8 +4,7 @@ import enumeration.Paths;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
+import model.building.Building;
 import model.game.Tile;
 
 public class GameTile extends StackPane {
@@ -48,37 +47,31 @@ public class GameTile extends StackPane {
 
     public void setTexture() {
         textureImage.setImage(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
-                + "textures/" + tile.getTexture().getName() +"/"+tile.getTextureNum()+".png").toExternalForm()));
+                + "textures/" + tile.getTexture().getName() + "/" + tile.getTextureNum() + ".png").toExternalForm()));
     }
 
     public void setBuilding() {
         if (tileX == 10 && tileY == 20) {
+            Building building = tile.getBuilding();
             textureImage.setImage(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
                     + "textures/red.png").toExternalForm()));
             buildingImage = new ImageView(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
-                    + "buildings/tunnelersGuild.png").toExternalForm()));
-//            buildingImage.setFitWidth(width * 5);
-//            buildingImage.setFitHeight(height * 10);
-            buildingImage.setScaleX(0.5);
-            buildingImage.setScaleY(0.5);
+                    + "buildings/stockPile.png").toExternalForm()));
             buildingImage.setTranslateX(x);
-            buildingImage.setTranslateY(y);
+            buildingImage.setTranslateY(y - buildingImage.getImage().getHeight() / 2 + textureImage.getFitHeight() / 2);
 //            buildingImage.setViewOrder(-1);
             this.setViewOrder(-1);
             this.getChildren().add(buildingImage);
         }
 
         if (tileX == 20 && tileY == 20) {
+            Building building = tile.getBuilding();
             textureImage.setImage(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
                     + "textures/red.png").toExternalForm()));
             buildingImage = new ImageView(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
-                    + "buildings/stockPile.png").toExternalForm()));
-//            buildingImage.setFitWidth(width * 2);
-//            buildingImage.setFitHeight(height * 2);
-//            buildingImage.setScaleX(5.0 / 3);
-//            buildingImage.setScaleY(5.0 / 3);
-            buildingImage.setTranslateX(x);
-            buildingImage.setTranslateY(y);
+                    + "buildings/engineerGuild.png").toExternalForm()));
+            buildingImage.setTranslateX(x - buildingImage.getImage().getWidth() * (-1.0 / 6));
+            buildingImage.setTranslateY(y - buildingImage.getImage().getHeight() / 2 + textureImage.getFitHeight() / 2);
 //            buildingImage.setViewOrder(-1);
             this.setViewOrder(-1);
             this.getChildren().add(buildingImage);
