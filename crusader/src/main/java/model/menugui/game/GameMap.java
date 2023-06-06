@@ -1,26 +1,30 @@
 package model.menugui.game;
 
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 import model.game.Map;
 import model.game.Tile;
-import model.menugui.MiniMap;
 
 public class GameMap extends Pane {
-    Map map;
-    double width;
-    double height;
-    int screenWidth = 41;
-    int screenHeight = 90;
+    private Map map;
+    private double width;
+    private double height;
+    public static double tileWidth;
+    public static double tileHeight;
+    private int screenWidth;
+    private int screenHeight;
     private int cameraX;
     private int cameraY;
     private int tilesLoaded;
-    private GameTile[][] gameTiles;
+    private static GameTile[][] gameTiles;
     private final boolean[][] load;
 
-    public GameMap(Map map, double cameraX, double cameraY) {
-        width = map.getWidth() * 30;
-        height = map.getLength() * 18;
+    public GameMap(Map map, double cameraX, double cameraY, double tileWidth, double tileHeight) {
+        this.tileWidth = tileWidth;
+        this.tileHeight = tileHeight;
+        this.screenWidth = (int) Math.ceil(1200 / tileWidth) + 1;
+        this.screenHeight = 2 * (int) Math.ceil(800 / tileHeight);
+        width = map.getWidth() * tileWidth;
+        height = map.getLength() * tileHeight;
         this.map = map;
         this.gameTiles = new GameTile[map.getWidth()][map.getWidth()];
         this.cameraX = (int) cameraX;
@@ -60,10 +64,13 @@ public class GameMap extends Pane {
                 if (!load[y][x]) {
                     Tile tile = map.getTile(x, y);
                     if (y % 2 == 1) {
-                        GameTile gameTile = new GameTile(tile, x * 30 - 15, y * 9 - 9);
+                        GameTile gameTile = new GameTile(tile, x * tileWidth - tileWidth / 2,
+                                y * tileHeight / 2 - tileHeight / 2);
+                        gameTiles[y][x] = gameTile;
                         this.getChildren().add(gameTile);
                     } else {
-                        GameTile gameTile = new GameTile(tile, x * 30, y * 9 - 9);
+                        GameTile gameTile = new GameTile(tile, x * tileWidth, y * tileHeight / 2 - tileHeight / 2);
+                        gameTiles[y][x] = gameTile;
                         this.getChildren().add(gameTile);
                     }
                     tilesLoaded++;
@@ -74,30 +81,34 @@ public class GameMap extends Pane {
     }
 
     public void moveRight() {
-        if (cameraX == map.getWidth()-screenWidth) return;
+        if (cameraX == map.getWidth() - screenWidth) return;
         cameraX++;
         loadMap();
-        this.setTranslateX(this.getTranslateX() - 30);
+        this.setTranslateX(this.getTranslateX() - tileWidth);
     }
 
     public void moveLeft() {
         if (cameraX == 0) return;
         cameraX--;
         loadMap();
-        this.setTranslateX(this.getTranslateX() + 30);
+        this.setTranslateX(this.getTranslateX() + tileWidth);
     }
 
     public void moveUp() {
         if (cameraY == 0) return;
         cameraY--;
         loadMap();
-        this.setTranslateX(this.getTranslateY() - 9);
+        this.setTranslateX(this.getTranslateY() - tileHeight);
     }
 
     public void moveDown() {
         if (cameraY == map.getLength() - screenHeight) return;
         cameraY++;
         loadMap();
-        this.setTranslateY(this.getTranslateY() - 9);
+        this.setTranslateY(this.getTranslateY() - tileHeight);
+    }
+
+    public static GameTile getGameTile(int x, int y) {
+        return gameTiles[y][x];
     }
 }

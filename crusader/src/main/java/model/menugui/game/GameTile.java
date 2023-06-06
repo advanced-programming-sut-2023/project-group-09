@@ -10,11 +10,13 @@ import model.game.Tile;
 
 public class GameTile extends StackPane {
     Tile tile;
-    double width = 30;
-    double height = 18;
+    double width;
+    double height;
     Rectangle image;
 
     public GameTile(Tile tile, double x, double y) {
+        this.width = GameMap.tileWidth;
+        this.height = GameMap.tileHeight;
         this.tile = tile;
         this.setMaxHeight(height);
         this.setMinHeight(height);
