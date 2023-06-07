@@ -1,11 +1,15 @@
 package model.menugui.game;
 
 import enumeration.Paths;
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import model.building.Building;
 import model.game.Tile;
+import org.w3c.dom.ls.LSOutput;
+import view.controllers.GameViewController;
 
 public class GameTile extends StackPane {
     private Tile tile;
@@ -17,10 +21,12 @@ public class GameTile extends StackPane {
     private double height;
     private ImageView textureImage;
     private ImageView buildingImage;
+    private Image textureImg;
+    private static int tileXOn , tileYOn;
 
     public GameTile(Tile tile, double x, double y, int tileX, int tileY) {
-        this.tileX = tileX;
-        this.tileY = tileY;
+        this.tileX = tileXOn = tileX;
+        this.tileY = tileYOn = tileY;
         this.x = x;
         this.y = y;
         this.width = GameMap.tileWidth;
@@ -51,7 +57,20 @@ public class GameTile extends StackPane {
     }
 
     public void setBuilding() {
-        if (tile.getBuilding() != null && tile.getBuilding().getEndX() == tileX && tile.getBuilding().getEndY() == tileY) {
+        if (tileX == 10 && tileY == 20) {
+            Building building = tile.getBuilding();
+            textureImage.setImage(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                    + "textures/red.png").toExternalForm()));
+            buildingImage = new ImageView(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                    + "buildings/stockPile.png").toExternalForm()));
+            buildingImage.setTranslateX(x);
+            buildingImage.setTranslateY(y - buildingImage.getImage().getHeight() / 2 + textureImage.getFitHeight() / 2);
+//            buildingImage.setViewOrder(-1);
+            this.setViewOrder(-1);
+            this.getChildren().add(buildingImage);
+        }
+
+        if (tileX == 20 && tileY == 20) {
             Building building = tile.getBuilding();
 //            textureImage.setImage(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
 //                    + "textures/red.png").toExternalForm()));
@@ -63,6 +82,35 @@ public class GameTile extends StackPane {
 //            buildingImage.setViewOrder(-1);
             this.setViewOrder(-1);
             this.getChildren().add(buildingImage);
+        }*/
+        Building building = tile.getBuilding();
+        if (building != null) {
+            Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                    + "buildings/" + building.getName() + ".png").toExternalForm());
+            buildingImage = new ImageView(image);
+            buildingImage.setTranslateX(x + (image.getWidth() *
+                    ((double)building.getLength() - building.getWidth())/(building.getLength() + building.getWidth())));
+            buildingImage.setTranslateY(y - image.getHeight()/2 + textureImg.getHeight()/4);
+//            buildingImage.setViewOrder(-1);
+            this.setViewOrder(-1);
+            this.getChildren().add(buildingImage);
         }
+
+    }
+
+    public int getTileX() {
+        return tileX;
+    }
+
+    public void setTileX(int tileX) {
+        this.tileX = tileX;
+    }
+
+    public int getTileY() {
+        return tileY;
+    }
+
+    public void setTileY(int tileY) {
+        this.tileY = tileY;
     }
 }

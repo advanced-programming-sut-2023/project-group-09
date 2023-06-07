@@ -23,7 +23,6 @@ import javafx.stage.Stage;
 import model.game.Map;
 import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
-import model.menugui.game.GameMap1;
 import view.controllers.GameViewController;
 import view.controllers.ViewController;
 
@@ -37,7 +36,6 @@ public class GameMenu extends Application {
     public static StackPane root;
     public static MiniMap miniMap;
     public static GameMap gameMap;
-    public static GameMap1 gameMap1;
     public static Pane menuBar;
     public static Text hoveringBarStateText;
 

@@ -1,8 +1,11 @@
 package model.menugui.game;
 
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import model.game.Map;
 import model.game.Tile;
+import view.controllers.GameViewController;
 
 public class GameMap extends Pane {
     private Map map;
@@ -80,6 +83,7 @@ public class GameMap extends Pane {
         }
     }
 
+
     public void moveRight() {
         if (cameraX == map.getWidth() - screenWidth) return;
         cameraX++;
@@ -146,5 +150,22 @@ public class GameMap extends Pane {
 
     public static GameTile getGameTile(int x, int y) {
         return gameTiles[y][x];
+    }
+
+    public int getCameraX() {
+        return cameraX;
+    }
+
+
+    public void setCameraX(int cameraX) {
+        this.cameraX = cameraX;
+    }
+
+    public int getCameraY() {
+        return cameraY;
+    }
+
+    public void setCameraY(int cameraY) {
+        this.cameraY = cameraY;
     }
 }
