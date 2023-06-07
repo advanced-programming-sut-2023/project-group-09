@@ -51,26 +51,14 @@ public class GameTile extends StackPane {
     }
 
     public void setBuilding() {
-        if (tileX == 10 && tileY == 20) {
+        if (tile.getBuilding() != null && tile.getBuilding().getEndX() == tileX && tile.getBuilding().getEndY() == tileY) {
             Building building = tile.getBuilding();
-            textureImage.setImage(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
-                    + "textures/red.png").toExternalForm()));
+//            textureImage.setImage(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+//                    + "textures/red.png").toExternalForm()));
             buildingImage = new ImageView(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
-                    + "buildings/stockPile.png").toExternalForm()));
-            buildingImage.setTranslateX(x);
-            buildingImage.setTranslateY(y - buildingImage.getImage().getHeight() / 2 + textureImage.getFitHeight() / 2);
-//            buildingImage.setViewOrder(-1);
-            this.setViewOrder(-1);
-            this.getChildren().add(buildingImage);
-        }
-
-        if (tileX == 20 && tileY == 20) {
-            Building building = tile.getBuilding();
-            textureImage.setImage(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
-                    + "textures/red.png").toExternalForm()));
-            buildingImage = new ImageView(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
-                    + "buildings/engineerGuild.png").toExternalForm()));
-            buildingImage.setTranslateX(x - buildingImage.getImage().getWidth() * (-1.0 / 6));
+                    + "buildings/" + tile.getBuilding().getName() + ".png").toExternalForm()));
+            buildingImage.setTranslateX(x - buildingImage.getImage().getWidth() * (building.getWidth() - building.getLength())
+            / (building.getWidth() + building.getLength()) / 2);
             buildingImage.setTranslateY(y - buildingImage.getImage().getHeight() / 2 + textureImage.getFitHeight() / 2);
 //            buildingImage.setViewOrder(-1);
             this.setViewOrder(-1);
