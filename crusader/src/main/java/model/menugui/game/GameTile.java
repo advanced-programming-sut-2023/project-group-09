@@ -108,6 +108,7 @@ public class GameTile extends StackPane {
 
     public int getTileY() {
         return tileY;
+        //
     }
 
     public void setTileY(int tileY) {
