@@ -24,6 +24,7 @@ import model.game.Map;
 import model.human.military.EuropeanTroop;
 import model.menugui.*;
 import view.controllers.ViewController;
+import viewphase1.EditMapEnvironmentMenu;
 
 import java.util.ArrayList;
 
@@ -250,8 +251,9 @@ public class CreateGameMenu extends Application {
         EuropeanTroop lordMilitary = (EuropeanTroop) game.getMap().getTile(x, y).getMilitaries().get(0);
         lordMilitary.setGovernment(government);
         government.setLord(lordMilitary);
-        government.addAmountToProperties("wood", "resource", 100);
-        government.addAmountToProperties("stone", "resource", 50);
+        government.addAmountToProperties("wood", "resource", 1000);
+        government.addAmountToProperties("stone", "resource", 500);
+        government.addAmountToProperties("iron", "resource", 500);
         government.addAmountToProperties("bread", "food", 60);
         government.setGold(4000);
         game.addGovernment(government);

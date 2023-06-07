@@ -462,7 +462,7 @@ public class MapController {
         if (buildingCounter.getNumber() == 0) {
             return;
         }
-
+        // TODO : delete with refresh
         Building shouldDelete = buildingCounter.getBuildings().get(0);
         buildingCounter.deleteBuilding(shouldDelete);
         deleteBuilding(shouldDelete);

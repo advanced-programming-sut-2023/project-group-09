@@ -1,5 +1,6 @@
 package view.controllers;
 
+import controller.GameController;
 import controller.gamestructure.GameBuildings;
 import enumeration.Paths;
 import javafx.animation.KeyFrame;
@@ -7,6 +8,8 @@ import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -16,9 +19,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import model.Government;
 import model.building.Building;
 import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
+import model.menugui.game.GameTile;
 import view.menus.GameMenu;
 import view.menus.LoginMenu;
 
@@ -29,6 +34,8 @@ public class GameViewController {
 
     public static String nameOfPageInBar;
     public static Timeline timeline;
+    public static boolean isSelected = false;
+    public static int tileX , tileY;
 
     public static void createShortcutBars(Pane gamePane, Text text) {
         setCenterOfBar();
@@ -248,78 +255,78 @@ public class GameViewController {
     }
 
     private static void setCenterToFoodProcessingBuildings() {
-        putBuildingImageView("granaryIcon", "Granary", "granary", 280, 100, 1);
-        putBuildingImageView("bakeryIcon", "Bakery", "bakery", 380, 100, 1);
-        putBuildingImageView("breweryIcon", "Brewery", "brewery", 480, 100, 1);
-        putBuildingImageView("millIcon", "Mill", "mill", 580, 80, 1);
-        putBuildingImageView("innIcon", "Inn", "inn", 660, 90, 1);
+        putBuildingImageView("granaryIcon", "Granary", "granary", 280, 100, 1 , "granary");
+        putBuildingImageView("bakeryIcon", "Bakery", "bakery", 380, 100, 1 , "bakery");
+        putBuildingImageView("breweryIcon", "Brewery", "brewery", 480, 100, 1 , "brewery");
+        putBuildingImageView("millIcon", "Mill", "mill", 580, 80, 1 , "mill");
+        putBuildingImageView("innIcon", "Inn", "inn", 660, 90, 1 , "inn");
     }
 
     private static void setCenterToWeaponsBuildings() {
-        putBuildingImageView("fletcherWorkshopIcon", "Fletcher's Workshop", "fletcher", 300, 100, 1);
-        putBuildingImageView("poleturnerWorkshopIcon", "Poleturner's Workshop", "poleTurner", 470, 100, 1);
-        putBuildingImageView("armourerIcon", "Armourer", "armourer", 500, 30, 0.25);
+        putBuildingImageView("fletcherWorkshopIcon", "Fletcher's Workshop", "fletcher", 300, 100, 1 , "fletcher");
+        putBuildingImageView("poleturnerWorkshopIcon", "Poleturner's Workshop", "poleTurner", 470, 100, 1 , "poleTurner");
+        putBuildingImageView("armourerIcon", "Armourer", "armourer", 500, 30, 0.25 , "armourer");
     }
 
     private static void setCenterToTownBuildings() {
-        putBuildingImageView("hovelIcon", "Hovel", "hovel", 300, 100, 1);
-        putBuildingImageView("churchIcon", "Church", "church", 450, 100, 1);
-        putBuildingImageView("cathedralIcon", "Cathedral", "cathedral", 600, 90, 1);
+        putBuildingImageView("hovelIcon", "Hovel", "hovel", 300, 100, 1 , "hovel");
+        putBuildingImageView("churchIcon", "Church", "church", 450, 100, 1 , "church");
+        putBuildingImageView("cathedralIcon", "Cathedral", "cathedral", 600, 90, 1 , "cathedral");
     }
 
     private static void setCenterToFarmBuildings() {
-        putBuildingImageView("dairyIcon", "Dairy Farm", "dairyProducts", 180, 20, 0.25);
-        putBuildingImageView("appleFarmIcon", "Apple Orchard", "appleGarden", 300, 20, 0.25);
-        putBuildingImageView("wheatFarmIcon", "Wheat Farm", "wheatFarm", 460, 20, 0.25);
-        putBuildingImageView("hopsFarmIcon", "Hops Farm", "hopFarm", 540, 20, 0.25);
+        putBuildingImageView("dairyIcon", "Dairy Farm", "dairyProducts", 180, 20, 0.25 , "dairyProducts");
+        putBuildingImageView("appleFarmIcon", "Apple Orchard", "appleGarden", 300, 20, 0.25 , "appleGarden");
+        putBuildingImageView("wheatFarmIcon", "Wheat Farm", "wheatFarm", 460, 20, 0.25 , "wheatFarm");
+        putBuildingImageView("hopsFarmIcon", "Hops Farm", "hopFarm", 540, 20, 0.25 , "hopFarm");
     }
 
     private static void setCenterToIndustryBuildings() {
-        putBuildingImageView("stockPileIcon", "Stockpile", "stockPile", 180, 70, 0.25);
-        putBuildingImageView("woodCutterIcon", "Wood Cutter", "woodCutter", 220, 0, 0.25);
-        putBuildingImageView("quarryIcon", "Quarry", "quarry", 310, -50, 0.25);
-        putBuildingImageView("oxTetherIcon", "Ox Tether", "oxTether", 440, 30, 0.25);
-        putBuildingImageView("ironMineIcon", "Iron Mine", "ironMine", 400, 10, 0.25);
-        putBuildingImageView("pitchRigIcon", "Pitch Rig", "pitchRig", 465, 30, 0.25);
-        putBuildingImageView("shopIcon", "Market Place", "shop", 590, 10, 0.25);
+        putBuildingImageView("stockPileIcon", "Stockpile", "stockPile", 180, 70, 0.25 , "stockPile");
+        putBuildingImageView("woodCutterIcon", "Wood Cutter", "woodCutter", 220, 0, 0.25 , "woodCutter");
+        putBuildingImageView("quarryIcon", "Quarry", "quarry", 310, -50, 0.25 , "quarry");
+        putBuildingImageView("oxTetherIcon", "Ox Tether", "oxTether", 440, 30, 0.25 , "oxTether");
+        putBuildingImageView("ironMineIcon", "Iron Mine", "ironMine", 400, 10, 0.25 , "ironMine");
+        putBuildingImageView("pitchRigIcon", "Pitch Rig", "pitchRig", 465, 30, 0.25 , "pitchRig");
+        putBuildingImageView("shopIcon", "Market Place", "shop", 590, 10, 0.25 , "shop");
     }
 
     private static void setCenterToGatehouses() {
         putButtonImageViewWithDestination("backButtonIcon", "Back To Castles", "Castle Buildings", 225, 60, 0.2);
-        putBuildingImageView("smallGatehouseIcon", "Small Gatehouse", "smallStoneGatehouse", 250, 0, 0.25);
-        putBuildingImageView("bigGatehouseIcon", "Big Gatehouse", "bigStoneGatehouse", 290, -50, 0.25);
-        putBuildingImageView("drawBridgeIcon", "Draw Bridge", "drawBridge", 400, 20, 0.25);
-        putBuildingImageView("cageIcon", "Caged Dogs", "cagedWarDogs", 450, 30, 0.25);
-        putBuildingImageView("pitchDitchIcon", "Pitch Ditch", "", 530, 50, 0.25); // TODO:
-        putBuildingImageView("killingPitIcon", "Killing Pit", "", 530, 90, 0.25); // TODO:
-        putBuildingImageView("braizerIcon", "Braizer", "", 650, 70, 0.25); // braizer will added to game buildings
+        putBuildingImageView("smallGatehouseIcon", "Small Gatehouse", "smallStoneGatehouse", 250, 0, 0.25 , "smallStoneGatehouse");
+        putBuildingImageView("bigGatehouseIcon", "Big Gatehouse", "bigStoneGatehouse", 290, -50, 0.25 , "bigStoneGatehouse");
+        putBuildingImageView("drawBridgeIcon", "Draw Bridge", "drawBridge", 400, 20, 0.25 , "drawBridge");
+        putBuildingImageView("cageIcon", "Caged Dogs", "cagedWarDogs", 450, 30, 0.25 , "cagedWarDogs");
+        //putBuildingImageView("pitchDitchIcon", "Pitch Ditch", "", 530, 50, 0.25); // TODO:
+        //putBuildingImageView("killingPitIcon", "Killing Pit", "", 530, 90, 0.25 , "killing"); // TODO:
+        //putBuildingImageView("braizerIcon", "Braizer", "", 650, 70, 0.25); // braizer will added to game buildings
     }
 
     private static void setCenterToMilitaryBuildings() {
         putButtonImageViewWithDestination("backButtonIcon", "Back To Castles", "Castle Buildings", 225, 60, 0.2);
-        putBuildingImageView("engineerGuildIcon", "Engineer's Guild", "engineerGuild", 220, 20, 0.25);
-        putBuildingImageView("stableIcon", "Stable", "stable", 300, -5, 0.25);
-        putBuildingImageView("tunnelerGuildIcon", "Tunneler's Guild", "tunnelersGuild", 450, 5, 0.25);
-        putBuildingImageView("oilSmelterIcon", "Oil Smelter", "oilSmelter", 540, 5, 0.25);
+        putBuildingImageView("engineerGuildIcon", "Engineer's Guild", "engineerGuild", 220, 20, 0.25 , "engineerGuild");
+        putBuildingImageView("stableIcon", "Stable", "stable", 300, -5, 0.25 , "stable");
+        putBuildingImageView("tunnelerGuildIcon", "Tunneler's Guild", "tunnelersGuild", 450, 5, 0.25 , "tunnelersGuild");
+        putBuildingImageView("oilSmelterIcon", "Oil Smelter", "oilSmelter", 540, 5, 0.25 , "oilSmelter");
     }
 
     private static void setCenterToTowers() {
-        putBuildingImageView("lookoutTowerIcon", "Lookout Tower", "lookoutTower", 290, -45, 0.25);
-        putBuildingImageView("perimeterTurretIcon", "Perimeter Turret", "perimeterTurret", 340, 5, 0.30);
-        putBuildingImageView("defenseTurretIcon", "Defense Turret", "defenseTurret", 415, -15, 0.3);
-        putBuildingImageView("squareTowerIcon", "Square Tower", "squareTower", 495, -25, 0.3);
-        putBuildingImageView("roundTowerIcon", "Round Tower", "roundTower", 595, -30, 0.3);
+        putBuildingImageView("lookoutTowerIcon", "Lookout Tower", "lookoutTower", 290, -45, 0.25 , "lookoutTower");
+        putBuildingImageView("perimeterTurretIcon", "Perimeter Turret", "perimeterTurret", 340, 5, 0.30 , "perimeterTurret");
+        putBuildingImageView("defenseTurretIcon", "Defense Turret", "defenseTurret", 415, -15, 0.3 , "defenseTurret");
+        putBuildingImageView("squareTowerIcon", "Square Tower", "squareTower", 495, -25, 0.3 , "squareTower");
+        putBuildingImageView("roundTowerIcon", "Round Tower", "roundTower", 595, -30, 0.3 , "roundTower");
         putButtonImageViewWithDestination("backButtonIcon", "Back To Castles", "Castle Buildings", 225, 60, 0.2);
     }
 
     private static void setCenterToCastleBuildings() {
-        putBuildingImageView("stairsIcon", "Stairs", "stairs", 240, 80, 0.4);
-        putBuildingImageView("smallWallIcon", "Low Wall", "lowWall", 265, 80, 0.4);
-        putBuildingImageView("bigWallIcon", "Stone Wall", "stoneWall", 310, 60, 0.4);
-        putBuildingImageView("crenulatedWallIcon", "Crenulated Wall", "crenulatedWall", 370, 40, 0.4);
-        putBuildingImageView("barracksIcon", "Barrack", "barrack", 450, 80, 0.4);
-        putBuildingImageView("mercenrayIcon", "Mercenary Post", "mercenaryPost", 505, 100, 0.4);
-        putBuildingImageView("armoryIcon", "Armoury", "armoury", 595, 70, 0.4);
+        putBuildingImageView("stairsIcon", "Stairs", "stairs", 240, 80, 0.4 , "stairs");
+        putBuildingImageView("smallWallIcon", "Low Wall", "lowWall", 265, 80, 0.4 , "lowWall");
+        putBuildingImageView("bigWallIcon", "Stone Wall", "stoneWall", 310, 60, 0.4 , "stoneWall");
+        putBuildingImageView("crenulatedWallIcon", "Crenulated Wall", "crenulatedWall", 370, 40, 0.4 , "crenulatedWall");
+        putBuildingImageView("barracksIcon", "Barrack", "barrack", 450, 80, 0.4 , "barrack");
+        putBuildingImageView("mercenrayIcon", "Mercenary Post", "mercenaryPost", 505, 100, 0.4 , "mercenaryPost");
+        putBuildingImageView("armoryIcon", "Armoury", "armoury", 595, 70, 0.4 , "armoury");
         putImageView("towersIcon", "Towers", 652, 80);
         putImageView("militaryIcon", "Military Buildings", 692, 80);
         putImageView("gatehouseIcon", "Gatehouses", 692, 120);
@@ -358,7 +365,7 @@ public class GameViewController {
         return text;
     }
 
-    private static void putBuildingImageView(String fileName, String name, String buildingName, double x, double y, double size) {
+    private static void putBuildingImageView(String fileName, String name, String buildingName, double x, double y, double size , String picFileName) {
         ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/" + fileName + ".png");
         ArrayList<ImageView> resourceIcons = new ArrayList<>();
@@ -443,16 +450,13 @@ public class GameViewController {
                 }
             });
         }
-        icon.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
 
-            }
-        });
-
-        ImageView imageView = new ImageView(new Image(GameViewController.class.getResource(
-                Paths.BUILDING_IMAGES.getPath()).toExternalForm() + "armoury.png"));
+        Image image = new Image(GameViewController.class.getResource(
+                Paths.BUILDING_IMAGES.getPath()).toExternalForm() + picFileName + ".png");
+        ImageView imageView = new ImageView(image);
         imageView.setViewOrder(-10);
+
+
 
         icon.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
@@ -460,18 +464,26 @@ public class GameViewController {
                 if (!GameMenu.gameMap.getChildren().contains(imageView))
                     GameMenu.gameMap.getChildren().add(imageView);
 
-                imageView.setTranslateX(mouseEvent.getScreenX() - (GameMenu.scene.getWidth()-1200)/2);
-                imageView.setTranslateY(mouseEvent.getScreenY() - (GameMenu.scene.getHeight()-800)/2);
+                imageView.setTranslateX(GameMenu.gameMap.getCameraX() * GameMap.tileWidth +
+                        mouseEvent.getScreenX() - (GameMenu.scene.getWidth()-1200)/2 - image.getWidth() *
+                        ((double) sampleBuilding.getWidth() / (sampleBuilding.getWidth() + sampleBuilding.getLength())));
+                imageView.setTranslateY(GameMenu.gameMap.getCameraY() * GameMap.tileHeight / 2 +
+                                mouseEvent.getScreenY() - (GameMenu.scene.getHeight()-800)/2 - image.getHeight());
+                imageView.setOpacity(0.6);
+                icon.setOnMouseReleased(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        GameMenu.gameMap.getChildren().remove(imageView);
+                        tileX = GameMenu.gameMap.getCameraX() + (int)((mouseEvent.getScreenX() -
+                                (GameMenu.scene.getWidth()-1200)/2)/GameMap.tileWidth);
+                        tileY = GameMenu.gameMap.getCameraY() + 2*(int)((mouseEvent.getScreenY() -
+                                (GameMenu.scene.getHeight()-800)/2)/GameMap.tileHeight);
+                        GameMenu.hoveringBarStateText.setText(GameController.dropBuilding(tileX, tileY, buildingName, null));
+                        GameMap.getGameTile(tileX , tileY).refreshTile();
+                    }
+                });
             }
         });
-
-        icon.setOnMouseReleased(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                GameMenu.gameMap.getChildren().remove(imageView);
-            }
-        });
-
 
 
 
