@@ -1,6 +1,7 @@
 package view.menus;
 
 import controller.gamestructure.GameBuildings;
+import controller.gamestructure.GameImages;
 import controller.gamestructure.GameMaps;
 import enumeration.Paths;
 import javafx.application.Application;
@@ -23,6 +24,7 @@ import javafx.stage.Stage;
 import model.game.Map;
 import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
+import model.menugui.game.GameMap1;
 import view.controllers.GameViewController;
 import view.controllers.ViewController;
 
@@ -55,10 +57,9 @@ public class GameMenu extends Application {
 
         GameMaps.createMap1();
         Map map = GameMaps.largeMaps.get(0);
-
-        gameMap = new GameMap(map, 0, 0, 50, 30);
+        GameImages.loadImages();
+        gameMap= new GameMap(map,0,0,50,30);
         miniMap = new MiniMap(125, 143, 0, 0);
-
         GameBuildings.addBuildings();
 
         menuBar = new Pane();

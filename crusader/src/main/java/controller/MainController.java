@@ -1,7 +1,10 @@
 package controller;
 
+import controller.gamestructure.GameImages;
 import controller.gamestructure.GameMaps;
 import javafx.stage.Stage;
+import view.Main;
+import view.menus.GameMenu;
 import view.menus.LoginMenu;
 import view.menus.MainMenu;
 
@@ -16,7 +19,9 @@ public class MainController {
         DBController.loadMilitary();
         DBController.loadBuildings();
         DBController.loadTools();
+        GameImages.loadImages();
         GameMaps.createMaps();
+
     }
 
     public static void run(Stage stage) throws Exception {

@@ -2,9 +2,14 @@ package view;
 
 import controller.DBController;
 import controller.MainController;
+import controller.gamestructure.GameMaps;
+import enumeration.Paths;
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import model.menugui.game.LoadGameMap;
+import model.game.Map;
+import model.menugui.game.GameMap;
+import model.menugui.game.GameTile;
 import view.controllers.ViewController;
 
 public class Main extends Application {
@@ -22,10 +27,6 @@ public class Main extends Application {
             DBController.saveAllUsers();
             DBController.saveCurrentUser();
         }));
-//        LoadGameMap loadGameMap1 = new LoadGameMap(1);
-//        LoadGameMap loadGameMap2 = new LoadGameMap(2);
-//        loadGameMap1.start();
-//        loadGameMap2.start();
         MainController.run(stage);
     }
 }

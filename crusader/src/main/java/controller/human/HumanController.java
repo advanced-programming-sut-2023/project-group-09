@@ -496,83 +496,103 @@ public class HumanController {
 
     public static ArrayList<Military> getEnemyOfRight(int x, int y, Government government) {
         int startY = y - 5;
-        int endX = x + 5;
-        int endY = y + 5;
+        int width = 5;
+        int length = 10;
         Map map = GameController.getGame().getMap();
         if (y - 5 < 0) {
             startY = 0;
+            length = y + 5;
         }
 
-        if (endX + 1 >= map.getWidth()) {
-            endX = map.getWidth() - 1;
+        if (getXInDistance(x, y, 5) > map.getWidth()) {
+            width = map.getWidth() - x;
         }
 
-        if (endY + 1 >= map.getLength()) {
-            endY = map.getLength() - 1;
+        if (y + 6 >= map.getLength()) {
+            length = map.getLength() - startY;
         }
-        return HumanController.getEnemiesOfArea(x, startY, endX, endY, government);
+        return HumanController.getEnemiesOfArea(x, startY, width, length, government);
     }
 
     public static ArrayList<Military> getEnemyOfLeft(int x, int y, Government government) {
-        int startX = x - 5;
+        int startX = getXInDistance(x, y, -5);
         int startY = y - 5;
-        int endY = y + 5;
+        int length = 10;
+        int width = 5;
         Map map = GameController.getGame().getMap();
-        if (x - 5 < 0) {
+        if (startX < 0) {
             startX = 0;
+            width = x;
         }
-
         if (y - 5 < 0) {
             startY = 0;
+            length = y + 5;
         }
-        if (endY + 1 >= map.getLength()) {
-            endY = map.getLength() - 1;
+
+        if (y + 6 >= map.getLength()) {
+            length = map.getLength() - startY;
         }
-        return HumanController.getEnemiesOfArea(startX, startY, x, endY, government);
+        return HumanController.getEnemiesOfArea(startX, startY, width, length, government);
     }
 
     public static ArrayList<Military> getEnemyOfUp(int x, int y, Government government) {
-        int startX = x - 5;
+        int startX = getXInDistance(x, y, -5);
         int startY = y - 5;
-        int endX = x + 5;
+        int width = 10;
+        int length = 5;
+
         Map map = GameController.getGame().getMap();
         if (x - 5 < 0) {
             startX = 0;
+            length = x + 5;
         }
 
         if (y - 5 < 0) {
             startY = 0;
+            length = y;
         }
-
-        if (endX + 1 >= map.getWidth()) {
-            endX = map.getWidth() - 1;
+        if (getXInDistance(x, y, 5) > map.getWidth()) {
+            width = map.getWidth() - startX;
         }
-        return HumanController.getEnemiesOfArea(startX, startY, endX, y, government);
+        return HumanController.getEnemiesOfArea(startX, startY, width, length, government);
     }
 
     public static ArrayList<Military> getEnemyOfDown(int x, int y, Government government) {
-        int startX = x - 5;
-        int endX = x + 5;
-        int endY = y + 5;
+        int startX = getXInDistance(x, y, -5);
+        int width = 10;
+        int length = 5;
         Map map = GameController.getGame().getMap();
-        if (x - 5 < 0) {
+        if (startX < 0) {
             startX = 0;
+            width = x + 5;
         }
-        if (endX + 1 >= map.getWidth()) {
-            endX = map.getWidth() - 1;
+        if (getXInDistance(x, y, 5) > map.getWidth()) {
+            width = map.getWidth() - startX;
         }
 
-        if (endY + 1 >= map.getLength()) {
-            endY = map.getLength() - 1;
+        if (y + 6 >= map.getLength()) {
+            length = map.getLength() - y;
         }
-        return HumanController.getEnemiesOfArea(startX, y, endX, endY, government);
+        return HumanController.getEnemiesOfArea(startX, y, width, length, government);
     }
 
-    public static ArrayList<Military> getEnemiesOfArea(int startX, int startY, int endX, int endY, Government government) {
+    public static ArrayList<Military> getEnemiesOfArea(int startX, int startY, int width, int length, Government government) {
         ArrayList<Military> enemies = new ArrayList<>();
-        for (int i = startX; i <= endX; i++) {
-            for (int j = startY; j <= endY; j++) {
-                enemies.addAll(MapController.getMilitariesOfOtherGovernment(i, j, government));
+        int x1 = startX;
+        int y1 = startY;
+        for (int i = 0; i <= width; i++) {
+            int x2 = x1;
+            int y2 = y1;
+            for (int j = 0; j <= length; j++) {
+                enemies.addAll(MapController.getMilitariesOfOtherGovernment(x2, y2, government));
+                y2++;
+                if (y2 % 2 == 0) {
+                    x2++;
+                }
+            }
+            y1++;
+            if (y1 % 2 == 1) {
+                x1++;
             }
         }
         return enemies;
@@ -648,4 +668,14 @@ public class HumanController {
         }
         return false;
     }
+
+
+    public static int getXInDistance(int x, int y, int distance) {
+        int value = Math.abs(distance);
+        if (y % 2 == 1) {
+            return (int) (x + Math.signum(distance) * (Math.floor((double) value / 2)));
+        }
+        return (int) (x + Math.signum(distance) * (Math.ceil((double) value / 2)));
+    }
+
 }

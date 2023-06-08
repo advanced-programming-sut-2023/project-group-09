@@ -162,10 +162,4 @@ public class ViewController {
 
     }
 
-    public static double getScreenHeight() {
-        Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getVisualBounds();
-        double screenHeight = bounds.getHeight();
-        return screenHeight;
-    }
 }

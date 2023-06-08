@@ -71,9 +71,9 @@ public class ToolsController {
                     secondPairs.add(new Tuple(y, x - 1,pair));
                 }
             }
-            if (x != 0 && y != 0) {
-                if (map.getTile(x - 1, y - 1).isPassable() && map.getTile(x - 1, y - 1).getTool() == null && !checkArray[y - 1][x - 1]) {
-                    secondPairs.add(new Tuple(y - 1, x - 1,pair));
+            if (y > 1) {
+                if (map.getTile(x, y - 2).isPassable() && map.getTile(x, y - 2).getTool() == null && !checkArray[y - 2][x]) {
+                    secondPairs.add(new Tuple(y - 2, x,pair));
                 }
             }
             if (x != GameController.getGame().getMap().getWidth() - 1) {
@@ -91,9 +91,9 @@ public class ToolsController {
                     secondPairs.add(new Tuple(y + 1, x + 1, pair));
                 }
             }
-            if (y != GameController.getGame().getMap().getWidth() - 1 && x != 0) {
-                if (map.getTile(x - 1, y + 1).isPassable() && map.getTile(x - 1, y + 1).getTool() == null && !checkArray[y + 1][x - 1]) {
-                    secondPairs.add(new Tuple(y + 1, x - 1, pair));
+            if (y < GameController.getGame().getMap().getWidth() - 2) {
+                if (map.getTile(x, y + 2).isPassable() && map.getTile(x, y + 2).getTool() == null && !checkArray[y + 2][x]) {
+                    secondPairs.add(new Tuple(y + 2, x, pair));
                 }
             }
             if (y != 0 && x != GameController.getGame().getMap().getWidth() - 1) {
