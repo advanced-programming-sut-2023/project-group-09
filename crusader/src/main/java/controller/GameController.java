@@ -23,7 +23,6 @@ import model.human.military.Tunneler;
 import model.tools.Tool;
 import viewphase1.UnitMenu;
 
-import java.io.IOException;
 import java.util.*;
 
 public class GameController {
@@ -968,4 +967,21 @@ public class GameController {
         return filteredList;
     }
 
+    public static ArrayList<Tile> getNeighborTiles(int endX, int endY, int width , int length) {
+        ArrayList<Tile> neighborTiles = new ArrayList<>();
+        int headX = endX, headY = endY;
+        int x = endX, y = endY;
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < width; j++) {
+                neighborTiles.add(game.getMap().getTile(x, y));
+                if (y % 2 == 0) x--;
+                y--;
+            }
+            if (headY % 2 == 1) headX++;
+            headY--;
+            x = headX;
+            y = headY;
+        }
+        return neighborTiles;
+    }
 }

@@ -1,6 +1,7 @@
 package view.menus;
 
 import controller.gamestructure.GameBuildings;
+import controller.gamestructure.GameImages;
 import controller.gamestructure.GameMaps;
 import enumeration.Paths;
 import javafx.application.Application;
@@ -55,8 +56,8 @@ public class GameMenu extends Application {
 
         GameMaps.createMap1();
         Map map = GameMaps.largeMaps.get(0);
-
-        gameMap = new GameMap(map, 0, 0, 50, 30);
+        GameImages.loadImages();
+        gameMap = new GameMap(map, 0, 0, 30, 18);
         miniMap = new MiniMap(125, 143, 0, 0);
 
         GameBuildings.addBuildings();
