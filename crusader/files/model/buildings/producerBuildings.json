@@ -82,9 +82,9 @@
     "buildingImpassableLength": 3,
     "hasSpecialTexture": true,
     "suitableTextures": [
-      "THICK_GRASS",
-      "OASIS_GRASS",
-      "GRASS"
+      "thickGrass",
+      "oasisGrass",
+      "grass"
     ],
     "shouldBeOne": false,
     "name": "hopFarm",
@@ -117,9 +117,9 @@
     "buildingImpassableLength": 3,
     "hasSpecialTexture": true,
     "suitableTextures": [
-      "THICK_GRASS",
-      "OASIS_GRASS",
-      "GRASS"
+      "thickGrass",
+      "oasisGrass",
+      "grass"
     ],
     "shouldBeOne": false,
     "name": "wheatFarm",
@@ -185,7 +185,7 @@
     "buildingImpassableLength": -1,
     "hasSpecialTexture": true,
     "suitableTextures": [
-      "IRON_TEXTURE"
+      "ironTexture"
     ],
     "shouldBeOne": false,
     "name": "ironMine",
@@ -218,7 +218,7 @@
     "buildingImpassableLength": -1,
     "hasSpecialTexture": true,
     "suitableTextures": [
-      "OIL"
+      "oil"
     ],
     "shouldBeOne": false,
     "name": "pitchRig",
@@ -317,9 +317,9 @@
     "buildingImpassableLength": 3,
     "hasSpecialTexture": true,
     "suitableTextures": [
-      "THICK_GRASS",
-      "OASIS_GRASS",
-      "GRASS"
+      "thickGrass",
+      "oasisGrass",
+      "grass"
     ],
     "shouldBeOne": false,
     "name": "dairyProducts",
@@ -352,9 +352,9 @@
     "buildingImpassableLength": 3,
     "hasSpecialTexture": true,
     "suitableTextures": [
-      "THICK_GRASS",
-      "OASIS_GRASS",
-      "GRASS"
+      "thickGrass",
+      "oasisGrass",
+      "grass"
     ],
     "shouldBeOne": false,
     "name": "appleGarden",

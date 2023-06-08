@@ -49,6 +49,8 @@ public class ProducerBuilding extends Building {
         this.itemType = producerBuilding.getItemType();
         this.itemName = producerBuilding.itemName;
         this.required = producerBuilding.getRequired();
+        setHasSpecialTexture(producerBuilding.getHasSpecialTexture());
+        setSuitableTextures(producerBuilding.getSuitableTextures());
         super.setCost(producerBuilding.getCost());
     }
     public void setRequired(HashMap<String, Integer> required) {

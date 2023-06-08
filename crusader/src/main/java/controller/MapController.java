@@ -4,7 +4,6 @@ import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameHumans;
 import controller.gamestructure.GameTools;
 import enumeration.Pair;
-import enumeration.Paths;
 import enumeration.Textures;
 import enumeration.dictionary.RockDirections;
 import enumeration.dictionary.Trees;
@@ -15,7 +14,6 @@ import model.building.castlebuildings.Gatehouse;
 import model.building.castlebuildings.Wall;
 import model.building.storagebuildings.StorageBuilding;
 import model.buildinghandler.BuildingCounter;
-import model.game.Game;
 import model.game.Map;
 import model.game.Tile;
 import model.human.civilian.Civilian;
@@ -23,7 +21,6 @@ import model.human.military.Engineer;
 import model.human.military.Military;
 import model.tools.Tool;
 
-import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 
 public class MapController {
@@ -137,6 +134,9 @@ public class MapController {
         for (int i = y; i < y + building.getLength(); i++) {
             for (int j = x; j < x + building.getWidth(); j++) {
                 Tile tile = map.getTile(j, i);
+                if (tile.getTexture() == Textures.OIL && !building.getSuitableTextures().contains("oil")) {
+                    return false;
+                }
                 if (tile.getMilitaries().size() != 0 || tile.getCivilian().size() != 0) {
                     return false;
                 }
@@ -148,8 +148,9 @@ public class MapController {
                 } else if (!map.getTile(j, i).getCanPutBuilding()) {
                     return false;
                 }
+
                 if (building.getHasSpecialTexture()) {
-                    if (!building.getSuitableTextures().contains(map.getTile(j, i).getTexture())) {
+                    if (!building.getSuitableTextures().contains(map.getTile(j, i).getTexture().getName())) {
                         return false;
                     }
                 }
@@ -193,60 +194,60 @@ public class MapController {
         }
         int counter = 0;
         assert building != null;
-        ArrayList<Pair<Integer , Integer>> tiles = GameController.getNeighborTiles
-                (x , y , building.getWidth() , building.getLength());
-        for (Pair<Integer , Integer> pair : tiles) {
+        ArrayList<Pair<Integer, Integer>> tiles = GameController.getNeighborTiles
+                (x, y, building.getWidth(), building.getLength());
+        for (Pair<Integer, Integer> pair : tiles) {
             int i = pair.getFirst();
             int j = pair.getSecond();
             System.out.println(++counter + " : x = " + i + " y = " + j);
-                if (j >= map.getWidth() || i >= map.getLength()) {
-                    System.out.println("you can't put a building here");
-                }
+            if (j >= map.getWidth() || i >= map.getLength()) {
+                System.out.println("you can't put a building here");
+            }
             Tile tile = map.getTile(i, j);
-                if (building.isShouldBeOne()) {
-                    deleteOtherBuildingWithThisType(building);
-                }
+            if (building.isShouldBeOne()) {
+                deleteOtherBuildingWithThisType(building);
+            }
 
-                tile.setCanPutBuilding(false);
-                Textures textures = Textures.EARTH_AND_SAND;
-                if (building.getHasSpecialTexture()) {
-                    textures = building.getSuitableTextures().get(0);
-                }
+            tile.setCanPutBuilding(false);
+            Textures textures = Textures.EARTH_AND_SAND;
+            if (building.getHasSpecialTexture()) {
+                textures = Textures.getTextureByName(building.getSuitableTextures().get(0));
+            }
 
+            tile.setBuilding(building);
+            System.out.println(map.getTile(x, y).getBuilding() != null);
+            if (building.getName().equals("stairs") && building instanceof Wall) {
+                ((Wall) building).setHeight(Wall.heightOfStairs(x, y));
+                tile.setPassable(false);
+                tile.setTexture(textures);
+                continue;
+            }
+
+            if (building.getName().equals("drawBridge")) {
+                Gatehouse gatehouse = Gatehouse.canDropDrawBridge(x, y);
+                assert gatehouse != null;
+                gatehouse.setDrawBridge_gatehouse((Gatehouse) building);
+                tile.setMoat(true);
+                tile.setPassable(true);
                 tile.setBuilding(building);
-            System.out.println(map.getTile(x , y).getBuilding() != null);
-                if (building.getName().equals("stairs") && building instanceof Wall) {
-                    ((Wall) building).setHeight(Wall.heightOfStairs(x, y));
-                    tile.setPassable(false);
-                    tile.setTexture(textures);
-                    continue;
-                }
+                continue;
+            }
 
-                if (building.getName().equals("drawBridge")) {
-                    Gatehouse gatehouse = Gatehouse.canDropDrawBridge(x, y);
-                    assert gatehouse != null;
-                    gatehouse.setDrawBridge_gatehouse((Gatehouse) building);
-                    tile.setMoat(true);
+
+            if (building.getBuildingImpassableLength() != -1) {
+                if (i >= building.getBuildingImpassableLength() + y || j >= building.getBuildingImpassableLength() + x) {
                     tile.setPassable(true);
-                    tile.setBuilding(building);
-                    continue;
-                }
-
-
-                if (building.getBuildingImpassableLength() != -1) {
-                    if (i >= building.getBuildingImpassableLength() + y || j >= building.getBuildingImpassableLength() + x) {
-                        tile.setPassable(true);
-                        //tile.setBuilding(null);
-                    } else {
-                        tile.setPassable(false);
-                        tile.setTexture(textures);
-                    }
+                    //tile.setBuilding(null);
                 } else {
                     tile.setPassable(false);
                     tile.setTexture(textures);
                 }
+            } else {
+                tile.setPassable(false);
+                tile.setTexture(textures);
             }
-        Pair <Integer , Integer> lastPair = tiles.get(tiles.size()-1);
+        }
+        Pair<Integer, Integer> lastPair = tiles.get(tiles.size() - 1);
         building.setStartX(lastPair.getFirst());
         building.setStartY(lastPair.getSecond());
 

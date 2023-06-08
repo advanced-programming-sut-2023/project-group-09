@@ -43,7 +43,7 @@ public class DBController {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(Color.class, new ColorSerializer())
                     .registerTypeAdapter(Color.class, new ColorDeserializer())
-                    .create();;
+                    .create();
             checkFileExist(Paths.USERS_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.USERS_PATH.getPath())));
             ArrayList<User> allUsers = gson.fromJson(text, new TypeToken<List<User>>(){}.getType());
@@ -244,11 +244,7 @@ public class DBController {
         GameBuildings.buildings.putAll(buildingHashMap);
         GameBuildings.createQuarry();
         GameBuildings.createMainCastle();
-
-
         GameBuildings.storageBuildings.putAll(storageBuildingHashMap);
-
-
         GameBuildings.castleBuildings.putAll(wallHashMap);
         GameBuildings.castleBuildings.putAll(gatehouseHashMap);
         GameBuildings.castleBuildings.putAll(towerHashMap);

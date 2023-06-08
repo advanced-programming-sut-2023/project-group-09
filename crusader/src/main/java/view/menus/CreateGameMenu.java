@@ -3,6 +3,7 @@ package view.menus;
 import controller.DBController;
 import controller.GameController;
 import controller.MapController;
+import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameMaps;
 import enumeration.dictionary.Colors;
 import javafx.application.Application;
@@ -55,11 +56,12 @@ public class CreateGameMenu extends Application {
         for (Colors color : Colors.values()) {
             colors.add(color);
         }
-
-        DBController.loadAllUsers();
         Pane root = FXMLLoader.load(getClass().getResource("/FXML/createGameMenu.fxml"));
-        createGamePane = ViewController.makePaneScreen(stage, root, 1000, -1);
         Scene scene = new Scene(root);
+        stage.setScene(scene);
+        DBController.loadAllUsers();
+        createGamePane = ViewController.makePaneScreen(stage, root, 1000, -1);
+
 
         menuBox = new MenuBox("Create New Game", 365, 100, 800, 700);
         root.getChildren().add(menuBox);
@@ -74,7 +76,7 @@ public class CreateGameMenu extends Application {
 
         menuBox.getChildren().add(addGovernment);
         stage.setTitle("Create New Game");
-        stage.setScene(scene);
+
         stage.show();
     }
 

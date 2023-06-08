@@ -53,15 +53,10 @@ public class GameMenu extends Application {
 
         root.setOnMouseEntered(mouseEvent -> scene.setCursor(Cursor.DEFAULT));
         root.setOnMouseExited(mouseEvent -> scene.setCursor(Cursor.NONE));
-
         GameMaps.createMap1();
         Map map = GameMaps.largeMaps.get(0);
-        GameImages.loadImages();
         gameMap = new GameMap(map, 0, 0, 30, 18);
         miniMap = new MiniMap(125, 143, 0, 0);
-
-        GameBuildings.addBuildings();
-
         menuBar = new Pane();
         menuBar.setMaxWidth(1200);
         menuBar.setMaxHeight(220);
