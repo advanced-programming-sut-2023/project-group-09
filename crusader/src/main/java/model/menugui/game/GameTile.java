@@ -1,11 +1,15 @@
 package model.menugui.game;
 
+import controller.gamestructure.GameImages;
 import enumeration.Paths;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import model.building.Building;
 import model.game.Tile;
+import model.human.Human;
+
+import java.util.ArrayList;
 
 public class GameTile extends StackPane {
     private Tile tile;
@@ -17,6 +21,7 @@ public class GameTile extends StackPane {
     private double height;
     private ImageView textureImage;
     private ImageView buildingImage;
+    private ImageView humanImage;
     private static int tileXOn, tileYOn;
 
     public GameTile(Tile tile, double x, double y, int tileX, int tileY) {
@@ -43,12 +48,12 @@ public class GameTile extends StackPane {
     public void refreshTile() {
         setTexture();
         setBuilding();
+        setTroop();
     }
 
     public void setTexture() {
         this.getChildren().remove(textureImage);
-        Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
-                + "textures/" + tile.getTexture().getName() + "/" + tile.getTextureNum() + ".png").toExternalForm());
+        Image image = GameImages.imageViews.get(tile.getTexture().getName() + tile.getTextureNum());
         textureImage.setImage(image);
         this.getChildren().add(textureImage);
     }
@@ -56,16 +61,36 @@ public class GameTile extends StackPane {
     public void setBuilding() {
         Building building = tile.getBuilding();
         if (building != null && building.getEndX() == tileX && building.getEndY() == tileY) {
-                Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
-                        + "buildings/" + building.getName() + ".png").toExternalForm());
+            Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                    + "buildings/" + building.getName() + ".png").toExternalForm());
             System.out.println(image != null);
-                buildingImage = new ImageView(image);
-                buildingImage.setTranslateX(x + (image.getWidth() *
-                        ((double) building.getLength() - building.getWidth()) / (building.getLength() + building.getWidth()) / 2));
-                buildingImage.setTranslateY(y - image.getHeight() / 2 + textureImage.getFitHeight() / 2);
-                buildingImage.setViewOrder(-1);
-                this.setViewOrder(-1);
-                this.getChildren().add(buildingImage);
+            buildingImage = new ImageView(image);
+            buildingImage.setTranslateX(x + (image.getWidth() *
+                    ((double) building.getLength() - building.getWidth()) / (building.getLength() + building.getWidth()) / 2));
+            buildingImage.setTranslateY(y - image.getHeight() / 2 + textureImage.getFitHeight() / 2);
+            buildingImage.setViewOrder(-1);
+            this.setViewOrder(-1);
+            this.getChildren().add(buildingImage);
+        }
+    }
+
+    public void setTroop() {
+        ArrayList<Human> humans = tile.getHumans();
+        if (tileX == 10 && tileY == 20) {
+//            textureImage.setImage(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+//            + "");
+            Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                    + "troops/archerBow.png").toExternalForm());
+            System.out.println(image != null);
+            humanImage = new ImageView(image);
+//            buildingImage.setTranslateX(x + (image.getWidth() *
+//                    ((double) building.getLength() - building.getWidth()) / (building.getLength() + building.getWidth()) / 2));
+//            buildingImage.setTranslateY(y - image.getHeight() / 2 + textureImage.getFitHeight() / 2);
+            humanImage.setTranslateX(x);
+            humanImage.setTranslateY(y);
+            humanImage.setViewOrder(-1);
+            this.setViewOrder(-1);
+            this.getChildren().add(humanImage);
         }
     }
 
