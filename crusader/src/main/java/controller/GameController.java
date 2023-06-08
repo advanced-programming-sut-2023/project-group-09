@@ -988,7 +988,7 @@ public class GameController {
         ArrayList<Pair<Integer, Integer>> neighborTiles = new ArrayList<>();
         int x = building.getStartX(), y = building.getStartY() - 2;
         for (int i = 0; i < building.getWidth(); i++) {
-            if (y % 2 == 1) x++;
+            if (y % 2 == 1 || y % 2 == -1) x++;
             y++;
             neighborTiles.add(new Pair<>(x, y));
         }
@@ -1009,7 +1009,7 @@ public class GameController {
         x = building.getEndX();
         y = building.getEndY() + 2;
         for (int i = 0; i < building.getLength(); i++) {
-            if (y % 2 == 1) x++;
+            if (y % 2 == 1 || y % 2 == -1) x++;
             y--;
             neighborTiles.add(new Pair<>(x, y));
         }
