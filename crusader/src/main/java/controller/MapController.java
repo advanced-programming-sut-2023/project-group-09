@@ -189,6 +189,8 @@ public class MapController {
         }
 
         assert building != null;
+        building.setEndX(x);
+        building.setEndY(y);
         for (int i = y; i < y + building.getLength(); i++) {
             for (int j = x; j < x + building.getWidth(); j++) {
                 if (j >= map.getWidth() || i >= map.getLength()) {

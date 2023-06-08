@@ -38,7 +38,6 @@ public class GameTile extends StackPane {
         textureImage.setTranslateY(y);
         textureImage.setViewOrder(0);
         refreshTile();
-        this.getChildren().addAll(textureImage);
     }
 
     public void refreshTile() {
@@ -47,23 +46,26 @@ public class GameTile extends StackPane {
     }
 
     public void setTexture() {
+        this.getChildren().remove(textureImage);
         Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
                 + "textures/" + tile.getTexture().getName() + "/" + tile.getTextureNum() + ".png").toExternalForm());
         textureImage.setImage(image);
+        this.getChildren().add(textureImage);
     }
 
     public void setBuilding() {
         Building building = tile.getBuilding();
-        if (building != null) {
-            Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
-                    + "buildings/" + building.getName() + ".png").toExternalForm());
-            buildingImage = new ImageView(image);
-            buildingImage.setTranslateX(x + (image.getWidth() *
-                    ((double) building.getLength() - building.getWidth()) / (building.getLength() + building.getWidth()) / 2));
-            buildingImage.setTranslateY(y - image.getHeight() / 2 + textureImage.getFitHeight() / 2);
-            buildingImage.setViewOrder(-1);
-            this.setViewOrder(-1);
-            this.getChildren().add(buildingImage);
+        if (building != null && building.getEndX() == tileX && building.getEndY() == tileY) {
+                System.out.println(building.getName());
+                Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                        + "buildings/" + building.getName() + ".png").toExternalForm());
+                buildingImage = new ImageView(image);
+                buildingImage.setTranslateX(x + (image.getWidth() *
+                        ((double) building.getLength() - building.getWidth()) / (building.getLength() + building.getWidth()) / 2));
+                buildingImage.setTranslateY(y - image.getHeight() / 2 + textureImage.getFitHeight() / 2);
+                buildingImage.setViewOrder(-1);
+                this.setViewOrder(-1);
+                this.getChildren().add(buildingImage);
         }
     }
 
