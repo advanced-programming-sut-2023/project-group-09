@@ -3,6 +3,8 @@ package controller;
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameHumans;
 import controller.gamestructure.GameTools;
+import enumeration.Pair;
+import enumeration.Paths;
 import enumeration.Textures;
 import enumeration.dictionary.RockDirections;
 import enumeration.dictionary.Trees;
@@ -13,6 +15,7 @@ import model.building.castlebuildings.Gatehouse;
 import model.building.castlebuildings.Wall;
 import model.building.storagebuildings.StorageBuilding;
 import model.buildinghandler.BuildingCounter;
+import model.game.Game;
 import model.game.Map;
 import model.game.Tile;
 import model.human.civilian.Civilian;
@@ -20,6 +23,7 @@ import model.human.military.Engineer;
 import model.human.military.Military;
 import model.tools.Tool;
 
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 
 public class MapController {
@@ -179,8 +183,6 @@ public class MapController {
 
     public static void dropBuilding(int x, int y, String type, Government government) {
         Building building = GameBuildings.getBuilding(type, government, x, y);
-        building.setEndX(x+1);
-        building.setEndY(y+1);
         if (type.equals("killingPit")) {
             dropKillingPit(x, y);
             return;
@@ -189,16 +191,18 @@ public class MapController {
             System.out.println("a government just can have one main Castle!");
             return;
         }
-
+        int counter = 0;
         assert building != null;
-        building.setEndX(x+1);
-        building.setEndY(y+1);
-        for (int i = y; i < y + building.getLength(); i++) {
-            for (int j = x; j < x + building.getWidth(); j++) {
+        ArrayList<Pair<Integer , Integer>> tiles = GameController.getNeighborTiles
+                (x , y , building.getWidth() , building.getLength());
+        for (Pair<Integer , Integer> pair : tiles) {
+            int i = pair.getFirst();
+            int j = pair.getSecond();
+            System.out.println(++counter + " : x = " + i + " y = " + j);
                 if (j >= map.getWidth() || i >= map.getLength()) {
                     System.out.println("you can't put a building here");
                 }
-                Tile tile = map.getTile(j, i);
+            Tile tile = map.getTile(i, j);
                 if (building.isShouldBeOne()) {
                     deleteOtherBuildingWithThisType(building);
                 }
@@ -210,8 +214,8 @@ public class MapController {
                 }
 
                 tile.setBuilding(building);
+            System.out.println(map.getTile(x , y).getBuilding() != null);
                 if (building.getName().equals("stairs") && building instanceof Wall) {
-
                     ((Wall) building).setHeight(Wall.heightOfStairs(x, y));
                     tile.setPassable(false);
                     tile.setTexture(textures);
@@ -232,7 +236,7 @@ public class MapController {
                 if (building.getBuildingImpassableLength() != -1) {
                     if (i >= building.getBuildingImpassableLength() + y || j >= building.getBuildingImpassableLength() + x) {
                         tile.setPassable(true);
-                        tile.setBuilding(null);
+                        //tile.setBuilding(null);
                     } else {
                         tile.setPassable(false);
                         tile.setTexture(textures);
@@ -242,7 +246,10 @@ public class MapController {
                     tile.setTexture(textures);
                 }
             }
-        }
+        Pair <Integer , Integer> lastPair = tiles.get(tiles.size()-1);
+        building.setStartX(lastPair.getFirst());
+        building.setStartY(lastPair.getSecond());
+
         government.getBuildingData(type).addBuilding(building);
         if (building.getName().equals("hovel")) {
             government.updateMaxPopulation();

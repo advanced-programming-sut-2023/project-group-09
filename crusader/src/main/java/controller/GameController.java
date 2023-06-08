@@ -5,6 +5,7 @@ import controller.gamestructure.GameHumans;
 import controller.human.HumanController;
 import controller.human.MoveController;
 import enumeration.MilitaryStates;
+import enumeration.Pair;
 import model.Government;
 import model.activity.Move;
 import model.building.Building;
@@ -480,8 +481,6 @@ public class GameController {
         if (message != null) {
             return message;
         }
-        x--;
-        y--;
         if (type.equals("killingPit")) {
             game.getMap().getTile(x, y).setPit(true);
             game.getMap().getTile(x, y).setPitGovernment(game.getCurrentGovernment());
@@ -967,13 +966,13 @@ public class GameController {
         return filteredList;
     }
 
-    public static ArrayList<Tile> getNeighborTiles(int endX, int endY, int width , int length) {
-        ArrayList<Tile> neighborTiles = new ArrayList<>();
+    public static ArrayList<Pair<Integer , Integer> > getNeighborTiles(int endX, int endY, int width , int length) {
+        ArrayList<Pair <Integer , Integer>> neighborTiles = new ArrayList<>();
         int headX = endX, headY = endY;
         int x = endX, y = endY;
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < width; j++) {
-                neighborTiles.add(game.getMap().getTile(x, y));
+                neighborTiles.add(new Pair<>(x , y));
                 if (y % 2 == 0) x--;
                 y--;
             }
@@ -983,5 +982,10 @@ public class GameController {
             y = headY;
         }
         return neighborTiles;
+    }
+
+    public static ArrayList<Pair<Integer , Integer>> getDirectNeighborTiles(int x , int y) {
+        ArrayList<Pair <Integer , Integer>> neighborTiles = new ArrayList<>();
+        return null;
     }
 }

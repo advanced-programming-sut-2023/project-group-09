@@ -28,8 +28,10 @@ public class GameBuildings {
             return null;
         }
         building.setGovernment(government);
-        building.setStartX(x);
-        building.setStartY(y);
+        /*building.setStartX(x); //TODO : edit
+        building.setStartY(y); //TODO : edit*/
+        building.setEndX(x);
+        building.setEndY(y);
         building.setNeighborTiles();
         return building;
     }
