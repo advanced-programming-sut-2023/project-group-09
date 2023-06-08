@@ -1,6 +1,5 @@
 package model.menugui.game;
 
-import controller.gamestructure.GameImages;
 import enumeration.Paths;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -48,8 +47,8 @@ public class GameTile extends StackPane {
 
     public void setTexture() {
         this.getChildren().remove(textureImage);
-        //
-        Image image = GameImages.imageViews.get(tile.getTexture().getName() + tile.getTextureNum());
+        Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                + "textures/" + tile.getTexture().getName() + "/" + tile.getTextureNum() + ".png").toExternalForm());
         textureImage.setImage(image);
         this.getChildren().add(textureImage);
     }

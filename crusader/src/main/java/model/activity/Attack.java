@@ -29,12 +29,12 @@ public class Attack {
     }
 
     public ArrayList<Military> getEnemyOfRange(int x, int y, int range) {
-        int startX = HumanController.getXInDistance(x, y, -range);
+        int startX = x - range;
         int startY = y - range;
-        int endX = HumanController.getXInDistance(x, y, range);
+        int endX = x + range;
         int endY = y + range;
         Map map = GameController.getGame().getMap();
-        if (startX < 0) {
+        if (x - range < 0) {
             startX = 0;
         }
 
@@ -42,25 +42,25 @@ public class Attack {
             startY = 0;
         }
 
-        if (endX > map.getWidth()) {
+        if (endX + 1 >= map.getWidth()) {
             endX = map.getWidth() - 1;
         }
 
         if (endY + 1 >= map.getLength()) {
             endY = map.getLength() - 1;
         }
-        return HumanController.getEnemiesOfArea(startX, startY, endX - startX, endY - startY, military.getGovernment());
+        return HumanController.getEnemiesOfArea(startX, startY, endX, endY, military.getGovernment());
     }
 
     public void attackCiviliansOfRange(int x, int y, int range) {
         Map map = GameController.getGame().getMap();
-        int startX = HumanController.getXInDistance(x, y, -range);
-        int endX = HumanController.getXInDistance(x, y, range);
+        int startX = x - range;
+        int endX = x + range;
         int startY = y - range;
         int endY = y + range;
 
 
-        if (startX < 0) {
+        if (x < range) {
             startX = 0;
         }
         if (endX >= map.getWidth() - 1) {
@@ -75,33 +75,19 @@ public class Attack {
             startY = 0;
         }
 
-        attackCiviliansOfArea(startX, startY, endX - startX, endY - startY);
+        attackCiviliansOfArea(startX, startY, endX, endY);
     }
 
-    public void attackCiviliansOfArea(int startX, int startY, int width, int length) {
-        int x1 = startX;
-        int y1 = startY;
-        int x2;
-        int y2;
-        for (int i = 0; i <= width; i++) {
-            x2 = x1;
-            y2 = y1;
-            for (int j = 0; j <= length; j++) {
-                ArrayList<Civilian> civilians = MapController.getCiviliansOfOtherGovernment(x2, y2, military.getGovernment());
+    public void attackCiviliansOfArea(int startX, int startY, int endX, int endY) {
+        for (int i = startX; i <= endX; i++) {
+            for (int j = startY; j <= endY; j++) {
+                ArrayList<Civilian> civilians = MapController.getCiviliansOfOtherGovernment(i, j, military.getGovernment());
                 if (civilians.size() != 0) {
                     Civilian civilian = civilians.get(0);
                     MapController.deleteHuman(civilian.getX(), civilian.getY(), civilian);
                     civilian.setGovernment(null);
                     return;
                 }
-                y2++;
-                if (y2 % 2 == 0) {
-                    x2++;
-                }
-            }
-            y1++;
-            if (x1 % 2 == 1) {
-                x1++;
             }
         }
     }
@@ -303,7 +289,7 @@ public class Attack {
     }
 
     public void attackToBuilding() {
-        if (targetBuilding instanceof MainCastle) {
+        if (targetBuilding instanceof MainCastle){
             return;
         }
         if (military.getName().equals("ladderman")) {

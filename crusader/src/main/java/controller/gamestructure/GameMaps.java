@@ -4,14 +4,12 @@ import enumeration.Textures;
 import enumeration.dictionary.RockDirections;
 import enumeration.dictionary.Trees;
 import model.game.Map;
-import model.menugui.game.GameMap;
 
 import java.util.ArrayList;
 
 public class GameMaps {
     public static ArrayList<Map> smallMaps = new ArrayList<>();
     public static ArrayList<Map> largeMaps = new ArrayList<>();
-    public static ArrayList<GameMap> gameMaps = new ArrayList<>();
 
     private static void changeTextureOfSomeTiles(int x1, int x2, int y1, int y2, Map map, Textures texture) {
         for (int i = x1; i <= x2; i++) {
@@ -41,10 +39,10 @@ public class GameMaps {
             map1.getTile(i, 50 + (i - 105)).setTexture(Textures.RIVER);
         }
         for (int i = 105; i <= 155; i++) {
-            map1.getTile(i + 1, 50 + (i - 105)).setTexture(Textures.RIVER);
+            map1.getTile(i+1, 50 + (i - 105)).setTexture(Textures.RIVER);
         }
         for (int i = 105; i <= 155; i++) {
-            map1.getTile(i + 2, 50 + (i - 105)).setTexture(Textures.RIVER);
+            map1.getTile(i+2, 50 + (i - 105)).setTexture(Textures.RIVER);
         }
         changeTextureOfSomeTiles(10, 40, 138, 142, map1, Textures.GRASS);
         map1.getTile(95, 80).setTree(Trees.OLIVE_TREE);

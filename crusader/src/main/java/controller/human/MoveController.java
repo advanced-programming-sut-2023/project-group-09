@@ -13,7 +13,6 @@ import model.game.Tile;
 import model.game.Tuple;
 import model.human.Human;
 import model.human.military.Military;
-import model.menugui.game.GameTile;
 import model.tools.Tool;
 import viewphase1.UnitMenu;
 
@@ -132,14 +131,7 @@ public class MoveController extends HumanController {
 
 
     public static double getDistance(int x1, int y1, int x2, int y2) {
-
-        double realX1 = getRealX(x1,y1);
-        double realX2 = getRealX(x2,y2);
-        double realY1 = getRealY(y1);
-        double realY2 = getRealY(y2);
-
-
-        return Math.sqrt(Math.pow(realX1 - realX2, 2) + Math.pow(realY1 - realY2, 2));
+        return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
     }
 
     //this used in makePath and detect next node
@@ -173,9 +165,9 @@ public class MoveController extends HumanController {
                         secondPairs.add(new Tuple(y, x - 1, !isOverHead, pair));
                     }
                 }
-                if (y > 1) {
-                    if (map.getTile(x, y - 2).isPassable(human, !isOverHead) && !checkArray[y - 2][x]) {
-                        secondPairs.add(new Tuple(y - 2, x, !isOverHead, pair));
+                if (x != 0 && y != 0) {
+                    if (map.getTile(x - 1, y - 1).isPassable(human, !isOverHead) && !checkArray[y - 1][x - 1]) {
+                        secondPairs.add(new Tuple(y - 1, x - 1, !isOverHead, pair));
                     }
                 }
                 if (x != GameController.getGame().getMap().getWidth() - 1) {
@@ -193,9 +185,9 @@ public class MoveController extends HumanController {
                         secondPairs.add(new Tuple(y + 1, x + 1, !isOverHead, pair));
                     }
                 }
-                if (y < GameController.getGame().getMap().getWidth() - 2) {
-                    if (map.getTile(x, y + 2).isPassable(human, !isOverHead) && !checkArray[y + 2][x]) {
-                        secondPairs.add(new Tuple(y + 2, x, !isOverHead, pair));
+                if (y != GameController.getGame().getMap().getWidth() - 1 && x != 0) {
+                    if (map.getTile(x - 1, y + 1).isPassable(human, !isOverHead) && !checkArray[y + 1][x - 1]) {
+                        secondPairs.add(new Tuple(y + 1, x - 1, !isOverHead, pair));
                     }
                 }
                 if (y != 0 && x != GameController.getGame().getMap().getWidth() - 1) {
@@ -209,14 +201,14 @@ public class MoveController extends HumanController {
                     secondPairs.add(new Tuple(y - 1, x, isOverHead, pair));
                 }
             }
-            if (x != 0) {
+            if (x != 0 && !checkArray[y][x - 1]) {
                 if (map.getTile(x - 1, y).isPassable(human, isOverHead) && !checkArray[y][x - 1]) {
                     secondPairs.add(new Tuple(y, x - 1, isOverHead, pair));
                 }
             }
-            if (y > 2) {
-                if (map.getTile(x, y - 2).isPassable(human, isOverHead) && !checkArray[y - 2][x]) {
-                    secondPairs.add(new Tuple(y - 2, x, isOverHead, pair));
+            if (x != 0 && y != 0) {
+                if (map.getTile(x - 1, y - 1).isPassable(human, isOverHead) && !checkArray[y - 1][x - 1]) {
+                    secondPairs.add(new Tuple(y - 1, x - 1, isOverHead, pair));
                 }
             }
             if (x != GameController.getGame().getMap().getWidth() - 1) {
@@ -234,9 +226,9 @@ public class MoveController extends HumanController {
                     secondPairs.add(new Tuple(y + 1, x + 1, isOverHead, pair));
                 }
             }
-            if (y < GameController.getGame().getMap().getWidth() - 2) {
-                if (map.getTile(x, y + 2).isPassable(human, isOverHead) && !checkArray[y + 2][x]) {
-                    secondPairs.add(new Tuple(y + 2, x, isOverHead, pair));
+            if (y != GameController.getGame().getMap().getWidth() - 1 && x != 0) {
+                if (map.getTile(x - 1, y + 1).isPassable(human, isOverHead) && !checkArray[y + 1][x - 1]) {
+                    secondPairs.add(new Tuple(y + 1, x - 1, isOverHead, pair));
                 }
             }
             if (y != 0 && x != GameController.getGame().getMap().getWidth() - 1) {
@@ -247,7 +239,6 @@ public class MoveController extends HumanController {
         }
         return secondPairs;
     }
-
     public static boolean checkOverHead(Building building) {
         if (building == null) {
             return false;
@@ -446,16 +437,5 @@ public class MoveController extends HumanController {
         Tile tile = GameController.getGame().getMap().getTile(tuple.getX(), tuple.getY());
         Building building = tile.getBuilding();
         return building instanceof CastleBuilding castleBuilding && !castleBuilding.getName().equals("drawBridge");
-    }
-
-    public static double getRealX(int x,int y){
-        if (y % 2 == 1) {
-            return x * 50 - 25;
-        } else {
-            return x * 25;
-        }
-    }
-    public static double getRealY(int y){
-        return y * 15 - 15;
     }
 }

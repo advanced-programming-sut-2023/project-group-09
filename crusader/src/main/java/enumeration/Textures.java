@@ -3,7 +3,7 @@ package enumeration;
 import javafx.scene.paint.Color;
 
 public enum Textures {
-    EARTH("earth", true, true, Color.WHEAT, Color.ROSYBROWN, 4,3),
+    EARTH("earth", true, true, Color.WHEAT, Color.ROSYBROWN, 4,8),
     EARTH_AND_SAND("earthAndSand", true, true, Color.SLATEGRAY, Color.WHEAT, 2,3),
     BOULDER("boulder", true, true, Color.WHITE, Color.WHEAT, 4,1),
     ROCK_TEXTURE("rockTexture", true, false, Color.SADDLEBROWN, Color.WHEAT, 3,1),
@@ -21,13 +21,13 @@ public enum Textures {
     SEA("sea", false, false, Color.STEELBLUE, Color.DARKBLUE, 6,3);
 
 
-    private final String name;
-    private final boolean passable;
-    private final boolean canPutBuilding;
-    private final Color color;
-    private final Color tempColor;
-    private final int ratio;
-    private final int count;
+    private String name;
+    private boolean passable;
+    private boolean canPutBuilding;
+    private Color color;
+    private Color tempColor;
+    private int ratio;
+    private int count;
 
     private Textures(String name, boolean passable, boolean canPutBuilding, Color color, Color tempColor, int ratio,int count) {
         this.name = name;
