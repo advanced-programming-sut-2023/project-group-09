@@ -2,6 +2,7 @@ package view.controllers;
 
 import controller.GameController;
 import controller.gamestructure.GameBuildings;
+import enumeration.Pair;
 import enumeration.Paths;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -21,11 +22,13 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import model.Government;
 import model.building.Building;
+import model.game.Tile;
 import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
 import view.menus.GameMenu;
 import view.menus.LoginMenu;
+import viewphase1.MapMenu;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -474,10 +477,10 @@ public class GameViewController {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         GameMenu.gameMap.getChildren().remove(imageView);
-                        tileX = GameMenu.gameMap.getCameraX() + (int)((mouseEvent.getScreenX() -
-                                (GameMenu.scene.getWidth()-1200)/2)/GameMap.tileWidth);
-                        tileY = GameMenu.gameMap.getCameraY() + 2*(int)((mouseEvent.getScreenY() -
-                                (GameMenu.scene.getHeight()-800)/2)/GameMap.tileHeight);
+                        Pair <Integer , Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
+                        tileX = pair.getFirst();
+                        tileY = pair.getSecond();
+                        System.out.println("Tile founded at : " + tileX + " " + tileY);
                         GameMenu.hoveringBarStateText.setText(GameController.dropBuilding(tileX, tileY, buildingName, null));
                         GameMap.getGameTile(tileX , tileY).refreshTile();
                     }
@@ -485,8 +488,68 @@ public class GameViewController {
             }
         });
 
+    }
 
+    public static Pair<Integer , Integer> tileCoordinateWithMouseEvent(MouseEvent mouseEvent) {
+        int halfTileX = (int)((mouseEvent.getScreenX() -
+                (GameMenu.scene.getWidth()-1200)/2)/((double) GameMap.tileWidth/2));
+        int halfTileY = (int)((mouseEvent.getScreenY() -
+                (GameMenu.scene.getHeight()-800)/2)/((double) GameMap.tileHeight/2));
+        int firstTileX = halfTileX/2;
+        int secondTileX = halfTileX % 2 == 1 ? halfTileX/2 : halfTileX/2-1;
+        int firstTileY = halfTileY-1;
+        int secondTileY = halfTileY;
+        Pair<Integer , Integer> pair = checkNearestTile(mouseEvent , firstTileX , secondTileX , firstTileY , secondTileY);
+        System.out.println("without change" + pair.getFirst() + " " + pair.getSecond());
+        return new Pair<>(pair.getFirst() + GameMenu.gameMap.getCameraX() ,
+                pair.getSecond() + GameMenu.gameMap.getCameraY());
+    }
 
+    private static Pair<Integer , Integer> checkNearestTile(MouseEvent mouseEvent , int x1 , int x2 , int y1 , int y2) {
+        double dis1 , dis2;
+        if (x1 != x2 && y1 != y2) {
+            if (Math.max(y1 , y2) % 2 == 0) {
+                dis1 = distanceOfTile(mouseEvent , Math.max(x1 , x2) , y2);
+                dis2 = distanceOfTile(mouseEvent , Math.min(x1 , x2) , y1);
+                if (dis1 <= dis2) {
+                    return new Pair<>(Math.max(x1 , x2) , y2);
+                } else {
+                    return new Pair<>(Math.min(x1 , x2) , y1);
+                }
+            } else {
+                if (y1 > y2) {
+                    int tmp = y1;
+                    y1 = y2;
+                    y2 = tmp;
+                }
+                dis1 = distanceOfTile(mouseEvent , Math.max(x1 , x2) , y1);
+                dis2 = distanceOfTile(mouseEvent , Math.min(x1 , x2) , y2);
+                if (dis1 <= dis2) {
+                    return new Pair<>(Math.max(x1 , x2) , y1);
+                } else {
+                    return new Pair<>(Math.min(x1 , x2) , y2);
+                }
+            }
+        } else {
+            dis1 = distanceOfTile(mouseEvent , x1 , y1);
+            dis2 = distanceOfTile(mouseEvent , x2 , y2);
+            if (dis1 <= dis2) {
+                return new Pair<>(x1 , y1);
+            } else {
+                return new Pair<>(x2 , y2);
+            }
+        }
+    }
+
+    private static double distanceOfTile(MouseEvent mouseEvent ,int tileX , int tileY) {
+        double x = (mouseEvent.getScreenX() -
+                (GameMenu.scene.getWidth()-1200)/2);
+        double y = (mouseEvent.getScreenY() -
+                (GameMenu.scene.getHeight()-800)/2);
+        GameTile tile = GameMap.getGameTile(tileX , tileY);
+        double distance = Math.sqrt(Math.pow(tile.getX() + (double) GameMap.tileWidth/2 - x , 2) +
+                Math.pow(tile.getY() + (double) GameMap.tileHeight/2 - y , 2));
+        return distance;
     }
 
     public static void createBorderRectangles(GameMap gameMap, MiniMap miniMap) {

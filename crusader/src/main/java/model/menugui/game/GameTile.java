@@ -104,4 +104,20 @@ public class GameTile extends StackPane {
     public void setTileY(int tileY) {
         this.tileY = tileY;
     }
+
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
 }
