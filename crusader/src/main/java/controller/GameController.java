@@ -492,8 +492,6 @@ public class GameController {
         if (building == null) {
             return "building type is invalid!";
         }
-        building.setEndX(x);
-        building.setEndY(y);
         if (!hasRequired(building.getCost())) {
             return "your resource is not enough!";
         }

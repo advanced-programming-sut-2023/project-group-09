@@ -24,7 +24,7 @@ import javafx.stage.Stage;
 import model.game.Map;
 import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
-import model.menugui.game.GameMap1;
+
 import view.controllers.GameViewController;
 import view.controllers.ViewController;
 

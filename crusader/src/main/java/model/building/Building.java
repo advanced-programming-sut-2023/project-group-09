@@ -138,7 +138,6 @@ public class Building implements Cloneable {
 
     public void setStartX(int startX) {
         this.startX = startX;
-        this.endX = startX + width - 1;
     }
 
     public int getStartY() {
@@ -146,7 +145,6 @@ public class Building implements Cloneable {
     }
 
     public void setStartY(int startY) {
-        this.endY = startY + length - 1;
         this.startY = startY;
     }
 

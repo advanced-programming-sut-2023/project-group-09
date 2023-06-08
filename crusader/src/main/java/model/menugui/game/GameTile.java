@@ -57,9 +57,9 @@ public class GameTile extends StackPane {
     public void setBuilding() {
         Building building = tile.getBuilding();
         if (building != null && building.getEndX() == tileX && building.getEndY() == tileY) {
-                System.out.println(building.getName());
                 Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
                         + "buildings/" + building.getName() + ".png").toExternalForm());
+            System.out.println(image != null);
                 buildingImage = new ImageView(image);
                 buildingImage.setTranslateX(x + (image.getWidth() *
                         ((double) building.getLength() - building.getWidth()) / (building.getLength() + building.getWidth()) / 2));
