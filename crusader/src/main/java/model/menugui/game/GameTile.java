@@ -77,9 +77,6 @@ public class GameTile extends StackPane {
     public void setTroop() {
         ArrayList<Human> humans = tile.getHumans();
         if (humans.size() != 0) {
-            textureImage.setImage(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
-                    + "textures/red.png").toExternalForm()));
-            textureImage.setViewOrder(10);
             Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
                     + "troops/" + humans.get(0).getName() + ".png").toExternalForm());
             System.out.println(image != null);
