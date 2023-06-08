@@ -81,14 +81,15 @@ public class GameImages {
         }
     }
 
-    public static void addMarsh(){
+    public static void addMarsh() {
         for (int i = 0; i < Textures.MARSH.getCount(); i++) {
             Image textureImg = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
                     + "textures/marsh/" + i + ".png").toExternalForm());
             imageViews.put("marsh" + i, textureImg);
         }
     }
-    public static void addLargePond(){
+
+    public static void addLargePond() {
         for (int i = 0; i < Textures.LARGE_POND.getCount(); i++) {
             Image textureImg = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
                     + "textures/largePond/" + i + ".png").toExternalForm());
@@ -96,13 +97,14 @@ public class GameImages {
         }
     }
 
-    public static void addSmallPond(){
+    public static void addSmallPond() {
         for (int i = 0; i < Textures.SMALL_POND.getCount(); i++) {
             Image textureImg = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
                     + "textures/smallPond/" + i + ".png").toExternalForm());
             imageViews.put("smallPond" + i, textureImg);
         }
     }
+
     public static void addIronTexture() {
         for (int i = 0; i < Textures.IRON_TEXTURE.getCount(); i++) {
             Image textureImg = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
