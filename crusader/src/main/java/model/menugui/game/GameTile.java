@@ -76,18 +76,16 @@ public class GameTile extends StackPane {
 
     public void setTroop() {
         ArrayList<Human> humans = tile.getHumans();
-        if (tileX == 10 && tileY == 20) {
-//            textureImage.setImage(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
-//            + "");
+        if (humans.size() != 0) {
+            textureImage.setImage(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                    + "textures/red.png").toExternalForm()));
+            textureImage.setViewOrder(10);
             Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
-                    + "troops/archerBow.png").toExternalForm());
+                    + "troops/" + humans.get(0).getName() + ".png").toExternalForm());
             System.out.println(image != null);
             humanImage = new ImageView(image);
-//            buildingImage.setTranslateX(x + (image.getWidth() *
-//                    ((double) building.getLength() - building.getWidth()) / (building.getLength() + building.getWidth()) / 2));
-//            buildingImage.setTranslateY(y - image.getHeight() / 2 + textureImage.getFitHeight() / 2);
             humanImage.setTranslateX(x);
-            humanImage.setTranslateY(y);
+            humanImage.setTranslateY(y - image.getHeight() / 2 + textureImage.getFitHeight() / 2);
             humanImage.setViewOrder(-1);
             this.setViewOrder(-1);
             this.getChildren().add(humanImage);
