@@ -5,7 +5,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import model.game.Map;
 import model.game.Tile;
+import model.human.military.Military;
 import view.controllers.GameViewController;
+
+import java.util.ArrayList;
 
 public class GameMap extends Pane {
     private Map map;
@@ -19,7 +22,12 @@ public class GameMap extends Pane {
     private int cameraY;
     private int tilesLoaded;
     private static GameTile[][] gameTiles;
+    private static ArrayList[][] gameTroops;
     private final boolean[][] load;
+
+    public ArrayList<Tile> selectedTilesTroop = new ArrayList<>();
+
+
 
     public GameMap(Map map, double cameraX, double cameraY, double tileWidth, double tileHeight) {
         GameMap.tileWidth = tileWidth;
@@ -30,6 +38,7 @@ public class GameMap extends Pane {
         height = map.getLength() * (tileHeight/2);
         this.map = map;
         gameTiles = new GameTile[map.getWidth()][map.getWidth()];
+        gameTroops = new ArrayList[map.getWidth()][map.getWidth()];
         this.cameraX = (int) cameraX;
         this.cameraY = (int) cameraY;
         this.tilesLoaded = 0;

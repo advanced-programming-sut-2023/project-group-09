@@ -3,6 +3,7 @@ package view.menus;
 import controller.DBController;
 import controller.GameController;
 import controller.MapController;
+import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameMaps;
 import enumeration.dictionary.Colors;
 import javafx.application.Application;
@@ -55,11 +56,12 @@ public class CreateGameMenu extends Application {
         for (Colors color : Colors.values()) {
             colors.add(color);
         }
-
-        DBController.loadAllUsers();
         Pane root = FXMLLoader.load(getClass().getResource("/FXML/createGameMenu.fxml"));
-        createGamePane = ViewController.makePaneScreen(stage, root, 1000, -1);
         Scene scene = new Scene(root);
+        stage.setScene(scene);
+        DBController.loadAllUsers();
+        createGamePane = ViewController.makePaneScreen(stage, root, 1000, -1);
+
 
         menuBox = new MenuBox("Create New Game", 365, 100, 800, 700);
         root.getChildren().add(menuBox);
@@ -74,7 +76,7 @@ public class CreateGameMenu extends Application {
 
         menuBox.getChildren().add(addGovernment);
         stage.setTitle("Create New Game");
-        stage.setScene(scene);
+
         stage.show();
     }
 
@@ -247,10 +249,10 @@ public class CreateGameMenu extends Application {
         colors.remove(color);
         Government government = new Government(controller.Application.getUserByUsername
                 (governmentUsernames.get(governmentNumber - 1).getText()), x, y, color);
-        MapController.dropMilitary(x, y, "lord", government);
-        EuropeanTroop lordMilitary = (EuropeanTroop) game.getMap().getTile(x, y).getMilitaries().get(0);
-        lordMilitary.setGovernment(government);
-        government.setLord(lordMilitary);
+        //MapController.dropMilitary(x, y, "lord", government);
+        //EuropeanTroop lordMilitary = (EuropeanTroop) game.getMap().getTile(x, y).getMilitaries().get(0);
+        //lordMilitary.setGovernment(government);
+        //government.setLord(lordMilitary);
         government.addAmountToProperties("wood", "resource", 1000);
         government.addAmountToProperties("stone", "resource", 500);
         government.addAmountToProperties("iron", "resource", 500);

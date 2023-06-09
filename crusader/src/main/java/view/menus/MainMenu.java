@@ -2,6 +2,7 @@ package view.menus;
 
 import controller.DBController;
 import controller.MainController;
+import controller.gamestructure.GameBuildings;
 import enumeration.Paths;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -73,27 +74,19 @@ public class MainMenu extends Application {
 
         MenuButton logoutButton = new MenuButton("Logout" ,  root , 0 , -25 , true);
 
-        logoutButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                controller.Application.setCurrentUser(null);
-                controller.Application.setStayLoggedIn(false);
-                DBController.saveCurrentUser();
-                try {
-                    new LoginMenu().start(stage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        logoutButton.setOnMouseClicked(mouseEvent -> {
+            controller.Application.setCurrentUser(null);
+            controller.Application.setStayLoggedIn(false);
+            DBController.saveCurrentUser();
+            try {
+                new LoginMenu().start(stage);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
 
         MenuButton exitButton = new MenuButton("Exit" , root , 0 , 50 , true);
-        exitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                MainController.exitCrusader();
-            }
-        });
+        exitButton.setOnMouseClicked(mouseEvent -> MainController.exitCrusader());
 
         root.getChildren().add(menuButton);
         root.getChildren().add(logoutButton);

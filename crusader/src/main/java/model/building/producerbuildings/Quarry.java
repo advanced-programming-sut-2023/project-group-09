@@ -14,7 +14,7 @@ public class Quarry extends ProducerBuilding{
         super(3, 0, "quarry", 30, 6, 6, 12, "stockPile","resource","stone");
         this.addCost("wood",20);
         this.enableHasSpecialTexture();
-        this.addTexture(Textures.BOULDER);
+        this.addTexture(Textures.BOULDER.getName());
     }
 
     @Override

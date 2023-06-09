@@ -11,7 +11,7 @@ public enum Textures {
     GRASS("grass", true, true, Color.SEAGREEN, Color.WHEAT, 3,3),
     THICK_GRASS("thickGrass", true, true, Color.WHEAT, Color.SEAGREEN, 3,3),
     OASIS_GRASS("oasisGrass", true, false, Color.SEAGREEN, Color.DARKGREEN, 2,3),
-    OIL("oil", true, false, Color.SLATEGRAY, Color.BLACK, 4,3),
+    OIL("oil", true, true, Color.SLATEGRAY, Color.BLACK, 4,3),
     MARSH("marsh", false, false, Color.SLATEGRAY, Color.BLACK, 4,3),
     LOW_DEPTH_WATER("lowDepthWater", true, false, Color.STEELBLUE, Color.WHEAT, 2,1),
     RIVER("river", false, false, Color.SKYBLUE, Color.STEELBLUE, 6,3),

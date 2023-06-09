@@ -1,6 +1,5 @@
 package controller.gamestructure;
 
-import enumeration.Textures;
 import model.Government;
 import model.building.Building;
 import model.building.castlebuildings.Gatehouse;
@@ -298,7 +297,6 @@ public class GameBuildings {
                 60, 4, 4, 3, "stockPile", "resource", "iron");
         producerBuilding.addCost("wood", 20);
         producerBuilding.enableHasSpecialTexture();
-        producerBuilding.addTexture(Textures.IRON_TEXTURE);
         producerBuildings.put("ironMine", producerBuilding);
         buildings.put("ironMine", producerBuilding);
     }
@@ -316,7 +314,6 @@ public class GameBuildings {
         producerBuilding.addCost("wood", 20);
 
         producerBuilding.enableHasSpecialTexture();
-        producerBuilding.addTexture(Textures.OIL);
 
 
         producerBuildings.put("pitchRig", producerBuilding);
@@ -455,14 +452,14 @@ public class GameBuildings {
     public static void createOilSmelter() {
         Building building = new Building(0, 1, "oilSmelter", 10, 4, 8);
         building.setPrice(100);
-        building.addCost("iron" , 10);
+        building.addCost("iron", 10);
         buildings.put("oilSmelter", building);
     }
 
     public static void createCagedWarDogs() {
         Building building = new Building(0, 0, "cagedWarDogs", 10, 2, 2);
         building.setPrice(100);
-        building.addCost("wood" , 10);
+        building.addCost("wood", 10);
         buildings.put("cagedWarDogs", building);
     }
 
@@ -495,9 +492,6 @@ public class GameBuildings {
         producerBuilding.addCost("wood", 5);
 
         producerBuilding.enableHasSpecialTexture();
-        producerBuilding.addTexture(Textures.THICK_GRASS);
-        producerBuilding.addTexture(Textures.OASIS_GRASS);
-        producerBuilding.addTexture(Textures.GRASS);
         producerBuilding.setBuildingImpassableLength(3);
 
         producerBuildings.put("appleGarden", producerBuilding);
@@ -511,9 +505,6 @@ public class GameBuildings {
         producerBuilding.addCost("wood", 10);
 
         producerBuilding.enableHasSpecialTexture();
-        producerBuilding.addTexture(Textures.THICK_GRASS);
-        producerBuilding.addTexture(Textures.OASIS_GRASS);
-        producerBuilding.addTexture(Textures.GRASS);
         producerBuilding.setBuildingImpassableLength(3);
 
         producerBuildings.put("dairyProducts", producerBuilding);
@@ -527,9 +518,6 @@ public class GameBuildings {
         producerBuilding.addCost("wood", 15);
 
         producerBuilding.enableHasSpecialTexture();
-        producerBuilding.addTexture(Textures.THICK_GRASS);
-        producerBuilding.addTexture(Textures.OASIS_GRASS);
-        producerBuilding.addTexture(Textures.GRASS);
 
         producerBuilding.setBuildingImpassableLength(3);
         producerBuildings.put("hopFarm", producerBuilding);
@@ -556,9 +544,6 @@ public class GameBuildings {
         producerBuilding.addCost("wood", 15);
         producerBuilding.setBuildingImpassableLength(3);
         producerBuilding.enableHasSpecialTexture();
-        producerBuilding.addTexture(Textures.THICK_GRASS);
-        producerBuilding.addTexture(Textures.OASIS_GRASS);
-        producerBuilding.addTexture(Textures.GRASS);
 
         producerBuildings.put("wheatFarm", producerBuilding);
         buildings.put("wheatFarm", producerBuilding);
@@ -598,13 +583,13 @@ public class GameBuildings {
 
     public static void createQuarry() {
         Quarry quarry = new Quarry();
-        quarry.addCost("wood" , 100);
+        quarry.addCost("wood", 100);
         buildings.put("quarry", quarry);
     }
 
     public static void createOxTether() {
         Building building = new Building(1, 0, "oxTether", 10, 2, 2);
-        building.addCost("wood" , 100);
+        building.addCost("wood", 100);
         buildings.put("oxTether", building);
     }
 

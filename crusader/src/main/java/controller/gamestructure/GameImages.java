@@ -12,6 +12,7 @@ public class GameImages {
 
     public static void loadImages() {
         addTextures();
+        addArabianTroop();
     }
 
     public static void addTextures() {
@@ -31,6 +32,14 @@ public class GameImages {
         addRockTexture();
         addThickGrass();
         addLowDepthWater();
+    }
+    public static void addArabianTroop() {
+        addSwordsman();
+    }
+
+    private static void addSwordsman() {
+        Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +"swordsman.png");
+        imageViews.put("swordsman",troop);
     }
 
     public static void addEarth() {

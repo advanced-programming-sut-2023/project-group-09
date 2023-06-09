@@ -1,5 +1,7 @@
 package controller;
 
+import controller.gamestructure.GameBuildings;
+import controller.gamestructure.GameImages;
 import controller.gamestructure.GameMaps;
 import javafx.stage.Stage;
 import view.menus.LoginMenu;
@@ -16,6 +18,7 @@ public class MainController {
         DBController.loadMilitary();
         DBController.loadBuildings();
         DBController.loadTools();
+        GameImages.loadImages();
         GameMaps.createMaps();
     }
 

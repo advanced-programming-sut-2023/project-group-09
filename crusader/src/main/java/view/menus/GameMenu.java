@@ -1,5 +1,7 @@
 package view.menus;
 
+import controller.GameController;
+import controller.MapController;
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameImages;
 import controller.gamestructure.GameMaps;
@@ -21,6 +23,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import model.game.Map;
 import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
@@ -53,20 +56,15 @@ public class GameMenu extends Application {
 
         root.setOnMouseEntered(mouseEvent -> scene.setCursor(Cursor.DEFAULT));
         root.setOnMouseExited(mouseEvent -> scene.setCursor(Cursor.NONE));
-
         GameMaps.createMap1();
         Map map = GameMaps.largeMaps.get(0);
-        GameImages.loadImages();
         gameMap = new GameMap(map, 0, 0, 30, 18);
         miniMap = new MiniMap(125, 143, 0, 0);
-
-        GameBuildings.addBuildings();
-
         menuBar = new Pane();
         menuBar.setMaxWidth(1200);
         menuBar.setMaxHeight(220);
         root.getChildren().addAll(gameMap, menuBar);
-
+        MapController.dropMilitary(10,5,"swordsman", GameController.getGame().getCurrentGovernment());
         GameViewController.setCenterOfBar();
         GameViewController.createBorderRectangles(gameMap, miniMap);
         stage.show();

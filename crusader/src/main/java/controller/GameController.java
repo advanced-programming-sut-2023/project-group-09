@@ -966,13 +966,13 @@ public class GameController {
         return filteredList;
     }
 
-    public static ArrayList<Pair<Integer , Integer> > getNeighborTiles(int endX, int endY, int width , int length) {
-        ArrayList<Pair <Integer , Integer>> neighborTiles = new ArrayList<>();
+    public static ArrayList<Pair<Integer, Integer>> getNeighborTiles(int endX, int endY, int width, int length) {
+        ArrayList<Pair<Integer, Integer>> neighborTiles = new ArrayList<>();
         int headX = endX, headY = endY;
         int x = endX, y = endY;
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < width; j++) {
-                neighborTiles.add(new Pair<>(x , y));
+                neighborTiles.add(new Pair<>(x, y));
                 if (y % 2 == 0) x--;
                 y--;
             }
@@ -984,8 +984,35 @@ public class GameController {
         return neighborTiles;
     }
 
-    public static ArrayList<Pair<Integer , Integer>> getDirectNeighborTiles(int x , int y) {
-        ArrayList<Pair <Integer , Integer>> neighborTiles = new ArrayList<>();
-        return null;
+    public static ArrayList<Pair<Integer, Integer>> getDirectNeighborTiles(Building building) {
+        ArrayList<Pair<Integer, Integer>> neighborTiles = new ArrayList<>();
+        int x = building.getStartX(), y = building.getStartY() - 2;
+        for (int i = 0; i < building.getWidth(); i++) {
+            if (y % 2 == 1 || y % 2 == -1) x++;
+            y++;
+            neighborTiles.add(new Pair<>(x, y));
+        }
+        x = building.getStartX();
+        y = building.getStartY() - 2;
+        for (int i = 0; i < building.getLength(); i++) {
+            if (y % 2 == 0) x--;
+            y++;
+            neighborTiles.add(new Pair<>(x, y));
+        }
+        x = building.getEndX();
+        y = building.getEndY() + 2;
+        for (int i = 0; i < building.getWidth(); i++) {
+            if (y % 2 == 0) x--;
+            y--;
+            neighborTiles.add(new Pair<>(x, y));
+        }
+        x = building.getEndX();
+        y = building.getEndY() + 2;
+        for (int i = 0; i < building.getLength(); i++) {
+            if (y % 2 == 1 || y % 2 == -1) x++;
+            y--;
+            neighborTiles.add(new Pair<>(x, y));
+        }
+        return neighborTiles;
     }
 }

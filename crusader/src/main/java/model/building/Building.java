@@ -1,7 +1,6 @@
 package model.building;
 
 import controller.GameController;
-import enumeration.Textures;
 import model.Government;
 import model.Permission;
 import model.game.Map;
@@ -26,7 +25,7 @@ public class Building implements Cloneable {
 
     private int buildingImpassableLength = -1;
     private boolean hasSpecialTexture = false;
-    private final ArrayList<Textures> suitableTextures = new ArrayList<>();
+    private ArrayList<String> suitableTextures = new ArrayList<>();
     private boolean shouldBeOne = false;
 
     private String name;
@@ -39,6 +38,7 @@ public class Building implements Cloneable {
     private int startX, startY;
     private int endX, endY;
     private int width, length;
+
     public String getName() {
         return name;
     }
@@ -196,7 +196,7 @@ public class Building implements Cloneable {
         cost.put(key, value);
     }
 
-    public ArrayList<Textures> getSuitableTextures() {
+    public ArrayList<String> getSuitableTextures() {
         return suitableTextures;
     }
 
@@ -204,8 +204,15 @@ public class Building implements Cloneable {
         return hasSpecialTexture;
     }
 
-    public void addTexture(Textures texture) {
+    public void addTexture(String texture) {
         suitableTextures.add(texture);
+    }
+    public void setSuitableTextures(ArrayList<String> textures) {
+        suitableTextures = textures;
+    }
+
+    public void setHasSpecialTexture(boolean hasSpecialTexture) {
+        this.hasSpecialTexture = hasSpecialTexture;
     }
 
     public void enableHasSpecialTexture() {
@@ -295,12 +302,12 @@ public class Building implements Cloneable {
         return this.hp <= 0;
     }
 
-    public boolean isActive(){
+    public boolean isActive() {
         requiredHumans.removeIf(i -> i.getGovernment() == null);
-        if (numberOfRequiredEngineers > 0){
+        if (numberOfRequiredEngineers > 0) {
             return requiredHumans.size() == numberOfRequiredEngineers;
         }
-        if (numberOfRequiredWorkers > 0){
+        if (numberOfRequiredWorkers > 0) {
             return requiredHumans.size() == numberOfRequiredWorkers;
         }
         return true;
