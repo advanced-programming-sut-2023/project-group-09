@@ -93,7 +93,7 @@ public class UnitMenu {
                 if (ViewController.isItemMatch(items, itemsPattern)) {
                     int x = ViewController.getNumberOfRegex("x");
                     int y = ViewController.getNumberOfRegex("y");
-                    output = GameController.attackEnemy(x, y, scanner);
+                    output = GameController.attackEnemy(x, y);
                     System.out.println(output);
                     if (output.equals("attack order has been recorded successfully!")) {
                         return;

@@ -3,7 +3,10 @@ package controller.gamestructure;
 import enumeration.Paths;
 import enumeration.Textures;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import model.game.Tile;
 import model.menugui.game.GameTile;
+import model.menugui.game.TileSensor;
 
 import java.util.HashMap;
 
@@ -13,6 +16,8 @@ public class GameImages {
     public static void loadImages() {
         addTextures();
         addArabianTroop();
+        addCursor();
+        addRed();
     }
 
     public static void addTextures() {
@@ -32,6 +37,20 @@ public class GameImages {
         addRockTexture();
         addThickGrass();
         addLowDepthWater();
+    }
+
+    public static void addCursor(){
+        addSelectMove();
+    }
+
+    public static void addSelectMove(){
+        Image image = new Image(GameTile.class.getResource(Paths.GAME_IMAGES.getPath()).toExternalForm() +"cursor/selectMove.gif");
+        imageViews.put("selectMove",image);
+    }
+
+    public static void addCanNot(){
+        Image image = new Image(GameTile.class.getResource(Paths.GAME_IMAGES.getPath()).toExternalForm() +"cursor/cannot.gif");
+        imageViews.put("cannot",image);
     }
     public static void addArabianTroop() {
         addSwordsman();
@@ -168,5 +187,18 @@ public class GameImages {
                     + "textures/lowDepthWater/" + i + ".png").toExternalForm());
             imageViews.put("lowDepthWater" + i, textureImg);
         }
+    }
+
+    public static void addRed(){
+        Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath() + "textures/red.png").toExternalForm());
+        imageViews.put("red",image);
+    }
+
+    public static TileSensor getRedImageView(double x, double y, GameTile gameTile){
+        TileSensor tileSensor = new TileSensor(imageViews.get("red"),gameTile);
+        tileSensor.setTranslateX(x);
+        tileSensor.setTranslateY(y);
+        tileSensor.setOpacity(0);
+        return tileSensor;
     }
 }

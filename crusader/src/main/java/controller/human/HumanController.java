@@ -298,6 +298,174 @@ public class HumanController {
         return true;
     }
 
+
+    public static boolean validateMove(Tuple endPair){
+        Tuple startPair = MoveController.getStartPair();
+        MoveController.shouldCheckOtherPath();
+        LinkedList<Tuple> path = MoveController.checkHasPath(startPair, endPair);
+        LinkedList<Tuple> ladderPath = MoveController.checkHasLadderPath(startPair, endPair, path);
+        LinkedList<Tuple> assassinPath = MoveController.checkAssassinPath(startPair, endPair, path);
+
+        return path != null || assassinPath != null || ladderPath != null;
+    }
+
+    public static boolean validateAttack(Tool tool){
+        Tuple startPair = MoveController.getStartPair();
+        Tuple endPair = new Tuple(tool.getY(), tool.getX());
+        MoveController.shouldCheckOtherPath();
+        LinkedList<Tuple> path = MoveController.checkHasPath(startPair, endPair);
+        LinkedList<Tuple> ladderPath = MoveController.checkHasLadderPath(startPair, endPair, path);
+        LinkedList<Tuple> assassinPath = MoveController.checkAssassinPath(startPair, endPair, path);
+
+        if (path == null && assassinPath == null && ladderPath == null) {
+            return false;
+        }
+        int count = 0;
+
+        if (path == null) {
+            for (Military military : militaries) {
+                if (military.canAirAttack() || military.getName().equals("engineer") || military.getName().equals("ladderman")) {
+                    continue;
+                }
+                if (military.isUsesLadder()) {
+                    count++;
+                }
+
+                if (military.getName().equals("assassin")) {
+                    count++;
+                }
+            }
+        } else {
+            for (Military military : militaries) {
+                if (military.canAirAttack() || military.getName().equals("engineer") || military.getName().equals("ladderman")) {
+                    continue;
+                }
+                count++;
+            }
+        }
+        if (count == 0) {
+            return false;
+        }
+        return true;
+    }
+    public static boolean validateAttack(Building building){
+        Tuple startPair = MoveController.getStartPair();
+        MoveController.shouldCheckOtherPath();
+        LinkedList<Tuple> path = MoveController.checkHasPathForBuilding(startPair, building);
+        LinkedList<Tuple> ladderPath = MoveController.checkHasLadderPathForBuilding(startPair, building, path);
+        LinkedList<Tuple> assassinPath = MoveController.checkAssassinPathForBuilding(startPair, building, path);
+
+        if (path == null && assassinPath == null && ladderPath == null) {
+            return false;
+        }
+        int count = 0;
+
+        if (path == null) {
+            for (Military military : militaries) {
+                if (military.canAirAttack() || military.getName().equals("engineer") || military.getName().equals("ladderman")) {
+                    continue;
+                }
+                if (military.isUsesLadder()) {
+                    count++;
+                }
+
+                if (military.getName().equals("assassin")) {
+                    count++;
+                }
+            }
+        } else {
+            for (Military military : militaries) {
+                if (military.canAirAttack() || military.getName().equals("engineer")) {
+                    continue;
+                }
+
+                if (military.getName().equals("ladderman") && !(building instanceof Wall)) {
+                    continue;
+                }
+                count++;
+            }
+        }
+        if (count == 0) {
+            return false;
+        }
+        return true;
+    }
+    public static boolean validateAttack(Military enemy){
+        Tuple startPair = MoveController.getStartPair();
+        Tuple endPair = new Tuple(enemy.getY(), enemy.getX());
+        MoveController.shouldCheckOtherPath();
+
+        LinkedList<Tuple> path = MoveController.checkHasPath(startPair, endPair);
+        LinkedList<Tuple> ladderPath = MoveController.checkHasLadderPath(startPair, endPair, path);
+        LinkedList<Tuple> assassinPath = MoveController.checkAssassinPath(startPair, endPair, path);
+        if (path == null && assassinPath == null && ladderPath == null) {
+            return false;
+        }
+        int count = 0;
+
+        if (path == null) {
+            for (Military military : militaries) {
+                if (military.canAirAttack() || military.getName().equals("engineer") || military.getName().equals("ladderman")) {
+                    continue;
+                }
+                if (military.isUsesLadder()) {
+                    count++;
+                }
+
+                if (military.getName().equals("assassin")) {
+                    count++;
+                }
+            }
+        } else {
+            for (Military military : militaries) {
+                if (military.canAirAttack() || military.getName().equals("engineer") || military.getName().equals("ladderman")) {
+                    continue;
+                }
+                count++;
+            }
+        }
+        if (count == 0) {
+            return false;
+        }
+        return true;
+    }
+    public static boolean validateAirAttack(Tool tool){
+        int countOfTroop = 0;
+        for (Military military : militaries) {
+            if (military.canAirAttack() && military.getAttack().isInRange(tool.getX(), tool.getY(), military.getShootingRange())) {
+                countOfTroop++;
+            }
+        }
+        return countOfTroop != 0;
+    }
+    public static boolean validateAirAttack(Building building){
+        int countOfTroop = 0;
+        for (Military military : militaries) {
+            if (military.canAirAttack() && military.getAttack().buildingIsInRange(building)) {
+                countOfTroop++;
+            }
+        }
+        return countOfTroop != 0;
+    }
+    public static boolean validateAirAttack(int x, int y, List<Military> enemies){
+        int countOfTroop = 0;
+        for (Military military : militaries) {
+            if (military.canAirAttack() && military.getAttack().isInRange(x, y, military.getShootingRange())) {
+                countOfTroop++;
+            }
+        }
+        return countOfTroop != 0;
+    }
+
+
+
+
+
+
+
+
+
+
     public static boolean patrolUnit(int x1, int y1, int x2, int y2) {
 
         Tuple patrolPair = new Tuple(y2, x2);

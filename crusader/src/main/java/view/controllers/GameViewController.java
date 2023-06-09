@@ -3,9 +3,11 @@ package view.controllers;
 import controller.GameController;
 import controller.MapController;
 import controller.gamestructure.GameBuildings;
+import controller.gamestructure.GameImages;
 import enumeration.Pair;
 import enumeration.Paths;
 import enumeration.Textures;
+import enumeration.UnitMovingState;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.EventHandler;
@@ -17,6 +19,7 @@ import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -26,9 +29,11 @@ import javafx.util.Duration;
 import model.Government;
 import model.building.Building;
 import model.game.Tile;
+import model.human.military.Military;
 import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
+import model.menugui.game.Troop;
 import view.menus.GameMenu;
 import view.menus.LoginMenu;
 import viewphase1.EditMapEnvironmentMenu;
@@ -826,4 +831,34 @@ public class GameViewController {
         rectangle.setFill(Color.TRANSPARENT);
     }
 
+
+    public static void dropUnit(int x, int y, Tile tile, Military military){
+        GameTile gameTile = GameMap.getGameTile(x, y);
+        GameMap gameMap = GameMenu.gameMap;
+        Troop troop = new Troop(military, tile,gameTile);
+        gameMap.getChildren().add(troop);
+        if(GameMap.gameTroops[y][x] == null){
+            GameMap.gameTroops[y][x] = new ArrayList<>();
+        }
+        GameMap.gameTroops[y][x].add(troop);
+    }
+    public static void selectUnits(int x,int y){
+        GameMenu.selectedTilesTroop.clear();
+        Tile tile = GameController.getGame().getMap().getTile(x, y);
+        GameMenu.selectedTilesTroop.add(tile);
+        GameMenu.selectedUnit = true;
+    }
+
+    public static void setSelectCursorImage(String state){
+        GameMenu.selectCursor.setFill(new ImagePattern(GameImages.imageViews.get(state)));
+    }
+
+    public static void setSelectCursorState(GameTile endTile){
+        String state= GameMenu.movingState;
+        if(UnitMovingState.NORMAL.getState().equals(state)){
+//            if (GameController.validateAirAttack(endTile.getTileX())){
+//
+//            }
+        }
+    }
 }

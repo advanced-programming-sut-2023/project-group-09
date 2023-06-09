@@ -26,6 +26,7 @@ import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
 import model.menugui.game.Troop;
 import model.tools.Tool;
+import view.controllers.GameViewController;
 import view.menus.GameMenu;
 
 import java.util.ArrayList;
@@ -354,13 +355,7 @@ public class MapController {
         Tile tile = map.getTile(x, y);
         government.addMilitary(military);
         tile.addMilitary(military);
-        GameTile gameTile = GameMap.getGameTile(x, y);
-        GameMap gameMap = GameMenu.gameMap;
-        Troop troop = new Troop(military, tile,gameTile);
-        gameMap.getChildren().add(troop);
-        //TODO delete this
-        Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath() + "textures/red.png").toExternalForm());
-        gameTile.setTextureImage(image);
+        GameViewController.dropUnit(x,y,tile,military);
     }
 
     public static void deleteMilitary(int x, int y, Military military) {

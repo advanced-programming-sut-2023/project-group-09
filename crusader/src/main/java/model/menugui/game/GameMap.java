@@ -1,12 +1,9 @@
 package model.menugui.game;
 
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
+import controller.gamestructure.GameImages;
 import javafx.scene.layout.Pane;
 import model.game.Map;
 import model.game.Tile;
-import model.human.military.Military;
-import view.controllers.GameViewController;
 
 import java.util.ArrayList;
 
@@ -22,10 +19,8 @@ public class GameMap extends Pane {
     private int cameraY;
     private int tilesLoaded;
     private static GameTile[][] gameTiles;
-    private static ArrayList[][] gameTroops;
+    public static ArrayList<Troop>[][] gameTroops;
     private final boolean[][] load;
-
-    public ArrayList<Tile> selectedTilesTroop = new ArrayList<>();
 
 
 
@@ -33,9 +28,9 @@ public class GameMap extends Pane {
         GameMap.tileWidth = tileWidth;
         GameMap.tileHeight = tileHeight;
         this.screenWidth = (int) Math.ceil(1200 / tileWidth) + 1;
-        this.screenHeight = (int) Math.ceil(800 / (tileHeight/2));
+        this.screenHeight = (int) Math.ceil(800 / (tileHeight / 2));
         width = map.getWidth() * tileWidth;
-        height = map.getLength() * (tileHeight/2);
+        height = map.getLength() * (tileHeight / 2);
         this.map = map;
         gameTiles = new GameTile[map.getWidth()][map.getWidth()];
         gameTroops = new ArrayList[map.getWidth()][map.getWidth()];
@@ -75,15 +70,21 @@ public class GameMap extends Pane {
             for (int x = cameraX; x < Math.min(cameraX + screenWidth, map.getWidth()); x++) {
                 if (!load[y][x]) {
                     Tile tile = map.getTile(x, y);
+                    double xx;
+                    double yy = y * (tileHeight / 2) - (tileHeight / 2);
                     if (y % 2 == 1) {
-                        GameTile gameTile = new GameTile(tile, x * tileWidth - (tileWidth / 2),
-                                y * (tileHeight / 2) - (tileHeight / 2), x, y);
+                        xx = x * tileWidth - (tileWidth / 2);
+                        GameTile gameTile = new GameTile(tile, xx, yy, x, y);
+
                         gameTiles[y][x] = gameTile;
-                        this.getChildren().add(0,gameTile);
+                        this.getChildren().add(0, gameTile);
+                        this.getChildren().add(GameImages.getRedImageView(xx, yy, gameTile));
                     } else {
-                        GameTile gameTile = new GameTile(tile, x * tileWidth, y * (tileHeight / 2) - (tileHeight / 2), x, y);
+                        xx = x * tileWidth;
+                        GameTile gameTile = new GameTile(tile, xx, yy, x, y);
                         gameTiles[y][x] = gameTile;
-                        this.getChildren().add(gameTile);
+                        this.getChildren().add(0, gameTile);
+                        this.getChildren().add(GameImages.getRedImageView(xx, yy, gameTile));
                     }
                     tilesLoaded++;
                     load[y][x] = true;
@@ -165,16 +166,8 @@ public class GameMap extends Pane {
         return cameraX;
     }
 
-
-    public void setCameraX(int cameraX) {
-        this.cameraX = cameraX;
-    }
-
     public int getCameraY() {
         return cameraY;
     }
 
-    public void setCameraY(int cameraY) {
-        this.cameraY = cameraY;
-    }
 }

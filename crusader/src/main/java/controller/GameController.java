@@ -22,6 +22,7 @@ import model.human.military.Engineer;
 import model.human.military.Military;
 import model.human.military.Tunneler;
 import model.tools.Tool;
+import view.controllers.GameViewController;
 import viewphase1.UnitMenu;
 
 import java.util.*;
@@ -46,13 +47,7 @@ public class GameController {
         GameController.game = game;
     }
 
-    public static String selectUnit(int x, int y, String type, Scanner scanner) {
-        String message = validateXAndY(x, y);
-        if (message != null) {
-            return message;
-        }
-        x--;
-        y--;
+    public static String selectUnit(int x, int y, String type) {
         ArrayList<Military> militaries;
         if (type == null) {
             militaries = MapController.getMilitariesOfGovernment(x, y, game.getCurrentGovernment());
@@ -69,15 +64,11 @@ public class GameController {
         UnitMenu.x = x;
         UnitMenu.y = y;
         UnitMenu.type = type;
-        UnitMenu.run(scanner);
+        GameViewController.selectUnits(x,y);
         return "";
     }
 
     public static String moveUnit(int x, int y) {
-        String message = validateXAndY(x, y);
-        if (message != null) {
-            return message;
-        }
         Tuple destination = new Tuple(y - 1, x - 1);
         boolean check = HumanController.move(destination);
         if (!check) {
@@ -108,10 +99,6 @@ public class GameController {
     }
 
     public static String setStateOfMilitary(int x, int y, String state) {
-        String message = validateXAndY(x, y);
-        if (message != null) {
-            return message;
-        }
 
         ArrayList<Military> militaries = MapController.getMilitariesOfGovernment(x - 1, y - 1, game.getCurrentGovernment());
         if (militaries.size() == 0) {
@@ -134,15 +121,15 @@ public class GameController {
         return "invalid state!";
     }
 
-    public static String attackEnemy(int x, int y, Scanner scanner) {
-        String message = validateXAndY(x, y);
-        if (message != null) {
-            return message;
-        }
-        Military enemy = UnitMenu.getEnemy(x - 1, y - 1, scanner);
-        if (enemy == null) {
+
+    //==================================================================================
+    public static String attackEnemy(int x, int y) {
+        ArrayList<Military> militaries = MapController.getMilitariesOfOtherGovernment(x, y, GameController.getGame().getCurrentGovernment());
+        if (militaries.size() == 0) {
             return "your input is not valid please try again later!";
         }
+        Random random = new Random();
+        Military enemy = militaries.get(random.nextInt(militaries.size()));
         boolean canAttack = HumanController.attack(enemy);
         if (!canAttack) {
             return "can't attack to enemy with this type of unit or position!";
@@ -151,10 +138,6 @@ public class GameController {
     }
 
     public static String airAttack(int x, int y) {
-        String message = validateXAndY(x, y);
-        if (message != null) {
-            return message;
-        }
         List<Military> enemies = MapController.getMilitariesOfOtherGovernment(x - 1, y - 1, GameController.getGame().getCurrentGovernment());
         if (enemies.size() == 0) {
             return "there is no enemy in this position!";
@@ -168,10 +151,6 @@ public class GameController {
     }
 
     public static String attackBuilding(int x, int y) {
-        String message = validateXAndY(x, y);
-        if (message != null) {
-            return message;
-        }
         Building building = game.getMap().getTile(x - 1, y - 1).getBuilding();
         if (building == null) {
             return "no building in this place!";
@@ -190,10 +169,6 @@ public class GameController {
     }
 
     public static String airAttackBuilding(int x, int y) {
-        String message = validateXAndY(x, y);
-        if (message != null) {
-            return message;
-        }
         Building building = game.getMap().getTile(x - 1, y - 1).getBuilding();
         if (building == null) {
             return "no building in this place!";
@@ -209,10 +184,6 @@ public class GameController {
     }
 
     public static String attackTool(int x, int y) {
-        String message = validateXAndY(x, y);
-        if (message != null) {
-            return message;
-        }
         Tool tool = game.getMap().getTile(x - 1, y - 1).getTool();
         if (tool == null) {
             return "no tool in this place!";
@@ -228,10 +199,6 @@ public class GameController {
     }
 
     public static String airAttackTool(int x, int y) {
-        String message = validateXAndY(x, y);
-        if (message != null) {
-            return message;
-        }
         Tool tool = game.getMap().getTile(x - 1, y - 1).getTool();
         if (tool == null) {
             return "no tool in this place!";
@@ -246,11 +213,82 @@ public class GameController {
         return "attack order record successfully!";
     }
 
-    public static String useTool(int x, int y) {
-        String message = validateXAndY(x, y);
-        if (message != null) {
-            return message;
+    //==================================================================
+
+    public static boolean validateAttackEnemy(int x, int y) {
+        ArrayList<Military> militaries = MapController.getMilitariesOfOtherGovernment(x, y, GameController.getGame().getCurrentGovernment());
+        if (militaries.size() == 0) {
+            return false;
         }
+        Random random = new Random();
+        Military enemy = militaries.get(random.nextInt(militaries.size()));
+        boolean canAttack = HumanController.validateAttack(enemy);
+        if (!canAttack) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean validateAirAttack(int x, int y) {
+        List<Military> enemies = MapController.getMilitariesOfOtherGovernment(x, y, GameController.getGame().getCurrentGovernment());
+        if (enemies.size() == 0) {
+            return false;
+        }
+
+        return HumanController.validateAirAttack(x , y , enemies);
+    }
+
+    public static boolean validateAttackBuilding(int x, int y) {
+        Building building = game.getMap().getTile(x, y).getBuilding();
+        if (building == null) {
+            return false;
+        }
+        if (building instanceof MainCastle) {
+            return false;
+        }
+        if (building.getGovernment().equals(game.getCurrentGovernment())) {
+            return false;
+        }
+        return HumanController.validateAttack(building);
+    }
+
+    public static boolean validateAirAttackBuilding(int x, int y) {
+        Building building = game.getMap().getTile(x, y).getBuilding();
+        if (building == null) {
+            return false;
+        }
+        if (building.getGovernment().equals(game.getCurrentGovernment())) {
+            return false;
+        }
+        return HumanController.airAttack(building);
+    }
+
+    public static boolean validateAttackTool(int x, int y) {
+        Tool tool = game.getMap().getTile(x, y).getTool();
+        if (tool == null) {
+            return false;
+        }
+        if (tool.getGovernment().equals(game.getCurrentGovernment())) {
+            return false;
+        }
+        return HumanController.validateAttack(tool);
+    }
+
+    public static boolean validateAirAttackTool(int x, int y) {
+        Tool tool = game.getMap().getTile(x, y).getTool();
+        if (tool == null) {
+            return false;
+        }
+        if (tool.getGovernment().equals(game.getCurrentGovernment())) {
+            return false;
+        }
+        return HumanController.airAttack(tool);
+    }
+
+
+
+    //===================================================================
+    public static String useTool(int x, int y) {
         Tool tool = game.getMap().getTile(x - 1, y - 1).getTool();
         if (tool == null) {
             return "no tool in this place!";
@@ -286,10 +324,6 @@ public class GameController {
     }
 
     public static String digTunnel(int x, int y) {
-        String message = validateXAndY(x, y);
-        if (message != null) {
-            return message;
-        }
         ArrayList<Military> militaries = MapController.getOneTypeOfMilitariesOfGovernment(UnitMenu.x, UnitMenu.y, "tunneler", game.getCurrentGovernment());
         if (militaries.size() == 0) {
             return "no tunneler between selected troops!";
@@ -315,10 +349,6 @@ public class GameController {
     }
 
     public static String digMoat(int x, int y) {
-        String message = validateXAndY(x, y);
-        if (message != null) {
-            return message;
-        }
         Military digger = null;
         Tile tile = GameController.getGame().getMap().getTile(x - 1, y - 1);
         if (!tile.isPassable()) {
@@ -344,12 +374,6 @@ public class GameController {
     }
 
     public static String fillMoat(int x, int y) {
-        String message = validateXAndY(x, y);
-        if (message != null) {
-            return message;
-        }
-        x--;
-        y--;
         Military digger = null;
         Tile tile = GameController.getGame().getMap().getTile(x, y);
         if (!tile.isMoat()) {
@@ -377,12 +401,6 @@ public class GameController {
     }
 
     public static String goToOilSmelter(int x, int y) {
-        String message = validateXAndY(x, y);
-        if (message != null) {
-            return message;
-        }
-        x--;
-        y--;
         Tile tile = GameController.getGame().getMap().getTile(x, y);
         Building building = tile.getBuilding();
         if (building == null || !building.getName().equals("oilSmelter")) {
@@ -477,10 +495,6 @@ public class GameController {
     }
 
     public static String dropBuilding(int x, int y, String type, String side) {
-        String message = validateXAndY(x, y);
-        if (message != null) {
-            return message;
-        }
         if (type.equals("killingPit")) {
             game.getMap().getTile(x, y).setPit(true);
             game.getMap().getTile(x, y).setPitGovernment(game.getCurrentGovernment());
@@ -542,12 +556,6 @@ public class GameController {
 
 
     public static String selectBuilding(int x, int y) {
-        String message = validateXAndY(x, y);
-        if (message != null) {
-            return message;
-        }
-        x--;
-        y--;
         Government nowGovernment = game.getCurrentGovernment();
         Building building = game.getMap().getTile(x, y).getBuilding();
         if (building == null || !building.getGovernment().equals(nowGovernment)) {
@@ -559,12 +567,6 @@ public class GameController {
     }
 
     public static String selectTool(int x, int y) {
-        String message = validateXAndY(x, y);
-        if (message != null) {
-            return message;
-        }
-        x--;
-        y--;
         Tool tool = game.getMap().getTile(x, y).getTool();
         if (tool == null || !tool.getGovernment().equals(game.getCurrentGovernment())) {
             return "there is no tool of your government here!";
@@ -984,34 +986,34 @@ public class GameController {
         return neighborTiles;
     }
 
-    public static ArrayList<Pair<Integer, Integer>> getDirectNeighborTiles(Building building) {
-        ArrayList<Pair<Integer, Integer>> neighborTiles = new ArrayList<>();
+    public static ArrayList<Tuple> getDirectNeighborTiles(Building building) {
+        ArrayList<Tuple> neighborTiles = new ArrayList<>();
         int x = building.getStartX(), y = building.getStartY() - 2;
         for (int i = 0; i < building.getWidth(); i++) {
             if (y % 2 == 1 || y % 2 == -1) x++;
             y++;
-            neighborTiles.add(new Pair<>(x, y));
+            neighborTiles.add(new Tuple(y, x));
         }
         x = building.getStartX();
         y = building.getStartY() - 2;
         for (int i = 0; i < building.getLength(); i++) {
             if (y % 2 == 0) x--;
             y++;
-            neighborTiles.add(new Pair<>(x, y));
+            neighborTiles.add(new Tuple(y, x));
         }
         x = building.getEndX();
         y = building.getEndY() + 2;
         for (int i = 0; i < building.getWidth(); i++) {
             if (y % 2 == 0) x--;
             y--;
-            neighborTiles.add(new Pair<>(x, y));
+            neighborTiles.add(new Tuple(y, x));
         }
         x = building.getEndX();
         y = building.getEndY() + 2;
         for (int i = 0; i < building.getLength(); i++) {
             if (y % 2 == 1 || y % 2 == -1) x++;
             y--;
-            neighborTiles.add(new Pair<>(x, y));
+            neighborTiles.add(new Tuple(y,x));
         }
         return neighborTiles;
     }

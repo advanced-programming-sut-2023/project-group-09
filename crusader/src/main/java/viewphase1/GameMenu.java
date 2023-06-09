@@ -76,7 +76,7 @@ public class GameMenu {
                     int x = ViewController.getNumberOfRegex("x");
                     int y = ViewController.getNumberOfRegex("y");
                     String type = ViewController.resultMatcher.group("type");
-                    output = GameController.selectUnit(x, y, type, scanner);
+                    output = GameController.selectUnit(x, y, type);
                     System.out.println(output);
                 }
             } else if (selectToolMatcher.matches()) {
