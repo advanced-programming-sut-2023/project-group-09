@@ -24,6 +24,8 @@ public class GameTile extends StackPane {
     private ImageView humanImage;
     private static int tileXOn, tileYOn;
 
+
+
     public GameTile(Tile tile, double x, double y, int tileX, int tileY) {
         this.tileX = tileXOn = tileX;
         this.tileY = tileYOn = tileY;
@@ -39,11 +41,19 @@ public class GameTile extends StackPane {
         textureImage = new ImageView();
         textureImage.setFitWidth(width);
         textureImage.setFitHeight(height);
-        textureImage.setTranslateX(x);
-        textureImage.setTranslateY(y);
-        textureImage.setViewOrder(0);
+        this.setTranslateX(x);
+        this.setTranslateY(y);
+        textureImage.setViewOrder(1);
         refreshTile();
+        setEventListener();
     }
+
+    private void setEventListener() {
+        textureImage.setOnMouseClicked(mouseEvent -> {
+            System.out.println(this);
+        });
+    }
+
 
     public void refreshTile() {
         setTexture();
@@ -117,5 +127,12 @@ public class GameTile extends StackPane {
 
     public void setY(double y) {
         this.y = y;
+    }
+    public ImageView getTextureImage() {
+        return textureImage;
+    }
+
+    public void setTextureImage(Image image) {
+        this.textureImage.setImage(image) ;
     }
 }

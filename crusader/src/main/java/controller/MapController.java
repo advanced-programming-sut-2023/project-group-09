@@ -2,11 +2,14 @@ package controller;
 
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameHumans;
+import controller.gamestructure.GameMaps;
 import controller.gamestructure.GameTools;
 import enumeration.Pair;
+import enumeration.Paths;
 import enumeration.Textures;
 import enumeration.dictionary.RockDirections;
 import enumeration.dictionary.Trees;
+import javafx.scene.image.Image;
 import model.Government;
 import model.building.Building;
 import model.building.castlebuildings.CastleBuilding;
@@ -19,7 +22,11 @@ import model.game.Tile;
 import model.human.civilian.Civilian;
 import model.human.military.Engineer;
 import model.human.military.Military;
+import model.menugui.game.GameMap;
+import model.menugui.game.GameTile;
+import model.menugui.game.Troop;
 import model.tools.Tool;
+import view.menus.GameMenu;
 
 import java.util.ArrayList;
 
@@ -347,6 +354,13 @@ public class MapController {
         Tile tile = map.getTile(x, y);
         government.addMilitary(military);
         tile.addMilitary(military);
+        GameTile gameTile = GameMap.getGameTile(x, y);
+        GameMap gameMap = GameMenu.gameMap;
+        Troop troop = new Troop(military, tile,gameTile);
+        gameMap.getChildren().add(troop);
+        //TODO delete this
+        Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath() + "textures/red.png").toExternalForm());
+        gameTile.setTextureImage(image);
     }
 
     public static void deleteMilitary(int x, int y, Military military) {
