@@ -72,7 +72,7 @@ public class GameMenu extends Application {
         stage.show();
     }
 
-    public static void createGameBar() {
+    public static void createGameBar(boolean doFirst) {
         ImageView barImage = new ImageView(new Image(LoginMenu.class.getResource
                 (Paths.BAR_IMAGES.getPath()).toExternalForm() + "bar.png"));
         barImage.setFitWidth(menuBar.getMaxWidth());
@@ -97,7 +97,11 @@ public class GameMenu extends Application {
         Rectangle clipRectangle = new Rectangle(1200, 800);
         root.setClip(clipRectangle);
 
-        GameViewController.createShortcutBars(menuBar, hoveringButton);
+        if (doFirst) {
+            GameViewController.createShortcutBars(menuBar, hoveringButton);
+        } else {
+            GameViewController.createShortcutBars2(menuBar , hoveringButton);
+        }
     }
 
     @FXML

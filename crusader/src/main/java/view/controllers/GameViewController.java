@@ -1,9 +1,11 @@
 package view.controllers;
 
 import controller.GameController;
+import controller.MapController;
 import controller.gamestructure.GameBuildings;
 import enumeration.Pair;
 import enumeration.Paths;
+import enumeration.Textures;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.EventHandler;
@@ -15,6 +17,7 @@ import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -28,9 +31,11 @@ import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
 import view.menus.GameMenu;
 import view.menus.LoginMenu;
+import viewphase1.EditMapEnvironmentMenu;
 import viewphase1.MapMenu;
 
 import javax.swing.*;
+import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 
 public class GameViewController {
@@ -38,6 +43,7 @@ public class GameViewController {
     public static String nameOfPageInBar;
     public static Timeline timeline;
     public static boolean isSelected = false;
+    public static boolean isTextureSelected = false;
     public static int tileX , tileY;
 
     public static void createShortcutBars(Pane gamePane, Text text) {
@@ -106,6 +112,58 @@ public class GameViewController {
         gamePane.getChildren().add(deleteImage);
         setHoverEventForBar(deleteImage, "Delete");
 
+        ImageView buildingsImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/buildingsIcon.png");
+        buildingsImage.setTranslateX(750);
+        buildingsImage.setTranslateY(-55);
+        buildingsImage.setScaleX(0.2);
+        buildingsImage.setScaleY(0.2);
+        gamePane.getChildren().add(buildingsImage);
+
+
+        ImageView editLandImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/editLandScapeActiveOffIcon.png");
+        editLandImage.setTranslateX(785);
+        editLandImage.setTranslateY(-55);
+        editLandImage.setScaleX(0.2);
+        editLandImage.setScaleY(0.2);
+        gamePane.getChildren().add(editLandImage);
+        setHoverEventForMainBarState(editLandImage, "Edit Landscape" , "Edit Landscape" , buildingsImage);
+        setHoverEventForMainBarState(buildingsImage, "Buildings" , "Castle Buildings" , editLandImage);
+    }
+
+    private static void setHoverEventForMainBarState(ImageView imageView , String text , String destination , ImageView anotherIcon) {
+        imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                GameMenu.hoveringBarStateText.setText(text);
+            }
+        });
+
+        imageView.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                GameMenu.hoveringBarStateText.setText("");
+            }
+        });
+
+        imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                GameViewController.setCenterOfBar(destination);
+                if (destination.equals("Edit Landscape")) {
+                    imageView.setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                            .toExternalForm() + "icons/editLandscapeIcon.png"));
+                    anotherIcon.setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                            .toExternalForm() + "icons/buildingsActiveOffIcon.png"));
+                } else {
+                    imageView.setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                            .toExternalForm() + "icons/buildingsIcon.png"));
+                    anotherIcon.setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                            .toExternalForm() + "icons/editLandScapeActiveOffIcon.png"));
+                }
+            }
+        });
     }
 
     private static void setHoverEventForBar(ImageView imageView, String text) {
@@ -153,54 +211,54 @@ public class GameViewController {
     public static void setCenterOfBar() {
         if (GameMenu.hoveringBarStateText == null) {
             GameMenu.menuBar.getChildren().clear();
-            GameMenu.createGameBar();
+            GameMenu.createGameBar(true);
             setCenterToCastleBuildings();
             return;
         }
         switch (GameMenu.hoveringBarStateText.getText()) {
             case "Castle Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar();
+                GameMenu.createGameBar(true);
                 setCenterToCastleBuildings();
             }
             case "Towers" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar();
+                GameMenu.createGameBar(true);
                 setCenterToTowers();
             }
             case "Military Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar();
+                GameMenu.createGameBar(true);
                 setCenterToMilitaryBuildings();
             }
             case "Gatehouses" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar();
+                GameMenu.createGameBar(true);
                 setCenterToGatehouses();
             }
             case "Industry Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar();
+                GameMenu.createGameBar(true);
                 setCenterToIndustryBuildings();
             }
             case "Farm Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar();
+                GameMenu.createGameBar(true);
                 setCenterToFarmBuildings();
             }
             case "Town Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar();
+                GameMenu.createGameBar(true);
                 setCenterToTownBuildings();
             }
             case "Weapons Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar();
+                GameMenu.createGameBar(true);
                 setCenterToWeaponsBuildings();
             }
             case "Food Processing Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar();
+                GameMenu.createGameBar(true);
                 setCenterToFoodProcessingBuildings();
             }
         }
@@ -211,50 +269,146 @@ public class GameViewController {
         switch (destination) {
             case "Castle Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar();
+                GameMenu.createGameBar(true);
                 setCenterToCastleBuildings();
             }
             case "Towers" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar();
+                GameMenu.createGameBar(true);
                 setCenterToTowers();
             }
             case "Military Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar();
+                GameMenu.createGameBar(true);
                 setCenterToMilitaryBuildings();
             }
             case "Gatehouses" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar();
+                GameMenu.createGameBar(true);
                 setCenterToGatehouses();
             }
             case "Industry Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar();
+                GameMenu.createGameBar(true);
                 setCenterToIndustryBuildings();
             }
             case "Farm Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar();
+                GameMenu.createGameBar(true);
                 setCenterToFarmBuildings();
             }
             case "Town Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar();
+                GameMenu.createGameBar(true);
                 setCenterToTownBuildings();
             }
             case "Weapons Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar();
+                GameMenu.createGameBar(true);
                 setCenterToWeaponsBuildings();
             }
             case "Food Processing Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar();
+                GameMenu.createGameBar(true);
                 setCenterToFoodProcessingBuildings();
             }
+            case "Edit Landscape" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(false);
+                setCenterOfEditLand();
+            }
+            case "Edit Land" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(false);
+                setCenterOfEditLand();
+            }
+            case "Edit Water" -> {
+
+            }
+            case "Edit Features" -> {
+
+            }
+            case "Edit Vegetation" -> {
+
+            }
         }
+    }
+
+    private static void setCenterOfEditLand() {
+        putEditTextureImageView("bouldersIcon" , "Boulder"
+                ,Textures.BOULDER , 200 , 20 , 0.2 , "boulder");
+    }
+
+    public static void createShortcutBars2(Pane gamePane , Text text) {
+
+        ImageView keyImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/keyIcon.png");
+        keyImage.setTranslateX(760);
+        keyImage.setTranslateY(85);
+        gamePane.getChildren().add(keyImage);
+        setHoverEventForBar(keyImage, "Game Options");
+
+        ImageView deleteImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/deleteIcon.png");
+        deleteImage.setTranslateX(760);
+        deleteImage.setTranslateY(155);
+        gamePane.getChildren().add(deleteImage);
+        setHoverEventForBar(deleteImage, "Delete");
+
+        ImageView buildingsImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/buildingsActiveOffIcon.png");
+        buildingsImage.setTranslateX(750);
+        buildingsImage.setTranslateY(-55);
+        buildingsImage.setScaleX(0.2);
+        buildingsImage.setScaleY(0.2);
+        gamePane.getChildren().add(buildingsImage);
+
+
+        ImageView editLandImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/editLandscapeIcon.png");
+        editLandImage.setTranslateX(785);
+        editLandImage.setTranslateY(-55);
+        editLandImage.setScaleX(0.2);
+        editLandImage.setScaleY(0.2);
+        gamePane.getChildren().add(editLandImage);
+        setHoverEventForMainBarState(editLandImage, "Edit Landscape", "Edit Landscape", buildingsImage);
+        setHoverEventForMainBarState(buildingsImage, "Buildings", "Castle Buildings", editLandImage);
+
+        ImageView editLandShortcut = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/editLandShortcutIcon.png");
+        editLandShortcut.setTranslateX(220);
+        editLandShortcut.setTranslateY(30);
+        editLandShortcut.setScaleX(0.2);
+        editLandShortcut.setScaleY(0.2);
+        gamePane.getChildren().add(editLandShortcut);
+        setHoverEventForBar(editLandShortcut, "Edit Land");
+
+        ImageView editWaterShortcut = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/editWaterIcon.png");
+        editWaterShortcut.setTranslateX(250);
+        editWaterShortcut.setTranslateY(30);
+        editWaterShortcut.setScaleX(0.2);
+        editWaterShortcut.setScaleY(0.2);
+        gamePane.getChildren().add(editWaterShortcut);
+        setHoverEventForBar(editWaterShortcut, "Edit Water");
+
+        ImageView editVegetationShortcut = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/editVegetationIcon.png");
+        editVegetationShortcut.setTranslateX(217);
+        editVegetationShortcut.setTranslateY(65);
+        editVegetationShortcut.setScaleX(0.2);
+        editVegetationShortcut.setScaleY(0.2);
+        gamePane.getChildren().add(editVegetationShortcut);
+        setHoverEventForBar(editVegetationShortcut, "Edit Vegetation");
+
+        ImageView editFeaturesShortcut = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/editFeaturesIcon.png");
+        editFeaturesShortcut.setTranslateX(250);
+        editFeaturesShortcut.setTranslateY(67);
+        editFeaturesShortcut.setScaleX(0.2);
+        editFeaturesShortcut.setScaleY(0.2);
+        gamePane.getChildren().add(editFeaturesShortcut);
+        setHoverEventForBar(editFeaturesShortcut, "Edit Features");
     }
 
     private static void setCenterToFoodProcessingBuildings() {
@@ -366,6 +520,75 @@ public class GameViewController {
         text.setStrokeWidth(0.5);
         text.setStroke(Color.BLACK);
         return text;
+    }
+
+    private static void putEditTextureImageView(String fileName , String name , Textures texture, double x , double y , double size , String picFileName) {
+        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/" + fileName + ".png");
+        icon.setTranslateX(x);
+        icon.setTranslateY(y);
+        icon.setScaleX(size);
+        icon.setScaleY(size);
+        GameMenu.menuBar.getChildren().add(icon);
+        icon.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                GameMenu.hoveringBarStateText.setText(name);
+            }
+        });
+        icon.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                GameMenu.hoveringBarStateText.setText("");
+            }
+        });
+
+        Image image = new Image(GameViewController.class.getResource(
+                Paths.TEXTURE_IMAGES.getPath()).toExternalForm() + picFileName + ".png");
+        ImageView imageView = new ImageView(image);
+        imageView.setViewOrder(-10);
+
+        icon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (!GameMenu.gameMap.getChildren().contains(imageView))
+                    GameMenu.gameMap.getChildren().add(imageView);
+                isTextureSelected = true;
+                imageView.setTranslateX(GameMenu.gameMap.getCameraX() * GameMap.tileWidth +
+                        mouseEvent.getScreenX() - (GameMenu.scene.getWidth()-1200)/2 - image.getWidth() * 0.5);
+                imageView.setTranslateY(GameMenu.gameMap.getCameraY() * GameMap.tileHeight / 2 +
+                        mouseEvent.getScreenY() - (GameMenu.scene.getHeight()-800)/2 - image.getHeight());
+                imageView.setOpacity(0.6);
+                GameMenu.gameMap.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        if (mouseEvent.getButton() == MouseButton.PRIMARY && isTextureSelected) {
+                            GameMenu.gameMap.getChildren().remove(imageView);
+                            Pair <Integer , Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
+                            tileX = pair.getFirst();
+                            tileY = pair.getSecond();
+                            System.out.println("Tile founded at : " + tileX + " " + tileY);
+                            GameMenu.hoveringBarStateText.setText(MapController.setTexture(tileX , tileY , texture));
+                            GameMap.getGameTile(tileX , tileY).refreshTile();
+                        } else {
+                            isTextureSelected = false;
+                            GameMenu.gameMap.getChildren().remove(imageView);
+                        }
+                    }
+                });
+
+                GameMenu.gameMap.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                            isTextureSelected = false;
+                            GameMenu.gameMap.getChildren().remove(imageView);
+                        }
+                    }
+                });
+
+            }
+        });
     }
 
     private static void putBuildingImageView(String fileName, String name, String buildingName, double x, double y, double size , String picFileName) {
@@ -495,50 +718,27 @@ public class GameViewController {
                 (GameMenu.scene.getWidth()-1200)/2)/((double) GameMap.tileWidth/2));
         int halfTileY = (int)((mouseEvent.getScreenY() -
                 (GameMenu.scene.getHeight()-800)/2)/((double) GameMap.tileHeight/2));
-        int firstTileX = halfTileX/2;
-        int secondTileX = halfTileX % 2 == 1 ? halfTileX/2 : halfTileX/2-1;
-        int firstTileY = halfTileY-1;
-        int secondTileY = halfTileY;
-        Pair<Integer , Integer> pair = checkNearestTile(mouseEvent , firstTileX , secondTileX , firstTileY , secondTileY);
-        System.out.println("without change" + pair.getFirst() + " " + pair.getSecond());
+        Pair<Integer , Integer> pair;
+        if (halfTileX % 2 == 1) {
+            pair = checkNearestTile(mouseEvent , (halfTileX-1)/2 , (halfTileX-1)/2 , halfTileY , halfTileY-1);
+        } else {
+            if (halfTileY % 2 == 1) {
+                pair = checkNearestTile(mouseEvent , halfTileX/2 - 1 , halfTileX/2 , halfTileY , halfTileY-1);
+            } else {
+                pair = checkNearestTile(mouseEvent , halfTileX/2 - 1 , halfTileX/2 , halfTileY-1 , halfTileY);
+            }
+        }
         return new Pair<>(pair.getFirst() + GameMenu.gameMap.getCameraX() ,
                 pair.getSecond() + GameMenu.gameMap.getCameraY());
     }
 
     private static Pair<Integer , Integer> checkNearestTile(MouseEvent mouseEvent , int x1 , int x2 , int y1 , int y2) {
         double dis1 , dis2;
-        if (x1 != x2 && y1 != y2) {
-            if (Math.max(y1 , y2) % 2 == 0) {
-                dis1 = distanceOfTile(mouseEvent , Math.max(x1 , x2) , y2);
-                dis2 = distanceOfTile(mouseEvent , Math.min(x1 , x2) , y1);
-                if (dis1 <= dis2) {
-                    return new Pair<>(Math.max(x1 , x2) , y2);
-                } else {
-                    return new Pair<>(Math.min(x1 , x2) , y1);
-                }
-            } else {
-                if (y1 > y2) {
-                    int tmp = y1;
-                    y1 = y2;
-                    y2 = tmp;
-                }
-                dis1 = distanceOfTile(mouseEvent , Math.max(x1 , x2) , y1);
-                dis2 = distanceOfTile(mouseEvent , Math.min(x1 , x2) , y2);
-                if (dis1 <= dis2) {
-                    return new Pair<>(Math.max(x1 , x2) , y1);
-                } else {
-                    return new Pair<>(Math.min(x1 , x2) , y2);
-                }
-            }
-        } else {
-            dis1 = distanceOfTile(mouseEvent , x1 , y1);
-            dis2 = distanceOfTile(mouseEvent , x2 , y2);
-            if (dis1 <= dis2) {
-                return new Pair<>(x1 , y1);
-            } else {
-                return new Pair<>(x2 , y2);
-            }
-        }
+        dis1 = distanceOfTile(mouseEvent , x1 , y1);
+        dis2 = distanceOfTile(mouseEvent , x2 , y2);
+        if (dis1 <= dis2)
+            return new Pair<>(x1 , y1);
+        return new Pair<>(x2 , y2);
     }
 
     private static double distanceOfTile(MouseEvent mouseEvent ,int tileX , int tileY) {
@@ -547,8 +747,8 @@ public class GameViewController {
         double y = (mouseEvent.getScreenY() -
                 (GameMenu.scene.getHeight()-800)/2);
         GameTile tile = GameMap.getGameTile(tileX , tileY);
-        double distance = Math.sqrt(Math.pow(tile.getX() + (double) GameMap.tileWidth/2 - x , 2) +
-                Math.pow(tile.getY() + (double) GameMap.tileHeight/2 - y , 2));
+        double distance = Math.sqrt(Math.pow(tile.getX() - x , 2) +
+                Math.pow(tile.getY() - y , 2));
         return distance;
     }
 

@@ -63,7 +63,6 @@ public class GameTile extends StackPane {
         if (building != null && building.getEndX() == tileX && building.getEndY() == tileY) {
             Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
                     + "buildings/" + building.getName() + ".png").toExternalForm());
-            System.out.println(image != null);
             buildingImage = new ImageView(image);
             buildingImage.setTranslateX(x + (image.getWidth() *
                     ((double) building.getLength() - building.getWidth()) / (building.getLength() + building.getWidth()) / 2));
@@ -79,7 +78,6 @@ public class GameTile extends StackPane {
         if (humans.size() != 0) {
             Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
                     + "troops/" + humans.get(0).getName() + ".png").toExternalForm());
-            System.out.println(image != null);
             humanImage = new ImageView(image);
             humanImage.setTranslateX(x);
             humanImage.setTranslateY(y - image.getHeight() / 2 + textureImage.getFitHeight() / 2);
