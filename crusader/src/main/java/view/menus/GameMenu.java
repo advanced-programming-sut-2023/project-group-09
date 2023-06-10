@@ -10,6 +10,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.Transition;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -17,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -49,6 +51,7 @@ public class GameMenu extends Application {
     public static GameMap gameMap;
     public static Pane menuBar;
     public static Text hoveringBarStateText;
+    public Rectangle selectedArea;
     public static ArrayList<Tile> selectedTilesTroop = new ArrayList<>();
     public static Rectangle selectCursor;
 
@@ -73,6 +76,8 @@ public class GameMenu extends Application {
 
         root.setOnMouseEntered(mouseEvent -> scene.setCursor(Cursor.DEFAULT));
         root.setOnMouseExited(mouseEvent -> scene.setCursor(Cursor.NONE));
+        createSelectedArea();
+
         GameMaps.createMap1();
         Map map = GameMaps.largeMaps.get(0);
         gameMap = new GameMap(map, 0, 0, 30, 18);
@@ -120,7 +125,7 @@ public class GameMenu extends Application {
         if (doFirst) {
             GameViewController.createShortcutBars(menuBar, hoveringButton);
         } else {
-            GameViewController.createShortcutBars2(menuBar , hoveringButton);
+            GameViewController.createShortcutBars2(menuBar, hoveringButton);
         }
     }
 
@@ -142,7 +147,7 @@ public class GameMenu extends Application {
             if (!selectedUnit) {
                 cursorTimeLine.stop();
             }
-            if (nowTile != null){
+            if (nowTile != null) {
                 GameViewController.setSelectCursorState(nowTile);
             }
 
@@ -150,6 +155,45 @@ public class GameMenu extends Application {
         timelines.add(cursorTimeLine);
         cursorTimeLine.setCycleCount(-1);
         cursorTimeLine.play();
+    }
+
+    private void createSelectedArea() {
+        selectedArea = new Rectangle(0, 0);
+        selectedArea.setViewOrder(-600);
+        selectedArea.setStyle("-fx-fill: white; -fx-opacity: 0.3;");
+
+        final double[] startX = {0.0};
+        final double[] startY = {0.0};
+        root.setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseDragEvent) {
+                startX[0] = mouseDragEvent.getScreenX();
+                startY[0] = mouseDragEvent.getScreenY();
+                selectedArea.setTranslateX(startX[0] - scene.getWidth() / 2);
+                selectedArea.setTranslateY(startY[0] - scene.getHeight() / 2);
+            }
+        });
+        root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                double endX = mouseEvent.getScreenX();
+                double endY = mouseEvent.getScreenY();
+                selectedArea.setWidth(endX - startX[0]);
+                selectedArea.setHeight(endY - startY[0]);
+                selectedArea.setTranslateX(startX[0] - scene.getWidth() / 2 + selectedArea.getWidth() / 2);
+                selectedArea.setTranslateY(startY[0] - scene.getHeight() / 2 + selectedArea.getHeight() / 2);
+
+                root.setOnMouseReleased(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        selectedArea.setWidth(0);
+                        selectedArea.setHeight(0);
+                    }
+                });
+            }
+        });
+
+        root.getChildren().add(selectedArea);
     }
 
     @FXML

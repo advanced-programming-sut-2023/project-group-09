@@ -685,7 +685,7 @@ public class GameViewController {
         Image image = new Image(GameViewController.class.getResource(
                 Paths.BUILDING_IMAGES.getPath()).toExternalForm() + picFileName + ".png");
         ImageView imageView = new ImageView(image);
-        imageView.setViewOrder(-10);
+        imageView.setViewOrder(-500);
 
 
 

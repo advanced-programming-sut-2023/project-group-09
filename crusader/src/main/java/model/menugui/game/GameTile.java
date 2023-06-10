@@ -78,7 +78,7 @@ public class GameTile extends StackPane {
                     ((double) building.getLength() - building.getWidth()) / (building.getLength() + building.getWidth()) / 2));
             buildingImage.setTranslateY(y - image.getHeight() / 2 + textureImage.getFitHeight() / 2);
             buildingImage.setViewOrder(-1);
-            this.setViewOrder(-1);
+            this.setViewOrder(-tileY);
             this.getChildren().add(buildingImage);
         }
     }
@@ -91,8 +91,8 @@ public class GameTile extends StackPane {
             humanImage = new ImageView(image);
             humanImage.setTranslateX(x);
             humanImage.setTranslateY(y - image.getHeight() / 2 + textureImage.getFitHeight() / 2);
-            humanImage.setViewOrder(-1);
-            this.setViewOrder(-1);
+            humanImage.setViewOrder(-2);
+            this.setViewOrder(-tileY);
             this.getChildren().add(humanImage);
         }
     }
