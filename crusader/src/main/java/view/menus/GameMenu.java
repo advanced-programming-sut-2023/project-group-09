@@ -61,6 +61,8 @@ public class GameMenu extends Application {
     public static GameTile nowTile;
     public static Timeline cursorTimeLine;
     public static boolean selectedUnit = false;
+    public static GameTile startSelectionTile;
+    public static GameTile endSelectionTile;
 
     public static String movingState = UnitMovingState.NORMAL.getState();
 
@@ -168,6 +170,7 @@ public class GameMenu extends Application {
         root.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseDragEvent) {
+                startSelectionTile = nowTile;
                 startX[0] = mouseDragEvent.getScreenX();
                 startY[0] = mouseDragEvent.getScreenY();
                 selectedArea.setTranslateX(startX[0] - scene.getWidth() / 2);
@@ -189,8 +192,12 @@ public class GameMenu extends Application {
                 root.setOnMouseReleased(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
+                        endSelectionTile = nowTile;
                         selectedArea.setWidth(0);
                         selectedArea.setHeight(0);
+                        System.out.println(startSelectionTile.getTileX() + " " + startSelectionTile.getTileY());
+                        System.out.println(endSelectionTile.getTileX() + " " + endSelectionTile.getTileY());
+                        GameController.getSelectedAreaTiles(startSelectionTile, endSelectionTile);
                     }
                 });
             }

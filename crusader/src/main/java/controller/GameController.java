@@ -6,6 +6,8 @@ import controller.human.HumanController;
 import controller.human.MoveController;
 import enumeration.MilitaryStates;
 import enumeration.Pair;
+import enumeration.Paths;
+import javafx.scene.image.Image;
 import model.Government;
 import model.activity.Move;
 import model.building.Building;
@@ -21,10 +23,13 @@ import model.human.civilian.Civilian;
 import model.human.military.Engineer;
 import model.human.military.Military;
 import model.human.military.Tunneler;
+import model.menugui.game.GameMap;
+import model.menugui.game.GameTile;
 import model.tools.Tool;
 import view.controllers.GameViewController;
 import viewphase1.UnitMenu;
 
+import java.nio.file.Path;
 import java.util.*;
 
 public class GameController {
@@ -64,7 +69,7 @@ public class GameController {
         UnitMenu.x = x;
         UnitMenu.y = y;
         UnitMenu.type = type;
-        GameViewController.selectUnits(x,y);
+        GameViewController.selectUnits(x, y);
         return "";
     }
 
@@ -235,7 +240,7 @@ public class GameController {
             return false;
         }
 
-        return HumanController.validateAirAttack(x , y , enemies);
+        return HumanController.validateAirAttack(x, y, enemies);
     }
 
     public static boolean validateAttackBuilding(int x, int y) {
@@ -284,7 +289,6 @@ public class GameController {
         }
         return HumanController.airAttack(tool);
     }
-
 
 
     //===================================================================
@@ -990,7 +994,7 @@ public class GameController {
         ArrayList<Tuple> neighborTiles = new ArrayList<>();
         int x = building.getStartX(), y = building.getStartY() - 2;
         for (int i = 0; i < building.getWidth(); i++) {
-            if (y % 2 == 1 || y % 2 == -1) x++;
+            if (y % 2 != 0) x++;
             y++;
             neighborTiles.add(new Tuple(y, x));
         }
@@ -1011,10 +1015,43 @@ public class GameController {
         x = building.getEndX();
         y = building.getEndY() + 2;
         for (int i = 0; i < building.getLength(); i++) {
-            if (y % 2 == 1 || y % 2 == -1) x++;
+            if (y % 2 != 0) x++;
             y--;
-            neighborTiles.add(new Tuple(y,x));
+            neighborTiles.add(new Tuple(y, x));
         }
         return neighborTiles;
+    }
+
+    public static ArrayList<GameTile> getSelectedAreaTiles(GameTile start, GameTile end) {
+        ArrayList<GameTile> tiles = new ArrayList<>();
+        int startX = Math.min(start.getTileX(), end.getTileX());
+        int startY = Math.min(start.getTileY(), end.getTileY());
+        int endX = Math.max(start.getTileX(), end.getTileX());
+        int endY = Math.max(start.getTileY(), end.getTileY());
+
+        int headX = startX, headY = startY;
+        int x = startX, y = startY;
+        for (int i = 0; i < endY - startY + 1; i++) {
+            int indent = 1;
+            if ((endY - startY) % 2 != 0 && i % 2 != 0) indent = 0;
+            for (int j = 0; j < endX - startX + indent; j++) {
+                tiles.add(GameMap.getGameTile(x, y));
+                GameMap.getGameTile(x, y).setTextureImage(new Image(GameController.class.getResource(Paths.MAP_IMAGES.getPath() +
+                        "textures/red.png").toExternalForm()));
+                x++;
+            }
+
+            if (i % 2 == 0) {
+                if (headY % 2 != 0) headX++;
+                headY++;
+            } else {
+                if (headY % 2 == 0) headX--;
+                headY++;
+            }
+            x = headX;
+            y = headY;
+        }
+
+        return tiles;
     }
 }
