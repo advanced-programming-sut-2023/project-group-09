@@ -35,6 +35,7 @@ import model.game.Tile;
 import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
+import view.Main;
 import view.controllers.GameViewController;
 import view.controllers.ViewController;
 
@@ -178,10 +179,12 @@ public class GameMenu extends Application {
             public void handle(MouseEvent mouseEvent) {
                 double endX = mouseEvent.getScreenX();
                 double endY = mouseEvent.getScreenY();
-                selectedArea.setWidth(endX - startX[0]);
-                selectedArea.setHeight(endY - startY[0]);
-                selectedArea.setTranslateX(startX[0] - scene.getWidth() / 2 + selectedArea.getWidth() / 2);
-                selectedArea.setTranslateY(startY[0] - scene.getHeight() / 2 + selectedArea.getHeight() / 2);
+                selectedArea.setWidth(Math.abs(endX - startX[0]));
+                selectedArea.setHeight(Math.abs(endY - startY[0]));
+                double rectangleX = (endX >= startX[0]) ? startX[0] : endX;
+                double rectangleY = (endY >= startY[0]) ? startY[0] : endY;
+                selectedArea.setTranslateX(rectangleX - scene.getWidth() / 2 + selectedArea.getWidth() / 2);
+                selectedArea.setTranslateY(rectangleY - scene.getHeight() / 2 + selectedArea.getHeight() / 2);
 
                 root.setOnMouseReleased(new EventHandler<MouseEvent>() {
                     @Override
