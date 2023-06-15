@@ -59,6 +59,8 @@ public class GameViewController {
     public static HashMap<String , String> buildingNameToFileName = new HashMap<>();
     public static HashMap<String , String> buildingNameToPicName = new HashMap<>();
     public static HashMap<String , String> buildingNameToName = new HashMap<>();
+    public static HashMap<String , Double> buildingScales = new HashMap<>();
+    public static HashMap<String , Double> buildingCoordinates = new HashMap<>();
 
     public static void createShortcutBars(Pane gamePane, Text text) {
         setCenterOfBar();
@@ -390,8 +392,22 @@ public class GameViewController {
         String name = buildingNameToName.get(buildingName);
         String picFileName = buildingNameToPicName.get(buildingName);
         if (fileName != null && name != null && picFileName != null) {
-            putBuildingImageView(fileName, name, buildingName, 250, 0, 0.25, picFileName);
+            putBuildingImageView(fileName, name, buildingName,
+                    coordinateOfBuildingIconsInClipboardPage(buildingName).getFirst(),
+                    coordinateOfBuildingIconsInClipboardPage(buildingName).getSecond(),
+                    buildingScales.get(buildingName), picFileName);
         }
+    }
+
+    private static Pair<Double , Double> coordinateOfBuildingIconsInClipboardPage(String buildingName) {
+        double x , y;
+        Image image = new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/" + buildingNameToFileName.get(buildingName) + ".png");
+        x = image.getWidth();
+        y = image.getHeight();
+        //x *= buildingScales.get(buildingName);
+        //y *= buildingScales.get(buildingName);
+        return new Pair<>((765-270-x)/2 + 270 , (225-80-y)/2 + 65);
     }
 
     private static void setCenterOfEditLand() {
@@ -655,6 +671,7 @@ public class GameViewController {
         buildingNameToFileName.put(buildingName , fileName);
         buildingNameToName.put(buildingName , name);
         buildingNameToPicName.put(buildingName , picFileName);
+        buildingScales.put(buildingName , size);
         ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/" + fileName + ".png");
         ArrayList<ImageView> resourceIcons = new ArrayList<>();
