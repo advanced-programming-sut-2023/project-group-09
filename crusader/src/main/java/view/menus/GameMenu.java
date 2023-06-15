@@ -35,7 +35,6 @@ import model.game.Tile;
 import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
-import view.Main;
 import view.controllers.GameViewController;
 import view.controllers.ViewController;
 
@@ -58,7 +57,7 @@ public class GameMenu extends Application {
 
     public static ArrayList<Transition> transitions = new ArrayList<>();
     public static ArrayList<Timeline> timelines = new ArrayList<>();
-    public static GameTile nowTile;
+    public static GameTile currentTile;
     public static Timeline cursorTimeLine;
     public static boolean selectedUnit = false;
     public static GameTile startSelectionTile;
@@ -150,8 +149,8 @@ public class GameMenu extends Application {
             if (!selectedUnit) {
                 cursorTimeLine.stop();
             }
-            if (nowTile != null) {
-                GameViewController.setSelectCursorState(nowTile);
+            if (currentTile != null) {
+                GameViewController.setSelectCursorState(currentTile);
             }
 
         }));
@@ -163,6 +162,7 @@ public class GameMenu extends Application {
     private void createSelectedArea() {
         selectedArea = new Rectangle(0, 0);
         selectedArea.setViewOrder(-600);
+        selectedArea.setVisible(false);
         selectedArea.setStyle("-fx-fill: white; -fx-opacity: 0.3;");
 
         final double[] startX = {0.0};
@@ -170,16 +170,22 @@ public class GameMenu extends Application {
         root.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseDragEvent) {
-                startSelectionTile = nowTile;
+                startSelectionTile = currentTile;
                 startX[0] = mouseDragEvent.getScreenX();
                 startY[0] = mouseDragEvent.getScreenY();
                 selectedArea.setTranslateX(startX[0] - scene.getWidth() / 2);
                 selectedArea.setTranslateY(startY[0] - scene.getHeight() / 2);
             }
         });
+
         root.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                if (startY[0] >= scene.getHeight() - 200) {
+                    selectedArea.setWidth(0);
+                    selectedArea.setHeight(0);
+                    return;
+                }
                 double endX = mouseEvent.getScreenX();
                 double endY = mouseEvent.getScreenY();
                 selectedArea.setWidth(Math.abs(endX - startX[0]));
@@ -188,16 +194,16 @@ public class GameMenu extends Application {
                 double rectangleY = (endY >= startY[0]) ? startY[0] : endY;
                 selectedArea.setTranslateX(rectangleX - scene.getWidth() / 2 + selectedArea.getWidth() / 2);
                 selectedArea.setTranslateY(rectangleY - scene.getHeight() / 2 + selectedArea.getHeight() / 2);
+                selectedArea.setVisible(true);
 
                 root.setOnMouseReleased(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        endSelectionTile = nowTile;
+                        endSelectionTile = currentTile;
+                        selectedArea.setVisible(false);
                         selectedArea.setWidth(0);
                         selectedArea.setHeight(0);
-                        System.out.println(startSelectionTile.getTileX() + " " + startSelectionTile.getTileY());
-                        System.out.println(endSelectionTile.getTileX() + " " + endSelectionTile.getTileY());
-                        GameController.getSelectedAreaTiles(startSelectionTile, endSelectionTile);
+//                        GameController.getSelectedAreaTiles(startSelectionTile, endSelectionTile);
                     }
                 });
             }
