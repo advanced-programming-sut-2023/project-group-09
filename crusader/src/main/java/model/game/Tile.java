@@ -35,6 +35,9 @@ public class Tile {
     private boolean passable = true;
     private boolean canPutBuilding = true;
 
+    public int x;
+    public int y;
+
     public Tile() {
         this.isMoat = false;
         this.isPit = false;

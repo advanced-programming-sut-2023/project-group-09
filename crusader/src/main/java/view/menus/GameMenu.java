@@ -4,6 +4,7 @@ import controller.GameController;
 import controller.MapController;
 import controller.gamestructure.GameImages;
 import controller.gamestructure.GameMaps;
+import enumeration.MoveStates;
 import enumeration.Paths;
 import enumeration.UnitMovingState;
 import javafx.animation.KeyFrame;
@@ -142,10 +143,30 @@ public class GameMenu extends Application {
                 selectCursor.setTranslateX(mouseEvent.getX() - 600);
             }
         });
+
+        scene.setOnKeyPressed(keyEvent -> {
+            String keyName = keyEvent.getCode().getName();
+            if (keyName.equals("n")){
+                movingState = UnitMovingState.NORMAL.getState();
+            }
+            if (keyName.equals("m")){
+                movingState = UnitMovingState.MOVE.getState();
+            }
+            if (keyName.equals("t")){
+                movingState = UnitMovingState.ATTACK.getState();
+            }
+
+            if (keyName.equals("a")){
+                movingState = UnitMovingState.AIR_ATTACK.getState();
+            }
+        });
     }
 
-    public void setMouseCursorOnSelect() {
-        cursorTimeLine = new Timeline(new KeyFrame(Duration.millis(1000), actionEvent -> {
+    public static void setMouseCursorOnSelect() {
+        if (cursorTimeLine != null){
+            cursorTimeLine.stop();
+        }
+        cursorTimeLine = new Timeline(new KeyFrame(Duration.millis(500), actionEvent -> {
             if (!selectedUnit) {
                 cursorTimeLine.stop();
             }
