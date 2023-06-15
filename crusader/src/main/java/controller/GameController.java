@@ -74,7 +74,7 @@ public class GameController {
     }
 
     public static String moveUnit(int x, int y) {
-        Tuple destination = new Tuple(y - 1, x - 1);
+        Tuple destination = new Tuple(y, x);
         boolean check = HumanController.move(destination);
         if (!check) {
             return "can't move unit no path to destination!";
@@ -83,7 +83,7 @@ public class GameController {
     }
 
     public static boolean validateMoveUnit(int x, int y) {
-        Tuple destination = new Tuple(y - 1, x - 1);
+        Tuple destination = new Tuple(y , x);
         boolean check = HumanController.validateMove(destination);
         if (!check) {
             return false;

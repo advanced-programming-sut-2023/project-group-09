@@ -166,7 +166,7 @@ public class GameMenu extends Application {
         if (cursorTimeLine != null){
             cursorTimeLine.stop();
         }
-        cursorTimeLine = new Timeline(new KeyFrame(Duration.millis(500), actionEvent -> {
+        cursorTimeLine = new Timeline(new KeyFrame(Duration.millis(300), actionEvent -> {
             if (!selectedUnit) {
                 cursorTimeLine.stop();
             }

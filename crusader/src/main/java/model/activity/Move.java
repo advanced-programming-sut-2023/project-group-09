@@ -116,6 +116,10 @@ public class Move {
         setMoveState();
     }
 
+    public LinkedList<Tuple> getPath() {
+        return path;
+    }
+
     public boolean checkIsPathValid() {
         Map map = GameController.getGame().getMap();
         boolean beforeSate = false;
@@ -191,10 +195,7 @@ public class Move {
 
 
         Tuple lastPair = path.getLast();
-        if (endPair.getX() != lastPair.getX() || endPair.getY() != lastPair.getY()) {
-            return true;
-        }
-        return false;
+        return endPair.getX() != lastPair.getX() || endPair.getY() != lastPair.getY();
     }
 
     public boolean takeDamageOfKillPit() {

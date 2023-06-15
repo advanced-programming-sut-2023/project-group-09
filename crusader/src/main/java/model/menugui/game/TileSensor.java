@@ -1,9 +1,9 @@
 package model.menugui.game;
 
 import controller.gamestructure.GameImages;
-import enumeration.Paths;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import view.controllers.GameViewController;
 import view.menus.GameMenu;
 
 public class TileSensor extends ImageView {
@@ -23,7 +23,10 @@ public class TileSensor extends ImageView {
 
         this.setOnMouseClicked(mouseEvent -> {
             if (GameMenu.selectedUnit) {
-
+                GameViewController.doAction(true, gameTile);
+                System.out.println("destination: " + gameTile.getTileX() + " " + gameTile.getTileY());
+                GameMenu.selectedUnit = false;
+                GameMenu.root.getChildren().remove(GameMenu.selectCursor);
             }
         });
 

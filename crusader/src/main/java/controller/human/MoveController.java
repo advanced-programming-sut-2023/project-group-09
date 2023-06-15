@@ -55,7 +55,6 @@ public class MoveController extends HumanController {
                 if (checkArray[y][x]) {
                     continue;
                 }
-
                 pair.setOverhead(checkIsPathOverhead(x, y, human, pair));
                 wave[y][x] = pair.getParentPair();
                 checkArray[y][x] = true;
@@ -131,7 +130,7 @@ public class MoveController extends HumanController {
 
 
     public static double getDistance(int x1, int y1, int x2, int y2) {
-        return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+        return Math.sqrt(Math.pow((double) (x1 - x2) / 30, 2) + Math.pow((double) (y1 - y2) / 9, 2));
     }
 
     //this used in makePath and detect next node
@@ -160,16 +159,21 @@ public class MoveController extends HumanController {
                         secondPairs.add(new Tuple(y - 1, x, !isOverHead, pair));
                     }
                 }
-                if (x != 0 && !checkArray[y][x - 1]) {
+                if (x != 0) {
                     if (map.getTile(x - 1, y).isPassable(human, !isOverHead) && !checkArray[y][x - 1]) {
                         secondPairs.add(new Tuple(y, x - 1, !isOverHead, pair));
                     }
                 }
-                if (x != 0 && y != 0) {
-                    if (map.getTile(x - 1, y - 1).isPassable(human, !isOverHead) && !checkArray[y - 1][x - 1]) {
-                        secondPairs.add(new Tuple(y - 1, x - 1, !isOverHead, pair));
+
+                //------------------------
+                if (y > 1) {
+                    if (map.getTile(x, y - 2).isPassable(human, !isOverHead) && !checkArray[y - 2][x]) {
+                        secondPairs.add(new Tuple(y - 2, x, !isOverHead, pair));
                     }
                 }
+                //--------------------------
+
+
                 if (x != GameController.getGame().getMap().getWidth() - 1) {
                     if (map.getTile(x + 1, y).isPassable(human, !isOverHead) && !checkArray[y][x + 1]) {
                         secondPairs.add(new Tuple(y, x + 1, !isOverHead, pair));
@@ -180,19 +184,19 @@ public class MoveController extends HumanController {
                         secondPairs.add(new Tuple(y + 1, x, !isOverHead, pair));
                     }
                 }
-                if (y != GameController.getGame().getMap().getWidth() - 1 && x != GameController.getGame().getMap().getWidth() - 1) {
-                    if (map.getTile(x + 1, y + 1).isPassable(human, !isOverHead) && !checkArray[y + 1][x + 1]) {
-                        secondPairs.add(new Tuple(y + 1, x + 1, !isOverHead, pair));
+                if (y != GameController.getGame().getMap().getWidth() - 1) {
+                    if (map.getTile(x, y + 1).isPassable(human, !isOverHead) && !checkArray[y + 1][x]) {
+                        secondPairs.add(new Tuple(y + 1, x, !isOverHead, pair));
                     }
                 }
-                if (y != GameController.getGame().getMap().getWidth() - 1 && x != 0) {
-                    if (map.getTile(x - 1, y + 1).isPassable(human, !isOverHead) && !checkArray[y + 1][x - 1]) {
-                        secondPairs.add(new Tuple(y + 1, x - 1, !isOverHead, pair));
+                if (y < GameController.getGame().getMap().getWidth() - 2) {
+                    if (map.getTile(x, y + 2).isPassable(human, !isOverHead) && !checkArray[y + 2][x]) {
+                        secondPairs.add(new Tuple(y + 2, x, !isOverHead, pair));
                     }
                 }
-                if (y != 0 && x != GameController.getGame().getMap().getWidth() - 1) {
-                    if (map.getTile(x + 1, y - 1).isPassable(human, !isOverHead) && !checkArray[y - 1][x + 1]) {
-                        secondPairs.add(new Tuple(y - 1, x + 1, !isOverHead, pair));
+                if (y != 0) {
+                    if (map.getTile(x, y - 1).isPassable(human, !isOverHead) && !checkArray[y - 1][x]) {
+                        secondPairs.add(new Tuple(y - 1, x, !isOverHead, pair));
                     }
                 }
             }
@@ -201,14 +205,14 @@ public class MoveController extends HumanController {
                     secondPairs.add(new Tuple(y - 1, x, isOverHead, pair));
                 }
             }
-            if (x != 0 && !checkArray[y][x - 1]) {
+            if (x != 0) {
                 if (map.getTile(x - 1, y).isPassable(human, isOverHead) && !checkArray[y][x - 1]) {
                     secondPairs.add(new Tuple(y, x - 1, isOverHead, pair));
                 }
             }
-            if (x != 0 && y != 0) {
-                if (map.getTile(x - 1, y - 1).isPassable(human, isOverHead) && !checkArray[y - 1][x - 1]) {
-                    secondPairs.add(new Tuple(y - 1, x - 1, isOverHead, pair));
+            if (y > 1) {
+                if (map.getTile(x, y - 2).isPassable(human, isOverHead) && !checkArray[y - 2][x]) {
+                    secondPairs.add(new Tuple(y - 2, x, isOverHead, pair));
                 }
             }
             if (x != GameController.getGame().getMap().getWidth() - 1) {
@@ -221,24 +225,25 @@ public class MoveController extends HumanController {
                     secondPairs.add(new Tuple(y + 1, x, isOverHead, pair));
                 }
             }
-            if (y != GameController.getGame().getMap().getWidth() - 1 && x != GameController.getGame().getMap().getWidth() - 1) {
-                if (map.getTile(x + 1, y + 1).isPassable(human, isOverHead) && !checkArray[y + 1][x + 1]) {
-                    secondPairs.add(new Tuple(y + 1, x + 1, isOverHead, pair));
+            if (y != GameController.getGame().getMap().getWidth() - 1) {
+                if (map.getTile(x, y + 1).isPassable(human, isOverHead) && !checkArray[y + 1][x]) {
+                    secondPairs.add(new Tuple(y + 1, x, isOverHead, pair));
                 }
             }
-            if (y != GameController.getGame().getMap().getWidth() - 1 && x != 0) {
-                if (map.getTile(x - 1, y + 1).isPassable(human, isOverHead) && !checkArray[y + 1][x - 1]) {
-                    secondPairs.add(new Tuple(y + 1, x - 1, isOverHead, pair));
+            if (y < GameController.getGame().getMap().getWidth() - 2) {
+                if (map.getTile(x, y + 2).isPassable(human, isOverHead) && !checkArray[y + 2][x]) {
+                    secondPairs.add(new Tuple(y + 2, x, isOverHead, pair));
                 }
             }
-            if (y != 0 && x != GameController.getGame().getMap().getWidth() - 1) {
-                if (map.getTile(x + 1, y - 1).isPassable(human, isOverHead) && !checkArray[y - 1][x + 1]) {
-                    secondPairs.add(new Tuple(y - 1, x + 1, isOverHead, pair));
+            if (y != 0) {
+                if (map.getTile(x, y - 1).isPassable(human, isOverHead) && !checkArray[y - 1][x]) {
+                    secondPairs.add(new Tuple(y - 1, x, isOverHead, pair));
                 }
             }
         }
         return secondPairs;
     }
+
     public static boolean checkOverHead(Building building) {
         if (building == null) {
             return false;

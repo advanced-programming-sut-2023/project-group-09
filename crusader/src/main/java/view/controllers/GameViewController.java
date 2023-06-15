@@ -13,20 +13,16 @@ import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import model.Government;
 import model.building.Building;
 import model.game.Tile;
 import model.human.military.Military;
@@ -34,14 +30,12 @@ import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
 import model.menugui.game.Troop;
+import view.animations.MoveTroop;
 import view.menus.GameMenu;
 import view.menus.LoginMenu;
-import viewphase1.EditMapEnvironmentMenu;
-import viewphase1.MapMenu;
 
-import javax.swing.*;
-import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
 
 public class GameViewController {
@@ -50,7 +44,7 @@ public class GameViewController {
     public static Timeline timeline;
     public static boolean isSelected = false;
     public static boolean isTextureSelected = false;
-    public static int tileX , tileY;
+    public static int tileX, tileY;
 
     public static void createShortcutBars(Pane gamePane, Text text) {
         setCenterOfBar();
@@ -134,11 +128,11 @@ public class GameViewController {
         editLandImage.setScaleX(0.2);
         editLandImage.setScaleY(0.2);
         gamePane.getChildren().add(editLandImage);
-        setHoverEventForMainBarState(editLandImage, "Edit Landscape" , "Edit Landscape" , buildingsImage);
-        setHoverEventForMainBarState(buildingsImage, "Buildings" , "Castle Buildings" , editLandImage);
+        setHoverEventForMainBarState(editLandImage, "Edit Landscape", "Edit Landscape", buildingsImage);
+        setHoverEventForMainBarState(buildingsImage, "Buildings", "Castle Buildings", editLandImage);
     }
 
-    private static void setHoverEventForMainBarState(ImageView imageView , String text , String destination , ImageView anotherIcon) {
+    private static void setHoverEventForMainBarState(ImageView imageView, String text, String destination, ImageView anotherIcon) {
         imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -341,11 +335,11 @@ public class GameViewController {
     }
 
     private static void setCenterOfEditLand() {
-        putEditTextureImageView("bouldersIcon" , "Boulder"
-                ,Textures.BOULDER , 200 , 20 , 0.2 , "boulder");
+        putEditTextureImageView("bouldersIcon", "Boulder"
+                , Textures.BOULDER, 200, 20, 0.2, "boulder");
     }
 
-    public static void createShortcutBars2(Pane gamePane , Text text) {
+    public static void createShortcutBars2(Pane gamePane, Text text) {
 
         ImageView keyImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/keyIcon.png");
@@ -418,48 +412,48 @@ public class GameViewController {
     }
 
     private static void setCenterToFoodProcessingBuildings() {
-        putBuildingImageView("granaryIcon", "Granary", "granary", 280, 100, 1 , "granary");
-        putBuildingImageView("bakeryIcon", "Bakery", "bakery", 380, 100, 1 , "bakery");
-        putBuildingImageView("breweryIcon", "Brewery", "brewery", 480, 100, 1 , "brewery");
-        putBuildingImageView("millIcon", "Mill", "mill", 580, 80, 1 , "mill");
-        putBuildingImageView("innIcon", "Inn", "inn", 660, 90, 1 , "inn");
+        putBuildingImageView("granaryIcon", "Granary", "granary", 280, 100, 1, "granary");
+        putBuildingImageView("bakeryIcon", "Bakery", "bakery", 380, 100, 1, "bakery");
+        putBuildingImageView("breweryIcon", "Brewery", "brewery", 480, 100, 1, "brewery");
+        putBuildingImageView("millIcon", "Mill", "mill", 580, 80, 1, "mill");
+        putBuildingImageView("innIcon", "Inn", "inn", 660, 90, 1, "inn");
     }
 
     private static void setCenterToWeaponsBuildings() {
-        putBuildingImageView("fletcherWorkshopIcon", "Fletcher's Workshop", "fletcher", 300, 100, 1 , "fletcher");
-        putBuildingImageView("poleturnerWorkshopIcon", "Poleturner's Workshop", "poleTurner", 470, 100, 1 , "poleTurner");
-        putBuildingImageView("armourerIcon", "Armourer", "armourer", 500, 30, 0.25 , "armourer");
+        putBuildingImageView("fletcherWorkshopIcon", "Fletcher's Workshop", "fletcher", 300, 100, 1, "fletcher");
+        putBuildingImageView("poleturnerWorkshopIcon", "Poleturner's Workshop", "poleTurner", 470, 100, 1, "poleTurner");
+        putBuildingImageView("armourerIcon", "Armourer", "armourer", 500, 30, 0.25, "armourer");
     }
 
     private static void setCenterToTownBuildings() {
-        putBuildingImageView("hovelIcon", "Hovel", "hovel", 300, 100, 1 , "hovel");
-        putBuildingImageView("churchIcon", "Church", "church", 450, 100, 1 , "church");
-        putBuildingImageView("cathedralIcon", "Cathedral", "cathedral", 600, 90, 1 , "cathedral");
+        putBuildingImageView("hovelIcon", "Hovel", "hovel", 300, 100, 1, "hovel");
+        putBuildingImageView("churchIcon", "Church", "church", 450, 100, 1, "church");
+        putBuildingImageView("cathedralIcon", "Cathedral", "cathedral", 600, 90, 1, "cathedral");
     }
 
     private static void setCenterToFarmBuildings() {
-        putBuildingImageView("dairyIcon", "Dairy Farm", "dairyProducts", 180, 20, 0.25 , "dairyProducts");
-        putBuildingImageView("appleFarmIcon", "Apple Orchard", "appleGarden", 300, 20, 0.25 , "appleGarden");
-        putBuildingImageView("wheatFarmIcon", "Wheat Farm", "wheatFarm", 460, 20, 0.25 , "wheatFarm");
-        putBuildingImageView("hopsFarmIcon", "Hops Farm", "hopFarm", 540, 20, 0.25 , "hopFarm");
+        putBuildingImageView("dairyIcon", "Dairy Farm", "dairyProducts", 180, 20, 0.25, "dairyProducts");
+        putBuildingImageView("appleFarmIcon", "Apple Orchard", "appleGarden", 300, 20, 0.25, "appleGarden");
+        putBuildingImageView("wheatFarmIcon", "Wheat Farm", "wheatFarm", 460, 20, 0.25, "wheatFarm");
+        putBuildingImageView("hopsFarmIcon", "Hops Farm", "hopFarm", 540, 20, 0.25, "hopFarm");
     }
 
     private static void setCenterToIndustryBuildings() {
-        putBuildingImageView("stockPileIcon", "Stockpile", "stockPile", 180, 70, 0.25 , "stockPile");
-        putBuildingImageView("woodCutterIcon", "Wood Cutter", "woodCutter", 220, 0, 0.25 , "woodCutter");
-        putBuildingImageView("quarryIcon", "Quarry", "quarry", 310, -50, 0.25 , "quarry");
-        putBuildingImageView("oxTetherIcon", "Ox Tether", "oxTether", 440, 30, 0.25 , "oxTether");
-        putBuildingImageView("ironMineIcon", "Iron Mine", "ironMine", 400, 10, 0.25 , "ironMine");
-        putBuildingImageView("pitchRigIcon", "Pitch Rig", "pitchRig", 465, 30, 0.25 , "pitchRig");
-        putBuildingImageView("shopIcon", "Market Place", "shop", 590, 10, 0.25 , "shop");
+        putBuildingImageView("stockPileIcon", "Stockpile", "stockPile", 180, 70, 0.25, "stockPile");
+        putBuildingImageView("woodCutterIcon", "Wood Cutter", "woodCutter", 220, 0, 0.25, "woodCutter");
+        putBuildingImageView("quarryIcon", "Quarry", "quarry", 310, -50, 0.25, "quarry");
+        putBuildingImageView("oxTetherIcon", "Ox Tether", "oxTether", 440, 30, 0.25, "oxTether");
+        putBuildingImageView("ironMineIcon", "Iron Mine", "ironMine", 400, 10, 0.25, "ironMine");
+        putBuildingImageView("pitchRigIcon", "Pitch Rig", "pitchRig", 465, 30, 0.25, "pitchRig");
+        putBuildingImageView("shopIcon", "Market Place", "shop", 590, 10, 0.25, "shop");
     }
 
     private static void setCenterToGatehouses() {
         putButtonImageViewWithDestination("backButtonIcon", "Back To Castles", "Castle Buildings", 225, 60, 0.2);
-        putBuildingImageView("smallGatehouseIcon", "Small Gatehouse", "smallStoneGatehouse", 250, 0, 0.25 , "smallStoneGatehouse");
-        putBuildingImageView("bigGatehouseIcon", "Big Gatehouse", "bigStoneGatehouse", 290, -50, 0.25 , "bigStoneGatehouse");
-        putBuildingImageView("drawBridgeIcon", "Draw Bridge", "drawBridge", 400, 20, 0.25 , "drawBridge");
-        putBuildingImageView("cageIcon", "Caged Dogs", "cagedWarDogs", 450, 30, 0.25 , "cagedWarDogs");
+        putBuildingImageView("smallGatehouseIcon", "Small Gatehouse", "smallStoneGatehouse", 250, 0, 0.25, "smallStoneGatehouse");
+        putBuildingImageView("bigGatehouseIcon", "Big Gatehouse", "bigStoneGatehouse", 290, -50, 0.25, "bigStoneGatehouse");
+        putBuildingImageView("drawBridgeIcon", "Draw Bridge", "drawBridge", 400, 20, 0.25, "drawBridge");
+        putBuildingImageView("cageIcon", "Caged Dogs", "cagedWarDogs", 450, 30, 0.25, "cagedWarDogs");
         //putBuildingImageView("pitchDitchIcon", "Pitch Ditch", "", 530, 50, 0.25); // TODO:
         //putBuildingImageView("killingPitIcon", "Killing Pit", "", 530, 90, 0.25 , "killing"); // TODO:
         //putBuildingImageView("braizerIcon", "Braizer", "", 650, 70, 0.25); // braizer will added to game buildings
@@ -467,29 +461,29 @@ public class GameViewController {
 
     private static void setCenterToMilitaryBuildings() {
         putButtonImageViewWithDestination("backButtonIcon", "Back To Castles", "Castle Buildings", 225, 60, 0.2);
-        putBuildingImageView("engineerGuildIcon", "Engineer's Guild", "engineerGuild", 220, 20, 0.25 , "engineerGuild");
-        putBuildingImageView("stableIcon", "Stable", "stable", 300, -5, 0.25 , "stable");
-        putBuildingImageView("tunnelerGuildIcon", "Tunneler's Guild", "tunnelersGuild", 450, 5, 0.25 , "tunnelersGuild");
-        putBuildingImageView("oilSmelterIcon", "Oil Smelter", "oilSmelter", 540, 5, 0.25 , "oilSmelter");
+        putBuildingImageView("engineerGuildIcon", "Engineer's Guild", "engineerGuild", 220, 20, 0.25, "engineerGuild");
+        putBuildingImageView("stableIcon", "Stable", "stable", 300, -5, 0.25, "stable");
+        putBuildingImageView("tunnelerGuildIcon", "Tunneler's Guild", "tunnelersGuild", 450, 5, 0.25, "tunnelersGuild");
+        putBuildingImageView("oilSmelterIcon", "Oil Smelter", "oilSmelter", 540, 5, 0.25, "oilSmelter");
     }
 
     private static void setCenterToTowers() {
-        putBuildingImageView("lookoutTowerIcon", "Lookout Tower", "lookoutTower", 290, -45, 0.25 , "lookoutTower");
-        putBuildingImageView("perimeterTurretIcon", "Perimeter Turret", "perimeterTurret", 340, 5, 0.30 , "perimeterTurret");
-        putBuildingImageView("defenseTurretIcon", "Defense Turret", "defenseTurret", 415, -15, 0.3 , "defenseTurret");
-        putBuildingImageView("squareTowerIcon", "Square Tower", "squareTower", 495, -25, 0.3 , "squareTower");
-        putBuildingImageView("roundTowerIcon", "Round Tower", "roundTower", 595, -30, 0.3 , "roundTower");
+        putBuildingImageView("lookoutTowerIcon", "Lookout Tower", "lookoutTower", 290, -45, 0.25, "lookoutTower");
+        putBuildingImageView("perimeterTurretIcon", "Perimeter Turret", "perimeterTurret", 340, 5, 0.30, "perimeterTurret");
+        putBuildingImageView("defenseTurretIcon", "Defense Turret", "defenseTurret", 415, -15, 0.3, "defenseTurret");
+        putBuildingImageView("squareTowerIcon", "Square Tower", "squareTower", 495, -25, 0.3, "squareTower");
+        putBuildingImageView("roundTowerIcon", "Round Tower", "roundTower", 595, -30, 0.3, "roundTower");
         putButtonImageViewWithDestination("backButtonIcon", "Back To Castles", "Castle Buildings", 225, 60, 0.2);
     }
 
     private static void setCenterToCastleBuildings() {
-        putBuildingImageView("stairsIcon", "Stairs", "stairs", 240, 80, 0.4 , "stairs");
-        putBuildingImageView("smallWallIcon", "Low Wall", "lowWall", 265, 80, 0.4 , "lowWall");
-        putBuildingImageView("bigWallIcon", "Stone Wall", "stoneWall", 310, 60, 0.4 , "stoneWall");
-        putBuildingImageView("crenulatedWallIcon", "Crenulated Wall", "crenulatedWall", 370, 40, 0.4 , "crenulatedWall");
-        putBuildingImageView("barracksIcon", "Barrack", "barrack", 450, 80, 0.4 , "barrack");
-        putBuildingImageView("mercenrayIcon", "Mercenary Post", "mercenaryPost", 505, 100, 0.4 , "mercenaryPost");
-        putBuildingImageView("armoryIcon", "Armoury", "armoury", 595, 70, 0.4 , "armoury");
+        putBuildingImageView("stairsIcon", "Stairs", "stairs", 240, 80, 0.4, "stairs");
+        putBuildingImageView("smallWallIcon", "Low Wall", "lowWall", 265, 80, 0.4, "lowWall");
+        putBuildingImageView("bigWallIcon", "Stone Wall", "stoneWall", 310, 60, 0.4, "stoneWall");
+        putBuildingImageView("crenulatedWallIcon", "Crenulated Wall", "crenulatedWall", 370, 40, 0.4, "crenulatedWall");
+        putBuildingImageView("barracksIcon", "Barrack", "barrack", 450, 80, 0.4, "barrack");
+        putBuildingImageView("mercenrayIcon", "Mercenary Post", "mercenaryPost", 505, 100, 0.4, "mercenaryPost");
+        putBuildingImageView("armoryIcon", "Armoury", "armoury", 595, 70, 0.4, "armoury");
         putImageView("towersIcon", "Towers", 652, 80);
         putImageView("militaryIcon", "Military Buildings", 692, 80);
         putImageView("gatehouseIcon", "Gatehouses", 692, 120);
@@ -528,7 +522,7 @@ public class GameViewController {
         return text;
     }
 
-    private static void putEditTextureImageView(String fileName , String name , Textures texture, double x , double y , double size , String picFileName) {
+    private static void putEditTextureImageView(String fileName, String name, Textures texture, double x, double y, double size, String picFileName) {
         ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/" + fileName + ".png");
         icon.setTranslateX(x);
@@ -561,21 +555,21 @@ public class GameViewController {
                     GameMenu.gameMap.getChildren().add(imageView);
                 isTextureSelected = true;
                 imageView.setTranslateX(GameMenu.gameMap.getCameraX() * GameMap.tileWidth +
-                        mouseEvent.getScreenX() - (GameMenu.scene.getWidth()-1200)/2 - image.getWidth() * 0.5);
+                        mouseEvent.getScreenX() - (GameMenu.scene.getWidth() - 1200) / 2 - image.getWidth() * 0.5);
                 imageView.setTranslateY(GameMenu.gameMap.getCameraY() * GameMap.tileHeight / 2 +
-                        mouseEvent.getScreenY() - (GameMenu.scene.getHeight()-800)/2 - image.getHeight());
+                        mouseEvent.getScreenY() - (GameMenu.scene.getHeight() - 800) / 2 - image.getHeight());
                 imageView.setOpacity(0.6);
                 GameMenu.gameMap.setOnMouseDragged(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         if (mouseEvent.getButton() == MouseButton.PRIMARY && isTextureSelected) {
                             GameMenu.gameMap.getChildren().remove(imageView);
-                            Pair <Integer , Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
+                            Pair<Integer, Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
                             tileX = pair.getFirst();
                             tileY = pair.getSecond();
                             System.out.println("Tile founded at : " + tileX + " " + tileY);
-                            GameMenu.hoveringBarStateText.setText(MapController.setTexture(tileX , tileY , texture));
-                            GameMap.getGameTile(tileX , tileY).refreshTile();
+                            GameMenu.hoveringBarStateText.setText(MapController.setTexture(tileX, tileY, texture));
+                            GameMap.getGameTile(tileX, tileY).refreshTile();
                         } else {
                             isTextureSelected = false;
                             GameMenu.gameMap.getChildren().remove(imageView);
@@ -597,7 +591,7 @@ public class GameViewController {
         });
     }
 
-    private static void putBuildingImageView(String fileName, String name, String buildingName, double x, double y, double size , String picFileName) {
+    private static void putBuildingImageView(String fileName, String name, String buildingName, double x, double y, double size, String picFileName) {
         ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/" + fileName + ".png");
         ArrayList<ImageView> resourceIcons = new ArrayList<>();
@@ -689,7 +683,6 @@ public class GameViewController {
         imageView.setViewOrder(-500);
 
 
-
         icon.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -697,21 +690,21 @@ public class GameViewController {
                     GameMenu.gameMap.getChildren().add(imageView);
 
                 imageView.setTranslateX(GameMenu.gameMap.getCameraX() * GameMap.tileWidth +
-                        mouseEvent.getScreenX() - (GameMenu.scene.getWidth()-1200)/2 - image.getWidth() *
+                        mouseEvent.getScreenX() - (GameMenu.scene.getWidth() - 1200) / 2 - image.getWidth() *
                         ((double) sampleBuilding.getWidth() / (sampleBuilding.getWidth() + sampleBuilding.getLength())));
                 imageView.setTranslateY(GameMenu.gameMap.getCameraY() * GameMap.tileHeight / 2 +
-                                mouseEvent.getScreenY() - (GameMenu.scene.getHeight()-800)/2 - image.getHeight());
+                        mouseEvent.getScreenY() - (GameMenu.scene.getHeight() - 800) / 2 - image.getHeight());
                 imageView.setOpacity(0.6);
                 icon.setOnMouseReleased(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         GameMenu.gameMap.getChildren().remove(imageView);
-                        Pair <Integer , Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
+                        Pair<Integer, Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
                         tileX = pair.getFirst();
                         tileY = pair.getSecond();
                         System.out.println("Tile founded at : " + tileX + " " + tileY);
                         GameMenu.hoveringBarStateText.setText(GameController.dropBuilding(tileX, tileY, buildingName, null));
-                        GameMap.getGameTile(tileX , tileY).refreshTile();
+                        GameMap.getGameTile(tileX, tileY).refreshTile();
                     }
                 });
             }
@@ -719,42 +712,42 @@ public class GameViewController {
 
     }
 
-    public static Pair<Integer , Integer> tileCoordinateWithMouseEvent(MouseEvent mouseEvent) {
-        int halfTileX = (int)((mouseEvent.getScreenX() -
-                (GameMenu.scene.getWidth()-1200)/2)/((double) GameMap.tileWidth/2));
-        int halfTileY = (int)((mouseEvent.getScreenY() -
-                (GameMenu.scene.getHeight()-800)/2)/((double) GameMap.tileHeight/2));
-        Pair<Integer , Integer> pair;
+    public static Pair<Integer, Integer> tileCoordinateWithMouseEvent(MouseEvent mouseEvent) {
+        int halfTileX = (int) ((mouseEvent.getScreenX() -
+                (GameMenu.scene.getWidth() - 1200) / 2) / ((double) GameMap.tileWidth / 2));
+        int halfTileY = (int) ((mouseEvent.getScreenY() -
+                (GameMenu.scene.getHeight() - 800) / 2) / ((double) GameMap.tileHeight / 2));
+        Pair<Integer, Integer> pair;
         if (halfTileX % 2 == 1) {
-            pair = checkNearestTile(mouseEvent , (halfTileX-1)/2 , (halfTileX-1)/2 , halfTileY , halfTileY-1);
+            pair = checkNearestTile(mouseEvent, (halfTileX - 1) / 2, (halfTileX - 1) / 2, halfTileY, halfTileY - 1);
         } else {
             if (halfTileY % 2 == 1) {
-                pair = checkNearestTile(mouseEvent , halfTileX/2 - 1 , halfTileX/2 , halfTileY , halfTileY-1);
+                pair = checkNearestTile(mouseEvent, halfTileX / 2 - 1, halfTileX / 2, halfTileY, halfTileY - 1);
             } else {
-                pair = checkNearestTile(mouseEvent , halfTileX/2 - 1 , halfTileX/2 , halfTileY-1 , halfTileY);
+                pair = checkNearestTile(mouseEvent, halfTileX / 2 - 1, halfTileX / 2, halfTileY - 1, halfTileY);
             }
         }
-        return new Pair<>(pair.getFirst() + GameMenu.gameMap.getCameraX() ,
+        return new Pair<>(pair.getFirst() + GameMenu.gameMap.getCameraX(),
                 pair.getSecond() + GameMenu.gameMap.getCameraY());
     }
 
-    private static Pair<Integer , Integer> checkNearestTile(MouseEvent mouseEvent , int x1 , int x2 , int y1 , int y2) {
-        double dis1 , dis2;
-        dis1 = distanceOfTile(mouseEvent , x1 , y1);
-        dis2 = distanceOfTile(mouseEvent , x2 , y2);
+    private static Pair<Integer, Integer> checkNearestTile(MouseEvent mouseEvent, int x1, int x2, int y1, int y2) {
+        double dis1, dis2;
+        dis1 = distanceOfTile(mouseEvent, x1, y1);
+        dis2 = distanceOfTile(mouseEvent, x2, y2);
         if (dis1 <= dis2)
-            return new Pair<>(x1 , y1);
-        return new Pair<>(x2 , y2);
+            return new Pair<>(x1, y1);
+        return new Pair<>(x2, y2);
     }
 
-    private static double distanceOfTile(MouseEvent mouseEvent ,int tileX , int tileY) {
+    private static double distanceOfTile(MouseEvent mouseEvent, int tileX, int tileY) {
         double x = (mouseEvent.getScreenX() -
-                (GameMenu.scene.getWidth()-1200)/2);
+                (GameMenu.scene.getWidth() - 1200) / 2);
         double y = (mouseEvent.getScreenY() -
-                (GameMenu.scene.getHeight()-800)/2);
-        GameTile tile = GameMap.getGameTile(tileX , tileY);
-        double distance = Math.sqrt(Math.pow(tile.getX() - x , 2) +
-                Math.pow(tile.getY() - y , 2));
+                (GameMenu.scene.getHeight() - 800) / 2);
+        GameTile tile = GameMap.getGameTile(tileX, tileY);
+        double distance = Math.sqrt(Math.pow(tile.getX() - x, 2) +
+                Math.pow(tile.getY() - y, 2));
         return distance;
     }
 
@@ -833,88 +826,89 @@ public class GameViewController {
     }
 
 
-    public static void dropUnit(int x, int y, Tile tile, Military military){
+    public static void dropUnit(int x, int y, Tile tile, Military military) {
         GameTile gameTile = GameMap.getGameTile(x, y);
         GameMap gameMap = GameMenu.gameMap;
-        Troop troop = new Troop(military, tile,gameTile);
+        Troop troop = new Troop(military, tile, gameTile);
         gameMap.getChildren().add(troop);
-        if(GameMap.gameTroops[y][x] == null){
+        if (GameMap.gameTroops[y][x] == null) {
             GameMap.gameTroops[y][x] = new ArrayList<>();
         }
         GameMap.gameTroops[y][x].add(troop);
     }
-    public static void selectUnits(int x,int y){
+
+    public static void selectUnits(int x, int y) {
         GameMenu.selectedTilesTroop.clear();
         Tile tile = GameController.getGame().getMap().getTile(x, y);
         GameMenu.selectedTilesTroop.add(tile);
         GameMenu.selectedUnit = true;
     }
 
-    public static void setSelectCursorImage(String state){
+    public static void setSelectCursorImage(String state) {
         GameMenu.selectCursor.setFill(new ImagePattern(GameImages.imageViews.get(state)));
     }
 
-    public static void setSelectCursorState(GameTile endTile){
-        String state= GameMenu.movingState;
-        if(UnitMovingState.NORMAL.getState().equals(state)){
-            canDoAction(true,endTile);
+    public static void setSelectCursorState(GameTile endTile) {
+        String state = GameMenu.movingState;
+        if (UnitMovingState.NORMAL.getState().equals(state)) {
+            canDoAction(true, endTile);
         }
     }
 
 
-    public static boolean canDoAction(boolean changeCursor,GameTile endTile){
+    public static boolean canDoAction(boolean changeCursor, GameTile endTile) {
         String state = GameMenu.movingState;
-        if (Objects.equals(state, UnitMovingState.NORMAL.getState())){
-            if (checkCanAttack(endTile)||checkCanAirAttack(endTile)){
-                if (changeCursor){
+        if (Objects.equals(state, UnitMovingState.NORMAL.getState())) {
+            if (checkCanAttack(endTile) || checkCanAirAttack(endTile)) {
+                if (changeCursor) {
                     setSelectCursorImage("attack");
                 }
                 return true;
             }
-            if (GameController.validateMoveUnit(endTile.getTileX(),endTile.getTileY())){
-                if (changeCursor){
+            if (GameController.validateMoveUnit(endTile.getTileX(), endTile.getTileY())) {
+                if (changeCursor) {
                     setSelectCursorImage("selectMove");
                 }
                 return true;
             }
-            if (changeCursor){
+            if (changeCursor) {
                 setSelectCursorImage("cannot");
             }
             return false;
         }
-        if (Objects.equals(state, UnitMovingState.MOVE.getState())){
-            if (GameController.validateMoveUnit(endTile.getTileX(),endTile.getTileY())){
-                if (changeCursor){
+        if (Objects.equals(state, UnitMovingState.MOVE.getState())) {
+            if (GameController.validateMoveUnit(endTile.getTileX(), endTile.getTileY())) {
+                if (changeCursor) {
                     setSelectCursorImage("selectMove");
                 }
                 return true;
             }
-            if (changeCursor){
+            if (changeCursor) {
                 setSelectCursorImage("cannot");
             }
             return false;
         }
-        if (Objects.equals(state, UnitMovingState.AIR_ATTACK.getState())){
-            if (checkCanAirAttack(endTile)){
-                if (changeCursor){
+        if (Objects.equals(state, UnitMovingState.AIR_ATTACK.getState())) {
+            if (checkCanAirAttack(endTile)) {
+                if (changeCursor) {
                     setSelectCursorImage("attack");
                 }
                 return true;
             }
-            if (changeCursor){
+            if (changeCursor) {
                 setSelectCursorImage("cannot");
             }
             return false;
         }
 
-        if (Objects.equals(state, UnitMovingState.ATTACK.getState())){
-            if (checkCanAttack(endTile)){
-                if (changeCursor){
+        if (Objects.equals(state, UnitMovingState.ATTACK.getState())) {
+            if (checkCanAttack(endTile)) {
+                if (changeCursor) {
                     setSelectCursorImage("attack");
                 }
                 return true;
             }
-            if (changeCursor){
+            if (changeCursor) {
                 setSelectCursorImage("cannot");
             }
             return false;
@@ -924,32 +918,141 @@ public class GameViewController {
     }
 
 
-    public static boolean checkCanAttack(GameTile endTile){
-        if (GameController.validateAttackEnemy(endTile.getTileX(),endTile.getTileY())){
+    public static boolean checkCanAttack(GameTile endTile) {
+        if (GameController.validateAttackEnemy(endTile.getTileX(), endTile.getTileY())) {
             return true;
         }
-        if (GameController.validateAttackBuilding(endTile.getTileX(),endTile.getTileY())){
+        if (GameController.validateAttackBuilding(endTile.getTileX(), endTile.getTileY())) {
             return true;
         }
         return GameController.validateAttackTool(endTile.getTileX(), endTile.getTileY());
     }
 
 
-    public static boolean checkCanAirAttack(GameTile endTile){
-        if (GameController.validateAirAttack(endTile.getTileX(),endTile.getTileY())){
+    public static boolean checkCanAirAttack(GameTile endTile) {
+        if (GameController.validateAirAttack(endTile.getTileX(), endTile.getTileY())) {
             return true;
         }
-        if (GameController.validateAirAttackBuilding(endTile.getTileX(),endTile.getTileY())){
+        if (GameController.validateAirAttackBuilding(endTile.getTileX(), endTile.getTileY())) {
             return true;
         }
         return GameController.validateAirAttackTool(endTile.getTileX(), endTile.getTileY());
     }
 
-    public static void moveUnits(){
-        for (Tile tile : GameMenu.selectedTilesTroop){
-            for (Troop military : GameMap.gameTroops[tile.y][tile.x]){
+    public static void doAction(boolean changeCursor, GameTile endTile) {
+        String state = GameMenu.movingState;
+        if (Objects.equals(state, UnitMovingState.NORMAL.getState())) {
+            if (checkCanAttack(endTile) || checkCanAirAttack(endTile)) {
+                if (changeCursor) {
+                    setSelectCursorImage("attack");
+                }
+                attack();
+                return;
+            }
+            if (GameController.validateMoveUnit(endTile.getTileX(), endTile.getTileY())) {
+                if (changeCursor) {
+                    setSelectCursorImage("selectMove");
+                }
+                moveUnits(endTile);
+                return;
+            }
+            if (changeCursor) {
+                setSelectCursorImage("cannot");
+            }
+            return;
+        }
+        if (Objects.equals(state, UnitMovingState.MOVE.getState())) {
+            if (GameController.validateMoveUnit(endTile.getTileX(), endTile.getTileY())) {
+                if (changeCursor) {
+                    setSelectCursorImage("selectMove");
+                }
+                moveUnits(endTile);
+                return;
+            }
+            if (changeCursor) {
+                setSelectCursorImage("cannot");
+            }
+            return;
+        }
+        if (Objects.equals(state, UnitMovingState.AIR_ATTACK.getState())) {
+            if (checkCanAirAttack(endTile)) {
+                if (changeCursor) {
+                    setSelectCursorImage("attack");
+                    attack();
+                }
+                return;
+            }
+            if (changeCursor) {
+                setSelectCursorImage("cannot");
+            }
+            return;
+        }
 
+        if (Objects.equals(state, UnitMovingState.ATTACK.getState())) {
+            if (checkCanAttack(endTile)) {
+                if (changeCursor) {
+                    setSelectCursorImage("attack");
+                }
+                return;
+            }
+            if (changeCursor) {
+                setSelectCursorImage("cannot");
             }
         }
+
+    }
+
+
+    public static boolean doAttack(GameTile endTile) {
+        if (GameController.validateAttackEnemy(endTile.getTileX(), endTile.getTileY())) {
+            return true;
+        }
+        if (GameController.validateAttackBuilding(endTile.getTileX(), endTile.getTileY())) {
+            return true;
+        }
+        return GameController.validateAttackTool(endTile.getTileX(), endTile.getTileY());
+    }
+
+
+    public static boolean doAirAttack(GameTile endTile) {
+        if (GameController.validateAirAttack(endTile.getTileX(), endTile.getTileY())) {
+            return true;
+        }
+        if (GameController.validateAirAttackBuilding(endTile.getTileX(), endTile.getTileY())) {
+            return true;
+        }
+        return GameController.validateAirAttackTool(endTile.getTileX(), endTile.getTileY());
+    }
+
+
+    public static void moveUnits(GameTile end) {
+        for (Tile tile : GameMenu.selectedTilesTroop) {
+            GameController.selectUnit(tile.x,tile.y,null);
+            GameController.moveUnit(end.getTileX(),end.getTileY());
+            if (GameMap.gameTroops[tile.y][tile.x] != null){
+
+                Iterator<Troop> it = GameMap.gameTroops[tile.y][tile.x].iterator();
+                while(it.hasNext()) {
+                    Troop troop = it.next();
+                    Military military = troop.getMilitary();
+                    System.out.println("this is a troop!");
+                    if (military.getMove() != null && military.getMove().isMoving()) {
+                        MoveTroop moveTroop = new MoveTroop(troop);
+                        moveTroop.play();
+                        GameMenu.transitions.add(moveTroop);
+                        it.remove();
+                    }
+                }
+            }
+
+        }
+    }
+
+    public static void attack() {
+        //
+    }
+
+    public static void airAttack() {
+        //
     }
 }
