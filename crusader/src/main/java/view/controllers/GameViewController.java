@@ -1,5 +1,6 @@
 package view.controllers;
 
+import controller.FileController;
 import controller.GameController;
 import controller.MapController;
 import controller.gamestructure.GameBuildings;
@@ -11,6 +12,7 @@ import enumeration.UnitMovingState;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -25,6 +27,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Government;
 import model.building.Building;
@@ -42,6 +45,7 @@ import viewphase1.MapMenu;
 import javax.swing.*;
 import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class GameViewController {
@@ -52,8 +56,21 @@ public class GameViewController {
     public static boolean isTextureSelected = false;
     public static int tileX , tileY;
 
+    public static HashMap<String , String> buildingNameToFileName = new HashMap<>();
+    public static HashMap<String , String> buildingNameToPicName = new HashMap<>();
+    public static HashMap<String , String> buildingNameToName = new HashMap<>();
+
     public static void createShortcutBars(Pane gamePane, Text text) {
         setCenterOfBar();
+
+        ImageView clipboardSign = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
+                + "icons/clipboardIcon.png");
+        clipboardSign.setTranslateX(513);
+        clipboardSign.setTranslateY(-110);
+        clipboardSign.setScaleX(0.05);
+        clipboardSign.setScaleY(0.05);
+        gamePane.getChildren().add(clipboardSign);
+        setEventsForClipboardIcon(clipboardSign);
         ImageView castleBuildingsImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/castleBuildingsIcon.png");
         castleBuildingsImage.setTranslateX(275);
@@ -136,6 +153,18 @@ public class GameViewController {
         gamePane.getChildren().add(editLandImage);
         setHoverEventForMainBarState(editLandImage, "Edit Landscape" , "Edit Landscape" , buildingsImage);
         setHoverEventForMainBarState(buildingsImage, "Buildings" , "Castle Buildings" , editLandImage);
+    }
+
+    private static void setEventsForClipboardIcon(ImageView clipboardSign) {
+        clipboardSign.setOnMouseEntered(e -> {
+            GameMenu.hoveringBarStateText.setText("Clipboard");
+        });
+        clipboardSign.setOnMouseExited(e -> {
+            GameMenu.hoveringBarStateText.setText("");
+        });
+        clipboardSign.setOnMouseClicked(e -> {
+            setCenterOfBar();
+        });
     }
 
     private static void setHoverEventForMainBarState(ImageView imageView , String text , String destination , ImageView anotherIcon) {
@@ -267,6 +296,11 @@ public class GameViewController {
                 GameMenu.createGameBar(true);
                 setCenterToFoodProcessingBuildings();
             }
+            case "Clipboard" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(true);
+                setCenterOfClipboard();
+            }
         }
     }
 
@@ -337,6 +371,26 @@ public class GameViewController {
             case "Edit Vegetation" -> {
 
             }
+            case "Clipboard" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(true);
+                setCenterOfClipboard();
+            }
+        }
+    }
+
+    private static void setCenterOfClipboard() {
+        putButtonImageViewWithDestination("backButtonIcon", "Back To Castles", "Castle Buildings", 225, 60, 0.2);
+        String buildingName = FileController.getClipboard();
+        putBuildingFromClipboard(buildingName);
+    }
+
+    private static void putBuildingFromClipboard(String buildingName) {
+        String fileName = buildingNameToFileName.get(buildingName);
+        String name = buildingNameToName.get(buildingName);
+        String picFileName = buildingNameToPicName.get(buildingName);
+        if (fileName != null && name != null && picFileName != null) {
+            putBuildingImageView(fileName, name, buildingName, 250, 0, 0.25, picFileName);
         }
     }
 
@@ -598,6 +652,9 @@ public class GameViewController {
     }
 
     private static void putBuildingImageView(String fileName, String name, String buildingName, double x, double y, double size , String picFileName) {
+        buildingNameToFileName.put(buildingName , fileName);
+        buildingNameToName.put(buildingName , name);
+        buildingNameToPicName.put(buildingName , picFileName);
         ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/" + fileName + ".png");
         ArrayList<ImageView> resourceIcons = new ArrayList<>();
@@ -951,5 +1008,18 @@ public class GameViewController {
 
             }
         }
+    }
+
+    private static void setEventOfOkButton(Button button , Stage popupStage) {
+        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                try {
+                    popupStage.close();
+                } catch (Exception e) {
+                    System.out.println("an error occurred");
+                }
+            }
+        });
     }
 }
