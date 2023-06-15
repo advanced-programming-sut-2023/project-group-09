@@ -1,6 +1,7 @@
 package model.menugui.game;
 
 import controller.gamestructure.GameImages;
+import enumeration.Paths;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import model.game.Tile;
