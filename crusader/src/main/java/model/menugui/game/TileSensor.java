@@ -1,5 +1,6 @@
 package model.menugui.game;
 
+import controller.gamestructure.GameImages;
 import enumeration.Paths;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,7 +29,7 @@ public class TileSensor extends ImageView {
 
         this.setOnDragDone(mouseEvent -> {
             GameMenu.currentTile = gameTile;
-            gameTile.setTextureImage(new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath() + "textures/red.png").toExternalForm()));
+            gameTile.setTextureImage(GameImages.imageViews.get("red"));
         });
     }
 }

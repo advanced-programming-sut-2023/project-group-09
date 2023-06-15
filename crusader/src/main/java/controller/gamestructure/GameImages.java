@@ -207,6 +207,8 @@ public class GameImages {
         TileSensor tileSensor = new TileSensor(imageViews.get("red"),gameTile);
         tileSensor.setTranslateX(x);
         tileSensor.setTranslateY(y);
+        tileSensor.setFitWidth(30);
+        tileSensor.setFitHeight(18);
         tileSensor.setOpacity(0);
         return tileSensor;
     }
