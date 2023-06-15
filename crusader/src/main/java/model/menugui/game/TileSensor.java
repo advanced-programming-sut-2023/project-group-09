@@ -3,6 +3,7 @@ package model.menugui.game;
 import controller.gamestructure.GameImages;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import model.game.Tile;
 import view.controllers.GameViewController;
 import view.menus.GameMenu;
 
@@ -22,6 +23,7 @@ public class TileSensor extends ImageView {
         });
 
         this.setOnMouseClicked(mouseEvent -> {
+            gameTile.setTextureImage(new Image(TileSensor.class.getResource(Paths.MAP_IMAGES.getPath() + "textures/red.png").toExternalForm()));
             if (GameMenu.selectedUnit) {
                 GameViewController.doAction(true, gameTile);
                 System.out.println("destination: " + gameTile.getTileX() + " " + gameTile.getTileY());

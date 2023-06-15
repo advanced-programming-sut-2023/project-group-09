@@ -1,5 +1,10 @@
 package controller;
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -38,4 +43,25 @@ public class FileController {
         }
         return "";
     }
+
+    public static String getClipboard() {
+        Transferable t = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
+        try {
+            if (t != null && t.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+                String text = (String) t.getTransferData(DataFlavor.stringFlavor);
+
+                return text.trim();
+            }
+        } catch (Exception e) {
+        }
+        return "";
+    }
+
+    public static void copyBuildingNameToClipboard(String buildingName) {
+        String myString = buildingName;
+        StringSelection stringSelection = new StringSelection(myString);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(stringSelection, null);
+    }
+
 }

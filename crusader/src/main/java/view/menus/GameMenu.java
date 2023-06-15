@@ -63,6 +63,7 @@ public class GameMenu extends Application {
     public static boolean selectedUnit = false;
     public static GameTile startSelectionTile;
     public static GameTile endSelectionTile;
+    public static boolean selectDone = false;
 
     public static String movingState = UnitMovingState.NORMAL.getState();
 
@@ -220,15 +221,28 @@ public class GameMenu extends Application {
                 root.setOnMouseReleased(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        endSelectionTile = currentTile;
-                        selectedArea.setVisible(false);
-                        selectedArea.setWidth(0);
-                        selectedArea.setHeight(0);
-//                        GameController.getSelectedAreaTiles(startSelectionTile, endSelectionTile);
+                        selectDone = true;
                     }
                 });
             }
         });
+
+        Timeline selectDoneTimeline = new Timeline(new KeyFrame(Duration.ZERO, actionEvent -> {
+            if (selectDone) {
+                endSelectionTile = currentTile;
+                selectedArea.setVisible(false);
+                selectedArea.setWidth(0);
+                selectedArea.setHeight(0);
+                ArrayList<GameTile> tiles = GameController.getSelectedAreaTiles(startSelectionTile, endSelectionTile);
+                for (int i = 0; i < tiles.size(); i++) {
+                    tiles.get(i).selectTile();
+                }
+                selectDone = false;
+            }
+        }), new KeyFrame(Duration.millis(100), actionEvent -> {
+        }));
+        selectDoneTimeline.setCycleCount(-1);
+        selectDoneTimeline.play();
 
         root.getChildren().add(selectedArea);
     }
