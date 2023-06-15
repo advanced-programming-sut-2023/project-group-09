@@ -41,6 +41,8 @@ public class GameImages {
 
     public static void addCursor(){
         addSelectMove();
+        addCanNot();
+        addAttack();
     }
 
     public static void addSelectMove(){
@@ -52,6 +54,13 @@ public class GameImages {
         Image image = new Image(GameTile.class.getResource(Paths.GAME_IMAGES.getPath()).toExternalForm() +"cursor/cannot.gif");
         imageViews.put("cannot",image);
     }
+
+    public static void addAttack(){
+        Image image = new Image(GameTile.class.getResource(Paths.GAME_IMAGES.getPath()).toExternalForm() +"cursor/attack.gif");
+        imageViews.put("attack",image);
+    }
+
+
     public static void addArabianTroop() {
         addSwordsman();
     }

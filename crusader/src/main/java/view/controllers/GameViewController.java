@@ -42,6 +42,7 @@ import viewphase1.MapMenu;
 import javax.swing.*;
 import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GameViewController {
 
@@ -856,9 +857,99 @@ public class GameViewController {
     public static void setSelectCursorState(GameTile endTile){
         String state= GameMenu.movingState;
         if(UnitMovingState.NORMAL.getState().equals(state)){
-//            if (GameController.validateAirAttack(endTile.getTileX())){
-//
-//            }
+            canDoAction(true,endTile);
+        }
+    }
+
+
+    public static boolean canDoAction(boolean changeCursor,GameTile endTile){
+        String state = GameMenu.movingState;
+        if (Objects.equals(state, UnitMovingState.NORMAL.getState())){
+            if (checkCanAttack(endTile)||checkCanAirAttack(endTile)){
+                if (changeCursor){
+                    setSelectCursorImage("attack");
+                }
+                return true;
+            }
+            if (GameController.validateMoveUnit(endTile.getTileX(),endTile.getTileY())){
+                if (changeCursor){
+                    setSelectCursorImage("selectMove");
+                }
+                return true;
+            }
+            if (changeCursor){
+                setSelectCursorImage("cannot");
+            }
+            return false;
+        }
+        if (Objects.equals(state, UnitMovingState.MOVE.getState())){
+            if (GameController.validateMoveUnit(endTile.getTileX(),endTile.getTileY())){
+                if (changeCursor){
+                    setSelectCursorImage("selectMove");
+                }
+                return true;
+            }
+            if (changeCursor){
+                setSelectCursorImage("cannot");
+            }
+            return false;
+        }
+        if (Objects.equals(state, UnitMovingState.AIR_ATTACK.getState())){
+            if (checkCanAirAttack(endTile)){
+                if (changeCursor){
+                    setSelectCursorImage("attack");
+                }
+                return true;
+            }
+            if (changeCursor){
+                setSelectCursorImage("cannot");
+            }
+            return false;
+        }
+
+        if (Objects.equals(state, UnitMovingState.ATTACK.getState())){
+            if (checkCanAttack(endTile)){
+                if (changeCursor){
+                    setSelectCursorImage("attack");
+                }
+                return true;
+            }
+            if (changeCursor){
+                setSelectCursorImage("cannot");
+            }
+            return false;
+        }
+
+        return false;
+    }
+
+
+    public static boolean checkCanAttack(GameTile endTile){
+        if (GameController.validateAttackEnemy(endTile.getTileX(),endTile.getTileY())){
+            return true;
+        }
+        if (GameController.validateAttackBuilding(endTile.getTileX(),endTile.getTileY())){
+            return true;
+        }
+        return GameController.validateAttackTool(endTile.getTileX(), endTile.getTileY());
+    }
+
+
+    public static boolean checkCanAirAttack(GameTile endTile){
+        if (GameController.validateAirAttack(endTile.getTileX(),endTile.getTileY())){
+            return true;
+        }
+        if (GameController.validateAirAttackBuilding(endTile.getTileX(),endTile.getTileY())){
+            return true;
+        }
+        return GameController.validateAirAttackTool(endTile.getTileX(), endTile.getTileY());
+    }
+
+    public static void moveUnits(){
+        for (Tile tile : GameMenu.selectedTilesTroop){
+            for (Troop military : GameMap.gameTroops[tile.y][tile.x]){
+
+            }
         }
     }
 }

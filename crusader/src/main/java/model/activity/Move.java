@@ -119,7 +119,7 @@ public class Move {
     public boolean checkIsPathValid() {
         Map map = GameController.getGame().getMap();
         boolean beforeSate = false;
-        for (int i = indexOfPath; i <= indexOfPath + human.getSpeed(); i++) {
+        for (int i = indexOfPath; i <= indexOfPath + 1; i++) {
             if (i >= path.size()) {
                 return true;
             }
@@ -225,8 +225,8 @@ public class Move {
     }
 
     public void moveBeforeDestination() {
-        Tuple pair = path.get(indexOfPath + human.getSpeed());
-        indexOfPath += human.getSpeed();
+        Tuple pair = path.get(indexOfPath + 1);
+        indexOfPath += 1;
         if (human instanceof Military military) {
             MapController.moveMilitary(pair.getX(), pair.getY(), military);
         } else {
@@ -343,7 +343,7 @@ public class Move {
 
 
         if (MoveStates.MOVING.getState().equals(moveState) || MoveStates.PATROL.getState().equals(moveState)) {
-            if (indexOfPath + human.getSpeed() < path.size()) {
+            if (indexOfPath + 1 < path.size()) {
                 moveBeforeDestination();
                 return;
             }

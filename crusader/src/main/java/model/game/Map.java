@@ -14,8 +14,11 @@ public class Map {
         this.width = width;
         this.mapTiles = new Tile[length][width];
         for (int i = 0; i != length; i++) {
-            for (int j = 0; j != width; j++)
-             this.mapTiles[i][j] = new Tile();
+            for (int j = 0; j != width; j++){
+                this.mapTiles[i][j] = new Tile();
+                this.mapTiles[i][j].x = j;
+                this.mapTiles[i][j].y = i;
+            }
         }
     }
 

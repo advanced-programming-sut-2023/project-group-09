@@ -82,6 +82,15 @@ public class GameController {
         return "unit(s) moved successfully!";
     }
 
+    public static boolean validateMoveUnit(int x, int y) {
+        Tuple destination = new Tuple(y - 1, x - 1);
+        boolean check = HumanController.validateMove(destination);
+        if (!check) {
+            return false;
+        }
+        return true;
+    }
+
     public static String patrolUnit(int x1, int y1, int x2, int y2) {
         String message = validatePatrol(x1, y1, x2, y2);
         if (message != null) {

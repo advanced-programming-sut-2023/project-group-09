@@ -4,6 +4,7 @@ import controller.GameController;
 import controller.MapController;
 import controller.gamestructure.GameImages;
 import controller.gamestructure.GameMaps;
+import enumeration.MoveStates;
 import enumeration.Paths;
 import enumeration.UnitMovingState;
 import javafx.animation.KeyFrame;
@@ -143,10 +144,30 @@ public class GameMenu extends Application {
                 selectCursor.setTranslateX(mouseEvent.getX() - 600);
             }
         });
+
+        scene.setOnKeyPressed(keyEvent -> {
+            String keyName = keyEvent.getCode().getName();
+            if (keyName.equals("n")){
+                movingState = UnitMovingState.NORMAL.getState();
+            }
+            if (keyName.equals("m")){
+                movingState = UnitMovingState.MOVE.getState();
+            }
+            if (keyName.equals("t")){
+                movingState = UnitMovingState.ATTACK.getState();
+            }
+
+            if (keyName.equals("a")){
+                movingState = UnitMovingState.AIR_ATTACK.getState();
+            }
+        });
     }
 
-    public void setMouseCursorOnSelect() {
-        cursorTimeLine = new Timeline(new KeyFrame(Duration.millis(1000), actionEvent -> {
+    public static void setMouseCursorOnSelect() {
+        if (cursorTimeLine != null){
+            cursorTimeLine.stop();
+        }
+        cursorTimeLine = new Timeline(new KeyFrame(Duration.millis(500), actionEvent -> {
             if (!selectedUnit) {
                 cursorTimeLine.stop();
             }
@@ -167,40 +188,32 @@ public class GameMenu extends Application {
 
         final double[] startX = {0.0};
         final double[] startY = {0.0};
-        root.setOnDragDetected(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseDragEvent) {
-                startSelectionTile = nowTile;
-                startX[0] = mouseDragEvent.getScreenX();
-                startY[0] = mouseDragEvent.getScreenY();
-                selectedArea.setTranslateX(startX[0] - scene.getWidth() / 2);
-                selectedArea.setTranslateY(startY[0] - scene.getHeight() / 2);
-            }
+        root.setOnDragDetected(mouseDragEvent -> {
+            startSelectionTile = nowTile;
+            startX[0] = mouseDragEvent.getScreenX();
+            startY[0] = mouseDragEvent.getScreenY();
+            selectedArea.setTranslateX(startX[0] - scene.getWidth() / 2);
+            selectedArea.setTranslateY(startY[0] - scene.getHeight() / 2);
         });
-        root.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                double endX = mouseEvent.getScreenX();
-                double endY = mouseEvent.getScreenY();
-                selectedArea.setWidth(Math.abs(endX - startX[0]));
-                selectedArea.setHeight(Math.abs(endY - startY[0]));
-                double rectangleX = (endX >= startX[0]) ? startX[0] : endX;
-                double rectangleY = (endY >= startY[0]) ? startY[0] : endY;
-                selectedArea.setTranslateX(rectangleX - scene.getWidth() / 2 + selectedArea.getWidth() / 2);
-                selectedArea.setTranslateY(rectangleY - scene.getHeight() / 2 + selectedArea.getHeight() / 2);
 
-                root.setOnMouseReleased(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        endSelectionTile = nowTile;
-                        selectedArea.setWidth(0);
-                        selectedArea.setHeight(0);
-                        System.out.println(startSelectionTile.getTileX() + " " + startSelectionTile.getTileY());
-                        System.out.println(endSelectionTile.getTileX() + " " + endSelectionTile.getTileY());
-                        GameController.getSelectedAreaTiles(startSelectionTile, endSelectionTile);
-                    }
-                });
-            }
+        root.setOnMouseDragged(mouseEvent -> {
+            double endX = mouseEvent.getScreenX();
+            double endY = mouseEvent.getScreenY();
+            selectedArea.setWidth(Math.abs(endX - startX[0]));
+            selectedArea.setHeight(Math.abs(endY - startY[0]));
+            double rectangleX = (endX >= startX[0]) ? startX[0] : endX;
+            double rectangleY = (endY >= startY[0]) ? startY[0] : endY;
+            selectedArea.setTranslateX(rectangleX - scene.getWidth() / 2 + selectedArea.getWidth() / 2);
+            selectedArea.setTranslateY(rectangleY - scene.getHeight() / 2 + selectedArea.getHeight() / 2);
+
+            root.setOnMouseReleased(mouseEvent1 -> {
+                endSelectionTile = nowTile;
+                selectedArea.setWidth(0);
+                selectedArea.setHeight(0);
+                System.out.println(startSelectionTile.getTileX() + " " + startSelectionTile.getTileY());
+                System.out.println(endSelectionTile.getTileX() + " " + endSelectionTile.getTileY());
+                GameController.getSelectedAreaTiles(startSelectionTile, endSelectionTile);
+            });
         });
 
         root.getChildren().add(selectedArea);
