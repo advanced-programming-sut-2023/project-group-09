@@ -61,12 +61,13 @@ public class GameViewController {
 
         ImageView clipboardSign = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
                 + "icons/clipboardIcon.png");
-        clipboardSign.setTranslateX(513);
-        clipboardSign.setTranslateY(-110);
-        clipboardSign.setScaleX(0.05);
-        clipboardSign.setScaleY(0.05);
+        clipboardSign.setTranslateX(657);
+        clipboardSign.setTranslateY(20);
+        clipboardSign.setScaleX(0.08);
+        clipboardSign.setScaleY(0.08);
         gamePane.getChildren().add(clipboardSign);
         setEventsForClipboardIcon(clipboardSign);
+
         ImageView castleBuildingsImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/castleBuildingsIcon.png");
         castleBuildingsImage.setTranslateX(275);
@@ -525,7 +526,7 @@ public class GameViewController {
         putBuildingImageView("drawBridgeIcon", "Draw Bridge", "drawBridge", 400, 20, 0.25, "drawBridge");
         putBuildingImageView("cageIcon", "Caged Dogs", "cagedWarDogs", 450, 30, 0.25, "cagedWarDogs");
         //putBuildingImageView("pitchDitchIcon", "Pitch Ditch", "", 530, 50, 0.25); // TODO:
-        //putBuildingImageView("killingPitIcon", "Killing Pit", "", 530, 90, 0.25 , "killing"); // TODO:
+        putBuildingImageView("killingPitIcon", "Killing Pit", "", 530, 90, 0.25 , "killing");
         //putBuildingImageView("braizerIcon", "Braizer", "", 650, 70, 0.25); // braizer will added to game buildings
     }
 
@@ -751,6 +752,21 @@ public class GameViewController {
             });
         }
 
+        if (buildingName.equals("killingPit")) {
+            icon.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    GameMenu.hoveringBarStateText.setText(name);
+
+            }});
+            icon.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    GameMenu.hoveringBarStateText.setText("");
+                }
+            });
+        }
+
         Image image = new Image(GameViewController.class.getResource(
                 Paths.BUILDING_IMAGES.getPath()).toExternalForm() + picFileName + ".png");
         ImageView imageView = new ImageView(image);
@@ -762,12 +778,19 @@ public class GameViewController {
             public void handle(MouseEvent mouseEvent) {
                 if (!GameMenu.gameMap.getChildren().contains(imageView))
                     GameMenu.gameMap.getChildren().add(imageView);
-
-                imageView.setTranslateX(GameMenu.gameMap.getCameraX() * GameMap.tileWidth +
-                        mouseEvent.getScreenX() - (GameMenu.scene.getWidth() - 1200) / 2 - image.getWidth() *
-                        ((double) sampleBuilding.getWidth() / (sampleBuilding.getWidth() + sampleBuilding.getLength())));
-                imageView.setTranslateY(GameMenu.gameMap.getCameraY() * GameMap.tileHeight / 2 +
-                        mouseEvent.getScreenY() - (GameMenu.scene.getHeight() - 800) / 2 - image.getHeight());
+                if (sampleBuilding != null) {
+                    imageView.setTranslateX(GameMenu.gameMap.getCameraX() * GameMap.tileWidth +
+                            mouseEvent.getScreenX() - (GameMenu.scene.getWidth() - 1200) / 2 - image.getWidth() *
+                            ((double) sampleBuilding.getWidth() / (sampleBuilding.getWidth() + sampleBuilding.getLength())));
+                    imageView.setTranslateY(GameMenu.gameMap.getCameraY() * GameMap.tileHeight / 2 +
+                            mouseEvent.getScreenY() - (GameMenu.scene.getHeight() - 800) / 2 - image.getHeight());
+                } else {
+                    imageView.setTranslateX(GameMenu.gameMap.getCameraX() * GameMap.tileWidth +
+                            mouseEvent.getScreenX() - (GameMenu.scene.getWidth() - 1200) / 2 - image.getWidth() *
+                            (0.5));
+                    imageView.setTranslateY(GameMenu.gameMap.getCameraY() * GameMap.tileHeight / 2 +
+                            mouseEvent.getScreenY() - (GameMenu.scene.getHeight() - 800) / 2 - image.getHeight());
+                }
                 imageView.setOpacity(0.6);
                 icon.setOnMouseReleased(new EventHandler<MouseEvent>() {
                     @Override

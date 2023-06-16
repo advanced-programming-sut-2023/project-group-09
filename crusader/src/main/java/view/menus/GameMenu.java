@@ -80,7 +80,7 @@ public class GameMenu extends Application {
 
         root.setOnMouseEntered(mouseEvent -> scene.setCursor(Cursor.DEFAULT));
         root.setOnMouseExited(mouseEvent -> scene.setCursor(Cursor.NONE));
-        createSelectedArea();
+        //createSelectedArea();
 
         GameMaps.createMap1();
         Map map = GameMaps.largeMaps.get(0);
