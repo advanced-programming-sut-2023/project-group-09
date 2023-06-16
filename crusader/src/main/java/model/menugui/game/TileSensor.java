@@ -26,7 +26,6 @@ public class TileSensor extends ImageView {
         });
 
         this.setOnMouseClicked(mouseEvent -> {
-            gameTile.setTextureImage(new Image(TileSensor.class.getResource(Paths.MAP_IMAGES.getPath() + "textures/red.png").toExternalForm()));
             if (GameMenu.selectedUnit) {
                 GameViewController.doAction(true, gameTile);
                 System.out.println("destination: " + gameTile.getTileX() + " " + gameTile.getTileY());
@@ -42,6 +41,9 @@ public class TileSensor extends ImageView {
                 GameMenu.endSelectionTile = null;
                 GameMenu.isSelected = false;
             }
+            GameMenu.startSelectionTile = gameTile;
+            GameMenu.endSelectionTile = gameTile;
+            gameTile.selectTile();
         });
 
         this.setOnDragDone(mouseEvent -> {
