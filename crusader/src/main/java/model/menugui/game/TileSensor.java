@@ -1,12 +1,14 @@
 package model.menugui.game;
 
+import controller.GameController;
 import controller.gamestructure.GameImages;
 import enumeration.Paths;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import model.game.Tile;
 import view.controllers.GameViewController;
 import view.menus.GameMenu;
+
+import java.util.ArrayList;
 
 public class TileSensor extends ImageView {
 
@@ -30,6 +32,15 @@ public class TileSensor extends ImageView {
                 System.out.println("destination: " + gameTile.getTileX() + " " + gameTile.getTileY());
                 GameMenu.selectedUnit = false;
                 GameMenu.root.getChildren().remove(GameMenu.selectCursor);
+            } else if (GameMenu.isSelected) {
+                ArrayList<GameTile> tiles = GameController.getSelectedAreaTiles(GameMenu.startSelectionTile,
+                        GameMenu.endSelectionTile);
+                for (int i = 0; i < tiles.size(); i++) {
+                    tiles.get(i).deselectTile();
+                }
+                GameMenu.startSelectionTile = null;
+                GameMenu.endSelectionTile = null;
+                GameMenu.isSelected = false;
             }
         });
 

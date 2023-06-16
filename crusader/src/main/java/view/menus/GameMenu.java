@@ -64,6 +64,7 @@ public class GameMenu extends Application {
     public static GameTile startSelectionTile;
     public static GameTile endSelectionTile;
     public static boolean selectDone = false;
+    public static boolean isSelected = false;
 
     public static String movingState = UnitMovingState.NORMAL.getState();
 
@@ -80,7 +81,7 @@ public class GameMenu extends Application {
 
         root.setOnMouseEntered(mouseEvent -> scene.setCursor(Cursor.DEFAULT));
         root.setOnMouseExited(mouseEvent -> scene.setCursor(Cursor.NONE));
-        //createSelectedArea();
+        createSelectedArea();
 
         GameMaps.createMap1();
         Map map = GameMaps.largeMaps.get(0);
@@ -192,6 +193,16 @@ public class GameMenu extends Application {
         root.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseDragEvent) {
+                if (GameMenu.isSelected) {
+                    ArrayList<GameTile> tiles = GameController.getSelectedAreaTiles(GameMenu.startSelectionTile,
+                            GameMenu.endSelectionTile);
+                    for (int i = 0; i < tiles.size(); i++) {
+                        tiles.get(i).deselectTile();
+                    }
+                    GameMenu.startSelectionTile = null;
+                    GameMenu.endSelectionTile = null;
+                    GameMenu.isSelected = false;
+                }
                 startSelectionTile = currentTile;
                 startX[0] = mouseDragEvent.getScreenX();
                 startY[0] = mouseDragEvent.getScreenY();
@@ -203,6 +214,16 @@ public class GameMenu extends Application {
         root.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                if (GameMenu.isSelected) {
+                    ArrayList<GameTile> tiles = GameController.getSelectedAreaTiles(GameMenu.startSelectionTile,
+                            GameMenu.endSelectionTile);
+                    for (int i = 0; i < tiles.size(); i++) {
+                        tiles.get(i).deselectTile();
+                    }
+                    GameMenu.startSelectionTile = null;
+                    GameMenu.endSelectionTile = null;
+                    GameMenu.isSelected = false;
+                }
                 if (startY[0] >= scene.getHeight() - 200) {
                     selectedArea.setWidth(0);
                     selectedArea.setHeight(0);
@@ -238,8 +259,9 @@ public class GameMenu extends Application {
                     tiles.get(i).selectTile();
                 }
                 selectDone = false;
+                isSelected = true;
             }
-        }), new KeyFrame(Duration.millis(100), actionEvent -> {
+        }), new KeyFrame(Duration.millis(300), actionEvent -> {
         }));
         selectDoneTimeline.setCycleCount(-1);
         selectDoneTimeline.play();

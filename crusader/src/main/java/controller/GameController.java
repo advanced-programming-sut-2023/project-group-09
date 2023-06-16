@@ -1045,8 +1045,6 @@ public class GameController {
             if ((endY - startY) % 2 != 0 && i % 2 != 0) indent = 0;
             for (int j = 0; j < endX - startX + indent; j++) {
                 tiles.add(GameMap.getGameTile(x, y));
-//                GameMap.getGameTile(x, y).setTextureImage(new Image(GameController.class.getResource(Paths.MAP_IMAGES.getPath() +
-//                        "textures/red.png").toExternalForm()));
                 x++;
             }
 
