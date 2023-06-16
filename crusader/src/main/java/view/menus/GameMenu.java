@@ -99,10 +99,12 @@ public class GameMenu extends Application {
         setEventListeners();
         GameViewController.setCenterOfBar();
         GameViewController.createBorderRectangles(gameMap, miniMap);
+        GameViewController.setCenterOfBar("shop");
         stage.show();
     }
 
-    public static void createGameBar(boolean doFirst) {
+    public static void createGameBar(int state) {
+//        state: 0=buildings  /  1=nemidunam(farzam midune)  /  2=menu
         ImageView barImage = new ImageView(new Image(LoginMenu.class.getResource
                 (Paths.BAR_IMAGES.getPath()).toExternalForm() + "bar.png"));
         barImage.setFitWidth(menuBar.getMaxWidth());
@@ -127,10 +129,17 @@ public class GameMenu extends Application {
         Rectangle clipRectangle = new Rectangle(1200, 800);
         root.setClip(clipRectangle);
 
-        if (doFirst) {
+        if (state == 0)
             GameViewController.createShortcutBars(menuBar, hoveringButton);
-        } else {
+        else if (state == 1)
             GameViewController.createShortcutBars2(menuBar, hoveringButton);
+        else if (state == 2) {
+            ImageView menuBox = new ImageView(GameMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
+                    + "menuEmptyBar.png");
+            menuBox.setTranslateX(247);
+            menuBox.setTranslateY(55);
+            menuBox.setScaleY(1.08);
+            menuBar.getChildren().add(menuBox);
         }
     }
 

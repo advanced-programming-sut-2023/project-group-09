@@ -243,59 +243,59 @@ public class GameViewController {
     public static void setCenterOfBar() {
         if (GameMenu.hoveringBarStateText == null) {
             GameMenu.menuBar.getChildren().clear();
-            GameMenu.createGameBar(true);
+            GameMenu.createGameBar(0);
             setCenterToCastleBuildings();
             return;
         }
         switch (GameMenu.hoveringBarStateText.getText()) {
             case "Castle Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(true);
+                GameMenu.createGameBar(0);
                 setCenterToCastleBuildings();
             }
             case "Towers" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(true);
+                GameMenu.createGameBar(0);
                 setCenterToTowers();
             }
             case "Military Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(true);
+                GameMenu.createGameBar(0);
                 setCenterToMilitaryBuildings();
             }
             case "Gatehouses" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(true);
+                GameMenu.createGameBar(0);
                 setCenterToGatehouses();
             }
             case "Industry Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(true);
+                GameMenu.createGameBar(0);
                 setCenterToIndustryBuildings();
             }
             case "Farm Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(true);
+                GameMenu.createGameBar(0);
                 setCenterToFarmBuildings();
             }
             case "Town Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(true);
+                GameMenu.createGameBar(0);
                 setCenterToTownBuildings();
             }
             case "Weapons Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(true);
+                GameMenu.createGameBar(0);
                 setCenterToWeaponsBuildings();
             }
             case "Food Processing Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(true);
+                GameMenu.createGameBar(0);
                 setCenterToFoodProcessingBuildings();
             }
             case "Clipboard" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(true);
+                GameMenu.createGameBar(0);
                 setCenterOfClipboard();
             }
         }
@@ -306,57 +306,57 @@ public class GameViewController {
         switch (destination) {
             case "Castle Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(true);
+                GameMenu.createGameBar(0);
                 setCenterToCastleBuildings();
             }
             case "Towers" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(true);
+                GameMenu.createGameBar(0);
                 setCenterToTowers();
             }
             case "Military Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(true);
+                GameMenu.createGameBar(0);
                 setCenterToMilitaryBuildings();
             }
             case "Gatehouses" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(true);
+                GameMenu.createGameBar(0);
                 setCenterToGatehouses();
             }
             case "Industry Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(true);
+                GameMenu.createGameBar(0);
                 setCenterToIndustryBuildings();
             }
             case "Farm Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(true);
+                GameMenu.createGameBar(0);
                 setCenterToFarmBuildings();
             }
             case "Town Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(true);
+                GameMenu.createGameBar(0);
                 setCenterToTownBuildings();
             }
             case "Weapons Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(true);
+                GameMenu.createGameBar(0);
                 setCenterToWeaponsBuildings();
             }
             case "Food Processing Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(true);
+                GameMenu.createGameBar(0);
                 setCenterToFoodProcessingBuildings();
             }
             case "Edit Landscape" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(false);
+                GameMenu.createGameBar(1);
                 setCenterOfEditLand();
             }
             case "Edit Land" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(false);
+                GameMenu.createGameBar(1);
                 setCenterOfEditLand();
             }
             case "Edit Water" -> {
@@ -370,8 +370,12 @@ public class GameViewController {
             }
             case "Clipboard" -> {
                 GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(true);
+                GameMenu.createGameBar(0);
                 setCenterOfClipboard();
+            }
+            case "shop" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
             }
         }
     }
@@ -526,7 +530,7 @@ public class GameViewController {
         putBuildingImageView("drawBridgeIcon", "Draw Bridge", "drawBridge", 400, 20, 0.25, "drawBridge");
         putBuildingImageView("cageIcon", "Caged Dogs", "cagedWarDogs", 450, 30, 0.25, "cagedWarDogs");
         //putBuildingImageView("pitchDitchIcon", "Pitch Ditch", "", 530, 50, 0.25); // TODO:
-        putBuildingImageView("killingPitIcon", "Killing Pit", "", 530, 90, 0.25 , "killing");
+        putBuildingImageView("killingPitIcon", "Killing Pit", "", 530, 90, 0.25, "killing");
         //putBuildingImageView("braizerIcon", "Braizer", "", 650, 70, 0.25); // braizer will added to game buildings
     }
 
@@ -758,7 +762,8 @@ public class GameViewController {
                 public void handle(MouseEvent mouseEvent) {
                     GameMenu.hoveringBarStateText.setText(name);
 
-            }});
+                }
+            });
             icon.setOnMouseExited(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
