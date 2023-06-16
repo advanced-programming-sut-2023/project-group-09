@@ -22,6 +22,7 @@ public enum Paths {
     BAR_IMAGES("/images/game/bar/"),
     MAP_IMAGES("/images/game/map/"),
     FLAG_IMAGES("/images/flags/"),
+    RESOURCE_IMAGES("/images/resources/"),
     BUILDING_IMAGES("/images/game/map/buildings/"),
     TROOP_IMAGES("/images/game/troops/"),
     TEXTURE_IMAGES("/images/game/map/textures/"),

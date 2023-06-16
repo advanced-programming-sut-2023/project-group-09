@@ -373,7 +373,7 @@ public class GameViewController {
                 GameMenu.createGameBar(0);
                 setCenterOfClipboard();
             }
-            case "shop" -> {
+            case "Shop" -> {
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar(2);
             }
@@ -574,6 +574,14 @@ public class GameViewController {
         icon.setScaleY(0.4);
         GameMenu.menuBar.getChildren().add(icon);
         setHoverEventForBar(icon, name);
+    }
+
+    private static void putShopIcons(String fileName, double x, double y) {
+        ImageView icon = new ImageView(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                .toExternalForm() + fileName + ".png");
+        icon.setTranslateX(x);
+        icon.setTranslateY(y);
+        GameMenu.menuBar.getChildren().add(icon);
     }
 
     private static void putButtonImageViewWithDestination
