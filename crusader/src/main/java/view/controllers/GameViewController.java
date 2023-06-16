@@ -13,6 +13,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -22,6 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -376,6 +378,7 @@ public class GameViewController {
             case "Shop" -> {
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar(2);
+                setCenterToShopMenu();
             }
         }
     }
@@ -562,7 +565,14 @@ public class GameViewController {
         putImageView("towersIcon", "Towers", 652, 80);
         putImageView("militaryIcon", "Military Buildings", 692, 80);
         putImageView("gatehouseIcon", "Gatehouses", 692, 120);
+    }
 
+    private static void setCenterToShopMenu() {
+        setTitle("The Marketplace", 275, 95);
+        putShopIcon("foods", 340, 135);
+        putShopIcon("rawMaterials", 440, 135);
+        putShopIcon("weapons", 540, 130);
+        putShopIcon("resources", 640, 132);
     }
 
     private static void putImageView(String fileName, String name, double x, double y) {
@@ -576,11 +586,30 @@ public class GameViewController {
         setHoverEventForBar(icon, name);
     }
 
-    private static void putShopIcons(String fileName, double x, double y) {
+    private static void setTitle(String title, double x, double y) {
+        Text menuTitle = new Text("The Marketplace");
+        menuTitle.setTranslateX(x);
+        menuTitle.setTranslateY(y);
+        menuTitle.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 32));
+        GameMenu.menuBar.getChildren().add(menuTitle);
+    }
+
+    private static void putShopIcon(String fileName, double x, double y) {
         ImageView icon = new ImageView(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
                 .toExternalForm() + fileName + ".png");
         icon.setTranslateX(x);
         icon.setTranslateY(y);
+        ColorAdjust colorAdjust = new ColorAdjust();
+        icon.setOnMouseEntered(mouseEvent -> {
+            colorAdjust.setSaturation(0.2);
+            colorAdjust.setBrightness(-0.1);
+            icon.setEffect(colorAdjust);
+        });
+        icon.setOnMouseExited(mouseEvent -> {
+            colorAdjust.setSaturation(0);
+            colorAdjust.setBrightness(0);
+            icon.setEffect(colorAdjust);
+        });
         GameMenu.menuBar.getChildren().add(icon);
     }
 
