@@ -54,6 +54,7 @@ public class GameMenu extends Application {
     public static Text hoveringBarStateText;
     public Rectangle selectedArea;
     public static ArrayList<Tile> selectedTilesTroop = new ArrayList<>();
+    public static ArrayList<GameTile> selectedTiles = new ArrayList<>();
     public static Rectangle selectCursor;
 
     public static ArrayList<Transition> transitions = new ArrayList<>();
@@ -263,9 +264,9 @@ public class GameMenu extends Application {
                 selectedArea.setVisible(false);
                 selectedArea.setWidth(0);
                 selectedArea.setHeight(0);
-                ArrayList<GameTile> tiles = GameController.getSelectedAreaTiles(startSelectionTile, endSelectionTile);
-                for (int i = 0; i < tiles.size(); i++) {
-                    tiles.get(i).selectTile();
+                selectedTiles = GameController.getSelectedAreaTiles(startSelectionTile, endSelectionTile);
+                for (int i = 0; i < selectedTiles.size(); i++) {
+                    selectedTiles.get(i).selectTile();
                 }
                 selectDone = false;
                 isSelected = true;
