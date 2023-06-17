@@ -100,7 +100,7 @@ public class GameMenu extends Application {
         setEventListeners();
         GameViewController.setCenterOfBar();
         GameViewController.createBorderRectangles(gameMap, miniMap);
-//        GameViewController.setCenterOfBar("Shop");
+        GameViewController.setCenterOfBar("Shop");
         stage.show();
     }
 
