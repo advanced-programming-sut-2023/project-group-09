@@ -3,6 +3,7 @@ package controller;
 import controller.gamestructure.GameGoods;
 import model.Government;
 import model.goods.Goods;
+import model.menugui.MenuTextField;
 
 import java.util.HashMap;
 
@@ -19,66 +20,68 @@ public class MarketController {
         return output.substring(0, output.length() - 1);
     }
 
-    public static String buyItem(String name, int amount) {
-        String message = validateItems(name, amount);
-        if (message != null) {
-            return message;
-        }
+    public static void buyItem(String name, MenuTextField buyAmount) {
+        int amount = validateAmount(buyAmount);
+        if (amount == 0) return;
         Goods product = GameGoods.getProduct(name);
         int cost = product.getPrice() * amount;
         Government government = GameController.getGame().getCurrentGovernment();
-        if (cost > government.getGold()) return "you don't have enough gold!";
+        if (cost > government.getGold()) buyAmount.handlingError("not enough gold!");
         int addedCount = GovernmentController.generateProduct(government, name, amount);
 
         cost = product.getPrice() * addedCount;
-        if (addedCount == 0)
-            return "storage is full!";
-        if (addedCount == -1)
-            return "no " + product.getNameOfStorage() + " to store this product!";
+        if (addedCount == 0) {
+            buyAmount.handlingError("storage is full!");
+            return;
+        }
+        if (addedCount == -1) {
+            buyAmount.handlingError("no " + product.getNameOfStorage() + " to store this product!");
+            return;
+        }
 
         government.addGold(-cost);
-        if (addedCount != amount)
-            return "storage is full!\n" + addedCount + " " + name + " bought successfully!";
-        return addedCount + " " + name + " bought successfully!";
+        buyAmount.handlingCorrect(addedCount + " " + name + " bought successfully!");
     }
 
-    public static String sellItem(String name, int amount) {
-        String message = validateItems(name, amount);
-        if (message != null) {
-            return message;
-        }
+    public static void sellItem(String name, MenuTextField sellAmount) {
+        int amount = validateAmount(sellAmount);
+        if (amount == 0) return;
         Goods product = GameGoods.getProduct(name);
         int cost = (int) Math.ceil(product.getPrice() * 0.5) * amount;
         Government government = GameController.getGame().getCurrentGovernment();
 
         boolean check = GovernmentController.consumeProduct(government, name, amount);
         if (!check) {
-            return "your resource is not enough!";
+            sellAmount.handlingError("not enough resource!");
+            return;
         }
         government.addGold(cost);
-        return amount + " " + name + " sold successfully!";
+        sellAmount.handlingCorrect(amount + " " + name + " sold successfully!");
     }
 
-    private static String validateItems(String name, int amount) {
-        if (checkNullFields(name)) {
-            return "name field is required!";
+    public static int validateAmount(MenuTextField amount) {
+        amount.clearErrorOrMessage();
+        if (MarketController.checkNullFields(amount.getText())) {
+            amount.handlingError("amount is required!");
+            return 0;
         }
 
-        if (checkNullFields(amount)) {
-            return "amount field is required!";
+        int amountOfGoods = 0;
+        try {
+            amountOfGoods = Integer.parseInt(amount.getText());
+        } catch (Exception e) {
+            amount.handlingError("invalid amount!");
+            return 0;
         }
 
-        if (amount == 0) {
-            return "amount value can not be 0!";
+        if (amountOfGoods <= 0) {
+            amount.handlingError("amount should be positive!");
+            return 0;
         }
-
-        if (GameGoods.getProduct(name) == null) {
-            return "product name is invalid!";
-        }
-        return null;
+        return amountOfGoods;
     }
 
-    private static boolean checkNullFields(String input) {
+    public static boolean checkNullFields(String input) {
         return input == null || input.length() == 0;
     }
 

@@ -3,7 +3,9 @@ package view.controllers;
 import controller.FileController;
 import controller.GameController;
 import controller.MapController;
+import controller.MarketController;
 import controller.gamestructure.GameBuildings;
+import controller.gamestructure.GameGoods;
 import controller.gamestructure.GameImages;
 import enumeration.Pair;
 import enumeration.Paths;
@@ -11,6 +13,8 @@ import enumeration.Textures;
 import enumeration.UnitMovingState;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.effect.ColorAdjust;
@@ -31,6 +35,8 @@ import javafx.util.Duration;
 import model.building.Building;
 import model.game.Tile;
 import model.human.military.Military;
+import model.menugui.MenuButton;
+import model.menugui.MenuTextField;
 import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
@@ -51,6 +57,9 @@ public class GameViewController {
     public static boolean isSelected = false;
     public static boolean isTextureSelected = false;
     public static int tileX, tileY;
+    private static int shopMenuPhase = -1;
+    private static String currentCategory;
+    private static String currentItem;
 
     public static HashMap<String, String> buildingNameToFileName = new HashMap<>();
     public static HashMap<String, String> buildingNameToPicName = new HashMap<>();
@@ -380,6 +389,31 @@ public class GameViewController {
                 GameMenu.createGameBar(2);
                 setCenterToShopMenu();
             }
+            case "foods" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToFoodsInShop();
+            }
+            case "rawMaterials" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToRawMaterialsInShop();
+            }
+            case "weapons" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToWeaponsInShop();
+            }
+            case "resources" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToAllResourcesInShop();
+            }
+            case "shopItem" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToShopItem(currentItem);
+            }
         }
     }
 
@@ -568,11 +602,219 @@ public class GameViewController {
     }
 
     private static void setCenterToShopMenu() {
-        setTitle("The Marketplace", 275, 95);
-        putShopIcon("foods", 340, 135);
-        putShopIcon("rawMaterials", 440, 135);
-        putShopIcon("weapons", 540, 130);
-        putShopIcon("resources", 640, 132);
+        currentCategory = null;
+        shopMenuPhase = 0;
+        setTitle("The Marketplace", 32, 275, 95);
+        putShopIcon("foods", 340, 135, false);
+        putShopIcon("rawMaterials", 440, 135, false);
+        putShopIcon("weapons", 540, 130, false);
+        putShopIcon("resources", 640, 132, false);
+    }
+
+    private static void setCenterToFoodsInShop() {
+        currentItem = null;
+        shopMenuPhase = 1;
+        setTitle("Food", 32, 275, 95);
+        putShopIcon("meat", 320, 125, true);
+        putShopIcon("cheese", 375, 125, true);
+        putShopIcon("apple", 430, 120, true);
+        putShopIcon("hops", 485, 120, true);
+        putShopIcon("ale", 540, 120, true);
+        putShopIcon("wheat", 595, 115, true);
+        putShopIcon("flour", 645, 117, true);
+        putShopIcon("bread", 700, 122, true);
+        putBackButton("Shop");
+    }
+
+    private static void setCenterToRawMaterialsInShop() {
+        currentItem = null;
+        shopMenuPhase = 1;
+        setTitle("Raw Materials", 32, 275, 95);
+        putShopIcon("wood", 375, 120, true);
+        putShopIcon("stone", 475, 120, true);
+        putShopIcon("iron", 575, 120, true);
+        putShopIcon("pitch", 675, 120, true);
+        putBackButton("Shop");
+    }
+
+    private static void setCenterToWeaponsInShop() {
+        currentItem = null;
+        shopMenuPhase = 1;
+        setTitle("Weapons", 32, 275, 95);
+        putShopIcon("spear", 320, 120, true);
+        putShopIcon("bow", 375, 120, true);
+        putShopIcon("mace", 430, 120, true);
+        putShopIcon("leatherArmour", 485, 120, true);
+        putShopIcon("crossBow", 540, 120, true);
+        putShopIcon("pike", 595, 120, true);
+        putShopIcon("sword", 650, 120, true);
+        putShopIcon("metalArmour", 705, 120, true);
+        putBackButton("Shop");
+    }
+
+    private static void setCenterToAllResourcesInShop() {
+        currentItem = null;
+        shopMenuPhase = 1;
+        setTitle("Resources", 24, 270, 85);
+        putShopIcon("meat", 300, 95, 145);
+        putShopIcon("cheese", 350, 95, 145);
+        putShopIcon("apple", 400, 90, 145);
+        putShopIcon("hops", 450, 90, 145);
+        putShopIcon("wood", 500, 90, 145);
+        putShopIcon("stone", 550, 90, 145);
+        putShopIcon("spear", 600, 90, 145);
+        putShopIcon("bow", 650, 90, 145);
+        putShopIcon("mace", 700, 90, 145);
+        putShopIcon("leatherArmour", 750, 90, 145);
+        putShopIcon("ale", 300, 155, 210);
+        putShopIcon("wheat", 350, 155, 210);
+        putShopIcon("bread", 400, 155, 210);
+        putShopIcon("iron", 450, 155, 210);
+        putShopIcon("pitch", 500, 155, 210);
+        putShopIcon("crossBow", 550, 155, 210);
+        putShopIcon("pike", 600, 155, 210);
+        putShopIcon("sword", 650, 155, 210);
+        putShopIcon("metalArmour", 700, 155, 210);
+        putShopIcon("flour", 750, 155, 210);
+        putBackButton("Shop");
+    }
+
+    private static void setCenterToShopItem(String fileName) {
+        shopMenuPhase = 2;
+        setTitle(convertFileName(fileName), 32, 275, 85);
+        putShopIcon(fileName, 300, 130, true);
+        MenuTextField buyAmount = new MenuTextField(GameMenu.menuBar, "", "", 400, 90, 100);
+        MenuTextField sellAmount = new MenuTextField(GameMenu.menuBar, "", "", 400, 160, 100);
+        buyAmount.setText("1");
+        buyAmount.getErrorLabel().setTranslateY(buyAmount.getErrorLabel().getTranslateY() + 15);
+        sellAmount.setText("1");
+        sellAmount.getErrorLabel().setTranslateY(sellAmount.getErrorLabel().getTranslateY() + 15);
+        int buyPrice = GameGoods.goods.get(fileName).getPrice();
+        int sellPrice = (int) Math.ceil(GameGoods.goods.get(fileName).getPrice() * 0.5);
+        MenuButton buy = new MenuButton("Buy (" + buyPrice + " golds)", GameMenu.menuBar, 525, 90, false);
+        MenuButton sell = new MenuButton("Sell (" + sellPrice + " golds)", GameMenu.menuBar, 525, 160, false);
+
+        buy.setOnAction(actionEvent -> {
+            buyAmount.clearErrorOrMessage();
+            MarketController.buyItem(fileName, buyAmount);
+        });
+        sell.setOnAction(actionEvent -> {
+            sellAmount.clearErrorOrMessage();
+            MarketController.sellItem(fileName, sellAmount);
+        });
+
+        buyAmount.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                int amount = MarketController.validateAmount(buyAmount);
+                if (amount != 0) buy.setText("  Buy (" + (amount * buyPrice) + " golds)");
+            }
+        });
+        sellAmount.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                int amount = MarketController.validateAmount(sellAmount);
+                if (amount != 0) sell.setText("  Sell (" + (amount * sellPrice) + " golds)");
+            }
+        });
+
+        putBackButton(currentCategory);
+        GameMenu.menuBar.getChildren().addAll(buyAmount, sellAmount, buy, sell);
+    }
+
+    private static void setTitle(String title, int fontSize, double x, double y) {
+        Text menuTitle = new Text(title);
+        menuTitle.setTranslateX(x);
+        menuTitle.setTranslateY(y);
+        menuTitle.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, fontSize));
+        GameMenu.menuBar.getChildren().add(menuTitle);
+    }
+
+    private static String convertFileName(String fileName) {
+        char firstChar = fileName.charAt(0);
+        fileName = fileName.replaceFirst(Character.toString(firstChar),
+                "" + Character.toString(firstChar - 'a' + 'A'));
+        for (int i = 1; i < fileName.length(); i++) {
+            char character = fileName.charAt(i);
+            if (character >= 'A' && character <= 'Z') {
+                fileName = fileName.replaceFirst(Character.toString(character),
+                        " " + Character.toString(character));
+                i++;
+            }
+        }
+        return fileName;
+    }
+
+    private static void putShopIcon(String fileName, double x, double y, boolean count) {
+        ImageView icon = new ImageView(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                .toExternalForm() + fileName + ".png");
+        icon.setTranslateX(x);
+        icon.setTranslateY(y);
+        ColorAdjust colorAdjust = new ColorAdjust();
+        icon.setOnMouseEntered(mouseEvent -> {
+            colorAdjust.setSaturation(0.2);
+            colorAdjust.setBrightness(-0.1);
+            icon.setEffect(colorAdjust);
+            if (shopMenuPhase == 0) currentCategory = fileName;
+            else if (shopMenuPhase == 1) currentItem = fileName;
+        });
+        icon.setOnMouseExited(mouseEvent -> {
+            colorAdjust.setSaturation(0);
+            colorAdjust.setBrightness(0);
+            icon.setEffect(colorAdjust);
+        });
+        icon.setOnMouseClicked(mouseEvent -> {
+            if (shopMenuPhase == 1) setCenterOfBar("shopItem");
+            else setCenterOfBar(fileName);
+        });
+        if (count) {
+            String numberOfResource = Integer.toString(GameController.getGame().getCurrentGovernment().getPropertyAmount(fileName));
+            Text resourceCount = new Text(numberOfResource);
+            resourceCount.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 24));
+            resourceCount.setTranslateX(x + icon.getImage().getWidth() / 2 - 5 * numberOfResource.length());
+            resourceCount.setTranslateY(195);
+            GameMenu.menuBar.getChildren().add(resourceCount);
+        }
+        GameMenu.menuBar.getChildren().add(icon);
+    }
+
+    private static void putShopIcon(String fileName, double x, double y, double countY) {
+        ImageView icon = new ImageView(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                .toExternalForm() + fileName + ".png");
+        icon.setTranslateX(x);
+        icon.setTranslateY(y);
+        icon.setScaleX(0.8);
+        icon.setScaleY(0.8);
+        ColorAdjust colorAdjust = new ColorAdjust();
+
+        String costs = Integer.toString(GameGoods.goods.get(fileName).getPrice()) + "/"
+                + Integer.toString((int) Math.ceil(GameGoods.goods.get(fileName).getPrice() / 2));
+        Text costsText = new Text(costs);
+        costsText.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.REGULAR, 14));
+        costsText.setTranslateX(x + icon.getImage().getWidth() / 2 - 3 * costs.length());
+        costsText.setTranslateY(countY);
+        GameMenu.menuBar.getChildren().add(costsText);
+
+        GameMenu.menuBar.getChildren().add(icon);
+    }
+
+    private static void putBackButton(String destination) {
+        ImageView icon = new ImageView(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                .toExternalForm() + "back.png");
+        icon.setTranslateX(262);
+        icon.setTranslateY(182);
+        icon.setOnMouseEntered(mouseEvent -> {
+            icon.setImage(new Image(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                    .toExternalForm() + "backHovered.png"));
+        });
+        icon.setOnMouseExited(mouseEvent -> {
+            icon.setImage(new Image(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                    .toExternalForm() + "back.png"));
+        });
+        icon.setOnMouseClicked(mouseEvent -> {
+            setCenterOfBar(destination);
+        });
+        GameMenu.menuBar.getChildren().add(icon);
     }
 
     private static void putImageView(String fileName, String name, double x, double y) {
@@ -584,33 +826,6 @@ public class GameViewController {
         icon.setScaleY(0.4);
         GameMenu.menuBar.getChildren().add(icon);
         setHoverEventForBar(icon, name);
-    }
-
-    private static void setTitle(String title, double x, double y) {
-        Text menuTitle = new Text("The Marketplace");
-        menuTitle.setTranslateX(x);
-        menuTitle.setTranslateY(y);
-        menuTitle.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 32));
-        GameMenu.menuBar.getChildren().add(menuTitle);
-    }
-
-    private static void putShopIcon(String fileName, double x, double y) {
-        ImageView icon = new ImageView(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
-                .toExternalForm() + fileName + ".png");
-        icon.setTranslateX(x);
-        icon.setTranslateY(y);
-        ColorAdjust colorAdjust = new ColorAdjust();
-        icon.setOnMouseEntered(mouseEvent -> {
-            colorAdjust.setSaturation(0.2);
-            colorAdjust.setBrightness(-0.1);
-            icon.setEffect(colorAdjust);
-        });
-        icon.setOnMouseExited(mouseEvent -> {
-            colorAdjust.setSaturation(0);
-            colorAdjust.setBrightness(0);
-            icon.setEffect(colorAdjust);
-        });
-        GameMenu.menuBar.getChildren().add(icon);
     }
 
     private static void putButtonImageViewWithDestination
