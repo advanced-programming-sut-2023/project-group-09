@@ -14,6 +14,8 @@ import javafx.scene.layout.StackPane;
 import model.building.Building;
 import model.game.Tile;
 import model.human.Human;
+import view.controllers.GameViewController;
+import view.menus.GameMenu;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -106,8 +108,12 @@ public class GameTile extends StackPane {
             buildingImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    if (mouseEvent.getButton() == MouseButton.SECONDARY) {
-                        FileController.copyBuildingNameToClipboard(tile.getBuilding().getName());
+                    if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+                        if (mouseEvent.getClickCount() == 2) {
+                            FileController.copyBuildingNameToClipboard(tile.getBuilding().getName());
+                            GameMenu.hoveringBarStateText.setText(GameViewController.buildingNameToName
+                                    .get(tile.getBuilding().getName()) + " Copied!");
+                        }
                     }
                 }
             });

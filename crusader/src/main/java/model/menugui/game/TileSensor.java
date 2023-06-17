@@ -32,17 +32,17 @@ public class TileSensor extends ImageView {
                 GameMenu.selectedUnit = false;
                 GameMenu.root.getChildren().remove(GameMenu.selectCursor);
             } else if (GameMenu.isSelected) {
-                ArrayList<GameTile> tiles = GameController.getSelectedAreaTiles(GameMenu.startSelectionTile,
-                        GameMenu.endSelectionTile);
-                for (int i = 0; i < tiles.size(); i++) {
-                    tiles.get(i).deselectTile();
+                for (int i = 0; i < GameMenu.selectedTiles.size(); i++) {
+                    GameMenu.selectedTiles.get(i).deselectTile();
                 }
                 GameMenu.startSelectionTile = null;
                 GameMenu.endSelectionTile = null;
                 GameMenu.isSelected = false;
+                GameMenu.selectedTiles.clear();
             }
             GameMenu.startSelectionTile = gameTile;
             GameMenu.endSelectionTile = gameTile;
+            GameMenu.selectedTiles.add(gameTile);
             gameTile.selectTile();
         });
 
