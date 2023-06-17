@@ -13,6 +13,7 @@ import model.game.Tile;
 import model.game.Tuple;
 import model.human.Human;
 import model.human.military.Military;
+import model.menugui.game.GameMap;
 import model.tools.Tool;
 import viewphase1.UnitMenu;
 
@@ -130,7 +131,24 @@ public class MoveController extends HumanController {
 
 
     public static double getDistance(int x1, int y1, int x2, int y2) {
-        return Math.sqrt(Math.pow((double) (x1 - x2) / 30, 2) + Math.pow((double) (y1 - y2) / 9, 2));
+        double xt1;
+        double xt2;
+        if (y1 % 2 == 1) {
+            xt1 = x1 * GameMap.tileWidth;
+        } else {
+            xt1 = x1 * GameMap.tileWidth + (GameMap.tileWidth / 2);
+        }
+
+        if (y2 % 2 == 1) {
+            xt2 = x2 * GameMap.tileWidth;
+        } else {
+            xt2 = x2 * GameMap.tileWidth  + (GameMap.tileWidth / 2);
+        }
+        double yt1 = y1 * (GameMap.tileHeight / 2);
+
+        double yt2 = y2 * (GameMap.tileHeight / 2);
+
+        return Math.sqrt(Math.pow((xt1 - xt2), 2) + Math.pow((yt1 - yt2), 2));
     }
 
     //this used in makePath and detect next node

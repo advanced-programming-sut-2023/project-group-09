@@ -35,7 +35,6 @@ import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
 import model.menugui.game.Troop;
-import view.animations.MoveTroop;
 import view.menus.GameMenu;
 import view.menus.LoginMenu;
 
@@ -291,12 +290,10 @@ public class GameViewController {
         putAggressive();
 
 
-
-
     }
 
 
-    public static void putDisband(){
+    public static void putDisband() {
         ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/disband.png");
         icon.setTranslateX(127);
@@ -306,7 +303,8 @@ public class GameViewController {
         GameMenu.menuBar.getChildren().add(icon);
         setHoverEventForBar(icon, "disband");
     }
-    public static void putStop(){
+
+    public static void putStop() {
         ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/stop.png");
         icon.setTranslateX(177);
@@ -317,7 +315,7 @@ public class GameViewController {
         setHoverEventForBar(icon, "Stop");
     }
 
-    public static void putPatrol(){
+    public static void putPatrol() {
         ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/patrol.png");
         icon.setTranslateX(225);
@@ -328,7 +326,7 @@ public class GameViewController {
         setHoverEventForBar(icon, "Patrol");
     }
 
-    public static void putStand(){
+    public static void putStand() {
         ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/stand-ground.png");
         icon.setTranslateX(127);
@@ -339,7 +337,7 @@ public class GameViewController {
         setHoverEventForBar(icon, "Stand Ground");
     }
 
-    public static void putDefensive(){
+    public static void putDefensive() {
         ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/defensive-state.png");
         icon.setTranslateX(177);
@@ -350,7 +348,7 @@ public class GameViewController {
         setHoverEventForBar(icon, "Defensive State");
     }
 
-    public static void putAggressive(){
+    public static void putAggressive() {
         ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/aggressive-state.png");
         icon.setTranslateX(225);
@@ -1237,22 +1235,6 @@ public class GameViewController {
         for (Tile tile : GameMenu.selectedTilesTroop) {
             GameController.selectUnit(tile.x, tile.y, null);
             GameController.moveUnit(end.getTileX(), end.getTileY());
-            if (GameMap.gameTroops[tile.y][tile.x] != null) {
-
-                Iterator<Troop> it = GameMap.gameTroops[tile.y][tile.x].iterator();
-                while (it.hasNext()) {
-                    Troop troop = it.next();
-                    Military military = troop.getMilitary();
-                    System.out.println("this is a troop!");
-                    if (military.getMove() != null && military.getMove().isMoving()) {
-                        MoveTroop moveTroop = new MoveTroop(troop);
-                        moveTroop.play();
-                        GameMenu.transitions.add(moveTroop);
-                        it.remove();
-                    }
-                }
-            }
-
         }
     }
 

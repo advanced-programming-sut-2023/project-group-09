@@ -3,11 +3,8 @@ package controller.gamestructure;
 import enumeration.Paths;
 import enumeration.Textures;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import model.game.Tile;
 import model.menugui.game.GameTile;
 import model.menugui.game.TileSensor;
-import view.menus.LoginMenu;
 
 import java.util.HashMap;
 
@@ -41,51 +38,65 @@ public class GameImages {
         addLowDepthWater();
     }
 
-    public static void addCursor(){
+    public static void addCursor() {
         addSelectMove();
         addCanNot();
         addAttack();
     }
 
-    public static void addBars(){
+    public static void addBars() {
         addUnitBar();
         addMainBar();
     }
 
-    public static void addMainBar(){
+
+    public static void addMainBar() {
         Image image = new Image(GameImages.class.getResource
                 (Paths.BAR_IMAGES.getPath()).toExternalForm() + "bar.png");
-        imageViews.put("bar",image);
+        imageViews.put("bar", image);
     }
 
-    public static void addUnitBar(){
+    public static void addUnitBar() {
         Image image = new Image(GameImages.class.getResource
                 (Paths.BAR_IMAGES.getPath()).toExternalForm() + "unitBar.png");
-        imageViews.put("unit bar",image);
-    }
-    public static void addSelectMove(){
-        Image image = new Image(GameTile.class.getResource(Paths.GAME_IMAGES.getPath()).toExternalForm() +"cursor/selectMove.gif");
-        imageViews.put("selectMove",image);
+        imageViews.put("unit bar", image);
     }
 
-    public static void addCanNot(){
-        Image image = new Image(GameTile.class.getResource(Paths.GAME_IMAGES.getPath()).toExternalForm() +"cursor/cannot.gif");
-        imageViews.put("cannot",image);
+    public static void addSelectMove() {
+        Image image = new Image(GameTile.class.getResource(Paths.GAME_IMAGES.getPath()).toExternalForm() + "cursor/selectMove.gif");
+        imageViews.put("selectMove", image);
     }
 
-    public static void addAttack(){
-        Image image = new Image(GameTile.class.getResource(Paths.GAME_IMAGES.getPath()).toExternalForm() +"cursor/attack.gif");
-        imageViews.put("attack",image);
+    public static void addCanNot() {
+        Image image = new Image(GameTile.class.getResource(Paths.GAME_IMAGES.getPath()).toExternalForm() + "cursor/cannot.gif");
+        imageViews.put("cannot", image);
+    }
+
+    public static void addAttack() {
+        Image image = new Image(GameTile.class.getResource(Paths.GAME_IMAGES.getPath()).toExternalForm() + "cursor/attack.gif");
+        imageViews.put("attack", image);
     }
 
 
     public static void addArabianTroop() {
-        addSwordsman();
+        addArabianSwordsman();
     }
 
-    private static void addSwordsman() {
-        Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +"swordsman.png");
-        imageViews.put("swordsman",troop);
+    private static void addArabianSwordsman() {
+        String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
+        for (int i = 0; i < 8; i++) {
+            int counter = 0;
+            for (int j = 0; j < 8; j++) {
+                for (int k = 0; k < 8; k++) {
+                    Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
+                            "arabianSwordsman/" + colors[i] + "/0_0img" + counter + ".png");
+                    imageViews.put("arabianSwordsman_" + colors[i] + "_" + counter, troop);
+                    System.out.println("arabianSwordsman_" + colors[i] + "_" + counter);
+                    counter++;
+                }
+                counter += 8;
+            }
+        }
     }
 
     public static void addEarth() {
@@ -216,13 +227,13 @@ public class GameImages {
         }
     }
 
-    public static void addRed(){
+    public static void addRed() {
         Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath() + "textures/red.png").toExternalForm());
-        imageViews.put("red",image);
+        imageViews.put("red", image);
     }
 
-    public static TileSensor getRedImageView(double x, double y, GameTile gameTile){
-        TileSensor tileSensor = new TileSensor(imageViews.get("red"),gameTile);
+    public static TileSensor getRedImageView(double x, double y, GameTile gameTile) {
+        TileSensor tileSensor = new TileSensor(imageViews.get("red"), gameTile);
         tileSensor.setTranslateX(x);
         tileSensor.setTranslateY(y);
         tileSensor.setFitWidth(30);

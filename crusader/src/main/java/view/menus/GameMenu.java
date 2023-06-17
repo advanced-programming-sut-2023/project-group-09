@@ -96,7 +96,10 @@ public class GameMenu extends Application {
         selectCursor.setFill(new ImagePattern(GameImages.imageViews.get("selectMove")));
 
 
-        MapController.dropMilitary(10, 5, "swordsman", GameController.getGame().getCurrentGovernment());
+        MapController.dropMilitary(10, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
+        MapController.dropMilitary(10, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
+        MapController.dropMilitary(12, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
+        MapController.dropMilitary(14, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
         setEventListeners();
         GameViewController.setCenterOfBar();
         GameViewController.createBorderRectangles(gameMap, miniMap);
