@@ -6,7 +6,7 @@
     "required": {
       "wood": 1
     },
-    "price": 100
+    "price": 20
   },
   "sword": {
     "name": "sword",
@@ -15,7 +15,7 @@
     "required": {
       "iron": 1
     },
-    "price": 290
+    "price": 58
   },
   "leatherArmour": {
     "name": "leatherArmour",
@@ -24,7 +24,7 @@
     "required": {
       "cow": 1
     },
-    "price": 125
+    "price": 25
   },
   "metalArmour": {
     "name": "metalArmour",
@@ -33,7 +33,7 @@
     "required": {
       "iron": 1
     },
-    "price": 290
+    "price": 58
   },
   "crossBow": {
     "name": "crossbow",
@@ -42,7 +42,7 @@
     "required": {
       "wood": 3
     },
-    "price": 290
+    "price": 58
   },
   "mace": {
     "name": "mace",
@@ -51,7 +51,7 @@
     "required": {
       "iron": 1
     },
-    "price": 290
+    "price": 58
   },
   "pike": {
     "name": "pike",
@@ -60,7 +60,7 @@
     "required": {
       "wood": 2
     },
-    "price": 180
+    "price": 36
   },
   "bow": {
     "name": "bow",
@@ -69,6 +69,6 @@
     "required": {
       "wood": 2
     },
-    "price": 155
+    "price": 31
   }
 }

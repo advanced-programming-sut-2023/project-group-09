@@ -32,8 +32,8 @@ public class MarketMenu {
                     int amount = Integer.parseInt(ViewController.resultMatcher.group("amount"));
                     String name = ViewController.resultMatcher.group("name");
                     name = ViewController.editItem(name);
-                    output = MarketController.buyItem(name, amount);
-                    System.out.println(output);
+//                    output = MarketController.buyItem(name, amount);
+//                    System.out.println(output);
                 }
             } else if (sellMatcher.matches()) {
                 String items = sellMatcher.group("items");
@@ -44,8 +44,8 @@ public class MarketMenu {
                     int amount = Integer.parseInt(ViewController.resultMatcher.group("amount"));
                     String name = ViewController.resultMatcher.group("name");
                     name = ViewController.editItem(name);
-                    output = MarketController.sellItem(name, amount);
-                    System.out.println(output);
+//                    output = MarketController.sellItem(name, amount);
+//                    System.out.println(output);
                 }
             } else if (backMatcher.matches()) {
                 System.out.println("<< Game Menu >>");

@@ -4,7 +4,7 @@
     "nameOfStorage": "granary",
     "type": "food",
     "required": {},
-    "price": 40
+    "price": 8
   },
   "bread": {
     "name": "bread",
@@ -13,7 +13,7 @@
     "required": {
       "flour": 1
     },
-    "price": 40
+    "price": 8
   },
   "meat": {
     "name": "meat",
@@ -22,7 +22,7 @@
     "required": {
       "cow": 1
     },
-    "price": 40
+    "price": 8
   },
   "cheese": {
     "name": "cheese",
@@ -31,6 +31,6 @@
     "required": {
       "cow": 1
     },
-    "price": 40
+    "price": 8
   }
 }

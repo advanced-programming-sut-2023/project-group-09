@@ -6,7 +6,7 @@
     "required": {
       "flour": 1
     },
-    "price": 40
+    "price": 8
   },
   "leatherArmour": {
     "name": "leatherArmour",
@@ -15,7 +15,7 @@
     "required": {
       "cow": 1
     },
-    "price": 125
+    "price": 25
   },
   "metalArmour": {
     "name": "metalArmour",
@@ -24,7 +24,7 @@
     "required": {
       "iron": 1
     },
-    "price": 290
+    "price": 58
   },
   "crossBow": {
     "name": "crossbow",
@@ -33,7 +33,7 @@
     "required": {
       "wood": 3
     },
-    "price": 290
+    "price": 58
   },
   "mace": {
     "name": "mace",
@@ -42,7 +42,7 @@
     "required": {
       "iron": 1
     },
-    "price": 290
+    "price": 58
   },
   "pike": {
     "name": "pike",
@@ -51,7 +51,7 @@
     "required": {
       "wood": 2
     },
-    "price": 180
+    "price": 36
   },
   "bow": {
     "name": "bow",
@@ -60,7 +60,7 @@
     "required": {
       "wood": 2
     },
-    "price": 155
+    "price": 31
   },
   "cheese": {
     "name": "cheese",
@@ -69,21 +69,21 @@
     "required": {
       "cow": 1
     },
-    "price": 40
+    "price": 8
   },
   "stone": {
     "name": "stone",
     "nameOfStorage": "stockPile",
     "type": "resource",
     "required": {},
-    "price": 70
+    "price": 14
   },
   "apple": {
     "name": "apple",
     "nameOfStorage": "granary",
     "type": "food",
     "required": {},
-    "price": 40
+    "price": 8
   },
   "spear": {
     "name": "spear",
@@ -92,7 +92,7 @@
     "required": {
       "wood": 1
     },
-    "price": 100
+    "price": 20
   },
   "sword": {
     "name": "sword",
@@ -101,7 +101,7 @@
     "required": {
       "iron": 1
     },
-    "price": 290
+    "price": 58
   },
   "flour": {
     "name": "flour",
@@ -110,7 +110,7 @@
     "required": {
       "wheat": 1
     },
-    "price": 160
+    "price": 32
   },
   "meat": {
     "name": "meat",
@@ -119,42 +119,42 @@
     "required": {
       "cow": 1
     },
-    "price": 40
+    "price": 8
   },
   "iron": {
     "name": "iron",
     "nameOfStorage": "stockPile",
     "type": "resource",
     "required": {},
-    "price": 225
+    "price": 45
   },
   "wood": {
     "name": "wood",
     "nameOfStorage": "stockPile",
     "type": "resource",
     "required": {},
-    "price": 20
+    "price": 4
   },
   "wheat": {
     "name": "wheat",
     "nameOfStorage": "stockPile",
     "type": "resource",
     "required": {},
-    "price": 115
+    "price": 23
   },
   "hops": {
     "name": "hops",
     "nameOfStorage": "stockPile",
     "type": "resource",
     "required": {},
-    "price": 75
+    "price": 15
   },
   "pitch": {
     "name": "pitch",
     "nameOfStorage": "stockPile",
     "type": "resource",
     "required": {},
-    "price": 100
+    "price": 20
   },
   "ale": {
     "name": "ale",
@@ -163,6 +163,6 @@
     "required": {
       "hops": 1
     },
-    "price": 100
+    "price": 20
   }
 }

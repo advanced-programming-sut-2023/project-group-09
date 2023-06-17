@@ -62,4 +62,8 @@ public class MenuTextField extends TextField {
     public void clearErrorOrMessage() {
         errorLabel.setText("");
     }
+
+    public Label getErrorLabel() {
+        return errorLabel;
+    }
 }

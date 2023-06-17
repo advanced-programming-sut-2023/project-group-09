@@ -6,42 +6,42 @@
     "required": {
       "wheat": 1
     },
-    "price": 160
+    "price": 32
   },
   "iron": {
     "name": "iron",
     "nameOfStorage": "stockPile",
     "type": "resource",
     "required": {},
-    "price": 225
+    "price": 45
   },
   "wood": {
     "name": "wood",
     "nameOfStorage": "stockPile",
     "type": "resource",
     "required": {},
-    "price": 20
+    "price": 4
   },
   "wheat": {
     "name": "wheat",
     "nameOfStorage": "stockPile",
     "type": "resource",
     "required": {},
-    "price": 115
+    "price": 23
   },
   "hops": {
     "name": "hops",
     "nameOfStorage": "stockPile",
     "type": "resource",
     "required": {},
-    "price": 75
+    "price": 15
   },
   "pitch": {
     "name": "pitch",
     "nameOfStorage": "stockPile",
     "type": "resource",
     "required": {},
-    "price": 100
+    "price": 20
   },
   "ale": {
     "name": "ale",
@@ -50,13 +50,13 @@
     "required": {
       "hops": 1
     },
-    "price": 100
+    "price": 20
   },
   "stone": {
     "name": "stone",
     "nameOfStorage": "stockPile",
     "type": "resource",
     "required": {},
-    "price": 70
+    "price": 14
   }
 }
