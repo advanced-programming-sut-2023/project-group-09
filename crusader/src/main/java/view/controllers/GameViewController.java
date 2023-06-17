@@ -201,45 +201,15 @@ public class GameViewController {
     }
 
     private static void setHoverEventForBar(ImageView imageView, String text) {
-        imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                GameMenu.hoveringBarStateText.setText(text);
-            }
-        });
-        imageView.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                GameMenu.hoveringBarStateText.setText("");
-            }
-        });
-        imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                setCenterOfBar();
-            }
-        });
+        imageView.setOnMouseEntered(mouseEvent -> GameMenu.hoveringBarStateText.setText(text));
+        imageView.setOnMouseExited(mouseEvent -> GameMenu.hoveringBarStateText.setText(""));
+        imageView.setOnMouseClicked(mouseEvent -> setCenterOfBar());
     }
 
     private static void setHoverEventForBar(ImageView imageView, String destination, String name) {
-        imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                GameMenu.hoveringBarStateText.setText(name);
-            }
-        });
-        imageView.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                GameMenu.hoveringBarStateText.setText("");
-            }
-        });
-        imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                setCenterOfBar(destination);
-            }
-        });
+        imageView.setOnMouseEntered(mouseEvent -> GameMenu.hoveringBarStateText.setText(name));
+        imageView.setOnMouseExited(mouseEvent -> GameMenu.hoveringBarStateText.setText(""));
+        imageView.setOnMouseClicked(mouseEvent -> setCenterOfBar(destination));
     }
 
     public static void setCenterOfBar() {
@@ -248,6 +218,9 @@ public class GameViewController {
             GameMenu.createGameBar(0);
             setCenterToCastleBuildings();
             return;
+        }
+        if (!GameMenu.selectedUnit) {
+            GameMenu.barImage.setImage(GameImages.imageViews.get("bar"));
         }
         switch (GameMenu.hoveringBarStateText.getText()) {
             case "Castle Buildings" -> {
@@ -300,9 +273,93 @@ public class GameViewController {
                 GameMenu.createGameBar(0);
                 setCenterOfClipboard();
             }
+            case "Unit Menu" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(-1);
+                setCenterOfUnitMenu();
+            }
         }
     }
 
+    private static void setCenterOfUnitMenu() {
+        GameMenu.barImage.setImage(GameImages.imageViews.get("unit bar"));
+        putDisband();
+        putPatrol();
+        putStop();
+        putStand();
+        putDefensive();
+        putAggressive();
+
+
+
+
+    }
+
+
+    public static void putDisband(){
+        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/disband.png");
+        icon.setTranslateX(127);
+        icon.setTranslateY(127);
+        icon.setScaleY(1.1);
+        icon.setScaleX(1.2);
+        GameMenu.menuBar.getChildren().add(icon);
+        setHoverEventForBar(icon, "disband");
+    }
+    public static void putStop(){
+        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/stop.png");
+        icon.setTranslateX(177);
+        icon.setTranslateY(127);
+        icon.setScaleY(1.1);
+        icon.setScaleX(1.2);
+        GameMenu.menuBar.getChildren().add(icon);
+        setHoverEventForBar(icon, "Stop");
+    }
+
+    public static void putPatrol(){
+        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/patrol.png");
+        icon.setTranslateX(225);
+        icon.setTranslateY(127);
+        icon.setScaleY(1.1);
+        icon.setScaleX(1.3);
+        GameMenu.menuBar.getChildren().add(icon);
+        setHoverEventForBar(icon, "Patrol");
+    }
+
+    public static void putStand(){
+        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/stand-ground.png");
+        icon.setTranslateX(127);
+        icon.setTranslateY(50);
+        icon.setScaleY(1.3);
+        icon.setScaleX(1.3);
+        GameMenu.menuBar.getChildren().add(icon);
+        setHoverEventForBar(icon, "Stand Ground");
+    }
+
+    public static void putDefensive(){
+        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/defensive-state.png");
+        icon.setTranslateX(177);
+        icon.setTranslateY(70);
+        icon.setScaleY(1.3);
+        icon.setScaleX(1.3);
+        GameMenu.menuBar.getChildren().add(icon);
+        setHoverEventForBar(icon, "Defensive State");
+    }
+
+    public static void putAggressive(){
+        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/aggressive-state.png");
+        icon.setTranslateX(225);
+        icon.setTranslateY(65);
+        icon.setScaleY(1.3);
+        icon.setScaleX(1.3);
+        GameMenu.menuBar.getChildren().add(icon);
+        setHoverEventForBar(icon, "Offensive State");
+    }
 
     public static void setCenterOfBar(String destination) {
         switch (destination) {

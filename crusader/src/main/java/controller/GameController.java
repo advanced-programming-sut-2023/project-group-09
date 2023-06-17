@@ -6,8 +6,6 @@ import controller.human.HumanController;
 import controller.human.MoveController;
 import enumeration.MilitaryStates;
 import enumeration.Pair;
-import enumeration.Paths;
-import javafx.scene.image.Image;
 import model.Government;
 import model.activity.Move;
 import model.building.Building;
@@ -28,8 +26,6 @@ import model.menugui.game.GameTile;
 import model.tools.Tool;
 import view.controllers.GameViewController;
 import viewphase1.UnitMenu;
-
-import java.nio.file.Path;
 import java.util.*;
 
 public class GameController {
