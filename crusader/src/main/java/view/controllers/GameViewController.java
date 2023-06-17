@@ -57,9 +57,9 @@ public class GameViewController {
     public static boolean isSelected = false;
     public static boolean isTextureSelected = false;
     public static int tileX, tileY;
-    private static int shopMenuPhase = -1;
-    private static String currentCategory;
-    private static String currentItem;
+    public static int shopMenuPhase = -1;
+    public static String currentCategory;
+    public static String currentItem;
 
     public static HashMap<String, String> buildingNameToFileName = new HashMap<>();
     public static HashMap<String, String> buildingNameToPicName = new HashMap<>();
@@ -371,6 +371,12 @@ public class GameViewController {
     }
 
     public static void setCenterOfBar(String destination) {
+        if (destination == null) {
+            GameMenu.menuBar.getChildren().clear();
+            GameMenu.createGameBar(0);
+            setCenterToCastleBuildings();
+            return;
+        }
         switch (destination) {
             case "Castle Buildings" -> {
                 GameMenu.menuBar.getChildren().clear();
