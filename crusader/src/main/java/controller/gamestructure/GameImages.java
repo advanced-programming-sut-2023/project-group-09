@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import model.game.Tile;
 import model.menugui.game.GameTile;
 import model.menugui.game.TileSensor;
+import view.menus.LoginMenu;
 
 import java.util.HashMap;
 
@@ -18,6 +19,7 @@ public class GameImages {
         addArabianTroop();
         addCursor();
         addRed();
+        addBars();
     }
 
     public static void addTextures() {
@@ -45,6 +47,22 @@ public class GameImages {
         addAttack();
     }
 
+    public static void addBars(){
+        addUnitBar();
+        addMainBar();
+    }
+
+    public static void addMainBar(){
+        Image image = new Image(GameImages.class.getResource
+                (Paths.BAR_IMAGES.getPath()).toExternalForm() + "bar.png");
+        imageViews.put("bar",image);
+    }
+
+    public static void addUnitBar(){
+        Image image = new Image(GameImages.class.getResource
+                (Paths.BAR_IMAGES.getPath()).toExternalForm() + "unitBar.png");
+        imageViews.put("unit bar",image);
+    }
     public static void addSelectMove(){
         Image image = new Image(GameTile.class.getResource(Paths.GAME_IMAGES.getPath()).toExternalForm() +"cursor/selectMove.gif");
         imageViews.put("selectMove",image);
