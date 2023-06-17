@@ -7,6 +7,7 @@ import javafx.scene.shape.Rectangle;
 import model.game.Game;
 import model.game.Tile;
 import model.human.military.Military;
+import view.controllers.GameViewController;
 import view.menus.GameMenu;
 
 public class Troop extends Rectangle {
@@ -40,6 +41,8 @@ public class Troop extends Rectangle {
         this.setOnMouseClicked(mouseEvent -> {
             GameController.selectUnit(military.getX(),military.getY(),null);
             GameMenu.setMouseCursorOnSelect();
+            GameMenu.hoveringBarStateText.setText("Unit Menu");
+            GameViewController.setCenterOfBar();
         });
     }
 
