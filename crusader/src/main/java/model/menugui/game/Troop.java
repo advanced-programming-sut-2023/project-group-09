@@ -68,7 +68,7 @@ public class Troop extends Rectangle {
                         GameMap.gameTroops[military.getY()][military.getX()] = new ArrayList<>();
                     }
                     GameTile next = GameMap.getGameTile(military.getX(), military.getY());
-                    direction = getDirection(gameTile.getX(), gameTile.getY(), next.getX(), next.getTileY());
+                    direction = getDirection(gameTile.getX(), gameTile.getY(), next.getX(), next.getY());
                     step = (step + 1) % 8;
                     gameTile = next;
                     GameMap.gameTroops[military.getY()][military.getX()].add(this);
@@ -125,10 +125,10 @@ public class Troop extends Rectangle {
         }
         double slop = (y2 - y1) / (x2 - x1);
         if (slop < 0.5) {
-            if ((y2 - y1) > 0) {
-                return 5;
+            if ((x2 - x1) > 0) {
+                return 1;
             }
-            return 1;
+            return 5;
         }
         if (slop >= 0) {
             if ((y2 - y1) > 0) {
