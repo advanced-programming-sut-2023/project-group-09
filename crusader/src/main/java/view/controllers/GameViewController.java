@@ -15,6 +15,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.effect.ColorAdjust;
@@ -46,8 +47,8 @@ import view.menus.LoginMenu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class GameViewController {
 
@@ -445,7 +446,7 @@ public class GameViewController {
                 GameMenu.createGameBar(0);
                 setCenterOfClipboard();
             }
-            case "Shop" -> {
+            case "shop" -> {
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar(2);
                 setCenterToShopMenu();
@@ -684,7 +685,7 @@ public class GameViewController {
         putShopIcon("wheat", 595, 115, true);
         putShopIcon("flour", 645, 117, true);
         putShopIcon("bread", 700, 122, true);
-        putBackButton("Shop");
+        putBackButton("shop");
     }
 
     private static void setCenterToRawMaterialsInShop() {
@@ -695,7 +696,7 @@ public class GameViewController {
         putShopIcon("stone", 475, 120, true);
         putShopIcon("iron", 575, 120, true);
         putShopIcon("pitch", 675, 120, true);
-        putBackButton("Shop");
+        putBackButton("shop");
     }
 
     private static void setCenterToWeaponsInShop() {
@@ -710,7 +711,7 @@ public class GameViewController {
         putShopIcon("pike", 595, 120, true);
         putShopIcon("sword", 650, 120, true);
         putShopIcon("metalArmour", 705, 120, true);
-        putBackButton("Shop");
+        putBackButton("shop");
     }
 
     private static void setCenterToAllResourcesInShop() {
@@ -737,13 +738,13 @@ public class GameViewController {
         putShopIcon("sword", 650, 155, 210);
         putShopIcon("metalArmour", 700, 155, 210);
         putShopIcon("flour", 750, 155, 210);
-        putBackButton("Shop");
+        putBackButton("shop");
     }
 
     private static void setCenterToShopItem(String fileName) {
         shopMenuPhase = 2;
         setTitle(convertFileName(fileName), 32, 275, 85);
-        putShopIcon(fileName, 300, 130, true);
+        putShopIcon(fileName, 320, 130, true);
         MenuTextField buyAmount = new MenuTextField(GameMenu.menuBar, "", "", 400, 90, 100);
         MenuTextField sellAmount = new MenuTextField(GameMenu.menuBar, "", "", 400, 160, 100);
         buyAmount.setText("1");
@@ -757,11 +758,13 @@ public class GameViewController {
 
         buy.setOnAction(actionEvent -> {
             buyAmount.clearErrorOrMessage();
-            MarketController.buyItem(fileName, buyAmount);
+            if (MarketController.buyItem(fileName, buyAmount))
+                setCenterOfBar("shopItem");
         });
         sell.setOnAction(actionEvent -> {
             sellAmount.clearErrorOrMessage();
-            MarketController.sellItem(fileName, sellAmount);
+            if (MarketController.sellItem(fileName, sellAmount))
+                setCenterOfBar("shopItem");
         });
 
         buyAmount.textProperty().addListener(new ChangeListener<String>() {

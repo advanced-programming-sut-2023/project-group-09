@@ -20,9 +20,9 @@ public class MarketController {
         return output.substring(0, output.length() - 1);
     }
 
-    public static void buyItem(String name, MenuTextField buyAmount) {
+    public static boolean buyItem(String name, MenuTextField buyAmount) {
         int amount = validateAmount(buyAmount);
-        if (amount == 0) return;
+        if (amount == 0) return false;
         Goods product = GameGoods.getProduct(name);
         int cost = product.getPrice() * amount;
         Government government = GameController.getGame().getCurrentGovernment();
@@ -32,20 +32,20 @@ public class MarketController {
         cost = product.getPrice() * addedCount;
         if (addedCount == 0) {
             buyAmount.handlingError("storage is full!");
-            return;
+            return false;
         }
         if (addedCount == -1) {
             buyAmount.handlingError("no " + product.getNameOfStorage() + " to store this product!");
-            return;
+            return false;
         }
 
         government.addGold(-cost);
-        buyAmount.handlingCorrect(addedCount + " " + name + " bought successfully!");
+        return true;
     }
 
-    public static void sellItem(String name, MenuTextField sellAmount) {
+    public static boolean sellItem(String name, MenuTextField sellAmount) {
         int amount = validateAmount(sellAmount);
-        if (amount == 0) return;
+        if (amount == 0) return false;
         Goods product = GameGoods.getProduct(name);
         int cost = (int) Math.ceil(product.getPrice() * 0.5) * amount;
         Government government = GameController.getGame().getCurrentGovernment();
@@ -53,10 +53,10 @@ public class MarketController {
         boolean check = GovernmentController.consumeProduct(government, name, amount);
         if (!check) {
             sellAmount.handlingError("not enough resource!");
-            return;
+            return false;
         }
         government.addGold(cost);
-        sellAmount.handlingCorrect(amount + " " + name + " sold successfully!");
+        return true;
     }
 
     public static int validateAmount(MenuTextField amount) {

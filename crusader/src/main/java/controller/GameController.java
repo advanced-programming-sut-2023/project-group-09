@@ -1029,6 +1029,8 @@ public class GameController {
 
     public static ArrayList<GameTile> getSelectedAreaTiles(GameTile start, GameTile end) {
         ArrayList<GameTile> tiles = new ArrayList<>();
+        if (start == null || end == null)
+            return tiles;
         int startX = Math.min(start.getTileX(), end.getTileX());
         int startY = Math.min(start.getTileY(), end.getTileY());
         int endX = Math.max(start.getTileX(), end.getTileX());

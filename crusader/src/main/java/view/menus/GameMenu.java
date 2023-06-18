@@ -4,7 +4,6 @@ import controller.GameController;
 import controller.MapController;
 import controller.gamestructure.GameImages;
 import controller.gamestructure.GameMaps;
-import enumeration.MoveStates;
 import enumeration.Paths;
 import enumeration.UnitMovingState;
 import javafx.animation.KeyFrame;
@@ -16,9 +15,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -103,7 +102,19 @@ public class GameMenu extends Application {
         setEventListeners();
         GameViewController.setCenterOfBar();
         GameViewController.createBorderRectangles(gameMap, miniMap);
-        GameViewController.setCenterOfBar("Shop");
+
+        root.setOnMouseClicked(mouseEvent -> {
+            if (isSelected && !selectedUnit && mouseEvent.getScreenY() >= scene.getHeight() - 200) {
+                for (int i = 0; i < GameMenu.selectedTiles.size(); i++) {
+                    GameMenu.selectedTiles.get(i).deselectTile();
+                }
+                GameMenu.startSelectionTile = null;
+                GameMenu.endSelectionTile = null;
+                GameMenu.isSelected = false;
+                GameMenu.selectedTiles.clear();
+            }
+        });
+
         stage.show();
     }
 
@@ -160,24 +171,24 @@ public class GameMenu extends Application {
 
         scene.setOnKeyPressed(keyEvent -> {
             String keyName = keyEvent.getCode().getName();
-            if (keyName.equals("n")){
+            if (keyName.equals("n")) {
                 movingState = UnitMovingState.NORMAL.getState();
             }
-            if (keyName.equals("m")){
+            if (keyName.equals("m")) {
                 movingState = UnitMovingState.MOVE.getState();
             }
-            if (keyName.equals("t")){
+            if (keyName.equals("t")) {
                 movingState = UnitMovingState.ATTACK.getState();
             }
 
-            if (keyName.equals("a")){
+            if (keyName.equals("a")) {
                 movingState = UnitMovingState.AIR_ATTACK.getState();
             }
         });
     }
 
     public static void setMouseCursorOnSelect() {
-        if (cursorTimeLine != null){
+        if (cursorTimeLine != null) {
             cursorTimeLine.stop();
         }
         cursorTimeLine = new Timeline(new KeyFrame(Duration.millis(300), actionEvent -> {
@@ -204,20 +215,28 @@ public class GameMenu extends Application {
         final double[] startY = {0.0};
         root.setOnDragDetected(mouseDragEvent -> {
             if (GameMenu.isSelected) {
-                ArrayList<GameTile> tiles = GameController.getSelectedAreaTiles(GameMenu.startSelectionTile,
-                        GameMenu.endSelectionTile);
-                for (int i = 0; i < tiles.size(); i++) {
-                    tiles.get(i).deselectTile();
+                for (int i = 0; i < selectedTiles.size(); i++) {
+                    selectedTiles.get(i).deselectTile();
                 }
                 GameMenu.startSelectionTile = null;
                 GameMenu.endSelectionTile = null;
                 GameMenu.isSelected = false;
+                GameMenu.selectedTiles.clear();
             }
             startSelectionTile = currentTile;
             startX[0] = mouseDragEvent.getScreenX();
             startY[0] = mouseDragEvent.getScreenY();
-            selectedArea.setTranslateX(startX[0] - scene.getWidth() / 2);
-            selectedArea.setTranslateY(startY[0] - scene.getHeight() / 2);
+            if (startY[0] >= scene.getHeight() - 200) {
+                selectedArea.setWidth(0);
+                selectedArea.setHeight(0);
+                startX[0] = -1;
+                startY[0] = -1;
+                return;
+            }
+            if (startX[0] > 0) {
+                selectedArea.setTranslateX(startX[0] - scene.getWidth() / 2);
+                selectedArea.setTranslateY(startY[0] - scene.getHeight() / 2);
+            }
         });
 
         root.setOnMouseDragged(mouseEvent -> {
@@ -231,7 +250,7 @@ public class GameMenu extends Application {
                 GameMenu.endSelectionTile = null;
                 GameMenu.isSelected = false;
             }
-            if (startY[0] >= scene.getHeight() - 200) {
+            if (startX[0] < 0) {
                 selectedArea.setWidth(0);
                 selectedArea.setHeight(0);
                 return;
@@ -249,7 +268,7 @@ public class GameMenu extends Application {
             root.setOnMouseReleased(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    selectDone = true;
+                    if (startX[0] > 0) selectDone = true;
                 }
             });
         });
@@ -260,7 +279,12 @@ public class GameMenu extends Application {
                 selectedArea.setVisible(false);
                 selectedArea.setWidth(0);
                 selectedArea.setHeight(0);
-                selectedTiles = GameController.getSelectedAreaTiles(startSelectionTile, endSelectionTile);
+                ArrayList<GameTile> tiles = GameController.getSelectedAreaTiles(startSelectionTile, endSelectionTile);
+                if (tiles.size() == 0) {
+                    selectDone = false;
+                    return;
+                }
+                selectedTiles = tiles;
                 for (int i = 0; i < selectedTiles.size(); i++) {
                     selectedTiles.get(i).selectTile();
                 }

@@ -23,6 +23,7 @@ public class TileSensor extends ImageView {
         });
 
         this.setOnMouseClicked(mouseEvent -> {
+            System.out.println(GameMenu.isSelected + " " + GameMenu.selectedUnit);
             if (GameMenu.selectedUnit) {
                 GameViewController.doAction(true, gameTile);
                 System.out.println("destination: " + gameTile.getTileX() + " " + gameTile.getTileY());
@@ -53,10 +54,11 @@ public class TileSensor extends ImageView {
                 GameViewController.currentCategory = null;
             }
 
-            if (mouseEvent.getSource() == MouseButton.PRIMARY && !GameMenu.selectedUnit) {
+            if (mouseEvent.getButton() == MouseButton.PRIMARY && !GameMenu.selectedUnit) {
                 GameMenu.startSelectionTile = gameTile;
                 GameMenu.endSelectionTile = gameTile;
                 GameMenu.selectedTiles.add(gameTile);
+                GameMenu.isSelected = true;
                 gameTile.selectTile();
             }
         });
