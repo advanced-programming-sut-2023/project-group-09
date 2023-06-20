@@ -195,6 +195,7 @@ public class GameMenu extends Application {
                 if (GameViewController.lastType != null && GameViewController.lastType.count != 0){
                     GameViewController.lastType.count--;
                     GameViewController.lastType.text.setText(GameViewController.lastType.count+"");
+                    GameViewController.setSelectedUnits();
                 }
             }
 
@@ -202,6 +203,23 @@ public class GameMenu extends Application {
                 if (GameViewController.lastType != null && GameViewController.lastType.count < unitsCount.get(GameViewController.lastType.name)){
                     GameViewController.lastType.count++;
                     GameViewController.lastType.text.setText(GameViewController.lastType.count+"");
+                    GameViewController.setSelectedUnits();
+                }
+            }
+
+            if (keyName.equals("0")) {
+                if (GameViewController.lastType != null){
+                    GameViewController.lastType.count = 0;
+                    GameViewController.lastType.text.setText(GameViewController.lastType.count+"");
+                    GameViewController.setSelectedUnits();
+                }
+            }
+
+            if (keyName.equals("X")) {
+                if (GameViewController.lastType != null){
+                    GameViewController.lastType.count = unitsCount.get(GameViewController.lastType.name);
+                    GameViewController.lastType.text.setText(GameViewController.lastType.count+"");
+                    GameViewController.setSelectedUnits();
                 }
             }
         });

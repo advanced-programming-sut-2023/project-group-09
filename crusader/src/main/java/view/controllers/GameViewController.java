@@ -8,6 +8,7 @@ import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameGoods;
 import controller.gamestructure.GameHumans;
 import controller.gamestructure.GameImages;
+import controller.human.HumanController;
 import enumeration.Pair;
 import enumeration.Paths;
 import enumeration.Textures;
@@ -73,7 +74,9 @@ public class GameViewController {
     //--------------------------------------------------------
     public static ArrayList<TypBTN> typeBTNS = new ArrayList<>();
     public static TypBTN lastType;
+    public static ArrayList<Military> selectedMilitaries = new ArrayList<>();
 
+    //----------------------------------------------------------
     public static void createShortcutBars(Pane gamePane, Text text) {
         setCenterOfBar();
 
@@ -286,6 +289,7 @@ public class GameViewController {
 
     private static void setCenterOfUnitMenu() {
         GameMenu.barImage.setImage(GameImages.imageViews.get("unit bar"));
+        setSelectedUnits();
         Tile firstTile = null;
         for (Tile tile : GameMenu.selectedTilesTroop) {
             firstTile = tile;
@@ -401,6 +405,9 @@ public class GameViewController {
         GameMenu.selectDone = false;
         GameMenu.unitsCount = new HashMap<>();
         GameMenu.selectedTroops.clear();
+        selectedMilitaries.clear();
+        lastType = null;
+        typeBTNS = new ArrayList<>();
         GameMenu.selectedTilesTroop.clear();
         GameMenu.selectedArea.setVisible(false);
         GameMenu.selectedArea.setWidth(0);
@@ -417,6 +424,8 @@ public class GameViewController {
         GameMenu.isSelected = false;
         GameMenu.selectedUnit = false;
         GameMenu.selectDone = false;
+        lastType = null;
+        typeBTNS = new ArrayList<>();
         GameMenu.selectedArea.setVisible(false);
         GameMenu.selectedArea.setWidth(0);
         GameMenu.selectedArea.setHeight(0);
@@ -1439,6 +1448,7 @@ public class GameViewController {
     }
 
     public static void doAction(boolean changeCursor, GameTile endTile) {
+        setSelectedUnits();
         String state = GameMenu.movingState;
         if (Objects.equals(state, UnitMovingState.NORMAL.getState())) {
             if (checkCanAttack(endTile) || checkCanAirAttack(endTile)) {
@@ -1523,16 +1533,37 @@ public class GameViewController {
         return GameController.validateAirAttackTool(endTile.getTileX(), endTile.getTileY());
     }
 
+    public static void setSelectedUnits() {
+        int count = 0;
+        HashMap<String, Integer> unitCount = GameHumans.getUnitHashmap();
+        for (TypBTN btn : typeBTNS) {
+            unitCount.put(btn.name,btn.count);
+            count += btn.count;
+        }
+        for (Military military : GameMenu.selectedTroops) {
+            System.out.println(military.getName() + " " + unitCount.get(military.getName()));
+            if (unitCount.get(military.getName()) != 0) {
+                selectedMilitaries.add(military);
+                unitCount.put(military.getName(), unitCount.get(military.getName()) - 1);
+                count--;
+            }
+            if (count == 0) {
+                return;
+            }
+        }
+    }
 
     public static void moveUnits(GameTile end) {
         System.out.println("selected units: " + GameMenu.selectedTilesTroop.size());
-        for (Tile tile : GameMenu.selectedTilesTroop) {
-            GameController.selectUnit(tile.x, tile.y, null);
+        for (Military military : GameViewController.selectedMilitaries) {
+            HumanController.militaries.clear();
+            HumanController.militaries.add(military);
             GameController.moveUnit(end.getTileX(), end.getTileY());
         }
         GameMenu.unitsCount = new HashMap<>();
         GameMenu.selectedTroops.clear();
         GameMenu.selectedTilesTroop.clear();
+        selectedMilitaries.clear();
     }
 
     public static void attack() {
