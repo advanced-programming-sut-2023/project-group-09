@@ -321,7 +321,6 @@ public class GameMenu extends Application {
                     if (selectedUnit) {
                         GameMenu.hoveringBarStateText.setText("Unit Menu");
                         GameViewController.setCenterOfBar();
-                        System.out.println("3: " + GameMenu.selectedTilesTroop.size());
                     }
                 }
 
