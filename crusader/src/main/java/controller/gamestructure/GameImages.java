@@ -48,7 +48,11 @@ public class GameImages {
         addUnitBar();
         addMainBar();
     }
-
+    public static void addArabianTroop() {
+        addArabianSwordsman();
+        addArabianArcher();
+        addSlinger();
+    }
 
     public static void addMainBar() {
         Image image = new Image(GameImages.class.getResource
@@ -78,9 +82,7 @@ public class GameImages {
     }
 
 
-    public static void addArabianTroop() {
-        addArabianSwordsman();
-    }
+
 
     private static void addArabianSwordsman() {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
@@ -91,6 +93,36 @@ public class GameImages {
                     Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
                             "arabianSwordsman/" + colors[i] + "/0_0img" + counter + ".png");
                     imageViews.put("arabianSwordsman_" + colors[i] + "_" + counter, troop);
+                    counter++;
+                }
+                counter += 8;
+            }
+        }
+    }
+    private static void addArabianArcher() {
+        String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
+        for (int i = 0; i < 8; i++) {
+            int counter = 0;
+            for (int j = 0; j < 8; j++) {
+                for (int k = 0; k < 8; k++) {
+                    Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
+                            "archerBow/" + colors[i] + "/0_0img" + counter + ".png");
+                    imageViews.put("archerBow_" + colors[i] + "_" + counter, troop);
+                    counter++;
+                }
+                counter += 8;
+            }
+        }
+    }
+    private static void addSlinger() {
+        String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
+        for (int i = 0; i < 8; i++) {
+            int counter = 0;
+            for (int j = 0; j < 8; j++) {
+                for (int k = 0; k < 8; k++) {
+                    Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
+                            "slinger/" + colors[i] + "/0_0img" + counter + ".png");
+                    imageViews.put("slinger_" + colors[i] + "_" + counter, troop);
                     counter++;
                 }
                 counter += 8;

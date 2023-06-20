@@ -39,7 +39,6 @@ public class TileSensor extends ImageView {
                 GameViewController.unselectTiles();
             } else if (GameMenu.selectedUnit) {
                 GameViewController.doAction(true, gameTile);
-                System.out.println("destination: " + gameTile.getTileX() + " " + gameTile.getTileY());
                 GameMenu.root.getChildren().remove(GameMenu.selectCursor);
                 GameViewController.unselectTilesWithOutUnits();
             } else if (GameMenu.isSelected) {

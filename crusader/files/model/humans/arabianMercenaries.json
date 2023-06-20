@@ -106,7 +106,7 @@
     "price": 75,
     "defenseRange": 8,
     "aggressiveRange": 11,
-    "name": "archerbow",
+    "name": "archerBow",
     "speed": 5,
     "x": 0,
     "y": 0,

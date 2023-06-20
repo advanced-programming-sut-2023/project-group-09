@@ -114,6 +114,7 @@ public class Troop extends Rectangle {
     public void setImage() {
         setFill(new ImagePattern(GameImages.imageViews.get(
                 military.getName() + "_" + military.getGovernment().getColor() + "_" + (step * 16 + direction))));
+
     }
 
     public int getDirection(double x1, double y1, double x2, double y2) {

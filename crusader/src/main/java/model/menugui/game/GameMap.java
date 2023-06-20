@@ -39,28 +39,6 @@ public class GameMap extends Pane {
         this.tilesLoaded = 0;
         load = new boolean[map.getLength()][map.getWidth()];
         loadMap();
-        this.setOnMouseEntered(mouseEvent -> {
-            this.requestFocus();
-            this.setOnKeyPressed(null);
-            this.setOnKeyReleased(keyEvent -> {
-                String keyName = keyEvent.getCode().getName();
-                if (keyName.equals("Right")) {
-                    moveRight();
-                }
-
-                if (keyName.equals("Left")) {
-                    moveLeft();
-                }
-
-                if (keyName.equals("Up")) {
-                    moveUp();
-                }
-
-                if (keyName.equals("Down")) {
-                    moveDown();
-                }
-            });
-        });
     }
 
     private void loadMap() {

@@ -98,9 +98,8 @@ public class GameMenu extends Application {
         selectCursor.setFill(new ImagePattern(GameImages.imageViews.get("selectMove")));
 
 
-        MapController.dropMilitary(10, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(10, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(12, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
+        MapController.dropMilitary(10, 5, "archerBow", GameController.getGame().getCurrentGovernment());
+        MapController.dropMilitary(12, 5, "slinger", GameController.getGame().getCurrentGovernment());
         MapController.dropMilitary(14, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
         setEventListeners();
         GameViewController.setCenterOfBar();
@@ -178,18 +177,32 @@ public class GameMenu extends Application {
 
         scene.setOnKeyPressed(keyEvent -> {
             String keyName = keyEvent.getCode().getName();
-            if (keyName.equals("n")) {
+            if (keyName.equals("N")) {
                 movingState = UnitMovingState.NORMAL.getState();
             }
-            if (keyName.equals("m")) {
+            if (keyName.equals("M")) {
                 movingState = UnitMovingState.MOVE.getState();
             }
-            if (keyName.equals("t")) {
+            if (keyName.equals("T")) {
                 movingState = UnitMovingState.ATTACK.getState();
             }
 
-            if (keyName.equals("a")) {
+            if (keyName.equals("A")) {
                 movingState = UnitMovingState.AIR_ATTACK.getState();
+            }
+
+            if (keyName.equals("Down")) {
+                if (GameViewController.lastType != null && GameViewController.lastType.count != 0){
+                    GameViewController.lastType.count--;
+                    GameViewController.lastType.text.setText(GameViewController.lastType.count+"");
+                }
+            }
+
+            if (keyName.equals("Up")) {
+                if (GameViewController.lastType != null && GameViewController.lastType.count < unitsCount.get(GameViewController.lastType.name)){
+                    GameViewController.lastType.count++;
+                    GameViewController.lastType.text.setText(GameViewController.lastType.count+"");
+                }
             }
         });
     }

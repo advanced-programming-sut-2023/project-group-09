@@ -16,10 +16,10 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -43,13 +43,13 @@ import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
 import model.menugui.game.Troop;
+import model.menugui.game.TypBTN;
 import view.menus.GameMenu;
 import view.menus.LoginMenu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.Set;
 
 public class GameViewController {
@@ -68,6 +68,11 @@ public class GameViewController {
     public static HashMap<String, String> buildingNameToName = new HashMap<>();
     public static HashMap<String, Double> buildingScales = new HashMap<>();
     public static HashMap<String, Double> buildingCoordinates = new HashMap<>();
+
+
+    //--------------------------------------------------------
+    public static ArrayList<TypBTN> typeBTNS = new ArrayList<>();
+    public static TypBTN lastType;
 
     public static void createShortcutBars(Pane gamePane, Text text) {
         setCenterOfBar();
@@ -178,35 +183,22 @@ public class GameViewController {
     }
 
     private static void setHoverEventForMainBarState(ImageView imageView, String text, String destination, ImageView anotherIcon) {
-        imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                GameMenu.hoveringBarStateText.setText(text);
-            }
-        });
+        imageView.setOnMouseEntered(mouseEvent -> GameMenu.hoveringBarStateText.setText(text));
 
-        imageView.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                GameMenu.hoveringBarStateText.setText("");
-            }
-        });
+        imageView.setOnMouseExited(mouseEvent -> GameMenu.hoveringBarStateText.setText(""));
 
-        imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                GameViewController.setCenterOfBar(destination);
-                if (destination.equals("Edit Landscape")) {
-                    imageView.setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
-                            .toExternalForm() + "icons/editLandscapeIcon.png"));
-                    anotherIcon.setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
-                            .toExternalForm() + "icons/buildingsActiveOffIcon.png"));
-                } else {
-                    imageView.setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
-                            .toExternalForm() + "icons/buildingsIcon.png"));
-                    anotherIcon.setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
-                            .toExternalForm() + "icons/editLandScapeActiveOffIcon.png"));
-                }
+        imageView.setOnMouseClicked(mouseEvent -> {
+            GameViewController.setCenterOfBar(destination);
+            if (destination.equals("Edit Landscape")) {
+                imageView.setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                        .toExternalForm() + "icons/editLandscapeIcon.png"));
+                anotherIcon.setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                        .toExternalForm() + "icons/buildingsActiveOffIcon.png"));
+            } else {
+                imageView.setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                        .toExternalForm() + "icons/buildingsIcon.png"));
+                anotherIcon.setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                        .toExternalForm() + "icons/editLandScapeActiveOffIcon.png"));
             }
         });
     }
@@ -295,21 +287,42 @@ public class GameViewController {
     private static void setCenterOfUnitMenu() {
         GameMenu.barImage.setImage(GameImages.imageViews.get("unit bar"));
         Tile firstTile = null;
-        for (Tile tile : GameMenu.selectedTilesTroop){
+        for (Tile tile : GameMenu.selectedTilesTroop) {
             firstTile = tile;
             break;
         }
-        GameController.selectUnit(firstTile.x,firstTile.y,null);
+        GameController.selectUnit(firstTile.x, firstTile.y, null);
         putDisband();
         putPatrol();
         putStop();
         putStand();
         putDefensive();
         putAggressive();
-
+        addTypes();
 
     }
 
+    public static void addTypes() {
+        double translateY = 95;
+        double translateX = 293;
+        for (String name : GameMenu.unitsCount.keySet()) {
+            if (GameMenu.unitsCount.get(name) != 0) {
+                TypBTN btn = new TypBTN(name, GameMenu.menuBar, GameMenu.unitsCount.get(name), translateX, translateY);
+                translateX += 65;
+                setHoverEventForBar(btn.imageView, name);
+                typeBTNS.add(btn);
+                DropShadow ds = new DropShadow(20, Color.WHITE);
+                btn.imageView.setOnMouseClicked(mouseEvent -> {
+                    for (TypBTN typBTN : typeBTNS) {
+                        typBTN.imageView.setEffect(null);
+                    }
+                    btn.imageView.setEffect(ds);
+                    lastType = btn;
+                });
+            }
+        }
+
+    }
 
     public static void putDisband() {
         ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
@@ -377,7 +390,7 @@ public class GameViewController {
         setHoverEventForBar(icon, "Offensive State");
     }
 
-    public static void unselectTiles(){
+    public static void unselectTiles() {
         for (GameTile gameTile : GameMenu.selectedTiles) {
             gameTile.deselectTile();
         }
@@ -394,7 +407,8 @@ public class GameViewController {
         GameMenu.selectedArea.setHeight(0);
         GameMenu.selectedTiles.clear();
     }
-    public static void unselectTilesWithOutUnits(){
+
+    public static void unselectTilesWithOutUnits() {
         for (GameTile gameTile : GameMenu.selectedTiles) {
             gameTile.deselectTile();
         }
@@ -1318,11 +1332,11 @@ public class GameViewController {
     public static void divideTroops(Tile tile) {
         Set<String> names = GameHumans.militaries.keySet();
         for (String name : names) {
-            ArrayList<Military> troops = MapController.getOneTypeOfMilitariesOfGovernment(tile.x, tile.y,name,
+            ArrayList<Military> troops = MapController.getOneTypeOfMilitariesOfGovernment(tile.x, tile.y, name,
                     GameController.getGame().getCurrentGovernment());
             GameMenu.selectedTroops.addAll(troops);
-            GameMenu.unitsCount.put(name,GameMenu.unitsCount.getOrDefault(name,0) + troops.size());
-            if (troops.size() != 0){
+            GameMenu.unitsCount.put(name, GameMenu.unitsCount.getOrDefault(name, 0) + troops.size());
+            if (troops.size() != 0) {
                 GameMenu.selectedUnit = true;
                 GameMenu.selectedTilesTroop.add(tile);
             }
