@@ -104,12 +104,17 @@ public class GameTile extends StackPane {
             buildingImage.setViewOrder(-1);
             this.setViewOrder(-tileY);
             this.getChildren().add(buildingImage);
-            buildingImage.setOnMouseClicked(mouseEvent -> {
-                if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-                    if (mouseEvent.getClickCount() == 2) {
-                        FileController.copyBuildingNameToClipboard(tile.getBuilding().getName());
-                        GameMenu.hoveringBarStateText.setText(GameViewController.buildingNameToName
-                                .get(tile.getBuilding().getName()) + " Copied!");
+            buildingImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+                        if (mouseEvent.getClickCount() == 1) {
+                            GameViewController.setCenterOfBar(building.getName());
+                        } else if (mouseEvent.getClickCount() == 2) {
+                            FileController.copyBuildingNameToClipboard(tile.getBuilding().getName());
+                            GameMenu.hoveringBarStateText.setText(GameViewController.buildingNameToName
+                                    .get(tile.getBuilding().getName()) + " Copied!");
+                        }
                     }
                 }
             });

@@ -26,7 +26,6 @@ import model.menugui.game.GameTile;
 import model.tools.Tool;
 import view.controllers.GameViewController;
 import viewphase1.UnitMenu;
-
 import java.util.*;
 
 public class GameController {
@@ -66,6 +65,7 @@ public class GameController {
         UnitMenu.x = x;
         UnitMenu.y = y;
         UnitMenu.type = type;
+        GameViewController.selectUnits(x, y);
         return "";
     }
 
@@ -1023,7 +1023,6 @@ public class GameController {
             if (y % 2 != 0) x++;
             y--;
             neighborTiles.add(new Tuple(y, x));
-
         }
         return neighborTiles;
     }
