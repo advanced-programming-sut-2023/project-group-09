@@ -1,6 +1,5 @@
 package model.menugui.game;
 
-import controller.gamestructure.GameImages;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -14,6 +13,7 @@ public class TileSensor extends ImageView {
     public TileSensor(Image image, GameTile gameTile) {
         super(image);
         this.gameTile = gameTile;
+        this.setViewOrder(-1000);
         setSensor();
     }
 
@@ -23,27 +23,26 @@ public class TileSensor extends ImageView {
         });
 
         this.setOnMouseClicked(mouseEvent -> {
-            if (GameMenu.selectedUnit) {
+            if (mouseEvent.getButton() == MouseButton.PRIMARY && !GameMenu.selectedUnit) {
+                GameViewController.unselectTiles();
+                GameMenu.startSelectionTile = gameTile;
+                GameMenu.endSelectionTile = gameTile;
+                GameMenu.selectedTiles.add(gameTile);
+                GameMenu.isSelected = true;
+                gameTile.selectTile();
+                if (GameMenu.selectedUnit) {
+                    GameMenu.hoveringBarStateText.setText("Unit Menu");
+                    GameViewController.setCenterOfBar();
+                }
+            }else if (GameMenu.isSelected && mouseEvent.getButton() == MouseButton.SECONDARY) {
+                GameViewController.unselectTiles();
+            } else if (GameMenu.selectedUnit) {
                 GameViewController.doAction(true, gameTile);
                 System.out.println("destination: " + gameTile.getTileX() + " " + gameTile.getTileY());
-                GameMenu.selectedUnit = false;
                 GameMenu.root.getChildren().remove(GameMenu.selectCursor);
-            } else if (GameMenu.isSelected && !GameMenu.selectedUnit) {
-                for (int i = 0; i < GameMenu.selectedTiles.size(); i++) {
-                    GameMenu.selectedTiles.get(i).deselectTile();
-                }
-                GameMenu.startSelectionTile = null;
-                GameMenu.endSelectionTile = null;
-                GameMenu.isSelected = false;
-                GameMenu.selectedTiles.clear();
-            } else if (GameMenu.isSelected && mouseEvent.getButton() == MouseButton.SECONDARY) {
-                for (int i = 0; i < GameMenu.selectedTiles.size(); i++) {
-                    GameMenu.selectedTiles.get(i).deselectTile();
-                }
-                GameMenu.startSelectionTile = null;
-                GameMenu.endSelectionTile = null;
-                GameMenu.isSelected = false;
-                GameMenu.selectedTiles.clear();
+                GameViewController.unselectTilesWithOutUnits();
+            } else if (GameMenu.isSelected) {
+                GameViewController.unselectTiles();
             }
 
             if (GameViewController.shopMenuPhase != -1) {
@@ -53,17 +52,7 @@ public class TileSensor extends ImageView {
                 GameViewController.currentCategory = null;
             }
 
-            if (mouseEvent.getSource() == MouseButton.PRIMARY && !GameMenu.selectedUnit) {
-                GameMenu.startSelectionTile = gameTile;
-                GameMenu.endSelectionTile = gameTile;
-                GameMenu.selectedTiles.add(gameTile);
-                gameTile.selectTile();
-            }
-        });
 
-        this.setOnDragDone(mouseEvent -> {
-            GameMenu.currentTile = gameTile;
-            gameTile.setTextureImage(GameImages.imageViews.get("red"));
         });
     }
 }

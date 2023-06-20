@@ -91,7 +91,6 @@ public class GameImages {
                     Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
                             "arabianSwordsman/" + colors[i] + "/0_0img" + counter + ".png");
                     imageViews.put("arabianSwordsman_" + colors[i] + "_" + counter, troop);
-                    System.out.println("arabianSwordsman_" + colors[i] + "_" + counter);
                     counter++;
                 }
                 counter += 8;

@@ -4,12 +4,10 @@ import controller.FileController;
 import controller.gamestructure.GameImages;
 import enumeration.Paths;
 import enumeration.dictionary.Trees;
-import javafx.event.EventHandler;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import model.building.Building;
 import model.game.Tile;
@@ -77,6 +75,7 @@ public class GameTile extends StackPane {
         if (buildingImage != null) buildingImage.setEffect(colorAdjust);
         if (humanImage != null) humanImage.setEffect(colorAdjust);
         if (treeImage != null) treeImage.setEffect(colorAdjust);
+        GameViewController.divideTroops(tile);
     }
 
     public void deselectTile() {
@@ -105,15 +104,12 @@ public class GameTile extends StackPane {
             buildingImage.setViewOrder(-1);
             this.setViewOrder(-tileY);
             this.getChildren().add(buildingImage);
-            buildingImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-                        if (mouseEvent.getClickCount() == 2) {
-                            FileController.copyBuildingNameToClipboard(tile.getBuilding().getName());
-                            GameMenu.hoveringBarStateText.setText(GameViewController.buildingNameToName
-                                    .get(tile.getBuilding().getName()) + " Copied!");
-                        }
+            buildingImage.setOnMouseClicked(mouseEvent -> {
+                if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+                    if (mouseEvent.getClickCount() == 2) {
+                        FileController.copyBuildingNameToClipboard(tile.getBuilding().getName());
+                        GameMenu.hoveringBarStateText.setText(GameViewController.buildingNameToName
+                                .get(tile.getBuilding().getName()) + " Copied!");
                     }
                 }
             });

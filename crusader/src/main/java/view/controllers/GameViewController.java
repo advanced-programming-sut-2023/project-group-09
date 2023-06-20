@@ -6,6 +6,7 @@ import controller.MapController;
 import controller.MarketController;
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameGoods;
+import controller.gamestructure.GameHumans;
 import controller.gamestructure.GameImages;
 import enumeration.Pair;
 import enumeration.Paths;
@@ -46,8 +47,8 @@ import view.menus.LoginMenu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Objects;
+import java.util.Set;
 
 public class GameViewController {
 
@@ -221,6 +222,7 @@ public class GameViewController {
     }
 
     public static void setCenterOfBar() {
+        System.out.println("1:" + GameMenu.selectedTilesTroop.size());
         if (GameMenu.hoveringBarStateText == null) {
             GameMenu.menuBar.getChildren().clear();
             GameMenu.createGameBar(0);
@@ -282,6 +284,7 @@ public class GameViewController {
                 setCenterOfClipboard();
             }
             case "Unit Menu" -> {
+                System.out.println("2:" + GameMenu.selectedTilesTroop.size());
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar(-1);
                 setCenterOfUnitMenu();
@@ -291,14 +294,21 @@ public class GameViewController {
 
     private static void setCenterOfUnitMenu() {
         GameMenu.barImage.setImage(GameImages.imageViews.get("unit bar"));
+        System.out.println("4:" + GameMenu.selectedTilesTroop.size());
+        Tile firstTile = null;
+        for (Tile tile : GameMenu.selectedTilesTroop){
+            firstTile = tile;
+            break;
+        }
+        System.out.println("5:" + GameMenu.selectedTilesTroop.size());
+        GameController.selectUnit(firstTile.x,firstTile.y,null);
+        System.out.println("5:" + GameMenu.selectedTilesTroop.size());
         putDisband();
         putPatrol();
         putStop();
         putStand();
         putDefensive();
         putAggressive();
-
-
     }
 
 
@@ -367,6 +377,39 @@ public class GameViewController {
         GameMenu.menuBar.getChildren().add(icon);
         setHoverEventForBar(icon, "Offensive State");
     }
+
+    public static void unselectTiles(){
+        for (GameTile gameTile : GameMenu.selectedTiles) {
+            gameTile.deselectTile();
+        }
+        GameMenu.startSelectionTile = null;
+        GameMenu.endSelectionTile = null;
+        GameMenu.isSelected = false;
+        GameMenu.selectedUnit = false;
+        GameMenu.selectDone = false;
+        GameMenu.unitsCount = new HashMap<>();
+        GameMenu.selectedTroops.clear();
+        GameMenu.selectedTilesTroop.clear();
+        GameMenu.selectedArea.setVisible(false);
+        GameMenu.selectedArea.setWidth(0);
+        GameMenu.selectedArea.setHeight(0);
+        GameMenu.selectedTiles.clear();
+    }
+    public static void unselectTilesWithOutUnits(){
+        for (GameTile gameTile : GameMenu.selectedTiles) {
+            gameTile.deselectTile();
+        }
+        GameMenu.startSelectionTile = null;
+        GameMenu.endSelectionTile = null;
+        GameMenu.isSelected = false;
+        GameMenu.selectedUnit = false;
+        GameMenu.selectDone = false;
+        GameMenu.selectedArea.setVisible(false);
+        GameMenu.selectedArea.setWidth(0);
+        GameMenu.selectedArea.setHeight(0);
+        GameMenu.selectedTiles.clear();
+    }
+
 
     public static void setCenterOfBar(String destination) {
         if (destination == null) {
@@ -1253,6 +1296,7 @@ public class GameViewController {
         });
     }
 
+
     public static void dropUnit(int x, int y, Tile tile, Military military) {
         GameTile gameTile = GameMap.getGameTile(x, y);
         GameMap gameMap = GameMenu.gameMap;
@@ -1269,6 +1313,20 @@ public class GameViewController {
         Tile tile = GameController.getGame().getMap().getTile(x, y);
         GameMenu.selectedTilesTroop.add(tile);
         GameMenu.selectedUnit = true;
+    }
+
+    public static void divideTroops(Tile tile) {
+        Set<String> names = GameHumans.militaries.keySet();
+        for (String name : names) {
+            ArrayList<Military> troops = MapController.getOneTypeOfMilitariesOfGovernment(tile.x, tile.y,name,
+                    GameController.getGame().getCurrentGovernment());
+            GameMenu.selectedTroops.addAll(troops);
+            GameMenu.unitsCount.put(name,GameMenu.unitsCount.getOrDefault(name,0) + troops.size());
+            if (troops.size() != 0){
+                GameMenu.selectedUnit = true;
+                GameMenu.selectedTilesTroop.add(tile);
+            }
+        }
     }
 
     public static void setSelectCursorImage(String state) {
@@ -1453,10 +1511,14 @@ public class GameViewController {
 
 
     public static void moveUnits(GameTile end) {
+        System.out.println("selected units: " + GameMenu.selectedTilesTroop.size());
         for (Tile tile : GameMenu.selectedTilesTroop) {
             GameController.selectUnit(tile.x, tile.y, null);
             GameController.moveUnit(end.getTileX(), end.getTileY());
         }
+        GameMenu.unitsCount = new HashMap<>();
+        GameMenu.selectedTroops.clear();
+        GameMenu.selectedTilesTroop.clear();
     }
 
     public static void attack() {

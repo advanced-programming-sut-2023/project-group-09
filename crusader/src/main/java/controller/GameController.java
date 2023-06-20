@@ -26,6 +26,7 @@ import model.menugui.game.GameTile;
 import model.tools.Tool;
 import view.controllers.GameViewController;
 import viewphase1.UnitMenu;
+
 import java.util.*;
 
 public class GameController {
@@ -65,7 +66,6 @@ public class GameController {
         UnitMenu.x = x;
         UnitMenu.y = y;
         UnitMenu.type = type;
-        GameViewController.selectUnits(x, y);
         return "";
     }
 
@@ -79,7 +79,7 @@ public class GameController {
     }
 
     public static boolean validateMoveUnit(int x, int y) {
-        Tuple destination = new Tuple(y , x);
+        Tuple destination = new Tuple(y, x);
         boolean check = HumanController.validateMove(destination);
         if (!check) {
             return false;
@@ -1023,38 +1023,27 @@ public class GameController {
             if (y % 2 != 0) x++;
             y--;
             neighborTiles.add(new Tuple(y, x));
+
         }
         return neighborTiles;
     }
 
-    public static ArrayList<GameTile> getSelectedAreaTiles(GameTile start, GameTile end) {
-        ArrayList<GameTile> tiles = new ArrayList<>();
-        int startX = Math.min(start.getTileX(), end.getTileX());
-        int startY = Math.min(start.getTileY(), end.getTileY());
-        int endX = Math.max(start.getTileX(), end.getTileX());
-        int endY = Math.max(start.getTileY(), end.getTileY());
-
-        int headX = startX, headY = startY;
-        int x = startX, y = startY;
-        for (int i = 0; i < endY - startY + 1; i++) {
-            int indent = 1;
-            if ((endY - startY) % 2 != 0 && i % 2 != 0) indent = 0;
-            for (int j = 0; j < endX - startX + indent; j++) {
-                tiles.add(GameMap.getGameTile(x, y));
-                x++;
+    public static Set<GameTile> getSelectedAreaTiles(GameTile start, GameTile end) {
+        Set<GameTile> tiles = new HashSet<>();
+        if (start != null && end != null) {
+            int startX = Math.min(start.getTileX(), end.getTileX());
+            int startY = Math.min(start.getTileY(), end.getTileY());
+            int endX = Math.max(start.getTileX(), end.getTileX());
+            int endY = Math.max(start.getTileY(), end.getTileY());
+            for (int i = startX; i < endX; i++) {
+                for (int j = startY; j < endY; j++) {
+                    tiles.add(GameMap.getGameTile(i, j));
+                }
             }
-
-            if (i % 2 == 0) {
-                if (headY % 2 != 0) headX++;
-                headY++;
-            } else {
-                if (headY % 2 == 0) headX--;
-                headY++;
-            }
-            x = headX;
-            y = headY;
+            return tiles;
         }
 
-        return tiles;
+        return null;
     }
+
 }

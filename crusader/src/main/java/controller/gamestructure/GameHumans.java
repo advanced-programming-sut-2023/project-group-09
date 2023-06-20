@@ -23,6 +23,13 @@ public class GameHumans {
         return militaries.get(name);
     }
 
+    public static HashMap<String,Integer> getUnitHashmap(){
+        HashMap<String,Integer> units = new HashMap<>();
+        for (String name : militaries.keySet()){
+            units.put(name,0);
+        }
+        return units;
+    }
     public static void addEuropeanTroops() {
         createArcher();
         createCrossbowman();

@@ -4,22 +4,18 @@ import controller.GameController;
 import controller.MapController;
 import controller.gamestructure.GameImages;
 import controller.gamestructure.GameMaps;
-import enumeration.MoveStates;
 import enumeration.Paths;
 import enumeration.UnitMovingState;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.Transition;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -33,6 +29,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.game.Map;
 import model.game.Tile;
+import model.human.military.Military;
 import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
@@ -40,8 +37,7 @@ import view.controllers.GameViewController;
 import view.controllers.ViewController;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.*;
 
 //TODO 1- add color of buildings and government
 public class GameMenu extends Application {
@@ -52,9 +48,9 @@ public class GameMenu extends Application {
     public static GameMap gameMap;
     public static Pane menuBar;
     public static Text hoveringBarStateText;
-    public Rectangle selectedArea;
-    public static ArrayList<Tile> selectedTilesTroop = new ArrayList<>();
-    public static ArrayList<GameTile> selectedTiles = new ArrayList<>();
+    public static Rectangle selectedArea;
+    public static Set<Tile> selectedTilesTroop = new HashSet<>();
+    public static Set<GameTile> selectedTiles = new HashSet<>();
     public static Rectangle selectCursor;
     public static ImageView barImage;
     public static ArrayList<Transition> transitions = new ArrayList<>();
@@ -66,8 +62,13 @@ public class GameMenu extends Application {
     public static GameTile endSelectionTile;
     public static boolean selectDone = false;
     public static boolean isSelected = false;
-
     public static String movingState = UnitMovingState.NORMAL.getState();
+
+
+    //---------------------------------
+    public static HashMap<String, Integer> unitsCount = new HashMap<>();
+    public static HashSet<Military> selectedTroops = new HashSet<>();
+
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -82,7 +83,6 @@ public class GameMenu extends Application {
 
         root.setOnMouseEntered(mouseEvent -> scene.setCursor(Cursor.DEFAULT));
         root.setOnMouseExited(mouseEvent -> scene.setCursor(Cursor.NONE));
-        createSelectedArea();
 
         GameMaps.createMap1();
         Map map = GameMaps.largeMaps.get(0);
@@ -103,7 +103,19 @@ public class GameMenu extends Application {
         setEventListeners();
         GameViewController.setCenterOfBar();
         GameViewController.createBorderRectangles(gameMap, miniMap);
-        GameViewController.setCenterOfBar("Shop");
+
+        root.setOnMouseClicked(mouseEvent -> {
+            if (isSelected && !selectedUnit && mouseEvent.getScreenY() >= scene.getHeight() - 200) {
+                for (GameTile gameTile : selectedTiles) {
+                    gameTile.deselectTile();
+                }
+                GameMenu.startSelectionTile = null;
+                GameMenu.endSelectionTile = null;
+                GameMenu.isSelected = false;
+                GameMenu.selectedTiles.clear();
+            }
+        });
+        createSelectedArea();
         stage.show();
     }
 
@@ -131,6 +143,10 @@ public class GameMenu extends Application {
 
         Rectangle clipRectangle = new Rectangle(1200, 800);
         root.setClip(clipRectangle);
+
+        menuBar.setViewOrder(-2000);
+        miniMap.setViewOrder(-1999);
+
 
         if (state == 0)
             GameViewController.createShortcutBars(menuBar, hoveringButton);
@@ -160,24 +176,24 @@ public class GameMenu extends Application {
 
         scene.setOnKeyPressed(keyEvent -> {
             String keyName = keyEvent.getCode().getName();
-            if (keyName.equals("n")){
+            if (keyName.equals("n")) {
                 movingState = UnitMovingState.NORMAL.getState();
             }
-            if (keyName.equals("m")){
+            if (keyName.equals("m")) {
                 movingState = UnitMovingState.MOVE.getState();
             }
-            if (keyName.equals("t")){
+            if (keyName.equals("t")) {
                 movingState = UnitMovingState.ATTACK.getState();
             }
 
-            if (keyName.equals("a")){
+            if (keyName.equals("a")) {
                 movingState = UnitMovingState.AIR_ATTACK.getState();
             }
         });
     }
 
     public static void setMouseCursorOnSelect() {
-        if (cursorTimeLine != null){
+        if (cursorTimeLine != null) {
             cursorTimeLine.stop();
         }
         cursorTimeLine = new Timeline(new KeyFrame(Duration.millis(300), actionEvent -> {
@@ -202,36 +218,31 @@ public class GameMenu extends Application {
 
         final double[] startX = {0.0};
         final double[] startY = {0.0};
-        root.setOnDragDetected(mouseDragEvent -> {
+        gameMap.setOnDragDetected(mouseDragEvent -> {
             if (GameMenu.isSelected) {
-                ArrayList<GameTile> tiles = GameController.getSelectedAreaTiles(GameMenu.startSelectionTile,
-                        GameMenu.endSelectionTile);
-                for (int i = 0; i < tiles.size(); i++) {
-                    tiles.get(i).deselectTile();
-                }
-                GameMenu.startSelectionTile = null;
-                GameMenu.endSelectionTile = null;
-                GameMenu.isSelected = false;
+                GameViewController.unselectTiles();
             }
             startSelectionTile = currentTile;
             startX[0] = mouseDragEvent.getScreenX();
             startY[0] = mouseDragEvent.getScreenY();
-            selectedArea.setTranslateX(startX[0] - scene.getWidth() / 2);
-            selectedArea.setTranslateY(startY[0] - scene.getHeight() / 2);
+            if (startY[0] >= scene.getHeight() - 200) {
+                selectedArea.setWidth(0);
+                selectedArea.setHeight(0);
+                startX[0] = -1;
+                startY[0] = -1;
+                return;
+            }
+            if (startX[0] > 0) {
+                selectedArea.setTranslateX(startX[0] - scene.getWidth() / 2);
+                selectedArea.setTranslateY(startY[0] - scene.getHeight() / 2);
+            }
         });
 
-        root.setOnMouseDragged(mouseEvent -> {
+        gameMap.setOnMouseDragged(mouseEvent -> {
             if (GameMenu.isSelected) {
-                ArrayList<GameTile> tiles = GameController.getSelectedAreaTiles(GameMenu.startSelectionTile,
-                        GameMenu.endSelectionTile);
-                for (int i = 0; i < tiles.size(); i++) {
-                    tiles.get(i).deselectTile();
-                }
-                GameMenu.startSelectionTile = null;
-                GameMenu.endSelectionTile = null;
-                GameMenu.isSelected = false;
+                GameViewController.unselectTiles();
             }
-            if (startY[0] >= scene.getHeight() - 200) {
+            if (startX[0] < 0) {
                 selectedArea.setWidth(0);
                 selectedArea.setHeight(0);
                 return;
@@ -246,28 +257,39 @@ public class GameMenu extends Application {
             selectedArea.setTranslateY(rectangleY - scene.getHeight() / 2 + selectedArea.getHeight() / 2);
             selectedArea.setVisible(true);
 
-            root.setOnMouseReleased(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
+            gameMap.setOnMouseReleased(mouseEvent1 -> {
+                if (startX[0] > 0) {
                     selectDone = true;
                 }
             });
         });
 
-        Timeline selectDoneTimeline = new Timeline(new KeyFrame(Duration.ZERO, actionEvent -> {
+        Timeline selectDoneTimeline = new Timeline(new KeyFrame(Duration.millis(100), actionEvent -> {
             if (selectDone) {
                 endSelectionTile = currentTile;
                 selectedArea.setVisible(false);
                 selectedArea.setWidth(0);
                 selectedArea.setHeight(0);
-                selectedTiles = GameController.getSelectedAreaTiles(startSelectionTile, endSelectionTile);
-                for (int i = 0; i < selectedTiles.size(); i++) {
-                    selectedTiles.get(i).selectTile();
+                Set<GameTile> tiles = GameController.getSelectedAreaTiles(startSelectionTile, endSelectionTile);
+                if (tiles != null) {
+                    if (tiles.size() == 0) {
+                        selectDone = false;
+                        return;
+                    }
+                    selectedTiles = tiles;
+                    for (GameTile gameTile : selectedTiles) {
+                        gameTile.selectTile();
+                    }
+                    selectDone = false;
+                    isSelected = true;
+                    if (selectedUnit) {
+                        GameMenu.hoveringBarStateText.setText("Unit Menu");
+                        GameViewController.setCenterOfBar();
+                        System.out.println("3: " + GameMenu.selectedTilesTroop.size());
+                    }
                 }
-                selectDone = false;
-                isSelected = true;
+
             }
-        }), new KeyFrame(Duration.millis(300), actionEvent -> {
         }));
         selectDoneTimeline.setCycleCount(-1);
         selectDoneTimeline.play();
