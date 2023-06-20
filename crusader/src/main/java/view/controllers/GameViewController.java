@@ -294,15 +294,12 @@ public class GameViewController {
 
     private static void setCenterOfUnitMenu() {
         GameMenu.barImage.setImage(GameImages.imageViews.get("unit bar"));
-        System.out.println("4:" + GameMenu.selectedTilesTroop.size());
         Tile firstTile = null;
         for (Tile tile : GameMenu.selectedTilesTroop){
             firstTile = tile;
             break;
         }
-        System.out.println("5:" + GameMenu.selectedTilesTroop.size());
         GameController.selectUnit(firstTile.x,firstTile.y,null);
-        System.out.println("5:" + GameMenu.selectedTilesTroop.size());
         putDisband();
         putPatrol();
         putStop();

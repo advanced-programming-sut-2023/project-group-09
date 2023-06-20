@@ -65,7 +65,6 @@ public class GameController {
         UnitMenu.x = x;
         UnitMenu.y = y;
         UnitMenu.type = type;
-        GameViewController.selectUnits(x, y);
         return "";
     }
 
