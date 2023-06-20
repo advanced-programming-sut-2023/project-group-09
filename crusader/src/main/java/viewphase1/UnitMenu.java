@@ -75,7 +75,7 @@ public class UnitMenu {
                     int y1 = ViewController.getNumberOfRegex("y1");
                     int x2 = ViewController.getNumberOfRegex("x2");
                     int y2 = ViewController.getNumberOfRegex("y2");
-                    output = GameController.patrolUnit(x1, y1, x2, y2);
+                    output = GameController.patrolUnit( x2, y2);
                     System.out.println(output);
                     if (output.equals("patrol started successfully!")) {
                         return;

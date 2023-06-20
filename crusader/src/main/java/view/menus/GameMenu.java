@@ -172,7 +172,10 @@ public class GameMenu extends Application {
                 }
                 selectCursor.setTranslateY(mouseEvent.getY() - 400 - selectCursor.getHeight() / 2);
                 selectCursor.setTranslateX(mouseEvent.getX() - 600);
+            }else {
+                root.getChildren().remove(selectCursor);
             }
+
         });
 
         scene.setOnKeyPressed(keyEvent -> {

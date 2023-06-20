@@ -26,6 +26,7 @@ import model.menugui.game.GameTile;
 import model.tools.Tool;
 import view.controllers.GameViewController;
 import viewphase1.UnitMenu;
+
 import java.util.*;
 
 public class GameController {
@@ -86,17 +87,19 @@ public class GameController {
         return true;
     }
 
-    public static String patrolUnit(int x1, int y1, int x2, int y2) {
-        String message = validatePatrol(x1, y1, x2, y2);
-        if (message != null) {
-            return message;
-        }
+    public static String patrolUnit(int x2, int y2) {
+        if (HumanController.militaries.size() > 0){
+            int x1 = HumanController.militaries.get(0).getX();
+            int y1 = HumanController.militaries.get(0).getY();
 
-        boolean check = HumanController.patrolUnit(x1 - 1, y1 - 1, x2 - 1, y2 - 1);
-        if (!check) {
-            return "can't start patrol, no path to destination!";
+            boolean check = HumanController.patrolUnit(x1, y1, x2, y2);
+            if (!check) {
+                return "can't start patrol, no path to destination!";
+            }
+            GameViewController.setFlagOfPatrol(x1,y1,x2,y2);
+            return "patrol started successfully!";
         }
-        return "patrol started successfully!";
+        return "";
     }
 
     public static String deactivatePatrolUnit() {
@@ -1033,8 +1036,8 @@ public class GameController {
             int startY = Math.min(start.getTileY(), end.getTileY());
             int endX = Math.max(start.getTileX(), end.getTileX());
             int endY = Math.max(start.getTileY(), end.getTileY());
-            for (int i = startX; i < endX; i++) {
-                for (int j = startY; j < endY; j++) {
+            for (int i = startX; i <= endX; i++) {
+                for (int j = startY; j <= endY; j++) {
                     tiles.add(GameMap.getGameTile(i, j));
                 }
             }

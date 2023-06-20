@@ -1,6 +1,8 @@
 package model.menugui.game;
 
 import controller.gamestructure.GameImages;
+import enumeration.MoveStates;
+import enumeration.UnitMovingState;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -40,6 +42,7 @@ public class TileSensor extends ImageView {
             } else if (GameMenu.selectedUnit) {
                 GameViewController.doAction(true, gameTile);
                 GameMenu.root.getChildren().remove(GameMenu.selectCursor);
+                GameMenu.movingState = UnitMovingState.NORMAL.getState();
                 GameViewController.unselectTilesWithOutUnits();
             } else if (GameMenu.isSelected) {
                 GameViewController.unselectTiles();
