@@ -1564,6 +1564,9 @@ public class GameViewController {
         GameMenu.selectedTroops.clear();
         GameMenu.selectedTilesTroop.clear();
         selectedMilitaries.clear();
+        GameViewController.setCenterOfBar(null);
+        GameViewController.currentItem = null;
+        GameViewController.currentCategory = null;
     }
 
     public static void attack() {
