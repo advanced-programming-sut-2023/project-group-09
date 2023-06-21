@@ -55,7 +55,7 @@ public class Troop extends Rectangle {
     }
 
     public void setTimeLine() {
-        move = new Timeline(new KeyFrame(Duration.millis(military.getSpeed() * 25), actionEvent -> {
+        move = new Timeline(new KeyFrame(Duration.millis((20 - military.getSpeed()) * 12), actionEvent -> {
             if (military.getMove() != null && military.getMove().isMoving()) {
                 if (getDistance() < 7) {
                     if (GameMap.gameTroops[military.getY()][military.getX()] == null) {
@@ -87,10 +87,15 @@ public class Troop extends Rectangle {
                 }
                 setImage();
             }
+
         }));
         GameMenu.timelines.add(move);
         move.setCycleCount(-1);
         move.play();
+    }
+
+    public void doAttack() {
+        military.getAttack().doAttack();
     }
 
     public double getDistance() {
@@ -113,19 +118,19 @@ public class Troop extends Rectangle {
 
     public void setImage() {
         setFill(new ImagePattern(GameImages.imageViews.get(
-                military.getName() + "_" + military.getGovernment().getColor() + "_" + (step * 16 + direction))));
+                military.getName() + "_" + military.getGovernment().getColor() + "_" + (step * 16 + direction + 1))));
 
     }
 
     public int getDirection(double x1, double y1, double x2, double y2) {
         if (Math.abs(x1 - x2) < 0.5) {
-            if ((y2 - y1) > 0) {
+            if ((y2 - y1) > 0 || Math.abs(y2 - y1) < 0.5) {
                 return 3;
             }
             return 7;
         }
         double slop = (y2 - y1) / (x2 - x1);
-        if (slop < 0.5) {
+        if (Math.abs(slop) < 0.5) {
             if ((x2 - x1) > 0) {
                 return 1;
             }
@@ -133,14 +138,14 @@ public class Troop extends Rectangle {
         }
         if (slop >= 0) {
             if ((y2 - y1) > 0) {
-                return 0;
-            }
-            return 4;
-        } else {
-            if ((y2 - y1) > 0) {
                 return 2;
             }
             return 6;
+        } else {
+            if ((y2 - y1) > 0) {
+                return 4;
+            }
+            return 0;
         }
     }
 }

@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import model.game.Map;
 import model.game.Tile;
+import model.menugui.game.GameMap;
 import view.menus.GameMenu;
 
 public class MiniMap extends StackPane {
@@ -20,8 +21,8 @@ public class MiniMap extends StackPane {
 
     private final int width;
     private final int height;
-    private final int pointerWidth = (int) Math.ceil((double) 1200 / 50) + 1;
-    private final int pointerHeight = (int) Math.ceil((double) 800 / 15);
+    private int pointerWidth = (int) Math.ceil((double) 1200 / GameMap.tileWidth) + 1;
+    private int pointerHeight = (int) Math.ceil((double) 800 / (GameMap.tileHeight/2));
     private Rectangle pointer;
 
     private final Map map;
@@ -78,7 +79,39 @@ public class MiniMap extends StackPane {
         pointer.setTranslateY(startY - (double) height / 2 + (double) pointerHeight / 2);
     }
 
-    private synchronized void paintMap() {
+    public void updatePointer() {
+        pointer.setWidth(pointerWidth);
+        pointer.setHeight(pointerHeight);
+    }
+
+    public void setStartX(int startX) {
+        while (startX + getX() > startX){
+            moveLeft(false);
+        }
+        while (startX + getX() < startX){
+            moveRight(false);
+        }
+    }
+
+    public void setStartY(int startY) {
+        while (startY + getY() > startY){
+            moveUp(false);
+        }
+        while (startY + getY() < startY){
+            moveDown(false);
+        }
+    }
+
+    public void setPointerWidth(int pointerWidth) {
+        this.pointerWidth = pointerWidth;
+    }
+
+    public void setPointerHeight(int pointerHeight) {
+        this.pointerHeight = pointerHeight;
+    }
+
+
+    public synchronized void paintMap() {
         graphicsContext.clearRect(0, 0, width, height);
         PixelWriter pixelWriter = graphicsContext.getPixelWriter();
         for (int i = startX; i < startX + width; i++) {

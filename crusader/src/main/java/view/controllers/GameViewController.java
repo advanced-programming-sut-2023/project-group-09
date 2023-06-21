@@ -15,6 +15,7 @@ import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.scene.control.Button;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.ColorAdjust;
@@ -43,7 +44,7 @@ import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
 import model.menugui.game.Troop;
-import model.menugui.game.TypBTN;
+import model.menugui.game.TypeBTN;
 import view.menus.GameMenu;
 import view.menus.LoginMenu;
 
@@ -71,9 +72,9 @@ public class GameViewController {
 
 
     //--------------------------------------------------------
-    public static ArrayList<TypBTN> typeBTNS = new ArrayList<>();
+    public static ArrayList<TypeBTN> typeBTNS = new ArrayList<>();
     public static ArrayList<ImageView> moveBTNS = new ArrayList<>();
-    public static TypBTN lastType;
+    public static TypeBTN lastType;
     public static ArrayList<Military> selectedMilitaries = new ArrayList<>();
 
     //----------------------------------------------------------
@@ -307,22 +308,28 @@ public class GameViewController {
     }
 
     public static void addTypes() {
-        double translateY = 95;
-        double translateX = 293;
+        double translateY = 100;
+        double translateX = 290;
+        int count = 0;
         for (String name : GameMenu.unitsCount.keySet()) {
             if (GameMenu.unitsCount.get(name) != 0) {
-                TypBTN btn = new TypBTN(name, GameMenu.menuBar, GameMenu.unitsCount.get(name), translateX, translateY);
-                translateX += 65;
+                System.out.println(name);
+                TypeBTN btn = new TypeBTN(name, GameMenu.menuBar, GameMenu.unitsCount.get(name), translateX, translateY);
+                translateX += 62;
                 setHoverEventForBar(btn.imageView, name);
                 typeBTNS.add(btn);
                 DropShadow ds = new DropShadow(20, Color.AQUA);
                 btn.imageView.setOnMouseClicked(mouseEvent -> {
-                    for (TypBTN typBTN : typeBTNS) {
-                        typBTN.imageView.setEffect(null);
+                    for (TypeBTN typeBTN : typeBTNS) {
+                        typeBTN.imageView.setEffect(null);
                     }
                     btn.imageView.setEffect(ds);
                     lastType = btn;
                 });
+                count++;
+                if (count > 7) {
+                    return;
+                }
             }
         }
 
@@ -1261,36 +1268,37 @@ public class GameViewController {
     }
 
     public static void createBorderRectangles(GameMap gameMap, MiniMap miniMap) {
-        Rectangle downRight = new Rectangle(10, 10);
-        Rectangle upRight = new Rectangle(10, 10);
-        Rectangle upLeft = new Rectangle(10, 10);
-        Rectangle downLeft = new Rectangle(10, 10);
-        Rectangle right = new Rectangle(10, 780);
-        Rectangle up = new Rectangle(1180, 10);
-        Rectangle left = new Rectangle(10, 780);
-        Rectangle down = new Rectangle(1180, 10);
+        GameMenu.downRight = new Rectangle(10, 10);
+        GameMenu.upRight = new Rectangle(10, 10);
+        GameMenu.upLeft = new Rectangle(10, 10);
+        GameMenu.downLeft = new Rectangle(10, 10);
+        GameMenu.right = new Rectangle(10, 780);
+        GameMenu.up = new Rectangle(1180, 10);
+        GameMenu.left = new Rectangle(10, 780);
+        GameMenu.down = new Rectangle(1180, 10);
 
-        setTranslateOfRectangle(downRight, 595, 395);
-        setTranslateOfRectangle(upRight, 595, -395);
-        setTranslateOfRectangle(upLeft, -595, -395);
-        setTranslateOfRectangle(downLeft, -595, 395);
-        setTranslateOfRectangle(right, 595, 0);
-        setTranslateOfRectangle(left, -595, 0);
-        setTranslateOfRectangle(up, 0, -395);
-        setTranslateOfRectangle(down, 0, 395);
+        setTranslateOfRectangle(GameMenu.downRight, 595, 395);
+        setTranslateOfRectangle(GameMenu.upRight, 595, -395);
+        setTranslateOfRectangle(GameMenu.upLeft, -595, -395);
+        setTranslateOfRectangle(GameMenu.downLeft, -595, 395);
+        setTranslateOfRectangle(GameMenu.right, 595, 0);
+        setTranslateOfRectangle(GameMenu.left, -595, 0);
+        setTranslateOfRectangle(GameMenu.up, 0, -395);
+        setTranslateOfRectangle(GameMenu.down, 0, 395);
 
 
-        GameMenu.root.getChildren().addAll(downRight, downLeft, upRight, upLeft, right, left, up, down);
+        GameMenu.root.getChildren().addAll(GameMenu.downRight, GameMenu.downLeft, GameMenu.upRight,
+                GameMenu.upLeft, GameMenu.right, GameMenu.left, GameMenu.up, GameMenu.down);
 
-        setEventForRectangles(downRight, 1, -1, gameMap, miniMap);
-        setEventForRectangles(downLeft, -1, -1, gameMap, miniMap);
-        setEventForRectangles(upRight, 1, 1, gameMap, miniMap);
-        setEventForRectangles(upLeft, -1, 1, gameMap, miniMap);
+        setEventForRectangles(GameMenu.downRight, 1, -1, gameMap, miniMap);
+        setEventForRectangles(GameMenu.downLeft, -1, -1, gameMap, miniMap);
+        setEventForRectangles(GameMenu.upRight, 1, 1, gameMap, miniMap);
+        setEventForRectangles(GameMenu.upLeft, -1, 1, gameMap, miniMap);
 
-        setEventForRectangles(down, 0, -1, gameMap, miniMap);
-        setEventForRectangles(left, -1, 0, gameMap, miniMap);
-        setEventForRectangles(up, 0, 1, gameMap, miniMap);
-        setEventForRectangles(right, 1, 0, gameMap, miniMap);
+        setEventForRectangles(GameMenu.down, 0, -1, gameMap, miniMap);
+        setEventForRectangles(GameMenu.left, -1, 0, gameMap, miniMap);
+        setEventForRectangles(GameMenu.up, 0, 1, gameMap, miniMap);
+        setEventForRectangles(GameMenu.right, 1, 0, gameMap, miniMap);
 
 
     }
@@ -1572,8 +1580,9 @@ public class GameViewController {
 
     public static void setSelectedUnits() {
         int count = 0;
+        selectedMilitaries.clear();
         HashMap<String, Integer> unitCount = GameHumans.getUnitHashmap();
-        for (TypBTN btn : typeBTNS) {
+        for (TypeBTN btn : typeBTNS) {
             unitCount.put(btn.name, btn.count);
             count += btn.count;
         }
@@ -1590,6 +1599,7 @@ public class GameViewController {
     }
 
     public static void moveUnits(GameTile end) {
+        System.out.println(selectedMilitaries.size());
         for (Military military : GameViewController.selectedMilitaries) {
             HumanController.militaries.clear();
             HumanController.militaries.add(military);
@@ -1657,7 +1667,43 @@ public class GameViewController {
         //
     }
 
-    public static void airAttack() {
-        //
+    public static GameTile getStartTile() {
+        for (int y = 0; y < GameController.getGame().getMap().getLength(); y++) {
+            for (int x = 0; x < GameController.getGame().getMap().getWidth(); x++) {
+                GameTile gameTile = GameMap.getGameTile(x, y);
+                if (gameTile == null) {
+                    continue;
+                }
+
+                Bounds RectA = GameMenu.upLeft.localToScene(GameMenu.upLeft.getBoundsInLocal());
+                Bounds RectC = gameTile.tileSensor.localToScene(gameTile.tileSensor.getBoundsInLocal());
+
+
+                if (RectA.intersects(RectC)) {
+                    return gameTile;
+                }
+            }
+        }
+        return null;
+    }
+    public static GameTile getEndTile() {
+        for (int y = 0; y < GameController.getGame().getMap().getLength(); y++) {
+            for (int x = 0; x < GameController.getGame().getMap().getWidth(); x++) {
+                GameTile gameTile = GameMap.getGameTile(x, y);
+                if (gameTile == null) {
+                    continue;
+                }
+
+                Bounds RectB = GameMenu.downRight.localToScene(GameMenu.downRight.getBoundsInLocal());
+                Bounds RectC = gameTile.tileSensor.localToScene(gameTile.tileSensor.getBoundsInLocal());
+
+
+                if (RectB.intersects(RectC)) {
+                    System.out.println("id " + x +" " + y);
+                    return gameTile;
+                }
+            }
+        }
+        return null;
     }
 }

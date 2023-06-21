@@ -39,6 +39,8 @@ public class GameMap extends Pane {
         this.tilesLoaded = 0;
         load = new boolean[map.getLength()][map.getWidth()];
         loadMap();
+        this.setWidth(width);
+        this.setHeight(height);
     }
 
     private void loadMap() {
@@ -53,16 +55,19 @@ public class GameMap extends Pane {
                     if (y % 2 == 1) {
                         xx = x * tileWidth - (tileWidth / 2);
                         GameTile gameTile = new GameTile(tile, xx, yy, x, y);
-
+                        TileSensor tileSensor = GameImages.getRedImageView(xx, yy, gameTile);
+                        gameTile.tileSensor = tileSensor;
                         gameTiles[y][x] = gameTile;
                         this.getChildren().add(0, gameTile);
-                        this.getChildren().add(GameImages.getRedImageView(xx, yy, gameTile));
+                        this.getChildren().add(tileSensor);
                     } else {
                         xx = x * tileWidth;
                         GameTile gameTile = new GameTile(tile, xx, yy, x, y);
+                        TileSensor tileSensor = GameImages.getRedImageView(xx, yy, gameTile);
+                        gameTile.tileSensor = tileSensor;
                         gameTiles[y][x] = gameTile;
                         this.getChildren().add(0, gameTile);
-                        this.getChildren().add(GameImages.getRedImageView(xx, yy, gameTile));
+                        this.getChildren().add(tileSensor);
                     }
                     tilesLoaded++;
                     load[y][x] = true;
@@ -71,6 +76,13 @@ public class GameMap extends Pane {
         }
     }
 
+    public void setCameraX(int cameraX) {
+        this.cameraX = cameraX;
+    }
+
+    public void setCameraY(int cameraY) {
+        this.cameraY = cameraY;
+    }
 
     public void moveRight() {
         if (cameraX == map.getWidth() - screenWidth) return;

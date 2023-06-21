@@ -229,6 +229,7 @@ public class Attack {
             return;
         }
 
+
         int enemyHp = enemy.takeDamage(military.getAttackRating());
         if (enemy.getAttack().enemy == null && enemy.getAttack().isInRange(military.getX(), military.getY(), enemy.getShootingRange())) {
             enemy.getAttack().setEnemy(military);

@@ -34,6 +34,8 @@ public class GameTile extends StackPane {
     private ImageView treeImage;
     private static int tileXOn, tileYOn;
 
+    public TileSensor tileSensor;
+
 
     public GameTile(Tile tile, double x, double y, int tileX, int tileY) {
         this.tileX = tileXOn = tileX;
