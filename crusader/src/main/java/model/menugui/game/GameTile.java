@@ -12,6 +12,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import model.building.Building;
+import model.building.castlebuildings.Gatehouse;
 import model.game.Tile;
 import model.human.Human;
 import view.controllers.GameViewController;
@@ -98,9 +99,18 @@ public class GameTile extends StackPane {
 
     public void setBuilding() {
         Building building = tile.getBuilding();
+        if (building == null && buildingImage != null) {
+            this.getChildren().remove(buildingImage);
+        }
         if (building != null && building.getEndX() == tileX && building.getEndY() == tileY) {
-            Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
-                    + "buildings/" + building.getName() + ".png").toExternalForm());
+            Image image;
+            if (building instanceof Gatehouse && ((Gatehouse)building).isRightSide()) {
+                image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                        + "buildings/" + building.getName() + "Right.png").toExternalForm());
+            } else {
+                image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                        + "buildings/" + building.getName() + ".png").toExternalForm());
+            }
             buildingImage = new ImageView(image);
             buildingImage.setTranslateX(image.getWidth() *
                     ((double) building.getLength() - building.getWidth()) / (building.getLength() + building.getWidth()) / 2);
@@ -132,7 +142,7 @@ public class GameTile extends StackPane {
             humanImage.setViewOrder(-2);
             this.setViewOrder(-tileY);
             this.getChildren().add(humanImage);
-        } ////
+        }
     }
 
     public void setTree() {

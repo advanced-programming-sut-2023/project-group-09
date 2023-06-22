@@ -525,13 +525,13 @@ public class GameController {
 
         if (building instanceof Gatehouse && !building.getName().equals("drawBridge")) {
             if (side != null && (side.equals("right") || side.equals("left"))) {
-                if (side.equals("left")) {
                     if (!MapController.checkCanPutBuilding(x, y, type, GameController.getGame().getCurrentGovernment())) {
                         return "this coordinate is not suitable!";
                     }
+                    MapController.isRightSide = side.equals("right");
                     MapController.dropBuilding(x, y, type, GameController.getGame().getCurrentGovernment());
                     return "building dropped successfully!";
-                }
+
             } else {
                 return "side field is required!";
             }

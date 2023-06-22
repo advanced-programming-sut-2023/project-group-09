@@ -14,13 +14,17 @@ import model.building.castlebuildings.Gatehouse;
 import model.building.castlebuildings.Wall;
 import model.building.storagebuildings.StorageBuilding;
 import model.buildinghandler.BuildingCounter;
+import model.game.Game;
 import model.game.Map;
 import model.game.Tile;
 import model.human.civilian.Civilian;
 import model.human.military.Engineer;
 import model.human.military.Military;
+import model.menugui.game.GameMap;
+import model.menugui.game.GameTile;
 import model.tools.Tool;
 import view.controllers.GameViewController;
+import view.menus.GameMenu;
 
 import java.util.ArrayList;
 
@@ -28,6 +32,10 @@ public class MapController {
     public static Map map;
 
     //TODO: complete setTexture conditions
+
+    // Temporary solution start\
+    public static boolean isRightSide;
+    // Temporary solution end
     public static String setTexture(int x, int y, Textures type) {
         Tile tile = map.getTile(x, y);
         if ((tile.getTree() != null && !type.equals(Textures.EARTH) && !type.equals(Textures.EARTH_AND_SAND) && !type.equals(Textures.GRASS) &&
@@ -101,12 +109,7 @@ public class MapController {
             return false;
         }
 
-        if (x + building.getWidth() >= map.getWidth()) {
-            return false;
-        }
-        if (y + building.getLength() >= map.getLength()) {
-            return false;
-        }
+
         if (building instanceof StorageBuilding && !checkCanPutStorage(x, y, (StorageBuilding) building)) {
             System.out.println("reason: this tile is pit or is moat or the texture is not suitable!");
             return false;
@@ -131,34 +134,35 @@ public class MapController {
                 return false;
             }
         }
+        ArrayList<Pair<Integer, Integer>> neighborTiles = new ArrayList<>();
 
-        for (int i = y; i < y + building.getLength(); i++) {
-            for (int j = x; j < x + building.getWidth(); j++) {
-                Tile tile = map.getTile(j, i);
-                if (tile.getTexture() == Textures.OIL && !building.getSuitableTextures().contains("oil")) {
+        for (Pair<Integer, Integer> pair : neighborTiles) {
+            int i = pair.getFirst();
+            int j = pair.getSecond();
+            Tile tile = map.getTile(i, j);
+            if (tile.getTexture() == Textures.OIL && !building.getSuitableTextures().contains("oil")) {
+                return false;
+            }
+            if (tile.getMilitaries().size() != 0 || tile.getCivilian().size() != 0) {
+                return false;
+            }
+            if (building instanceof CastleBuilding && !(building instanceof Wall)) {
+                if (!canPutCastleBuilding(i, j)) {
                     return false;
                 }
-                if (tile.getMilitaries().size() != 0 || tile.getCivilian().size() != 0) {
+            } else if (!map.getTile(i, j).getCanPutBuilding()) {
+                return false;
+            }
+            if (building.getHasSpecialTexture()) {
+                if (!building.getSuitableTextures().contains(map.getTile(i, j).getTexture().getName())) {
                     return false;
-                }
-
-                if (building instanceof CastleBuilding && !(building instanceof Wall)) {
-                    if (!canPutCastleBuilding(j, i)) {
-                        return false;
-                    }
-                } else if (!map.getTile(j, i).getCanPutBuilding()) {
-                    return false;
-                }
-
-                if (building.getHasSpecialTexture()) {
-                    if (!building.getSuitableTextures().contains(map.getTile(j, i).getTexture().getName())) {
-                        return false;
-                    }
                 }
             }
         }
-        return true;
-    }
+
+
+            return true;
+}
 
     public static boolean checkKillingPit(int x, int y) {
         Tile tile = GameController.getGame().getMap().getTile(x, y);
@@ -205,9 +209,7 @@ public class MapController {
                 System.out.println("you can't put a building here");
             }
             Tile tile = map.getTile(i, j);
-            if (building.isShouldBeOne()) {
-                deleteOtherBuildingWithThisType(building);
-            }
+
 
             tile.setCanPutBuilding(false);
             Textures textures = Textures.EARTH_AND_SAND;
@@ -216,7 +218,6 @@ public class MapController {
             }
 
             tile.setBuilding(building);
-            System.out.println(map.getTile(x, y).getBuilding() != null);
             if (building.getName().equals("stairs") && building instanceof Wall) {
                 ((Wall) building).setHeight(Wall.heightOfStairs(x, y));
                 tile.setPassable(false);
@@ -249,12 +250,13 @@ public class MapController {
                 tile.setTexture(textures);
             }
         }
-        for (Pair<Integer, Integer> pair : tiles) {
-            System.out.println(map.getTile(pair.getFirst(),pair.getSecond()).isPassable());
-        }
+
+
+
         Pair<Integer, Integer> lastPair = tiles.get(tiles.size() - 1);
         building.setStartX(lastPair.getFirst());
         building.setStartY(lastPair.getSecond());
+
 
         government.getBuildingData(type).addBuilding(building);
         if (building.getName().equals("hovel")) {
@@ -263,6 +265,14 @@ public class MapController {
 
         if (building instanceof StorageBuilding) {
             government.checkFirstStorage(building);
+        }
+
+        if (building.isShouldBeOne()) {
+            deleteOtherBuildingWithThisType(building);
+        }
+
+        if (building instanceof Gatehouse) {
+            ((Gatehouse)building).setRightSide(isRightSide);
         }
     }
 
@@ -477,25 +487,24 @@ public class MapController {
     public static void deleteOtherBuildingWithThisType(Building building) {
         Government government = GameController.getGame().getCurrentGovernment();
         BuildingCounter buildingCounter = government.getBuildingData(building.getName());
-        if (buildingCounter.getNumber() == 0) {
+        if (buildingCounter.getNumber() <= 1) {
+            System.out.println("returned!");
             return;
         }
-        // TODO : delete with refresh
         Building shouldDelete = buildingCounter.getBuildings().get(0);
-        buildingCounter.deleteBuilding(shouldDelete);
         deleteBuilding(shouldDelete);
     }
 
     public static void deleteBuilding(Building building) {
-        int xx = building.getStartX();
-        int yy = building.getStartY();
-        for (int i = yy; i < yy + building.getLength(); i++) {
-            for (int j = xx; j < xx + building.getWidth(); j++) {
-                Tile tileOfBuilding = map.getTile(j, i);
-                tileOfBuilding.setCanPutBuilding(true);
-                tileOfBuilding.setPassable(true);
-                tileOfBuilding.setBuilding(null);
-            }
+        ArrayList<Pair<Integer, Integer>> tiles = GameController.getNeighborTiles
+                (building.getEndX(), building.getEndY(), building.getWidth(), building.getLength());
+        for (Pair<Integer , Integer> pair : tiles) {
+            int i = pair.getFirst();
+            int j = pair.getSecond();
+            Tile tileOfBuilding = map.getTile(i, j);
+            tileOfBuilding.setCanPutBuilding(true);
+            tileOfBuilding.setPassable(true);
+            tileOfBuilding.setBuilding(null);
         }
         BuildingCounter buildingCounter = building.getGovernment().getBuildingData(building.getName());
         if (buildingCounter != null) {
@@ -504,6 +513,7 @@ public class MapController {
         if (building instanceof StorageBuilding) {
             ((StorageBuilding) building).deleteStorage();
         }
+        GameMap.getGameTile(building.getEndX() , building.getEndY()).refreshTile();
     }
 
 }
