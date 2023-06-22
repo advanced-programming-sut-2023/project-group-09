@@ -27,7 +27,7 @@ import java.util.Random;
 
 
 public class HumanController {
-    public static ArrayList<Military> militaries;
+    public static ArrayList<Military> militaries = new ArrayList<>();
 
     public static boolean move(Tuple endPair) {
 

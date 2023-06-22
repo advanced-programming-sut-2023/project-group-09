@@ -6,7 +6,8 @@ public enum UnitMovingState {
     ATTACK("attack"),
     AIR_ATTACK("air attack"),
     ATTACK_BUILDING("attack building"),
-    NORMAL("normal")
+    NORMAL("normal"),
+    PATROL("patrol"),
     ;
     private final String state;
 
