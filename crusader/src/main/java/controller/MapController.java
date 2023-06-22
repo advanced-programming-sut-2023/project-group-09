@@ -32,6 +32,10 @@ public class MapController {
     public static Map map;
 
     //TODO: complete setTexture conditions
+
+    // Temporary solution start\
+    public static boolean isRightSide;
+    // Temporary solution end
     public static String setTexture(int x, int y, Textures type) {
         Tile tile = map.getTile(x, y);
         if ((tile.getTree() != null && !type.equals(Textures.EARTH) && !type.equals(Textures.EARTH_AND_SAND) && !type.equals(Textures.GRASS) &&
@@ -105,12 +109,7 @@ public class MapController {
             return false;
         }
 
-        if (x + building.getWidth() >= map.getWidth()) {
-            return false;
-        }
-        if (y + building.getLength() >= map.getLength()) {
-            return false;
-        }
+
         if (building instanceof StorageBuilding && !checkCanPutStorage(x, y, (StorageBuilding) building)) {
             System.out.println("reason: this tile is pit or is moat or the texture is not suitable!");
             return false;
@@ -135,34 +134,35 @@ public class MapController {
                 return false;
             }
         }
+        ArrayList<Pair<Integer, Integer>> neighborTiles = new ArrayList<>();
 
-        for (int i = y; i < y + building.getLength(); i++) {
-            for (int j = x; j < x + building.getWidth(); j++) {
-                Tile tile = map.getTile(j, i);
-                if (tile.getTexture() == Textures.OIL && !building.getSuitableTextures().contains("oil")) {
+        for (Pair<Integer, Integer> pair : neighborTiles) {
+            int i = pair.getFirst();
+            int j = pair.getSecond();
+            Tile tile = map.getTile(i, j);
+            if (tile.getTexture() == Textures.OIL && !building.getSuitableTextures().contains("oil")) {
+                return false;
+            }
+            if (tile.getMilitaries().size() != 0 || tile.getCivilian().size() != 0) {
+                return false;
+            }
+            if (building instanceof CastleBuilding && !(building instanceof Wall)) {
+                if (!canPutCastleBuilding(i, j)) {
                     return false;
                 }
-                if (tile.getMilitaries().size() != 0 || tile.getCivilian().size() != 0) {
+            } else if (!map.getTile(i, j).getCanPutBuilding()) {
+                return false;
+            }
+            if (building.getHasSpecialTexture()) {
+                if (!building.getSuitableTextures().contains(map.getTile(i, j).getTexture().getName())) {
                     return false;
-                }
-
-                if (building instanceof CastleBuilding && !(building instanceof Wall)) {
-                    if (!canPutCastleBuilding(j, i)) {
-                        return false;
-                    }
-                } else if (!map.getTile(j, i).getCanPutBuilding()) {
-                    return false;
-                }
-
-                if (building.getHasSpecialTexture()) {
-                    if (!building.getSuitableTextures().contains(map.getTile(j, i).getTexture().getName())) {
-                        return false;
-                    }
                 }
             }
         }
-        return true;
-    }
+
+
+            return true;
+}
 
     public static boolean checkKillingPit(int x, int y) {
         Tile tile = GameController.getGame().getMap().getTile(x, y);
@@ -269,6 +269,10 @@ public class MapController {
 
         if (building.isShouldBeOne()) {
             deleteOtherBuildingWithThisType(building);
+        }
+
+        if (building instanceof Gatehouse) {
+            ((Gatehouse)building).setRightSide(isRightSide);
         }
     }
 
