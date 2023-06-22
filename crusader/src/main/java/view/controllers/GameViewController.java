@@ -1277,18 +1277,28 @@ public class GameViewController {
         GameMenu.left = new Rectangle(10, 780);
         GameMenu.down = new Rectangle(1180, 10);
 
+
+
         setTranslateOfRectangle(GameMenu.downRight, 595, 395);
         setTranslateOfRectangle(GameMenu.upRight, 595, -395);
         setTranslateOfRectangle(GameMenu.upLeft, -595, -395);
         setTranslateOfRectangle(GameMenu.downLeft, -595, 395);
         setTranslateOfRectangle(GameMenu.right, 595, 0);
         setTranslateOfRectangle(GameMenu.left, -595, 0);
+
+
         setTranslateOfRectangle(GameMenu.up, 0, -395);
         setTranslateOfRectangle(GameMenu.down, 0, 395);
 
 
         GameMenu.root.getChildren().addAll(GameMenu.downRight, GameMenu.downLeft, GameMenu.upRight,
                 GameMenu.upLeft, GameMenu.right, GameMenu.left, GameMenu.up, GameMenu.down);
+
+        GameMenu.downRight.setViewOrder(-3000);
+        GameMenu.downLeft.setViewOrder(-3000);
+        GameMenu.down.setViewOrder(-3000);
+        GameMenu.left.setViewOrder(-3000);
+        GameMenu.right.setViewOrder(-3000);
 
         setEventForRectangles(GameMenu.downRight, 1, -1, gameMap, miniMap);
         setEventForRectangles(GameMenu.downLeft, -1, -1, gameMap, miniMap);
@@ -1339,7 +1349,7 @@ public class GameViewController {
     private static void setTranslateOfRectangle(Rectangle rectangle, double x, double y) {
         rectangle.setTranslateX(x);
         rectangle.setTranslateY(y);
-        rectangle.setFill(Color.TRANSPARENT);
+        //rectangle.setFill(Color.TRANSPARENT);
     }
 
     private static void setEventOfOkButton(Button button, Stage popupStage) {

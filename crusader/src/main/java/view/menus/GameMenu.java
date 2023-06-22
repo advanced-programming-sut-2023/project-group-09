@@ -171,9 +171,6 @@ public class GameMenu extends Application {
         root.setClip(clipRectangle);
 
         menuBar.setViewOrder(-2000);
-        miniMap.setViewOrder(-1999);
-
-
         if (state == 0)
             GameViewController.createShortcutBars(menuBar, hoveringButton);
         else if (state == 1)
@@ -205,12 +202,21 @@ public class GameMenu extends Application {
         gameMap.setOnScroll(event -> {
             double zoomFactor = event.getDeltaY() > 0 ? ZOOM_FACTOR : 1 / ZOOM_FACTOR;
             if (gameMap.getScaleX() * zoomFactor > 1 && gameMap.getScaleX() * zoomFactor < 1.5) {
+                // Apply the scale and translation adjustments
+                double newWidth = gameMap.getWidth() * gameMap.getScaleX() * zoomFactor;
+                double newHeight = gameMap.getHeight() * gameMap.getScaleY() * zoomFactor;
+                double lastWidth = gameMap.getWidth() * gameMap.getScaleX();
+                double lastHeight = gameMap.getHeight() * gameMap.getScaleY();
+                double translateX = (newWidth - lastWidth)/2;
+                double translateY = (newHeight - lastHeight)/2;
+
                 gameMap.setScaleX(gameMap.getScaleX() * zoomFactor);
                 gameMap.setScaleY(gameMap.getScaleY() * zoomFactor);
-                GameTile start = GameViewController.getStartTile();
-                GameTile end = GameViewController.getEndTile();
-                gameMap.setCameraX(start.getTileX());
-                gameMap.setCameraY(start.getTileY());
+                gameMap.setTranslateX(gameMap.getTranslateX() + translateX);
+                gameMap.setTranslateY(gameMap.getTranslateY() + translateY);
+                miniMap.updatePointer(gameMap.getScaleX());
+
+
             }
 
             event.consume();

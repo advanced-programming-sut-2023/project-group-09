@@ -79,9 +79,19 @@ public class MiniMap extends StackPane {
         pointer.setTranslateY(startY - (double) height / 2 + (double) pointerHeight / 2);
     }
 
-    public void updatePointer() {
+    public void updatePointer(double zoom) {
+        double width = pointer.getWidth();
+        double height = pointer.getHeight();
+        pointerWidth = (int) Math.ceil((double) 1200 / (GameMap.tileWidth * zoom)) + 1;
+        pointerHeight = (int) Math.ceil((double) 800 / (GameMap.tileHeight * zoom/2));
         pointer.setWidth(pointerWidth);
         pointer.setHeight(pointerHeight);
+
+        double translateX = (pointerWidth - width)/2;
+        double translateY = (pointerHeight - height)/2;
+
+        pointer.setTranslateX(pointer.getTranslateX() + translateX);
+        pointer.setTranslateY(pointer.getTranslateY() + translateY);
     }
 
     public void setStartX(int startX) {
