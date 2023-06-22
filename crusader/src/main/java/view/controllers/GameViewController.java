@@ -1349,7 +1349,7 @@ public class GameViewController {
     private static void setTranslateOfRectangle(Rectangle rectangle, double x, double y) {
         rectangle.setTranslateX(x);
         rectangle.setTranslateY(y);
-        //rectangle.setFill(Color.TRANSPARENT);
+        rectangle.setFill(Color.TRANSPARENT);
     }
 
     private static void setEventOfOkButton(Button button, Stage popupStage) {

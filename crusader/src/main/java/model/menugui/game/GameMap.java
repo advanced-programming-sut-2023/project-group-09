@@ -39,8 +39,12 @@ public class GameMap extends Pane {
         this.tilesLoaded = 0;
         load = new boolean[map.getLength()][map.getWidth()];
         loadMap();
-        this.setWidth(width);
-        this.setHeight(height);
+//        this.setMaxWidth(width);
+//        this.setMaxHeight(height);
+//        this.setMinHeight(height);
+//        this.setMinWidth(width);
+//        this.setHeight(height);
+//        this.setWidth(width);
     }
 
     private void loadMap() {
