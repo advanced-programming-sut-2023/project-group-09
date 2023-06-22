@@ -14,7 +14,7 @@ import view.menus.GameMenu;
 public class TileSensor extends ImageView {
 
     public GameTile gameTile;
-
+    public boolean touch = false;
     public TileSensor(Image image, GameTile gameTile) {
         super(image);
         this.gameTile = gameTile;

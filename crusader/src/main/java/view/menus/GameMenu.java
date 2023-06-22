@@ -14,6 +14,7 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
@@ -77,7 +78,14 @@ public class GameMenu extends Application {
     public static HashMap<String, Integer> unitsCount = new HashMap<>();
     public static HashSet<Military> selectedTroops = new HashSet<>();
 
-    private static final double ZOOM_FACTOR = 1.1;
+
+    //-----------------------------------
+
+
+
+
+
+
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -103,8 +111,8 @@ public class GameMenu extends Application {
         root.getChildren().addAll(gameMap, menuBar);
         selectCursor = new Rectangle(50, 75);
         selectCursor.setFill(new ImagePattern(GameImages.imageViews.get("selectMove")));
-
-
+        Rectangle clipRectangle = new Rectangle(1200, 800);
+        root.setClip(clipRectangle);
         MapController.dropMilitary(10, 5, "archerBow", GameController.getGame().getCurrentGovernment());
         MapController.dropMilitary(12, 5, "slinger", GameController.getGame().getCurrentGovernment());
         MapController.dropMilitary(13, 10, "slave", GameController.getGame().getCurrentGovernment());
@@ -145,6 +153,9 @@ public class GameMenu extends Application {
         stage.show();
     }
 
+    public static void renderMap(){
+
+    }
     public static void createGameBar(int state) {
 //        state: 0=buildings  /  1=nemidunam(farzam midune)  /  2=menu
         barImage = new ImageView(GameImages.imageViews.get("bar"));
@@ -166,9 +177,6 @@ public class GameMenu extends Application {
         hoveringButton.setStroke(Color.BLACK);
         menuBar.getChildren().add(hoveringButton);
         hoveringBarStateText = hoveringButton;
-
-        Rectangle clipRectangle = new Rectangle(1200, 800);
-        root.setClip(clipRectangle);
 
         menuBar.setViewOrder(-2000);
         if (state == 0)
@@ -198,28 +206,6 @@ public class GameMenu extends Application {
                 root.getChildren().remove(selectCursor);
             }
 
-        });
-        gameMap.setOnScroll(event -> {
-            double zoomFactor = event.getDeltaY() > 0 ? ZOOM_FACTOR : 1 / ZOOM_FACTOR;
-            if (gameMap.getScaleX() * zoomFactor > 1 && gameMap.getScaleX() * zoomFactor < 1.5) {
-                // Apply the scale and translation adjustments
-                double newWidth = gameMap.getWidth() * gameMap.getScaleX() * zoomFactor;
-                double newHeight = gameMap.getHeight() * gameMap.getScaleY() * zoomFactor;
-                double lastWidth = gameMap.getWidth() * gameMap.getScaleX();
-                double lastHeight = gameMap.getHeight() * gameMap.getScaleY();
-                double translateX = (newWidth - lastWidth)/2;
-                double translateY = (newHeight - lastHeight)/2;
-
-                gameMap.setScaleX(gameMap.getScaleX() * zoomFactor);
-                gameMap.setScaleY(gameMap.getScaleY() * zoomFactor);
-                gameMap.setTranslateX(gameMap.getTranslateX() + translateX);
-                gameMap.setTranslateY(gameMap.getTranslateY() + translateY);
-                miniMap.updatePointer(gameMap.getScaleX());
-
-
-            }
-
-            event.consume();
         });
         scene.setOnKeyPressed(keyEvent -> {
             String keyName = keyEvent.getCode().getName();

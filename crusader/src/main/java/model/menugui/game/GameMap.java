@@ -4,17 +4,18 @@ import controller.gamestructure.GameImages;
 import javafx.scene.layout.Pane;
 import model.game.Map;
 import model.game.Tile;
+import view.menus.GameMenu;
 
 import java.util.ArrayList;
 
 public class GameMap extends Pane {
-    private Map map;
+    private final Map map;
     private double width;
     private double height;
     public static double tileWidth;
     public static double tileHeight;
-    private int screenWidth;
-    private int screenHeight;
+    private final int screenWidth;
+    private final int screenHeight;
     private int cameraX;
     private int cameraY;
     private int tilesLoaded;
@@ -22,7 +23,7 @@ public class GameMap extends Pane {
     public static ArrayList<Troop>[][] gameTroops;
     private final boolean[][] load;
 
-
+    private static final double ZOOM_FACTOR = 1.1;
 
     public GameMap(Map map, double cameraX, double cameraY, double tileWidth, double tileHeight) {
         GameMap.tileWidth = (tileWidth * this.getScaleX());
@@ -39,19 +40,18 @@ public class GameMap extends Pane {
         this.tilesLoaded = 0;
         load = new boolean[map.getLength()][map.getWidth()];
         loadMap();
-//        this.setMaxWidth(width);
-//        this.setMaxHeight(height);
-//        this.setMinHeight(height);
-//        this.setMinWidth(width);
-//        this.setHeight(height);
-//        this.setWidth(width);
+        this.setOnScroll(event -> {
+            double zoomFactor = event.getDeltaY() > 0 ? ZOOM_FACTOR : 1 / ZOOM_FACTOR;
+            zoom(zoomFactor);
+            event.consume();
+        });
     }
 
-    private void loadMap() {
+    public void loadMap() {
         if (tilesLoaded == map.getWidth() * map.getLength())
             return;
-        for (int y = cameraY; y < Math.min(cameraY + screenHeight, map.getLength()); y++) {
-            for (int x = cameraX; x < Math.min(cameraX + screenWidth, map.getWidth()); x++) {
+        for (int y = 0; y < map.getLength(); y++) {
+            for (int x = 0; x < map.getWidth(); x++) {
                 if (!load[y][x]) {
                     Tile tile = map.getTile(x, y);
                     double xx;
@@ -72,12 +72,38 @@ public class GameMap extends Pane {
                         gameTiles[y][x] = gameTile;
                         this.getChildren().add(0, gameTile);
                         this.getChildren().add(tileSensor);
+                        gameTile.setScaleX(1.1);
+                        gameTile.setScaleX(1);
                     }
                     tilesLoaded++;
                     load[y][x] = true;
                 }
             }
         }
+    }
+
+    public void zoom(double zoomFactor){
+        if (this.getScaleX() * zoomFactor > 1 && this.getScaleX() * zoomFactor < 1.5) {
+            // Apply the scale and translation adjustments
+            double newWidth = this.getWidth() * this.getScaleX() * zoomFactor;
+            double newHeight = this.getHeight() * this.getScaleY() * zoomFactor;
+            double lastWidth = this.getWidth() * this.getScaleX();
+            double lastHeight = this.getHeight() * this.getScaleY();
+            double translateX = (newWidth - lastWidth)/2;
+            double translateY = (newHeight - lastHeight)/2;
+            this.setScaleX(this.getScaleX() * zoomFactor);
+            this.setScaleY(this.getScaleY() * zoomFactor);
+            this.setTranslateX(this.getTranslateX() + translateX);
+            this.setTranslateY(this.getTranslateY() + translateY);
+            GameMenu.miniMap.updatePointer(this.getScaleX());
+        }
+    }
+    public Map getMap() {
+        return map;
+    }
+
+    public int getScreenWidth() {
+        return screenWidth;
     }
 
     public void setCameraX(int cameraX) {
@@ -88,31 +114,31 @@ public class GameMap extends Pane {
         this.cameraY = cameraY;
     }
 
+    public int getScreenHeight() {
+        return screenHeight;
+    }
+
     public void moveRight() {
         if (cameraX == map.getWidth() - screenWidth) return;
         cameraX++;
-        loadMap();
         this.setTranslateX(this.getTranslateX() - (tileWidth * this.getScaleX()));
     }
 
     public void moveLeft() {
         if (cameraX == 0) return;
         cameraX--;
-        loadMap();
         this.setTranslateX(this.getTranslateX() + (tileWidth * this.getScaleX()));
     }
 
     public void moveUp() {
         if (cameraY == 0) return;
         cameraY--;
-        loadMap();
         this.setTranslateY(this.getTranslateY() + (tileHeight * this.getScaleY()) / 2);
     }
 
     public void moveDown() {
         if (cameraY == map.getLength() - screenHeight) return;
         cameraY++;
-        loadMap();
         this.setTranslateY(this.getTranslateY() - (tileHeight * this.getScaleY()) / 2);
     }
 
@@ -120,7 +146,6 @@ public class GameMap extends Pane {
         if (cameraX == 0 || cameraY == 0) return;
         cameraX--;
         cameraY--;
-        loadMap();
         this.setTranslateX(this.getTranslateX() + (tileWidth * this.getScaleX()));
         this.setTranslateY(this.getTranslateY() + (tileHeight * this.getScaleY()) / 2);
     }
@@ -129,7 +154,6 @@ public class GameMap extends Pane {
         if (cameraX == map.getWidth() - screenWidth || cameraY == 0) return;
         if (cameraX != map.getWidth() - screenWidth) cameraX++;
         if (cameraY != 0) cameraY--;
-        loadMap();
         this.setTranslateX(this.getTranslateX() - (tileWidth * this.getScaleX()));
         this.setTranslateY(this.getTranslateY() + (tileHeight * this.getScaleY()) / 2);
     }
@@ -138,7 +162,6 @@ public class GameMap extends Pane {
         if (cameraX == map.getWidth() - screenWidth || cameraY == map.getLength() - screenHeight) return;
         if (cameraX != map.getWidth() - screenWidth) cameraX++;
         if (cameraY != map.getLength() - screenHeight) cameraY++;
-        loadMap();
         this.setTranslateX(this.getTranslateX() - (tileWidth * this.getScaleX()));
         this.setTranslateY(this.getTranslateY() - (tileHeight * this.getScaleY()) / 2);
     }
@@ -147,7 +170,6 @@ public class GameMap extends Pane {
         if (cameraX == 0 || cameraY == map.getLength() - screenHeight) return;
         if (cameraX != 0) cameraX--;
         if (cameraY != map.getLength() - screenHeight) cameraY++;
-        loadMap();
         this.setTranslateX(this.getTranslateX() + (tileWidth * this.getScaleX()));
         this.setTranslateY(this.getTranslateY() - (tileHeight * this.getScaleY()) / 2);
     }

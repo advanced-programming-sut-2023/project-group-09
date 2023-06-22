@@ -1677,41 +1677,12 @@ public class GameViewController {
         //
     }
 
-    public static GameTile getStartTile() {
+    public static GameTile touchTile(double zoom) {
         for (int y = 0; y < GameController.getGame().getMap().getLength(); y++) {
             for (int x = 0; x < GameController.getGame().getMap().getWidth(); x++) {
                 GameTile gameTile = GameMap.getGameTile(x, y);
-                if (gameTile == null) {
-                    continue;
-                }
-
-                Bounds RectA = GameMenu.upLeft.localToScene(GameMenu.upLeft.getBoundsInLocal());
-                Bounds RectC = gameTile.tileSensor.localToScene(gameTile.tileSensor.getBoundsInLocal());
-
-
-                if (RectA.intersects(RectC)) {
-                    return gameTile;
-                }
-            }
-        }
-        return null;
-    }
-    public static GameTile getEndTile() {
-        for (int y = 0; y < GameController.getGame().getMap().getLength(); y++) {
-            for (int x = 0; x < GameController.getGame().getMap().getWidth(); x++) {
-                GameTile gameTile = GameMap.getGameTile(x, y);
-                if (gameTile == null) {
-                    continue;
-                }
-
-                Bounds RectB = GameMenu.downRight.localToScene(GameMenu.downRight.getBoundsInLocal());
-                Bounds RectC = gameTile.tileSensor.localToScene(gameTile.tileSensor.getBoundsInLocal());
-
-
-                if (RectB.intersects(RectC)) {
-                    System.out.println("id " + x +" " + y);
-                    return gameTile;
-                }
+                gameTile.setScaleX(gameTile.getScaleX() * zoom);
+                gameTile.setScaleY(gameTile.getScaleY() * zoom);
             }
         }
         return null;

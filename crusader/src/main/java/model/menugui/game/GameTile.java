@@ -33,7 +33,7 @@ public class GameTile extends StackPane {
     private ImageView humanImage;
     private ImageView treeImage;
     private static int tileXOn, tileYOn;
-
+    public boolean touch = false;
     public TileSensor tileSensor;
 
 
