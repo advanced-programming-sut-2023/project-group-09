@@ -130,7 +130,7 @@ public class GameTile extends StackPane {
             humanImage.setViewOrder(-2);
             this.setViewOrder(-tileY);
             this.getChildren().add(humanImage);
-        }
+        } ////
     }
 
     public void setTree() {
