@@ -28,7 +28,7 @@ public class BuildingCounter {
         this.buildings.add(building);
     }
     public void deleteBuilding(Building building){
-        buildings.remove(building);
-        number--;
+        this.buildings.remove(building);
+        this.number--;
     }
 }

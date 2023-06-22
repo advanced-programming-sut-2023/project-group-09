@@ -98,6 +98,9 @@ public class GameTile extends StackPane {
 
     public void setBuilding() {
         Building building = tile.getBuilding();
+        if (building == null && buildingImage != null) {
+            this.getChildren().remove(buildingImage);
+        }
         if (building != null && building.getEndX() == tileX && building.getEndY() == tileY) {
             Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
                     + "buildings/" + building.getName() + ".png").toExternalForm());
@@ -132,7 +135,7 @@ public class GameTile extends StackPane {
             humanImage.setViewOrder(-2);
             this.setViewOrder(-tileY);
             this.getChildren().add(humanImage);
-        } ////
+        }
     }
 
     public void setTree() {
