@@ -631,8 +631,23 @@ public class GameViewController {
     }
 
     private static void setCenterOfEditLand() {
+        putEditTextureImageView("earthAndStoneIcon", "Earth And Stones"
+                , Textures.EARTH, 290, 85, 0.2);
+        putEditTextureImageView("rocksIcon", "Rocks"
+                , Textures.ROCK_TEXTURE, 270, 105, 0.2);
+        putEditTextureImageView("ironTextureIcon", "Iron"
+                , Textures.IRON_TEXTURE, 360, 90, 0.2);
+
+        putEditTextureImageView("drivenSandIcon", "Driven Sand"
+                , Textures.EARTH_AND_SAND, 360, 40, 0.2);
+        putEditTextureImageView("scrubIcon", "Scrub"
+                , Textures.GRASS, 450, 60, 0.2);
+        putEditTextureImageView("thickScrubIcon", "Thick Scrub"
+                , Textures.THICK_GRASS, 450, 120, 0.2);
+        putEditTextureImageView("oasisGrassIcon", "Oasis Grass"
+                , Textures.OASIS_GRASS, 520, 60, 0.2);
         putEditTextureImageView("bouldersIcon", "Boulder"
-                , Textures.BOULDER, 200, 20, 0.2, "boulder");
+                , Textures.BOULDER, 500, 70, 0.2);
     }
 
     public static void createShortcutBars2(Pane gamePane, Text text) {
@@ -1035,7 +1050,7 @@ public class GameViewController {
         return text;
     }
 
-    private static void putEditTextureImageView(String fileName, String name, Textures texture, double x, double y, double size, String picFileName) {
+    private static void putEditTextureImageView(String fileName, String name, Textures texture, double x, double y, double size) {
         ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/" + fileName + ".png");
         icon.setTranslateX(x);
@@ -1056,27 +1071,15 @@ public class GameViewController {
             }
         });
 
-        Image image = new Image(GameViewController.class.getResource(
-                Paths.TEXTURE_IMAGES.getPath()).toExternalForm() + picFileName + ".png");
-        ImageView imageView = new ImageView(image);
-        imageView.setViewOrder(-10);
 
         icon.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if (!GameMenu.gameMap.getChildren().contains(imageView))
-                    GameMenu.gameMap.getChildren().add(imageView);
                 isTextureSelected = true;
-                imageView.setTranslateX(GameMenu.gameMap.getCameraX() * GameMap.tileWidth +
-                        mouseEvent.getScreenX() - (GameMenu.scene.getWidth() - 1200) / 2 - image.getWidth() * 0.5);
-                imageView.setTranslateY(GameMenu.gameMap.getCameraY() * GameMap.tileHeight / 2 +
-                        mouseEvent.getScreenY() - (GameMenu.scene.getHeight() - 800) / 2 - image.getHeight());
-                imageView.setOpacity(0.6);
                 GameMenu.gameMap.setOnMouseDragged(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         if (mouseEvent.getButton() == MouseButton.PRIMARY && isTextureSelected) {
-                            GameMenu.gameMap.getChildren().remove(imageView);
                             Pair<Integer, Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
                             tileX = pair.getFirst();
                             tileY = pair.getSecond();
@@ -1085,7 +1088,6 @@ public class GameViewController {
                             GameMap.getGameTile(tileX, tileY).refreshTile();
                         } else {
                             isTextureSelected = false;
-                            GameMenu.gameMap.getChildren().remove(imageView);
                         }
                     }
                 });
@@ -1095,7 +1097,6 @@ public class GameViewController {
                     public void handle(MouseEvent mouseEvent) {
                         if (mouseEvent.getButton() == MouseButton.SECONDARY) {
                             isTextureSelected = false;
-                            GameMenu.gameMap.getChildren().remove(imageView);
                         }
                     }
                 });
