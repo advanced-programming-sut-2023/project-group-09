@@ -468,6 +468,7 @@ public class GameViewController {
         GameMenu.selectedArea.setHeight(0);
         GameMenu.selectedTiles.clear();
         GameMenu.movingState = UnitMovingState.NORMAL.getState();
+        GameViewController.setCenterOfBar(null);
     }
 
     public static void unselectTilesWithOutUnits() {
@@ -485,6 +486,7 @@ public class GameViewController {
         GameMenu.selectedArea.setWidth(0);
         GameMenu.selectedArea.setHeight(0);
         GameMenu.selectedTiles.clear();
+        GameViewController.setCenterOfBar(null);
     }
 
 
