@@ -6,10 +6,12 @@ import controller.human.HumanController;
 import enumeration.Paths;
 import enumeration.UnitMovingState;
 import enumeration.dictionary.Trees;
+import javafx.event.EventHandler;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseDragEvent;
 import model.building.Building;
 import model.building.castlebuildings.Gatehouse;
 import model.game.Tile;
@@ -221,7 +223,7 @@ public class GameTile {
         });
 
         textureImage.setOnMouseClicked(mouseEvent -> {
-            if (mouseEvent.getButton() == MouseButton.PRIMARY && !GameMenu.selectedUnit) {
+            if (mouseEvent.getButton() == MouseButton.PRIMARY && !GameMenu.selectedUnit && !GameViewController.isTextureSelected) {
                 GameViewController.unselectTiles();
                 GameMenu.startSelectionTile = this;
                 GameMenu.endSelectionTile = this;
@@ -249,14 +251,14 @@ public class GameTile {
                         }
                     }
                 }
-            } else if (GameMenu.isSelected && mouseEvent.getButton() == MouseButton.SECONDARY) {
+            } else if (GameMenu.isSelected && mouseEvent.getButton() == MouseButton.SECONDARY && !GameViewController.isTextureSelected) {
                 GameViewController.unselectTiles();
-            } else if (GameMenu.selectedUnit) {
+            } else if (GameMenu.selectedUnit && !GameViewController.isTextureSelected) {
                 GameViewController.doAction(true, this);
                 GameMenu.root.getChildren().remove(GameMenu.selectCursor);
                 GameMenu.movingState = UnitMovingState.NORMAL.getState();
                 GameViewController.unselectTilesWithOutUnits();
-            } else if (GameMenu.isSelected) {
+            } else if (GameMenu.isSelected && !GameViewController.isTextureSelected) {
                 GameViewController.unselectTiles();
             }
 
@@ -265,6 +267,13 @@ public class GameTile {
                 GameViewController.shopMenuPhase = -1;
                 GameViewController.currentItem = null;
                 GameViewController.currentCategory = null;
+            }
+        });
+
+        textureImage.setOnMouseDragEntered(new EventHandler<MouseDragEvent>() {
+            @Override
+            public void handle(MouseDragEvent mouseDragEvent) {
+
             }
         });
     }
