@@ -1204,8 +1204,9 @@ public class GameViewController {
             }
             if (error) return;
 
+            int price = (priceField.isDisable()) ? 0 : Integer.parseInt(priceField.getText());
             String message = TradeController.tradeGoods(currentItem, Integer.parseInt(amountField.getText()),
-                    Integer.parseInt(priceField.getText()), messageField.getText());
+                    price, messageField.getText());
             String popUpType = (message.charAt(0) == 'y') ? "error" : "success";
             MenuPopUp popUp = new MenuPopUp(GameMenu.root, 400, 400, popUpType, message);
             if (message.charAt(0) == 'r') setCenterOfBar("shopItem");
