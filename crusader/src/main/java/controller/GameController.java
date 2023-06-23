@@ -1036,14 +1036,22 @@ public class GameController {
             int startY = Math.min(start.getTileY(), end.getTileY());
             int endX = Math.max(start.getTileX(), end.getTileX());
             int endY = Math.max(start.getTileY(), end.getTileY());
-            for (int i = startX; i <= endX; i++) {
-                for (int j = startY; j <= endY; j++) {
-                    tiles.add(GameMap.getGameTile(i, j));
+            int headX = startX, headY = startY, x = startX, y = startY;
+            for (int i = 0; i < endY - startY + 1; i++) {
+                int indent = ((endY - startY) % 2 == 0 && i % 2 == 0) ? 1 : 0;
+                for (int j = 0; j < endX - startX + indent; j++) {
+                    tiles.add(GameMap.getGameTile(x++, y));
                 }
+                if (i % 2 == 0){
+                    if (headY % 2 == 0) headX++;
+                    headY++;
+                } else {
+                    if (headY % 2 != 0) headX--;
+                    headY++;
+                }
+                x = headX;
+                y = headY;
             }
-//            for (int i = 0; i < endY - startY + 1; i++) {
-//
-//            }
             return tiles;
         }
 
