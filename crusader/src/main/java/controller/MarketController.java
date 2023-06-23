@@ -3,7 +3,9 @@ package controller;
 import controller.gamestructure.GameGoods;
 import model.Government;
 import model.goods.Goods;
+import model.menugui.MenuPopUp;
 import model.menugui.MenuTextField;
+import view.menus.GameMenu;
 
 import java.util.HashMap;
 
@@ -21,8 +23,11 @@ public class MarketController {
     }
 
     public static boolean buyItem(String name, MenuTextField buyAmount) {
-        int amount = validateAmount(buyAmount);
-        if (amount == 0) return false;
+        if (buyAmount.getText().isEmpty() || buyAmount.getText() == null) {
+            buyAmount.handlingError("amount is required!");
+            return false;
+        }
+        int amount = Integer.parseInt(buyAmount.getText());
         Goods product = GameGoods.getProduct(name);
         int cost = product.getPrice() * amount;
         Government government = GameController.getGame().getCurrentGovernment();
@@ -31,11 +36,14 @@ public class MarketController {
 
         cost = product.getPrice() * addedCount;
         if (addedCount == 0) {
-            buyAmount.handlingError("storage is full!");
+            MenuPopUp popUp = new MenuPopUp(GameMenu.root, 400, 400, "error", "storage is full!");
+            GameMenu.root.getChildren().add(popUp);
             return false;
         }
         if (addedCount == -1) {
-            buyAmount.handlingError("no " + product.getNameOfStorage() + " to store this product!");
+            MenuPopUp popUp = new MenuPopUp(GameMenu.root, 400, 400, "error",
+                    "no " + product.getNameOfStorage() + " to store this product!");
+            GameMenu.root.getChildren().add(popUp);
             return false;
         }
 
@@ -44,41 +52,24 @@ public class MarketController {
     }
 
     public static boolean sellItem(String name, MenuTextField sellAmount) {
-        int amount = validateAmount(sellAmount);
-        if (amount == 0) return false;
+        if (sellAmount.getText().isEmpty() || sellAmount.getText() == null) {
+            sellAmount.handlingError("amount is required!");
+            return false;
+        }
+        int amount = Integer.parseInt(sellAmount.getText());
         Goods product = GameGoods.getProduct(name);
         int cost = (int) Math.ceil(product.getPrice() * 0.5) * amount;
         Government government = GameController.getGame().getCurrentGovernment();
 
         boolean check = GovernmentController.consumeProduct(government, name, amount);
         if (!check) {
-            sellAmount.handlingError("not enough resource!");
+            MenuPopUp popUp = new MenuPopUp(GameMenu.root, 400, 400, "error",
+                    "not enough resource!");
+            GameMenu.root.getChildren().add(popUp);
             return false;
         }
         government.addGold(cost);
         return true;
-    }
-
-    public static int validateAmount(MenuTextField amount) {
-        amount.clearErrorOrMessage();
-        if (MarketController.checkNullFields(amount.getText())) {
-            amount.handlingError("amount is required!");
-            return 0;
-        }
-
-        int amountOfGoods = 0;
-        try {
-            amountOfGoods = Integer.parseInt(amount.getText());
-        } catch (Exception e) {
-            amount.handlingError("invalid amount!");
-            return 0;
-        }
-
-        if (amountOfGoods <= 0) {
-            amount.handlingError("amount should be positive!");
-            return 0;
-        }
-        return amountOfGoods;
     }
 
     public static boolean checkNullFields(String input) {

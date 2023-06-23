@@ -1,6 +1,5 @@
 package controller;
 
-import controller.gamestructure.GameGoods;
 import model.Government;
 import model.Trade;
 
@@ -19,16 +18,15 @@ public class TradeController {
     }
 
     public static String tradeGoods(String resourceType, int resourceAmount, int price, String message) {
-        String validateMessage = validateTradeItems(resourceType, resourceAmount, price, message);
-        if (validateMessage != null) {
-            return validateMessage;
+        if (price > GameController.getGame().getCurrentGovernment().getGold()) {
+            return "your gold isn't enough!";
         }
         Government currentGovernment = GameController.getGame().getCurrentGovernment();
         Trade trade = new Trade(message, resourceType, resourceAmount, price, currentGovernment, targetGovernment);
         currentGovernment.addSentTrade(trade);
         targetGovernment.addReceivedTrade(trade);
         allTrades.put(trade.getId(), trade);
-        return "request sent successfully!";
+        return "request sent successfully";
     }
 
     public static String acceptTrade(String id, String message) {
@@ -130,32 +128,6 @@ public class TradeController {
             output += "you don't have any accepted received requests/donations!\n";
         }
         return output.substring(0, output.length() - 1);
-    }
-
-    public static String validateTradeItems(String resourceType, int resourceAmount, int price, String message) {
-        if (checkNullFields(resourceType)) {
-            return "resource type field is required!";
-        }
-        if (checkNullFields(resourceAmount)) {
-            return "resource amount field is required!";
-        }
-        if (checkNullFields(price)) {
-            return "price field is required!";
-        }
-        if (checkNullFields(message)) {
-            return "message field is required!";
-        }
-
-        if (GameGoods.getProduct(resourceType) == null) {
-            return "resource type is invalid!";
-        }
-        if (price > GameController.getGame().getCurrentGovernment().getGold()){
-            return "your gold isn't enough!";
-        }
-        if (resourceAmount == 0) {
-            return "amount value can not be 0!";
-        }
-        return null;
     }
 
     private static String makeTradeInfo(Trade trade) {
