@@ -61,7 +61,8 @@ public class GameViewController {
     public static int tileX, tileY;
     public static int shopMenuPhase = -1;
     public static String currentCategory;
-    public static String currentItem, droppedBuildingName, droppedPicFileName;
+    public static String currentItem , droppedBuildingName , droppedPicFileName;
+    public static Textures selectedTexture;
 
     public static HashMap<String, String> buildingNameToFileName = new HashMap<>();
     public static HashMap<String, String> buildingNameToPicName = new HashMap<>();
@@ -466,6 +467,7 @@ public class GameViewController {
         GameMenu.selectedArea.setHeight(0);
         GameMenu.selectedTiles.clear();
         GameMenu.movingState = UnitMovingState.NORMAL.getState();
+        GameViewController.setCenterOfBar(null);
     }
 
     public static void unselectTilesWithOutUnits() {
@@ -483,6 +485,7 @@ public class GameViewController {
         GameMenu.selectedArea.setWidth(0);
         GameMenu.selectedArea.setHeight(0);
         GameMenu.selectedTiles.clear();
+        GameViewController.setCenterOfBar(null);
     }
 
 
@@ -1515,13 +1518,13 @@ public class GameViewController {
         int halfTileY = (int) ((mouseEvent.getScreenY() -
                 (GameMenu.scene.getHeight() - 800) / 2) / ((double) GameMap.tileHeight / 2));
         Pair<Integer, Integer> pair;
-        if (halfTileX % 2 == 1) {
-            pair = checkNearestTile(mouseEvent, (halfTileX - 1) / 2, (halfTileX - 1) / 2, halfTileY, halfTileY - 1);
+        if (halfTileX % 2 == 0) {
+            pair = checkNearestTile(mouseEvent, halfTileX / 2, halfTileX / 2, halfTileY, halfTileY - 1);
         } else {
             if (halfTileY % 2 == 1) {
-                pair = checkNearestTile(mouseEvent, halfTileX / 2 - 1, halfTileX / 2, halfTileY, halfTileY - 1);
+                pair = checkNearestTile(mouseEvent, (halfTileX-1)/2,(halfTileX+1)/2 , halfTileY-1, halfTileY);
             } else {
-                pair = checkNearestTile(mouseEvent, halfTileX / 2 - 1, halfTileX / 2, halfTileY - 1, halfTileY);
+                pair = checkNearestTile(mouseEvent, (halfTileX+1)/2, (halfTileX-1)/2, halfTileY - 1, halfTileY);
             }
         }
         return new Pair<>(pair.getFirst() + GameMenu.gameMap.getCameraX(),
