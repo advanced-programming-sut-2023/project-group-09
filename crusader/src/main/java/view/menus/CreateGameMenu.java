@@ -73,7 +73,6 @@ public class CreateGameMenu extends Application {
         makeBackButton();
         makeStartGameButton();
 
-
         menuBox.getChildren().add(addGovernment);
         stage.setTitle("Create New Game");
 

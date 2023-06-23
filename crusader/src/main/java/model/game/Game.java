@@ -64,6 +64,15 @@ public class Game {
         return currentGovernment;
     }
 
+    public Government getGovernmentByUsername(String username) {
+        for (int i = 0; i < governments.size(); i++) {
+            Government government = governments.get(i);
+            if (government.getUser().getUsername().equals(username))
+                return government;
+        }
+        return null;
+    }
+
     public void setCurrentGovernment(Government currentGovernment) {
         this.currentGovernment = currentGovernment;
     }

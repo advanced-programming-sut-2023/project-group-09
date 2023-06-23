@@ -6,10 +6,12 @@ import controller.human.HumanController;
 import enumeration.Paths;
 import enumeration.UnitMovingState;
 import enumeration.dictionary.Trees;
+import javafx.event.EventHandler;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseDragEvent;
 import model.building.Building;
 import model.building.castlebuildings.Gatehouse;
 import model.game.Tile;
@@ -65,6 +67,7 @@ public class GameTile {
         setTexture();
         setBuilding();
         setTree();
+        setPit();
     }
 
     public void selectTile() {
@@ -114,12 +117,12 @@ public class GameTile {
             GameMenu.gameMap.getChildren().add(buildingImage);
             buildingImage.setOnMouseClicked(mouseEvent -> {
                 if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-                    if (mouseEvent.getClickCount() == 1) {
-                        GameViewController.setCenterOfBar(building.getName());
-                    } else if (mouseEvent.getClickCount() == 2) {
+                    if (mouseEvent.getClickCount() == 2) {
                         FileController.copyBuildingNameToClipboard(tile.getBuilding().getName());
                         GameMenu.hoveringBarStateText.setText(GameViewController.buildingNameToName
                                 .get(tile.getBuilding().getName()) + " Copied!");
+                    } else if (mouseEvent.getClickCount() == 1) {
+                        GameViewController.setCenterOfBar(building.getName());
                     }
                 }
             });
@@ -140,6 +143,28 @@ public class GameTile {
             treeImage.setTranslateX(textureImage.getTranslateX() - image.getWidth() / 2 + textureImage.getFitWidth() / 2);
             treeImage.setViewOrder(-tileY - 1);
             GameMenu.gameMap.getChildren().add(treeImage);
+        }
+    }
+
+    public void setPit() {
+        if (tile.isPit()) {
+            System.out.println("is pit!");
+            Image image;
+            image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                    + "buildings/killingPit.png").toExternalForm());
+            buildingImage = new ImageView(image);
+            buildingImage.setTranslateX(-image.getWidth() / 2 + textureImage.getFitWidth() / 2 + textureImage.getTranslateX());
+            buildingImage.setTranslateY(-image.getHeight()+ textureImage.getFitHeight()+ textureImage.getTranslateY());
+            buildingImage.setViewOrder(-tileY - 1);
+            GameMenu.gameMap.getChildren().add(buildingImage);
+            buildingImage.setOnMouseClicked(mouseEvent -> {
+                if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+                    if (mouseEvent.getClickCount() == 2) {
+                        FileController.copyBuildingNameToClipboard("killingPit");
+                        GameMenu.hoveringBarStateText.setText("Killing Pit Copied!");
+                    }
+                }
+            });
         }
     }
 
@@ -198,7 +223,7 @@ public class GameTile {
         });
 
         textureImage.setOnMouseClicked(mouseEvent -> {
-            if (mouseEvent.getButton() == MouseButton.PRIMARY && !GameMenu.selectedUnit) {
+            if (mouseEvent.getButton() == MouseButton.PRIMARY && !GameMenu.selectedUnit && !GameViewController.isTextureSelected) {
                 GameViewController.unselectTiles();
                 GameMenu.startSelectionTile = this;
                 GameMenu.endSelectionTile = this;
@@ -226,14 +251,14 @@ public class GameTile {
                         }
                     }
                 }
-            } else if (GameMenu.isSelected && mouseEvent.getButton() == MouseButton.SECONDARY) {
+            } else if (GameMenu.isSelected && mouseEvent.getButton() == MouseButton.SECONDARY && !GameViewController.isTextureSelected) {
                 GameViewController.unselectTiles();
-            } else if (GameMenu.selectedUnit) {
+            } else if (GameMenu.selectedUnit && !GameViewController.isTextureSelected) {
                 GameViewController.doAction(true, this);
                 GameMenu.root.getChildren().remove(GameMenu.selectCursor);
                 GameMenu.movingState = UnitMovingState.NORMAL.getState();
                 GameViewController.unselectTilesWithOutUnits();
-            } else if (GameMenu.isSelected) {
+            } else if (GameMenu.isSelected && !GameViewController.isTextureSelected) {
                 GameViewController.unselectTiles();
             }
 
@@ -242,6 +267,13 @@ public class GameTile {
                 GameViewController.shopMenuPhase = -1;
                 GameViewController.currentItem = null;
                 GameViewController.currentCategory = null;
+            }
+        });
+
+        textureImage.setOnMouseDragEntered(new EventHandler<MouseDragEvent>() {
+            @Override
+            public void handle(MouseDragEvent mouseDragEvent) {
+
             }
         });
     }

@@ -111,7 +111,7 @@ public class GameMenu extends Application {
         menuBar.setMaxHeight(220);
         root.getChildren().addAll(gameMap, menuBar);
         selectCursor = new Rectangle(50, 75);
-        selectCursor.setFill(new ImagePattern(GameImages.imageViews.get("selectMove")));
+//        selectCursor.setFill(new ImagePattern(GameImages.imageViews.get("selectMove")));
         Rectangle clipRectangle = new Rectangle(1200, 800);
         root.setClip(clipRectangle);
         MapController.dropMilitary(14, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());

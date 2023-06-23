@@ -986,10 +986,10 @@ public class GameController {
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < width; j++) {
                 neighborTiles.add(new Pair<>(x, y));
-                if (y % 2 == 0) x--;
+                if (y % 2 != 0) x--;
                 y--;
             }
-            if (headY % 2 == 1) headX++;
+            if (headY % 2 == 0) headX++;
             headY--;
             x = headX;
             y = headY;
@@ -1001,28 +1001,28 @@ public class GameController {
         ArrayList<Tuple> neighborTiles = new ArrayList<>();
         int x = building.getStartX(), y = building.getStartY() - 2;
         for (int i = 0; i < building.getWidth(); i++) {
-            if (y % 2 != 0) x++;
+            if (y % 2 == 0) x++;
             y++;
             neighborTiles.add(new Tuple(y, x));
         }
         x = building.getStartX();
         y = building.getStartY() - 2;
         for (int i = 0; i < building.getLength(); i++) {
-            if (y % 2 == 0) x--;
+            if (y % 2 != 0) x--;
             y++;
             neighborTiles.add(new Tuple(y, x));
         }
         x = building.getEndX();
         y = building.getEndY() + 2;
         for (int i = 0; i < building.getWidth(); i++) {
-            if (y % 2 == 0) x--;
+            if (y % 2 != 0) x--;
             y--;
             neighborTiles.add(new Tuple(y, x));
         }
         x = building.getEndX();
         y = building.getEndY() + 2;
         for (int i = 0; i < building.getLength(); i++) {
-            if (y % 2 != 0) x++;
+            if (y % 2 == 0) x++;
             y--;
             neighborTiles.add(new Tuple(y, x));
         }
@@ -1036,10 +1036,21 @@ public class GameController {
             int startY = Math.min(start.getTileY(), end.getTileY());
             int endX = Math.max(start.getTileX(), end.getTileX());
             int endY = Math.max(start.getTileY(), end.getTileY());
-            for (int i = startX; i <= endX; i++) {
-                for (int j = startY; j <= endY; j++) {
-                    tiles.add(GameMap.getGameTile(i, j));
+            int headX = startX, headY = startY, x = startX, y = startY;
+            for (int i = 0; i < endY - startY + 1; i++) {
+                int indent = ((endY - startY) % 2 == 0 && i % 2 == 0) ? 1 : 0;
+                for (int j = 0; j < endX - startX + indent; j++) {
+                    tiles.add(GameMap.getGameTile(x++, y));
                 }
+                if (i % 2 == 0){
+                    if (headY % 2 == 0) headX++;
+                    headY++;
+                } else {
+                    if (headY % 2 != 0) headX--;
+                    headY++;
+                }
+                x = headX;
+                y = headY;
             }
             return tiles;
         }

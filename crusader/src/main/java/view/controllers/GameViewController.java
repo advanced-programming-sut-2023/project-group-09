@@ -1,9 +1,6 @@
 package view.controllers;
 
-import controller.FileController;
-import controller.GameController;
-import controller.MapController;
-import controller.MarketController;
+import controller.*;
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameGoods;
 import controller.gamestructure.GameHumans;
@@ -14,8 +11,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
-import javafx.geometry.Bounds;
 import javafx.scene.control.Button;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.ColorAdjust;
@@ -35,12 +32,11 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.Government;
 import model.building.Building;
 import model.game.Tile;
 import model.human.military.Military;
-import model.menugui.MenuButton;
-import model.menugui.MenuTextField;
-import model.menugui.MiniMap;
+import model.menugui.*;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
 import model.menugui.game.Troop;
@@ -52,6 +48,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GameViewController {
 
@@ -64,6 +62,7 @@ public class GameViewController {
     public static int shopMenuPhase = -1;
     public static String currentCategory;
     public static String currentItem , droppedBuildingName , droppedPicFileName;
+    public static Textures selectedTexture;
 
     public static HashMap<String, String> buildingNameToFileName = new HashMap<>();
     public static HashMap<String, String> buildingNameToPicName = new HashMap<>();
@@ -597,6 +596,16 @@ public class GameViewController {
                 GameMenu.createGameBar(2);
                 setCenterToShopItem(currentItem);
             }
+            case "showUsers" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToShowUsers();
+            }
+            case "sendRequest" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToSendRequest(currentItem);
+            }
         }
     }
 
@@ -630,8 +639,23 @@ public class GameViewController {
     }
 
     private static void setCenterOfEditLand() {
+        putEditTextureImageView("earthAndStoneIcon", "Earth And Stones"
+                , Textures.EARTH, 290, 85, 0.2);
+        putEditTextureImageView("rocksIcon", "Rocks"
+                , Textures.ROCK_TEXTURE, 270, 105, 0.2);
+        putEditTextureImageView("ironTextureIcon", "Iron"
+                , Textures.IRON_TEXTURE, 360, 90, 0.2);
+
+        putEditTextureImageView("drivenSandIcon", "Driven Sand"
+                , Textures.EARTH_AND_SAND, 360, 40, 0.2);
+        putEditTextureImageView("scrubIcon", "Scrub"
+                , Textures.GRASS, 450, 60, 0.2);
+        putEditTextureImageView("thickScrubIcon", "Thick Scrub"
+                , Textures.THICK_GRASS, 450, 120, 0.2);
+        putEditTextureImageView("oasisGrassIcon", "Oasis Grass"
+                , Textures.OASIS_GRASS, 520, 60, 0.2);
         putEditTextureImageView("bouldersIcon", "Boulder"
-                , Textures.BOULDER, 200, 20, 0.2, "boulder");
+                , Textures.BOULDER, 500, 70, 0.2);
     }
 
     public static void createShortcutBars2(Pane gamePane, Text text) {
@@ -879,32 +903,172 @@ public class GameViewController {
 
         buy.setOnAction(actionEvent -> {
             buyAmount.clearErrorOrMessage();
-            if (MarketController.buyItem(fileName, buyAmount))
+            if (MarketController.buyItem(fileName, buyAmount)) {
+                MenuPopUp popUp = new MenuPopUp(GameMenu.root, 400, 400, "success",
+                        "buy process done successfully!");
+                GameMenu.root.getChildren().add(popUp);
                 setCenterOfBar("shopItem");
+            }
+
         });
         sell.setOnAction(actionEvent -> {
             sellAmount.clearErrorOrMessage();
-            if (MarketController.sellItem(fileName, sellAmount))
+            if (MarketController.sellItem(fileName, sellAmount)){
+                MenuPopUp popUp = new MenuPopUp(GameMenu.root, 400, 400, "success",
+                        "sell process done successfully!");
+                GameMenu.root.getChildren().add(popUp);
                 setCenterOfBar("shopItem");
+            }
         });
 
         buyAmount.textProperty().addListener(new ChangeListener<String>() {
             @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                int amount = MarketController.validateAmount(buyAmount);
+            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
+                Pattern pattern = Pattern.compile("[\\D]");
+                Matcher matcher = pattern.matcher(newValue);
+                if (matcher.find()) buyAmount.setText(oldValue);
+                if (newValue.isEmpty() || newValue == null) return;
+                int amount = Integer.parseInt(buyAmount.getText());
+                if (amount <= 0) buyAmount.setText(oldValue);
                 if (amount != 0) buy.setText("  Buy (" + (amount * buyPrice) + " golds)");
             }
         });
         sellAmount.textProperty().addListener(new ChangeListener<String>() {
             @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                int amount = MarketController.validateAmount(sellAmount);
+            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
+                Pattern pattern = Pattern.compile("[\\D]");
+                Matcher matcher = pattern.matcher(newValue);
+                if (matcher.find()) sellAmount.setText(oldValue);
+                if (newValue.isEmpty() || newValue == null) return;
+                int amount = Integer.parseInt(sellAmount.getText());
+                if (amount <= 0) sellAmount.setText(oldValue);
                 if (amount != 0) sell.setText("  Sell (" + (amount * sellPrice) + " golds)");
             }
         });
 
         putBackButton(currentCategory);
+        putTradeButton();
         GameMenu.menuBar.getChildren().addAll(buyAmount, sellAmount, buy, sell);
+    }
+
+    private static void setCenterToShowUsers() {
+        setTitle("Choose a government to trade with:", 28, 275, 100);
+
+        ArrayList<String> castles = new ArrayList<>();
+        int count = 1;
+        for (int i = 0; i < GameController.getGame().getGovernments().size(); i++) {
+            Government government = GameController.getGame().getGovernments().get(i);
+            if (!government.equals(GameController.getGame().getCurrentGovernment()))
+                castles.add(count++ + ". " + government.getUser().getUsername());
+        }
+        MenuChoiceBox castleNumber = new MenuChoiceBox(GameMenu.menuBar, "", 375, 140,
+                FXCollections.observableArrayList(castles), 300);
+        castleNumber.setValue("Government");
+
+        castleNumber.valueProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
+                TradeController.setTargetGovernment(GameController.getGame().
+                        getGovernmentByUsername(((String) newValue).substring(3)));
+                setCenterOfBar("sendRequest");
+            }
+        });
+        GameMenu.menuBar.getChildren().add(castleNumber);
+    }
+
+    private static void setCenterToSendRequest(String item) {
+        setTitle("Send Request", 28, 275, 95);
+
+        Button decreaseAmount = new Button("-");
+        decreaseAmount.setFont(Font.font("Times New Roman", FontWeight.BOLD, 20));
+        decreaseAmount.setTranslateX(310);
+        decreaseAmount.setTranslateY(110);
+        decreaseAmount.setMinWidth(40);
+        decreaseAmount.setMaxWidth(40);
+        decreaseAmount.setDisable(true);
+        decreaseAmount.getStyleClass().add("addButton");
+
+        MenuTextField amountField = new MenuTextField(GameMenu.menuBar, "", "", 365, 110, 80);
+        amountField.getErrorLabel().setTranslateY(amountField.getErrorLabel().getTranslateY() + 8);
+        amountField.setText("1");
+
+        Button increaseAmount = new Button("+");
+        increaseAmount.setFont(Font.font("Times New Roman", FontWeight.BOLD, 20));
+        increaseAmount.setTranslateX(460);
+        increaseAmount.setTranslateY(110);
+        increaseAmount.setMinWidth(40);
+        increaseAmount.setMaxWidth(40);
+        increaseAmount.getStyleClass().add("addButton");
+
+        increaseAmount.setOnMouseClicked(mouseEvent -> {
+            if (amountField.getText().isEmpty() || amountField.getText() == null) return;
+            int amount = Integer.parseInt(amountField.getText());
+            amountField.setText(Integer.toString(++amount));
+            if (amount != 1) decreaseAmount.setDisable(false);
+        });
+        decreaseAmount.setOnMouseClicked(mouseEvent -> {
+            if (amountField.getText().isEmpty() || amountField.getText() == null) return;
+            int amount = Integer.parseInt(amountField.getText());
+            amountField.setText(Integer.toString(--amount));
+            if (amount == 1) decreaseAmount.setDisable(true);
+        });
+        amountField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
+                Pattern pattern = Pattern.compile("[\\D]");
+                Matcher matcher = pattern.matcher(newValue);
+                if (matcher.find()) amountField.setText(oldValue);
+                else {
+                    if (newValue.isEmpty() || newValue == null) {
+                        decreaseAmount.setDisable(true);
+                        return;
+                    }
+                    int amount = Integer.parseInt(newValue);
+                    if (amount <= 0) amountField.setText(oldValue);
+                    else {
+                        amountField.clearErrorOrMessage();
+                        if (amount == 1) decreaseAmount.setDisable(true);
+                        else decreaseAmount.setDisable(false);
+                    }
+                }
+            }
+        });
+
+        MenuButton requestType = new MenuButton("Request", GameMenu.menuBar, 530, 110, false);
+        MenuTextField priceField = new MenuTextField(GameMenu.menuBar, "Price", "", 310, 165, 120);
+        priceField.getErrorLabel().setTranslateY(priceField.getErrorLabel().getTranslateY() + 8);
+        MenuTextField messageField = new MenuTextField(GameMenu.menuBar, "Message", "", 445, 165, 280);
+        messageField.getErrorLabel().setTranslateY(messageField.getErrorLabel().getTranslateY() + 8);
+
+        requestType.setOnMouseClicked(mouseEvent -> {
+            priceField.clearErrorOrMessage();
+            if (requestType.getText().equals("  Denote")) {
+                requestType.setText("  Request");
+                priceField.setDisable(false);
+            } else {
+                requestType.setText("  Denote");
+                priceField.setText("");
+                priceField.setDisable(true);
+            }
+        });
+        priceField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
+                Pattern pattern = Pattern.compile("[\\D]");
+                Matcher matcher = pattern.matcher(newValue);
+                if (matcher.find()) priceField.setText(oldValue);
+                else {
+                    if (newValue.isEmpty() || newValue == null) return;
+                    int price = Integer.parseInt(newValue);
+                    if (price <= 0) priceField.setText(oldValue);
+                }
+            }
+        });
+
+        GameMenu.menuBar.getChildren().addAll(increaseAmount, amountField, decreaseAmount,
+                requestType, priceField, messageField);
+        putSendRequestButton(amountField, priceField, messageField);
+        putBackButton("shopItem");
     }
 
     private static void setTitle(String title, int fontSize, double x, double y) {
@@ -1002,6 +1166,70 @@ public class GameViewController {
         GameMenu.menuBar.getChildren().add(icon);
     }
 
+    private static void putTradeButton() {
+        ImageView icon = new ImageView(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                .toExternalForm() + "trade.png");
+        icon.setTranslateX(262);
+        icon.setTranslateY(142);
+        icon.setOnMouseEntered(mouseEvent -> {
+            icon.setImage(new Image(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                    .toExternalForm() + "tradeHovered.png"));
+        });
+        icon.setOnMouseExited(mouseEvent -> {
+            icon.setImage(new Image(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                    .toExternalForm() + "trade.png"));
+        });
+        icon.setOnMouseClicked(mouseEvent -> {
+            setCenterOfBar("showUsers");
+        });
+        GameMenu.menuBar.getChildren().add(icon);
+    }
+
+    private static void putSendRequestButton(MenuTextField amountField, MenuTextField priceField, MenuTextField messageField) {
+        ImageView icon = new ImageView(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                .toExternalForm() + "check.png");
+        icon.setTranslateX(740);
+        icon.setTranslateY(165);
+        icon.setOnMouseEntered(mouseEvent -> {
+            icon.setImage(new Image(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                    .toExternalForm() + "checkHovered.png"));
+        });
+        icon.setOnMouseExited(mouseEvent -> {
+            icon.setImage(new Image(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                    .toExternalForm() + "check.png"));
+        });
+        icon.setOnMouseClicked(mouseEvent -> {
+            amountField.clearErrorOrMessage();
+            priceField.clearErrorOrMessage();
+            messageField.clearErrorOrMessage();
+            boolean error = false;
+            if (amountField.getText().isEmpty() || amountField.getText() == null) {
+                amountField.handlingError("required!");
+                error = true;
+            }
+            if (!priceField.isDisable()) {
+                if (priceField.getText().isEmpty() || priceField.getText() == null) {
+                    priceField.handlingError("required!");
+                    error = true;
+                }
+            }
+            if (messageField.getText().isEmpty() || messageField.getText() == null) {
+                messageField.handlingError("message is required!");
+                error = true;
+            }
+            if (error) return;
+
+            int price = (priceField.isDisable()) ? 0 : Integer.parseInt(priceField.getText());
+            String message = TradeController.tradeGoods(currentItem, Integer.parseInt(amountField.getText()),
+                    price, messageField.getText());
+            String popUpType = (message.charAt(0) == 'y') ? "error" : "success";
+            MenuPopUp popUp = new MenuPopUp(GameMenu.root, 400, 400, popUpType, message);
+            if (message.charAt(0) == 'r') setCenterOfBar("shopItem");
+            GameMenu.root.getChildren().add(popUp);
+        });
+        GameMenu.menuBar.getChildren().add(icon);
+    }
+
     private static void putImageView(String fileName, String name, double x, double y) {
         ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/" + fileName + ".png");
@@ -1034,7 +1262,7 @@ public class GameViewController {
         return text;
     }
 
-    private static void putEditTextureImageView(String fileName, String name, Textures texture, double x, double y, double size, String picFileName) {
+    private static void putEditTextureImageView(String fileName, String name, Textures texture, double x, double y, double size) {
         ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/" + fileName + ".png");
         icon.setTranslateX(x);
@@ -1055,27 +1283,15 @@ public class GameViewController {
             }
         });
 
-        Image image = new Image(GameViewController.class.getResource(
-                Paths.TEXTURE_IMAGES.getPath()).toExternalForm() + picFileName + ".png");
-        ImageView imageView = new ImageView(image);
-        imageView.setViewOrder(-10);
 
         icon.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if (!GameMenu.gameMap.getChildren().contains(imageView))
-                    GameMenu.gameMap.getChildren().add(imageView);
                 isTextureSelected = true;
-                imageView.setTranslateX(GameMenu.gameMap.getCameraX() * GameMap.tileWidth +
-                        mouseEvent.getScreenX() - (GameMenu.scene.getWidth() - 1200) / 2 - image.getWidth() * 0.5);
-                imageView.setTranslateY(GameMenu.gameMap.getCameraY() * GameMap.tileHeight / 2 +
-                        mouseEvent.getScreenY() - (GameMenu.scene.getHeight() - 800) / 2 - image.getHeight());
-                imageView.setOpacity(0.6);
                 GameMenu.gameMap.setOnMouseDragged(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         if (mouseEvent.getButton() == MouseButton.PRIMARY && isTextureSelected) {
-                            GameMenu.gameMap.getChildren().remove(imageView);
                             Pair<Integer, Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
                             tileX = pair.getFirst();
                             tileY = pair.getSecond();
@@ -1084,7 +1300,6 @@ public class GameViewController {
                             GameMap.getGameTile(tileX, tileY).refreshTile();
                         } else {
                             isTextureSelected = false;
-                            GameMenu.gameMap.getChildren().remove(imageView);
                         }
                     }
                 });
@@ -1094,7 +1309,6 @@ public class GameViewController {
                     public void handle(MouseEvent mouseEvent) {
                         if (mouseEvent.getButton() == MouseButton.SECONDARY) {
                             isTextureSelected = false;
-                            GameMenu.gameMap.getChildren().remove(imageView);
                         }
                     }
                 });
@@ -1282,7 +1496,7 @@ public class GameViewController {
     }
 
     public static void dropBuildingAfterSelectingTile(MouseEvent mouseEvent) {
-        Pair <Integer , Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
+        Pair<Integer, Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
         tileX = pair.getFirst();
         tileY = pair.getSecond();
         tileY = pair.getSecond();
@@ -1306,13 +1520,13 @@ public class GameViewController {
         int halfTileY = (int) ((mouseEvent.getScreenY() -
                 (GameMenu.scene.getHeight() - 800) / 2) / ((double) GameMap.tileHeight / 2));
         Pair<Integer, Integer> pair;
-        if (halfTileX % 2 == 1) {
-            pair = checkNearestTile(mouseEvent, (halfTileX - 1) / 2, (halfTileX - 1) / 2, halfTileY, halfTileY - 1);
+        if (halfTileX % 2 == 0) {
+            pair = checkNearestTile(mouseEvent, halfTileX / 2, halfTileX / 2, halfTileY, halfTileY - 1);
         } else {
             if (halfTileY % 2 == 1) {
-                pair = checkNearestTile(mouseEvent, halfTileX / 2 - 1, halfTileX / 2, halfTileY, halfTileY - 1);
+                pair = checkNearestTile(mouseEvent, (halfTileX-1)/2,(halfTileX+1)/2 , halfTileY-1, halfTileY);
             } else {
-                pair = checkNearestTile(mouseEvent, halfTileX / 2 - 1, halfTileX / 2, halfTileY - 1, halfTileY);
+                pair = checkNearestTile(mouseEvent, (halfTileX+1)/2, (halfTileX-1)/2, halfTileY - 1, halfTileY);
             }
         }
         return new Pair<>(pair.getFirst() + GameMenu.gameMap.getCameraX(),
@@ -1348,7 +1562,6 @@ public class GameViewController {
         GameMenu.up = new Rectangle(1180, 10);
         GameMenu.left = new Rectangle(10, 780);
         GameMenu.down = new Rectangle(1180, 10);
-
 
 
         setTranslateOfRectangle(GameMenu.downRight, 595, 395);
