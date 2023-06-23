@@ -65,6 +65,7 @@ public class GameTile {
         setTexture();
         setBuilding();
         setTree();
+        setPit();
     }
 
     public void selectTile() {
@@ -114,12 +115,12 @@ public class GameTile {
             GameMenu.gameMap.getChildren().add(buildingImage);
             buildingImage.setOnMouseClicked(mouseEvent -> {
                 if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-                    if (mouseEvent.getClickCount() == 1) {
-                        GameViewController.setCenterOfBar(building.getName());
-                    } else if (mouseEvent.getClickCount() == 2) {
+                    if (mouseEvent.getClickCount() == 2) {
                         FileController.copyBuildingNameToClipboard(tile.getBuilding().getName());
                         GameMenu.hoveringBarStateText.setText(GameViewController.buildingNameToName
                                 .get(tile.getBuilding().getName()) + " Copied!");
+                    } else if (mouseEvent.getClickCount() == 1) {
+                        GameViewController.setCenterOfBar(building.getName());
                     }
                 }
             });
@@ -140,6 +141,28 @@ public class GameTile {
             treeImage.setTranslateX(textureImage.getTranslateX() - image.getWidth() / 2 + textureImage.getFitWidth() / 2);
             treeImage.setViewOrder(-tileY - 1);
             GameMenu.gameMap.getChildren().add(treeImage);
+        }
+    }
+
+    public void setPit() {
+        if (tile.isPit()) {
+            System.out.println("is pit!");
+            Image image;
+            image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                    + "buildings/killingPit.png").toExternalForm());
+            buildingImage = new ImageView(image);
+            buildingImage.setTranslateX(-image.getWidth() / 2 + textureImage.getFitWidth() / 2 + textureImage.getTranslateX());
+            buildingImage.setTranslateY(-image.getHeight()+ textureImage.getFitHeight()+ textureImage.getTranslateY());
+            buildingImage.setViewOrder(-tileY - 1);
+            GameMenu.gameMap.getChildren().add(buildingImage);
+            buildingImage.setOnMouseClicked(mouseEvent -> {
+                if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+                    if (mouseEvent.getClickCount() == 2) {
+                        FileController.copyBuildingNameToClipboard("killingPit");
+                        GameMenu.hoveringBarStateText.setText("Killing Pit Copied!");
+                    }
+                }
+            });
         }
     }
 
