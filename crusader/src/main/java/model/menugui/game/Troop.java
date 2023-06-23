@@ -2,8 +2,12 @@ package model.menugui.game;
 
 import controller.GameController;
 import controller.gamestructure.GameImages;
+import controller.human.HumanController;
+import enumeration.UnitMovingState;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -14,7 +18,7 @@ import view.menus.GameMenu;
 
 import java.util.ArrayList;
 
-public class Troop extends Rectangle {
+public class Troop extends ImageView {
     private Military military;
     private Tile tile;
 
@@ -27,12 +31,13 @@ public class Troop extends Rectangle {
     int direction = 3;
 
     public Troop(Military military, Tile tile, GameTile gameTile) {
-        super(40, 40);
+        this.setFitWidth(40);
+        this.setFitHeight(40);
         this.military = military;
         this.tile = tile;
         this.setViewOrder(-1);
-        this.setTranslateX(gameTile.getTranslateX() - this.getWidth() / 2 + GameMap.tileWidth / 2);
-        this.setTranslateY(gameTile.getTranslateY() - this.getHeight() / 2);
+        this.setTranslateX(gameTile.getTextureImage().getTranslateX() - this.getFitWidth() / 2 + GameMap.tileWidth / 2);
+        this.setTranslateY(gameTile.getTextureImage().getTranslateY() - this.getFitHeight() / 2);
         this.gameTile = gameTile;
         setImage();
         setEventListener();
@@ -41,16 +46,49 @@ public class Troop extends Rectangle {
 
     public void changeGameTile(GameTile gameTile) {
         this.setViewOrder(-1);
-        this.setTranslateX(gameTile.getTranslateX() - this.getWidth() / 2 + GameMap.tileWidth / 2);
-        this.setTranslateY(gameTile.getTranslateY() - this.getHeight() / 2);
+        this.setTranslateX(gameTile.getTextureImage().getTranslateX() - this.getFitWidth() / 2 + GameMap.tileWidth / 2);
+        this.setTranslateY(gameTile.getTextureImage().getTranslateY() - this.getFitHeight() / 2);
     }
 
     public void setEventListener() {
+        this.setOnMouseEntered(mouseEvent -> GameMenu.currentTile = gameTile);
         this.setOnMouseClicked(mouseEvent -> {
-            GameController.selectUnit(military.getX(), military.getY(), null);
-            GameMenu.setMouseCursorOnSelect();
-            GameMenu.hoveringBarStateText.setText("Unit Menu");
-            GameViewController.setCenterOfBar();
+            if (mouseEvent.getButton() == MouseButton.PRIMARY && !GameMenu.selectedUnit) {
+                GameViewController.unselectTiles();
+                GameMenu.startSelectionTile = gameTile;
+                GameMenu.endSelectionTile = gameTile;
+                GameMenu.selectedTiles.add(gameTile);
+                GameMenu.isSelected = true;
+                gameTile.selectTile();
+                if (GameMenu.selectedUnit) {
+                    if (GameMenu.unitsCount.get("lord") == null || GameMenu.unitsCount.get("lord") != 1 || GameMenu.selectedTroops.size() != 1) {
+                        if (GameMenu.unitsCount.get("lord") != null && GameMenu.unitsCount.get("lord") != 0) {
+                            GameMenu.selectedTroops.removeIf(i -> i.getName().equals("lord"));
+                            GameMenu.unitsCount.put("lord", 0);
+                        }
+                        GameMenu.hoveringBarStateText.setText("Unit Menu");
+                        GameViewController.setCenterOfBar();
+                    } else {
+                        GameViewController.addTypes();
+                        if (GameMenu.selectedTroops.size() != 0) {
+                            Military military = null;
+                            for (Military m : GameMenu.selectedTroops) {
+                                military = m;
+                            }
+                            HumanController.militaries.clear();
+                            HumanController.militaries.add(military);
+                            System.out.println(HumanController.militaries);
+                        }
+                    }
+                }
+            } else if (GameMenu.isSelected && mouseEvent.getButton() == MouseButton.SECONDARY) {
+                GameViewController.unselectTiles();
+            } else if (GameMenu.selectedUnit) {
+                GameViewController.doAction(true, gameTile);
+                GameMenu.root.getChildren().remove(GameMenu.selectCursor);
+                GameMenu.movingState = UnitMovingState.NORMAL.getState();
+                GameViewController.unselectTilesWithOutUnits();
+            }
         });
     }
 
@@ -73,8 +111,8 @@ public class Troop extends Rectangle {
                     gameTile = next;
                     GameMap.gameTroops[military.getY()][military.getX()].add(this);
                 } else {
-                    double disX = this.getTranslateX() + this.getWidth() / 2 - (gameTile.getX() + GameMap.tileWidth / 2);
-                    double disY = this.getTranslateY() + this.getHeight() / 2 - gameTile.getY();
+                    double disX = this.getTranslateX() + this.getFitWidth() / 2 - (gameTile.getX() + GameMap.tileWidth / 2);
+                    double disY = this.getTranslateY() + this.getFitHeight() / 2 - gameTile.getY();
                     if (Math.abs(disX) >= 5) {
                         int sign = (int) Math.signum(disX);
                         this.setTranslateX(this.getTranslateX() + (sign * (-1) * 5));
@@ -99,8 +137,8 @@ public class Troop extends Rectangle {
     }
 
     public double getDistance() {
-        return Math.sqrt(Math.pow(this.getTranslateX() + this.getWidth() / 2 - (gameTile.getX() + GameMap.tileWidth / 2), 2)
-                + Math.pow(this.getTranslateY() + this.getHeight() / 2 - gameTile.getY(), 2));
+        return Math.sqrt(Math.pow(this.getTranslateX() + this.getFitWidth() / 2 - (gameTile.getX() + GameMap.tileWidth / 2), 2)
+                + Math.pow(this.getTranslateY() + this.getFitHeight() / 2 - gameTile.getY(), 2));
     }
 
 
@@ -117,8 +155,8 @@ public class Troop extends Rectangle {
     }
 
     public void setImage() {
-        setFill(new ImagePattern(GameImages.imageViews.get(
-                military.getName() + "_" + military.getGovernment().getColor() + "_" + (step * 16 + direction + 1))));
+        setImage(GameImages.imageViews.get(
+                military.getName() + "_" + military.getGovernment().getColor() + "_" + (step * 16 + direction + 1)));
 
     }
 

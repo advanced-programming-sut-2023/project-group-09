@@ -1706,10 +1706,10 @@ public class GameViewController {
                 .toExternalForm() + "patrol-flag.png"));
         GameTile start = GameMap.getGameTile(x1, y1);
         GameTile end = GameMap.getGameTile(x2, y2);
-        flag1.setTranslateX(start.getTranslateX());
-        flag1.setTranslateY(start.getTranslateY());
-        flag2.setTranslateX(end.getTranslateX());
-        flag2.setTranslateY(end.getTranslateY());
+        flag1.setTranslateX(start.getTextureImage().getTranslateX());
+        flag1.setTranslateY(start.getTextureImage().getTranslateY());
+        flag2.setTranslateX(end.getTextureImage().getTranslateX());
+        flag2.setTranslateY(end.getTextureImage().getTranslateY());
         flag1.setFitWidth(GameMap.tileWidth);
         flag2.setFitWidth(GameMap.tileWidth);
         flag2.setFitHeight(GameMap.tileHeight);
@@ -1741,8 +1741,8 @@ public class GameViewController {
         for (int y = 0; y < GameController.getGame().getMap().getLength(); y++) {
             for (int x = 0; x < GameController.getGame().getMap().getWidth(); x++) {
                 GameTile gameTile = GameMap.getGameTile(x, y);
-                gameTile.setScaleX(gameTile.getScaleX() * zoom);
-                gameTile.setScaleY(gameTile.getScaleY() * zoom);
+                gameTile.getTextureImage().setScaleX(gameTile.getTextureImage().getScaleX() * zoom);
+                gameTile.getTextureImage().setScaleY(gameTile.getTextureImage().getScaleY() * zoom);
             }
         }
         return null;

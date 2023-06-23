@@ -4,6 +4,7 @@ import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameImages;
 import controller.gamestructure.GameMaps;
 import javafx.stage.Stage;
+import view.controllers.ImageLoader;
 import view.menus.LoginMenu;
 import view.menus.MainMenu;
 
@@ -18,7 +19,7 @@ public class MainController {
         DBController.loadMilitary();
         DBController.loadBuildings();
         DBController.loadTools();
-        GameImages.loadImages();
+        new ImageLoader().start();
         GameMaps.createMaps();
     }
 
