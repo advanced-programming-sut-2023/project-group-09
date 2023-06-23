@@ -4,9 +4,12 @@ import controller.gamestructure.GameImages;
 import controller.human.HumanController;
 import enumeration.MoveStates;
 import enumeration.UnitMovingState;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.util.Duration;
 import model.human.military.Military;
 import view.controllers.GameViewController;
 import view.menus.GameMenu;
@@ -23,7 +26,11 @@ public class TileSensor extends ImageView {
     }
 
     public void setSensor() {
-        this.setOnMouseEntered(mouseEvent -> GameMenu.currentTile = gameTile);
+
+        this.setOnMouseEntered(mouseEvent -> {
+            GameMenu.currentTile = gameTile;
+        });
+
 
         this.setOnMouseClicked(mouseEvent -> {
             if (mouseEvent.getButton() == MouseButton.PRIMARY && !GameMenu.selectedUnit) {
@@ -54,7 +61,7 @@ public class TileSensor extends ImageView {
                         }
                     }
                 }
-            }else if (GameMenu.isSelected && mouseEvent.getButton() == MouseButton.SECONDARY) {
+            } else if (GameMenu.isSelected && mouseEvent.getButton() == MouseButton.SECONDARY) {
                 GameViewController.unselectTiles();
             } else if (GameMenu.selectedUnit) {
                 GameViewController.doAction(true, gameTile);

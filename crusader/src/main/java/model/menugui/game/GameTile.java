@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import model.building.Building;
 import model.building.castlebuildings.Gatehouse;
@@ -71,6 +72,7 @@ public class GameTile extends StackPane {
         setBuilding();
         //setTroop();
         setTree();
+        setPit();
     }
 
     public void selectTile() {
@@ -104,7 +106,7 @@ public class GameTile extends StackPane {
         }
         if (building != null && building.getEndX() == tileX && building.getEndY() == tileY) {
             Image image;
-            if (building instanceof Gatehouse && ((Gatehouse)building).isRightSide()) {
+            if (building instanceof Gatehouse && ((Gatehouse) building).isRightSide()) {
                 image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
                         + "buildings/" + building.getName() + "Right.png").toExternalForm());
             } else {
@@ -120,12 +122,12 @@ public class GameTile extends StackPane {
             this.getChildren().add(buildingImage);
             buildingImage.setOnMouseClicked(mouseEvent -> {
                 if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-                    if (mouseEvent.getClickCount() == 1) {
-                        GameViewController.setCenterOfBar(building.getName());
-                    } else if (mouseEvent.getClickCount() == 2) {
+                    if (mouseEvent.getClickCount() == 2) {
                         FileController.copyBuildingNameToClipboard(tile.getBuilding().getName());
                         GameMenu.hoveringBarStateText.setText(GameViewController.buildingNameToName
                                 .get(tile.getBuilding().getName()) + " Copied!");
+                    } else if (mouseEvent.getClickCount() == 1) {
+                        GameViewController.setCenterOfBar(building.getName());
                     }
                 }
             });
@@ -158,6 +160,28 @@ public class GameTile extends StackPane {
             treeImage.setViewOrder(-1);
             this.setViewOrder(-tileY);
             this.getChildren().add(treeImage);
+        }
+    }
+
+    public void setPit() {
+        if (tile.isPit()) {
+            Image image;
+            image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                    + "buildings/killingPit.png").toExternalForm());
+            buildingImage = new ImageView(image);
+            buildingImage.setTranslateY(-image.getHeight() / 2 + textureImage.getFitHeight() / 2);
+            buildingImage.setViewOrder(-1);
+            this.setViewOrder(-tileY);
+            this.getChildren().add(buildingImage);
+            buildingImage.setOnMouseClicked(mouseEvent -> {
+                if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+                    if (mouseEvent.getClickCount() == 2) {
+                        FileController.copyBuildingNameToClipboard("killingPit");
+                        GameMenu.hoveringBarStateText.setText(GameViewController.buildingNameToName
+                                .get(tile.getBuilding().getName()) + " Copied!");
+                    }
+                }
+            });
         }
     }
 

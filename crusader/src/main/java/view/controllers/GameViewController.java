@@ -58,11 +58,12 @@ public class GameViewController {
     public static String nameOfPageInBar;
     public static Timeline timeline;
     public static boolean isSelected = false;
+    public static boolean isDroped = false;
     public static boolean isTextureSelected = false;
     public static int tileX, tileY;
     public static int shopMenuPhase = -1;
     public static String currentCategory;
-    public static String currentItem;
+    public static String currentItem , droppedBuildingName , droppedPicFileName;
 
     public static HashMap<String, String> buildingNameToFileName = new HashMap<>();
     public static HashMap<String, String> buildingNameToPicName = new HashMap<>();
@@ -747,7 +748,7 @@ public class GameViewController {
         putBuildingImageView("drawBridgeIcon", "Draw Bridge", "drawBridge", 400, 20, 0.25, "drawBridge");
         putBuildingImageView("cageIcon", "Caged Dogs", "cagedWarDogs", 450, 30, 0.25, "cagedWarDogs");
         //putBuildingImageView("pitchDitchIcon", "Pitch Ditch", "", 530, 50, 0.25); // TODO:
-        putBuildingImageView("killingPitIcon", "Killing Pit", "", 530, 90, 0.25, "killing");
+        putBuildingImageView("killingPitIcon", "Killing Pit", "killingPit", 530, 90, 0.25, "killingPit");
         //putBuildingImageView("braizerIcon", "Braizer", "", 650, 70, 0.25); // braizer will added to game buildings
     }
 
@@ -1266,18 +1267,27 @@ public class GameViewController {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         GameMenu.gameMap.getChildren().remove(imageView);
-                        Pair<Integer, Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
-                        tileX = pair.getFirst();
-                        tileY = pair.getSecond();
-                        System.out.println("Tile founded at : " + tileX + " " + tileY);
-                        String side = getSideOfGatehouseFromFilename(picFileName);
-                        GameMenu.hoveringBarStateText.setText(GameController.dropBuilding(tileX, tileY, buildingName, side));
-                        GameMap.getGameTile(tileX, tileY).refreshTile();
+                        droppedPicFileName = picFileName;
+                        droppedBuildingName = buildingName;
+                        isDroped = true;
+                        dropBuildingAfterSelectingTile(mouseEvent);
+                        isDroped = false;
                     }
                 });
             }
         });
 
+    }
+
+    public static void dropBuildingAfterSelectingTile(MouseEvent mouseEvent) {
+        Pair <Integer , Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
+        tileX = pair.getFirst();
+        tileY = pair.getSecond();
+        tileY = pair.getSecond();
+        System.out.println("Tile founded at : " + tileX + " " + tileY);
+        String side = getSideOfGatehouseFromFilename(droppedPicFileName);
+        GameMenu.hoveringBarStateText.setText(GameController.dropBuilding(tileX, tileY, droppedBuildingName, side));
+        GameMap.getGameTile(tileX, tileY).refreshTile();
     }
 
     private static String getSideOfGatehouseFromFilename(String fileName) {
@@ -1439,7 +1449,6 @@ public class GameViewController {
     public static void selectUnits(int x, int y) {
         GameMenu.selectedTilesTroop.clear();
         Tile tile = GameController.getGame().getMap().getTile(x, y);
-        GameMenu.selectedTilesTroop.add(tile);
         GameMenu.selectedUnit = true;
     }
 
