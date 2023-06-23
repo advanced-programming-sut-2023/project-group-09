@@ -110,7 +110,7 @@ public class GameImages {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
             int counter = 1;
-            for (int j = 0; j < 8; j++) {
+            for (int j = 0; j < 16; j++) {
                 for (int k = 0; k < 8; k++) {
                     Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
                             "arabianSwordsman/" + colors[i] + "/Image" + counter + ".png");
@@ -126,7 +126,7 @@ public class GameImages {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
             int counter = 1;
-            for (int j = 0; j < 8; j++) {
+            for (int j = 0; j < 16; j++) {
                 for (int k = 0; k < 8; k++) {
                     Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
                             "archerBow/" + colors[i] + "/Image" + counter + ".png");
@@ -142,7 +142,7 @@ public class GameImages {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
             int counter = 1;
-            for (int j = 0; j < 8; j++) {
+            for (int j = 0; j < 16; j++) {
                 for (int k = 0; k < 8; k++) {
                     Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
                             "slinger/" + colors[i] + "/Image" + counter + ".png");
@@ -158,7 +158,7 @@ public class GameImages {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
             int counter = 1;
-            for (int j = 0; j < 8; j++) {
+            for (int j = 0; j < 16; j++) {
                 for (int k = 0; k < 8; k++) {
                     Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
                             "horseArcher/" + colors[i] + "/Image" + counter + ".png");
@@ -174,7 +174,7 @@ public class GameImages {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
             int counter = 1;
-            for (int j = 0; j < 8; j++) {
+            for (int j = 0; j < 16; j++) {
                 for (int k = 0; k < 8; k++) {
                     Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
                             "slave/" + colors[i] + "/Image" + counter + ".png");
@@ -189,7 +189,7 @@ public class GameImages {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
             int counter = 1;
-            for (int j = 0; j < 8; j++) {
+            for (int j = 0; j < 16; j++) {
                 for (int k = 0; k < 8; k++) {
                     Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
                             "archerBow/" + colors[i] + "/Image" + counter + ".png");
@@ -203,7 +203,7 @@ public class GameImages {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
             int counter = 1;
-            for (int j = 0; j < 8; j++) {
+            for (int j = 0; j < 16; j++) {
                 for (int k = 0; k < 8; k++) {
                     Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
                             "fireThrower/" + colors[i] + "/Image" + counter + ".png");
@@ -220,7 +220,7 @@ public class GameImages {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
             int counter = 1;
-            for (int j = 0; j < 8; j++) {
+            for (int j = 0; j < 16; j++) {
                 for (int k = 0; k < 8; k++) {
                     Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
                             "knight/" + colors[i] + "/Image" + counter + ".png");
@@ -236,7 +236,7 @@ public class GameImages {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
             int counter = 1;
-            for (int j = 0; j < 8; j++) {
+            for (int j = 0; j < 16; j++) {
                 for (int k = 0; k < 8; k++) {
                     Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
                             "ladderman/" + colors[i] + "/Image" + counter + ".png");
@@ -252,7 +252,7 @@ public class GameImages {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
             int counter = 1;
-            for (int j = 0; j < 8; j++) {
+            for (int j = 0; j < 16; j++) {
                 for (int k = 0; k < 8; k++) {
                     Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
                             "crossbowman/" + colors[i] + "/Image" + counter + ".png");
@@ -267,7 +267,7 @@ public class GameImages {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
             int counter = 1;
-            for (int j = 0; j < 8; j++) {
+            for (int j = 0; j < 16; j++) {
                 for (int k = 0; k < 8; k++) {
                     Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
                             "spearman/" + colors[i] + "/Image" + counter + ".png");
@@ -282,7 +282,7 @@ public class GameImages {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
             int counter = 1;
-            for (int j = 0; j < 8; j++) {
+            for (int j = 0; j < 16; j++) {
                 for (int k = 0; k < 8; k++) {
                     Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
                             "lord/" + colors[i] + "/Image" + counter + ".png");
@@ -298,7 +298,7 @@ public class GameImages {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
             int counter = 1;
-            for (int j = 0; j < 8; j++) {
+            for (int j = 0; j < 16; j++) {
                 for (int k = 0; k < 8; k++) {
                     Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
                             "archer/" + colors[i] + "/Image" + counter + ".png");
@@ -313,7 +313,7 @@ public class GameImages {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
             int counter = 1;
-            for (int j = 0; j < 8; j++) {
+            for (int j = 0; j < 16; j++) {
                 for (int k = 0; k < 8; k++) {
                     Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
                             "swordsman/" + colors[i] + "/Image" + counter + ".png");
@@ -329,7 +329,7 @@ public class GameImages {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
             int counter = 1;
-            for (int j = 0; j < 8; j++) {
+            for (int j = 0; j < 16; j++) {
                 for (int k = 0; k < 8; k++) {
                     Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
                             "blackmonk/Image" + counter + ".png");
@@ -344,7 +344,7 @@ public class GameImages {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
             int counter = 1;
-            for (int j = 0; j < 8; j++) {
+            for (int j = 0; j < 16; j++) {
                 for (int k = 0; k < 8; k++) {
                     Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
                             "maceman/" + colors[i] + "/Image" + counter + ".png");
@@ -359,7 +359,7 @@ public class GameImages {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
             int counter = 1;
-            for (int j = 0; j < 8; j++) {
+            for (int j = 0; j < 16; j++) {
                 for (int k = 0; k < 8; k++) {
                     Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
                             "pikeman/" + colors[i] + "/Image" + counter + ".png");
@@ -374,7 +374,7 @@ public class GameImages {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
             int counter = 1;
-            for (int j = 0; j < 8; j++) {
+            for (int j = 0; j < 16; j++) {
                 for (int k = 0; k < 8; k++) {
                     Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
                             "engineer/" + colors[i] + "/Image" + counter + ".png");
@@ -389,7 +389,7 @@ public class GameImages {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
             int counter = 1;
-            for (int j = 0; j < 8; j++) {
+            for (int j = 0; j < 16; j++) {
                 for (int k = 0; k < 8; k++) {
                     Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
                             "tunneler/" + colors[i] + "/Image" + counter + ".png");

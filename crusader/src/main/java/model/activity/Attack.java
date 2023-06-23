@@ -9,11 +9,13 @@ import enumeration.MoveStates;
 import model.building.Building;
 import model.building.castlebuildings.MainCastle;
 import model.game.Map;
+import model.game.Tile;
 import model.game.Tuple;
 import model.human.civilian.Civilian;
 import model.human.military.Engineer;
 import model.human.military.Military;
 import model.tools.Tool;
+import view.controllers.GameViewController;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -29,6 +31,9 @@ public class Attack {
     }
 
     public ArrayList<Military> getEnemyOfRange(int x, int y, int range) {
+        if (range == 1){
+            return getNearEnemy(x,y);
+        }
         int startX = x - range;
         int startY = y - range;
         int endX = x + range;
@@ -52,6 +57,15 @@ public class Attack {
         return HumanController.getEnemiesOfArea(startX, startY, endX, endY, military.getGovernment());
     }
 
+    public ArrayList<Military> getNearEnemy(int x , int y){
+        ArrayList<Military> troops = new ArrayList<>();
+        ArrayList<Tile> tiles = HumanController.getNeighbor(x,y);
+        for (Tile tile : tiles){
+
+            troops.addAll(MapController.getMilitariesOfOtherGovernment(tile.x, tile.y, military.getGovernment()));
+        }
+        return troops;
+    }
     public void attackCiviliansOfRange(int x, int y, int range) {
         Map map = GameController.getGame().getMap();
         int startX = x - range;
@@ -167,7 +181,7 @@ public class Attack {
         this.tool = tool;
     }
 
-    public boolean shouldAttack(int range) {
+    public boolean shouldAttack(int range)  {
         if (enemy != null || tool != null) {
             return true;
         }
@@ -234,7 +248,7 @@ public class Attack {
         if (enemy.getAttack().enemy == null && enemy.getAttack().isInRange(military.getX(), military.getY(), enemy.getShootingRange())) {
             enemy.getAttack().setEnemy(military);
         }
-
+        GameViewController.attackToEnemy(military,enemy);
         if (enemyHp <= 0) {
             MapController.deleteMilitary(enemy.getX(), enemy.getY(), enemy);
             enemy.setGovernment(null);
@@ -326,7 +340,7 @@ public class Attack {
 
 
     //this should use in nextTurn for each troop if troop has government so far
-    public void doAttack() {
+    public synchronized void doAttack() {
 
         if (military.getGovernment() == null) {
             return;

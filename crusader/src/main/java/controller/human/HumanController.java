@@ -298,8 +298,49 @@ public class HumanController {
         return true;
     }
 
+    public static ArrayList<Tile> getNeighbor(int x, int y) {
+        Map map = MapController.map;
+        ArrayList<Tile> neighbors = new ArrayList<>();
+        if (y != 0) {
+            neighbors.add(map.getTile(x, y - 1));
+        }
+        if (x != 0) {
+            neighbors.add(map.getTile(x - 1, y));
+        }
+        if (y > 1) {
+            neighbors.add(map.getTile(x, y - 2));
+        }
+        if (y < map.getLength() - 2) {
+            neighbors.add(map.getTile(x, y + 2));
+        }
+        if (y != map.getLength() - 1) {
+            neighbors.add(map.getTile(x, y + 1));
+        }
+        if (x != map.getWidth() - 1) {
+            neighbors.add(map.getTile(x + 1, y));
+        }
+        if (y % 2 == 0) {
+            if (x != map.getWidth() - 1) {
+                if (y != map.getLength() - 1) {
+                    neighbors.add(map.getTile(x + 1, y + 1));
+                }
+                if (y != 0) {
+                    neighbors.add(map.getTile(x + 1, y - 1));
+                }
+            }
+        } else {
+            if (x != 0) {
+                if (y != map.getLength() - 1) {
+                    neighbors.add(map.getTile(x - 1, y + 1));
+                }
+                neighbors.add(map.getTile(x - 1, y - 1));
+            }
+        }
+        return neighbors;
+    }
 
-    public static boolean validateMove(Tuple endPair){
+
+    public static boolean validateMove(Tuple endPair) {
         Tuple startPair = MoveController.getStartPair();
         MoveController.shouldCheckOtherPath();
         LinkedList<Tuple> path = MoveController.checkHasPath(startPair, endPair);
@@ -309,7 +350,7 @@ public class HumanController {
         return path != null || assassinPath != null || ladderPath != null;
     }
 
-    public static boolean validateAttack(Tool tool){
+    public static boolean validateAttack(Tool tool) {
         Tuple startPair = MoveController.getStartPair();
         Tuple endPair = new Tuple(tool.getY(), tool.getX());
         MoveController.shouldCheckOtherPath();
@@ -348,7 +389,8 @@ public class HumanController {
         }
         return true;
     }
-    public static boolean validateAttack(Building building){
+
+    public static boolean validateAttack(Building building) {
         Tuple startPair = MoveController.getStartPair();
         MoveController.shouldCheckOtherPath();
         LinkedList<Tuple> path = MoveController.checkHasPathForBuilding(startPair, building);
@@ -390,7 +432,8 @@ public class HumanController {
         }
         return true;
     }
-    public static boolean validateAttack(Military enemy){
+
+    public static boolean validateAttack(Military enemy) {
         Tuple startPair = MoveController.getStartPair();
         Tuple endPair = new Tuple(enemy.getY(), enemy.getX());
         MoveController.shouldCheckOtherPath();
@@ -429,7 +472,8 @@ public class HumanController {
         }
         return true;
     }
-    public static boolean validateAirAttack(Tool tool){
+
+    public static boolean validateAirAttack(Tool tool) {
         int countOfTroop = 0;
         for (Military military : militaries) {
             if (military.canAirAttack() && military.getAttack().isInRange(tool.getX(), tool.getY(), military.getShootingRange())) {
@@ -438,7 +482,8 @@ public class HumanController {
         }
         return countOfTroop != 0;
     }
-    public static boolean validateAirAttack(Building building){
+
+    public static boolean validateAirAttack(Building building) {
         int countOfTroop = 0;
         for (Military military : militaries) {
             if (military.canAirAttack() && military.getAttack().buildingIsInRange(building)) {
@@ -447,7 +492,8 @@ public class HumanController {
         }
         return countOfTroop != 0;
     }
-    public static boolean validateAirAttack(int x, int y, List<Military> enemies){
+
+    public static boolean validateAirAttack(int x, int y, List<Military> enemies) {
         int countOfTroop = 0;
         for (Military military : militaries) {
             if (military.canAirAttack() && military.getAttack().isInRange(x, y, military.getShootingRange())) {
@@ -456,14 +502,6 @@ public class HumanController {
         }
         return countOfTroop != 0;
     }
-
-
-
-
-
-
-
-
 
 
     public static boolean patrolUnit(int x1, int y1, int x2, int y2) {

@@ -1748,14 +1748,53 @@ public class GameViewController {
         //
     }
 
-    public static GameTile touchTile(double zoom) {
-        for (int y = 0; y < GameController.getGame().getMap().getLength(); y++) {
-            for (int x = 0; x < GameController.getGame().getMap().getWidth(); x++) {
-                GameTile gameTile = GameMap.getGameTile(x, y);
-                gameTile.getTextureImage().setScaleX(gameTile.getTextureImage().getScaleX() * zoom);
-                gameTile.getTextureImage().setScaleY(gameTile.getTextureImage().getScaleY() * zoom);
+    public static Troop getTroopFromMilitary(Military military){
+        ArrayList<Troop> militaries = GameMap.gameTroops[military.getY()][military.getX()];
+        for (Troop troop : militaries){
+            if (troop.getMilitary().equals(military)){
+                return troop;
             }
         }
         return null;
+    }
+    public static void attackToEnemy(Military military,Military enemy){
+        Troop troop = getTroopFromMilitary(military);
+        GameTile start = GameMap.getGameTile(military.getX(),military.getY());
+        GameTile end = GameMap.getGameTile(enemy.getX(),enemy.getY());
+        double x1 = start.getX();
+        double x2 = end.getX();
+        double y1 = start.getY();
+        double y2 = end.getY();
+        int dir = getDirection(x1,y1,x2,y2);
+        troop.setAttackDirection(dir);
+        troop.setAttackStep();
+        troop.updateImage();
+    }
+
+    public static int getDirection(double x1, double y1, double x2, double y2) {
+        if (Math.abs(x1 - x2) < 0.5) {
+            if ((y2 - y1) > 0 || Math.abs(y2 - y1) < 0.5) {
+                return 3;
+            }
+            return 7;
+        }
+        double slop = (y2 - y1) / (x2 - x1);
+        if (Math.abs(slop) < 0.5) {
+            if ((x2 - x1) > 0) {
+                return 1;
+            }
+            return 5;
+        }
+        if (slop >= 0) {
+            if ((y2 - y1) > 0) {
+                return 2;
+            }
+            return 6;
+        } else {
+            if ((y2 - y1) > 0) {
+                return 4;
+            }
+            return 0;
+        }
     }
 }
