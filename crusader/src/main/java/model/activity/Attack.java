@@ -233,7 +233,7 @@ public class Attack {
     }
 
 
-    public void attackEnemy() {
+    public synchronized void attackEnemy() {
 
         if (tool != null) {
             attackToTool();
