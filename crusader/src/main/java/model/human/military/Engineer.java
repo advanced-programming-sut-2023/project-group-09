@@ -22,6 +22,8 @@ public class Engineer extends EuropeanTroop {
         super.setAggressiveRange(engineer.getAggressiveRange());
         super.setUsesLadder(engineer.isUsesLadder());
         super.setDigsMoat(engineer.isDigsMoat());
+        super.setAttackStepCount(0);
+        super.setAirAttackStepCount(0);
     }
 
     public Tool getTarget() {

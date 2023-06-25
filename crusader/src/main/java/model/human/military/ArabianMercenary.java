@@ -16,5 +16,7 @@ public class ArabianMercenary extends Military {
         super.setUsesLadder(arabianMercenary.isUsesLadder());
         super.setDigsMoat(arabianMercenary.isDigsMoat());
         super.setInvisible(arabianMercenary.isInvisible());
+        super.setAttackStepCount(arabianMercenary.getAttackStepCount());
+        super.setAirAttackStepCount(arabianMercenary.getAirAttackStepCount());
     }
 }
