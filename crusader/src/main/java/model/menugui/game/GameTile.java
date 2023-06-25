@@ -17,6 +17,7 @@ import model.building.castlebuildings.Gatehouse;
 import model.game.Tile;
 import model.human.military.Military;
 import view.controllers.GameViewController;
+import view.controllers.HumanViewController;
 import view.menus.GameMenu;
 
 import java.util.Random;
@@ -35,8 +36,6 @@ public class GameTile {
     private ImageView treeImage;
     private static int tileXOn, tileYOn;
     public boolean touch = false;
-    public TileSensor tileSensor;
-
 
     public GameTile(Tile tile, double x, double y, int tileX, int tileY) {
         this.tileX = tileXOn = tileX;
@@ -77,7 +76,7 @@ public class GameTile {
         if (buildingImage != null) buildingImage.setEffect(colorAdjust);
         if (humanImage != null) humanImage.setEffect(colorAdjust);
         if (treeImage != null) treeImage.setEffect(colorAdjust);
-        GameViewController.divideTroops(tile);
+        HumanViewController.divideTroops(tile);
     }
 
     public void deselectTile() {
@@ -239,7 +238,7 @@ public class GameTile {
                         GameMenu.hoveringBarStateText.setText("Unit Menu");
                         GameViewController.setCenterOfBar();
                     } else {
-                        GameViewController.addTypes();
+                        HumanViewController.addTypes();
                         if (GameMenu.selectedTroops.size() != 0) {
                             Military military = null;
                             for (Military m : GameMenu.selectedTroops) {
@@ -254,7 +253,7 @@ public class GameTile {
             } else if (GameMenu.isSelected && mouseEvent.getButton() == MouseButton.SECONDARY && !GameViewController.isTextureSelected) {
                 GameViewController.unselectTiles();
             } else if (GameMenu.selectedUnit && !GameViewController.isTextureSelected) {
-                GameViewController.doAction(true, this);
+                HumanViewController.doAction(true, this);
                 GameMenu.root.getChildren().remove(GameMenu.selectCursor);
                 GameMenu.movingState = UnitMovingState.NORMAL.getState();
                 GameViewController.unselectTilesWithOutUnits();
@@ -270,11 +269,8 @@ public class GameTile {
             }
         });
 
-        textureImage.setOnMouseDragEntered(new EventHandler<MouseDragEvent>() {
-            @Override
-            public void handle(MouseDragEvent mouseDragEvent) {
+        textureImage.setOnMouseDragEntered(mouseDragEvent -> {
 
-            }
         });
     }
 }

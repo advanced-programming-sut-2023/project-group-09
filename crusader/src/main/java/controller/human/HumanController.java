@@ -828,15 +828,13 @@ public class HumanController {
 
     public static void setState(String state, ArrayList<Military> militaries) {
         for (Military military : militaries) {
-            if (military.getMove().getMoveState().equals(MoveStates.PATROL.getState())) {
-                military.setMilitaryState(state);
-            }
+            military.setMilitaryState(state);
         }
     }
 
 
     public static boolean attack(Military enemy, Military military) {
-        LinkedList<Tuple> path = MoveController.getPath(new Tuple(military.getX(), military.getY()), new Tuple(enemy.getX(), enemy.getX()), military);
+        LinkedList<Tuple> path = MoveController.getPath(new Tuple(military.getX(), military.getY()), new Tuple(enemy.getX(), enemy.getY()), military);
         if (path != null) {
             Move move = new Move(military.getX(), military.getY(), enemy, false, military);
             move.setPath(path);

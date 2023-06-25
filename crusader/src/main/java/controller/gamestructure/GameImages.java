@@ -2,13 +2,8 @@ package controller.gamestructure;
 
 import enumeration.Paths;
 import enumeration.Textures;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
-import javafx.scene.layout.HBox;
 import model.menugui.game.GameTile;
-import model.menugui.game.TileSensor;
 
 import java.util.HashMap;
 
@@ -63,7 +58,8 @@ public class GameImages {
         addFireThrower();
         addHorseArcher();
     }
-    public static void addEuropeanTroops(){
+
+    public static void addEuropeanTroops() {
         addKnight();
         addTunneler();
         addEngineer();
@@ -185,6 +181,7 @@ public class GameImages {
             }
         }
     }
+
     private static void addAssassin() {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
@@ -199,7 +196,9 @@ public class GameImages {
                 counter += 8;
             }
         }
-    }private static void addFireThrower() {
+    }
+
+    private static void addFireThrower() {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
             int counter = 1;
@@ -263,6 +262,7 @@ public class GameImages {
             }
         }
     }
+
     private static void addSpearman() {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
@@ -278,6 +278,7 @@ public class GameImages {
             }
         }
     }
+
     private static void addLord() {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
@@ -309,6 +310,7 @@ public class GameImages {
             }
         }
     }
+
     private static void addSwordsman() {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
@@ -340,6 +342,7 @@ public class GameImages {
             }
         }
     }
+
     private static void addMaceman() {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
@@ -355,6 +358,7 @@ public class GameImages {
             }
         }
     }
+
     private static void addPikeman() {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
@@ -370,6 +374,7 @@ public class GameImages {
             }
         }
     }
+
     private static void addEngineer() {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
@@ -385,6 +390,7 @@ public class GameImages {
             }
         }
     }
+
     private static void addTunneler() {
         String[] colors = {"blue", "red", "orange", "yellow", "grey", "purple", "skyBlue", "green"};
         for (int i = 0; i < 8; i++) {
@@ -535,13 +541,4 @@ public class GameImages {
         imageViews.put("red", image);
     }
 
-    public static TileSensor getRedImageView(double x, double y, GameTile gameTile) {
-        TileSensor tileSensor = new TileSensor(imageViews.get("red"), gameTile);
-        tileSensor.setTranslateX(x);
-        tileSensor.setTranslateY(y);
-        tileSensor.setFitWidth(30);
-        tileSensor.setFitHeight(18);
-        tileSensor.setOpacity(0);
-        return tileSensor;
-    }
 }

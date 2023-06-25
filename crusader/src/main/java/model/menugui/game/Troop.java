@@ -13,6 +13,7 @@ import javafx.util.Duration;
 import model.game.Tile;
 import model.human.military.Military;
 import view.controllers.GameViewController;
+import view.controllers.HumanViewController;
 import view.menus.GameMenu;
 
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public class Troop extends ImageView {
                         GameMenu.hoveringBarStateText.setText("Unit Menu");
                         GameViewController.setCenterOfBar();
                     } else {
-                        GameViewController.addTypes();
+                        HumanViewController.addTypes();
                         if (GameMenu.selectedTroops.size() != 0) {
                             Military military = null;
                             for (Military m : GameMenu.selectedTroops) {
@@ -88,7 +89,7 @@ public class Troop extends ImageView {
             } else if (GameMenu.isSelected && mouseEvent.getButton() == MouseButton.SECONDARY) {
                 GameViewController.unselectTiles();
             } else if (GameMenu.selectedUnit) {
-                GameViewController.doAction(true, gameTile);
+                HumanViewController.doAction(true, gameTile);
                 GameMenu.root.getChildren().remove(GameMenu.selectCursor);
                 GameMenu.movingState = UnitMovingState.NORMAL.getState();
                 GameViewController.unselectTilesWithOutUnits();
@@ -111,7 +112,7 @@ public class Troop extends ImageView {
                         GameMap.gameTroops[military.getY()][military.getX()] = new ArrayList<>();
                     }
                     GameTile next = GameMap.getGameTile(military.getX(), military.getY());
-                    direction = GameViewController.getDirection(gameTile.getX(), gameTile.getY(), next.getX(), next.getY());
+                    direction = HumanViewController.getDirection(gameTile.getX(), gameTile.getY(), next.getX(), next.getY());
                     step = (step + 1) % 8;
                     gameTile = next;
                     GameMap.gameTroops[military.getY()][military.getX()].add(this);

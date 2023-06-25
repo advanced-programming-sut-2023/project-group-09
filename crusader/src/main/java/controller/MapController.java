@@ -24,6 +24,7 @@ import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
 import model.tools.Tool;
 import view.controllers.GameViewController;
+import view.controllers.HumanViewController;
 import view.menus.GameMenu;
 
 import java.util.ArrayList;
@@ -362,7 +363,7 @@ public class MapController {
         Tile tile = map.getTile(x, y);
         government.addMilitary(military);
         tile.addMilitary(military);
-        GameViewController.dropUnit(x, y, tile, military);
+        HumanViewController.dropUnit(x, y, tile, military);
     }
 
     public static void deleteMilitary(int x, int y, Military military) {

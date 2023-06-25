@@ -16,6 +16,7 @@ import model.human.military.Engineer;
 import model.human.military.Military;
 import model.tools.Tool;
 import view.controllers.GameViewController;
+import view.controllers.HumanViewController;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -248,7 +249,7 @@ public class Attack {
         if (enemy.getAttack().enemy == null && enemy.getAttack().isInRange(military.getX(), military.getY(), enemy.getShootingRange())) {
             enemy.getAttack().setEnemy(military);
         }
-        GameViewController.attackToEnemy(military,enemy);
+        HumanViewController.attackToEnemy(military,enemy);
         if (enemyHp <= 0) {
             MapController.deleteMilitary(enemy.getX(), enemy.getY(), enemy);
             enemy.setGovernment(null);

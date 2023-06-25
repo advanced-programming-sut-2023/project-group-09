@@ -71,16 +71,9 @@ public class GameViewController {
     public static HashMap<String, Double> buildingCoordinates = new HashMap<>();
 
 
-    //--------------------------------------------------------
-    public static ArrayList<TypeBTN> typeBTNS = new ArrayList<>();
-    public static ArrayList<ImageView> moveBTNS = new ArrayList<>();
-    public static TypeBTN lastType;
-    public static ArrayList<Military> selectedMilitaries = new ArrayList<>();
 
-    //----------------------------------------------------------
     public static void createShortcutBars(Pane gamePane, Text text) {
         setCenterOfBar();
-
         ImageView clipboardSign = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
                 + "icons/clipboardIcon.png");
         clipboardSign.setTranslateX(657);
@@ -207,7 +200,7 @@ public class GameViewController {
         });
     }
 
-    private static void setHoverEventForBar(ImageView imageView, String text) {
+    public static void setHoverEventForBar(ImageView imageView, String text) {
         imageView.setOnMouseEntered(mouseEvent -> GameMenu.hoveringBarStateText.setText(text));
         imageView.setOnMouseExited(mouseEvent -> GameMenu.hoveringBarStateText.setText(""));
         imageView.setOnMouseClicked(mouseEvent -> setCenterOfBar());
@@ -283,7 +276,7 @@ public class GameViewController {
             case "Unit Menu" -> {
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar(-1);
-                setCenterOfUnitMenu();
+                HumanViewController.setCenterOfUnitMenu();
             }
             case "Small Gatehouse" -> {
                 GameMenu.menuBar.getChildren().clear();
@@ -309,142 +302,9 @@ public class GameViewController {
         putBuildingImageView("smallGatehouseRightIcon", "Right Side", "smallStoneGatehouse", 520, 0, 0.3, "smallStoneGatehouseRight");
         putButtonImageViewWithDestination("backButtonIcon", "Back To Castles", "Gatehouses", 225, 60, 0.2);
     }
-
-    private static void setCenterOfUnitMenu() {
-        GameMenu.barImage.setImage(GameImages.imageViews.get("unit bar"));
-        addTypes();
-        setSelectedUnits();
-        if (selectedMilitaries.size() != 0) {
-            Military military = selectedMilitaries.get(0);
-            HumanController.militaries.clear();
-            HumanController.militaries.add(military);
-        }
-        putDisband();
-        putPatrol();
-        putStop();
-        putStand();
-        putDefensive();
-        putAggressive();
-    }
-
-    public static void addTypes() {
-        double translateY = 100;
-        double translateX = 290;
-        int count = 0;
-        for (String name : GameMenu.unitsCount.keySet()) {
-            if (GameMenu.unitsCount.get(name) != 0) {
-                System.out.println(name);
-                TypeBTN btn = new TypeBTN(name, GameMenu.menuBar, GameMenu.unitsCount.get(name), translateX, translateY);
-                translateX += 62;
-                setHoverEventForBar(btn.imageView, name);
-                typeBTNS.add(btn);
-                DropShadow ds = new DropShadow(20, Color.AQUA);
-                btn.imageView.setOnMouseClicked(mouseEvent -> {
-                    for (TypeBTN typeBTN : typeBTNS) {
-                        typeBTN.imageView.setEffect(null);
-                    }
-                    btn.imageView.setEffect(ds);
-                    lastType = btn;
-                });
-                count++;
-                if (count > 7) {
-                    return;
-                }
-            }
-        }
-
-    }
-
-    public static void putDisband() {
-        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
-                .toExternalForm() + "icons/disband.png");
-        icon.setTranslateX(127);
-        icon.setTranslateY(127);
-        icon.setScaleY(1.1);
-        icon.setScaleX(1.2);
-        GameMenu.menuBar.getChildren().add(icon);
-        setHoverEventForBar(icon, "disband");
-    }
-
-    public static void putStop() {
-        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
-                .toExternalForm() + "icons/stop.png");
-        icon.setTranslateX(177);
-        icon.setTranslateY(127);
-        icon.setScaleY(1.1);
-        icon.setScaleX(1.2);
-        GameMenu.menuBar.getChildren().add(icon);
-        icon.setOnMouseEntered(mouseEvent -> GameMenu.hoveringBarStateText.setText("stop"));
-        icon.setOnMouseExited(mouseEvent -> GameMenu.hoveringBarStateText.setText(""));
-        System.out.println(selectedMilitaries.size());
-        icon.setOnMouseClicked(mouseEvent -> {
-            setSelectedUnits();
-            stopTroops();
-        });
-        icon.setOnMousePressed(mouseEvent -> {
-            GameMenu.movingState = MoveStates.PATROL.getState();
-            icon.setEffect(new InnerShadow(BlurType.THREE_PASS_BOX, Color.GRAY, 10, 0, 0, 0));
-        });
-        icon.setOnMouseReleased(mouseEvent -> {
-            GameMenu.movingState = MoveStates.PATROL.getState();
-            icon.setEffect(null);
-        });
-    }
-
-    public static void putPatrol() {
-        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
-                .toExternalForm() + "icons/patrol.png");
-        icon.setTranslateX(225);
-        icon.setTranslateY(127);
-        icon.setScaleY(1.1);
-        icon.setScaleX(1.3);
-        GameMenu.menuBar.getChildren().add(icon);
-        icon.setOnMouseEntered(mouseEvent -> GameMenu.hoveringBarStateText.setText("patrol"));
-        icon.setOnMouseExited(mouseEvent -> GameMenu.hoveringBarStateText.setText(""));
-        icon.setOnMouseClicked(mouseEvent -> {
-            GameMenu.movingState = MoveStates.PATROL.getState();
-        });
-        icon.setOnMousePressed(mouseEvent -> {
-            GameMenu.movingState = MoveStates.PATROL.getState();
-            icon.setEffect(new InnerShadow(BlurType.THREE_PASS_BOX, Color.GRAY, 10, 0, 0, 0));
-        });
-        icon.setOnMouseReleased(mouseEvent -> {
-            GameMenu.movingState = MoveStates.PATROL.getState();
-            icon.setEffect(null);
-        });
-    }
-
-    public static void putStand() {
-        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
-                .toExternalForm() + "icons/stand-ground.png");
-        icon.setTranslateX(127);
-        icon.setTranslateY(50);
-        icon.setScaleY(1.3);
-        icon.setScaleX(1.3);
-        GameMenu.menuBar.getChildren().add(icon);
-        setHoverEventForBar(icon, "Stand Ground");
-    }
-
-    public static void putDefensive() {
-        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
-                .toExternalForm() + "icons/defensive-state.png");
-        icon.setTranslateX(177);
-        icon.setTranslateY(70);
-        icon.setScaleY(1.3);
-        icon.setScaleX(1.3);
-        GameMenu.menuBar.getChildren().add(icon);
-        setHoverEventForBar(icon, "Defensive State");
-    }
-
-    public static void putAggressive() {
-        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
-                .toExternalForm() + "icons/aggressive-state.png");
-        icon.setTranslateX(225);
-        icon.setTranslateY(65);
-        icon.setScaleY(1.3);
-        icon.setScaleX(1.3);
-        GameMenu.menuBar.getChildren().add(icon);
-        setHoverEventForBar(icon, "Offensive State");
+    public static void setHoverEventForBarOnUnitMenu(ImageView imageView, String text) {
+        imageView.setOnMouseEntered(mouseEvent -> GameMenu.hoveringBarStateText.setText(text));
+        imageView.setOnMouseExited(mouseEvent -> GameMenu.hoveringBarStateText.setText(""));
     }
 
     public static void unselectTiles() {
@@ -458,9 +318,9 @@ public class GameViewController {
         GameMenu.selectDone = false;
         GameMenu.unitsCount = new HashMap<>();
         GameMenu.selectedTroops.clear();
-        selectedMilitaries.clear();
-        lastType = null;
-        typeBTNS = new ArrayList<>();
+        HumanViewController.selectedMilitaries.clear();
+        HumanViewController.lastType = null;
+        HumanViewController.typeBTNS = new ArrayList<>();
         GameMenu.selectedTilesTroop.clear();
         GameMenu.selectedArea.setVisible(false);
         GameMenu.selectedArea.setWidth(0);
@@ -479,8 +339,8 @@ public class GameViewController {
         GameMenu.isSelected = false;
         GameMenu.selectedUnit = false;
         GameMenu.selectDone = false;
-        lastType = null;
-        typeBTNS = new ArrayList<>();
+        HumanViewController.lastType = null;
+        HumanViewController.typeBTNS = new ArrayList<>();
         GameMenu.selectedArea.setVisible(false);
         GameMenu.selectedArea.setWidth(0);
         GameMenu.selectedArea.setHeight(0);
@@ -1554,46 +1414,46 @@ public class GameViewController {
     }
 
     public static void createBorderRectangles(GameMap gameMap, MiniMap miniMap) {
-        GameMenu.downRight = new Rectangle(10, 10);
-        GameMenu.upRight = new Rectangle(10, 10);
-        GameMenu.upLeft = new Rectangle(10, 10);
-        GameMenu.downLeft = new Rectangle(10, 10);
-        GameMenu.right = new Rectangle(10, 780);
-        GameMenu.up = new Rectangle(1180, 10);
-        GameMenu.left = new Rectangle(10, 780);
-        GameMenu.down = new Rectangle(1180, 10);
+        Rectangle downRight = new Rectangle(10, 10);
+        Rectangle upRight = new Rectangle(10, 10);
+        Rectangle upLeft = new Rectangle(10, 10);
+        Rectangle downLeft = new Rectangle(10, 10);
+        Rectangle right = new Rectangle(10, 780);
+        Rectangle up = new Rectangle(1180, 10);
+        Rectangle left = new Rectangle(10, 780);
+        Rectangle down = new Rectangle(1180, 10);
 
 
-        setTranslateOfRectangle(GameMenu.downRight, 595, 395);
-        setTranslateOfRectangle(GameMenu.upRight, 595, -395);
-        setTranslateOfRectangle(GameMenu.upLeft, -595, -395);
-        setTranslateOfRectangle(GameMenu.downLeft, -595, 395);
-        setTranslateOfRectangle(GameMenu.right, 595, 0);
-        setTranslateOfRectangle(GameMenu.left, -595, 0);
+        setTranslateOfRectangle(downRight, 595, 395);
+        setTranslateOfRectangle(upRight, 595, -395);
+        setTranslateOfRectangle(upLeft, -595, -395);
+        setTranslateOfRectangle(downLeft, -595, 395);
+        setTranslateOfRectangle(right, 595, 0);
+        setTranslateOfRectangle(left, -595, 0);
 
 
-        setTranslateOfRectangle(GameMenu.up, 0, -395);
-        setTranslateOfRectangle(GameMenu.down, 0, 395);
+        setTranslateOfRectangle(up, 0, -395);
+        setTranslateOfRectangle(down, 0, 395);
 
 
-        GameMenu.root.getChildren().addAll(GameMenu.downRight, GameMenu.downLeft, GameMenu.upRight,
-                GameMenu.upLeft, GameMenu.right, GameMenu.left, GameMenu.up, GameMenu.down);
+        GameMenu.root.getChildren().addAll(downRight, downLeft, upRight,
+                upLeft, right, left, up, down);
 
-        GameMenu.downRight.setViewOrder(-3000);
-        GameMenu.downLeft.setViewOrder(-3000);
-        GameMenu.down.setViewOrder(-3000);
-        GameMenu.left.setViewOrder(-3000);
-        GameMenu.right.setViewOrder(-3000);
+        downRight.setViewOrder(-3000);
+        downLeft.setViewOrder(-3000);
+        down.setViewOrder(-3000);
+        left.setViewOrder(-3000);
+        right.setViewOrder(-3000);
 
-        setEventForRectangles(GameMenu.downRight, 1, -1, gameMap, miniMap);
-        setEventForRectangles(GameMenu.downLeft, -1, -1, gameMap, miniMap);
-        setEventForRectangles(GameMenu.upRight, 1, 1, gameMap, miniMap);
-        setEventForRectangles(GameMenu.upLeft, -1, 1, gameMap, miniMap);
+        setEventForRectangles(downRight, 1, -1, gameMap, miniMap);
+        setEventForRectangles(downLeft, -1, -1, gameMap, miniMap);
+        setEventForRectangles(upRight, 1, 1, gameMap, miniMap);
+        setEventForRectangles(upLeft, -1, 1, gameMap, miniMap);
 
-        setEventForRectangles(GameMenu.down, 0, -1, gameMap, miniMap);
-        setEventForRectangles(GameMenu.left, -1, 0, gameMap, miniMap);
-        setEventForRectangles(GameMenu.up, 0, 1, gameMap, miniMap);
-        setEventForRectangles(GameMenu.right, 1, 0, gameMap, miniMap);
+        setEventForRectangles(down, 0, -1, gameMap, miniMap);
+        setEventForRectangles(left, -1, 0, gameMap, miniMap);
+        setEventForRectangles(up, 0, 1, gameMap, miniMap);
+        setEventForRectangles(right, 1, 0, gameMap, miniMap);
 
 
     }
@@ -1650,364 +1510,5 @@ public class GameViewController {
         });
     }
 
-    public static void dropUnit(int x, int y, Tile tile, Military military) {
-        GameTile gameTile = GameMap.getGameTile(x, y);
-        GameMap gameMap = GameMenu.gameMap;
-        Troop troop = new Troop(military, tile, gameTile);
-        gameMap.getChildren().add(troop);
-        if (GameMap.gameTroops[y][x] == null) {
-            GameMap.gameTroops[y][x] = new ArrayList<>();
-        }
-        GameMap.gameTroops[y][x].add(troop);
-    }
 
-    public static void selectUnits(int x, int y) {
-        GameMenu.selectedTilesTroop.clear();
-        Tile tile = GameController.getGame().getMap().getTile(x, y);
-        GameMenu.selectedUnit = true;
-    }
-
-    public static void divideTroops(Tile tile) {
-        Set<String> names = GameHumans.militaries.keySet();
-        for (String name : names) {
-            ArrayList<Military> troops = MapController.getOneTypeOfMilitariesOfGovernment(tile.x, tile.y, name,
-                    GameController.getGame().getCurrentGovernment());
-            GameMenu.selectedTroops.addAll(troops);
-            GameMenu.unitsCount.put(name, GameMenu.unitsCount.getOrDefault(name, 0) + troops.size());
-            if (troops.size() != 0) {
-                GameMenu.selectedUnit = true;
-                GameMenu.selectedTilesTroop.add(tile);
-            }
-        }
-    }
-
-    public static void setSelectCursorImage(String state) {
-        GameMenu.selectCursor.setFill(new ImagePattern(GameImages.imageViews.get(state)));
-    }
-
-    public static void setSelectCursorState(GameTile endTile) {
-        String state = GameMenu.movingState;
-        if (UnitMovingState.NORMAL.getState().equals(state)) {
-            canDoAction(true, endTile);
-        }
-    }
-
-
-    public static boolean canDoAction(boolean changeCursor, GameTile endTile) {
-        String state = GameMenu.movingState;
-        if (Objects.equals(state, UnitMovingState.NORMAL.getState())) {
-            if (checkCanAttack(endTile) || checkCanAirAttack(endTile)) {
-                if (changeCursor) {
-                    setSelectCursorImage("attack");
-                }
-                return true;
-            }
-            if (GameController.validateMoveUnit(endTile.getTileX(), endTile.getTileY())) {
-                if (changeCursor) {
-                    setSelectCursorImage("selectMove");
-                }
-                return true;
-            }
-            if (changeCursor) {
-                setSelectCursorImage("cannot");
-            }
-            return false;
-        }
-        if (Objects.equals(state, UnitMovingState.MOVE.getState())) {
-            if (GameController.validateMoveUnit(endTile.getTileX(), endTile.getTileY())) {
-                if (changeCursor) {
-                    setSelectCursorImage("selectMove");
-                }
-                return true;
-            }
-            if (changeCursor) {
-                setSelectCursorImage("cannot");
-            }
-            return false;
-        }
-        if (Objects.equals(state, UnitMovingState.AIR_ATTACK.getState())) {
-            if (checkCanAirAttack(endTile)) {
-                if (changeCursor) {
-                    setSelectCursorImage("attack");
-                }
-                return true;
-            }
-            if (changeCursor) {
-                setSelectCursorImage("cannot");
-            }
-            return false;
-        }
-
-        if (Objects.equals(state, UnitMovingState.ATTACK.getState())) {
-            if (checkCanAttack(endTile)) {
-                if (changeCursor) {
-                    setSelectCursorImage("attack");
-                }
-                return true;
-            }
-            if (changeCursor) {
-                setSelectCursorImage("cannot");
-            }
-            return false;
-        }
-
-        return false;
-    }
-
-
-    public static boolean checkCanAttack(GameTile endTile) {
-        if (GameController.validateAttackEnemy(endTile.getTileX(), endTile.getTileY())) {
-            return true;
-        }
-        if (GameController.validateAttackBuilding(endTile.getTileX(), endTile.getTileY())) {
-            return true;
-        }
-        return GameController.validateAttackTool(endTile.getTileX(), endTile.getTileY());
-    }
-
-
-    public static boolean checkCanAirAttack(GameTile endTile) {
-        if (GameController.validateAirAttack(endTile.getTileX(), endTile.getTileY())) {
-            return true;
-        }
-        if (GameController.validateAirAttackBuilding(endTile.getTileX(), endTile.getTileY())) {
-            return true;
-        }
-        return GameController.validateAirAttackTool(endTile.getTileX(), endTile.getTileY());
-    }
-
-    public static void doAction(boolean changeCursor, GameTile endTile) {
-        setSelectedUnits();
-        String state = GameMenu.movingState;
-        if (Objects.equals(state, UnitMovingState.NORMAL.getState())) {
-            if (checkCanAttack(endTile) || checkCanAirAttack(endTile)) {
-                if (changeCursor) {
-                    setSelectCursorImage("attack");
-                }
-                attack();
-                return;
-            }
-            if (GameController.validateMoveUnit(endTile.getTileX(), endTile.getTileY())) {
-                if (changeCursor) {
-                    setSelectCursorImage("selectMove");
-                }
-                moveUnits(endTile);
-                return;
-            }
-            if (changeCursor) {
-                setSelectCursorImage("cannot");
-            }
-            return;
-        }
-        if (Objects.equals(state, UnitMovingState.MOVE.getState())) {
-            if (GameController.validateMoveUnit(endTile.getTileX(), endTile.getTileY())) {
-                if (changeCursor) {
-                    setSelectCursorImage("selectMove");
-                }
-                moveUnits(endTile);
-                return;
-            }
-            if (changeCursor) {
-                setSelectCursorImage("cannot");
-            }
-            return;
-        }
-        if (Objects.equals(state, UnitMovingState.AIR_ATTACK.getState())) {
-            if (checkCanAirAttack(endTile)) {
-                if (changeCursor) {
-                    setSelectCursorImage("attack");
-                    attack();
-                }
-                return;
-            }
-            if (changeCursor) {
-                setSelectCursorImage("cannot");
-            }
-            return;
-        }
-        if (Objects.equals(state, UnitMovingState.ATTACK.getState())) {
-            if (checkCanAttack(endTile)) {
-                if (changeCursor) {
-                    setSelectCursorImage("attack");
-                }
-                return;
-            }
-            if (changeCursor) {
-                setSelectCursorImage("cannot");
-            }
-        }
-        if (Objects.equals(state, UnitMovingState.PATROL.getState())) {
-            if (GameController.validateMoveUnit(endTile.getTileX(), endTile.getTileY())) {
-                if (changeCursor) {
-                    setSelectCursorImage("selectMove");
-                }
-                patrolUnits(endTile);
-                return;
-            }
-            if (changeCursor) {
-                setSelectCursorImage("cannot");
-            }
-        }
-    }
-
-
-    public static boolean doAttack(GameTile endTile) {
-        if (GameController.validateAttackEnemy(endTile.getTileX(), endTile.getTileY())) {
-            return true;
-        }
-        if (GameController.validateAttackBuilding(endTile.getTileX(), endTile.getTileY())) {
-            return true;
-        }
-        return GameController.validateAttackTool(endTile.getTileX(), endTile.getTileY());
-    }
-
-
-    public static boolean doAirAttack(GameTile endTile) {
-        if (GameController.validateAirAttack(endTile.getTileX(), endTile.getTileY())) {
-            return true;
-        }
-        if (GameController.validateAirAttackBuilding(endTile.getTileX(), endTile.getTileY())) {
-            return true;
-        }
-        return GameController.validateAirAttackTool(endTile.getTileX(), endTile.getTileY());
-    }
-
-    public static void setSelectedUnits() {
-        int count = 0;
-        selectedMilitaries.clear();
-        HashMap<String, Integer> unitCount = GameHumans.getUnitHashmap();
-        for (TypeBTN btn : typeBTNS) {
-            unitCount.put(btn.name, btn.count);
-            count += btn.count;
-        }
-        for (Military military : GameMenu.selectedTroops) {
-            if (unitCount.get(military.getName()) != 0) {
-                selectedMilitaries.add(military);
-                unitCount.put(military.getName(), unitCount.get(military.getName()) - 1);
-                count--;
-            }
-            if (count == 0) {
-                return;
-            }
-        }
-    }
-
-    public static void moveUnits(GameTile end) {
-        System.out.println(selectedMilitaries.size());
-        for (Military military : GameViewController.selectedMilitaries) {
-            HumanController.militaries.clear();
-            HumanController.militaries.add(military);
-            GameController.moveUnit(end.getTileX(), end.getTileY());
-        }
-        GameMenu.unitsCount = new HashMap<>();
-        GameMenu.selectedTroops.clear();
-        GameMenu.selectedTilesTroop.clear();
-        selectedMilitaries.clear();
-        GameViewController.setCenterOfBar(null);
-        GameViewController.currentItem = null;
-        GameViewController.currentCategory = null;
-    }
-
-    public static void patrolUnits(GameTile end) {
-        for (Military military : GameViewController.selectedMilitaries) {
-            HumanController.militaries.clear();
-            HumanController.militaries.add(military);
-            GameController.patrolUnit(end.getTileX(), end.getTileY());
-        }
-        GameMenu.unitsCount = new HashMap<>();
-        GameMenu.selectedTroops.clear();
-        GameMenu.selectedTilesTroop.clear();
-        selectedMilitaries.clear();
-        GameViewController.setCenterOfBar(null);
-        GameViewController.currentItem = null;
-        GameViewController.currentCategory = null;
-    }
-
-    public static void setFlagOfPatrol(int x1, int y1, int x2, int y2) {
-        ImageView flag1 = new ImageView(new Image(LoginMenu.class.getResource(Paths.MAP_IMAGES.getPath())
-                .toExternalForm() + "patrol-flag.png"));
-        ImageView flag2 = new ImageView(new Image(LoginMenu.class.getResource(Paths.MAP_IMAGES.getPath())
-                .toExternalForm() + "patrol-flag.png"));
-        GameTile start = GameMap.getGameTile(x1, y1);
-        GameTile end = GameMap.getGameTile(x2, y2);
-        flag1.setTranslateX(start.getTextureImage().getTranslateX());
-        flag1.setTranslateY(start.getTextureImage().getTranslateY());
-        flag2.setTranslateX(end.getTextureImage().getTranslateX());
-        flag2.setTranslateY(end.getTextureImage().getTranslateY());
-        flag1.setFitWidth(GameMap.tileWidth);
-        flag2.setFitWidth(GameMap.tileWidth);
-        flag2.setFitHeight(GameMap.tileHeight);
-        flag1.setFitHeight(GameMap.tileHeight);
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(5000), actionEvent -> {
-            GameMenu.gameMap.getChildren().remove(flag2);
-            GameMenu.gameMap.getChildren().remove(flag1);
-        }));
-        timeline.setCycleCount(1);
-        timeline.play();
-
-        GameMenu.gameMap.getChildren().addAll(flag1, flag2);
-    }
-
-    public static void stopTroops() {
-        for (Military military : selectedMilitaries) {
-            if (military.getMove() != null) {
-                military.getMove().stopMove();
-            }
-        }
-        unselectTiles();
-    }
-
-    public static void attack() {
-        //
-    }
-
-    public static Troop getTroopFromMilitary(Military military){
-        ArrayList<Troop> militaries = GameMap.gameTroops[military.getY()][military.getX()];
-        for (Troop troop : militaries){
-            if (troop.getMilitary().equals(military)){
-                return troop;
-            }
-        }
-        return null;
-    }
-    public static void attackToEnemy(Military military,Military enemy){
-        Troop troop = getTroopFromMilitary(military);
-        GameTile start = GameMap.getGameTile(military.getX(),military.getY());
-        GameTile end = GameMap.getGameTile(enemy.getX(),enemy.getY());
-        double x1 = start.getX();
-        double x2 = end.getX();
-        double y1 = start.getY();
-        double y2 = end.getY();
-        int dir = getDirection(x1,y1,x2,y2);
-        troop.setAttackDirection(dir);
-        troop.setAttackStep();
-        troop.updateImage();
-    }
-
-    public static int getDirection(double x1, double y1, double x2, double y2) {
-        if (Math.abs(x1 - x2) < 0.5) {
-            if ((y2 - y1) > 0 || Math.abs(y2 - y1) < 0.5) {
-                return 3;
-            }
-            return 7;
-        }
-        double slop = (y2 - y1) / (x2 - x1);
-        if (Math.abs(slop) < 0.5) {
-            if ((x2 - x1) > 0) {
-                return 1;
-            }
-            return 5;
-        }
-        if (slop >= 0) {
-            if ((y2 - y1) > 0) {
-                return 2;
-            }
-            return 6;
-        } else {
-            if ((y2 - y1) > 0) {
-                return 4;
-            }
-            return 0;
-        }
-    }
 }

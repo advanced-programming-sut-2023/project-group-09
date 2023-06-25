@@ -25,6 +25,7 @@ import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
 import model.tools.Tool;
 import view.controllers.GameViewController;
+import view.controllers.HumanViewController;
 import viewphase1.UnitMenu;
 
 import java.util.*;
@@ -96,7 +97,7 @@ public class GameController {
             if (!check) {
                 return "can't start patrol, no path to destination!";
             }
-            GameViewController.setFlagOfPatrol(x1,y1,x2,y2);
+            HumanViewController.setFlagOfPatrol(x1,y1,x2,y2);
             return "patrol started successfully!";
         }
         return "";
