@@ -110,9 +110,18 @@ public class GameMenu extends Application {
         selectCursor.setFill(new ImagePattern(GameImages.imageViews.get("selectMove")));
         Rectangle clipRectangle = new Rectangle(1200, 800);
         root.setClip(clipRectangle);
-        MapController.dropMilitary(14, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(15, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
+        //MapController.dropMilitary(14, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
+        MapController.dropMilitary(11, 5, "archerBow", GameController.getGame().getCurrentGovernment());
+        //MapController.dropMilitary(20, 5, "horseArcher", GameController.getGame().getCurrentGovernment());
+        //MapController.dropMilitary(22, 5, "slinger", GameController.getGame().getCurrentGovernment());
+        //MapController.dropMilitary(18, 5, "assassin", GameController.getGame().getCurrentGovernment());
+        //MapController.dropMilitary(23, 5, "fireThrower", GameController.getGame().getCurrentGovernment());
+
         MapController.dropMilitary(20, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
+        MapController.dropMilitary(21, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
+        MapController.dropMilitary(21, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
+        MapController.dropMilitary(22, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
+        MapController.dropMilitary(22, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
         setEventListeners();
         GameViewController.setCenterOfBar();
         GameViewController.createBorderRectangles(gameMap, miniMap);

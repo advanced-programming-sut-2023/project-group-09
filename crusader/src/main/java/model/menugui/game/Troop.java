@@ -32,6 +32,9 @@ public class Troop extends ImageView {
     String color;
     int attackStep = 0;
     int attackDirection = 0;
+
+    int airAttackStep = 0;
+    int airAttackDirection = 0;
     int dead = 1;
 
     public Troop(Military military, Tile tile, GameTile gameTile) {
@@ -187,39 +190,33 @@ public class Troop extends ImageView {
 
     }
 
-    public int getStep() {
-        return step;
-    }
-
-    public void setStep(int step) {
-        this.step = step;
-    }
-
-    public int getDirection() {
-        return direction;
-    }
-
-    public void setDirection(int direction) {
-        this.direction = direction;
-    }
-
-    public int getAttackStep() {
-        return attackStep;
-    }
 
     public void setAttackStep() {
-        this.attackStep = (attackStep + 1) % 8;
-    }
+        if ( military.getAttackStepCount() != 0){
+            this.attackStep = (attackStep + 1) % military.getAttackStepCount();
+        }
 
-    public int getAttackDirection() {
-        return attackDirection;
-    }
-
-    public void updateImage(){
-        setImage(GameImages.imageViews.get(
-                military.getName() + "_" + military.getGovernment().getColor() + "_" + (attackStep * 16 + attackDirection + 129)));
     }
     public void setAttackDirection(int attackDirection) {
         this.attackDirection = attackDirection;
+    }
+    public void updateImageAttack(){
+        setImage(GameImages.imageViews.get(
+                military.getName() + "_" + military.getGovernment().getColor() + "_" + (attackStep * 16 + attackDirection + 129)));
+    }
+
+    public void setAirAttackStep() {
+        if ( military.getAirAttackStepCount() != 0){
+            this.attackStep = (attackStep + 1) % military.getAirAttackStepCount();
+        }
+    }
+
+    public void setAirAttackDirection(int airAttackDirection) {
+        this.airAttackDirection = airAttackDirection;
+    }
+
+    public void updateImageAirAttack(){
+        setImage(GameImages.imageViews.get(
+                military.getName() + "_" + military.getGovernment().getColor() + "_" + (attackStep * 16 + attackDirection + 257)));
     }
 }

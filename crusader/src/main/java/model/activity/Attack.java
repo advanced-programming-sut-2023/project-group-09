@@ -233,7 +233,7 @@ public class Attack {
     }
 
 
-    public void attackEnemy() {
+    public synchronized void attackEnemy() {
 
         if (tool != null) {
             attackToTool();
@@ -249,7 +249,16 @@ public class Attack {
         if (enemy.getAttack().enemy == null && enemy.getAttack().isInRange(military.getX(), military.getY(), enemy.getShootingRange())) {
             enemy.getAttack().setEnemy(military);
         }
-        HumanViewController.attackToEnemy(military,enemy);
+
+        ArrayList<Tile> neighbors = HumanController.getNeighbor(military.getX(),military.getY());
+        Tile enemyTile = MapController.map.getTile(enemy.getX(),enemy.getY());
+        if (neighbors.contains(enemyTile)){
+            HumanViewController.attackToEnemy(military,enemy);
+        }else if (military.canAirAttack()){
+            HumanViewController.airAttackToEnemy(military,enemy);
+        }
+
+
         if (enemyHp <= 0) {
             MapController.deleteMilitary(enemy.getX(), enemy.getY(), enemy);
             enemy.setGovernment(null);

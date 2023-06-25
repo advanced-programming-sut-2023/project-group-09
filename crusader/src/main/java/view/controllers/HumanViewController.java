@@ -591,9 +591,22 @@ public class HumanViewController {
         int dir = getDirection(x1,y1,x2,y2);
         troop.setAttackDirection(dir);
         troop.setAttackStep();
-        troop.updateImage();
+        troop.updateImageAttack();
     }
 
+    public static void airAttackToEnemy(Military military,Military enemy){
+        Troop troop = getTroopFromMilitary(military);
+        GameTile start = GameMap.getGameTile(military.getX(),military.getY());
+        GameTile end = GameMap.getGameTile(enemy.getX(),enemy.getY());
+        double x1 = start.getX();
+        double x2 = end.getX();
+        double y1 = start.getY();
+        double y2 = end.getY();
+        int dir = getDirection(x1,y1,x2,y2);
+        troop.setAirAttackDirection(dir);
+        troop.setAirAttackStep();
+        troop.updateImageAirAttack();
+    }
     public static int getDirection(double x1, double y1, double x2, double y2) {
         if (Math.abs(x1 - x2) < 0.5) {
             if ((y2 - y1) > 0 || Math.abs(y2 - y1) < 0.5) {
