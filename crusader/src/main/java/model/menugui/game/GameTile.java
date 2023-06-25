@@ -5,6 +5,7 @@ import controller.gamestructure.GameImages;
 import controller.human.HumanController;
 import enumeration.Paths;
 import enumeration.UnitMovingState;
+import enumeration.dictionary.RockDirections;
 import enumeration.dictionary.Trees;
 import javafx.event.EventHandler;
 import javafx.scene.effect.ColorAdjust;
@@ -34,6 +35,7 @@ public class GameTile {
     private ImageView buildingImage;
     private ImageView humanImage;
     private ImageView treeImage;
+    private ImageView rockImage;
     private static int tileXOn, tileYOn;
     public boolean touch = false;
 
@@ -67,6 +69,7 @@ public class GameTile {
         setBuilding();
         setTree();
         setPit();
+        setRock();
     }
 
     public void selectTile() {
@@ -128,6 +131,22 @@ public class GameTile {
         }
     }
 
+    public void setRock() {
+        RockDirections rockDirections = tile.getRockDirection();
+        if (rockDirections != null) {
+            System.out.println("Yep!");
+            String rockNumber = Integer.toString(new Random().nextInt(16) + 1);
+            Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()).toExternalForm()
+                    + "rocks/Image (" + rockNumber  + ").png");
+            rockImage = new ImageView(image);
+            rockImage.setFitWidth(GameMap.tileWidth);
+            rockImage.setFitHeight(GameMap.tileHeight);
+            rockImage.setTranslateY(-rockImage.getFitHeight() + textureImage.getFitHeight() + textureImage.getTranslateY());
+            rockImage.setTranslateX(textureImage.getTranslateX() - rockImage.getFitWidth() / 2 + textureImage.getFitWidth() / 2);
+            rockImage.setViewOrder(-tileY - 1);
+            GameMenu.gameMap.getChildren().add(rockImage);
+        }
+    }
 
     public void setTree() {
         Trees tree = tile.getTree();

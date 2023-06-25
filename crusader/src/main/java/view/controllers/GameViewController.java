@@ -7,6 +7,8 @@ import controller.gamestructure.GameHumans;
 import controller.gamestructure.GameImages;
 import controller.human.HumanController;
 import enumeration.*;
+import enumeration.dictionary.RockDirections;
+import enumeration.dictionary.Trees;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
@@ -287,6 +289,25 @@ public class GameViewController {
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar(0);
                 setCenterToBigGatehouses();
+            }case "Edit Land" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(1);
+                setCenterOfEditLand();
+            }
+            case "Edit Water" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(1);
+                setCenterOfEditWater();
+            }
+            case "Edit Features" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(1);
+                setCenterOfEditFeatures();
+            }
+            case "Edit Vegetation" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(1);
+                setCenterOfEditVegetation();
             }
         }
     }
@@ -413,13 +434,19 @@ public class GameViewController {
                 setCenterOfEditLand();
             }
             case "Edit Water" -> {
-
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(1);
+                setCenterOfEditWater();
             }
             case "Edit Features" -> {
-
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(1);
+                setCenterOfEditFeatures();
             }
             case "Edit Vegetation" -> {
-
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(1);
+                setCenterOfEditVegetation();
             }
             case "Clipboard" -> {
                 GameMenu.menuBar.getChildren().clear();
@@ -469,6 +496,7 @@ public class GameViewController {
         }
     }
 
+
     private static void setCenterOfClipboard() {
         putButtonImageViewWithDestination("backButtonIcon", "Back To Castles", "Castle Buildings", 225, 60, 0.2);
         String buildingName = FileController.getClipboard();
@@ -498,6 +526,21 @@ public class GameViewController {
         return new Pair<>((765 - 270 - x) / 2 + 270, (225 - 80 - y) / 2 + 65);
     }
 
+    private static void setCenterOfEditFeatures() {
+        putEditRockImageView("bigRockIcon" , "Rock - South" ,
+                RockDirections.SOUTH , 290 , 85 , 0.2);
+        putEditRockImageView("bigRockIcon" , "Rock - East" ,
+                RockDirections.EAST , 325 , 85 , 0.2);
+        putEditRockImageView("bigRockIcon" , "Rock - North" ,
+                RockDirections.NORTH , 360 , 85 , 0.2);
+        putEditRockImageView("bigRockIcon" , "Rock - West" ,
+                RockDirections.WEST , 395 , 85 , 0.2);
+        putEditRockImageView("bigRockIcon" , "Rock - Random" ,
+                RockDirections.getRandomDirection() , 430 , 85 , 0.2);
+
+    }
+
+
     private static void setCenterOfEditLand() {
         putEditTextureImageView("earthAndStoneIcon", "Earth And Stones"
                 , Textures.EARTH, 290, 85, 0.2);
@@ -516,6 +559,39 @@ public class GameViewController {
                 , Textures.OASIS_GRASS, 520, 60, 0.2);
         putEditTextureImageView("bouldersIcon", "Boulder"
                 , Textures.BOULDER, 500, 70, 0.2);
+    }
+
+    private static void setCenterOfEditWater() {
+        putEditTextureImageView("seaIcon", "Sea"
+                , Textures.SEA, 290, 65, 0.2);
+        putEditTextureImageView("beachIcon", "Beach"
+                , Textures.BEACH, 305, 95, 0.2);
+        putEditTextureImageView("largePoundIcon", "Large Pound"
+                , Textures.LARGE_POND, 350, 75, 0.2);
+
+        putEditTextureImageView("smallPoundIcon", "Small Pound"
+                , Textures.SMALL_POND, 360, 40, 0.2);
+        putEditTextureImageView("riverIcon", "River"
+                , Textures.RIVER, 475, 40, 0.2);
+        putEditTextureImageView("fordIcon", "Ford"
+                , Textures.LOW_DEPTH_WATER, 460, 100, 0.2);
+        putEditTextureImageView("marshIcon", "Marsh"
+                , Textures.MARSH, 550, 30, 0.2);
+        putEditTextureImageView("oilIcon", "Oil"
+                , Textures.OIL, 505, 90, 0.2);
+    }
+
+    private static void setCenterOfEditVegetation() {
+        putEditTreeImageView("datePalmIcon" , "Date Palm" , Trees.DATE_PALM ,
+                300 , 0 , 0.2);
+        putEditTreeImageView("coconutPalmIcon" , "Coconut Palm" , Trees.COCONUT_PALM ,
+                400 , -20 , 0.2);
+        putEditTreeImageView("oliveTreeIcon" , "Olive tree" , Trees.OLIVE_TREE ,
+                430 , 20 , 0.2);
+        putEditTreeImageView("desertShrubIcon" , "Desert Shrub" , Trees.DESERT_SHRUB ,
+                580 , 50 , 0.2);
+        putEditTreeImageView("cherryPalmIcon" , "Cherry Palm" , Trees.CHERRY_PALM ,
+                600 , 0 , 0.2);
     }
 
     public static void createShortcutBars2(Pane gamePane, Text text) {
@@ -1120,6 +1196,116 @@ public class GameViewController {
         text.setStrokeWidth(0.5);
         text.setStroke(Color.BLACK);
         return text;
+    }
+
+    private static void putEditRockImageView(String fileName , String name , RockDirections rockDirection , double x , double y , double size) {
+        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/" + fileName + ".png");
+        icon.setTranslateX(x);
+        icon.setTranslateY(y);
+        icon.setScaleX(size);
+        icon.setScaleY(size);
+        GameMenu.menuBar.getChildren().add(icon);
+        icon.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                GameMenu.hoveringBarStateText.setText(name);
+            }
+        });
+        icon.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                GameMenu.hoveringBarStateText.setText("");
+            }
+        });
+
+
+        icon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                isTextureSelected = true;
+                GameMenu.gameMap.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        if (mouseEvent.getButton() == MouseButton.PRIMARY && isTextureSelected) {
+                            Pair<Integer, Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
+                            tileX = pair.getFirst();
+                            tileY = pair.getSecond();
+                            System.out.println("Tile founded at : " + tileX + " " + tileY);
+                            GameMenu.hoveringBarStateText.setText(MapController.dropRock(tileX, tileY, rockDirection));
+                            GameMap.getGameTile(tileX, tileY).refreshTile();
+                        } else {
+                            isTextureSelected = false;
+                        }
+                    }
+                });
+
+                GameMenu.gameMap.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                            isTextureSelected = false;
+                        }
+                    }
+                });
+
+            }
+        });
+    }
+
+    private static void putEditTreeImageView(String fileName , String name , Trees tree , double x , double y , double size) {
+        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/" + fileName + ".png");
+        icon.setTranslateX(x);
+        icon.setTranslateY(y);
+        icon.setScaleX(size);
+        icon.setScaleY(size);
+        GameMenu.menuBar.getChildren().add(icon);
+        icon.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                GameMenu.hoveringBarStateText.setText(name);
+            }
+        });
+        icon.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                GameMenu.hoveringBarStateText.setText("");
+            }
+        });
+
+
+        icon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                isTextureSelected = true;
+                GameMenu.gameMap.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        if (mouseEvent.getButton() == MouseButton.PRIMARY && isTextureSelected) {
+                            Pair<Integer, Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
+                            tileX = pair.getFirst();
+                            tileY = pair.getSecond();
+                            System.out.println("Tile founded at : " + tileX + " " + tileY);
+                            GameMenu.hoveringBarStateText.setText(MapController.dropTree(tileX, tileY, tree));
+                            GameMap.getGameTile(tileX, tileY).refreshTile();
+                        } else {
+                            isTextureSelected = false;
+                        }
+                    }
+                });
+
+                GameMenu.gameMap.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                            isTextureSelected = false;
+                        }
+                    }
+                });
+
+            }
+        });
     }
 
     private static void putEditTextureImageView(String fileName, String name, Textures texture, double x, double y, double size) {

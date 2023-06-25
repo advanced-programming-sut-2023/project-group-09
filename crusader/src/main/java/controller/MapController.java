@@ -83,7 +83,7 @@ public class MapController {
             tile.setRockDirection(direction);
             tile.setCanPutBuilding(false);
             tile.setPassable(false);
-            return "rock added in (" + (x + 1) + ", " + (y + 1) + ") with " + direction.getDirection() + " direction";
+            return "rock added in (" + (x) + ", " + (y) + ") with " + direction.getDirection() + " direction";
         }
         return "you can't drop a rock here";
     }
