@@ -1,5 +1,7 @@
 package controller.gamestructure;
 
+import controller.GameController;
+import controller.MapController;
 import model.Government;
 import model.building.Building;
 import model.building.castlebuildings.Gatehouse;
@@ -27,11 +29,10 @@ public class GameBuildings {
             return null;
         }
         building.setGovernment(government);
-        /*building.setStartX(x); //TODO : edit
-        building.setStartY(y); //TODO : edit*/
         building.setEndX(x);
         building.setEndY(y);
         building.setNeighborTiles();
+        MapController.setDoorForCastleBuilding(building);
         return building;
     }
 

@@ -3,7 +3,7 @@ package model.building;
 import controller.GameController;
 import model.Government;
 import model.Permission;
-import model.game.Map;
+import model.game.Tile;
 import model.game.Tuple;
 import model.human.Human;
 import model.human.civilian.Civilian;
@@ -100,22 +100,6 @@ public class Building implements Cloneable {
         return government;
     }
 
-    public ArrayList<Permission> getLandPermissions() {
-        return landPermissions;
-    }
-
-    public void setLandPermissions(ArrayList<Permission> landPermissions) {
-        this.landPermissions = landPermissions;
-    }
-
-    public ArrayList<Permission> getActivityPermissions() {
-        return activityPermissions;
-    }
-
-    public void setActivityPermissions(ArrayList<Permission> activityPermissions) {
-        this.activityPermissions = activityPermissions;
-    }
-
     public HashMap<String, Integer> getCost() {
         return cost;
     }
@@ -207,6 +191,7 @@ public class Building implements Cloneable {
     public void addTexture(String texture) {
         suitableTextures.add(texture);
     }
+
     public void setSuitableTextures(ArrayList<String> textures) {
         suitableTextures = textures;
     }
@@ -240,42 +225,11 @@ public class Building implements Cloneable {
     }
 
     public void setNeighborTiles() {
-
-        int endX = startX + width;
-        int endY = startY + length;
-        if (buildingImpassableLength != -1) {
-            endX = startX + buildingImpassableLength;
-            endY = startY + buildingImpassableLength;
-        }
-        Map map = GameController.getGame().getMap();
-
-        if (startY != 0) {
-            for (int j = startX; j < endX; j++) {
-                Tuple tuple = new Tuple(startY - 1, j);
-                neighborTiles.add(tuple);
-            }
-        }
-
-        if (startX != 0) {
-            for (int i = startY; i < endY; i++) {
-                Tuple tuple = new Tuple(i, startX - 1);
-                neighborTiles.add(tuple);
-            }
-        }
-
-
-        if (endX != map.getWidth() - 1) {
-            for (int i = startY; i < endY; i++) {
-                Tuple tuple = new Tuple(i, endX);
-                neighborTiles.add(tuple);
-            }
-        }
-
-        if (endY != map.getLength() - 1) {
-            for (int j = startX; j < endX; j++) {
-                Tuple tuple = new Tuple(endY, j);
-                neighborTiles.add(tuple);
-            }
+        ArrayList<Tile> tiles = GameController.getDirectNeighborTiles(this);
+        for (Tile tile : tiles) {
+            System.out.println("tile : " + tile.x + " " + tile.y);
+            Tuple tuple = new Tuple(tile.y,tile.x);
+            neighborTiles.add(tuple);
         }
     }
 

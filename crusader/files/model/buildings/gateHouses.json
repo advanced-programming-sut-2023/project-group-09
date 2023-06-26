@@ -8,6 +8,7 @@
     },
     "requiredHumans": [],
     "price": 0,
+    "height": 7,
     "numberOfRequiredWorkers": 0,
     "numberOfRequiredEngineers": 0,
     "buildingImpassableLength": -1,
@@ -53,6 +54,7 @@
   },
   "bigStoneGatehouse": {
     "isRightSide": false,
+    "height": 8,
     "isOpen": true,
     "capacity": 10,
     "cost": {

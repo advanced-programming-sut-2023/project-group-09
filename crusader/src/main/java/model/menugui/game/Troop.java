@@ -2,6 +2,7 @@ package model.menugui.game;
 
 import controller.gamestructure.GameImages;
 import controller.human.HumanController;
+import controller.human.MoveController;
 import enumeration.Paths;
 import enumeration.UnitMovingState;
 import javafx.animation.KeyFrame;
@@ -10,7 +11,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.util.Duration;
+import model.building.castlebuildings.CastleBuilding;
 import model.game.Tile;
+import model.game.Tuple;
 import model.human.military.Military;
 import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
@@ -36,6 +39,7 @@ public class Troop extends ImageView {
     int airAttackStep = 0;
     int airAttackDirection = 0;
     int dead = 1;
+    boolean overHead = false;
 
     public Troop(Military military, Tile tile, GameTile gameTile) {
         this.setFitWidth(40);
@@ -43,7 +47,7 @@ public class Troop extends ImageView {
         this.military = military;
         this.tile = tile;
         color = military.getGovernment().getColor();
-        this.setViewOrder(-1);
+        this.setViewOrder(-gameTile.getTileY() - 2);
         this.setTranslateX(gameTile.getTextureImage().getTranslateX() - this.getFitWidth() / 2 + GameMap.tileWidth / 2);
         this.setTranslateY(gameTile.getTextureImage().getTranslateY() - this.getFitHeight() / 2);
         this.gameTile = gameTile;
@@ -53,7 +57,17 @@ public class Troop extends ImageView {
     }
 
     public void changeGameTile(GameTile gameTile) {
-        this.setViewOrder(-1);
+        this.setViewOrder(-gameTile.getTileY() - 2);
+
+        Tuple tuple = new Tuple(military.getY(), military.getX());
+        tuple.setOverhead(overHead);
+        if (MoveController.checkIsPathOverhead(gameTile.getTileX(), gameTile.getTileY(), military, tuple)) {
+            if (tile.getBuilding() instanceof CastleBuilding castleBuilding) {
+                this.setTranslateX(gameTile.getTextureImage().getTranslateX() - this.getFitWidth() / 2 + GameMap.tileWidth / 2);
+                this.setTranslateY(gameTile.getTextureImage().getTranslateY()
+                        - this.getFitHeight() / 2 - castleBuilding.getHeight() * GameMap.tileHeight);
+            }
+        }
         this.setTranslateX(gameTile.getTextureImage().getTranslateX() - this.getFitWidth() / 2 + GameMap.tileWidth / 2);
         this.setTranslateY(gameTile.getTextureImage().getTranslateY() - this.getFitHeight() / 2);
     }
@@ -85,7 +99,6 @@ public class Troop extends ImageView {
                             }
                             HumanController.militaries.clear();
                             HumanController.militaries.add(military);
-                            System.out.println(HumanController.militaries);
                         }
                     }
                 }
@@ -118,6 +131,7 @@ public class Troop extends ImageView {
                     direction = HumanViewController.getDirection(gameTile.getX(), gameTile.getY(), next.getX(), next.getY());
                     step = (step + 1) % 8;
                     gameTile = next;
+                    tile = next.getTile();
                     GameMap.gameTroops[military.getY()][military.getX()].add(this);
                 } else {
                     double disX = this.getTranslateX() + this.getFitWidth() / 2 - (gameTile.getX() + GameMap.tileWidth / 2);
@@ -133,7 +147,7 @@ public class Troop extends ImageView {
                     step = (step + 1) % 8;
                 }
                 setImage();
-            }else {
+            } else {
                 doAttack();
             }
         }));
@@ -144,20 +158,21 @@ public class Troop extends ImageView {
 
     public void doAttack() {
         military.getAttack().doAttack();
-        if (military.getGovernment() == null || military.getHealth() <= 0){
+        if (military.getGovernment() == null || military.getHealth() <= 0) {
             setDead();
         }
     }
-    public void setDead(){
+
+    public void setDead() {
         move.stop();
         GameMenu.timelines.remove(move);
-        deadTimeline = new Timeline(new KeyFrame(Duration.millis(50),actionEvent -> {
+        deadTimeline = new Timeline(new KeyFrame(Duration.millis(50), actionEvent -> {
             try {
                 Image troop = new Image(GameTile.class.getResource(Paths.TROOP_IMAGES.getPath()).toExternalForm() +
                         military.getName() + "/" + color + "/dead (" + dead + ").png");
                 dead++;
                 this.setImage(troop);
-            }catch (Exception e){
+            } catch (Exception e) {
                 deadTimeline.stop();
                 GameMap.gameTroops[military.getY()][military.getX()].remove(this);
                 GameMenu.gameMap.getChildren().remove(this);
@@ -166,6 +181,7 @@ public class Troop extends ImageView {
         deadTimeline.setCycleCount(-1);
         deadTimeline.play();
     }
+
     public double getDistance() {
         return Math.sqrt(Math.pow(this.getTranslateX() + this.getFitWidth() / 2 - (gameTile.getX() + GameMap.tileWidth / 2), 2)
                 + Math.pow(this.getTranslateY() + this.getFitHeight() / 2 - gameTile.getY(), 2));
@@ -192,21 +208,23 @@ public class Troop extends ImageView {
 
 
     public void setAttackStep() {
-        if ( military.getAttackStepCount() != 0){
+        if (military.getAttackStepCount() != 0) {
             this.attackStep = (attackStep + 1) % military.getAttackStepCount();
         }
 
     }
+
     public void setAttackDirection(int attackDirection) {
         this.attackDirection = attackDirection;
     }
-    public void updateImageAttack(){
+
+    public void updateImageAttack() {
         setImage(GameImages.imageViews.get(
                 military.getName() + "_" + military.getGovernment().getColor() + "_" + (attackStep * 16 + attackDirection + 129)));
     }
 
     public void setAirAttackStep() {
-        if ( military.getAirAttackStepCount() != 0){
+        if (military.getAirAttackStepCount() != 0) {
             this.attackStep = (attackStep + 1) % military.getAirAttackStepCount();
         }
     }
@@ -215,7 +233,7 @@ public class Troop extends ImageView {
         this.airAttackDirection = airAttackDirection;
     }
 
-    public void updateImageAirAttack(){
+    public void updateImageAirAttack() {
         setImage(GameImages.imageViews.get(
                 military.getName() + "_" + military.getGovernment().getColor() + "_" + (attackStep * 16 + attackDirection + 257)));
     }

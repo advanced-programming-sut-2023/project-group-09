@@ -1,5 +1,6 @@
 package model.menugui.game;
 
+import controller.BuildingController;
 import controller.FileController;
 import controller.gamestructure.GameImages;
 import controller.human.HumanController;
@@ -7,12 +8,10 @@ import enumeration.Paths;
 import enumeration.UnitMovingState;
 import enumeration.dictionary.RockDirections;
 import enumeration.dictionary.Trees;
-import javafx.event.EventHandler;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseDragEvent;
 import model.building.Building;
 import model.building.castlebuildings.Gatehouse;
 import model.game.Tile;
@@ -98,14 +97,27 @@ public class GameTile {
 
     public void setBuilding() {
         Building building = tile.getBuilding();
-        if (building == null && buildingImage != null) {
+        if (buildingImage != null) {
             GameMenu.gameMap.getChildren().remove(buildingImage);
         }
         if (building != null && building.getEndX() == tileX && building.getEndY() == tileY) {
             Image image;
-            if (building instanceof Gatehouse && ((Gatehouse) building).isRightSide()) {
-                image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
-                        + "buildings/" + building.getName() + "Right.png").toExternalForm());
+            if (building instanceof Gatehouse) {
+                if (((Gatehouse) building).isRightSide()) {
+                    if (((Gatehouse) building).isOpen())
+                        image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                                + "buildings/" + building.getName() + "Right.png").toExternalForm());
+                    else
+                        image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                                + "buildings/" + building.getName() + "ClosedRight.png").toExternalForm());
+                } else {
+                    if (((Gatehouse) building).isOpen())
+                        image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                                + "buildings/" + building.getName() + ".png").toExternalForm());
+                    else
+                        image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                                + "buildings/" + building.getName() + "Closed.png").toExternalForm());
+                }
             } else {
                 image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
                         + "buildings/" + building.getName() + ".png").toExternalForm());
@@ -114,20 +126,28 @@ public class GameTile {
             double translateX = image.getWidth() *
                     ((double) building.getLength() - building.getWidth()) / (building.getLength() + building.getWidth()) / 2;
             buildingImage.setTranslateX(translateX - image.getWidth() / 2 + textureImage.getFitWidth() / 2 + textureImage.getTranslateX());
-            buildingImage.setTranslateY(-image.getHeight()+ textureImage.getFitHeight()+ textureImage.getTranslateY());
-            buildingImage.setViewOrder(-tileY-1);
+            buildingImage.setTranslateY(-image.getHeight() + textureImage.getFitHeight() + textureImage.getTranslateY());
+            buildingImage.setViewOrder(-tileY - 1);
             GameMenu.gameMap.getChildren().add(buildingImage);
             buildingImage.setOnMouseClicked(mouseEvent -> {
-                if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+                if (!GameMenu.selectedUnit && mouseEvent.getButton() == MouseButton.PRIMARY) {
                     if (mouseEvent.getClickCount() == 2) {
                         FileController.copyBuildingNameToClipboard(tile.getBuilding().getName());
                         GameMenu.hoveringBarStateText.setText(GameViewController.buildingNameToName
                                 .get(tile.getBuilding().getName()) + " Copied!");
                     } else if (mouseEvent.getClickCount() == 1) {
+                        GameViewController.selectedBuilding = building;
+                        BuildingController.setBuilding(building);
                         GameViewController.setCenterOfBar(building.getName());
                     }
+                } else if (GameMenu.selectedUnit) {
+                    HumanViewController.doAction(true, this);
+                    GameMenu.root.getChildren().remove(GameMenu.selectCursor);
+                    GameMenu.movingState = UnitMovingState.NORMAL.getState();
+                    GameViewController.unselectTilesWithOutUnits();
                 }
             });
+            buildingImage.setOnMouseEntered(mouseEvent -> GameMenu.currentTile = GameMap.getGameTile(building.getEndX(), building.getEndY()));
         }
     }
 
@@ -137,7 +157,7 @@ public class GameTile {
             System.out.println("Yep!");
             String rockNumber = Integer.toString(new Random().nextInt(16) + 1);
             Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()).toExternalForm()
-                    + "rocks/Image (" + rockNumber  + ").png");
+                    + "rocks/Image (" + rockNumber + ").png");
             rockImage = new ImageView(image);
             rockImage.setFitWidth(GameMap.tileWidth);
             rockImage.setFitHeight(GameMap.tileHeight);
@@ -172,7 +192,7 @@ public class GameTile {
                     + "buildings/killingPit.png").toExternalForm());
             buildingImage = new ImageView(image);
             buildingImage.setTranslateX(-image.getWidth() / 2 + textureImage.getFitWidth() / 2 + textureImage.getTranslateX());
-            buildingImage.setTranslateY(-image.getHeight()+ textureImage.getFitHeight()+ textureImage.getTranslateY());
+            buildingImage.setTranslateY(-image.getHeight() + textureImage.getFitHeight() + textureImage.getTranslateY());
             buildingImage.setViewOrder(-tileY - 1);
             GameMenu.gameMap.getChildren().add(buildingImage);
             buildingImage.setOnMouseClicked(mouseEvent -> {

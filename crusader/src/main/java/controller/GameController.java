@@ -24,7 +24,6 @@ import model.human.military.Tunneler;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
 import model.tools.Tool;
-import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
 import viewphase1.UnitMenu;
 
@@ -89,7 +88,7 @@ public class GameController {
     }
 
     public static String patrolUnit(int x2, int y2) {
-        if (HumanController.militaries.size() > 0){
+        if (HumanController.militaries.size() > 0) {
             int x1 = HumanController.militaries.get(0).getX();
             int y1 = HumanController.militaries.get(0).getY();
 
@@ -97,7 +96,7 @@ public class GameController {
             if (!check) {
                 return "can't start patrol, no path to destination!";
             }
-            HumanViewController.setFlagOfPatrol(x1,y1,x2,y2);
+            HumanViewController.setFlagOfPatrol(x1, y1, x2, y2);
             return "patrol started successfully!";
         }
         return "";
@@ -164,7 +163,7 @@ public class GameController {
     }
 
     public static String attackBuilding(int x, int y) {
-        Building building = game.getMap().getTile(x - 1, y - 1).getBuilding();
+        Building building = game.getMap().getTile(x, y).getBuilding();
         if (building == null) {
             return "no building in this place!";
         }
@@ -254,12 +253,15 @@ public class GameController {
     public static boolean validateAttackBuilding(int x, int y) {
         Building building = game.getMap().getTile(x, y).getBuilding();
         if (building == null) {
+            System.out.println("null err");
             return false;
         }
         if (building instanceof MainCastle) {
+            System.out.println("main castle err");
             return false;
         }
         if (building.getGovernment().equals(game.getCurrentGovernment())) {
+            System.out.println("government err");
             return false;
         }
         return HumanController.validateAttack(building);
@@ -526,12 +528,12 @@ public class GameController {
 
         if (building instanceof Gatehouse && !building.getName().equals("drawBridge")) {
             if (side != null && (side.equals("right") || side.equals("left"))) {
-                    if (!MapController.checkCanPutBuilding(x, y, type, GameController.getGame().getCurrentGovernment())) {
-                        return "this coordinate is not suitable!";
-                    }
-                    MapController.isRightSide = side.equals("right");
-                    MapController.dropBuilding(x, y, type, GameController.getGame().getCurrentGovernment());
-                    return "building dropped successfully!";
+                if (!MapController.checkCanPutBuilding(x, y, type, GameController.getGame().getCurrentGovernment())) {
+                    return "this coordinate is not suitable!";
+                }
+                MapController.isRightSide = side.equals("right");
+                MapController.dropBuilding(x, y, type, GameController.getGame().getCurrentGovernment());
+                return "building dropped successfully!";
 
             } else {
                 return "side field is required!";
@@ -980,7 +982,7 @@ public class GameController {
         return filteredList;
     }
 
-    public static ArrayList<Pair<Integer, Integer>> getNeighborTiles(int endX, int endY, int width, int length) {
+    public static ArrayList<Pair<Integer, Integer>> getNeighborPairs(int endX, int endY, int width, int length) {
         ArrayList<Pair<Integer, Integer>> neighborTiles = new ArrayList<>();
         int headX = endX, headY = endY;
         int x = endX, y = endY;
@@ -998,34 +1000,52 @@ public class GameController {
         return neighborTiles;
     }
 
-    public static ArrayList<Tuple> getDirectNeighborTiles(Building building) {
-        ArrayList<Tuple> neighborTiles = new ArrayList<>();
-        int x = building.getStartX(), y = building.getStartY() - 2;
-        for (int i = 0; i < building.getWidth(); i++) {
-            if (y % 2 == 0) x++;
-            y++;
-            neighborTiles.add(new Tuple(y, x));
+    public static ArrayList<Tile> getNeighborTiles(int endX, int endY, int width, int length) {
+        ArrayList<Tile> neighborTiles = new ArrayList<>();
+        int headX = endX, headY = endY;
+        int x = endX, y = endY;
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < width; j++) {
+                neighborTiles.add(getGame().getMap().getTile(x, y));
+                if (y % 2 != 0) x--;
+                y--;
+            }
+            if (headY % 2 == 0) headX++;
+            headY--;
+            x = headX;
+            y = headY;
         }
-        x = building.getStartX();
-        y = building.getStartY() - 2;
-        for (int i = 0; i < building.getLength(); i++) {
-            if (y % 2 != 0) x--;
-            y++;
-            neighborTiles.add(new Tuple(y, x));
+        return neighborTiles;
+    }
+
+    public static ArrayList<Tile> getNeighborTilesFromStart(int startX, int startY, int width, int length) {
+        ArrayList<Tile> neighborTiles = new ArrayList<>();
+        int headX = startX, headY = startY;
+        int x = startX, y = startY;
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < width; j++) {
+                neighborTiles.add(getGame().getMap().getTile(x, y));
+                if (y % 2 != 0) x--;
+                y++;
+            }
+            if (headY % 2 == 0) headX++;
+            headY++;
+            x = headX;
+            y = headY;
         }
-        x = building.getEndX();
-        y = building.getEndY() + 2;
-        for (int i = 0; i < building.getWidth(); i++) {
-            if (y % 2 != 0) x--;
-            y--;
-            neighborTiles.add(new Tuple(y, x));
-        }
-        x = building.getEndX();
-        y = building.getEndY() + 2;
-        for (int i = 0; i < building.getLength(); i++) {
-            if (y % 2 == 0) x++;
-            y--;
-            neighborTiles.add(new Tuple(y, x));
+        return neighborTiles;
+    }
+
+    public static ArrayList<Tile> getDirectNeighborTiles(Building building) {
+        ArrayList<Tile> neighborTiles = new ArrayList<>();
+        ArrayList<Tile> tiles = getNeighborTiles(building.getEndX(),building.getEndY(),building.getWidth(),building.getLength());
+        for (Tile tile : tiles){
+            ArrayList<Tile> neighbors = HumanController.getNeighbor(tile.x,tile.y);
+            for (Tile neighbor : neighbors) {
+                if (!tiles.contains(neighbor)) {
+                    neighborTiles.add(neighbor);
+                }
+            }
         }
         return neighborTiles;
     }
@@ -1043,7 +1063,7 @@ public class GameController {
                 for (int j = 0; j < endX - startX + indent; j++) {
                     tiles.add(GameMap.getGameTile(x++, y));
                 }
-                if (i % 2 == 0){
+                if (i % 2 == 0) {
                     if (headY % 2 == 0) headX++;
                     headY++;
                 } else {
@@ -1053,6 +1073,7 @@ public class GameController {
                 x = headX;
                 y = headY;
             }
+
             return tiles;
         }
 

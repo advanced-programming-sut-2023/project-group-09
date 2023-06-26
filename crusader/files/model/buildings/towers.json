@@ -4,6 +4,7 @@
     "defendRange": 60,
     "canKeepRidingEquipment": false,
     "capacity": 5,
+    "height": 17,
     "cost": {
       "stone": 10
     },
@@ -31,6 +32,7 @@
     "defendRange": 40,
     "canKeepRidingEquipment": false,
     "capacity": 10,
+    "height": 9,
     "cost": {
       "stone": 10
     },
@@ -58,6 +60,7 @@
     "defendRange": 50,
     "canKeepRidingEquipment": true,
     "capacity": 20,
+    "height": 11,
     "cost": {
       "stone": 40
     },
@@ -83,6 +86,7 @@
   "squareTower": {
     "fireRange": 50,
     "defendRange": 50,
+    "height": 11,
     "canKeepRidingEquipment": true,
     "capacity": 20,
     "cost": {
@@ -112,6 +116,7 @@
     "defendRange": 40,
     "canKeepRidingEquipment": false,
     "capacity": 10,
+    "height": 11,
     "cost": {
       "stone": 15
     },

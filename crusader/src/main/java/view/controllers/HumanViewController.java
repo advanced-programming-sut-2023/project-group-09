@@ -19,6 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.util.Duration;
+import model.building.Building;
 import model.game.Tile;
 import model.human.military.Military;
 import model.menugui.game.GameMap;
@@ -102,7 +103,7 @@ public class HumanViewController {
         icon.setScaleY(1.1);
         icon.setScaleX(1.2);
         GameMenu.menuBar.getChildren().add(icon);
-        GameViewController.setHoverEventForBarOnUnitMenu(icon,"stop");
+        GameViewController.setHoverEventForBarOnUnitMenu(icon, "stop");
         System.out.println(selectedMilitaries.size());
         icon.setOnMouseClicked(mouseEvent -> {
             setSelectedUnits();
@@ -126,7 +127,7 @@ public class HumanViewController {
         icon.setScaleY(1.1);
         icon.setScaleX(1.3);
         GameMenu.menuBar.getChildren().add(icon);
-        GameViewController.setHoverEventForBarOnUnitMenu(icon,"patrol");
+        GameViewController.setHoverEventForBarOnUnitMenu(icon, "patrol");
         icon.setOnMouseClicked(mouseEvent -> {
             GameMenu.movingState = MoveStates.PATROL.getState();
         });
@@ -147,7 +148,7 @@ public class HumanViewController {
         icon.setTranslateY(50);
         icon.setScaleY(1.3);
         icon.setScaleX(1.3);
-        GameViewController.setHoverEventForBarOnUnitMenu(icon,"stand ground");
+        GameViewController.setHoverEventForBarOnUnitMenu(icon, "stand ground");
         GameMenu.standing = icon;
         icon.setOnMouseClicked(mouseEvent -> {
             setMilitaryState(MilitaryStates.STAND_GROUND.getState());
@@ -164,7 +165,7 @@ public class HumanViewController {
         icon.setScaleY(1.3);
         icon.setScaleX(1.3);
         GameMenu.defensive = icon;
-        GameViewController.setHoverEventForBar(icon,"defensive state");
+        GameViewController.setHoverEventForBar(icon, "defensive state");
         icon.setOnMouseClicked(mouseEvent -> {
             setMilitaryState(MilitaryStates.DEFENSIVE_STANCE.getState());
             GameViewController.unselectTiles();
@@ -180,7 +181,7 @@ public class HumanViewController {
         icon.setScaleY(1.3);
         icon.setScaleX(1.3);
         GameMenu.aggressive = icon;
-        GameViewController.setHoverEventForBar(icon,"offensive state");
+        GameViewController.setHoverEventForBar(icon, "offensive state");
         icon.setOnMouseClicked(mouseEvent -> {
             setMilitaryState(MilitaryStates.AGGRESSIVE_STANCE.getState());
             GameViewController.unselectTiles();
@@ -188,35 +189,37 @@ public class HumanViewController {
         GameMenu.menuBar.getChildren().add(icon);
     }
 
-    public static void setMilitaryState(String state){
-        HumanController.setState(state,selectedMilitaries);
+    public static void setMilitaryState(String state) {
+        HumanController.setState(state, selectedMilitaries);
         setSelectedUnits();
     }
-    public static void updateStateOfMilitary(){
-        if (GameMenu.aggressive == null || GameMenu.defensive == null || GameMenu.standing == null){
+
+    public static void updateStateOfMilitary() {
+        if (GameMenu.aggressive == null || GameMenu.defensive == null || GameMenu.standing == null) {
             return;
         }
-        if (HumanController.militaries.size() != 0){
+        if (HumanController.militaries.size() != 0) {
             Military military = HumanController.militaries.get(0);
             DropShadow ds = new DropShadow(20, Color.AQUA);
-            if (military.getMilitaryState().equals(MilitaryStates.STAND_GROUND.getState())){
+            if (military.getMilitaryState().equals(MilitaryStates.STAND_GROUND.getState())) {
                 GameMenu.standing.setEffect(ds);
                 GameMenu.defensive.setEffect(null);
                 GameMenu.aggressive.setEffect(null);
             }
 
-            if (military.getMilitaryState().equals(MilitaryStates.DEFENSIVE_STANCE.getState())){
+            if (military.getMilitaryState().equals(MilitaryStates.DEFENSIVE_STANCE.getState())) {
                 GameMenu.standing.setEffect(null);
                 GameMenu.defensive.setEffect(ds);
                 GameMenu.aggressive.setEffect(null);
             }
-            if (military.getMilitaryState().equals(MilitaryStates.AGGRESSIVE_STANCE.getState())){
+            if (military.getMilitaryState().equals(MilitaryStates.AGGRESSIVE_STANCE.getState())) {
                 GameMenu.standing.setEffect(null);
                 GameMenu.defensive.setEffect(null);
                 GameMenu.aggressive.setEffect(ds);
             }
         }
     }
+
     public static void dropUnit(int x, int y, Tile tile, Military military) {
         GameTile gameTile = GameMap.getGameTile(x, y);
         GameMap gameMap = GameMenu.gameMap;
@@ -254,7 +257,6 @@ public class HumanViewController {
 
     public static boolean canDoAction(boolean changeCursor, GameTile endTile) {
         String state = GameMenu.movingState;
-        System.out.println("oooo!");
         if (Objects.equals(state, UnitMovingState.NORMAL.getState())) {
             if (checkCanAttack(endTile) || checkCanAirAttack(endTile)) {
                 if (changeCursor) {
@@ -320,6 +322,7 @@ public class HumanViewController {
             return true;
         }
         if (GameController.validateAttackBuilding(endTile.getTileX(), endTile.getTileY())) {
+            System.out.println("check: " + endTile.getTileX() + " " + endTile.getTileY());
             return true;
         }
         return GameController.validateAttackTool(endTile.getTileX(), endTile.getTileY());
@@ -411,27 +414,6 @@ public class HumanViewController {
     }
 
 
-    public static boolean doAttack(GameTile endTile) {
-        if (GameController.validateAttackEnemy(endTile.getTileX(), endTile.getTileY())) {
-            return true;
-        }
-        if (GameController.validateAttackBuilding(endTile.getTileX(), endTile.getTileY())) {
-            return true;
-        }
-        return GameController.validateAttackTool(endTile.getTileX(), endTile.getTileY());
-    }
-
-
-    public static boolean doAirAttack(GameTile endTile) {
-        if (GameController.validateAirAttack(endTile.getTileX(), endTile.getTileY())) {
-            return true;
-        }
-        if (GameController.validateAirAttackBuilding(endTile.getTileX(), endTile.getTileY())) {
-            return true;
-        }
-        return GameController.validateAirAttackTool(endTile.getTileX(), endTile.getTileY());
-    }
-
     public static void setSelectedUnits() {
         int count = 0;
         selectedMilitaries.clear();
@@ -447,20 +429,20 @@ public class HumanViewController {
                 count--;
             }
             if (count == 0) {
-                if (selectedMilitaries.size() != 0){
+                if (selectedMilitaries.size() != 0) {
                     HumanController.militaries.clear();
                     HumanController.militaries.add(selectedMilitaries.get(0));
-                }else{
+                } else {
                     HumanController.militaries.clear();
                 }
                 updateStateOfMilitary();
                 return;
             }
         }
-        if (selectedMilitaries.size() != 0){
+        if (selectedMilitaries.size() != 0) {
             HumanController.militaries.clear();
             HumanController.militaries.add(selectedMilitaries.get(0));
-        }else{
+        } else {
             HumanController.militaries.clear();
         }
         updateStateOfMilitary();
@@ -532,6 +514,7 @@ public class HumanViewController {
     }
 
     public static void attack(GameTile end) {
+        System.out.println("enter attack: " + end.getTileX() + " " + end.getTileY());
         for (Military military : selectedMilitaries) {
             HumanController.militaries.clear();
             HumanController.militaries.add(military);
@@ -540,10 +523,11 @@ public class HumanViewController {
                 continue;
             }
             if (GameController.validateAttackBuilding(end.getTileX(), end.getTileY())) {
+                System.out.println("before attack: " + end.getTileX() + " " + end.getTileY());
                 GameController.attackBuilding(end.getTileX(), end.getTileY());
                 continue;
             }
-            if (GameController.validateAttackTool(end.getTileX(), end.getTileY())){
+            if (GameController.validateAttackTool(end.getTileX(), end.getTileY())) {
                 GameController.attackTool(end.getTileX(), end.getTileY());
                 continue;
             }
@@ -555,7 +539,7 @@ public class HumanViewController {
                 GameController.airAttackBuilding(end.getTileX(), end.getTileY());
                 continue;
             }
-            if(GameController.validateAirAttackTool(end.getTileX(), end.getTileY())){
+            if (GameController.validateAirAttackTool(end.getTileX(), end.getTileY())) {
                 GameController.airAttackTool(end.getTileX(), end.getTileY());
                 continue;
             }
@@ -571,42 +555,84 @@ public class HumanViewController {
         GameViewController.currentCategory = null;
     }
 
-    public static Troop getTroopFromMilitary(Military military){
+    public static Troop getTroopFromMilitary(Military military) {
         ArrayList<Troop> militaries = GameMap.gameTroops[military.getY()][military.getX()];
-        for (Troop troop : militaries){
-            if (troop.getMilitary().equals(military)){
+        for (Troop troop : militaries) {
+            if (troop.getMilitary().equals(military)) {
                 return troop;
             }
         }
         return null;
     }
-    public static void attackToEnemy(Military military,Military enemy){
+
+    public static void attackToEnemy(Military military, Military enemy) {
         Troop troop = getTroopFromMilitary(military);
-        GameTile start = GameMap.getGameTile(military.getX(),military.getY());
-        GameTile end = GameMap.getGameTile(enemy.getX(),enemy.getY());
+        GameTile start = GameMap.getGameTile(military.getX(), military.getY());
+        GameTile end = GameMap.getGameTile(enemy.getX(), enemy.getY());
         double x1 = start.getX();
         double x2 = end.getX();
         double y1 = start.getY();
         double y2 = end.getY();
-        int dir = getDirection(x1,y1,x2,y2);
+        int dir = getDirection(x1, y1, x2, y2);
         troop.setAttackDirection(dir);
         troop.setAttackStep();
         troop.updateImageAttack();
     }
 
-    public static void airAttackToEnemy(Military military,Military enemy){
+    public static void airAttackToEnemy(Military military, Military enemy) {
         Troop troop = getTroopFromMilitary(military);
-        GameTile start = GameMap.getGameTile(military.getX(),military.getY());
-        GameTile end = GameMap.getGameTile(enemy.getX(),enemy.getY());
+        GameTile start = GameMap.getGameTile(military.getX(), military.getY());
+        GameTile end = GameMap.getGameTile(enemy.getX(), enemy.getY());
         double x1 = start.getX();
         double x2 = end.getX();
         double y1 = start.getY();
         double y2 = end.getY();
-        int dir = getDirection(x1,y1,x2,y2);
+        int dir = getDirection(x1, y1, x2, y2);
         troop.setAirAttackDirection(dir);
         troop.setAirAttackStep();
         troop.updateImageAirAttack();
     }
+
+    public static void attackToBuilding(Military military, Building building) {
+        Troop troop = getTroopFromMilitary(military);
+        GameTile start = GameMap.getGameTile(military.getX(), military.getY());
+        GameTile end = null;
+        ArrayList<Tile> troopNeighborTiles = HumanController.getNeighbor(military.getX(), military.getY());
+
+        for (Tile tile : troopNeighborTiles) {
+            if (tile.getBuilding() != null && tile.getBuilding().equals(building)) {
+                end = GameMap.getGameTile(tile.x, tile.y);
+                break;
+            }
+        }
+        if (end == null) {
+            return;
+        }
+
+        double x1 = start.getX();
+        double x2 = end.getX();
+        double y1 = start.getY();
+        double y2 = end.getY();
+        int dir = getDirection(x1, y1, x2, y2);
+        troop.setAttackDirection(dir);
+        troop.setAttackStep();
+        troop.updateImageAttack();
+    }
+
+    public static void airAttackToBuilding(Military military, Building building) {
+        Troop troop = getTroopFromMilitary(military);
+        GameTile start = GameMap.getGameTile(military.getX(), military.getY());
+        GameTile end = GameMap.getGameTile(building.getEndX(), building.getEndY());
+        double x1 = start.getX();
+        double x2 = end.getX();
+        double y1 = start.getY();
+        double y2 = end.getY();
+        int dir = getDirection(x1, y1, x2, y2);
+        troop.setAirAttackDirection(dir);
+        troop.setAirAttackStep();
+        troop.updateImageAirAttack();
+    }
+
     public static int getDirection(double x1, double y1, double x2, double y2) {
         if (Math.abs(x1 - x2) < 0.5) {
             if ((y2 - y1) > 0 || Math.abs(y2 - y1) < 0.5) {

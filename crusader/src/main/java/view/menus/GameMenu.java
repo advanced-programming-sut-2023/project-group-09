@@ -213,6 +213,9 @@ public class GameMenu extends Application {
             if (keyName.equals("A")) {
                 movingState = UnitMovingState.AIR_ATTACK.getState();
             }
+            if (keyName.equals("C")) {
+                GameController.getGame().changeTurn();
+            }
 
             if (keyName.equals("Down")) {
                 if (HumanViewController.lastType != null && HumanViewController.lastType.count != 0) {

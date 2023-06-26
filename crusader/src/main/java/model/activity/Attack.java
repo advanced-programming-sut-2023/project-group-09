@@ -14,6 +14,7 @@ import model.game.Tuple;
 import model.human.civilian.Civilian;
 import model.human.military.Engineer;
 import model.human.military.Military;
+import model.menugui.game.GameMap;
 import model.tools.Tool;
 import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
@@ -332,6 +333,22 @@ public class Attack {
 
 
         int hp = targetBuilding.takeDamage(military.getAttackRating());
+        boolean airAttack = true;
+        ArrayList<Tile> troopNeighborTiles = HumanController.getNeighbor(military.getX(),military.getY());
+        for (Tile tile :troopNeighborTiles){
+            if (tile.getBuilding() != null && tile.getBuilding().equals(targetBuilding)){
+                airAttack = false;
+                break;
+            }
+        }
+
+        if (!airAttack){
+            HumanViewController.attackToBuilding(military,targetBuilding);
+        }else if (military.canAirAttack()){
+            HumanViewController.airAttackToBuilding(military,targetBuilding);
+        }
+
+
         if (hp <= 0) {
             MapController.deleteBuilding(targetBuilding);
             targetBuilding.setGovernment(null);

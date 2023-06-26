@@ -15,7 +15,7 @@ public class TypeBTN {
 
     public TypeBTN(String name, Pane parent, int count, double x, double y) {
         this.imageView = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
-                .toExternalForm() + "icons/unit menu/" + name + ".png");
+                .toExternalForm() + "icons/unit menu/troops/" + name + ".png");
         this.count = count;
         this.name = name;
         text = new Text(count + "");

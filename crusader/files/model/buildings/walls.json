@@ -75,7 +75,7 @@
     "length": 1
   },
   "lowWall": {
-    "height": 3,
+    "height": 4,
     "capacity": 0,
     "cost": {
       "stone": 1
