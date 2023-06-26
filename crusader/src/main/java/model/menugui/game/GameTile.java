@@ -2,18 +2,22 @@ package model.menugui.game;
 
 import controller.BuildingController;
 import controller.FileController;
+import controller.GovernmentController;
+import controller.MapController;
 import controller.gamestructure.GameImages;
 import controller.human.HumanController;
 import enumeration.Paths;
 import enumeration.UnitMovingState;
 import enumeration.dictionary.RockDirections;
 import enumeration.dictionary.Trees;
+import javafx.scene.Cursor;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import model.building.Building;
 import model.building.castlebuildings.Gatehouse;
+import model.building.castlebuildings.MainCastle;
 import model.game.Tile;
 import model.human.military.Military;
 import view.controllers.GameViewController;
@@ -97,7 +101,7 @@ public class GameTile {
 
     public void setBuilding() {
         Building building = tile.getBuilding();
-        if (buildingImage != null) {
+        if (building == null && buildingImage != null) {
             GameMenu.gameMap.getChildren().remove(buildingImage);
         }
         if (building != null && building.getEndX() == tileX && building.getEndY() == tileY) {
@@ -130,15 +134,29 @@ public class GameTile {
             buildingImage.setViewOrder(-tileY - 1);
             GameMenu.gameMap.getChildren().add(buildingImage);
             buildingImage.setOnMouseClicked(mouseEvent -> {
-                if (!GameMenu.selectedUnit && mouseEvent.getButton() == MouseButton.PRIMARY) {
-                    if (mouseEvent.getClickCount() == 2) {
-                        FileController.copyBuildingNameToClipboard(tile.getBuilding().getName());
-                        GameMenu.hoveringBarStateText.setText(GameViewController.buildingNameToName
-                                .get(tile.getBuilding().getName()) + " Copied!");
-                    } else if (mouseEvent.getClickCount() == 1) {
-                        GameViewController.selectedBuilding = building;
-                        BuildingController.setBuilding(building);
-                        GameViewController.setCenterOfBar(building.getName());
+                if (mouseEvent.getButton() == MouseButton.PRIMARY && building.getGovernment().equals
+                        (GovernmentController.getCurrentGovernment()) && !GameMenu.selectedUnit) {
+                    if (GameViewController.isDelete) {
+                        if (!(building instanceof MainCastle)) {
+                            MapController.deleteBuilding(building);
+                            GameMenu.hoveringBarStateText.setText("Delete building was successful!");
+                            this.refreshTile();
+                            GameViewController.isDelete = false;
+                            GameMenu.scene.setCursor(Cursor.DEFAULT);
+                        } else {
+                            GameMenu.hoveringBarStateText.setText("You cannot delete Main Castle!");
+                        }
+                    } else {
+                        if (mouseEvent.getClickCount() == 2) {
+                            FileController.copyBuildingNameToClipboard(tile.getBuilding().getName());
+                            GameMenu.hoveringBarStateText.setText(GameViewController.buildingNameToName
+                                    .get(tile.getBuilding().getName()) + " Copied!");
+                        } else if (mouseEvent.getClickCount() == 1) {
+                            GameViewController.selectedBuilding = building;
+                            BuildingController.setBuilding(building);
+
+                            GameViewController.setCenterOfBar(building.getName());
+                        }
                     }
                 } else if (GameMenu.selectedUnit) {
                     HumanViewController.doAction(true, this);
@@ -147,7 +165,6 @@ public class GameTile {
                     GameViewController.unselectTilesWithOutUnits();
                 }
             });
-            buildingImage.setOnMouseEntered(mouseEvent -> GameMenu.currentTile = GameMap.getGameTile(building.getEndX(), building.getEndY()));
         }
     }
 
@@ -261,7 +278,10 @@ public class GameTile {
         });
 
         textureImage.setOnMouseClicked(mouseEvent -> {
-            if (mouseEvent.getButton() == MouseButton.PRIMARY && !GameMenu.selectedUnit && !GameViewController.isTextureSelected) {
+            if (GameViewController.isDelete) {
+                GameViewController.isDelete = false;
+                GameMenu.scene.setCursor(Cursor.DEFAULT);
+            } else if (mouseEvent.getButton() == MouseButton.PRIMARY && !GameMenu.selectedUnit && !GameViewController.isTextureSelected) {
                 GameViewController.unselectTiles();
                 GameMenu.startSelectionTile = this;
                 GameMenu.endSelectionTile = this;

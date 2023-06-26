@@ -29,7 +29,6 @@ public class StorageBuilding extends Building {
         this.itemType = storageBuilding.itemType;
         this.capacity = storageBuilding.getCapacity();
     }
-
     public HashMap<String, Integer> getItems() {
         return items;
     }
@@ -59,12 +58,10 @@ public class StorageBuilding extends Building {
             amountRemoved -= amountRemoved;
             government.getProperties().put(itemName, government.getProperties().get(itemName) - amountRemoved);
         }
-        if (government.getStorages() == null || government.getStorages().get(itemType) == null) {
-            return;
+        if (government.getStorages().get(itemType) != null) {
+            government.getStorages().get(itemType).addCapacity(-this.capacity);
+            government.getStorages().get(itemType).addAmount(-amountOfAllRemoved);
         }
-
-        government.getStorages().get(itemType).addCapacity(-this.capacity);
-        government.getStorages().get(itemType).addAmount(-amountOfAllRemoved);
     }
 
     public void addItem(String key, int value) {

@@ -1,5 +1,6 @@
 package model.game;
 
+import controller.GovernmentController;
 import model.Government;
 
 import java.util.ArrayList;
@@ -56,6 +57,7 @@ public class Game {
     public void addGovernment(Government government) {
         if (currentGovernment == null) {
             currentGovernment = government;
+            GovernmentController.setCurrentGovernment(government);
         }
         this.governments.add(government);
     }

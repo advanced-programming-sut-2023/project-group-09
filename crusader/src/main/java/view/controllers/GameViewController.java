@@ -3,10 +3,11 @@ package view.controllers;
 import controller.*;
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameGoods;
-import controller.gamestructure.GameHumans;
 import controller.gamestructure.GameImages;
-import controller.human.HumanController;
-import enumeration.*;
+import enumeration.Pair;
+import enumeration.Paths;
+import enumeration.Textures;
+import enumeration.UnitMovingState;
 import enumeration.dictionary.RockDirections;
 import enumeration.dictionary.Trees;
 import javafx.animation.KeyFrame;
@@ -15,19 +16,16 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
+import javafx.scene.ImageCursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.effect.BlurType;
 import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -37,22 +35,15 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Government;
 import model.building.Building;
-import model.building.castlebuildings.MainCastle;
-import model.game.Tile;
-import model.human.military.Military;
 import model.menugui.*;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
-import model.menugui.game.Troop;
-import model.menugui.game.TypeBTN;
 import view.menus.GameMenu;
 import view.menus.LoginMenu;
 
-import java.security.AlgorithmConstraints;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
-import java.util.Set;
+import model.building.castlebuildings.MainCastle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -61,12 +52,13 @@ public class GameViewController {
     public static String nameOfPageInBar;
     public static Timeline timeline;
     public static boolean isSelected = false;
+    public static boolean isDelete = false;
     public static boolean isDroped = false;
     public static boolean isTextureSelected = false;
     public static int tileX, tileY;
     public static int shopMenuPhase = -1;
     public static String currentCategory;
-    public static String currentItem , droppedBuildingName , droppedPicFileName;
+    public static String currentItem, droppedBuildingName, droppedPicFileName;
     public static Textures selectedTexture;
     public static Building selectedBuilding;
 
@@ -77,6 +69,49 @@ public class GameViewController {
     public static HashMap<String, Double> buildingCoordinates = new HashMap<>();
 
 
+    public static void setBarForCurrentGovernment() {
+        int popularity = GovernmentController.getCurrentGovernment().getPopularity() + 37;
+        Text popularityText = new Text(String.format("%d", popularity));
+        popularityText.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 30)); //TODO: update in change turn!
+        popularityText.setFill(Color.GREEN); // TODO : change color with chang popularity
+        popularityText.setTranslateY(140);
+        popularityText.setTranslateX(980);
+        GameMenu.menuBar.getChildren().add(popularityText);
+
+        Text coinText = new Text(String.format("%d", GovernmentController.getCurrentGovernment().getGold()));
+        coinText.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 18));
+        coinText.setFill(Color.GREEN);
+        coinText.setTranslateY(160);
+        coinText.setTranslateX(950); //TODO : update with cost and receiving money
+        GameMenu.menuBar.getChildren().add(coinText);
+
+        Text populationText = new Text(String.format("%d/%d", GovernmentController.getCurrentGovernment().getPopulation(),
+                GovernmentController.getCurrentGovernment().getMaxPopulation()));
+        populationText.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 18));
+        populationText.setFill(Color.GREEN);
+        populationText.setTranslateY(180);
+        populationText.setTranslateX(950);
+        GameMenu.menuBar.getChildren().add(populationText);
+
+        // TODO : update with changes.
+        if (popularity <= 21) {
+            ImageView angryFace = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
+                    + "angryFace.png");
+            angryFace.setTranslateX(758);
+            angryFace.setTranslateY(-160);
+            angryFace.setScaleY(0.29);
+            angryFace.setScaleX(0.25);
+            GameMenu.menuBar.getChildren().add(angryFace);
+        } else if (popularity <= 42) {
+            ImageView pokerFace = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
+                    + "pokerFace.png");
+            pokerFace.setTranslateX(750);
+            pokerFace.setTranslateY(-160);
+            pokerFace.setScaleX(0.25);
+            pokerFace.setScaleY(0.29);
+            GameMenu.menuBar.getChildren().add(pokerFace);
+        }
+    }
 
     public static void createShortcutBars(Pane gamePane, Text text) {
         setCenterOfBar();
@@ -144,14 +179,14 @@ public class GameViewController {
         keyImage.setTranslateX(760);
         keyImage.setTranslateY(85);
         gamePane.getChildren().add(keyImage);
-        setHoverEventForBar(keyImage, "Game Options");
+        setHoverEventForBar(keyImage, "Game Options"); // TODO : do it!
 
         ImageView deleteImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/deleteIcon.png");
         deleteImage.setTranslateX(760);
         deleteImage.setTranslateY(155);
         gamePane.getChildren().add(deleteImage);
-        setHoverEventForBar(deleteImage, "Delete");
+        setEventForDeleteIcon(deleteImage);
 
         ImageView buildingsImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/buildingsIcon.png");
@@ -293,7 +328,8 @@ public class GameViewController {
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar(0);
                 setCenterToBigGatehouses();
-            }case "Edit Land" -> {
+            }
+            case "Edit Land" -> {
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar(1);
                 setCenterOfEditLand();
@@ -327,6 +363,7 @@ public class GameViewController {
         putBuildingImageView("smallGatehouseRightIcon", "Right Side", "smallStoneGatehouse", 520, 0, 0.3, "smallStoneGatehouseRight");
         putButtonImageViewWithDestination("backButtonIcon", "Back To Castles", "Gatehouses", 225, 60, 0.2);
     }
+
     public static void setHoverEventForBarOnUnitMenu(ImageView imageView, String text) {
         imageView.setOnMouseEntered(mouseEvent -> GameMenu.hoveringBarStateText.setText(text));
         imageView.setOnMouseExited(mouseEvent -> GameMenu.hoveringBarStateText.setText(""));
@@ -628,7 +665,7 @@ public class GameViewController {
         closeIcon.setOnMouseClicked(e -> {
             GameMenu.hoveringBarStateText.setText(BuildingController.openOrCloseGatehouse("close"));
             GameMap.getGameTile(BuildingController.getBuilding().getEndX() , BuildingController.getBuilding().getEndY())
-                    .refreshTile();
+                            .refreshTile();
             System.out.println("pressed");
         });
         openIcon.setOnMouseClicked(e -> {
@@ -682,9 +719,9 @@ public class GameViewController {
         repairButton.setScaleY(0.4);
         GameMenu.menuBar.getChildren().add(repairButton);
         repairButton.setOnMouseClicked(e -> {GameMenu.hoveringBarStateText.setText(BuildingController.repair());;
-            if (GameMenu.hoveringBarStateText.getText().equals("Successfully repaired!")) {
-                progressBar.setProgress(1);
-            }
+                if (GameMenu.hoveringBarStateText.getText().equals("Successfully repaired!")) {
+                    progressBar.setProgress(1);
+                }
         });
     }
 
@@ -719,16 +756,16 @@ public class GameViewController {
     }
 
     private static void setCenterOfEditFeatures() {
-        putEditRockImageView("bigRockIcon" , "Rock - South" ,
-                RockDirections.SOUTH , 290 , 85 , 0.2);
-        putEditRockImageView("bigRockIcon" , "Rock - East" ,
-                RockDirections.EAST , 325 , 85 , 0.2);
-        putEditRockImageView("bigRockIcon" , "Rock - North" ,
-                RockDirections.NORTH , 360 , 85 , 0.2);
-        putEditRockImageView("bigRockIcon" , "Rock - West" ,
-                RockDirections.WEST , 395 , 85 , 0.2);
-        putEditRockImageView("bigRockIcon" , "Rock - Random" ,
-                RockDirections.getRandomDirection() , 430 , 85 , 0.2);
+        putEditRockImageView("bigRockIcon", "Rock - South",
+                RockDirections.SOUTH, 290, 85, 0.2);
+        putEditRockImageView("bigRockIcon", "Rock - East",
+                RockDirections.EAST, 325, 85, 0.2);
+        putEditRockImageView("bigRockIcon", "Rock - North",
+                RockDirections.NORTH, 360, 85, 0.2);
+        putEditRockImageView("bigRockIcon", "Rock - West",
+                RockDirections.WEST, 395, 85, 0.2);
+        putEditRockImageView("bigRockIcon", "Rock - Random",
+                RockDirections.getRandomDirection(), 430, 85, 0.2);
 
     }
 
@@ -774,16 +811,16 @@ public class GameViewController {
     }
 
     private static void setCenterOfEditVegetation() {
-        putEditTreeImageView("datePalmIcon" , "Date Palm" , Trees.DATE_PALM ,
-                300 , 0 , 0.2);
-        putEditTreeImageView("coconutPalmIcon" , "Coconut Palm" , Trees.COCONUT_PALM ,
-                400 , -20 , 0.2);
-        putEditTreeImageView("oliveTreeIcon" , "Olive tree" , Trees.OLIVE_TREE ,
-                430 , 20 , 0.2);
-        putEditTreeImageView("desertShrubIcon" , "Desert Shrub" , Trees.DESERT_SHRUB ,
-                580 , 50 , 0.2);
-        putEditTreeImageView("cherryPalmIcon" , "Cherry Palm" , Trees.CHERRY_PALM ,
-                600 , 0 , 0.2);
+        putEditTreeImageView("datePalmIcon", "Date Palm", Trees.DATE_PALM,
+                300, 0, 0.2);
+        putEditTreeImageView("coconutPalmIcon", "Coconut Palm", Trees.COCONUT_PALM,
+                400, -20, 0.2);
+        putEditTreeImageView("oliveTreeIcon", "Olive tree", Trees.OLIVE_TREE,
+                430, 20, 0.2);
+        putEditTreeImageView("desertShrubIcon", "Desert Shrub", Trees.DESERT_SHRUB,
+                580, 50, 0.2);
+        putEditTreeImageView("cherryPalmIcon", "Cherry Palm", Trees.CHERRY_PALM,
+                600, 0, 0.2);
     }
 
     public static void createShortcutBars2(Pane gamePane, Text text) {
@@ -800,7 +837,7 @@ public class GameViewController {
         deleteImage.setTranslateX(760);
         deleteImage.setTranslateY(155);
         gamePane.getChildren().add(deleteImage);
-        setHoverEventForBar(deleteImage, "Delete");
+        setEventForDeleteIcon(deleteImage);
 
         ImageView buildingsImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/buildingsActiveOffIcon.png");
@@ -856,6 +893,20 @@ public class GameViewController {
         editFeaturesShortcut.setScaleY(0.2);
         gamePane.getChildren().add(editFeaturesShortcut);
         setHoverEventForBar(editFeaturesShortcut, "Edit Features");
+    }
+
+    private static void setEventForDeleteIcon(ImageView deleteImage) {
+        deleteImage.setOnMouseEntered(mouseEvent -> GameMenu.hoveringBarStateText.setText("Delete"));
+        deleteImage.setOnMouseExited(mouseEvent -> GameMenu.hoveringBarStateText.setText(""));
+        deleteImage.setOnMouseClicked(e -> {
+            isDelete = true;
+            System.out.println("changed cursor!");
+            Image image = new Image(LoginMenu.class.getResource(Paths.GAME_IMAGES.getPath())
+                    .toExternalForm() + "cursor/crossCursor.png");
+            GameMenu.scene.setCursor(new ImageCursor(image,
+                    image.getWidth() / 2,
+                    image.getHeight() /2));
+        });
     }
 
     private static void setCenterToFoodProcessingBuildings() {
@@ -1041,7 +1092,7 @@ public class GameViewController {
         });
         sell.setOnAction(actionEvent -> {
             sellAmount.clearErrorOrMessage();
-            if (MarketController.sellItem(fileName, sellAmount)){
+            if (MarketController.sellItem(fileName, sellAmount)) {
                 MenuPopUp popUp = new MenuPopUp(GameMenu.root, 400, 400, "success",
                         "sell process done successfully!");
                 GameMenu.root.getChildren().add(popUp);
@@ -1390,7 +1441,7 @@ public class GameViewController {
         return text;
     }
 
-    private static void putEditRockImageView(String fileName , String name , RockDirections rockDirection , double x , double y , double size) {
+    private static void putEditRockImageView(String fileName, String name, RockDirections rockDirection, double x, double y, double size) {
         ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/" + fileName + ".png");
         icon.setTranslateX(x);
@@ -1445,7 +1496,7 @@ public class GameViewController {
         });
     }
 
-    private static void putEditTreeImageView(String fileName , String name , Trees tree , double x , double y , double size) {
+    private static void putEditTreeImageView(String fileName, String name, Trees tree, double x, double y, double size) {
         ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/" + fileName + ".png");
         icon.setTranslateX(x);
@@ -1762,9 +1813,9 @@ public class GameViewController {
             pair = checkNearestTile(mouseEvent, halfTileX / 2, halfTileX / 2, halfTileY, halfTileY - 1);
         } else {
             if (halfTileY % 2 == 1) {
-                pair = checkNearestTile(mouseEvent, (halfTileX-1)/2,(halfTileX+1)/2 , halfTileY-1, halfTileY);
+                pair = checkNearestTile(mouseEvent, (halfTileX - 1) / 2, (halfTileX + 1) / 2, halfTileY - 1, halfTileY);
             } else {
-                pair = checkNearestTile(mouseEvent, (halfTileX+1)/2, (halfTileX-1)/2, halfTileY - 1, halfTileY);
+                pair = checkNearestTile(mouseEvent, (halfTileX + 1) / 2, (halfTileX - 1) / 2, halfTileY - 1, halfTileY);
             }
         }
         return new Pair<>(pair.getFirst() + GameMenu.gameMap.getCameraX(),

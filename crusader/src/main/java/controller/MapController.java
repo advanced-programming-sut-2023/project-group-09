@@ -11,7 +11,6 @@ import model.Government;
 import model.building.Building;
 import model.building.castlebuildings.CastleBuilding;
 import model.building.castlebuildings.Gatehouse;
-import model.building.castlebuildings.MainCastle;
 import model.building.castlebuildings.Wall;
 import model.building.storagebuildings.StorageBuilding;
 import model.buildinghandler.BuildingCounter;
@@ -160,8 +159,6 @@ public class MapController {
                 }
             }
         }
-
-
         return true;
     }
 
@@ -242,7 +239,6 @@ public class MapController {
             tile.setPassable(false);
             tile.setTexture(textures);
         }
-
 
         Pair<Integer, Integer> lastPair = tiles.get(tiles.size() - 1);
         building.setStartX(lastPair.getFirst());
@@ -515,8 +511,6 @@ public class MapController {
                 }
             }
         }
-
-
         return false;
     }
 

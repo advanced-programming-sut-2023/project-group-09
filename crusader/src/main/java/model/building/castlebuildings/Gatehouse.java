@@ -133,7 +133,8 @@ public class Gatehouse extends CastleBuilding {
 
     public void openOrCloseGatehouse(boolean openIt) {
         this.setOpen(openIt);
-        this.drawBridge_gatehouse.setOpen(openIt);
+        if (this.drawBridge_gatehouse != null)
+            this.drawBridge_gatehouse.setOpen(openIt);
     }
 
 

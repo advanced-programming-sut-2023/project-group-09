@@ -49,8 +49,10 @@ public class MainCastle extends CastleBuilding {
             } else {
                 government.addGold(-money);
             }
+            totalTax = money;
         } else if (this.taxRate > 0) {
             government.addGold((int) Math.floor(goldPerPerson * population));
+            totalTax = (int) Math.floor(goldPerPerson * population);
         }
     }
 
