@@ -58,8 +58,10 @@ public class StorageBuilding extends Building {
             amountRemoved -= amountRemoved;
             government.getProperties().put(itemName, government.getProperties().get(itemName) - amountRemoved);
         }
-        government.getStorages().get(itemType).addCapacity(-this.capacity);
-        government.getStorages().get(itemType).addAmount(-amountOfAllRemoved);
+        if (government.getStorages().get(itemType) != null) {
+            government.getStorages().get(itemType).addCapacity(-this.capacity);
+            government.getStorages().get(itemType).addAmount(-amountOfAllRemoved);
+        }
     }
 
     public void addItem(String key, int value) {

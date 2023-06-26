@@ -545,6 +545,7 @@ public class GameController {
             return "this coordinate is not suitable!";
         }
         consumeRequired(building.getCost());
+        GovernmentController.getCurrentGovernment().setGold(GovernmentController.getCurrentGovernment().getGold() - building.getPrice());
         MapController.dropBuilding(x, y, type, GameController.getGame().getCurrentGovernment());
         return "building dropped successfully!";
     }

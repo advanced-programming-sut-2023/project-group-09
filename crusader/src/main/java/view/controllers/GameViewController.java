@@ -15,6 +15,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.BlurType;
@@ -61,6 +63,7 @@ public class GameViewController {
     public static String nameOfPageInBar;
     public static Timeline timeline;
     public static boolean isSelected = false;
+    public static boolean isDelete = false;
     public static boolean isDroped = false;
     public static boolean isTextureSelected = false;
     public static int tileX, tileY;
@@ -77,7 +80,51 @@ public class GameViewController {
     public static HashMap<String, Double> buildingCoordinates = new HashMap<>();
 
 
+    public static void setBarForCurrentGovernment() {
+        int popularity = GovernmentController.getCurrentGovernment().getPopularity() + 37;
+        Text popularityText = new Text(String.format("%d" , popularity));
+        popularityText.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 30)); //TODO: update in change turn!
+        popularityText.setFill(Color.GREEN); // TODO : change color with chang popularity
+        popularityText.setTranslateY(140);
+        popularityText.setTranslateX(980);
+        GameMenu.menuBar.getChildren().add(popularityText);
 
+        Text coinText = new Text(String.format("%d" , GovernmentController.getCurrentGovernment().getGold()));
+        coinText.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 18));
+        coinText.setFill(Color.GREEN);
+        coinText.setTranslateY(160);
+        coinText.setTranslateX(950); //TODO : update with cost and receiving money
+        GameMenu.menuBar.getChildren().add(coinText);
+
+        Text populationText = new Text(String.format("%d/%d" , GovernmentController.getCurrentGovernment().getPopulation() ,
+                GovernmentController.getCurrentGovernment().getMaxPopulation()));
+        populationText.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 18));
+        populationText.setFill(Color.GREEN);
+        populationText.setTranslateY(180);
+        populationText.setTranslateX(950);
+        GameMenu.menuBar.getChildren().add(populationText);
+
+        // TODO : update with changes.
+        if (popularity <= 21) {
+            ImageView angryFace = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
+                    + "angryFace.png");
+            angryFace.setTranslateX(758);
+            angryFace.setTranslateY(-160);
+            angryFace.setScaleY(0.29);
+            angryFace.setScaleX(0.25);
+            GameMenu.menuBar.getChildren().add(angryFace);
+        } else if (popularity <= 42) {
+            ImageView pokerFace = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
+                    + "pokerFace.png");
+            pokerFace.setTranslateX(750);
+            pokerFace.setTranslateY(-160);
+            pokerFace.setScaleX(0.25);
+            pokerFace.setScaleY(0.29);
+            GameMenu.menuBar.getChildren().add(pokerFace);
+        }
+
+
+    }
     public static void createShortcutBars(Pane gamePane, Text text) {
         setCenterOfBar();
         ImageView clipboardSign = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
@@ -144,14 +191,14 @@ public class GameViewController {
         keyImage.setTranslateX(760);
         keyImage.setTranslateY(85);
         gamePane.getChildren().add(keyImage);
-        setHoverEventForBar(keyImage, "Game Options");
+        setHoverEventForBar(keyImage, "Game Options"); // TODO : do it!
 
         ImageView deleteImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/deleteIcon.png");
         deleteImage.setTranslateX(760);
         deleteImage.setTranslateY(155);
         gamePane.getChildren().add(deleteImage);
-        setHoverEventForBar(deleteImage, "Delete");
+        setEventForDeleteIcon(deleteImage);
 
         ImageView buildingsImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/buildingsIcon.png");
@@ -800,7 +847,7 @@ public class GameViewController {
         deleteImage.setTranslateX(760);
         deleteImage.setTranslateY(155);
         gamePane.getChildren().add(deleteImage);
-        setHoverEventForBar(deleteImage, "Delete");
+        setEventForDeleteIcon(deleteImage);
 
         ImageView buildingsImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/buildingsActiveOffIcon.png");
@@ -856,6 +903,20 @@ public class GameViewController {
         editFeaturesShortcut.setScaleY(0.2);
         gamePane.getChildren().add(editFeaturesShortcut);
         setHoverEventForBar(editFeaturesShortcut, "Edit Features");
+    }
+
+    private static void setEventForDeleteIcon(ImageView deleteImage) {
+        deleteImage.setOnMouseEntered(mouseEvent -> GameMenu.hoveringBarStateText.setText("Delete"));
+        deleteImage.setOnMouseExited(mouseEvent -> GameMenu.hoveringBarStateText.setText(""));
+        deleteImage.setOnMouseClicked(e -> {
+            isDelete = true;
+            System.out.println("changed cursor!");
+            Image image = new Image(LoginMenu.class.getResource(Paths.GAME_IMAGES.getPath())
+                    .toExternalForm() + "cursor/crossCursor.png");
+            GameMenu.scene.setCursor(new ImageCursor(image,
+                    image.getWidth() / 2,
+                    image.getHeight() /2));
+        });
     }
 
     private static void setCenterToFoodProcessingBuildings() {

@@ -167,6 +167,7 @@ public class GameMenu extends Application {
         hoveringBarStateText = hoveringButton;
 
         menuBar.setViewOrder(-2000);
+        GameViewController.setBarForCurrentGovernment();
         if (state == 0) {
             GameViewController.createShortcutBars(menuBar, hoveringButton);
             hoveringButton.setTranslateX(275);
