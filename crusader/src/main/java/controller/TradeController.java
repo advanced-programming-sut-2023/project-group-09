@@ -2,6 +2,8 @@ package controller;
 
 import model.Government;
 import model.Trade;
+import model.menugui.MenuPopUp;
+import view.menus.GameMenu;
 
 import java.util.LinkedHashMap;
 
@@ -29,24 +31,16 @@ public class TradeController {
         return "request sent successfully";
     }
 
-    public static String acceptTrade(String id, String message) {
+    public static boolean acceptTrade(String id) {
         Government currentGovernment = GameController.getGame().getCurrentGovernment();
 
-        if (id == null) {
-            return "id field is required!";
-        }
-
-        if (message == null) {
-            return "message field is required!";
-        }
-
         Trade trade = currentGovernment.getReceivedTrades().get(id);
-        if (trade == null) {
-            return "no trade with this id exist!";
-        }
 
-        if (trade.isAccepted()) {
-            return "this trade was accepted before!";
+        if (trade.getTradeType().equals("request") && trade.getSender().getGold() < trade.getPrice()) {
+            MenuPopUp popUp = new MenuPopUp(GameMenu.root, 400, 400, "error",
+                    "sender doesn't have enough money!");
+            GameMenu.root.getChildren().add(popUp);
+            return false;
         }
 
         boolean check;
@@ -56,7 +50,10 @@ public class TradeController {
         if (!check) {
             String pronoun = "your";
             if (trade.getTradeType().equals("donate")) pronoun = "sender's";
-            return pronoun + " resource is not enough!";
+            MenuPopUp popUp = new MenuPopUp(GameMenu.root, 400, 400, "error",
+                    pronoun + " resource is not enough!");
+            GameMenu.root.getChildren().add(popUp);
+            return false;
         }
 
         if (trade.getTradeType().equals("request"))
@@ -65,20 +62,18 @@ public class TradeController {
         if (!check) {
             String pronoun = "sender doesn't";
             if (trade.getTradeType().equals("donate")) pronoun = "you don't";
-            return pronoun + " have capacity to store!";
+            MenuPopUp popUp = new MenuPopUp(GameMenu.root, 400, 400, "error",
+                    pronoun + " have capacity to store!");
+            GameMenu.root.getChildren().add(popUp);
+            return false;
         }
 
-        if (trade.getTradeType().equals("request") && trade.getSender().getGold() < trade.getPrice()) {
-            return "sender doesn't have enough money!";
-        }
-        trade.setAcceptMessage(message);
-        trade.setIsAccepted(true);
         if (trade.getTradeType().equals("request")) {
             currentGovernment.addGold(trade.getPrice());
             trade.getSender().addGold(-trade.getPrice());
             GovernmentController.generateProduct(trade.getSender(), trade.getType(), trade.getAmount());
         } else GovernmentController.generateProduct(currentGovernment, trade.getType(), trade.getAmount());
-        return "request accepted successfully!";
+        return true;
     }
 
     public static String showTradeList() {

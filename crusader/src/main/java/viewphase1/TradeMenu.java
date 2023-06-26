@@ -89,8 +89,8 @@ public class TradeMenu {
                     String message = ViewController.resultMatcher.group("message");
                     message = ViewController.editItem(message);
 
-                    output = TradeController.acceptTrade(id, message);
-                    System.out.println(output);
+//                    output = TradeController.acceptTrade(id, message);
+//                    System.out.println(output);
                 }
             } else if (tradeHistoryMatcher.matches()) {
                 output = TradeController.showTradeHistory();

@@ -13,7 +13,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.DropShadow;
@@ -22,6 +24,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -33,6 +36,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Government;
+import model.Trade;
 import model.building.Building;
 import model.game.Tile;
 import model.human.military.Military;
@@ -61,7 +65,8 @@ public class GameViewController {
     public static int tileX, tileY;
     public static int shopMenuPhase = -1;
     public static String currentCategory;
-    public static String currentItem , droppedBuildingName , droppedPicFileName;
+    public static String currentTradeId;
+    public static String currentItem, droppedBuildingName, droppedPicFileName;
     public static Textures selectedTexture;
 
     public static HashMap<String, String> buildingNameToFileName = new HashMap<>();
@@ -606,6 +611,34 @@ public class GameViewController {
                 GameMenu.createGameBar(2);
                 setCenterToSendRequest(currentItem);
             }
+            case "tradeList" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToTradeList();
+            }
+            case "tradeHistory" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToTradeHistory();
+            }
+            case "showSentTrade" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToShowTrade(currentTradeId, true, false);
+            }
+            case "showReceivedTrade" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                Trade trade = TradeController.allTrades.get(currentTradeId);
+                if (trade.isAccepted() || trade.isRejected())
+                    setCenterToShowTrade(currentTradeId, false, false);
+                else setCenterToShowTrade(currentTradeId, false, true);
+            }
+            case "acceptMessage" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToAcceptMessage(TradeController.allTrades.get(currentTradeId));
+            }
         }
     }
 
@@ -816,6 +849,8 @@ public class GameViewController {
         putShopIcon("rawMaterials", 440, 135, false);
         putShopIcon("weapons", 540, 130, false);
         putShopIcon("resources", 640, 132, false);
+        putTradeHistoryButton();
+        putTradeListButton();
     }
 
     private static void setCenterToFoodsInShop() {
@@ -913,7 +948,7 @@ public class GameViewController {
         });
         sell.setOnAction(actionEvent -> {
             sellAmount.clearErrorOrMessage();
-            if (MarketController.sellItem(fileName, sellAmount)){
+            if (MarketController.sellItem(fileName, sellAmount)) {
                 MenuPopUp popUp = new MenuPopUp(GameMenu.root, 400, 400, "success",
                         "sell process done successfully!");
                 GameMenu.root.getChildren().add(popUp);
@@ -1037,7 +1072,7 @@ public class GameViewController {
         MenuButton requestType = new MenuButton("Request", GameMenu.menuBar, 530, 110, false);
         MenuTextField priceField = new MenuTextField(GameMenu.menuBar, "Price", "", 310, 165, 120);
         priceField.getErrorLabel().setTranslateY(priceField.getErrorLabel().getTranslateY() + 8);
-        MenuTextField messageField = new MenuTextField(GameMenu.menuBar, "Message", "", 445, 165, 280);
+        MenuTextField messageField = new MenuTextField(GameMenu.menuBar, "Message", "", 445, 165, 285);
         messageField.getErrorLabel().setTranslateY(messageField.getErrorLabel().getTranslateY() + 8);
 
         requestType.setOnMouseClicked(mouseEvent -> {
@@ -1069,6 +1104,229 @@ public class GameViewController {
                 requestType, priceField, messageField);
         putSendRequestButton(amountField, priceField, messageField);
         putBackButton("shopItem");
+    }
+
+    private static void setCenterToTradeList() {
+        setTitle("Trade List", 28, 275, 95);
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setPrefViewportHeight(100);
+        scrollPane.setPrefViewportWidth(150);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setStyle("-fx-background: transparent; -fx-background-color: transparent");
+        scrollPane.setTranslateX(450);
+        scrollPane.setTranslateY(100);
+        GridPane pane = new GridPane();
+        pane.setHgap(20);
+        pane.setVgap(10);
+        scrollPane.setContent(pane);
+
+        int count = 0;
+        Government government = GameController.getGame().getCurrentGovernment();
+        for (String id : government.getReceivedTrades().keySet()) {
+            Trade trade = government.getReceivedTrades().get(id);
+            if (!trade.isAccepted() && !trade.isRejected()) {
+                Text idText = new Text("ID: " + id);
+                idText.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+                GridPane.setHalignment(idText, HPos.LEFT);
+                pane.add(idText, 0, count);
+                putViewRequestButton(id, pane, count++, false);
+            }
+        }
+        if (count == 0) {
+            Text emptyText = new Text("Empty");
+            emptyText.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+            GridPane.setHalignment(emptyText, HPos.CENTER);
+            GridPane.setRowSpan(emptyText, 2);
+            pane.add(emptyText, 0, count);
+        }
+
+        putBackButton("shop");
+        GameMenu.menuBar.getChildren().add(scrollPane);
+    }
+
+    private static void setCenterToTradeHistory() {
+        setTitle("History List", 28, 275, 95);
+        setTitle("Sent", 22, 470, 90);
+        ScrollPane sentScrollPane = new ScrollPane();
+        sentScrollPane.setPrefViewportHeight(100);
+        sentScrollPane.setPrefViewportWidth(150);
+        sentScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        sentScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        sentScrollPane.setStyle("-fx-background: transparent; -fx-background-color: transparent");
+        sentScrollPane.setTranslateX(420);
+        sentScrollPane.setTranslateY(110);
+        GridPane sentPane = new GridPane();
+        sentPane.setHgap(20);
+        sentPane.setVgap(10);
+        sentScrollPane.setContent(sentPane);
+
+        int count = 0;
+        Government government = GameController.getGame().getCurrentGovernment();
+        for (String id : government.getSentTrades().keySet()) {
+            Trade trade = government.getSentTrades().get(id);
+            Text idText = new Text("ID: " + id);
+            idText.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+            GridPane.setHalignment(idText, HPos.LEFT);
+            sentPane.add(idText, 0, count);
+            putViewRequestButton(id, sentPane, count++, true);
+        }
+        if (count == 0) {
+            Text emptyText = new Text("Empty");
+            emptyText.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+            GridPane.setHalignment(emptyText, HPos.CENTER);
+            GridPane.setRowSpan(emptyText, 2);
+            sentPane.add(emptyText, 0, count);
+        }
+
+        setTitle("Received", 22, 650, 90);
+        ScrollPane receivedScrollPane = new ScrollPane();
+        receivedScrollPane.setPrefViewportHeight(100);
+        receivedScrollPane.setPrefViewportWidth(150);
+        receivedScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        receivedScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        receivedScrollPane.setStyle("-fx-background: transparent; -fx-background-color: transparent");
+        receivedScrollPane.setTranslateX(600);
+        receivedScrollPane.setTranslateY(110);
+        GridPane receivedPane = new GridPane();
+        receivedPane.setHgap(20);
+        receivedPane.setVgap(10);
+        receivedScrollPane.setContent(receivedPane);
+
+        count = 0;
+        for (String id : government.getReceivedTrades().keySet()) {
+            Trade trade = government.getReceivedTrades().get(id);
+            if (trade.isAccepted() || trade.isRejected()) {
+                Text idText = new Text("ID: " + id);
+                idText.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+                GridPane.setHalignment(idText, HPos.LEFT);
+                receivedPane.add(idText, 0, count);
+                putViewRequestButton(id, receivedPane, count++, false);
+            }
+        }
+        if (count == 0) {
+            Text emptyText = new Text("Empty");
+            emptyText.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+            GridPane.setHalignment(emptyText, HPos.CENTER);
+            GridPane.setRowSpan(emptyText, 2);
+            receivedPane.add(emptyText, 0, count);
+        }
+
+        putBackButton("shop");
+        GameMenu.menuBar.getChildren().addAll(sentScrollPane, receivedScrollPane);
+    }
+
+    private static void setCenterToShowTrade(String id, boolean showReceiver, boolean showOptions) {
+        Trade trade = TradeController.allTrades.get(id);
+        showTradeType(trade);
+        showTradeItem(trade);
+        showTradeAmount(trade);
+        showTradePrice(trade);
+        if (showReceiver) showTradeReceiver(trade);
+        else showTradeSender(trade);
+        showTradeState(trade);
+        MenuTextField message;
+        if (trade.isAccepted()) message = showTradeAcceptMessage(trade);
+        else message = showTradeRequestMessage(trade);
+        if (showOptions) {
+            putAcceptTradeButton(trade, false, message);
+            putRejectTradeButton(trade);
+        }
+        putBackButton("shop");
+    }
+
+    private static void showTradeType(Trade trade) {
+        Text tradeTypeText = new Text(275, 88, "Type:");
+        tradeTypeText.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+        MenuTextField tradeType = new MenuTextField(GameMenu.menuBar, "", "", 330, 65, 100);
+        tradeType.setText(trade.getTradeType());
+        tradeType.setEditable(false);
+        GameMenu.menuBar.getChildren().addAll(tradeTypeText, tradeType);
+    }
+
+    private static void showTradeItem(Trade trade) {
+        Text itemText = new Text(445, 88, "Item:");
+        itemText.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+        MenuTextField item = new MenuTextField(GameMenu.menuBar, "", "", 495, 65, 200);
+        item.setText(convertFileName(trade.getType()));
+        item.setEditable(false);
+        GameMenu.menuBar.getChildren().addAll(itemText, item);
+    }
+
+    private static void showTradeAmount(Trade trade) {
+        Text amountText = new Text(275, 125, "Amount:");
+        amountText.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+        MenuTextField amount = new MenuTextField(GameMenu.menuBar, "", "", 355, 102, 80);
+        amount.setText(Integer.toString(trade.getAmount()));
+        amount.setEditable(false);
+        GameMenu.menuBar.getChildren().addAll(amountText, amount);
+    }
+
+    private static void showTradePrice(Trade trade) {
+        Text priceText = new Text(450, 125, "Price:");
+        priceText.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+        MenuTextField priceField = new MenuTextField(GameMenu.menuBar, "", "", 505, 102, 80);
+        int price = trade.getPrice();
+        priceField.setText(Integer.toString(trade.getPrice()));
+        priceField.setEditable(false);
+        if (price == 0) priceField.setDisable(true);
+        GameMenu.menuBar.getChildren().addAll(priceText, priceField);
+    }
+
+    private static void showTradeSender(Trade trade) {
+        Text senderText = new Text(275, 162, "Sender:");
+        senderText.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+        MenuTextField sender = new MenuTextField(GameMenu.menuBar, "", "", 345, 139, 100);
+        sender.setText(trade.getSender().getUser().getUsername());
+        sender.setEditable(false);
+        GameMenu.menuBar.getChildren().addAll(senderText, sender);
+    }
+
+    private static void showTradeReceiver(Trade trade) {
+        Text receiverText = new Text(275, 162, "Receiver:");
+        receiverText.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+        MenuTextField receiver = new MenuTextField(GameMenu.menuBar, "", "", 360, 139, 100);
+        receiver.setText(trade.getReceiver().getUser().getUsername());
+        receiver.setEditable(false);
+        GameMenu.menuBar.getChildren().addAll(receiverText, receiver);
+    }
+
+    private static void showTradeState(Trade trade) {
+        Text stateText = new Text(475, 162, "State:");
+        stateText.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+        MenuTextField state = new MenuTextField(GameMenu.menuBar, "", "", 535, 139, 150);
+        if (trade.isAccepted()) state.setText("Accepted");
+        else if (trade.isRejected()) state.setText("Rejected");
+        else state.setText("Not Checked");
+        state.setEditable(false);
+        GameMenu.menuBar.getChildren().addAll(stateText, state);
+    }
+
+    private static MenuTextField showTradeRequestMessage(Trade trade) {
+        Text requestMessageText = new Text(315, 199, "Request Message:");
+        requestMessageText.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+        MenuTextField requestMessage = new MenuTextField(GameMenu.menuBar, "", "", 465, 176, 250);
+        requestMessage.setText(trade.getRequestMessage());
+        requestMessage.setEditable(false);
+        GameMenu.menuBar.getChildren().addAll(requestMessageText, requestMessage);
+        return requestMessage;
+    }
+
+    private static MenuTextField showTradeAcceptMessage(Trade trade) {
+        Text acceptMessageText = new Text(315, 199, "Accept Message:");
+        acceptMessageText.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+        MenuTextField acceptMessage = new MenuTextField(GameMenu.menuBar, "", "", 465, 176, 250);
+        acceptMessage.setText(trade.getAcceptMessage());
+        acceptMessage.setEditable(false);
+        GameMenu.menuBar.getChildren().addAll(acceptMessageText, acceptMessage);
+        return acceptMessage;
+    }
+
+    private static void setCenterToAcceptMessage(Trade trade) {
+        MenuTextField acceptMessage = new MenuTextField(GameMenu.menuBar,
+                "Accept Message", "", 285, 100, 250);
+        putAcceptTradeButton(trade, true, acceptMessage);
+        GameMenu.menuBar.getChildren().add(acceptMessage);
     }
 
     private static void setTitle(String title, int fontSize, double x, double y) {
@@ -1170,7 +1428,7 @@ public class GameViewController {
         ImageView icon = new ImageView(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
                 .toExternalForm() + "trade.png");
         icon.setTranslateX(262);
-        icon.setTranslateY(142);
+        icon.setTranslateY(182);
         icon.setOnMouseEntered(mouseEvent -> {
             icon.setImage(new Image(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
                     .toExternalForm() + "tradeHovered.png"));
@@ -1185,10 +1443,68 @@ public class GameViewController {
         GameMenu.menuBar.getChildren().add(icon);
     }
 
+    private static void putTradeHistoryButton() {
+        ImageView icon = new ImageView(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                .toExternalForm() + "history.png");
+        icon.setTranslateX(262);
+        icon.setTranslateY(142);
+        icon.setOnMouseEntered(mouseEvent -> {
+            icon.setImage(new Image(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                    .toExternalForm() + "historyHovered.png"));
+        });
+        icon.setOnMouseExited(mouseEvent -> {
+            icon.setImage(new Image(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                    .toExternalForm() + "history.png"));
+        });
+        icon.setOnMouseClicked(mouseEvent -> {
+            setCenterOfBar("tradeHistory");
+        });
+        GameMenu.menuBar.getChildren().add(icon);
+    }
+
+    private static void putTradeListButton() {
+        ImageView icon = new ImageView(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                .toExternalForm() + "list.png");
+        icon.setTranslateX(262);
+        icon.setTranslateY(182);
+        icon.setOnMouseEntered(mouseEvent -> {
+            icon.setImage(new Image(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                    .toExternalForm() + "listHovered.png"));
+        });
+        icon.setOnMouseExited(mouseEvent -> {
+            icon.setImage(new Image(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                    .toExternalForm() + "list.png"));
+        });
+        icon.setOnMouseClicked(mouseEvent -> {
+            setCenterOfBar("tradeList");
+        });
+        GameMenu.menuBar.getChildren().add(icon);
+    }
+
+    private static void putViewRequestButton(String id, GridPane pane, int row, boolean showReceiver) {
+        ImageView icon = new ImageView(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                .toExternalForm() + "view.png");
+        icon.setOnMouseEntered(mouseEvent -> {
+            icon.setImage(new Image(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                    .toExternalForm() + "viewHovered.png"));
+        });
+        icon.setOnMouseExited(mouseEvent -> {
+            icon.setImage(new Image(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                    .toExternalForm() + "view.png"));
+        });
+        icon.setOnMouseClicked(mouseEvent -> {
+            currentTradeId = id;
+            if (showReceiver) setCenterOfBar("showSentTrade");
+            else setCenterOfBar("showReceivedTrade");
+        });
+        GridPane.setHalignment(icon, HPos.CENTER);
+        pane.add(icon, 1, row);
+    }
+
     private static void putSendRequestButton(MenuTextField amountField, MenuTextField priceField, MenuTextField messageField) {
         ImageView icon = new ImageView(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
                 .toExternalForm() + "check.png");
-        icon.setTranslateX(740);
+        icon.setTranslateX(745);
         icon.setTranslateY(165);
         icon.setOnMouseEntered(mouseEvent -> {
             icon.setImage(new Image(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
@@ -1226,6 +1542,59 @@ public class GameViewController {
             MenuPopUp popUp = new MenuPopUp(GameMenu.root, 400, 400, popUpType, message);
             if (message.charAt(0) == 'r') setCenterOfBar("shopItem");
             GameMenu.root.getChildren().add(popUp);
+        });
+        GameMenu.menuBar.getChildren().add(icon);
+    }
+
+    private static void putAcceptTradeButton(Trade trade, boolean isAcceptMessageAdded, MenuTextField message) {
+        ImageView icon = new ImageView(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                .toExternalForm() + "check.png");
+        icon.setTranslateX(752);
+        icon.setTranslateY(180);
+        icon.setOnMouseEntered(mouseEvent -> {
+            icon.setImage(new Image(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                    .toExternalForm() + "checkHovered.png"));
+        });
+        icon.setOnMouseExited(mouseEvent -> {
+            icon.setImage(new Image(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                    .toExternalForm() + "check.png"));
+        });
+        icon.setOnMouseClicked(mouseEvent -> {
+            if (!isAcceptMessageAdded) {
+                if (TradeController.acceptTrade(trade.getId())) setCenterOfBar("acceptMessage");
+                else return;
+            }
+            else {
+                if (message.getText().isEmpty() || message.getText() == null) {
+                    MenuPopUp popUp = new MenuPopUp(GameMenu.root, 400, 400,
+                            "error", "accept message is required!");
+                    GameMenu.root.getChildren().add(popUp);
+                } else {
+                    MenuPopUp popUp = new MenuPopUp(GameMenu.root, 400, 400,
+                            "success", "trade accepted successfully");
+                    GameMenu.root.getChildren().add(popUp);
+                }
+            }
+        });
+        GameMenu.menuBar.getChildren().add(icon);
+    }
+
+    private static void putRejectTradeButton(Trade trade) {
+        ImageView icon = new ImageView(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                .toExternalForm() + "reject.png");
+        icon.setTranslateX(752);
+        icon.setTranslateY(140);
+        icon.setOnMouseEntered(mouseEvent -> {
+            icon.setImage(new Image(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                    .toExternalForm() + "rejectHovered.png"));
+        });
+        icon.setOnMouseExited(mouseEvent -> {
+            icon.setImage(new Image(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                    .toExternalForm() + "reject.png"));
+        });
+        icon.setOnMouseClicked(mouseEvent -> {
+            trade.reject();
+            setCenterOfBar("shop");
         });
         GameMenu.menuBar.getChildren().add(icon);
     }
@@ -1524,9 +1893,9 @@ public class GameViewController {
             pair = checkNearestTile(mouseEvent, halfTileX / 2, halfTileX / 2, halfTileY, halfTileY - 1);
         } else {
             if (halfTileY % 2 == 1) {
-                pair = checkNearestTile(mouseEvent, (halfTileX-1)/2,(halfTileX+1)/2 , halfTileY-1, halfTileY);
+                pair = checkNearestTile(mouseEvent, (halfTileX - 1) / 2, (halfTileX + 1) / 2, halfTileY - 1, halfTileY);
             } else {
-                pair = checkNearestTile(mouseEvent, (halfTileX+1)/2, (halfTileX-1)/2, halfTileY - 1, halfTileY);
+                pair = checkNearestTile(mouseEvent, (halfTileX + 1) / 2, (halfTileX - 1) / 2, halfTileY - 1, halfTileY);
             }
         }
         return new Pair<>(pair.getFirst() + GameMenu.gameMap.getCameraX(),

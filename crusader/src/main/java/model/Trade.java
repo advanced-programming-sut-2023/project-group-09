@@ -16,6 +16,7 @@ public class Trade {
     private Government sender;
     private Government receiver;
     private boolean isAccepted = false;
+    private boolean isRejected = false;
 
 
     public Trade(String requestMessage, String type, int amount, int price, Government sender, Government receiver) {
@@ -66,6 +67,9 @@ public class Trade {
     public boolean isAccepted() {
         return isAccepted;
     }
+    public boolean isRejected() {
+        return isRejected;
+    }
 
     public void setAcceptMessage(String acceptMessage) {
         this.acceptMessage = acceptMessage;
@@ -73,6 +77,10 @@ public class Trade {
 
     public void accept() {
         isAccepted = true;
+    }
+
+    public void reject() {
+        isRejected = true;
     }
 
     public void setId() {
