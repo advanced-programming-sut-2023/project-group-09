@@ -11,6 +11,7 @@ import java.util.Random;
 public class MainCastle extends CastleBuilding {
     private EuropeanTroop lord;
     private int taxRate;
+    private int totalTax = 0;
 
     public MainCastle(int numberOfRequiredWorkers, int numberOfRequiredEngineers, String type, int maxHp, int width, int length) {
         super(numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, width, length);
@@ -37,8 +38,10 @@ public class MainCastle extends CastleBuilding {
             } else {
                 government.addGold(-money);
             }
+            totalTax = money;
         } else if (this.taxRate > 0) {
             government.addGold((int) Math.floor(goldPerPerson * population));
+            totalTax = (int) Math.floor(goldPerPerson * population);
         }
     }
 
@@ -75,5 +78,25 @@ public class MainCastle extends CastleBuilding {
         x += this.getStartX();
         y += this.getStartY();
         return new Tuple(y, x);
+    }
+
+    public int getTotalTax() {
+        double goldPerPerson = 0.6 + (0.2) * (Math.abs(this.taxRate) - 1);
+        Government government = this.getGovernment();
+        int population = government.getPopulation();
+        if (this.taxRate < 0) {
+            int money = (int) Math.ceil(goldPerPerson * population);
+            if (money > government.getGold()) {
+                government.setTaxRate(0);
+            }
+            totalTax = -money;
+        } else if (this.taxRate > 0) {
+            totalTax = (int) Math.floor(goldPerPerson * population);
+        }
+        return totalTax;
+    }
+
+    public void setTotalTax(int totalTax) {
+        this.totalTax = totalTax;
     }
 }

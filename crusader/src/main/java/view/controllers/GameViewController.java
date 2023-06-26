@@ -37,6 +37,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Government;
 import model.building.Building;
+import model.building.castlebuildings.MainCastle;
 import model.game.Tile;
 import model.human.military.Military;
 import model.menugui.*;
@@ -520,12 +521,70 @@ public class GameViewController {
         icon.setTranslateY(-20);
         icon.setTranslateX(120);
 
+        Text numberOfPeople = new Text(String.format("%d            =            %d" ,GameController.getGame().getCurrentGovernment().getPopulation()
+                , ((MainCastle)selectedBuilding).getTotalTax())); // TODO : update after update turn
+        GameMenu.menuBar.getChildren().add(numberOfPeople);
+        numberOfPeople.setFont(Font.font("Times New Roman", FontWeight.BOLD, 15));
+        numberOfPeople.setTranslateX(510);
+        numberOfPeople.setTranslateY(150);
+
         Text towerText = new Text("Main Castle");
         towerText.setTranslateX(270);
         towerText.setTranslateY(95);
         GameMenu.menuBar.getChildren().add(towerText);
         towerText.setFont(Font.font("Times New Roman", FontWeight.BOLD, 25));
 
+        ImageView taxLine = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/lineOfTax.png");
+        GameMenu.menuBar.getChildren().add(taxLine);
+        taxLine.setScaleX(0.25);
+        taxLine.setScaleY(0.25);
+        taxLine.setTranslateY(50);
+        taxLine.setTranslateX(250);
+
+        ImageView rightButton = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/rightButton.png");
+        GameMenu.menuBar.getChildren().add(rightButton);
+        rightButton.setScaleX(0.25);
+        rightButton.setScaleY(0.25);
+        rightButton.setTranslateY(50);
+        rightButton.setTranslateX(625);
+        rightButton.setOnMouseClicked(e -> {
+            GameMenu.hoveringBarStateText.setText(GovernmentController.changeTaxRate
+                    (selectedBuilding.getGovernment().getTaxRate()+1));
+            numberOfPeople.setText(String.format("%d            =            %d" ,GameController.getGame().getCurrentGovernment().getPopulation()
+                    , ((MainCastle)selectedBuilding).getTotalTax()));
+        });
+
+        ImageView leftButton = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/leftButton.png");
+        GameMenu.menuBar.getChildren().add(leftButton);
+        leftButton.setScaleX(0.25);
+        leftButton.setScaleY(0.25);
+        leftButton.setTranslateY(50);
+        leftButton.setTranslateX(440);
+        leftButton.setOnMouseClicked(e -> {
+            GameMenu.hoveringBarStateText.setText(GovernmentController.changeTaxRate
+                    (selectedBuilding.getGovernment().getTaxRate()-1));
+            numberOfPeople.setText(String.format("%d            =            %d" ,GameController.getGame().getCurrentGovernment().getPopulation()
+                    , ((MainCastle)selectedBuilding).getTotalTax()));
+        });
+
+        ImageView headIcon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/headIcon.png");
+        GameMenu.menuBar.getChildren().add(headIcon);
+        headIcon.setScaleX(0.25);
+        headIcon.setScaleY(0.25);
+        headIcon.setTranslateX(495);
+        headIcon.setTranslateY(75);
+
+        ImageView coinIcon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/coinIcon.png");
+        GameMenu.menuBar.getChildren().add(coinIcon);
+        coinIcon.setScaleY(0.25);
+        coinIcon.setScaleX(0.25);
+        coinIcon.setTranslateX(550);
+        coinIcon.setTranslateY(105);
 
     }
 
