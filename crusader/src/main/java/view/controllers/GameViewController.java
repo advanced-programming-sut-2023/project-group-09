@@ -579,6 +579,11 @@ public class GameViewController {
                 GameMenu.createGameBar(2);
                 setCenterToAcceptMessage(TradeController.allTrades.get(currentTradeId));
             }
+            case "armoury" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToArmoury();
+            }
         }
     }
 
@@ -1507,6 +1512,18 @@ public class GameViewController {
                 "Accept Message", "", 285, 100, 250);
         putAcceptTradeButton(trade, true, acceptMessage);
         GameMenu.menuBar.getChildren().add(acceptMessage);
+    }
+
+    private static void setCenterToArmoury() {
+        setTitle("Armory", 32, 275, 95);
+        putShopIcon("bow", 285, 120, true);
+        putShopIcon("spear", 345, 120, true);
+        putShopIcon("mace", 405, 120, true);
+        putShopIcon("crossBow", 465, 120, true);
+        putShopIcon("pike", 525, 120, true);
+        putShopIcon("sword", 585, 120, true);
+        putShopIcon("leatherArmour", 655, 120, true);
+        putShopIcon("metalArmour", 705, 120, true);
     }
 
     private static void setTitle(String title, int fontSize, double x, double y) {
