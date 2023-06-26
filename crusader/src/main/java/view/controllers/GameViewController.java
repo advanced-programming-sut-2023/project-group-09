@@ -16,6 +16,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.DropShadow;
@@ -46,6 +47,7 @@ import model.menugui.game.TypeBTN;
 import view.menus.GameMenu;
 import view.menus.LoginMenu;
 
+import java.security.AlgorithmConstraints;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
@@ -65,6 +67,7 @@ public class GameViewController {
     public static String currentCategory;
     public static String currentItem , droppedBuildingName , droppedPicFileName;
     public static Textures selectedTexture;
+    public static Building selectedBuilding;
 
     public static HashMap<String, String> buildingNameToFileName = new HashMap<>();
     public static HashMap<String, String> buildingNameToPicName = new HashMap<>();
@@ -423,12 +426,7 @@ public class GameViewController {
                 GameMenu.createGameBar(0);
                 setCenterToFoodProcessingBuildings();
             }
-            case "Edit Landscape" -> {
-                GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(1);
-                setCenterOfEditLand();
-            }
-            case "Edit Land" -> {
+            case "Edit Landscape" , "Edit Land" -> {
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar(1);
                 setCenterOfEditLand();
@@ -493,7 +491,142 @@ public class GameViewController {
                 GameMenu.createGameBar(2);
                 setCenterToSendRequest(currentItem);
             }
+            case "defenseTurret" , "perimeterTurret" , "lookoutTower" ,
+                    "squareTower" , "roundTower" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToSelectTowersBuilding();
+            }
+            case "smallStoneGatehouse" , "bigStoneGatehouse" , "drawBridge" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToSelectGatehouse();
+            }
+            case "mainCastle" , "castleBuildings" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToSelectMainCastle();
+            }
         }
+    }
+
+    private static void setCenterToSelectMainCastle() {
+
+        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/taxIcon.png");
+        GameMenu.menuBar.getChildren().add(icon);
+        icon.setScaleX(0.3);
+        icon.setScaleY(0.3);
+        icon.setTranslateY(-20);
+        icon.setTranslateX(120);
+
+        Text towerText = new Text("Main Castle");
+        towerText.setTranslateX(270);
+        towerText.setTranslateY(95);
+        GameMenu.menuBar.getChildren().add(towerText);
+        towerText.setFont(Font.font("Times New Roman", FontWeight.BOLD, 25));
+
+
+    }
+
+    private static void setCenterToSelectGatehouse() {
+
+        Text towerText = new Text("Gatehouse And Drawbridge");
+        towerText.setTranslateX(270);
+        towerText.setTranslateY(95);
+        GameMenu.menuBar.getChildren().add(towerText);
+        towerText.setFont(Font.font("Times New Roman", FontWeight.BOLD, 25));
+
+        ProgressBar progressBar = new ProgressBar(1);
+        progressBar.setTranslateX(600);
+        progressBar.setTranslateY(95);
+        GameMenu.menuBar.getChildren().add(progressBar); // TODO: live change
+
+        Text hpOfTower = new Text(selectedBuilding.getHp() + " / " + selectedBuilding.getMaxHp());
+        hpOfTower.setFont(Font.font("Times New Roman" , FontWeight.BOLD , 15));
+        hpOfTower.setTranslateX(620);
+        hpOfTower.setTranslateY(85);
+        GameMenu.menuBar.getChildren().add(hpOfTower);
+
+        MenuButton repairButton = new MenuButton("Repair" , GameMenu.menuBar , 520 , 120 , false);
+        repairButton.setScaleX(0.4);
+        repairButton.setScaleY(0.4);
+        GameMenu.menuBar.getChildren().add(repairButton);
+        repairButton.setOnMouseClicked(e -> {GameMenu.hoveringBarStateText.setText(BuildingController.repair());
+            if (GameMenu.hoveringBarStateText.getText().equals("Successfully repaired!")) {
+                progressBar.setProgress(1);
+            }
+        });
+
+        ImageView closeIcon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/closeIcon.png");
+        ImageView openIcon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/openIcon.png");
+        closeIcon.setScaleY(0.25);
+        openIcon.setScaleY(0.25);
+        closeIcon.setScaleX(0.25);
+        openIcon.setScaleX(0.25);
+        closeIcon.setOnMouseClicked(e -> {
+            GameMenu.hoveringBarStateText.setText(BuildingController.openOrCloseGatehouse("close"));
+            GameMap.getGameTile(BuildingController.getBuilding().getEndX() , BuildingController.getBuilding().getEndY())
+                            .refreshTile();
+            System.out.println("pressed");
+        });
+        openIcon.setOnMouseClicked(e -> {
+            GameMenu.hoveringBarStateText.setText(BuildingController.openOrCloseGatehouse("open"));
+            GameMap.getGameTile(BuildingController.getBuilding().getEndX() , BuildingController.getBuilding().getEndY())
+                    .refreshTile();
+            System.out.println("pressed");
+        });
+        GameMenu.menuBar.getChildren().add(closeIcon);
+        GameMenu.menuBar.getChildren().add(openIcon);
+        closeIcon.setTranslateX(400);
+        closeIcon.setTranslateY(80);
+        openIcon.setTranslateX(490);
+        openIcon.setTranslateY(80);
+    }
+
+    private static void setCenterToSelectTowersBuilding() {
+        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/soldierIcon.png");
+        GameMenu.menuBar.getChildren().add(icon);
+        icon.setScaleX(0.3);
+        icon.setScaleY(0.3);
+        icon.setTranslateY(-30);
+        icon.setTranslateX(140);
+
+        Text towerText = new Text("Tower");
+        towerText.setTranslateX(270);
+        towerText.setTranslateY(95);
+        GameMenu.menuBar.getChildren().add(towerText);
+        towerText.setFont(Font.font("Times New Roman", FontWeight.BOLD, 25));
+
+        Text towerNameText = new Text(buildingNameToName.get(selectedBuilding.getName()));
+        towerNameText.setTranslateX(450);
+        towerNameText.setTranslateY(120);
+        GameMenu.menuBar.getChildren().add(towerNameText);
+        towerNameText.setFont(Font.font("Times New Roman" , FontWeight.BOLD , 15));
+
+        ProgressBar progressBar = new ProgressBar(1);
+        progressBar.setTranslateX(600);
+        progressBar.setTranslateY(95);
+        GameMenu.menuBar.getChildren().add(progressBar); // TODO: live change
+
+        Text hpOfTower = new Text(selectedBuilding.getHp() + " / " + selectedBuilding.getMaxHp());
+        hpOfTower.setFont(Font.font("Times New Roman" , FontWeight.BOLD , 15));
+        hpOfTower.setTranslateX(620);
+        hpOfTower.setTranslateY(85);
+        GameMenu.menuBar.getChildren().add(hpOfTower);
+
+        MenuButton repairButton = new MenuButton("Repair" , GameMenu.menuBar , 520 , 120 , false);
+        repairButton.setScaleX(0.4);
+        repairButton.setScaleY(0.4);
+        GameMenu.menuBar.getChildren().add(repairButton);
+        repairButton.setOnMouseClicked(e -> {GameMenu.hoveringBarStateText.setText(BuildingController.repair());;
+                if (GameMenu.hoveringBarStateText.getText().equals("Successfully repaired!")) {
+                    progressBar.setProgress(1);
+                }
+        });
     }
 
 

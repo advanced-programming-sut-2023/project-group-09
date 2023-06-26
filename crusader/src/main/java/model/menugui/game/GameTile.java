@@ -1,6 +1,8 @@
 package model.menugui.game;
 
+import controller.BuildingController;
 import controller.FileController;
+import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameImages;
 import controller.human.HumanController;
 import enumeration.Paths;
@@ -98,14 +100,27 @@ public class GameTile {
 
     public void setBuilding() {
         Building building = tile.getBuilding();
-        if (building == null && buildingImage != null) {
+        if (buildingImage != null) {
             GameMenu.gameMap.getChildren().remove(buildingImage);
         }
         if (building != null && building.getEndX() == tileX && building.getEndY() == tileY) {
             Image image;
-            if (building instanceof Gatehouse && ((Gatehouse) building).isRightSide()) {
-                image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
-                        + "buildings/" + building.getName() + "Right.png").toExternalForm());
+            if (building instanceof Gatehouse) {
+                if (((Gatehouse)building).isRightSide()) {
+                    if (((Gatehouse)building).isOpen())
+                        image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                                + "buildings/" + building.getName() + "Right.png").toExternalForm());
+                    else
+                        image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                            + "buildings/" + building.getName() + "ClosedRight.png").toExternalForm());
+                } else {
+                    if (((Gatehouse)building).isOpen())
+                        image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                            + "buildings/" + building.getName() + ".png").toExternalForm());
+                    else
+                        image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                                + "buildings/" + building.getName() + "Closed.png").toExternalForm());
+                }
             } else {
                 image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
                         + "buildings/" + building.getName() + ".png").toExternalForm());
@@ -124,6 +139,9 @@ public class GameTile {
                         GameMenu.hoveringBarStateText.setText(GameViewController.buildingNameToName
                                 .get(tile.getBuilding().getName()) + " Copied!");
                     } else if (mouseEvent.getClickCount() == 1) {
+                        GameViewController.selectedBuilding = building;
+                        BuildingController.setBuilding(building);
+
                         GameViewController.setCenterOfBar(building.getName());
                     }
                 }

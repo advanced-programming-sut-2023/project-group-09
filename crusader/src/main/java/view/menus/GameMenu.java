@@ -167,10 +167,16 @@ public class GameMenu extends Application {
         hoveringBarStateText = hoveringButton;
 
         menuBar.setViewOrder(-2000);
-        if (state == 0)
+        if (state == 0) {
             GameViewController.createShortcutBars(menuBar, hoveringButton);
-        else if (state == 1)
+            hoveringButton.setTranslateX(275);
+            hoveringButton.setTranslateY(70);
+        }
+        else if (state == 1) {
             GameViewController.createShortcutBars2(menuBar, hoveringButton);
+            hoveringButton.setTranslateX(275);
+            hoveringButton.setTranslateY(70);
+        }
         else if (state == 2) {
             ImageView menuBox = new ImageView(GameMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
                     + "menuEmptyBar.png");
@@ -178,6 +184,8 @@ public class GameMenu extends Application {
             menuBox.setTranslateY(55);
             menuBox.setScaleY(1.08);
             menuBar.getChildren().add(menuBox);
+            hoveringButton.setTranslateX(275);
+            hoveringButton.setTranslateY(45);
         }
     }
 

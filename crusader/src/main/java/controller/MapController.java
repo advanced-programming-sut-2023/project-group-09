@@ -135,7 +135,8 @@ public class MapController {
                 return false;
             }
         }
-        ArrayList<Pair<Integer, Integer>> neighborTiles = new ArrayList<>();
+        ArrayList<Pair<Integer, Integer>> neighborTiles = GameController.getNeighborTiles(building.getEndX() , building.getEndY() ,
+                building.getWidth() , building.getLength());
 
         for (Pair<Integer, Integer> pair : neighborTiles) {
             int i = pair.getFirst();
@@ -160,9 +161,7 @@ public class MapController {
                 }
             }
         }
-
-
-            return true;
+        return true;
 }
 
     public static boolean checkKillingPit(int x, int y) {
@@ -213,6 +212,7 @@ public class MapController {
 
 
             tile.setCanPutBuilding(false);
+            tile.setPassable(false);
             Textures textures = Textures.EARTH_AND_SAND;
             if (building.getHasSpecialTexture()) {
                 textures = Textures.getTextureByName(building.getSuitableTextures().get(0));
