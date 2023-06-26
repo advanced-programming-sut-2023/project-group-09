@@ -11,6 +11,7 @@ import model.Government;
 import model.building.Building;
 import model.building.castlebuildings.CastleBuilding;
 import model.building.castlebuildings.Gatehouse;
+import model.building.castlebuildings.MainCastle;
 import model.building.castlebuildings.Wall;
 import model.building.storagebuildings.StorageBuilding;
 import model.buildinghandler.BuildingCounter;
