@@ -5,15 +5,6 @@ import model.Government;
 import model.activity.Move;
 
 public abstract class Human implements Cloneable {
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-
     private String name;
     private Government government = null;
     private int speed;
@@ -51,7 +42,13 @@ public abstract class Human implements Cloneable {
         this.move = move;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
     public void enableInvisible() {
         this.isInvisible = true;
     }

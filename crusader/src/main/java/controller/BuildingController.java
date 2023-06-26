@@ -31,6 +31,7 @@ public class BuildingController {
 
     public static void setBuilding(Building b) {
         building = b;
+        government = building.getGovernment();
     }
 
     public static String changeTaxRate(String rateNumberString) {

@@ -3,10 +3,13 @@ package view.controllers;
 import controller.*;
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameGoods;
-import controller.gamestructure.GameHumans;
 import controller.gamestructure.GameImages;
-import controller.human.HumanController;
-import enumeration.*;
+import enumeration.Pair;
+import enumeration.Paths;
+import enumeration.Textures;
+import enumeration.UnitMovingState;
+import enumeration.dictionary.RockDirections;
+import enumeration.dictionary.Trees;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
@@ -14,12 +17,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
+import javafx.scene.ImageCursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.BlurType;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -27,7 +30,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -38,20 +40,15 @@ import javafx.util.Duration;
 import model.Government;
 import model.Trade;
 import model.building.Building;
-import model.game.Tile;
-import model.human.military.Military;
 import model.menugui.*;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
-import model.menugui.game.Troop;
-import model.menugui.game.TypeBTN;
 import view.menus.GameMenu;
 import view.menus.LoginMenu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
-import java.util.Set;
+import model.building.castlebuildings.MainCastle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -60,14 +57,16 @@ public class GameViewController {
     public static String nameOfPageInBar;
     public static Timeline timeline;
     public static boolean isSelected = false;
+    public static boolean isDelete = false;
     public static boolean isDroped = false;
     public static boolean isTextureSelected = false;
     public static int tileX, tileY;
     public static int shopMenuPhase = -1;
     public static String currentCategory;
-    public static String currentTradeId;
     public static String currentItem, droppedBuildingName, droppedPicFileName;
+    public static String currentTradeId;
     public static Textures selectedTexture;
+    public static Building selectedBuilding;
 
     public static HashMap<String, String> buildingNameToFileName = new HashMap<>();
     public static HashMap<String, String> buildingNameToPicName = new HashMap<>();
@@ -76,16 +75,52 @@ public class GameViewController {
     public static HashMap<String, Double> buildingCoordinates = new HashMap<>();
 
 
-    //--------------------------------------------------------
-    public static ArrayList<TypeBTN> typeBTNS = new ArrayList<>();
-    public static ArrayList<ImageView> moveBTNS = new ArrayList<>();
-    public static TypeBTN lastType;
-    public static ArrayList<Military> selectedMilitaries = new ArrayList<>();
+    public static void setBarForCurrentGovernment() {
+        int popularity = GovernmentController.getCurrentGovernment().getPopularity() + 37;
+        Text popularityText = new Text(String.format("%d", popularity));
+        popularityText.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 30)); //TODO: update in change turn!
+        popularityText.setFill(Color.GREEN); // TODO : change color with chang popularity
+        popularityText.setTranslateY(140);
+        popularityText.setTranslateX(980);
+        GameMenu.menuBar.getChildren().add(popularityText);
 
-    //----------------------------------------------------------
+        Text coinText = new Text(String.format("%d", GovernmentController.getCurrentGovernment().getGold()));
+        coinText.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 18));
+        coinText.setFill(Color.GREEN);
+        coinText.setTranslateY(160);
+        coinText.setTranslateX(950); //TODO : update with cost and receiving money
+        GameMenu.menuBar.getChildren().add(coinText);
+
+        Text populationText = new Text(String.format("%d/%d", GovernmentController.getCurrentGovernment().getPopulation(),
+                GovernmentController.getCurrentGovernment().getMaxPopulation()));
+        populationText.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 18));
+        populationText.setFill(Color.GREEN);
+        populationText.setTranslateY(180);
+        populationText.setTranslateX(950);
+        GameMenu.menuBar.getChildren().add(populationText);
+
+        // TODO : update with changes.
+        if (popularity <= 21) {
+            ImageView angryFace = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
+                    + "angryFace.png");
+            angryFace.setTranslateX(758);
+            angryFace.setTranslateY(-160);
+            angryFace.setScaleY(0.29);
+            angryFace.setScaleX(0.25);
+            GameMenu.menuBar.getChildren().add(angryFace);
+        } else if (popularity <= 42) {
+            ImageView pokerFace = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
+                    + "pokerFace.png");
+            pokerFace.setTranslateX(750);
+            pokerFace.setTranslateY(-160);
+            pokerFace.setScaleX(0.25);
+            pokerFace.setScaleY(0.29);
+            GameMenu.menuBar.getChildren().add(pokerFace);
+        }
+    }
+
     public static void createShortcutBars(Pane gamePane, Text text) {
         setCenterOfBar();
-
         ImageView clipboardSign = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
                 + "icons/clipboardIcon.png");
         clipboardSign.setTranslateX(657);
@@ -150,14 +185,14 @@ public class GameViewController {
         keyImage.setTranslateX(760);
         keyImage.setTranslateY(85);
         gamePane.getChildren().add(keyImage);
-        setHoverEventForBar(keyImage, "Game Options");
+        setHoverEventForBar(keyImage, "Game Options"); // TODO : do it!
 
         ImageView deleteImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/deleteIcon.png");
         deleteImage.setTranslateX(760);
         deleteImage.setTranslateY(155);
         gamePane.getChildren().add(deleteImage);
-        setHoverEventForBar(deleteImage, "Delete");
+        setEventForDeleteIcon(deleteImage);
 
         ImageView buildingsImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/buildingsIcon.png");
@@ -212,7 +247,7 @@ public class GameViewController {
         });
     }
 
-    private static void setHoverEventForBar(ImageView imageView, String text) {
+    public static void setHoverEventForBar(ImageView imageView, String text) {
         imageView.setOnMouseEntered(mouseEvent -> GameMenu.hoveringBarStateText.setText(text));
         imageView.setOnMouseExited(mouseEvent -> GameMenu.hoveringBarStateText.setText(""));
         imageView.setOnMouseClicked(mouseEvent -> setCenterOfBar());
@@ -288,7 +323,7 @@ public class GameViewController {
             case "Unit Menu" -> {
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar(-1);
-                setCenterOfUnitMenu();
+                HumanViewController.setCenterOfUnitMenu();
             }
             case "Small Gatehouse" -> {
                 GameMenu.menuBar.getChildren().clear();
@@ -299,6 +334,26 @@ public class GameViewController {
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar(0);
                 setCenterToBigGatehouses();
+            }
+            case "Edit Land" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(1);
+                setCenterOfEditLand();
+            }
+            case "Edit Water" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(1);
+                setCenterOfEditWater();
+            }
+            case "Edit Features" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(1);
+                setCenterOfEditFeatures();
+            }
+            case "Edit Vegetation" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(1);
+                setCenterOfEditVegetation();
             }
         }
     }
@@ -315,141 +370,9 @@ public class GameViewController {
         putButtonImageViewWithDestination("backButtonIcon", "Back To Castles", "Gatehouses", 225, 60, 0.2);
     }
 
-    private static void setCenterOfUnitMenu() {
-        GameMenu.barImage.setImage(GameImages.imageViews.get("unit bar"));
-        addTypes();
-        setSelectedUnits();
-        if (selectedMilitaries.size() != 0) {
-            Military military = selectedMilitaries.get(0);
-            HumanController.militaries.clear();
-            HumanController.militaries.add(military);
-        }
-        putDisband();
-        putPatrol();
-        putStop();
-        putStand();
-        putDefensive();
-        putAggressive();
-    }
-
-    public static void addTypes() {
-        double translateY = 100;
-        double translateX = 290;
-        int count = 0;
-        for (String name : GameMenu.unitsCount.keySet()) {
-            if (GameMenu.unitsCount.get(name) != 0) {
-                System.out.println(name);
-                TypeBTN btn = new TypeBTN(name, GameMenu.menuBar, GameMenu.unitsCount.get(name), translateX, translateY);
-                translateX += 62;
-                setHoverEventForBar(btn.imageView, name);
-                typeBTNS.add(btn);
-                DropShadow ds = new DropShadow(20, Color.AQUA);
-                btn.imageView.setOnMouseClicked(mouseEvent -> {
-                    for (TypeBTN typeBTN : typeBTNS) {
-                        typeBTN.imageView.setEffect(null);
-                    }
-                    btn.imageView.setEffect(ds);
-                    lastType = btn;
-                });
-                count++;
-                if (count > 7) {
-                    return;
-                }
-            }
-        }
-
-    }
-
-    public static void putDisband() {
-        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
-                .toExternalForm() + "icons/disband.png");
-        icon.setTranslateX(127);
-        icon.setTranslateY(127);
-        icon.setScaleY(1.1);
-        icon.setScaleX(1.2);
-        GameMenu.menuBar.getChildren().add(icon);
-        setHoverEventForBar(icon, "disband");
-    }
-
-    public static void putStop() {
-        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
-                .toExternalForm() + "icons/stop.png");
-        icon.setTranslateX(177);
-        icon.setTranslateY(127);
-        icon.setScaleY(1.1);
-        icon.setScaleX(1.2);
-        GameMenu.menuBar.getChildren().add(icon);
-        icon.setOnMouseEntered(mouseEvent -> GameMenu.hoveringBarStateText.setText("stop"));
-        icon.setOnMouseExited(mouseEvent -> GameMenu.hoveringBarStateText.setText(""));
-        System.out.println(selectedMilitaries.size());
-        icon.setOnMouseClicked(mouseEvent -> {
-            setSelectedUnits();
-            stopTroops();
-        });
-        icon.setOnMousePressed(mouseEvent -> {
-            GameMenu.movingState = MoveStates.PATROL.getState();
-            icon.setEffect(new InnerShadow(BlurType.THREE_PASS_BOX, Color.GRAY, 10, 0, 0, 0));
-        });
-        icon.setOnMouseReleased(mouseEvent -> {
-            GameMenu.movingState = MoveStates.PATROL.getState();
-            icon.setEffect(null);
-        });
-    }
-
-    public static void putPatrol() {
-        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
-                .toExternalForm() + "icons/patrol.png");
-        icon.setTranslateX(225);
-        icon.setTranslateY(127);
-        icon.setScaleY(1.1);
-        icon.setScaleX(1.3);
-        GameMenu.menuBar.getChildren().add(icon);
-        icon.setOnMouseEntered(mouseEvent -> GameMenu.hoveringBarStateText.setText("patrol"));
-        icon.setOnMouseExited(mouseEvent -> GameMenu.hoveringBarStateText.setText(""));
-        icon.setOnMouseClicked(mouseEvent -> {
-            GameMenu.movingState = MoveStates.PATROL.getState();
-        });
-        icon.setOnMousePressed(mouseEvent -> {
-            GameMenu.movingState = MoveStates.PATROL.getState();
-            icon.setEffect(new InnerShadow(BlurType.THREE_PASS_BOX, Color.GRAY, 10, 0, 0, 0));
-        });
-        icon.setOnMouseReleased(mouseEvent -> {
-            GameMenu.movingState = MoveStates.PATROL.getState();
-            icon.setEffect(null);
-        });
-    }
-
-    public static void putStand() {
-        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
-                .toExternalForm() + "icons/stand-ground.png");
-        icon.setTranslateX(127);
-        icon.setTranslateY(50);
-        icon.setScaleY(1.3);
-        icon.setScaleX(1.3);
-        GameMenu.menuBar.getChildren().add(icon);
-        setHoverEventForBar(icon, "Stand Ground");
-    }
-
-    public static void putDefensive() {
-        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
-                .toExternalForm() + "icons/defensive-state.png");
-        icon.setTranslateX(177);
-        icon.setTranslateY(70);
-        icon.setScaleY(1.3);
-        icon.setScaleX(1.3);
-        GameMenu.menuBar.getChildren().add(icon);
-        setHoverEventForBar(icon, "Defensive State");
-    }
-
-    public static void putAggressive() {
-        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
-                .toExternalForm() + "icons/aggressive-state.png");
-        icon.setTranslateX(225);
-        icon.setTranslateY(65);
-        icon.setScaleY(1.3);
-        icon.setScaleX(1.3);
-        GameMenu.menuBar.getChildren().add(icon);
-        setHoverEventForBar(icon, "Offensive State");
+    public static void setHoverEventForBarOnUnitMenu(ImageView imageView, String text) {
+        imageView.setOnMouseEntered(mouseEvent -> GameMenu.hoveringBarStateText.setText(text));
+        imageView.setOnMouseExited(mouseEvent -> GameMenu.hoveringBarStateText.setText(""));
     }
 
     public static void unselectTiles() {
@@ -463,9 +386,9 @@ public class GameViewController {
         GameMenu.selectDone = false;
         GameMenu.unitsCount = new HashMap<>();
         GameMenu.selectedTroops.clear();
-        selectedMilitaries.clear();
-        lastType = null;
-        typeBTNS = new ArrayList<>();
+        HumanViewController.selectedMilitaries.clear();
+        HumanViewController.lastType = null;
+        HumanViewController.typeBTNS = new ArrayList<>();
         GameMenu.selectedTilesTroop.clear();
         GameMenu.selectedArea.setVisible(false);
         GameMenu.selectedArea.setWidth(0);
@@ -484,8 +407,8 @@ public class GameViewController {
         GameMenu.isSelected = false;
         GameMenu.selectedUnit = false;
         GameMenu.selectDone = false;
-        lastType = null;
-        typeBTNS = new ArrayList<>();
+        HumanViewController.lastType = null;
+        HumanViewController.typeBTNS = new ArrayList<>();
         GameMenu.selectedArea.setVisible(false);
         GameMenu.selectedArea.setWidth(0);
         GameMenu.selectedArea.setHeight(0);
@@ -547,24 +470,25 @@ public class GameViewController {
                 GameMenu.createGameBar(0);
                 setCenterToFoodProcessingBuildings();
             }
-            case "Edit Landscape" -> {
-                GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(1);
-                setCenterOfEditLand();
-            }
-            case "Edit Land" -> {
+            case "Edit Landscape" , "Edit Land" -> {
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar(1);
                 setCenterOfEditLand();
             }
             case "Edit Water" -> {
-
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(1);
+                setCenterOfEditWater();
             }
             case "Edit Features" -> {
-
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(1);
+                setCenterOfEditFeatures();
             }
             case "Edit Vegetation" -> {
-
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(1);
+                setCenterOfEditVegetation();
             }
             case "Clipboard" -> {
                 GameMenu.menuBar.getChildren().clear();
@@ -611,6 +535,22 @@ public class GameViewController {
                 GameMenu.createGameBar(2);
                 setCenterToSendRequest(currentItem);
             }
+            case "defenseTurret" , "perimeterTurret" , "lookoutTower" ,
+                    "squareTower" , "roundTower" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToSelectTowersBuilding();
+            }
+            case "smallStoneGatehouse" , "bigStoneGatehouse" , "drawBridge" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToSelectGatehouse();
+            }
+            case "mainCastle" , "castleBuildings" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToSelectMainCastle();
+            }
             case "tradeList" -> {
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar(2);
@@ -642,6 +582,184 @@ public class GameViewController {
         }
     }
 
+    private static void setCenterToSelectMainCastle() {
+
+        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/taxIcon.png");
+        GameMenu.menuBar.getChildren().add(icon);
+        icon.setScaleX(0.3);
+        icon.setScaleY(0.3);
+        icon.setTranslateY(-20);
+        icon.setTranslateX(120);
+
+        Text numberOfPeople = new Text(String.format("%d            =            %d" ,GameController.getGame().getCurrentGovernment().getPopulation()
+                , ((MainCastle)selectedBuilding).getTotalTax())); // TODO : update after update turn
+        GameMenu.menuBar.getChildren().add(numberOfPeople);
+        numberOfPeople.setFont(Font.font("Times New Roman", FontWeight.BOLD, 15));
+        numberOfPeople.setTranslateX(510);
+        numberOfPeople.setTranslateY(150);
+
+        Text towerText = new Text("Main Castle");
+        towerText.setTranslateX(270);
+        towerText.setTranslateY(95);
+        GameMenu.menuBar.getChildren().add(towerText);
+        towerText.setFont(Font.font("Times New Roman", FontWeight.BOLD, 25));
+
+        ImageView taxLine = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/lineOfTax.png");
+        GameMenu.menuBar.getChildren().add(taxLine);
+        taxLine.setScaleX(0.25);
+        taxLine.setScaleY(0.25);
+        taxLine.setTranslateY(50);
+        taxLine.setTranslateX(250);
+
+        ImageView rightButton = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/rightButton.png");
+        GameMenu.menuBar.getChildren().add(rightButton);
+        rightButton.setScaleX(0.25);
+        rightButton.setScaleY(0.25);
+        rightButton.setTranslateY(50);
+        rightButton.setTranslateX(625);
+        rightButton.setOnMouseClicked(e -> {
+            GameMenu.hoveringBarStateText.setText(GovernmentController.changeTaxRate
+                    (selectedBuilding.getGovernment().getTaxRate()+1));
+            numberOfPeople.setText(String.format("%d            =            %d" ,GameController.getGame().getCurrentGovernment().getPopulation()
+                    , ((MainCastle)selectedBuilding).getTotalTax()));
+        });
+
+        ImageView leftButton = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/leftButton.png");
+        GameMenu.menuBar.getChildren().add(leftButton);
+        leftButton.setScaleX(0.25);
+        leftButton.setScaleY(0.25);
+        leftButton.setTranslateY(50);
+        leftButton.setTranslateX(440);
+        leftButton.setOnMouseClicked(e -> {
+            GameMenu.hoveringBarStateText.setText(GovernmentController.changeTaxRate
+                    (selectedBuilding.getGovernment().getTaxRate()-1));
+            numberOfPeople.setText(String.format("%d            =            %d" ,GameController.getGame().getCurrentGovernment().getPopulation()
+                    , ((MainCastle)selectedBuilding).getTotalTax()));
+        });
+
+        ImageView headIcon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/headIcon.png");
+        GameMenu.menuBar.getChildren().add(headIcon);
+        headIcon.setScaleX(0.25);
+        headIcon.setScaleY(0.25);
+        headIcon.setTranslateX(495);
+        headIcon.setTranslateY(75);
+
+        ImageView coinIcon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/coinIcon.png");
+        GameMenu.menuBar.getChildren().add(coinIcon);
+        coinIcon.setScaleY(0.25);
+        coinIcon.setScaleX(0.25);
+        coinIcon.setTranslateX(550);
+        coinIcon.setTranslateY(105);
+
+    }
+
+    private static void setCenterToSelectGatehouse() {
+
+        Text towerText = new Text("Gatehouse And Drawbridge");
+        towerText.setTranslateX(270);
+        towerText.setTranslateY(95);
+        GameMenu.menuBar.getChildren().add(towerText);
+        towerText.setFont(Font.font("Times New Roman", FontWeight.BOLD, 25));
+
+        ProgressBar progressBar = new ProgressBar(1);
+        progressBar.setTranslateX(600);
+        progressBar.setTranslateY(95);
+        GameMenu.menuBar.getChildren().add(progressBar); // TODO: live change
+
+        Text hpOfTower = new Text(selectedBuilding.getHp() + " / " + selectedBuilding.getMaxHp());
+        hpOfTower.setFont(Font.font("Times New Roman" , FontWeight.BOLD , 15));
+        hpOfTower.setTranslateX(620);
+        hpOfTower.setTranslateY(85);
+        GameMenu.menuBar.getChildren().add(hpOfTower);
+
+        MenuButton repairButton = new MenuButton("Repair" , GameMenu.menuBar , 520 , 120 , false);
+        repairButton.setScaleX(0.4);
+        repairButton.setScaleY(0.4);
+        GameMenu.menuBar.getChildren().add(repairButton);
+        repairButton.setOnMouseClicked(e -> {GameMenu.hoveringBarStateText.setText(BuildingController.repair());
+            if (GameMenu.hoveringBarStateText.getText().equals("Successfully repaired!")) {
+                progressBar.setProgress(1);
+            }
+        });
+
+        ImageView closeIcon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/closeIcon.png");
+        ImageView openIcon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/openIcon.png");
+        closeIcon.setScaleY(0.25);
+        openIcon.setScaleY(0.25);
+        closeIcon.setScaleX(0.25);
+        openIcon.setScaleX(0.25);
+        closeIcon.setOnMouseClicked(e -> {
+            GameMenu.hoveringBarStateText.setText(BuildingController.openOrCloseGatehouse("close"));
+            GameMap.getGameTile(BuildingController.getBuilding().getEndX() , BuildingController.getBuilding().getEndY())
+                            .refreshTile();
+            System.out.println("pressed");
+        });
+        openIcon.setOnMouseClicked(e -> {
+            GameMenu.hoveringBarStateText.setText(BuildingController.openOrCloseGatehouse("open"));
+            GameMap.getGameTile(BuildingController.getBuilding().getEndX() , BuildingController.getBuilding().getEndY())
+                    .refreshTile();
+            System.out.println("pressed");
+        });
+        GameMenu.menuBar.getChildren().add(closeIcon);
+        GameMenu.menuBar.getChildren().add(openIcon);
+        closeIcon.setTranslateX(400);
+        closeIcon.setTranslateY(80);
+        openIcon.setTranslateX(490);
+        openIcon.setTranslateY(80);
+    }
+
+    private static void setCenterToSelectTowersBuilding() {
+        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/soldierIcon.png");
+        GameMenu.menuBar.getChildren().add(icon);
+        icon.setScaleX(0.3);
+        icon.setScaleY(0.3);
+        icon.setTranslateY(-30);
+        icon.setTranslateX(140);
+
+        Text towerText = new Text("Tower");
+        towerText.setTranslateX(270);
+        towerText.setTranslateY(95);
+        GameMenu.menuBar.getChildren().add(towerText);
+        towerText.setFont(Font.font("Times New Roman", FontWeight.BOLD, 25));
+
+        Text towerNameText = new Text(buildingNameToName.get(selectedBuilding.getName()));
+        towerNameText.setTranslateX(450);
+        towerNameText.setTranslateY(120);
+        GameMenu.menuBar.getChildren().add(towerNameText);
+        towerNameText.setFont(Font.font("Times New Roman" , FontWeight.BOLD , 15));
+
+        ProgressBar progressBar = new ProgressBar(1);
+        progressBar.setTranslateX(600);
+        progressBar.setTranslateY(95);
+        GameMenu.menuBar.getChildren().add(progressBar); // TODO: live change
+
+        Text hpOfTower = new Text(selectedBuilding.getHp() + " / " + selectedBuilding.getMaxHp());
+        hpOfTower.setFont(Font.font("Times New Roman" , FontWeight.BOLD , 15));
+        hpOfTower.setTranslateX(620);
+        hpOfTower.setTranslateY(85);
+        GameMenu.menuBar.getChildren().add(hpOfTower);
+
+        MenuButton repairButton = new MenuButton("Repair" , GameMenu.menuBar , 520 , 120 , false);
+        repairButton.setScaleX(0.4);
+        repairButton.setScaleY(0.4);
+        GameMenu.menuBar.getChildren().add(repairButton);
+        repairButton.setOnMouseClicked(e -> {GameMenu.hoveringBarStateText.setText(BuildingController.repair());;
+                if (GameMenu.hoveringBarStateText.getText().equals("Successfully repaired!")) {
+                    progressBar.setProgress(1);
+                }
+        });
+    }
+
+
     private static void setCenterOfClipboard() {
         putButtonImageViewWithDestination("backButtonIcon", "Back To Castles", "Castle Buildings", 225, 60, 0.2);
         String buildingName = FileController.getClipboard();
@@ -671,6 +789,21 @@ public class GameViewController {
         return new Pair<>((765 - 270 - x) / 2 + 270, (225 - 80 - y) / 2 + 65);
     }
 
+    private static void setCenterOfEditFeatures() {
+        putEditRockImageView("bigRockIcon", "Rock - South",
+                RockDirections.SOUTH, 290, 85, 0.2);
+        putEditRockImageView("bigRockIcon", "Rock - East",
+                RockDirections.EAST, 325, 85, 0.2);
+        putEditRockImageView("bigRockIcon", "Rock - North",
+                RockDirections.NORTH, 360, 85, 0.2);
+        putEditRockImageView("bigRockIcon", "Rock - West",
+                RockDirections.WEST, 395, 85, 0.2);
+        putEditRockImageView("bigRockIcon", "Rock - Random",
+                RockDirections.getRandomDirection(), 430, 85, 0.2);
+
+    }
+
+
     private static void setCenterOfEditLand() {
         putEditTextureImageView("earthAndStoneIcon", "Earth And Stones"
                 , Textures.EARTH, 290, 85, 0.2);
@@ -691,6 +824,39 @@ public class GameViewController {
                 , Textures.BOULDER, 500, 70, 0.2);
     }
 
+    private static void setCenterOfEditWater() {
+        putEditTextureImageView("seaIcon", "Sea"
+                , Textures.SEA, 290, 65, 0.2);
+        putEditTextureImageView("beachIcon", "Beach"
+                , Textures.BEACH, 305, 95, 0.2);
+        putEditTextureImageView("largePoundIcon", "Large Pound"
+                , Textures.LARGE_POND, 350, 75, 0.2);
+
+        putEditTextureImageView("smallPoundIcon", "Small Pound"
+                , Textures.SMALL_POND, 360, 40, 0.2);
+        putEditTextureImageView("riverIcon", "River"
+                , Textures.RIVER, 475, 40, 0.2);
+        putEditTextureImageView("fordIcon", "Ford"
+                , Textures.LOW_DEPTH_WATER, 460, 100, 0.2);
+        putEditTextureImageView("marshIcon", "Marsh"
+                , Textures.MARSH, 550, 30, 0.2);
+        putEditTextureImageView("oilIcon", "Oil"
+                , Textures.OIL, 505, 90, 0.2);
+    }
+
+    private static void setCenterOfEditVegetation() {
+        putEditTreeImageView("datePalmIcon", "Date Palm", Trees.DATE_PALM,
+                300, 0, 0.2);
+        putEditTreeImageView("coconutPalmIcon", "Coconut Palm", Trees.COCONUT_PALM,
+                400, -20, 0.2);
+        putEditTreeImageView("oliveTreeIcon", "Olive tree", Trees.OLIVE_TREE,
+                430, 20, 0.2);
+        putEditTreeImageView("desertShrubIcon", "Desert Shrub", Trees.DESERT_SHRUB,
+                580, 50, 0.2);
+        putEditTreeImageView("cherryPalmIcon", "Cherry Palm", Trees.CHERRY_PALM,
+                600, 0, 0.2);
+    }
+
     public static void createShortcutBars2(Pane gamePane, Text text) {
 
         ImageView keyImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
@@ -705,7 +871,7 @@ public class GameViewController {
         deleteImage.setTranslateX(760);
         deleteImage.setTranslateY(155);
         gamePane.getChildren().add(deleteImage);
-        setHoverEventForBar(deleteImage, "Delete");
+        setEventForDeleteIcon(deleteImage);
 
         ImageView buildingsImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/buildingsActiveOffIcon.png");
@@ -761,6 +927,20 @@ public class GameViewController {
         editFeaturesShortcut.setScaleY(0.2);
         gamePane.getChildren().add(editFeaturesShortcut);
         setHoverEventForBar(editFeaturesShortcut, "Edit Features");
+    }
+
+    private static void setEventForDeleteIcon(ImageView deleteImage) {
+        deleteImage.setOnMouseEntered(mouseEvent -> GameMenu.hoveringBarStateText.setText("Delete"));
+        deleteImage.setOnMouseExited(mouseEvent -> GameMenu.hoveringBarStateText.setText(""));
+        deleteImage.setOnMouseClicked(e -> {
+            isDelete = true;
+            System.out.println("changed cursor!");
+            Image image = new Image(LoginMenu.class.getResource(Paths.GAME_IMAGES.getPath())
+                    .toExternalForm() + "cursor/crossCursor.png");
+            GameMenu.scene.setCursor(new ImageCursor(image,
+                    image.getWidth() / 2,
+                    image.getHeight() /2));
+        });
     }
 
     private static void setCenterToFoodProcessingBuildings() {
@@ -1631,6 +1811,116 @@ public class GameViewController {
         return text;
     }
 
+    private static void putEditRockImageView(String fileName, String name, RockDirections rockDirection, double x, double y, double size) {
+        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/" + fileName + ".png");
+        icon.setTranslateX(x);
+        icon.setTranslateY(y);
+        icon.setScaleX(size);
+        icon.setScaleY(size);
+        GameMenu.menuBar.getChildren().add(icon);
+        icon.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                GameMenu.hoveringBarStateText.setText(name);
+            }
+        });
+        icon.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                GameMenu.hoveringBarStateText.setText("");
+            }
+        });
+
+
+        icon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                isTextureSelected = true;
+                GameMenu.gameMap.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        if (mouseEvent.getButton() == MouseButton.PRIMARY && isTextureSelected) {
+                            Pair<Integer, Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
+                            tileX = pair.getFirst();
+                            tileY = pair.getSecond();
+                            System.out.println("Tile founded at : " + tileX + " " + tileY);
+                            GameMenu.hoveringBarStateText.setText(MapController.dropRock(tileX, tileY, rockDirection));
+                            GameMap.getGameTile(tileX, tileY).refreshTile();
+                        } else {
+                            isTextureSelected = false;
+                        }
+                    }
+                });
+
+                GameMenu.gameMap.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                            isTextureSelected = false;
+                        }
+                    }
+                });
+
+            }
+        });
+    }
+
+    private static void putEditTreeImageView(String fileName, String name, Trees tree, double x, double y, double size) {
+        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/" + fileName + ".png");
+        icon.setTranslateX(x);
+        icon.setTranslateY(y);
+        icon.setScaleX(size);
+        icon.setScaleY(size);
+        GameMenu.menuBar.getChildren().add(icon);
+        icon.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                GameMenu.hoveringBarStateText.setText(name);
+            }
+        });
+        icon.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                GameMenu.hoveringBarStateText.setText("");
+            }
+        });
+
+
+        icon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                isTextureSelected = true;
+                GameMenu.gameMap.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        if (mouseEvent.getButton() == MouseButton.PRIMARY && isTextureSelected) {
+                            Pair<Integer, Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
+                            tileX = pair.getFirst();
+                            tileY = pair.getSecond();
+                            System.out.println("Tile founded at : " + tileX + " " + tileY);
+                            GameMenu.hoveringBarStateText.setText(MapController.dropTree(tileX, tileY, tree));
+                            GameMap.getGameTile(tileX, tileY).refreshTile();
+                        } else {
+                            isTextureSelected = false;
+                        }
+                    }
+                });
+
+                GameMenu.gameMap.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                            isTextureSelected = false;
+                        }
+                    }
+                });
+
+            }
+        });
+    }
+
     private static void putEditTextureImageView(String fileName, String name, Textures texture, double x, double y, double size) {
         ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/" + fileName + ".png");
@@ -1923,46 +2213,46 @@ public class GameViewController {
     }
 
     public static void createBorderRectangles(GameMap gameMap, MiniMap miniMap) {
-        GameMenu.downRight = new Rectangle(10, 10);
-        GameMenu.upRight = new Rectangle(10, 10);
-        GameMenu.upLeft = new Rectangle(10, 10);
-        GameMenu.downLeft = new Rectangle(10, 10);
-        GameMenu.right = new Rectangle(10, 780);
-        GameMenu.up = new Rectangle(1180, 10);
-        GameMenu.left = new Rectangle(10, 780);
-        GameMenu.down = new Rectangle(1180, 10);
+        Rectangle downRight = new Rectangle(10, 10);
+        Rectangle upRight = new Rectangle(10, 10);
+        Rectangle upLeft = new Rectangle(10, 10);
+        Rectangle downLeft = new Rectangle(10, 10);
+        Rectangle right = new Rectangle(10, 780);
+        Rectangle up = new Rectangle(1180, 10);
+        Rectangle left = new Rectangle(10, 780);
+        Rectangle down = new Rectangle(1180, 10);
 
 
-        setTranslateOfRectangle(GameMenu.downRight, 595, 395);
-        setTranslateOfRectangle(GameMenu.upRight, 595, -395);
-        setTranslateOfRectangle(GameMenu.upLeft, -595, -395);
-        setTranslateOfRectangle(GameMenu.downLeft, -595, 395);
-        setTranslateOfRectangle(GameMenu.right, 595, 0);
-        setTranslateOfRectangle(GameMenu.left, -595, 0);
+        setTranslateOfRectangle(downRight, 595, 395);
+        setTranslateOfRectangle(upRight, 595, -395);
+        setTranslateOfRectangle(upLeft, -595, -395);
+        setTranslateOfRectangle(downLeft, -595, 395);
+        setTranslateOfRectangle(right, 595, 0);
+        setTranslateOfRectangle(left, -595, 0);
 
 
-        setTranslateOfRectangle(GameMenu.up, 0, -395);
-        setTranslateOfRectangle(GameMenu.down, 0, 395);
+        setTranslateOfRectangle(up, 0, -395);
+        setTranslateOfRectangle(down, 0, 395);
 
 
-        GameMenu.root.getChildren().addAll(GameMenu.downRight, GameMenu.downLeft, GameMenu.upRight,
-                GameMenu.upLeft, GameMenu.right, GameMenu.left, GameMenu.up, GameMenu.down);
+        GameMenu.root.getChildren().addAll(downRight, downLeft, upRight,
+                upLeft, right, left, up, down);
 
-        GameMenu.downRight.setViewOrder(-3000);
-        GameMenu.downLeft.setViewOrder(-3000);
-        GameMenu.down.setViewOrder(-3000);
-        GameMenu.left.setViewOrder(-3000);
-        GameMenu.right.setViewOrder(-3000);
+        downRight.setViewOrder(-3000);
+        downLeft.setViewOrder(-3000);
+        down.setViewOrder(-3000);
+        left.setViewOrder(-3000);
+        right.setViewOrder(-3000);
 
-        setEventForRectangles(GameMenu.downRight, 1, -1, gameMap, miniMap);
-        setEventForRectangles(GameMenu.downLeft, -1, -1, gameMap, miniMap);
-        setEventForRectangles(GameMenu.upRight, 1, 1, gameMap, miniMap);
-        setEventForRectangles(GameMenu.upLeft, -1, 1, gameMap, miniMap);
+        setEventForRectangles(downRight, 1, -1, gameMap, miniMap);
+        setEventForRectangles(downLeft, -1, -1, gameMap, miniMap);
+        setEventForRectangles(upRight, 1, 1, gameMap, miniMap);
+        setEventForRectangles(upLeft, -1, 1, gameMap, miniMap);
 
-        setEventForRectangles(GameMenu.down, 0, -1, gameMap, miniMap);
-        setEventForRectangles(GameMenu.left, -1, 0, gameMap, miniMap);
-        setEventForRectangles(GameMenu.up, 0, 1, gameMap, miniMap);
-        setEventForRectangles(GameMenu.right, 1, 0, gameMap, miniMap);
+        setEventForRectangles(down, 0, -1, gameMap, miniMap);
+        setEventForRectangles(left, -1, 0, gameMap, miniMap);
+        setEventForRectangles(up, 0, 1, gameMap, miniMap);
+        setEventForRectangles(right, 1, 0, gameMap, miniMap);
 
 
     }
@@ -2019,325 +2309,5 @@ public class GameViewController {
         });
     }
 
-    public static void dropUnit(int x, int y, Tile tile, Military military) {
-        GameTile gameTile = GameMap.getGameTile(x, y);
-        GameMap gameMap = GameMenu.gameMap;
-        Troop troop = new Troop(military, tile, gameTile);
-        gameMap.getChildren().add(troop);
-        if (GameMap.gameTroops[y][x] == null) {
-            GameMap.gameTroops[y][x] = new ArrayList<>();
-        }
-        GameMap.gameTroops[y][x].add(troop);
-    }
 
-    public static void selectUnits(int x, int y) {
-        GameMenu.selectedTilesTroop.clear();
-        Tile tile = GameController.getGame().getMap().getTile(x, y);
-        GameMenu.selectedUnit = true;
-    }
-
-    public static void divideTroops(Tile tile) {
-        Set<String> names = GameHumans.militaries.keySet();
-        for (String name : names) {
-            ArrayList<Military> troops = MapController.getOneTypeOfMilitariesOfGovernment(tile.x, tile.y, name,
-                    GameController.getGame().getCurrentGovernment());
-            GameMenu.selectedTroops.addAll(troops);
-            GameMenu.unitsCount.put(name, GameMenu.unitsCount.getOrDefault(name, 0) + troops.size());
-            if (troops.size() != 0) {
-                GameMenu.selectedUnit = true;
-                GameMenu.selectedTilesTroop.add(tile);
-            }
-        }
-    }
-
-    public static void setSelectCursorImage(String state) {
-        GameMenu.selectCursor.setFill(new ImagePattern(GameImages.imageViews.get(state)));
-    }
-
-    public static void setSelectCursorState(GameTile endTile) {
-        String state = GameMenu.movingState;
-        if (UnitMovingState.NORMAL.getState().equals(state)) {
-            canDoAction(true, endTile);
-        }
-    }
-
-
-    public static boolean canDoAction(boolean changeCursor, GameTile endTile) {
-        String state = GameMenu.movingState;
-        if (Objects.equals(state, UnitMovingState.NORMAL.getState())) {
-            if (checkCanAttack(endTile) || checkCanAirAttack(endTile)) {
-                if (changeCursor) {
-                    setSelectCursorImage("attack");
-                }
-                return true;
-            }
-            if (GameController.validateMoveUnit(endTile.getTileX(), endTile.getTileY())) {
-                if (changeCursor) {
-                    setSelectCursorImage("selectMove");
-                }
-                return true;
-            }
-            if (changeCursor) {
-                setSelectCursorImage("cannot");
-            }
-            return false;
-        }
-        if (Objects.equals(state, UnitMovingState.MOVE.getState())) {
-            if (GameController.validateMoveUnit(endTile.getTileX(), endTile.getTileY())) {
-                if (changeCursor) {
-                    setSelectCursorImage("selectMove");
-                }
-                return true;
-            }
-            if (changeCursor) {
-                setSelectCursorImage("cannot");
-            }
-            return false;
-        }
-        if (Objects.equals(state, UnitMovingState.AIR_ATTACK.getState())) {
-            if (checkCanAirAttack(endTile)) {
-                if (changeCursor) {
-                    setSelectCursorImage("attack");
-                }
-                return true;
-            }
-            if (changeCursor) {
-                setSelectCursorImage("cannot");
-            }
-            return false;
-        }
-
-        if (Objects.equals(state, UnitMovingState.ATTACK.getState())) {
-            if (checkCanAttack(endTile)) {
-                if (changeCursor) {
-                    setSelectCursorImage("attack");
-                }
-                return true;
-            }
-            if (changeCursor) {
-                setSelectCursorImage("cannot");
-            }
-            return false;
-        }
-
-        return false;
-    }
-
-
-    public static boolean checkCanAttack(GameTile endTile) {
-        if (GameController.validateAttackEnemy(endTile.getTileX(), endTile.getTileY())) {
-            return true;
-        }
-        if (GameController.validateAttackBuilding(endTile.getTileX(), endTile.getTileY())) {
-            return true;
-        }
-        return GameController.validateAttackTool(endTile.getTileX(), endTile.getTileY());
-    }
-
-
-    public static boolean checkCanAirAttack(GameTile endTile) {
-        if (GameController.validateAirAttack(endTile.getTileX(), endTile.getTileY())) {
-            return true;
-        }
-        if (GameController.validateAirAttackBuilding(endTile.getTileX(), endTile.getTileY())) {
-            return true;
-        }
-        return GameController.validateAirAttackTool(endTile.getTileX(), endTile.getTileY());
-    }
-
-    public static void doAction(boolean changeCursor, GameTile endTile) {
-        setSelectedUnits();
-        String state = GameMenu.movingState;
-        if (Objects.equals(state, UnitMovingState.NORMAL.getState())) {
-            if (checkCanAttack(endTile) || checkCanAirAttack(endTile)) {
-                if (changeCursor) {
-                    setSelectCursorImage("attack");
-                }
-                attack();
-                return;
-            }
-            if (GameController.validateMoveUnit(endTile.getTileX(), endTile.getTileY())) {
-                if (changeCursor) {
-                    setSelectCursorImage("selectMove");
-                }
-                moveUnits(endTile);
-                return;
-            }
-            if (changeCursor) {
-                setSelectCursorImage("cannot");
-            }
-            return;
-        }
-        if (Objects.equals(state, UnitMovingState.MOVE.getState())) {
-            if (GameController.validateMoveUnit(endTile.getTileX(), endTile.getTileY())) {
-                if (changeCursor) {
-                    setSelectCursorImage("selectMove");
-                }
-                moveUnits(endTile);
-                return;
-            }
-            if (changeCursor) {
-                setSelectCursorImage("cannot");
-            }
-            return;
-        }
-        if (Objects.equals(state, UnitMovingState.AIR_ATTACK.getState())) {
-            if (checkCanAirAttack(endTile)) {
-                if (changeCursor) {
-                    setSelectCursorImage("attack");
-                    attack();
-                }
-                return;
-            }
-            if (changeCursor) {
-                setSelectCursorImage("cannot");
-            }
-            return;
-        }
-        if (Objects.equals(state, UnitMovingState.ATTACK.getState())) {
-            if (checkCanAttack(endTile)) {
-                if (changeCursor) {
-                    setSelectCursorImage("attack");
-                }
-                return;
-            }
-            if (changeCursor) {
-                setSelectCursorImage("cannot");
-            }
-        }
-        if (Objects.equals(state, UnitMovingState.PATROL.getState())) {
-            if (GameController.validateMoveUnit(endTile.getTileX(), endTile.getTileY())) {
-                if (changeCursor) {
-                    setSelectCursorImage("selectMove");
-                }
-                patrolUnits(endTile);
-                return;
-            }
-            if (changeCursor) {
-                setSelectCursorImage("cannot");
-            }
-        }
-    }
-
-
-    public static boolean doAttack(GameTile endTile) {
-        if (GameController.validateAttackEnemy(endTile.getTileX(), endTile.getTileY())) {
-            return true;
-        }
-        if (GameController.validateAttackBuilding(endTile.getTileX(), endTile.getTileY())) {
-            return true;
-        }
-        return GameController.validateAttackTool(endTile.getTileX(), endTile.getTileY());
-    }
-
-
-    public static boolean doAirAttack(GameTile endTile) {
-        if (GameController.validateAirAttack(endTile.getTileX(), endTile.getTileY())) {
-            return true;
-        }
-        if (GameController.validateAirAttackBuilding(endTile.getTileX(), endTile.getTileY())) {
-            return true;
-        }
-        return GameController.validateAirAttackTool(endTile.getTileX(), endTile.getTileY());
-    }
-
-    public static void setSelectedUnits() {
-        int count = 0;
-        selectedMilitaries.clear();
-        HashMap<String, Integer> unitCount = GameHumans.getUnitHashmap();
-        for (TypeBTN btn : typeBTNS) {
-            unitCount.put(btn.name, btn.count);
-            count += btn.count;
-        }
-        for (Military military : GameMenu.selectedTroops) {
-            if (unitCount.get(military.getName()) != 0) {
-                selectedMilitaries.add(military);
-                unitCount.put(military.getName(), unitCount.get(military.getName()) - 1);
-                count--;
-            }
-            if (count == 0) {
-                return;
-            }
-        }
-    }
-
-    public static void moveUnits(GameTile end) {
-        System.out.println(selectedMilitaries.size());
-        for (Military military : GameViewController.selectedMilitaries) {
-            HumanController.militaries.clear();
-            HumanController.militaries.add(military);
-            GameController.moveUnit(end.getTileX(), end.getTileY());
-        }
-        GameMenu.unitsCount = new HashMap<>();
-        GameMenu.selectedTroops.clear();
-        GameMenu.selectedTilesTroop.clear();
-        selectedMilitaries.clear();
-        GameViewController.setCenterOfBar(null);
-        GameViewController.currentItem = null;
-        GameViewController.currentCategory = null;
-    }
-
-    public static void patrolUnits(GameTile end) {
-        for (Military military : GameViewController.selectedMilitaries) {
-            HumanController.militaries.clear();
-            HumanController.militaries.add(military);
-            GameController.patrolUnit(end.getTileX(), end.getTileY());
-        }
-        GameMenu.unitsCount = new HashMap<>();
-        GameMenu.selectedTroops.clear();
-        GameMenu.selectedTilesTroop.clear();
-        selectedMilitaries.clear();
-        GameViewController.setCenterOfBar(null);
-        GameViewController.currentItem = null;
-        GameViewController.currentCategory = null;
-    }
-
-    public static void setFlagOfPatrol(int x1, int y1, int x2, int y2) {
-        ImageView flag1 = new ImageView(new Image(LoginMenu.class.getResource(Paths.MAP_IMAGES.getPath())
-                .toExternalForm() + "patrol-flag.png"));
-        ImageView flag2 = new ImageView(new Image(LoginMenu.class.getResource(Paths.MAP_IMAGES.getPath())
-                .toExternalForm() + "patrol-flag.png"));
-        GameTile start = GameMap.getGameTile(x1, y1);
-        GameTile end = GameMap.getGameTile(x2, y2);
-        flag1.setTranslateX(start.getTextureImage().getTranslateX());
-        flag1.setTranslateY(start.getTextureImage().getTranslateY());
-        flag2.setTranslateX(end.getTextureImage().getTranslateX());
-        flag2.setTranslateY(end.getTextureImage().getTranslateY());
-        flag1.setFitWidth(GameMap.tileWidth);
-        flag2.setFitWidth(GameMap.tileWidth);
-        flag2.setFitHeight(GameMap.tileHeight);
-        flag1.setFitHeight(GameMap.tileHeight);
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(5000), actionEvent -> {
-            GameMenu.gameMap.getChildren().remove(flag2);
-            GameMenu.gameMap.getChildren().remove(flag1);
-        }));
-        timeline.setCycleCount(1);
-        timeline.play();
-
-        GameMenu.gameMap.getChildren().addAll(flag1, flag2);
-    }
-
-    public static void stopTroops() {
-        for (Military military : selectedMilitaries) {
-            if (military.getMove() != null) {
-                military.getMove().stopMove();
-            }
-        }
-        unselectTiles();
-    }
-
-    public static void attack() {
-        //
-    }
-
-    public static GameTile touchTile(double zoom) {
-        for (int y = 0; y < GameController.getGame().getMap().getLength(); y++) {
-            for (int x = 0; x < GameController.getGame().getMap().getWidth(); x++) {
-                GameTile gameTile = GameMap.getGameTile(x, y);
-                gameTile.getTextureImage().setScaleX(gameTile.getTextureImage().getScaleX() * zoom);
-                gameTile.getTextureImage().setScaleY(gameTile.getTextureImage().getScaleY() * zoom);
-            }
-        }
-        return null;
-    }
 }

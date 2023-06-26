@@ -36,6 +36,7 @@ import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
 import view.controllers.GameViewController;
+import view.controllers.HumanViewController;
 import view.controllers.ViewController;
 
 import java.net.URL;
@@ -58,7 +59,6 @@ public class GameMenu extends Application {
     public static ArrayList<Transition> transitions = new ArrayList<>();
     public static ArrayList<Timeline> timelines = new ArrayList<>();
     public static GameTile currentTile;
-    public static Timeline cursorTimeLine;
     public static boolean selectedUnit = false;
     public static GameTile startSelectionTile;
     public static GameTile endSelectionTile;
@@ -66,14 +66,10 @@ public class GameMenu extends Application {
     public static boolean isSelected = false;
     public static String movingState = UnitMovingState.NORMAL.getState();
 
-    public static Rectangle downRight;
-    public static Rectangle upRight;
-    public static Rectangle upLeft;
-    public static Rectangle downLeft;
-    public static Rectangle right;
-    public static Rectangle up;
-    public static Rectangle left;
-    public static Rectangle down;
+    public static ImageView standing;
+    public static ImageView defensive;
+    public static ImageView aggressive;
+
     //---------------------------------
     public static HashMap<String, Integer> unitsCount = new HashMap<>();
     public static HashSet<Military> selectedTroops = new HashSet<>();
@@ -111,30 +107,21 @@ public class GameMenu extends Application {
         menuBar.setMaxHeight(220);
         root.getChildren().addAll(gameMap, menuBar);
         selectCursor = new Rectangle(50, 75);
-//        selectCursor.setFill(new ImagePattern(GameImages.imageViews.get("selectMove")));
+        selectCursor.setFill(new ImagePattern(GameImages.imageViews.get("selectMove")));
         Rectangle clipRectangle = new Rectangle(1200, 800);
         root.setClip(clipRectangle);
-        MapController.dropMilitary(10, 5, "archerBow", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(12, 5, "slinger", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(13, 10, "slave", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(14, 5, "horseArcher", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(14, 9, "ladderman", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(15, 5, "swordsman", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(19, 11, "spearman", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(15, 5, "engineer", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(13, 5, "archer", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(13, 7, "maceman", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(13, 8, "pikeman", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(15, 8, "fireThrower", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(15, 11, "tunneler", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(17, 5, "crossbowman", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(17, 5, "blackmonk", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(17, 10, "knight", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(17, 12, "slinger", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(19, 10, "lord", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(14, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
+        //MapController.dropMilitary(14, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
+        MapController.dropMilitary(11, 5, "archerBow", GameController.getGame().getCurrentGovernment());
+        //MapController.dropMilitary(20, 5, "horseArcher", GameController.getGame().getCurrentGovernment());
+        //MapController.dropMilitary(22, 5, "slinger", GameController.getGame().getCurrentGovernment());
+        //MapController.dropMilitary(18, 5, "assassin", GameController.getGame().getCurrentGovernment());
+        //MapController.dropMilitary(23, 5, "fireThrower", GameController.getGame().getCurrentGovernment());
 
-
+        MapController.dropMilitary(20, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
+        MapController.dropMilitary(21, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
+        MapController.dropMilitary(21, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
+        MapController.dropMilitary(22, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
+        MapController.dropMilitary(22, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
         setEventListeners();
         GameViewController.setCenterOfBar();
         GameViewController.createBorderRectangles(gameMap, miniMap);
@@ -180,10 +167,17 @@ public class GameMenu extends Application {
         hoveringBarStateText = hoveringButton;
 
         menuBar.setViewOrder(-2000);
-        if (state == 0)
+        GameViewController.setBarForCurrentGovernment();
+        if (state == 0) {
             GameViewController.createShortcutBars(menuBar, hoveringButton);
-        else if (state == 1)
+            hoveringButton.setTranslateX(275);
+            hoveringButton.setTranslateY(70);
+        }
+        else if (state == 1) {
             GameViewController.createShortcutBars2(menuBar, hoveringButton);
+            hoveringButton.setTranslateX(275);
+            hoveringButton.setTranslateY(70);
+        }
         else if (state == 2) {
             ImageView menuBox = new ImageView(GameMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
                     + "menuEmptyBar.png");
@@ -191,6 +185,8 @@ public class GameMenu extends Application {
             menuBox.setTranslateY(55);
             menuBox.setScaleY(1.08);
             menuBar.getChildren().add(menuBox);
+            hoveringButton.setTranslateX(275);
+            hoveringButton.setTranslateY(45);
         }
     }
 
@@ -200,6 +196,9 @@ public class GameMenu extends Application {
             if (selectedUnit) {
                 if (!root.getChildren().contains(selectCursor)) {
                     root.getChildren().add(selectCursor);
+                }
+                if (currentTile != null){
+                    HumanViewController.setSelectCursorState(currentTile);
                 }
                 selectCursor.setTranslateY(mouseEvent.getY() - 400 - selectCursor.getHeight() / 2);
                 selectCursor.setTranslateX(mouseEvent.getX() - 600);
@@ -223,58 +222,44 @@ public class GameMenu extends Application {
             if (keyName.equals("A")) {
                 movingState = UnitMovingState.AIR_ATTACK.getState();
             }
+            if (keyName.equals("C")) {
+                GameController.getGame().changeTurn();
+            }
 
             if (keyName.equals("Down")) {
-                if (GameViewController.lastType != null && GameViewController.lastType.count != 0) {
-                    GameViewController.lastType.count--;
-                    GameViewController.lastType.text.setText(GameViewController.lastType.count + "");
-                    GameViewController.setSelectedUnits();
+                if (HumanViewController.lastType != null && HumanViewController.lastType.count != 0) {
+                    HumanViewController.lastType.count--;
+                    HumanViewController.lastType.text.setText(HumanViewController.lastType.count + "");
+                    HumanViewController.setSelectedUnits();
                 }
             }
 
             if (keyName.equals("Up")) {
-                if (GameViewController.lastType != null && GameViewController.lastType.count < unitsCount.get(GameViewController.lastType.name)) {
-                    GameViewController.lastType.count++;
-                    GameViewController.lastType.text.setText(GameViewController.lastType.count + "");
-                    GameViewController.setSelectedUnits();
+                if (HumanViewController.lastType != null && HumanViewController.lastType.count < unitsCount.get(HumanViewController.lastType.name)) {
+                    HumanViewController.lastType.count++;
+                    HumanViewController.lastType.text.setText(HumanViewController.lastType.count + "");
+                    HumanViewController.setSelectedUnits();
                 }
             }
 
             if (keyName.equals("0")) {
-                if (GameViewController.lastType != null) {
-                    GameViewController.lastType.count = 0;
-                    GameViewController.lastType.text.setText(GameViewController.lastType.count + "");
-                    GameViewController.setSelectedUnits();
+                if (HumanViewController.lastType != null) {
+                    HumanViewController.lastType.count = 0;
+                    HumanViewController.lastType.text.setText(HumanViewController.lastType.count + "");
+                    HumanViewController.setSelectedUnits();
                 }
             }
 
             if (keyName.equals("X")) {
-                if (GameViewController.lastType != null) {
-                    GameViewController.lastType.count = unitsCount.get(GameViewController.lastType.name);
-                    GameViewController.lastType.text.setText(GameViewController.lastType.count + "");
-                    GameViewController.setSelectedUnits();
+                if (HumanViewController.lastType != null) {
+                    HumanViewController.lastType.count = unitsCount.get(HumanViewController.lastType.name);
+                    HumanViewController.lastType.text.setText(HumanViewController.lastType.count + "");
+                    HumanViewController.setSelectedUnits();
                 }
             }
         });
     }
 
-    public static void setMouseCursorOnSelect() {
-        if (cursorTimeLine != null) {
-            cursorTimeLine.stop();
-        }
-        cursorTimeLine = new Timeline(new KeyFrame(Duration.millis(300), actionEvent -> {
-            if (!selectedUnit) {
-                cursorTimeLine.stop();
-            }
-            if (currentTile != null) {
-                GameViewController.setSelectCursorState(currentTile);
-            }
-
-        }));
-        timelines.add(cursorTimeLine);
-        cursorTimeLine.setCycleCount(-1);
-        cursorTimeLine.play();
-    }
 
     private void createSelectedArea() {
         selectedArea = new Rectangle(0, 0);
@@ -362,9 +347,9 @@ public class GameMenu extends Application {
                             GameMenu.hoveringBarStateText.setText("Unit Menu");
                             GameViewController.setCenterOfBar();
                         } else {
-                            GameViewController.addTypes();
-                            if (GameViewController.selectedMilitaries.size() != 0) {
-                                Military military = GameViewController.selectedMilitaries.get(0);
+                            HumanViewController.addTypes();
+                            if (HumanViewController.selectedMilitaries.size() != 0) {
+                                Military military = HumanViewController.selectedMilitaries.get(0);
                                 HumanController.militaries.clear();
                                 HumanController.militaries.add(military);
                             }

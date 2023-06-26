@@ -171,7 +171,7 @@ public class MoveController extends HumanController {
             int x = pair.getX();
             boolean isOverHead = pair.isOverhead();
             Tile tile = map.getTile(x, y);
-            if (checkOverHead(tile.getBuilding())) {
+            if (checkOverHead(tile.getBuilding(),tile)) {
                 if (y != 0) {
                     if (map.getTile(x, y - 1).isPassable(human, !isOverHead) && !checkArray[y - 1][x]) {
                         secondPairs.add(new Tuple(y - 1, x, !isOverHead, pair));
@@ -288,13 +288,20 @@ public class MoveController extends HumanController {
         return secondPairs;
     }
 
-    public static boolean checkOverHead(Building building) {
+    public static boolean checkOverHead(Building building,Tile tile) {
         if (building == null) {
             return false;
         }
-        if (building instanceof Gatehouse gatehouse && gatehouse.isOpen() && !gatehouse.getName().equals("drawBridge"))
-            return true;
-        if (building instanceof MainCastle) return true;
+        if (building instanceof Gatehouse gatehouse && gatehouse.isOpen() && !gatehouse.getName().equals("drawBridge")){
+            if (gatehouse.getDoor().equals(tile)){
+                return true;
+            }
+        }
+        if (building instanceof MainCastle mainCastle){
+            if (mainCastle.getDoor().equals(tile)){
+                return true;
+            }
+        }
         return false;
     }
 

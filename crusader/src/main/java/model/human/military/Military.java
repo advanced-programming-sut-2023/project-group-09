@@ -18,6 +18,9 @@ public abstract class Military extends Human{
     private int price;
     private int defenseRange;
     private int aggressiveRange;
+
+    private int attackStepCount = 8;
+    private int airAttackStepCount = 8;
      Attack attack;
 
 
@@ -33,6 +36,22 @@ public abstract class Military extends Human{
         this.price = military.getPrice();
         attack = new Attack(this);
         armours = military.getArmours();
+    }
+
+    public int getAttackStepCount() {
+        return attackStepCount;
+    }
+
+    public void setAttackStepCount(int attackStepCount) {
+        this.attackStepCount = attackStepCount;
+    }
+
+    public int getAirAttackStepCount() {
+        return airAttackStepCount;
+    }
+
+    public void setAirAttackStepCount(int airAttackStepCount) {
+        this.airAttackStepCount = airAttackStepCount;
     }
 
     public void setArmours(ArrayList<String> armours) {
@@ -118,7 +137,7 @@ public abstract class Military extends Human{
         if (weapon != null && (weapon.equals("bow") || weapon.equals("crossBow"))) {
             return true;
         }
-        return false;
+        return getName().equals("fireThrower");
     }
 
     public int getAggressiveRange() {

@@ -18,5 +18,7 @@ public class EuropeanTroop extends Military {
         super.setUsesLadder(europeanTroop.isUsesLadder());
         super.setDigsMoat(europeanTroop.isDigsMoat());
         super.setInvisible(europeanTroop.isInvisible());
+        super.setAttackStepCount(europeanTroop.getAttackStepCount());
+        super.setAirAttackStepCount(europeanTroop.getAirAttackStepCount());
     }
 }

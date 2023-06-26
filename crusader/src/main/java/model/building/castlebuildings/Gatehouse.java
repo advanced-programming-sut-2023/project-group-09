@@ -5,6 +5,7 @@ import controller.MapController;
 import controller.human.HumanController;
 import model.building.Building;
 import model.game.Map;
+import model.game.Tile;
 import model.human.military.Military;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class Gatehouse extends CastleBuilding {
     private String typeOfGate;
     private Gatehouse drawBridge_gatehouse; // if gatehouse has drawbridge
 
-
+    private Tile door;
     public boolean isRightSide() {
         return isRightSide;
     }
@@ -59,6 +60,14 @@ public class Gatehouse extends CastleBuilding {
                 gatehouse.getMaxHp(), gatehouse.getWidth(), gatehouse.getLength());
         this.capacity = gatehouse.getCapacity();
         super.setCost(gatehouse.getCost());
+    }
+
+    public Tile getDoor() {
+        return door;
+    }
+
+    public void setDoor(Tile door) {
+        this.door = door;
     }
 
     public int getCapacity() {
@@ -124,7 +133,8 @@ public class Gatehouse extends CastleBuilding {
 
     public void openOrCloseGatehouse(boolean openIt) {
         this.setOpen(openIt);
-        this.drawBridge_gatehouse.setOpen(openIt);
+        if (this.drawBridge_gatehouse != null)
+            this.drawBridge_gatehouse.setOpen(openIt);
     }
 
 

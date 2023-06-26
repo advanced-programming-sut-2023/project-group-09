@@ -23,6 +23,8 @@ public class Tunneler extends EuropeanTroop {
         super.setAggressiveRange(europeanTroop.getAggressiveRange());
         super.setUsesLadder(europeanTroop.isUsesLadder());
         super.setDigsMoat(europeanTroop.isDigsMoat());
+        super.setAttackStepCount(6);
+        super.setAirAttackStepCount(0);
     }
 
     public Building getTargetBuilding() {

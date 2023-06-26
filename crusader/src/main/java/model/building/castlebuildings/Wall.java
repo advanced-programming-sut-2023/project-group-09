@@ -4,28 +4,21 @@ import controller.GameController;
 import model.game.Map;
 
 public class Wall extends CastleBuilding {
-    private int height; // 3 for low wall -- 6 for stone wall -- 8 for crenulated wall
     private String type; // wall or stairs
 
     public Wall(int numberOfRequiredWorkers, int numberOfRequiredEngineers,
                 String type, int maxHp, int width, int length, int height) {
         super(numberOfRequiredWorkers, numberOfRequiredEngineers, type, maxHp, width, length);
-        this.height = height;
+        setHeight(height);
         this.capacity = 0;
     }
     public Wall(Wall wall) {
         super(wall.getNumberOfRequiredWorkers(), wall.getNumberOfRequiredEngineers(), wall.getName(), wall.getMaxHp(), wall.getWidth(), wall.getLength());
-        this.height = wall.height;
+        this.setHeight(wall.getHeight());
         this.capacity = 0;
         this.type = wall.type;
     }
-    public int getHeight() {
-        return height;
-    }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
 
     public String getType() {
         return type;
@@ -46,26 +39,26 @@ public class Wall extends CastleBuilding {
         Map map = GameController.getGame().getMap();
         if (x+1 < map.getLength() && map.getTile(x+1 , y).getBuilding() instanceof Wall) {
             Wall wall = (Wall)map.getTile(x+1 , y).getBuilding();
-            if (wall.height > height && height != 8) {
-                height = wall.height;
+            if (wall.getHeight() > height && height != 8) {
+                height = wall.getHeight();
             }
         }
         if (y+1 < map.getWidth() && map.getTile(x , y+1).getBuilding() instanceof Wall) {
             Wall wall = (Wall)map.getTile(x , y+1).getBuilding();
-            if (wall.height > height && height != 8) {
-                height = wall.height;
+            if (wall.getHeight() > height && height != 8) {
+                height = wall.getHeight();
             }
         }
         if (x-1 >= 0 && map.getTile(x-1 , y).getBuilding() instanceof Wall) {
             Wall wall = (Wall)map.getTile(x-1 , y).getBuilding();
-            if (wall.height > height && height != 8) {
-                height = wall.height;
+            if (wall.getHeight() > height && height != 8) {
+                height = wall.getHeight();
             }
         }
         if (y-1 >= 0 && map.getTile(x , y-1).getBuilding() instanceof Wall) {
             Wall wall = (Wall)map.getTile(x , y-1).getBuilding();
-            if (wall.height > height && height != 8) {
-                height = wall.height;
+            if (wall.getHeight() > height && height != 8) {
+                height = wall.getHeight();
             }
         }
         return height;

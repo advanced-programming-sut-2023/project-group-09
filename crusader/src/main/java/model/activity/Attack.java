@@ -9,11 +9,15 @@ import enumeration.MoveStates;
 import model.building.Building;
 import model.building.castlebuildings.MainCastle;
 import model.game.Map;
+import model.game.Tile;
 import model.game.Tuple;
 import model.human.civilian.Civilian;
 import model.human.military.Engineer;
 import model.human.military.Military;
+import model.menugui.game.GameMap;
 import model.tools.Tool;
+import view.controllers.GameViewController;
+import view.controllers.HumanViewController;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -29,6 +33,9 @@ public class Attack {
     }
 
     public ArrayList<Military> getEnemyOfRange(int x, int y, int range) {
+        if (range == 1){
+            return getNearEnemy(x,y);
+        }
         int startX = x - range;
         int startY = y - range;
         int endX = x + range;
@@ -52,6 +59,15 @@ public class Attack {
         return HumanController.getEnemiesOfArea(startX, startY, endX, endY, military.getGovernment());
     }
 
+    public ArrayList<Military> getNearEnemy(int x , int y){
+        ArrayList<Military> troops = new ArrayList<>();
+        ArrayList<Tile> tiles = HumanController.getNeighbor(x,y);
+        for (Tile tile : tiles){
+
+            troops.addAll(MapController.getMilitariesOfOtherGovernment(tile.x, tile.y, military.getGovernment()));
+        }
+        return troops;
+    }
     public void attackCiviliansOfRange(int x, int y, int range) {
         Map map = GameController.getGame().getMap();
         int startX = x - range;
@@ -167,7 +183,7 @@ public class Attack {
         this.tool = tool;
     }
 
-    public boolean shouldAttack(int range) {
+    public boolean shouldAttack(int range)  {
         if (enemy != null || tool != null) {
             return true;
         }
@@ -218,7 +234,7 @@ public class Attack {
     }
 
 
-    public void attackEnemy() {
+    public synchronized void attackEnemy() {
 
         if (tool != null) {
             attackToTool();
@@ -234,6 +250,15 @@ public class Attack {
         if (enemy.getAttack().enemy == null && enemy.getAttack().isInRange(military.getX(), military.getY(), enemy.getShootingRange())) {
             enemy.getAttack().setEnemy(military);
         }
+
+        ArrayList<Tile> neighbors = HumanController.getNeighbor(military.getX(),military.getY());
+        Tile enemyTile = MapController.map.getTile(enemy.getX(),enemy.getY());
+        if (neighbors.contains(enemyTile)){
+            HumanViewController.attackToEnemy(military,enemy);
+        }else if (military.canAirAttack()){
+            HumanViewController.airAttackToEnemy(military,enemy);
+        }
+
 
         if (enemyHp <= 0) {
             MapController.deleteMilitary(enemy.getX(), enemy.getY(), enemy);
@@ -308,6 +333,22 @@ public class Attack {
 
 
         int hp = targetBuilding.takeDamage(military.getAttackRating());
+        boolean airAttack = true;
+        ArrayList<Tile> troopNeighborTiles = HumanController.getNeighbor(military.getX(),military.getY());
+        for (Tile tile :troopNeighborTiles){
+            if (tile.getBuilding() != null && tile.getBuilding().equals(targetBuilding)){
+                airAttack = false;
+                break;
+            }
+        }
+
+        if (!airAttack){
+            HumanViewController.attackToBuilding(military,targetBuilding);
+        }else if (military.canAirAttack()){
+            HumanViewController.airAttackToBuilding(military,targetBuilding);
+        }
+
+
         if (hp <= 0) {
             MapController.deleteBuilding(targetBuilding);
             targetBuilding.setGovernment(null);
@@ -326,7 +367,7 @@ public class Attack {
 
 
     //this should use in nextTurn for each troop if troop has government so far
-    public void doAttack() {
+    public synchronized void doAttack() {
 
         if (military.getGovernment() == null) {
             return;

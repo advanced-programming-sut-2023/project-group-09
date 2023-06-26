@@ -50,7 +50,7 @@ public class StorageBuilding extends Building {
         this.capacity = capacity;
     }
 
-    public void deleteStorage() {
+    public synchronized void deleteStorage() {
         Government government = this.getGovernment();
         int amountOfAllRemoved = 0;
         for (String itemName : items.keySet()) {
@@ -58,17 +58,19 @@ public class StorageBuilding extends Building {
             amountRemoved -= amountRemoved;
             government.getProperties().put(itemName, government.getProperties().get(itemName) - amountRemoved);
         }
-        government.getStorages().get(itemType).addCapacity(-this.capacity);
-        government.getStorages().get(itemType).addAmount(-amountOfAllRemoved);
+        if (government.getStorages().get(itemType) != null) {
+            government.getStorages().get(itemType).addCapacity(-this.capacity);
+            government.getStorages().get(itemType).addAmount(-amountOfAllRemoved);
+        }
     }
 
     public void addItem(String key, int value) {
-        int currentValue = items.get(key) != null ?items.get(key) : 0;
+        int currentValue = items.get(key) != null ? items.get(key) : 0;
         items.put(key, currentValue + value);
     }
 
     public int getItemAmount(String key) {
-        return items.get(key) != null ?items.get(key) : 0;
+        return items.get(key) != null ? items.get(key) : 0;
     }
 
     public String getItemType() {
