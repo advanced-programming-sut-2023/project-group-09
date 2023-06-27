@@ -43,7 +43,7 @@ public class Barrack extends Building {
     }
 
     public void makeUnit(String name) {
-        if (!consumeRequired(name)){
+        if (!checkRequired(name)){
             return;
         }
         int[] coordinate = makePositionOfUnit();
