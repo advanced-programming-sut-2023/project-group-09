@@ -116,7 +116,7 @@ public class Troop extends ImageView {
     public void setTimeLine() {
         move = new Timeline(new KeyFrame(Duration.millis((20 - military.getSpeed()) * 10), actionEvent -> {
             if (military.getMove() != null && military.getMove().isMoving()) {
-                if (getDistance() < 3) {
+                if (getDistance() < 7) {
                     if (GameMap.gameTroops[military.getY()][military.getX()] == null) {
                         GameMap.gameTroops[military.getY()][military.getX()] = new ArrayList<>();
                     }
@@ -136,13 +136,13 @@ public class Troop extends ImageView {
                 } else {
                     double disX = this.getTranslateX() + this.getFitWidth() / 2 - (gameTile.getX() + GameMap.tileWidth / 2);
                     double disY = this.getTranslateY() + this.getFitHeight() / 2 - gameTile.getY();
-                    if (Math.abs(disX) >= 2) {
+                    if (Math.abs(disX) >= 5) {
                         int sign = (int) Math.signum(disX);
-                        this.setTranslateX(this.getTranslateX() + (sign * (-1) * 2));
+                        this.setTranslateX(this.getTranslateX() + (sign * (-1) * 5));
                     }
-                    if (Math.abs(disY) >= 2) {
+                    if (Math.abs(disY) >= 5) {
                         int sign = (int) Math.signum(disY);
-                        this.setTranslateY(this.getTranslateY() + (sign * (-1) * 2));
+                        this.setTranslateY(this.getTranslateY() + (sign * (-1) * 5));
                     }
                     step = (step + 1) % 8;
                 }
