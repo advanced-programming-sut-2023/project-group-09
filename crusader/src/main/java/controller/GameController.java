@@ -752,7 +752,7 @@ public class GameController {
                     }
                 }
             }
-            beingSick(game.getCurrentGovernment());
+            beingSick(government);
             if (numberOfRemainedGovernments == 1) {
                 if (!game.isEndGame()) {
                     game.setWinner();
