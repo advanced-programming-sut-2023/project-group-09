@@ -22,6 +22,7 @@ import model.human.military.Engineer;
 import model.human.military.Military;
 import model.menugui.game.GameMap;
 import model.tools.Tool;
+import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
 
 import java.util.ArrayList;
@@ -573,6 +574,9 @@ public class MapController {
             tileOfBuilding.setBuilding(null);
         }
         GameMap.getGameTile(building.getEndX(), building.getEndY()).refreshTile();
+        int popularity = GovernmentController.getCurrentGovernment().getPopularity() + 37;
+        GameViewController.popularityReporter.setText(String.format("%d", popularity));
+        GameViewController.updateFaceOfReporter();
     }
 
     public static void setDoorForCastleBuilding(Building building) {

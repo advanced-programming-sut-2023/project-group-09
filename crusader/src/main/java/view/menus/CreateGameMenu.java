@@ -283,10 +283,6 @@ public class CreateGameMenu extends Application {
         colors.remove(color);
         Government government = new Government(controller.Application.getUserByUsername
                 (governmentUsernames.get(governmentNumber - 1).getText()), x, y, color);
-        //MapController.dropMilitary(x, y, "lord", government);
-        //EuropeanTroop lordMilitary = (EuropeanTroop) game.getMap().getTile(x, y).getMilitaries().get(0);
-        //lordMilitary.setGovernment(government);
-        //government.setLord(lordMilitary);
         government.addAmountToProperties("wood", "resource", 1000);
         government.addAmountToProperties("stone", "resource", 500);
         government.addAmountToProperties("iron", "resource", 500);
