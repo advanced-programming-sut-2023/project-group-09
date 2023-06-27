@@ -18,6 +18,7 @@ public class GameImages {
         addRed();
         addBars();
         addCivilian();
+        addHealthProgressbar();
     }
 
     public static void addTextures() {
@@ -89,6 +90,15 @@ public class GameImages {
 
             }
             counter += 8;
+        }
+    }
+
+    public static void addHealthProgressbar(){
+
+        for (int k = 0; k <= 10; k++) {
+            Image health = new Image(GameTile.class.getResource(Paths.GAME_IMAGES.getPath()).toExternalForm() +
+                    "other/" + k + ".png");
+            imageViews.put("health_" + k, health);
         }
     }
     public static void addMainBar() {

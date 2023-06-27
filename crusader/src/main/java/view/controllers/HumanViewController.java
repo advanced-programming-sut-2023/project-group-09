@@ -1,7 +1,9 @@
 package view.controllers;
 
 import controller.GameController;
+import controller.MainController;
 import controller.MapController;
+import controller.UserController;
 import controller.gamestructure.GameHumans;
 import controller.gamestructure.GameImages;
 import controller.human.HumanController;
@@ -11,6 +13,8 @@ import enumeration.Paths;
 import enumeration.UnitMovingState;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
@@ -27,10 +31,7 @@ import model.menugui.game.*;
 import view.menus.GameMenu;
 import view.menus.LoginMenu;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class HumanViewController {
     //--------------------------------------------------------
@@ -428,6 +429,7 @@ public class HumanViewController {
         for (Military military : GameMenu.selectedTroops) {
             if (unitCount.get(military.getName()) != 0) {
                 selectedMilitaries.add(military);
+                Objects.requireNonNull(getTroopFromMilitary(military)).showProgressBar();
                 unitCount.put(military.getName(), unitCount.get(military.getName()) - 1);
                 count--;
             }
@@ -517,7 +519,18 @@ public class HumanViewController {
     }
 
     public static void attack(GameTile end) {
-        for (Military military : selectedMilitaries) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("attack");
+        alert.setHeaderText("are you sure of your attack?");
+
+        ButtonType yes = new ButtonType("yes");
+        ButtonType no = new ButtonType("no");
+        alert.getButtonTypes().clear();
+        alert.getButtonTypes().addAll(yes, no);
+        Optional<ButtonType> option = alert.showAndWait();
+
+        if (option.get() == yes) {
+            for (Military military : selectedMilitaries) {
             HumanController.militaries.clear();
             HumanController.militaries.add(military);
             if (GameController.validateAttackEnemy(end.getTileX(), end.getTileY())) {
@@ -547,13 +560,14 @@ public class HumanViewController {
 
             GameController.moveUnit(end.getTileX(), end.getTileY());
         }
-        GameMenu.unitsCount = new HashMap<>();
-        GameMenu.selectedTroops.clear();
-        GameMenu.selectedTilesTroop.clear();
-        selectedMilitaries.clear();
-        GameViewController.setCenterOfBar(null);
-        GameViewController.currentItem = null;
-        GameViewController.currentCategory = null;
+            GameMenu.unitsCount = new HashMap<>();
+            GameMenu.selectedTroops.clear();
+            GameMenu.selectedTilesTroop.clear();
+            selectedMilitaries.clear();
+            GameViewController.setCenterOfBar(null);
+            GameViewController.currentItem = null;
+            GameViewController.currentCategory = null;
+        }
     }
 
     public static Troop getTroopFromMilitary(Military military) {
@@ -580,7 +594,8 @@ public class HumanViewController {
         troop.updateImageAttack();
     }
 
-    public static void airAttackToEnemy(Military military, Military enemy) {
+    public static void airAttackToEnemy(Military military, Military enemy)
+    {
         Troop troop = getTroopFromMilitary(military);
         GameTile start = GameMap.getGameTile(military.getX(), military.getY());
         GameTile end = GameMap.getGameTile(enemy.getX(), enemy.getY());
@@ -594,6 +609,11 @@ public class HumanViewController {
         troop.updateImageAirAttack();
     }
 
+    public static void hideProgressBar(){
+        for (Military military : selectedMilitaries){
+            Objects.requireNonNull(getTroopFromMilitary(military)).hideProgressBar();
+        }
+    }
     public static void attackToBuilding(Military military, Building building) {
         Troop troop = getTroopFromMilitary(military);
         GameTile start = GameMap.getGameTile(military.getX(), military.getY());

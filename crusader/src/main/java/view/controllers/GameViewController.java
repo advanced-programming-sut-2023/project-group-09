@@ -449,6 +449,7 @@ public class GameViewController {
         for (GameTile gameTile : GameMenu.selectedTiles) {
             gameTile.deselectTile();
         }
+        HumanViewController.hideProgressBar();
         GameMenu.startSelectionTile = null;
         GameMenu.endSelectionTile = null;
         GameMenu.isSelected = false;
@@ -472,6 +473,7 @@ public class GameViewController {
         for (GameTile gameTile : GameMenu.selectedTiles) {
             gameTile.deselectTile();
         }
+        HumanViewController.hideProgressBar();
         GameMenu.startSelectionTile = null;
         GameMenu.endSelectionTile = null;
         GameMenu.isSelected = false;
