@@ -83,6 +83,9 @@ public class Citizen extends ImageView {
                 }
                 setImage();
             }
+            if (civilian.getGovernment() == null && civilian.getHealth() < 0){
+                setDead();
+            }
         }));
         GameMenu.timelines.add(move);
         move.setCycleCount(-1);
