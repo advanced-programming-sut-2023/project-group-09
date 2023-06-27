@@ -42,6 +42,8 @@ import model.Government;
 import model.Trade;
 import model.building.Building;
 import model.building.producerbuildings.Barrack;
+import model.human.Human;
+import model.human.civilian.Civilian;
 import model.human.military.Military;
 import model.menugui.*;
 import model.menugui.game.GameMap;
@@ -1794,7 +1796,24 @@ public class GameViewController {
         putTroopImage("horseArcher", 553, 68, cost, name, null, coin);
         putTroopImage("arabianSwordsman", 645, 75, cost, name, null, coin);
         putTroopImage("fireThrower", 723, 92, cost, name, null, coin);
-        GameMenu.menuBar.getChildren().addAll(cost, name);
+
+        Text peasantsNumber = new Text();
+        peasantsNumber.setTranslateX(750);
+        peasantsNumber.setTranslateY(207);
+        peasantsNumber.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 18));
+        peasantsNumber.setFill(new Color(0.93, 0.88, 0.61, 1));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, actionEvent -> {
+            int count = 0;
+            for (Human human : GameController.getGame().getCurrentGovernment().getSociety()) {
+                if (human instanceof Civilian civilian && !civilian.isHasJob()) {
+                    count++;
+                }
+            }
+            peasantsNumber.setText(Integer.toString(count));
+        }), new KeyFrame(Duration.millis(500), actionEvent -> {}));
+        timeline.setCycleCount(-1);
+        timeline.play();
+        GameMenu.menuBar.getChildren().addAll(cost, name, peasantsNumber);
     }
 
     private static void setCenterToBarrack() {
@@ -1832,7 +1851,24 @@ public class GameViewController {
         putTroopImage("pikeman", 578, 60, cost, name, requirements, coin);
         putTroopImage("swordsman", 650, 60, cost, name, requirements, coin);
         putTroopImage("knight", 718, 60, cost, name, requirements, coin);
-        GameMenu.menuBar.getChildren().addAll(cost, name);
+
+        Text peasantsNumber = new Text();
+        peasantsNumber.setTranslateX(750);
+        peasantsNumber.setTranslateY(60);
+        peasantsNumber.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 16));
+        peasantsNumber.setFill(new Color(0.93, 0.88, 0.61, 1));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, actionEvent -> {
+            int count = 0;
+            for (Human human : GameController.getGame().getCurrentGovernment().getSociety()) {
+                if (human instanceof Civilian civilian && !civilian.isHasJob()) {
+                    count++;
+                }
+            }
+            peasantsNumber.setText(Integer.toString(count));
+        }), new KeyFrame(Duration.millis(500), actionEvent -> {}));
+        timeline.setCycleCount(-1);
+        timeline.play();
+        GameMenu.menuBar.getChildren().addAll(cost, name, peasantsNumber);
     }
 
     private static void setTitle(String title, int fontSize, double x, double y) {

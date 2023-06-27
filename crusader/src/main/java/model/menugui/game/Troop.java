@@ -46,7 +46,7 @@ public class Troop extends ImageView {
         this.military = military;
         this.tile = tile;
         color = military.getGovernment().getColor();
-        this.setViewOrder(-gameTile.getTileY() - 2);
+        this.setViewOrder(-1000);
         this.setTranslateX(gameTile.getTextureImage().getTranslateX() - this.getFitWidth() / 2 + GameMap.tileWidth / 2);
         this.setTranslateY(gameTile.getTextureImage().getTranslateY() - this.getFitHeight() / 2);
         this.gameTile = gameTile;
@@ -56,21 +56,20 @@ public class Troop extends ImageView {
     }
 
     public void changeGameTile(GameTile gameTile) {
-        this.setViewOrder(-gameTile.getTileY() - 2);
-
-        Tuple tuple = new Tuple(military.getY(), military.getX());
-        tuple.setOverhead(overHead);
-        overHead = MoveController.checkIsPathOverhead(gameTile.getTileX(), gameTile.getTileY(), military, tuple);
-        if (overHead) {
-            if (gameTile.getTile().getBuilding() instanceof CastleBuilding castleBuilding) {
-                this.setTranslateX(gameTile.getTextureImage().getTranslateX() - this.getFitWidth() / 2 + GameMap.tileWidth / 2);
-                this.setTranslateY(gameTile.getTextureImage().getTranslateY()
-                        - this.getFitHeight() / 2 - castleBuilding.getHeight() * GameMap.tileHeight);
-            }
-        }else{
-            this.setTranslateX(gameTile.getTextureImage().getTranslateX() - this.getFitWidth() / 2 + GameMap.tileWidth / 2);
-            this.setTranslateY(gameTile.getTextureImage().getTranslateY() - this.getFitHeight() / 2);
-        }
+        this.setTranslateX(gameTile.getTextureImage().getTranslateX() - this.getFitWidth() / 2 + GameMap.tileWidth / 2);
+        this.setTranslateY(gameTile.getTextureImage().getTranslateY() - this.getFitHeight() / 2);
+//        Tuple tuple = new Tuple(military.getY(), military.getX());
+//        tuple.setOverhead(overHead);
+//        overHead = MoveController.checkIsPathOverhead(gameTile.getTileX(), gameTile.getTileY(), military, tuple);
+//        if (overHead) {
+//            if (gameTile.getTile().getBuilding() instanceof CastleBuilding castleBuilding) {
+//                this.setTranslateX(gameTile.getTextureImage().getTranslateX() - this.getFitWidth() / 2 + GameMap.tileWidth / 2);
+//                this.setTranslateY(gameTile.getTextureImage().getTranslateY()
+//                        - this.getFitHeight() / 2 - castleBuilding.getHeight() * GameMap.tileHeight);
+//            }
+//        }else{
+//
+//        }
     }
 
     public void setEventListener() {
@@ -115,7 +114,7 @@ public class Troop extends ImageView {
     }
 
     public void setTimeLine() {
-        move = new Timeline(new KeyFrame(Duration.millis((20 - military.getSpeed()) * 12), actionEvent -> {
+        move = new Timeline(new KeyFrame(Duration.millis((20 - military.getSpeed()) * 10), actionEvent -> {
             if (military.getMove() != null && military.getMove().isMoving()) {
                 if (getDistance() < 7) {
                     if (GameMap.gameTroops[military.getY()][military.getX()] == null) {
@@ -148,8 +147,6 @@ public class Troop extends ImageView {
                     step = (step + 1) % 8;
                 }
                 setImage();
-            } else {
-                doAttack();
             }
         }));
         GameMenu.timelines.add(move);

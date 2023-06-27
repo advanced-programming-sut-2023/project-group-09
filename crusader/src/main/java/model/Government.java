@@ -288,6 +288,15 @@ public class Government {
         newReceivedTrades.put(trade.getId(), trade);
     }
 
+    public int getUnemployedCount(){
+        int count = 0;
+        for (Human human : society){
+            if(human instanceof Civilian civilian && !civilian.isHasJob()){
+                count++;
+            }
+        }
+        return count;
+    }
     public void addSentTrade(Trade trade) {
         this.sentTrades.put(trade.getId(), trade);
     }
