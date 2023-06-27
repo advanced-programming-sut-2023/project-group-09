@@ -117,7 +117,7 @@ public class GameMenu extends Application {
         //MapController.dropMilitary(18, 5, "assassin", GameController.getGame().getCurrentGovernment());
         //MapController.dropMilitary(23, 5, "fireThrower", GameController.getGame().getCurrentGovernment());
 
-        MapController.dropMilitary(20, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
+        MapController.dropMilitary(20, 5, "archerBow", GameController.getGame().getGovernments().get(1));
         MapController.dropMilitary(21, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
         MapController.dropMilitary(21, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
         MapController.dropMilitary(22, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
@@ -141,9 +141,6 @@ public class GameMenu extends Application {
         stage.show();
     }
 
-    public static void renderMap(){
-
-    }
     public static void createGameBar(int state) {
 //        state: 0=buildings  /  1=nemidunam(farzam midune)  /  2=menu
         barImage = new ImageView(GameImages.imageViews.get("bar"));

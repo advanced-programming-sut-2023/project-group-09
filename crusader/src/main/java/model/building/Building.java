@@ -38,6 +38,7 @@ public class Building implements Cloneable {
     private int startX, startY;
     private int endX, endY;
     private int width, length;
+    private int endSpecialX, endSpecialY;
 
     public String getName() {
         return name;
@@ -146,6 +147,22 @@ public class Building implements Cloneable {
 
     public void setEndY(int endY) {
         this.endY = endY;
+    }
+
+    public int getEndSpecialX() {
+        return endSpecialX;
+    }
+
+    public void setEndSpecialX(int endSpecialX) {
+        this.endSpecialX = endSpecialX;
+    }
+
+    public int getEndSpecialY() {
+        return endSpecialY;
+    }
+
+    public void setEndSpecialY(int endSpecialY) {
+        this.endSpecialY = endSpecialY;
     }
 
     public ArrayList<Human> getRequiredHumans() {
