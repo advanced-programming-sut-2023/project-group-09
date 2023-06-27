@@ -529,6 +529,7 @@ public class Government {
                     counterOfRemovedPeople--;
                     itr.remove();
                     MapController.deleteHuman(human.getX(), human.getY(), (Civilian) human);
+                    human.setGovernment(null);
                 }
             }
         }
