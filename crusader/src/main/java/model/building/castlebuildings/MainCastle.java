@@ -74,7 +74,7 @@ public class MainCastle extends CastleBuilding {
     }
 
     public void makeUnemployed(int numberToAdd) {
-        for (int i = 0; i != numberToAdd; i++) {
+        for (int i = 0; i < numberToAdd; i++) {
             this.makeUnemployed();
         }
     }

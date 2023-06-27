@@ -327,6 +327,7 @@ public class GameViewController {
             GameMenu.menuBar.getChildren().clear();
             GameMenu.createGameBar(0);
             setCenterToCastleBuildings();
+            GameMenu.setShieldsForGovernments();
             return;
         }
         if (!GameMenu.selectedUnit) {
@@ -337,6 +338,7 @@ public class GameViewController {
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar(0);
                 setCenterToCastleBuildings();
+                GameMenu.setShieldsForGovernments();
             }
             case "Towers" -> {
                 GameMenu.menuBar.getChildren().clear();
@@ -490,6 +492,7 @@ public class GameViewController {
             GameMenu.menuBar.getChildren().clear();
             GameMenu.createGameBar(0);
             setCenterToCastleBuildings();
+            GameMenu.setShieldsForGovernments();
             return;
         }
         switch (destination) {
@@ -497,6 +500,7 @@ public class GameViewController {
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar(0);
                 setCenterToCastleBuildings();
+                GameMenu.setShieldsForGovernments();
             }
             case "Towers" -> {
                 GameMenu.menuBar.getChildren().clear();
@@ -2684,7 +2688,7 @@ public class GameViewController {
         Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO , actionEvent -> {
             GameController.nextTurn();
             System.out.println("next turn!");
-        }) , new KeyFrame(Duration.seconds(5) , actionEvent -> {}));
+        }) , new KeyFrame(Duration.seconds(30) , actionEvent -> {}));
         timeline.setCycleCount(-1);
         timeline.play();
         gameTimeLine = timeline;
@@ -2745,4 +2749,12 @@ public class GameViewController {
     }
 
 
+    public static void showWorkerStateOfBuilding(Building building) {
+        if (building.getNumberOfRequiredWorkers() + building.getNumberOfRequiredEngineers() >= 0) {
+            GameMenu.hoveringBarStateText.setText(String.format("%d/%d Engineers And %d/%d Workers" ,
+                    building.getNumberOfEngineers() , building.getNumberOfRequiredEngineers()
+                    ,building.getNumberOfWorkers()
+                    , building.getNumberOfRequiredWorkers()));
+        }
+    }
 }

@@ -6,6 +6,8 @@ import controller.human.HumanController;
 import controller.human.MoveController;
 import enumeration.MilitaryStates;
 import enumeration.Pair;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import model.Government;
 import model.activity.Move;
@@ -27,6 +29,8 @@ import model.menugui.game.GameTile;
 import model.tools.Tool;
 import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
+import view.controllers.ViewController;
+import view.menus.GameMenu;
 import viewphase1.UnitMenu;
 
 import java.util.*;
@@ -600,14 +604,25 @@ public class GameController {
 
 
     public static int howManyGovernmentsRemainsInGame() {
+        boolean governmentDead = false;
+        String deadMessage = "Lords ";
         int numberOfGovernments = 0;
         for (Government government : game.getGovernments()) {
             if (government.isAlive()) {
                 government.addTurnsSurvive();
                 numberOfGovernments++;
-            } else {
+            } else if (!government.isDead()){
+                deadMessage += government.getUser().getNickname() + " With Score " + government.getHowManyTurnsSurvive() * 100
+            + ", ";
                 government.beingDead();
+                governmentDead = true;
             }
+        }
+        if (governmentDead) {
+            deadMessage = deadMessage.substring(0 , deadMessage.length() - 2);
+            deadMessage += " Are Dead!";
+            GameMenu.hoveringBarStateText.setText(deadMessage);
+            ViewController.playDeadSong();
         }
         return numberOfGovernments;
     }
@@ -698,13 +713,17 @@ public class GameController {
             }
             int numberOfRemainedGovernments = howManyGovernmentsRemainsInGame();
             if (numberOfRemainedGovernments == 1) {
+                if (!game.isEndGame()) {
+                    game.setWinner();
+                    game.setScores();
+                }
                 game.setEndGame(true);
-                game.setWinner();
-                game.setScores();
             } else if (numberOfRemainedGovernments == 0) {
+                if (!game.isEndGame()) {
+                    game.setWinner();
+                    game.setScores();
+                }
                 game.setEndGame(true);
-                game.setWinner();
-                game.setScores();
             }
             return "";
     }

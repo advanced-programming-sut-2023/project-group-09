@@ -157,7 +157,7 @@ public class GameTile {
                         } else if (mouseEvent.getClickCount() == 1) {
                             GameViewController.selectedBuilding = building;
                             BuildingController.setBuilding(building);
-
+                            GameViewController.showWorkerStateOfBuilding(building);
                             GameViewController.setCenterOfBar(building.getName());
                         }
                     }
