@@ -197,41 +197,38 @@ public class CreateGameMenu extends Application {
     }
 
     private void checkSelectedMap() {
-        mapsField.valueProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
-                if (newValue.equals("")) {
-                    governmentUsernames.get(0).setDisable(true);
-                    castleNumbers.get(0).setDisable(true);
-                    governmentColors.get(0).setDisable(true);
-                } else {
-                    governmentNumber = 1;
-                    governmentUsernames.get(0).setDisable(false);
-                    castleNumbers.get(0).setDisable(false);
-                    governmentColors.get(0).setDisable(false);
-                    governmentUsernames.get(0).setText(controller.Application.getCurrentUser().getUsername());
-                    governmentUsernames.get(0).setEditable(false);
-                    addGovernment.setDisable(false);
-                    castles = new ArrayList<>();
-                    GameMaps.createMaps();
-                    Map selectedMap = (mapsField.getValue().equals("Map 1")) ?
-                            GameMaps.largeMaps.get(0) : GameMaps.smallMaps.get(0);
-                    menuBox.getChildren().remove(previewMap);
-                    previewMap = new PreviewMap(selectedMap, 230, -120);
-                    menuBox.getChildren().add(previewMap);
-                    for (int i = 0; i < 8; i++) {
-                        castleFlags.get(i).setTranslateX(selectedMap.getDefaultCastles().get(i).getFirst() - selectedMap.getWidth() / 2);
-                        castleFlags.get(i).setTranslateY(selectedMap.getDefaultCastles().get(i).getSecond() - selectedMap.getWidth() / 2);
-                        castleFlags.get(i).setVisible(true);
-                        previewMap.getChildren().add(castleFlags.get(i));
-                        castles.add("Castle " + (i + 1));
-                        selectCastle(castleFlags.get(i));
-                    }
-                    castleNumbers.get(0).setItems(FXCollections.observableArrayList(castles));
-                    MapController.map = selectedMap;
-                    game = new Game(selectedMap);
-                    GameController.setGame(game);
+        mapsField.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (newValue.equals("")) {
+                governmentUsernames.get(0).setDisable(true);
+                castleNumbers.get(0).setDisable(true);
+                governmentColors.get(0).setDisable(true);
+            } else {
+                governmentNumber = 1;
+                governmentUsernames.get(0).setDisable(false);
+                castleNumbers.get(0).setDisable(false);
+                governmentColors.get(0).setDisable(false);
+                governmentUsernames.get(0).setText(controller.Application.getCurrentUser().getUsername());
+                governmentUsernames.get(0).setEditable(false);
+                addGovernment.setDisable(false);
+                castles = new ArrayList<>();
+                GameMaps.createMaps();
+                Map selectedMap = (mapsField.getValue().equals("Map 1")) ?
+                        GameMaps.largeMaps.get(0) : GameMaps.smallMaps.get(0);
+                menuBox.getChildren().remove(previewMap);
+                previewMap = new PreviewMap(selectedMap, 230, -120);
+                menuBox.getChildren().add(previewMap);
+                for (int i = 0; i < 8; i++) {
+                    castleFlags.get(i).setTranslateX(selectedMap.getDefaultCastles().get(i).getFirst() - selectedMap.getWidth() / 2);
+                    castleFlags.get(i).setTranslateY(selectedMap.getDefaultCastles().get(i).getSecond() - selectedMap.getWidth() / 2);
+                    castleFlags.get(i).setVisible(true);
+                    previewMap.getChildren().add(castleFlags.get(i));
+                    castles.add("Castle " + (i + 1));
+                    selectCastle(castleFlags.get(i));
                 }
+                castleNumbers.get(0).setItems(FXCollections.observableArrayList(castles));
+                MapController.map = selectedMap;
+                game = new Game(selectedMap);
+                GameController.setGame(game);
             }
         });
     }

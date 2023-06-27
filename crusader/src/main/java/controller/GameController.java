@@ -112,7 +112,7 @@ public class GameController {
 
     public static String setStateOfMilitary(int x, int y, String state) {
 
-        ArrayList<Military> militaries = MapController.getMilitariesOfGovernment(x - 1, y - 1, game.getCurrentGovernment());
+        ArrayList<Military> militaries = MapController.getMilitariesOfGovernment(x, y, game.getCurrentGovernment());
         if (militaries.size() == 0) {
             return "There is no troop in this place!";
         }
@@ -150,12 +150,12 @@ public class GameController {
     }
 
     public static String airAttack(int x, int y) {
-        List<Military> enemies = MapController.getMilitariesOfOtherGovernment(x - 1, y - 1, GameController.getGame().getCurrentGovernment());
+        List<Military> enemies = MapController.getMilitariesOfOtherGovernment(x, y, GameController.getGame().getCurrentGovernment());
         if (enemies.size() == 0) {
             return "there is no enemy in this position!";
         }
 
-        boolean canAttack = HumanController.airAttack(x - 1, y - 1, enemies);
+        boolean canAttack = HumanController.airAttack(x , y, enemies);
         if (!canAttack) {
             return "can't attack with this type of unit or position!";
         }
@@ -181,7 +181,7 @@ public class GameController {
     }
 
     public static String airAttackBuilding(int x, int y) {
-        Building building = game.getMap().getTile(x - 1, y - 1).getBuilding();
+        Building building = game.getMap().getTile(x, y).getBuilding();
         if (building == null) {
             return "no building in this place!";
         }
@@ -196,7 +196,7 @@ public class GameController {
     }
 
     public static String attackTool(int x, int y) {
-        Tool tool = game.getMap().getTile(x - 1, y - 1).getTool();
+        Tool tool = game.getMap().getTile(x, y ).getTool();
         if (tool == null) {
             return "no tool in this place!";
         }
@@ -211,7 +211,7 @@ public class GameController {
     }
 
     public static String airAttackTool(int x, int y) {
-        Tool tool = game.getMap().getTile(x - 1, y - 1).getTool();
+        Tool tool = game.getMap().getTile(x, y).getTool();
         if (tool == null) {
             return "no tool in this place!";
         }
@@ -253,15 +253,12 @@ public class GameController {
     public static boolean validateAttackBuilding(int x, int y) {
         Building building = game.getMap().getTile(x, y).getBuilding();
         if (building == null) {
-            System.out.println("null err");
             return false;
         }
         if (building instanceof MainCastle) {
-            System.out.println("main castle err");
             return false;
         }
         if (building.getGovernment().equals(game.getCurrentGovernment())) {
-            System.out.println("government err");
             return false;
         }
         return HumanController.validateAttack(building);

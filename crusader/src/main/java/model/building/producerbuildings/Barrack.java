@@ -1,11 +1,13 @@
 package model.building.producerbuildings;
 
 
+import controller.GameController;
 import controller.GovernmentController;
 import controller.MapController;
 import controller.gamestructure.GameHumans;
 import model.Government;
 import model.building.Building;
+import model.game.Tile;
 import model.human.military.EuropeanTroop;
 import model.human.military.Military;
 
@@ -50,15 +52,16 @@ public class Barrack extends Building {
             return;
         }
         consumeRequired(name);
-        Military military = GameHumans.getUnit(name, this.getGovernment(), x, y);
-        MapController.addMilitary(x, y, military);
+        MapController.dropMilitary(x, y,name,getGovernment());
     }
 
 
     public boolean checkRequired(String name) {
         Military military = GameHumans.getUnit(name);
         int price = military.getPrice();
-
+        if (getGovernment().getPopulation() == 0){
+            return false;
+        }
         if (price > this.getGovernment().getGold()) {
             return false;
         }
@@ -103,15 +106,17 @@ public class Barrack extends Building {
     }
 
     public int[] makePositionOfUnit() {
+
+        ArrayList<Tile> tiles = GameController.getNeighborTiles(getEndX(),getEndY(),getBuildingImpassableLength(),getBuildingImpassableLength());
+        ArrayList<Tile> wholeTile = GameController.getNeighborTiles(getEndSpecialX(),getEndSpecialY(),getWidth(),getLength());
+
+
+
         Random random = new Random();
-        int x = random.nextInt(this.getWidth());
-        int y = random.nextInt(this.getLength());
-        while (x < this.getBuildingImpassableLength() && y < this.getBuildingImpassableLength()) {
-            x = random.nextInt(this.getWidth());
-            y = random.nextInt(this.getLength());
+        int i = random.nextInt(wholeTile.size());
+        while (tiles.contains(wholeTile.get(i))) {
+            i = random.nextInt(wholeTile.size());
         }
-        x += this.getStartX();
-        y += this.getStartY();
-        return new int[]{x, y};
+        return new int[]{wholeTile.get(i).x, wholeTile.get(i).y};
     }
 }

@@ -136,7 +136,7 @@
   "knight": {
     "attackRating": 6,
     "militaryState": "standing",
-    "usesHorse": false,
+    "usesHorse": true,
     "usesLadder": false,
     "digsMoat": false,
     "attackStepCount" : 8,
