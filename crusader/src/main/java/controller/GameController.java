@@ -6,9 +6,16 @@ import controller.human.HumanController;
 import controller.human.MoveController;
 import enumeration.MilitaryStates;
 import enumeration.Pair;
+import enumeration.Paths;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import model.Government;
 import model.activity.Move;
 import model.building.Building;
@@ -32,6 +39,7 @@ import view.controllers.HumanViewController;
 import view.controllers.ViewController;
 import view.menus.GameMenu;
 import viewphase1.UnitMenu;
+
 
 import java.util.*;
 
@@ -707,11 +715,43 @@ public class GameController {
         }
     }
 
+    public static void beingSick(Government government) {
+        ArrayList<Pair <Integer , Integer>> tiles = GameController.getNeighborPairs(government.getMainCastle().getEndSpecialX() ,
+                government.getMainCastle().getEndSpecialY() , government.getMainCastle().getWidth() ,
+                government.getMainCastle().getLength());
+        Timeline timeline = new Timeline( new KeyFrame(Duration.millis(100) , e -> {
+            for (Pair<Integer , Integer> tile : tiles) {
+                GameMap.getGameTile(tile.getFirst() , tile.getSecond()).setSickness();
+            }
+        }));
+        timeline.play();
+        timeline.setCycleCount(300);
+        timeline.setOnFinished(e -> {
+            for (Pair<Integer , Integer> tile : tiles) {
+                GameMap.getGameTile(tile.getFirst() , tile.getSecond()).clearSickness();
+            }
+        });
+    }
+
     public static String nextTurn() {
             for (Government government : game.getGovernments()) {
                 government.updateAfterTurnGraphical();
             }
             int numberOfRemainedGovernments = howManyGovernmentsRemainsInGame();
+            int randomGovernment = new Random().nextInt(numberOfRemainedGovernments-1);
+            Government government = null;
+            int index = 0;
+            for (Government iterator : game.getGovernments()) {
+                if (iterator.isAlive() && !iterator.isDead()) {
+                    if (index == randomGovernment) {
+                        government = iterator;
+                        break;
+                    } else {
+                        index++;
+                    }
+                }
+            }
+            beingSick(game.getCurrentGovernment());
             if (numberOfRemainedGovernments == 1) {
                 if (!game.isEndGame()) {
                     game.setWinner();

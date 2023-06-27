@@ -1233,7 +1233,8 @@ public class GameViewController {
 
     private static void setCenterToWeaponsBuildings() {
         putBuildingImageView("fletcherWorkshopIcon", "Fletcher's Workshop", "fletcher", 300, 100, 1, "fletcher");
-        putBuildingImageView("poleturnerWorkshopIcon", "Poleturner's Workshop", "poleTurner", 470, 100, 1, "poleTurner");
+        putBuildingImageView("poleturnerWorkshopIcon", "Poleturner's Workshop", "poleTurner", 510, 100, 1, "poleTurner");
+        putBuildingImageView("blackSmithIcon" , "BlackSmith's Workshop" , "blackSmith" , 400 , 100 , 1 , "blackSmith");
         putBuildingImageView("armourerIcon", "Armourer", "armourer", 500, 30, 0.25, "armourer");
     }
 
@@ -2783,13 +2784,14 @@ public class GameViewController {
         setEventForRectangles(up, 0, 1, gameMap, miniMap);
         setEventForRectangles(right, 1, 0, gameMap, miniMap);
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO , actionEvent -> {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(30) , actionEvent -> {
             GameController.nextTurn();
             System.out.println("next turn!");
-        }) , new KeyFrame(Duration.seconds(30) , actionEvent -> {}));
+        }));
         timeline.setCycleCount(-1);
         timeline.play();
         gameTimeLine = timeline;
+
 
 
     }
