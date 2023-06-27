@@ -15,6 +15,7 @@ import model.human.civilian.Civilian;
 import model.human.military.Engineer;
 import model.human.military.Military;
 import model.tools.Tool;
+import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
 
 import java.util.ArrayList;
@@ -326,9 +327,19 @@ public class Attack {
 
 
         if (military.getName().equals("slave")) {
-            MapController.deleteBuilding(targetBuilding);
-            targetBuilding.setGovernment(null);
-            targetBuilding = null;
+            if (targetBuilding.isBurning()){
+                return;
+            }
+            int hp = targetBuilding.takeDamage(military.getAttackRating());
+            targetBuilding.setBurning(true);
+            GameViewController.fireBuilding(targetBuilding);
+            if (hp <= 0) {
+                military.getGovernment().removeNumberOfTroopInAttack(military);
+                enemy.getGovernment().removeNumberOfTroopInAttack(military);
+                MapController.deleteBuilding(targetBuilding);
+                targetBuilding.setGovernment(null);
+                targetBuilding = null;
+            }
             return;
         }
 
@@ -348,7 +359,9 @@ public class Attack {
         } else if (military.canAirAttack()) {
             HumanViewController.airAttackToBuilding(military, targetBuilding);
         }
-
+        if (military.getName().equals("fireThrower") && !targetBuilding.isBurning()){
+            targetBuilding.isBurning();
+        }
 
         if (hp <= 0) {
             military.getGovernment().removeNumberOfTroopInAttack(military);

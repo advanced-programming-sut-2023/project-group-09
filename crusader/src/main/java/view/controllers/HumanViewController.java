@@ -82,6 +82,8 @@ public class HumanViewController {
                     btn.imageView.setEffect(ds);
                     lastType = btn;
                 });
+                btn.imageView.setOnMouseEntered(mouseEvent -> GameMenu.hoveringBarStateText.setText(btn.name));
+                btn.imageView.setOnMouseExited(mouseEvent -> GameMenu.hoveringBarStateText.setText(""));
                 count++;
                 if (count > 7) {
                     return;

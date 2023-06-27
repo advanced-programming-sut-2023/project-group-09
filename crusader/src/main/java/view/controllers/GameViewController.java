@@ -43,6 +43,7 @@ import model.Trade;
 import model.building.Building;
 import model.building.castlebuildings.MainCastle;
 import model.building.producerbuildings.Barrack;
+import model.game.Tile;
 import model.building.producerbuildings.WeaponProducer;
 import model.human.Human;
 import model.human.civilian.Civilian;
@@ -2967,5 +2968,39 @@ public class GameViewController {
                     ,building.getNumberOfWorkers()
                     , building.getNumberOfRequiredWorkers()));
         }
+    }
+
+    public static void fireBuilding(Building building){
+        ArrayList<Tile> tiles;
+        if (building.getBuildingImpassableLength() > 0){
+            tiles = GameController.getNeighborTiles(building.getEndX(),building.getEndY(),
+                    building.getBuildingImpassableLength(),building.getBuildingImpassableLength());
+        }else {
+            tiles = GameController.getNeighborTiles(building.getEndX(),building.getEndY(),
+                   building.getWidth(),building.getLength());
+        }
+
+        for (Tile tile : tiles){
+            GameTile gameTile = GameMap.getGameTile(tile.x,tile.y);
+            gameTile.burning();
+        }
+
+    }
+
+    public static void putOutBuilding(Building building){
+        ArrayList<Tile> tiles;
+        if (building.getBuildingImpassableLength() > 0){
+            tiles = GameController.getNeighborTiles(building.getEndX(),building.getEndY(),
+                    building.getBuildingImpassableLength(),building.getBuildingImpassableLength());
+        }else {
+            tiles = GameController.getNeighborTiles(building.getEndX(),building.getEndY(),
+                    building.getWidth(),building.getLength());
+        }
+
+        for (Tile tile : tiles){
+            GameTile gameTile = GameMap.getGameTile(tile.x,tile.y);
+            gameTile.putOutFire();
+        }
+
     }
 }

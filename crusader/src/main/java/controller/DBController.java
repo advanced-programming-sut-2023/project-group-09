@@ -29,6 +29,7 @@ import model.tools.Tool;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Modifier;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -408,7 +409,25 @@ public class DBController {
     }
 
     public static void saveMap(Map map, String fileAddress) {
-        String gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create().toJson(map);
-        FileController.updateFile(gson, fileAddress);
+        try {
+            checkFileExist(fileAddress);
+            File file = new File(fileAddress);
+            FileWriter fileWriter = new FileWriter(file);
+            if(Application.getCurrentUser() != null){
+                Gson gson = new GsonBuilder()
+                        .excludeFieldsWithModifiers(Modifier.STATIC,
+                                Modifier.TRANSIENT,
+                                Modifier.VOLATILE)
+                        .create();
+                String json = gson.toJson(map);
+                fileWriter.write(json);
+            }else {
+                fileWriter.write("");
+            }
+            fileWriter.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.[save current user]");
+            e.printStackTrace();
+        }
     }
 }

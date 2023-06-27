@@ -30,7 +30,7 @@ public class Tile {
     private boolean isMoat;
     private boolean isPit;
     private int textureNum;
-    @Expose private Color color;
+    private transient Color color;
 
     private Government pitGovernment;
     private boolean passable = true;

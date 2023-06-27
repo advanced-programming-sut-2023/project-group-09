@@ -319,7 +319,7 @@ public class MapController {
                 (x, y, building.getBuildingImpassableLength(), building.getBuildingImpassableLength());
 
         Tile lastTile = tiles.get(tiles.size() - 1);
-        ArrayList<Tile> holeTiles = GameController.getNeighborTilesFromStart(lastTile.x, lastTile.y, building.getLength(), building.getWidth());
+        ArrayList<Tile> holeTiles = GameController.getNeighborTilesFromStart(lastTile.x, lastTile.y, building.getWidth(), building.getLength());
         for (Tile tile : holeTiles) {
             int i = tile.x;
             int j = tile.y;
@@ -564,6 +564,10 @@ public class MapController {
         }
         if (building instanceof StorageBuilding) {
             ((StorageBuilding) building).deleteStorage();
+        }
+
+        if (building.isBurning()){
+            GameViewController.putOutBuilding(building);
         }
         for (Pair<Integer, Integer> pair : tiles) {
             int i = pair.getFirst();

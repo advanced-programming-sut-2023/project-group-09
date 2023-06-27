@@ -31,15 +31,15 @@ public class Building implements Cloneable {
 
     private String name;
 
-    private ArrayList<Tuple> neighborTiles = new ArrayList<>();
-
-
+    private final ArrayList<Tuple> neighborTiles = new ArrayList<>();
     private int maxHp;
     private int hp;
     private int startX, startY;
     private int endX, endY;
     private int width, length;
     private int endSpecialX, endSpecialY;
+
+    private boolean isBurning = false;
 
     public String getName() {
         return name;
@@ -62,6 +62,7 @@ public class Building implements Cloneable {
         this.hp = maxHp;
         this.width = width;
         this.length = length;
+        isBurning = false;
     }
 
     public Building(Building building) {
@@ -72,6 +73,7 @@ public class Building implements Cloneable {
         this.hp = maxHp;
         this.width = building.width;
         this.length = building.length;
+        isBurning = false;
     }
 
     public void setGovernment(Government government) {
@@ -246,7 +248,7 @@ public class Building implements Cloneable {
         ArrayList<Tile> tiles = GameController.getDirectNeighborTiles(this);
         for (Tile tile : tiles) {
             System.out.println("tile : " + tile.x + " " + tile.y);
-            Tuple tuple = new Tuple(tile.y,tile.x);
+            Tuple tuple = new Tuple(tile.y, tile.x);
             neighborTiles.add(tuple);
         }
     }
@@ -307,5 +309,13 @@ public class Building implements Cloneable {
 
     public int getPrice() {
         return price;
+    }
+
+    public boolean isBurning() {
+        return isBurning;
+    }
+
+    public void setBurning(boolean burning) {
+        isBurning = burning;
     }
 }

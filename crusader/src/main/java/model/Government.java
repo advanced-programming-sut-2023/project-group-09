@@ -380,6 +380,9 @@ public class Government {
             Iterator itr = bc.getBuildings().iterator();
             while (itr.hasNext()) {
                 Building building = (Building) itr.next();
+                if (building.isBurning()){
+                    building.takeDamage(10);
+                }
                 if (building.isDestroyed()) {
                     unemployed.addAll(building.getRequiredHumans());
                     itr.remove();
