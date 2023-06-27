@@ -550,6 +550,9 @@ public class GameController {
         MapController.dropBuilding(x, y, type, GameController.getGame().getCurrentGovernment());
         int popularity = GovernmentController.getCurrentGovernment().getPopularity() + 37;
         GameViewController.popularityReporter.setText(String.format("%d", popularity));
+        GameViewController.populationReporter.setText(
+                String.format("%d/%d", GovernmentController.getCurrentGovernment().getPopulation(),
+                        GovernmentController.getCurrentGovernment().getMaxPopulation()));
         GameViewController.updateFaceOfReporter();
         return "building dropped successfully!";
     }
@@ -688,6 +691,24 @@ public class GameController {
             return result.substring(0, result.length() - 1);
         }
     }
+
+    public static String nextTurn() {
+            for (Government government : game.getGovernments()) {
+                government.updateAfterTurnGraphical();
+            }
+            int numberOfRemainedGovernments = howManyGovernmentsRemainsInGame();
+            if (numberOfRemainedGovernments == 1) {
+                game.setEndGame(true);
+                game.setWinner();
+                game.setScores();
+            } else if (numberOfRemainedGovernments == 0) {
+                game.setEndGame(true);
+                game.setWinner();
+                game.setScores();
+            }
+            return "";
+    }
+
 
     public static String showMap(int x, int y) {
         Map map = game.getMap();

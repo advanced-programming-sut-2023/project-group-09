@@ -61,6 +61,7 @@ public class GameViewController {
 
     public static String nameOfPageInBar;
     public static Timeline timeline;
+    public static Timeline gameTimeLine;
     public static boolean isSelected = false;
     public static boolean isDelete = false;
     public static boolean isDropped = false;
@@ -814,7 +815,7 @@ public class GameViewController {
         lordNameText.setTranslateX(340);
         lordNameText.setTranslateY(100);
         GameMenu.menuBar.getChildren().add(lordNameText);
-        // TODO : complete it!
+
         MenuButton popularity = new MenuButton("Popularity", GameMenu.menuBar,
                 500, 90, false);
         GameMenu.menuBar.getChildren().add(popularity);
@@ -2690,6 +2691,14 @@ public class GameViewController {
         setEventForRectangles(left, -1, 0, gameMap, miniMap);
         setEventForRectangles(up, 0, 1, gameMap, miniMap);
         setEventForRectangles(right, 1, 0, gameMap, miniMap);
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO , actionEvent -> {
+            GameController.nextTurn();
+            System.out.println("next turn!");
+        }) , new KeyFrame(Duration.seconds(5) , actionEvent -> {}));
+        timeline.setCycleCount(-1);
+        timeline.play();
+        gameTimeLine = timeline;
 
 
     }

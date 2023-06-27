@@ -408,6 +408,23 @@ public class Government {
         }
     }
 
+    public void updateAfterTurnGraphical() {
+        this.updateAllHumans();
+        this.updateAllBuildings();
+        this.mainCastle.taxDistribution();
+        this.updateCowAndHorseNumber();
+        this.producerBuildingsAction();
+        this.outOfStockNotification();
+        this.updateMaxPopulation();
+        this.updatePeopleAfterTurn();
+        this.foodDistribution();
+        this.workerDistribution();
+        //this.workersNeededNotification();
+        GameViewController.populationReporter.setText(
+                String.format("%d/%d", GovernmentController.getCurrentGovernment().getPopulation(),
+                        GovernmentController.getCurrentGovernment().getMaxPopulation()));
+    }
+
     public void updateAfterTurn() {
         this.updateAllHumans();
         this.updateAllBuildings();
@@ -420,9 +437,6 @@ public class Government {
         this.foodDistribution();
         this.workerDistribution();
         this.workersNeededNotification();
-        GameViewController.populationReporter.setText(
-                String.format("%d/%d", GovernmentController.getCurrentGovernment().getPopulation(),
-                GovernmentController.getCurrentGovernment().getMaxPopulation()));
     }
 
     public void updateCowAndHorseNumber() {
