@@ -111,6 +111,7 @@ public class GameMenu extends Application {
                     getTile(government.getCastleX(), government.getCastleY() + 2).getMilitaries().get(0);
             lordMilitary.setGovernment(government);
             government.setLord(lordMilitary);
+            government.getMainCastle().makeUnemployed(10);
         }
 
         menuBar = new Pane();

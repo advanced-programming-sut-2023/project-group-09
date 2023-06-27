@@ -1881,18 +1881,7 @@ public class GameViewController {
     }
 
     private static void setCenterToEngineerMenu() {
-        setTitle("Choose a tool:", 32, 275, 100);
-        String[] tools = {"1.Catapult", "2.Trebuchet", "3.Siege Tower", "4.Battering Ram",
-                "5.Portable Shield", "6.Fire Ballista"};
-        MenuChoiceBox tool = new MenuChoiceBox(GameMenu.menuBar, "", 450, 120,
-                FXCollections.observableArrayList(tools), 300);
-        tool.setValue("Tool");
-        tool.valueProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
 
-            }
-        });
     }
 
     private static void setTitle(String title, int fontSize, double x, double y) {
