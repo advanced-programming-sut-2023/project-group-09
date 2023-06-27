@@ -175,6 +175,15 @@ public class Government {
     }
 
     public int getReligionRate() {
+        this.religionRate = 0;
+        for (BuildingCounter bc : this.buildings.values()) {
+            for (Building building : bc.getBuildings()) {
+                if (building.getName().equals("cathedral"))
+                    this.religionRate += 2;
+                if (building.getName().equals("church"))
+                    this.religionRate++;
+            }
+        }
         return religionRate;
     }
 
@@ -522,6 +531,8 @@ public class Government {
         }
     }
 
+
+
     public int getPopularity() {
         this.religionRate = 0;
         for (BuildingCounter bc : this.buildings.values()) {
@@ -630,5 +641,9 @@ public class Government {
             MapController.deleteMilitary(military.getX() , military.getY() , military);
             military.setGovernment(null);
         }
+    }
+
+    public int getRealTaxRate() {
+        return this.taxRate;
     }
 }
