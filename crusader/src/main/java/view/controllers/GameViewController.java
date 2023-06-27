@@ -21,6 +21,7 @@ import javafx.geometry.HPos;
 import javafx.scene.ImageCursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
 import javafx.scene.effect.BlurType;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.ColorAdjust;
@@ -80,6 +81,15 @@ public class GameViewController {
 
 
     public static void setBarForCurrentGovernment() {
+        ImageView emptyPage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
+                + "emptyPage.png");
+        emptyPage.setTranslateX(868);
+        emptyPage.setTranslateY(46);
+        emptyPage.setScaleX(0.48);
+        emptyPage.setScaleY(0.48);
+        GameMenu.menuBar.getChildren().add(emptyPage);
+        setEventForEmptyPage(emptyPage);
+
         int popularity = GovernmentController.getCurrentGovernment().getPopularity() + 37;
         Text popularityText = new Text(String.format("%d", popularity));
         popularityText.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 30)); //TODO: update in change turn!
@@ -104,7 +114,7 @@ public class GameViewController {
         GameMenu.menuBar.getChildren().add(populationText);
 
         // TODO : update with changes.
-        if (popularity <= 21) {
+        if (popularity < 21) {
             ImageView angryFace = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
                     + "angryFace.png");
             angryFace.setTranslateX(758);
@@ -112,7 +122,7 @@ public class GameViewController {
             angryFace.setScaleY(0.29);
             angryFace.setScaleX(0.25);
             GameMenu.menuBar.getChildren().add(angryFace);
-        } else if (popularity <= 42) {
+        } else if (popularity < 42) {
             ImageView pokerFace = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
                     + "pokerFace.png");
             pokerFace.setTranslateX(750);
@@ -121,6 +131,15 @@ public class GameViewController {
             pokerFace.setScaleY(0.29);
             GameMenu.menuBar.getChildren().add(pokerFace);
         }
+
+
+    }
+
+    private static void setEventForEmptyPage(ImageView emptyPage) {
+        emptyPage.setOnMouseClicked(e -> {
+            System.out.println("Clicked!");
+            setCenterOfBar("Government");
+        });
     }
 
     public static void createShortcutBars(Pane gamePane, Text text) {
@@ -359,6 +378,11 @@ public class GameViewController {
                 GameMenu.createGameBar(1);
                 setCenterOfEditVegetation();
             }
+            case "Government" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToGovernment();
+            }
         }
     }
 
@@ -593,7 +617,161 @@ public class GameViewController {
                 GameMenu.createGameBar(3);
                 setCenterToMercenaryPost();
             }
+            case "Government" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToGovernment();
+            }
+            case "Popularity" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToPopularity();
+            }
+            case "Change Rates" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToChangeRates();
+            }
         }
+    }
+
+    private static void setCenterToPopularity() {
+        ImageView twoMasks = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/twoMasks.png");
+        twoMasks.setScaleY(0.25);
+        twoMasks.setScaleX(0.25);
+        twoMasks.setTranslateX(200);
+        twoMasks.setTranslateY(-50);
+        GameMenu.menuBar.getChildren().add(twoMasks);
+
+        showPopularityOfOneFactor("Food" , GovernmentController.getFoodPopularity(
+                GovernmentController.getCurrentGovernment().getFoodRate()) ,
+                -8 , 8 , 500 , 100);
+
+        showPopularityOfOneFactor("Tax" , GovernmentController.getTaxPopularity(
+                GovernmentController.getCurrentGovernment().getRealTaxRate()) ,
+                -24 , 7 , 500 , 125);
+
+        showPopularityOfOneFactor("Fear Factor" , GovernmentController.getCurrentGovernment().getFearRate() ,
+                -5 , 5 , 500 , 150);
+
+        showPopularityOfOneFactor("Religion" ,  GovernmentController.getCurrentGovernment().getReligionRate() ,
+                0 , 5 ,500 , 175);
+
+        showPopularityOfOneFactor("In This Turn" , GovernmentController.getCurrentGovernment().getPopularity() + 37 ,
+                0 , 62 , 500 , 200);
+    }
+
+    private static void showPopularityOfOneFactor(String nameOfFactor , int popularity , int minRange , int maxRange , double x , double y) {
+        ImageView face;
+        Text numberText = new Text(String.format("%d" , popularity));
+        numberText.setFont(Font.font("Times New Roman", FontWeight.BOLD, 20));
+        if (popularity < minRange + (maxRange - minRange)/3) {
+            face = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                    .toExternalForm() + "icons/sadMask.png");
+            numberText.setFill(Color.RED);
+        } else if (popularity < minRange + 2*(maxRange - minRange)/3) {
+            face = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                    .toExternalForm() + "icons/pokerMask.png");
+            numberText.setFill(Color.YELLOW);
+        } else {
+            face = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                    .toExternalForm() + "icons/happyMask.png");
+            numberText.setFill(Color.GREEN);
+        }
+
+        Text name = new Text(nameOfFactor);
+        name.setFont(Font.font("Times New Roman", FontWeight.BOLD, 20));
+
+
+        numberText.setTranslateX(x);
+        numberText.setTranslateY(y);
+
+        face.setTranslateX(x+25);
+        face.setTranslateY(y-20);
+
+        name.setTranslateY(y);
+        name.setTranslateX(x + 60);
+
+        GameMenu.menuBar.getChildren().add(face);
+        GameMenu.menuBar.getChildren().add(numberText);
+        GameMenu.menuBar.getChildren().add(name);
+    }
+
+
+    private static void setCenterToChangeRates() {
+        Text text = new Text(String.format("Food Rate : %d",
+                GovernmentController.getCurrentGovernment().getFoodRate()));
+        Slider foodRate = new Slider(-2 , 2 , GovernmentController.
+                getCurrentGovernment().getFoodRate());
+        foodRate.setSnapToTicks(true);
+        foodRate.setMajorTickUnit(1.0);
+        foodRate.setMinorTickCount(0);
+        foodRate.setShowTickMarks(true);
+        foodRate.setShowTickLabels(true);
+        GameMenu.menuBar.getChildren().add(foodRate);
+        GameMenu.menuBar.getChildren().add(text);
+        foodRate.setTranslateX(450);
+        foodRate.setTranslateY(100);
+        text.setTranslateX(300);
+        text.setTranslateY(110);
+        text.setFont(Font.font("Times New Roman", FontWeight.BOLD, 20));
+        foodRate.setOnMouseReleased(e -> {
+            GovernmentController.getCurrentGovernment().setFoodRate((int)foodRate.getValue());
+            text.setText(String.format("Food Rate : %d",
+                    GovernmentController.getCurrentGovernment().getFoodRate()));
+        });
+
+        Text text2 = new Text(String.format("Fear Rate : %d",
+                GovernmentController.getCurrentGovernment().getFearRate()));
+        Slider fearRate = new Slider(-5 , 5 , GovernmentController.
+                getCurrentGovernment().getFearRate());
+        fearRate.setSnapToTicks(true);
+        fearRate.setMajorTickUnit(1.0);
+        fearRate.setMinorTickCount(0);
+        fearRate.setShowTickMarks(true);
+        fearRate.setShowTickLabels(true);
+        GameMenu.menuBar.getChildren().add(fearRate);
+        GameMenu.menuBar.getChildren().add(text2);
+        fearRate.setTranslateX(450);
+        fearRate.setTranslateY(155);
+        text2.setTranslateX(300);
+        text2.setTranslateY(165);
+        text2.setFont(Font.font("Times New Roman", FontWeight.BOLD, 20));
+        fearRate.setOnMouseReleased(e -> {
+            GovernmentController.getCurrentGovernment().setFearRate((int)fearRate.getValue());
+            text2.setText(String.format("Fear Rate : %d",
+                    GovernmentController.getCurrentGovernment().getFearRate()));
+        });
+    }
+
+    private static void setCenterToGovernment() {
+        ImageView shieldIcon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/shieldIcon.png");
+        shieldIcon.setScaleX(0.2);
+        shieldIcon.setScaleY(0.2);
+        shieldIcon.setTranslateX(-120);
+        shieldIcon.setTranslateY(-140);
+        GameMenu.menuBar.getChildren().add(shieldIcon);
+
+        Text lordNameText = new Text("Lord " + GovernmentController.getCurrentGovernment().getUser().getNickname());
+        lordNameText.setFont(Font.font("Times New Roman", FontWeight.BOLD, 15));
+        lordNameText.setTranslateX(340);
+        lordNameText.setTranslateY(100);
+        GameMenu.menuBar.getChildren().add(lordNameText);
+        // TODO : complete it!
+        MenuButton popularity = new MenuButton("Popularity" , GameMenu.menuBar ,
+                500, 90, false);
+        GameMenu.menuBar.getChildren().add(popularity);
+        popularity.setOnMouseClicked(e -> {
+            setCenterOfBar("Popularity");
+        });
+
+        MenuButton changeRates = new MenuButton("Change Rates" , GameMenu.menuBar, 500 , 150 , false);
+        GameMenu.menuBar.getChildren().add(changeRates);
+        changeRates.setOnMouseClicked(e -> {
+            setCenterOfBar("Change Rates");
+        });
     }
 
     private static void setCenterToSelectMainCastle() {
