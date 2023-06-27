@@ -14,7 +14,6 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
@@ -78,11 +77,6 @@ public class GameMenu extends Application {
     //-----------------------------------
 
 
-
-
-
-
-
     @Override
     public void start(Stage stage) throws Exception {
         GameMenu.stage = stage;
@@ -142,7 +136,7 @@ public class GameMenu extends Application {
     }
 
     public static void createGameBar(int state) {
-//        state: 0=buildings  /  1=nemidunam(farzam midune)  /  2=menu / 3=mercenaryPost
+//        state: 0=buildings  /  1=nemidunam(farzam midune)  /  2=menu  /  3=mercenaryPost  /  4=barrack
         barImage = new ImageView(GameImages.imageViews.get("bar"));
         barImage.setFitWidth(menuBar.getMaxWidth());
         barImage.setFitHeight(menuBar.getMaxHeight());
@@ -169,13 +163,11 @@ public class GameMenu extends Application {
             GameViewController.createShortcutBars(menuBar, hoveringButton);
             hoveringButton.setTranslateX(275);
             hoveringButton.setTranslateY(70);
-        }
-        else if (state == 1) {
+        } else if (state == 1) {
             GameViewController.createShortcutBars2(menuBar, hoveringButton);
             hoveringButton.setTranslateX(275);
             hoveringButton.setTranslateY(70);
-        }
-        else if (state == 2) {
+        } else if (state == 2) {
             ImageView menuBox = new ImageView(GameMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
                     + "menuEmptyBar.png");
             menuBox.setTranslateX(247);
@@ -184,12 +176,20 @@ public class GameMenu extends Application {
             menuBar.getChildren().add(menuBox);
             hoveringButton.setTranslateX(275);
             hoveringButton.setTranslateY(45);
-        }
-        else if (state == 3) {
+        } else if (state == 3) {
             ImageView menuBox = new ImageView(GameMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
                     + "mercenaryPostBar.png");
             menuBox.setTranslateX(175);
             menuBox.setTranslateY(-30);
+            menuBar.getChildren().add(menuBox);
+            hoveringButton.setTranslateX(275);
+            hoveringButton.setTranslateY(45);
+        } else if (state == 4) {
+            ImageView menuBox = new ImageView(GameMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
+                    + "barrackBar.png");
+            menuBox.setTranslateX(175);
+            menuBox.setTranslateY(-25);
+            System.out.println("width:" + menuBox.getImage().getWidth());
             menuBar.getChildren().add(menuBox);
             hoveringButton.setTranslateX(275);
             hoveringButton.setTranslateY(45);
@@ -203,7 +203,7 @@ public class GameMenu extends Application {
                 if (!root.getChildren().contains(selectCursor)) {
                     root.getChildren().add(selectCursor);
                 }
-                if (currentTile != null){
+                if (currentTile != null) {
                     HumanViewController.setSelectCursorState(currentTile);
                 }
                 selectCursor.setTranslateY(mouseEvent.getY() - 400 - selectCursor.getHeight() / 2);
