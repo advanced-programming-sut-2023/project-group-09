@@ -1948,7 +1948,7 @@ public class GameViewController {
         engineer.setTranslateY(100);
         engineer.setOnMouseClicked(mouseEvent -> {
             ((Barrack) selectedBuilding).makeUnit("engineer");
-            selectedBuilding.getGovernment().updatePopulationWithRemove(selectedBuilding.getGovernment().getPopulation() - 1);
+            selectedBuilding.getGovernment().updatePopulationWithRemove(selectedBuilding.getGovernment().getPopulation()-1);
         });
 
         ImageView ladderman = new ImageView(GameViewController.class.getResource(Paths.BAR_IMAGES.getPath())
