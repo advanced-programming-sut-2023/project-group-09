@@ -18,6 +18,7 @@ import model.building.producerbuildings.Barrack;
 import model.building.producerbuildings.ProducerBuilding;
 import model.building.producerbuildings.WeaponProducer;
 import model.building.storagebuildings.StorageBuilding;
+import model.game.Map;
 import model.goods.Goods;
 import model.gsonmodels.ColorDeserializer;
 import model.gsonmodels.ColorSerializer;
@@ -404,5 +405,10 @@ public class DBController {
             System.out.println("An error occurred.[check file exist]");
             e.printStackTrace();
         }
+    }
+
+    public static void saveMap(Map map, String fileAddress) {
+        String gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create().toJson(map);
+        FileController.updateFile(gson, fileAddress);
     }
 }

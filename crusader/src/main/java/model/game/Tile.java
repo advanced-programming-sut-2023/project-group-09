@@ -1,5 +1,6 @@
 package model.game;
 
+import com.google.gson.annotations.Expose;
 import enumeration.Textures;
 import enumeration.dictionary.RockDirections;
 import enumeration.dictionary.Trees;
@@ -29,7 +30,7 @@ public class Tile {
     private boolean isMoat;
     private boolean isPit;
     private int textureNum;
-    private Color color;
+    @Expose private Color color;
 
     private Government pitGovernment;
     private boolean passable = true;
