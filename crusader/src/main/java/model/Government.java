@@ -58,6 +58,7 @@ public class Government {
     }
 
     private boolean isAlive = true;
+    private boolean isDead = false;
 
     private int foodRate;
 
@@ -511,7 +512,8 @@ public class Government {
 
     public void updatePopulationWithAdd(int wanted) {
         int counterOfAddedPeople = wanted - population;
-        this.mainCastle.makeUnemployed(counterOfAddedPeople);
+        this.mainCastle.makeUnemployed(Math.min(maxPopulation - population ,counterOfAddedPeople));
+        population = wanted;
     }
 
 
@@ -545,6 +547,7 @@ public class Government {
                 }
             }
         }
+        population = wanted;
     }
 
     public void updatePeopleAfterTurn() {
@@ -685,9 +688,18 @@ public class Government {
             MapController.deleteMilitary(military.getX(), military.getY(), military);
             military.setGovernment(null);
         }
+        isDead = true;
     }
 
     public int getRealTaxRate() {
         return this.taxRate;
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
     }
 }

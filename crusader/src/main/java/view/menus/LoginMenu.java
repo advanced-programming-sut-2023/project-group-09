@@ -39,12 +39,13 @@ public class LoginMenu extends Application {
     public static MenuPasswordField password;
     public static Stage stage;
     public static Pane loginPane;
+    public static Pane root;
 
     @Override
     public void start(Stage stage) throws Exception {
         LoginMenu.stage = stage;
         Pane pane = FXMLLoader.load(LoginMenu.class.getResource("/FXML/loginMenu.fxml"));
-        ViewController.makePaneScreen(stage , pane , 1000 , -1);
+        root = ViewController.makePaneScreen(stage , pane , 1000 , -1);
         loginPane = pane;
         Scene scene = new Scene(pane);
         setLoginMenu(pane);

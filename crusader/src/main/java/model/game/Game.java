@@ -1,7 +1,16 @@
 package model.game;
 
 import controller.GovernmentController;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import model.Government;
+import model.menugui.MenuBox;
+import model.menugui.MenuButton;
+import view.Main;
+import view.menus.GameMenu;
+import view.menus.LoginMenu;
+import view.menus.MainMenu;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -33,9 +42,30 @@ public class Game {
         Iterator itr = getGovernments().iterator();
         while (itr.hasNext()) {
             Government government = (Government) itr.next();
-            if (government.isAlive())
+            if (government.isAlive()) {
                 this.winner = government;
+                setWinPage(government);
+            }
         }
+    }
+
+    private synchronized static void setWinPage(Government winnerGov) {
+        MenuBox menuBox = new MenuBox("Game Is Over" , 0 , 0 , 600 , 600);
+        Text winner = new Text("Winner : " + winnerGov.getUser().getNickname() + " With Score " +
+                winnerGov.getHowManyTurnsSurvive() * 100);
+        winner.setFont(Font.font("Times New Roman", FontWeight.BOLD, 35));
+        menuBox.getChildren().add(winner);
+        MenuButton endButton = new MenuButton("Exit!" , menuBox , 0 , 100 , false);
+        endButton.setOnMouseClicked(e -> {
+            try {
+                new MainMenu().start(GameMenu.stage);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        menuBox.getChildren().add(endButton);
+        menuBox.setViewOrder(-10000);
+        GameMenu.root.getChildren().add(menuBox);
     }
 
     public Game(Map map) {

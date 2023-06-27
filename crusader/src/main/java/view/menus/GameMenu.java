@@ -38,6 +38,7 @@ import model.game.Tile;
 import model.human.military.Engineer;
 import model.human.military.EuropeanTroop;
 import model.human.military.Military;
+import model.menugui.MenuHoverBox;
 import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
@@ -170,20 +171,32 @@ public class GameMenu extends Application {
             shield.setTranslateX(10 + 50*(index%4));
             shield.setOnMouseEntered(e -> {
                 hoveringBarStateText.setText("Lord " + government.getUser().getNickname());
-                shield.setImage(new Image(GameMenu.class.getResource(Paths.FLAG_IMAGES.getPath()).toExternalForm()
-                        + government.getColor() + "BrightFlag.png"));
+                if (government.isAlive()) {
+                    shield.setImage(new Image(GameMenu.class.getResource(Paths.FLAG_IMAGES.getPath()).toExternalForm()
+                            + government.getColor() + "BrightFlag.png"));
+                } else {
+                    shield.setImage(new Image(GameMenu.class.getResource(Paths.FLAG_IMAGES.getPath()).toExternalForm()
+                            + "transparent" + "BrightFlag.png"));
+                }
             });
             shield.setOnMouseExited(e -> {
                 hoveringBarStateText.setText("");
-                shield.setImage(new Image(GameMenu.class.getResource(Paths.FLAG_IMAGES.getPath()).toExternalForm()
-                        + government.getColor() + "Flag.png"));
+                if (government.isAlive()) {
+                    shield.setImage(new Image(GameMenu.class.getResource(Paths.FLAG_IMAGES.getPath()).toExternalForm()
+                            + government.getColor() + "Flag.png"));
+                } else {
+                    shield.setImage(new Image(GameMenu.class.getResource(Paths.FLAG_IMAGES.getPath()).toExternalForm()
+                            + "transparent" + "Flag.png"));
+                }
             });
             shield.setOnMouseClicked(e -> {
-                GovernmentController.setCurrentGovernment(government);
-                GameController.getGame().setCurrentGovernment(government);
-                GameMenu.menuBar.getChildren().clear();
-                createGameBar(0);
-                GameViewController.setCenterToCastleBuildings();
+                if (government.isAlive()) {
+                    GovernmentController.setCurrentGovernment(government);
+                    GameController.getGame().setCurrentGovernment(government);
+                    GameMenu.menuBar.getChildren().clear();
+                    createGameBar(0);
+                    GameViewController.setCenterToCastleBuildings();
+                }
             });
             index++;
         }
@@ -202,7 +215,7 @@ public class GameMenu extends Application {
         miniMap.setTranslateX(813);
         menuBar.getChildren().add(barImage);
 
-        setShieldsForGovernments();
+
 
         Text hoveringButton = new Text("");
         hoveringButton.setTranslateX(275);
@@ -444,7 +457,8 @@ public class GameMenu extends Application {
                         }
                     }
                 }
-
+//                MenuHoverBox details = new MenuHoverBox(root, endSelectionTile.getX() + GameMap.tileWidth / 2 - scene.getWidth() / 2,
+//                        endSelectionTile.getY() + GameMap.tileHeight / 2 - scene.getHeight() / 2, 300, 300, "Hello world");
             }
         }));
         selectDoneTimeline.setCycleCount(-1);
