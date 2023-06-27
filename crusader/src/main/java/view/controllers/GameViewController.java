@@ -43,6 +43,7 @@ import model.Trade;
 import model.building.Building;
 import model.building.castlebuildings.MainCastle;
 import model.building.producerbuildings.Barrack;
+import model.building.producerbuildings.WeaponProducer;
 import model.human.Human;
 import model.human.civilian.Civilian;
 import model.human.military.Military;
@@ -677,11 +678,11 @@ public class GameViewController {
                 GameMenu.createGameBar(4);
                 setCenterToBarrack();
             }
-            case "engineer" -> {
-                GameMenu.menuBar.getChildren().clear();
-                GameMenu.createGameBar(2);
+//            case "engineer" -> {
+//                GameMenu.menuBar.getChildren().clear();
+//                GameMenu.createGameBar(2);
 //                setCenterToEngineerMenu();
-            }
+//            }
             case "engineerGuild" -> {
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar(2);
@@ -693,16 +694,24 @@ public class GameViewController {
                 setCenterToTunnelersGuild();
             }
             case "fletcher" -> {
-
-            }
-            case "blackSmith" -> {
-
-            }
-            case "armourer" -> {
-
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToFletcher();
             }
             case "poleTurner" -> {
-
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToPoleTurner();
+            }
+            case "armourer" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToArmourer();
+            }
+            case "blackSmith" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToBlackSmith();
             }
         }
     }
@@ -1977,8 +1986,108 @@ public class GameViewController {
         GameMenu.menuBar.getChildren().addAll(tunneler, peasantsNumber);
     }
 
-    private static void setCenterToFletcher() {
+//    private static void setCenterToEngineerMenu() {
+//
+//    }
 
+    private static void setCenterToFletcher() {
+        setTitle("Fletcher's Workshop", 32, 275, 95);
+
+        String bowActive = (((WeaponProducer) selectedBuilding).getItemName().equals("bow")) ? "Hovered" : "";
+        ImageView bow = new ImageView(GameViewController.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/bow" + bowActive + ".png");
+        bow.setTranslateX(500);
+        bow.setTranslateY(120);
+        bow.setOnMouseClicked(mouseEvent -> {
+            ((WeaponProducer) selectedBuilding).setItemName("bow");
+            setCenterOfBar("fletcher");
+        });
+
+        String crossBowActive = (((WeaponProducer) selectedBuilding).getItemName().equals("crossBow")) ? "Hovered" : "";
+        ImageView crossBow = new ImageView(GameViewController.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/crossBow" + crossBowActive + ".png");
+        crossBow.setTranslateX(600);
+        crossBow.setTranslateY(120);
+        crossBow.setOnMouseClicked(mouseEvent -> {
+            ((WeaponProducer) selectedBuilding).setItemName("crossBow");
+            setCenterOfBar("fletcher");
+        });
+        GameMenu.menuBar.getChildren().addAll(bow, crossBow);
+    }
+
+    private static void setCenterToPoleTurner() {
+        setTitle("Poleturner's Workshop", 32, 275, 95);
+
+        String spearActive = (((WeaponProducer) selectedBuilding).getItemName().equals("spear")) ? "Hovered" : "";
+        ImageView spear = new ImageView(GameViewController.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/spear" + spearActive + ".png");
+        spear.setTranslateX(500);
+        spear.setTranslateY(120);
+        spear.setOnMouseClicked(mouseEvent -> {
+            ((WeaponProducer) selectedBuilding).setItemName("spear");
+            setCenterOfBar("poleTurner");
+        });
+
+        String pikeActive = (((WeaponProducer) selectedBuilding).getItemName().equals("pike")) ? "Hovered" : "";
+        ImageView pike = new ImageView(GameViewController.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/pike" + pikeActive + ".png");
+        pike.setTranslateX(600);
+        pike.setTranslateY(120);
+        pike.setOnMouseClicked(mouseEvent -> {
+            ((WeaponProducer) selectedBuilding).setItemName("pike");
+            setCenterOfBar("poleTurner");
+        });
+        GameMenu.menuBar.getChildren().addAll(spear, pike);
+    }
+
+    private static void setCenterToArmourer() {
+        setTitle("Armourer's Workshop", 32, 275, 95);
+
+        String metalArmourActive = (((WeaponProducer) selectedBuilding).getItemName().equals("metalArmour")) ? "Hovered" : "";
+        ImageView metalArmour = new ImageView(GameViewController.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/metalArmour" + metalArmourActive + ".png");
+        metalArmour.setTranslateX(500);
+        metalArmour.setTranslateY(120);
+        metalArmour.setOnMouseClicked(mouseEvent -> {
+            ((WeaponProducer) selectedBuilding).setItemName("metalArmour");
+            setCenterOfBar("armourer");
+        });
+
+        String leatherArmourActive = (((WeaponProducer) selectedBuilding).getItemName().equals("leatherArmour")) ? "Hovered" : "";
+        ImageView leatherArmour = new ImageView(GameViewController.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/leatherArmour" + leatherArmourActive + ".png");
+        leatherArmour.setTranslateX(600);
+        leatherArmour.setTranslateY(120);
+        leatherArmour.setOnMouseClicked(mouseEvent -> {
+            ((WeaponProducer) selectedBuilding).setItemName("leatherArmour");
+            setCenterOfBar("armourer");
+        });
+        GameMenu.menuBar.getChildren().addAll(leatherArmour, metalArmour);
+    }
+
+    private static void setCenterToBlackSmith() {
+        setTitle("Armourer's Workshop", 32, 275, 95);
+
+        String swordActive = (((WeaponProducer) selectedBuilding).getItemName().equals("sword")) ? "Hovered" : "";
+        ImageView sword = new ImageView(GameViewController.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/sword" + swordActive + ".png");
+        sword.setTranslateX(500);
+        sword.setTranslateY(120);
+        sword.setOnMouseClicked(mouseEvent -> {
+            ((WeaponProducer) selectedBuilding).setItemName("sword");
+            setCenterOfBar("blackSmith");
+        });
+
+        String maceActive = (((WeaponProducer) selectedBuilding).getItemName().equals("mace")) ? "Hovered" : "";
+        ImageView mace = new ImageView(GameViewController.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/mace" + maceActive + ".png");
+        mace.setTranslateX(600);
+        mace.setTranslateY(120);
+        mace.setOnMouseClicked(mouseEvent -> {
+            ((WeaponProducer) selectedBuilding).setItemName("mace");
+            setCenterOfBar("blackSmith");
+        });
+        GameMenu.menuBar.getChildren().addAll(mace, sword);
     }
 
     private static void setTitle(String title, int fontSize, double x, double y) {

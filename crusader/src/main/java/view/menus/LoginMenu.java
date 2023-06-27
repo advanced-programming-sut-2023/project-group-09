@@ -24,10 +24,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import model.User;
 import model.captcha.Captcha;
-import model.menugui.MenuBox;
-import model.menugui.MenuButton;
-import model.menugui.MenuPasswordField;
-import model.menugui.MenuTextField;
+import model.menugui.*;
 import view.controllers.CaptchaController;
 import view.controllers.ViewController;
 
@@ -39,16 +36,22 @@ public class LoginMenu extends Application {
     public static MenuPasswordField password;
     public static Stage stage;
     public static Pane loginPane;
-    public static Pane root;
+    public static boolean afterSignup;
 
     @Override
     public void start(Stage stage) throws Exception {
         LoginMenu.stage = stage;
         Pane pane = FXMLLoader.load(LoginMenu.class.getResource("/FXML/loginMenu.fxml"));
-        root = ViewController.makePaneScreen(stage , pane , 1000 , -1);
+        Pane root = ViewController.makePaneScreen(stage , pane , 1000 , -1);
         loginPane = pane;
         Scene scene = new Scene(pane);
         setLoginMenu(pane);
+        if (afterSignup) {
+            MenuPopUp popUp = new MenuPopUp(root, 400, 400, "success",
+                    "signed up successfully");
+            root.getChildren().add(popUp);
+            afterSignup = false;
+        }
         stage.setScene(scene);
         stage.show();
     }

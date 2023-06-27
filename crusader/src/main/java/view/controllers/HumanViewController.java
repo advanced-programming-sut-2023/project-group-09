@@ -22,6 +22,7 @@ import javafx.util.Duration;
 import model.building.Building;
 import model.game.Tile;
 import model.human.civilian.Civilian;
+import model.human.military.Engineer;
 import model.human.military.Military;
 import model.menugui.game.*;
 import view.menus.GameMenu;
@@ -52,7 +53,13 @@ public class HumanViewController {
         putAggressive();
         updateStateOfMilitary();
 
-
+        ArrayList<Engineer> engineers = new ArrayList<>();
+        for (Military military : selectedMilitaries) {
+            if (military instanceof Engineer) engineers.add((Engineer) military);
+        }
+        if (engineers.size() != 0) {
+            putBuild();
+        }
     }
 
     public static void addTypes() {
@@ -135,6 +142,27 @@ public class HumanViewController {
         });
         icon.setOnMouseReleased(mouseEvent -> {
             GameMenu.movingState = MoveStates.PATROL.getState();
+            icon.setEffect(null);
+        });
+    }
+
+    public static void putBuild() {
+        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/engineer.png");
+        icon.setTranslateX(127);
+        icon.setTranslateY(167);
+        icon.setScaleY(1.1);
+        icon.setScaleX(1.3);
+        GameMenu.menuBar.getChildren().add(icon);
+        GameViewController.setHoverEventForBarOnUnitMenu(icon, "engineer");
+        icon.setOnMouseClicked(mouseEvent -> {
+//            TODO
+        });
+        icon.setOnMousePressed(mouseEvent -> {
+//            TODO
+            icon.setEffect(new InnerShadow(BlurType.THREE_PASS_BOX, Color.GRAY, 10, 0, 0, 0));
+        });
+        icon.setOnMouseReleased(mouseEvent -> {
             icon.setEffect(null);
         });
     }
@@ -228,10 +256,11 @@ public class HumanViewController {
         }
         GameMap.gameTroops[y][x].add(troop);
     }
+
     public static void dropCivilian(int x, int y, Tile tile, Civilian civilian) {
         GameTile gameTile = GameMap.getGameTile(x, y);
         GameMap gameMap = GameMenu.gameMap;
-        Citizen citizen = new Citizen(civilian,tile,gameTile);
+        Citizen citizen = new Citizen(civilian, tile, gameTile);
         gameMap.getChildren().add(citizen);
     }
 

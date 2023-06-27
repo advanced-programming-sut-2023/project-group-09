@@ -13,6 +13,7 @@ import model.building.Building;
 import model.building.castlebuildings.Gatehouse;
 import model.building.castlebuildings.MainCastle;
 import model.building.castlebuildings.Wall;
+import model.building.producerbuildings.ProducerBuilding;
 import model.game.Game;
 import model.game.Map;
 import model.game.Tile;
@@ -850,7 +851,7 @@ public class GameController {
     public static String showDetailsOfTile(int x, int y) {
         Tile tile = GameController.getGame().getMap().getTile(x, y);
 
-        String details = "tile (" + (x + 1) + ", " + (y + 1) + ") details:\n";
+        String details = "";
         details += "texture type: " + tile.getTexture().getTextureName() + "\n";
         if (tile.getTree() != null) {
             details += "Tree : " + tile.getTree().getTreeName() + "\n";
@@ -863,34 +864,79 @@ public class GameController {
                     tile.getBuilding().getGovernment().getUser().getNickname() +
                     " | HP: " + tile.getBuilding().getHp() + "/" +
                     tile.getBuilding().getMaxHp() + "\n";
-        } else details += "there is no building on this tile\n";
+        }
         if (tile.getTool() != null) {
             details += "tool " + tile.getTool().getName() + " from Lord " +
                     tile.getTool().getGovernment().getUser().getNickname() +
                     " | HP: " + tile.getTool().getHp() + "/20\n";
-        } else details += "there is no tool on this tile\n";
+        }
 
-
-        details += "Civilian number : " + tile.getCivilians().size() + "\n";
+        HashMap<Government, Integer> civilians = new HashMap<>();
         if (tile.getCivilians().size() != 0) {
-            details += "Civilian in details : \n";
             for (int i = 0; i != tile.getCivilians().size(); i++) {
-                details += "Civilian " + (i + 1) + ": HP : " + tile.getCivilians().get(i).getHealth() + "/" +
-                        tile.getCivilians().get(i).getDefenseRating() + " | from Lord " +
-                        tile.getCivilians().get(i).getGovernment().getUser().getNickname() + "\n";
+                Civilian civilian = tile.getCivilians().get(i);
+                if (civilians.get(civilian.getGovernment()) == null)
+                    civilians.put(civilian.getGovernment(), 1);
+                else civilians.put(civilian.getGovernment(), civilians.get(civilian.getGovernment()) + 1);
             }
         }
-        details += "Military number : " + filteredMilitariesList(tile.getMilitaries()).size() + "\n";
-        for (int i = 0; i != filteredMilitariesList(tile.getMilitaries()).size(); i++) {
-            Military human = filteredMilitariesList(tile.getMilitaries()).get(i);
-            details += "Military " + (i + 1) + ": type: " + human.getName() + " | Hp : " +
-                    human.getHealth() + "/" + human.getDefenseRating() + " | from Lord " +
-                    human.getGovernment().getUser().getNickname() + "\n";
+        for (Government government : civilians.keySet())
+            details += "Lord " + government.getUser().getNickname() + ": " + civilians.get(government)
+                    + "civilians\n";
+
+        HashMap<Government, Integer> militaries = new HashMap<>();
+        if (filteredMilitariesList(tile.getMilitaries()).size() != 0) {
+            for (int i = 0; i != filteredMilitariesList(tile.getMilitaries()).size(); i++) {
+                Military human = filteredMilitariesList(tile.getMilitaries()).get(i);
+                if (militaries.get(human.getGovernment()) == null)
+                    militaries.put(human.getGovernment(), 1);
+                else militaries.put(human.getGovernment(), militaries.get(human.getGovernment()) + 1);
+            }
         }
+        for (Government government : militaries.keySet())
+            details += "Lord " + government.getUser().getNickname() + ": " + militaries.get(government)
+                    + "militaries\n";
 
         if (tile.isPit()) details += "there is a killing pit here\n";
         if (tile.isMoat()) details += "there is a moat here\n";
         return details.substring(0, details.length() - 1);
+    }
+
+    public static String showDetailsOfTiles(ArrayList<GameTile> tiles) {
+        String details = "";
+        ArrayList<Military> militaries = new ArrayList<>();
+        for (GameTile gameTile : tiles) {
+            militaries.addAll(filteredMilitariesList(gameTile.getTile().getMilitaries()));
+        }
+
+        HashMap<Government, Integer> militariesHashmap = new HashMap<>();
+        if (militariesHashmap.size() != 0) {
+            for (int i = 0; i != militaries.size(); i++) {
+                Military human = militaries.get(i);
+                if (militariesHashmap.get(human.getGovernment()) == null)
+                    militariesHashmap.put(human.getGovernment(), 1);
+                else militariesHashmap.put(human.getGovernment(), militariesHashmap.get(human.getGovernment()) + 1);
+            }
+        }
+        for (Government government : militariesHashmap.keySet())
+            details += "Lord " + government.getUser().getNickname() + ": " + militariesHashmap.get(government)
+                    + "militaries\n";
+
+        HashMap<Building, Integer> produceRates = new HashMap<>();
+        for (GameTile gameTile : tiles) {
+            Building building = gameTile.getTile().getBuilding();
+            if (building != null && building instanceof ProducerBuilding && produceRates.get(building) == null)
+                produceRates.put(building, ((ProducerBuilding) building).getRate());
+        }
+        if (produceRates.size() != 0) {
+            details += "minimum production rate: " + Collections.min(produceRates.values());
+            details += "maximum production rate: " + Collections.max(produceRates.values());
+            double sum = 0;
+            for (Integer rate : produceRates.values()) sum += (double) rate;
+            details += "average production rate: " + sum / produceRates.size();
+        }
+
+        return details;
     }
 
     public static String validateXAndY(int x, int y) {

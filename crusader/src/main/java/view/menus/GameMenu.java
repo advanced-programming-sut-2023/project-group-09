@@ -288,20 +288,6 @@ public class GameMenu extends Application {
                 GameController.getGame().changeTurn();
             }
 
-//            if (keyName.equals("B")) {
-//                ArrayList<Engineer> engineers = new ArrayList<>();
-//                for (GameTile tile : selectedTiles) {
-//                    for (int i = 0; i < tile.getTile().getHumans().size(); i++) {
-//                        if (tile.getTile().getHumans().get(i) instanceof Engineer engineer)
-//                            engineers.add(engineer);
-//                    }
-//                }
-//                if (engineers.size() == 0) {
-//                    return;
-//                }
-//                GameViewController.setCenterOfBar("engineer");
-//            }
-
             if (keyName.equals("Down")) {
                 if (HumanViewController.lastType != null && HumanViewController.lastType.count != 0) {
                     HumanViewController.lastType.count--;
@@ -432,8 +418,8 @@ public class GameMenu extends Application {
                         }
                     }
                 }
-//                MenuHoverBox details = new MenuHoverBox(root, endSelectionTile.getX() + GameMap.tileWidth / 2 - scene.getWidth() / 2,
-//                        endSelectionTile.getY() + GameMap.tileHeight / 2 - scene.getHeight() / 2, 300, 300, "Hello world");
+                MenuHoverBox details = new MenuHoverBox(root, endSelectionTile.getX() - 450,
+                        endSelectionTile.getY() - 250, 300, 300, "Hello world");
             }
         }));
         selectDoneTimeline.setCycleCount(-1);

@@ -91,10 +91,8 @@ public class SecurityQuestionMenu extends Application {
         this.user = null;
         LoginMenu loginMenu = new LoginMenu();
         try {
+            LoginMenu.afterSignup = true;
             loginMenu.start(this.stage);
-//            MenuPopUp popUp = new MenuPopUp(LoginMenu.root, 400, 400, "success",
-//                    "signup done successfully");
-//            loginMenu.root.getChildren().add(popUp);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
