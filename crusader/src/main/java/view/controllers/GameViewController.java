@@ -1948,7 +1948,7 @@ public class GameViewController {
         engineer.setTranslateY(100);
         engineer.setOnMouseClicked(mouseEvent -> {
             ((Barrack) selectedBuilding).makeUnit("engineer");
-            selectedBuilding.getGovernment().updatePopulationWithRemove(1);
+            selectedBuilding.getGovernment().updatePopulationWithRemove(selectedBuilding.getGovernment().getPopulation()-1);
         });
 
         ImageView ladderman = new ImageView(GameViewController.class.getResource(Paths.BAR_IMAGES.getPath())
@@ -1957,7 +1957,7 @@ public class GameViewController {
         ladderman.setTranslateY(90);
         ladderman.setOnMouseClicked(mouseEvent -> {
             ((Barrack) selectedBuilding).makeUnit("ladderman");
-            selectedBuilding.getGovernment().updatePopulationWithRemove(1);
+            selectedBuilding.getGovernment().updatePopulationWithRemove(selectedBuilding.getGovernment().getPopulation()-1);
         });
         GameMenu.menuBar.getChildren().addAll(engineer, ladderman, peasantsNumber);
     }
@@ -1988,7 +1988,7 @@ public class GameViewController {
         tunneler.setTranslateY(90);
         tunneler.setOnMouseClicked(mouseEvent -> {
             ((Barrack) selectedBuilding).makeUnit("tunneler");
-            selectedBuilding.getGovernment().updatePopulationWithRemove(1);
+            selectedBuilding.getGovernment().updatePopulationWithRemove(selectedBuilding.getGovernment().getPopulation()-1);
         });
         GameMenu.menuBar.getChildren().addAll(tunneler, peasantsNumber);
     }
