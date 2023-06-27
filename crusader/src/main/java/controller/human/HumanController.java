@@ -85,6 +85,7 @@ public class HumanController {
                 }
                 if (military.isUsesLadder()) {
                     Move move = new Move(military.getX(), military.getY(), enemy, false, military);
+                    military.getGovernment().addNumberOfTroopInAttack(military);
                     move.setPath(ladderPath);
                     military.setMove(move);
                     count++;
@@ -92,6 +93,7 @@ public class HumanController {
 
                 if (military.getName().equals("assassin")) {
                     Move move = new Move(military.getX(), military.getY(), enemy, false, military);
+                    military.getGovernment().addNumberOfTroopInAttack(military);
                     move.setPath(assassinPath);
                     military.setMove(move);
                     military.setInvisible(false);
@@ -104,6 +106,7 @@ public class HumanController {
                     continue;
                 }
                 Move move = new Move(military.getX(), military.getY(), enemy, false, military);
+                military.getGovernment().addNumberOfTroopInAttack(military);
                 move.setPath(path);
                 military.setMove(move);
                 count++;
@@ -136,6 +139,7 @@ public class HumanController {
                 }
                 if (military.isUsesLadder()) {
                     Move move = new Move(military.getX(), military.getY(), building, true, military);
+                    military.getGovernment().addNumberOfTroopInAttack(military);
                     move.setPath(ladderPath);
                     military.setMove(move);
                     military.getAttack().setTargetBuilding(building);
@@ -144,6 +148,7 @@ public class HumanController {
 
                 if (military.getName().equals("assassin")) {
                     Move move = new Move(military.getX(), military.getY(), building, true, military);
+                    military.getGovernment().addNumberOfTroopInAttack(military);
                     move.setPath(assassinPath);
                     military.setMove(move);
                     military.getAttack().setTargetBuilding(building);
@@ -162,6 +167,7 @@ public class HumanController {
                 }
 
                 Move move = new Move(military.getX(), military.getY(), building, true, military);
+                military.getGovernment().addNumberOfTroopInAttack(military);
                 move.setPath(path);
                 military.setMove(move);
                 military.getAttack().setTargetBuilding(building);
@@ -196,6 +202,7 @@ public class HumanController {
                 }
                 if (military.isUsesLadder()) {
                     Move move = new Move(military.getX(), military.getY(), tool, false, military);
+                    military.getGovernment().addNumberOfTroopInAttack(military);
                     move.setPath(ladderPath);
                     military.setMove(move);
                     count++;
@@ -203,6 +210,7 @@ public class HumanController {
 
                 if (military.getName().equals("assassin")) {
                     Move move = new Move(military.getX(), military.getY(), tool, false, military);
+                    military.getGovernment().addNumberOfTroopInAttack(military);
                     move.setPath(assassinPath);
                     military.setMove(move);
                     military.setInvisible(false);
@@ -215,6 +223,7 @@ public class HumanController {
                     continue;
                 }
                 Move move = new Move(military.getX(), military.getY(), tool, false, military);
+                military.getGovernment().addNumberOfTroopInAttack(military);
                 move.setPath(path);
                 military.setMove(move);
                 count++;
@@ -260,6 +269,7 @@ public class HumanController {
                 int index = random.nextInt(enemies.size());
                 Military enemy = enemies.get(index);
                 military.getAttack().setEnemy(enemy);
+                military.getGovernment().addNumberOfTroopInAttack(military);
             }
         }
         if (countOfTroop == 0) {
@@ -275,6 +285,7 @@ public class HumanController {
             if (military.canAirAttack() && military.getAttack().buildingIsInRange(building)) {
                 countOfTroop++;
                 military.getAttack().setTargetBuilding(building);
+                military.getGovernment().addNumberOfTroopInAttack(military);
             }
         }
         if (countOfTroop == 0) {
@@ -290,6 +301,7 @@ public class HumanController {
             if (military.canAirAttack() && military.getAttack().isInRange(tool.getX(), tool.getY(), military.getShootingRange())) {
                 countOfTroop++;
                 military.getAttack().setTool(tool);
+                military.getGovernment().addNumberOfTroopInAttack(military);
             }
         }
         if (countOfTroop == 0) {
@@ -839,6 +851,7 @@ public class HumanController {
             Move move = new Move(military.getX(), military.getY(), enemy, false, military);
             move.setPath(path);
             military.setMove(move);
+            military.getGovernment().addNumberOfTroopInAttack(military);
         }
         return false;
     }
@@ -847,6 +860,7 @@ public class HumanController {
         LinkedList<Tuple> path = MoveController.getPath(new Tuple(military.getX(), military.getY()), new Tuple(tool.getX(), tool.getX()), military);
         if (path != null) {
             Move move = new Move(military.getX(), military.getY(), tool, false, military);
+            military.getGovernment().addNumberOfTroopInAttack(military);
             move.setPath(path);
             military.setMove(move);
         }

@@ -80,7 +80,7 @@ public class GameMenu extends Application {
     //---------------------------------
     public static HashMap<String, Integer> unitsCount = new HashMap<>();
     public static HashSet<Military> selectedTroops = new HashSet<>();
-
+    public static ImageView attacking;
 
     //-----------------------------------
 
@@ -105,6 +105,7 @@ public class GameMenu extends Application {
         gameMap.loadMap();
         miniMap = new MiniMap(125, 143, 0, 0);
 
+
         for (Government government : GameController.getGame().getGovernments()) {
             MapController.dropMilitary(government.getCastleX(), government.getCastleY() + 2, "lord", government);
             EuropeanTroop lordMilitary = (EuropeanTroop) GameController.getGame().getMap().
@@ -124,10 +125,6 @@ public class GameMenu extends Application {
         root.setClip(clipRectangle);
         MapController.dropMilitary(14, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
         MapController.dropMilitary(11, 5, "archerBow", GameController.getGame().getCurrentGovernment());
-        //MapController.dropMilitary(20, 5, "horseArcher", GameController.getGame().getCurrentGovernment());
-        //MapController.dropMilitary(22, 5, "slinger", GameController.getGame().getCurrentGovernment());
-        //MapController.dropMilitary(18, 5, "assassin", GameController.getGame().getCurrentGovernment());
-        //MapController.dropMilitary(23, 5, "fireThrower", GameController.getGame().getCurrentGovernment());
 
         MapController.dropMilitary(20, 5, "archerBow", GameController.getGame().getGovernments().get(1));
         MapController.dropMilitary(21, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
@@ -135,11 +132,15 @@ public class GameMenu extends Application {
         MapController.dropMilitary(22, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
         MapController.dropMilitary(22, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
 
-
         //MapController.dropCivilian(10,10,GameController.getGame().getCurrentGovernment(),false);
         setEventListeners();
         GameViewController.setCenterOfBar();
         GameViewController.createBorderRectangles(gameMap, miniMap);
+        attacking = new ImageView(new Image(GameTile.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm() +
+                "icons/attacking.gif"));
+        attacking.setViewOrder(-2000);
+        attacking.setTranslateY(-350);
+        attacking.setTranslateX(-550);
 
         root.setOnMouseClicked(mouseEvent -> {
             if (isSelected && !selectedUnit && mouseEvent.getScreenY() >= scene.getHeight() - 200) {
@@ -153,6 +154,7 @@ public class GameMenu extends Application {
             }
         });
         createSelectedArea();
+
         stage.show();
     }
 
@@ -211,7 +213,6 @@ public class GameMenu extends Application {
         hoveringButton.setStroke(Color.BLACK);
         menuBar.getChildren().add(hoveringButton);
         hoveringBarStateText = hoveringButton;
-
         menuBar.setViewOrder(-2000);
         GameViewController.setBarForCurrentGovernment();
         if (state == 0) {
@@ -252,7 +253,7 @@ public class GameMenu extends Application {
     }
 
 
-    public void setEventListeners() {
+    public static void setEventListeners() {
         root.setOnMouseMoved(mouseEvent -> {
             if (selectedUnit) {
                 if (!root.getChildren().contains(selectCursor)) {
@@ -283,8 +284,9 @@ public class GameMenu extends Application {
             if (keyName.equals("A")) {
                 movingState = UnitMovingState.AIR_ATTACK.getState();
             }
-            if (keyName.equals("C")) {
-                GameController.getGame().changeTurn();
+
+            if (keyName.equals("P")) {
+                movingState = UnitMovingState.PATROL.getState();
             }
 
 //            if (keyName.equals("B")) {
@@ -335,6 +337,17 @@ public class GameMenu extends Application {
         });
     }
 
+    public static void showAttacking(){
+
+        if (GameController.getGame().getCurrentGovernment().getNumberOfTroopInAttack().size() > 0){
+            if (root.getChildren().contains(attacking)){
+                return;
+            }
+            root.getChildren().add(attacking);
+        }else{
+            root.getChildren().remove(attacking);
+        }
+    }
 
     private void createSelectedArea() {
         selectedArea = new Rectangle(0, 0);
