@@ -28,12 +28,17 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.Government;
+import model.game.Game;
 import model.game.Map;
 import model.game.Tile;
+import model.human.military.Engineer;
+import model.human.military.EuropeanTroop;
 import model.human.military.Military;
 import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
+import model.menugui.game.Troop;
 import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
 import view.controllers.ViewController;
@@ -96,6 +101,15 @@ public class GameMenu extends Application {
         gameMap = new GameMap(map, 0, 0, 30, 18);
         gameMap.loadMap();
         miniMap = new MiniMap(125, 143, 0, 0);
+
+        for (Government government : GameController.getGame().getGovernments()) {
+            MapController.dropMilitary(government.getCastleX(), government.getCastleY() + 2, "lord", government);
+            EuropeanTroop lordMilitary = (EuropeanTroop) GameController.getGame().getMap().
+                    getTile(government.getCastleX(), government.getCastleY() + 2).getMilitaries().get(0);
+            lordMilitary.setGovernment(government);
+            government.setLord(lordMilitary);
+        }
+
         menuBar = new Pane();
         menuBar.setMaxWidth(1200);
         menuBar.setMaxHeight(220);
@@ -231,6 +245,20 @@ public class GameMenu extends Application {
             if (keyName.equals("C")) {
                 GameController.getGame().changeTurn();
             }
+
+//            if (keyName.equals("B")) {
+//                ArrayList<Engineer> engineers = new ArrayList<>();
+//                for (GameTile tile : selectedTiles) {
+//                    for (int i = 0; i < tile.getTile().getHumans().size(); i++) {
+//                        if (tile.getTile().getHumans().get(i) instanceof Engineer engineer)
+//                            engineers.add(engineer);
+//                    }
+//                }
+//                if (engineers.size() == 0) {
+//                    return;
+//                }
+//                GameViewController.setCenterOfBar("engineer");
+//            }
 
             if (keyName.equals("Down")) {
                 if (HumanViewController.lastType != null && HumanViewController.lastType.count != 0) {
