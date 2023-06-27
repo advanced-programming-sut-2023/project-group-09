@@ -77,7 +77,6 @@ public class GameMaps {
         map1.addDefaultCastle(200, 250);
         map1.addDefaultCastle(30, 280);
         largeMaps.add(map1);
-        DBController.saveMap(map1, "src/main/resources/savedmaps/map1.json");
     }
 
     public static void createMap2() {

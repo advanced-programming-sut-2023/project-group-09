@@ -322,6 +322,7 @@ public class Attack {
         }
         if (military.getName().equals("ladderman")) {
             military.setUsesLadder(true);
+            military.getGovernment().removeNumberOfTroopInAttack(military);
             return;
         }
 
@@ -333,9 +334,8 @@ public class Attack {
             int hp = targetBuilding.takeDamage(military.getAttackRating());
             targetBuilding.setBurning(true);
             GameViewController.fireBuilding(targetBuilding);
+            military.getGovernment().removeNumberOfTroopInAttack(military);
             if (hp <= 0) {
-                military.getGovernment().removeNumberOfTroopInAttack(military);
-                enemy.getGovernment().removeNumberOfTroopInAttack(military);
                 MapController.deleteBuilding(targetBuilding);
                 targetBuilding.setGovernment(null);
                 targetBuilding = null;
@@ -360,12 +360,12 @@ public class Attack {
             HumanViewController.airAttackToBuilding(military, targetBuilding);
         }
         if (military.getName().equals("fireThrower") && !targetBuilding.isBurning()){
-            targetBuilding.isBurning();
+            targetBuilding.setBurning(true);
+            military.getGovernment().removeNumberOfTroopInAttack(military);
         }
 
         if (hp <= 0) {
             military.getGovernment().removeNumberOfTroopInAttack(military);
-            enemy.getGovernment().removeNumberOfTroopInAttack(military);
             MapController.deleteBuilding(targetBuilding);
             targetBuilding.setGovernment(null);
             targetBuilding = null;
