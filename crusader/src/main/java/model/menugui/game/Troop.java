@@ -46,7 +46,7 @@ public class Troop extends ImageView {
         this.military = military;
         this.tile = tile;
         color = military.getGovernment().getColor();
-        this.setViewOrder(-gameTile.getTileY() - 2);
+        this.setViewOrder(-1000);
         this.setTranslateX(gameTile.getTextureImage().getTranslateX() - this.getFitWidth() / 2 + GameMap.tileWidth / 2);
         this.setTranslateY(gameTile.getTextureImage().getTranslateY() - this.getFitHeight() / 2);
         this.gameTile = gameTile;
@@ -56,21 +56,20 @@ public class Troop extends ImageView {
     }
 
     public void changeGameTile(GameTile gameTile) {
-        this.setViewOrder(-gameTile.getTileY() - 2);
-
-        Tuple tuple = new Tuple(military.getY(), military.getX());
-        tuple.setOverhead(overHead);
-        overHead = MoveController.checkIsPathOverhead(gameTile.getTileX(), gameTile.getTileY(), military, tuple);
-        if (overHead) {
-            if (gameTile.getTile().getBuilding() instanceof CastleBuilding castleBuilding) {
-                this.setTranslateX(gameTile.getTextureImage().getTranslateX() - this.getFitWidth() / 2 + GameMap.tileWidth / 2);
-                this.setTranslateY(gameTile.getTextureImage().getTranslateY()
-                        - this.getFitHeight() / 2 - castleBuilding.getHeight() * GameMap.tileHeight);
-            }
-        }else{
-            this.setTranslateX(gameTile.getTextureImage().getTranslateX() - this.getFitWidth() / 2 + GameMap.tileWidth / 2);
-            this.setTranslateY(gameTile.getTextureImage().getTranslateY() - this.getFitHeight() / 2);
-        }
+        this.setTranslateX(gameTile.getTextureImage().getTranslateX() - this.getFitWidth() / 2 + GameMap.tileWidth / 2);
+        this.setTranslateY(gameTile.getTextureImage().getTranslateY() - this.getFitHeight() / 2);
+//        Tuple tuple = new Tuple(military.getY(), military.getX());
+//        tuple.setOverhead(overHead);
+//        overHead = MoveController.checkIsPathOverhead(gameTile.getTileX(), gameTile.getTileY(), military, tuple);
+//        if (overHead) {
+//            if (gameTile.getTile().getBuilding() instanceof CastleBuilding castleBuilding) {
+//                this.setTranslateX(gameTile.getTextureImage().getTranslateX() - this.getFitWidth() / 2 + GameMap.tileWidth / 2);
+//                this.setTranslateY(gameTile.getTextureImage().getTranslateY()
+//                        - this.getFitHeight() / 2 - castleBuilding.getHeight() * GameMap.tileHeight);
+//            }
+//        }else{
+//
+//        }
     }
 
     public void setEventListener() {
@@ -115,9 +114,9 @@ public class Troop extends ImageView {
     }
 
     public void setTimeLine() {
-        move = new Timeline(new KeyFrame(Duration.millis((20 - military.getSpeed()) * 12), actionEvent -> {
+        move = new Timeline(new KeyFrame(Duration.millis((20 - military.getSpeed()) * 10), actionEvent -> {
             if (military.getMove() != null && military.getMove().isMoving()) {
-                if (getDistance() < 7) {
+                if (getDistance() < 3) {
                     if (GameMap.gameTroops[military.getY()][military.getX()] == null) {
                         GameMap.gameTroops[military.getY()][military.getX()] = new ArrayList<>();
                     }
@@ -137,19 +136,17 @@ public class Troop extends ImageView {
                 } else {
                     double disX = this.getTranslateX() + this.getFitWidth() / 2 - (gameTile.getX() + GameMap.tileWidth / 2);
                     double disY = this.getTranslateY() + this.getFitHeight() / 2 - gameTile.getY();
-                    if (Math.abs(disX) >= 5) {
+                    if (Math.abs(disX) >= 2) {
                         int sign = (int) Math.signum(disX);
-                        this.setTranslateX(this.getTranslateX() + (sign * (-1) * 5));
+                        this.setTranslateX(this.getTranslateX() + (sign * (-1) * 2));
                     }
-                    if (Math.abs(disY) >= 5) {
+                    if (Math.abs(disY) >= 2) {
                         int sign = (int) Math.signum(disY);
-                        this.setTranslateY(this.getTranslateY() + (sign * (-1) * 5));
+                        this.setTranslateY(this.getTranslateY() + (sign * (-1) * 2));
                     }
                     step = (step + 1) % 8;
                 }
                 setImage();
-            } else {
-                doAttack();
             }
         }));
         GameMenu.timelines.add(move);
