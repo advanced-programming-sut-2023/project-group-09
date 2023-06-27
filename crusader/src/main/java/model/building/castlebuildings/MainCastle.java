@@ -1,5 +1,6 @@
 package model.building.castlebuildings;
 
+import controller.GameController;
 import controller.MapController;
 import model.Government;
 import model.game.Tile;
@@ -7,6 +8,7 @@ import model.game.Tuple;
 import model.human.civilian.Civilian;
 import model.human.military.EuropeanTroop;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class MainCastle extends CastleBuilding {
@@ -79,16 +81,17 @@ public class MainCastle extends CastleBuilding {
     }
 
     public Tuple makePositionOfUnit() {
+        ArrayList<Tile> tiles = GameController.getNeighborTiles(getEndX(),getEndY(),getBuildingImpassableLength(),getBuildingImpassableLength());
+        ArrayList<Tile> wholeTile = GameController.getNeighborTiles(getEndSpecialX(),getEndSpecialY(),getWidth(),getLength());
+
+
+
         Random random = new Random();
-        int x = random.nextInt(this.getWidth());
-        int y = random.nextInt(this.getLength());
-        while (x < 5 && y < 5) {
-            x = random.nextInt(this.getWidth());
-            y = random.nextInt(this.getLength());
+        int i = random.nextInt(wholeTile.size());
+        while (tiles.contains(wholeTile.get(i))) {
+            i = random.nextInt(wholeTile.size());
         }
-        x += this.getStartX();
-        y += this.getStartY();
-        return new Tuple(y, x);
+        return new Tuple(wholeTile.get(i).y, wholeTile.get(i).x);
     }
 
     public int getTotalTax() {
