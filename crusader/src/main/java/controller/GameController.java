@@ -6,6 +6,7 @@ import controller.human.HumanController;
 import controller.human.MoveController;
 import enumeration.MilitaryStates;
 import enumeration.Pair;
+import javafx.scene.text.Text;
 import model.Government;
 import model.activity.Move;
 import model.building.Building;
@@ -24,6 +25,7 @@ import model.human.military.Tunneler;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
 import model.tools.Tool;
+import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
 import viewphase1.UnitMenu;
 
@@ -546,6 +548,9 @@ public class GameController {
         consumeRequired(building.getCost());
         GovernmentController.getCurrentGovernment().setGold(GovernmentController.getCurrentGovernment().getGold() - building.getPrice());
         MapController.dropBuilding(x, y, type, GameController.getGame().getCurrentGovernment());
+        int popularity = GovernmentController.getCurrentGovernment().getPopularity() + 37;
+        GameViewController.popularityReporter.setText(String.format("%d", popularity));
+        GameViewController.updateFaceOfReporter();
         return "building dropped successfully!";
     }
 

@@ -1,12 +1,14 @@
 package view.menus;
 
 import controller.GameController;
+import controller.GovernmentController;
 import controller.MapController;
 import controller.gamestructure.GameImages;
 import controller.gamestructure.GameMaps;
 import controller.human.HumanController;
 import enumeration.Paths;
 import enumeration.UnitMovingState;
+import enumeration.dictionary.Colors;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.Transition;
@@ -15,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
@@ -28,6 +31,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.Government;
 import model.game.Map;
 import model.game.Tile;
 import model.human.military.Military;
@@ -135,6 +139,37 @@ public class GameMenu extends Application {
         stage.show();
     }
 
+    public static void setShieldsForGovernments() {
+        int index = 0;
+        for (Government government : GameController.getGame().getGovernments()) {
+            ImageView shield = new ImageView(GameMenu.class.getResource(Paths.FLAG_IMAGES.getPath()).toExternalForm()
+                    + government.getColor() + "Flag.png");
+            GameMenu.menuBar.getChildren().add(shield);
+            shield.setScaleX(2);
+            shield.setScaleY(2);
+            shield.setTranslateY(100 + (index/4) * 50);
+            shield.setTranslateX(10 + 50*(index%4));
+            shield.setOnMouseEntered(e -> {
+                hoveringBarStateText.setText("Lord " + government.getUser().getNickname());
+                shield.setImage(new Image(GameMenu.class.getResource(Paths.FLAG_IMAGES.getPath()).toExternalForm()
+                        + government.getColor() + "BrightFlag.png"));
+            });
+            shield.setOnMouseExited(e -> {
+                hoveringBarStateText.setText("");
+                shield.setImage(new Image(GameMenu.class.getResource(Paths.FLAG_IMAGES.getPath()).toExternalForm()
+                        + government.getColor() + "Flag.png"));
+            });
+            shield.setOnMouseClicked(e -> {
+                GovernmentController.setCurrentGovernment(government);
+                GameController.getGame().setCurrentGovernment(government);
+                GameMenu.menuBar.getChildren().clear();
+                createGameBar(0);
+                GameViewController.setCenterToCastleBuildings();
+            });
+            index++;
+        }
+    }
+
     public static void createGameBar(int state) {
 //        state: 0=buildings  /  1=nemidunam(farzam midune)  /  2=menu  /  3=mercenaryPost  /  4=barrack
         barImage = new ImageView(GameImages.imageViews.get("bar"));
@@ -147,6 +182,9 @@ public class GameMenu extends Application {
         miniMap.setTranslateY(66);
         miniMap.setTranslateX(813);
         menuBar.getChildren().add(barImage);
+
+        setShieldsForGovernments();
+
         Text hoveringButton = new Text("");
         hoveringButton.setTranslateX(275);
         hoveringButton.setTranslateY(70);
