@@ -21,7 +21,7 @@ import view.menus.GameMenu;
 
 import java.util.ArrayList;
 
-public class Troop extends ImageView {
+public class Tool extends ImageView {
     private Military military;
     private Tile tile;
 
@@ -40,7 +40,7 @@ public class Troop extends ImageView {
     int dead = 1;
     boolean overHead = false;
 
-    public Troop(Military military, Tile tile, GameTile gameTile) {
+    public Tool(Military military, Tile tile, GameTile gameTile) {
         this.setFitWidth(40);
         this.setFitHeight(40);
         this.military = military;
@@ -133,7 +133,7 @@ public class Troop extends ImageView {
                     step = (step + 1) % 8;
                     gameTile = next;
                     tile = next.getTile();
-                    GameMap.gameTroops[military.getY()][military.getX()].add(this);
+                    //GameMap.gameTroops[military.getY()][military.getX()].add(this);
                 } else {
                     double disX = this.getTranslateX() + this.getFitWidth() / 2 - (gameTile.getX() + GameMap.tileWidth / 2);
                     double disY = this.getTranslateY() + this.getFitHeight() / 2 - gameTile.getY();
