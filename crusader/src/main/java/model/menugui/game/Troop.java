@@ -52,7 +52,7 @@ public class Troop extends ImageView {
 
         health = new ImageView(new Image(GameTile.class.getResource(Paths.GAME_IMAGES.getPath()).toExternalForm() +
                 "other/10.png"));
-        health.setTranslateX(this.getTranslateX() + 10);
+        health.setTranslateX(this.getTranslateX() + 12);
         health.setTranslateY(this.getTranslateY() + 5);
         health.setViewOrder(-1000);
 
@@ -64,6 +64,8 @@ public class Troop extends ImageView {
     public void changeGameTile(GameTile gameTile) {
         this.setTranslateX(gameTile.getTextureImage().getTranslateX() - this.getFitWidth() / 2 + GameMap.tileWidth / 2);
         this.setTranslateY(gameTile.getTextureImage().getTranslateY() - this.getFitHeight() / 2);
+        health.setTranslateX(this.getTranslateX() + 12);
+        health.setTranslateY(this.getTranslateY() + 5);
 //        Tuple tuple = new Tuple(military.getY(), military.getX());
 //        tuple.setOverhead(overHead);
 //        overHead = MoveController.checkIsPathOverhead(gameTile.getTileX(), gameTile.getTileY(), military, tuple);
@@ -181,9 +183,10 @@ public class Troop extends ImageView {
                 this.setImage(troop);
             } catch (Exception e) {
                 deadTimeline.stop();
+                hideProgressBar();
                 GameMap.gameTroops[military.getY()][military.getX()].remove(this);
                 GameMenu.gameMap.getChildren().remove(this);
-                hideProgressBar();
+
             }
         }));
         deadTimeline.setCycleCount(-1);
@@ -227,7 +230,6 @@ public class Troop extends ImageView {
     }
 
     public void updateImageAttack() {
-        showProgressBar();
         setImage(GameImages.imageViews.get(
                 military.getName() + "_" + military.getGovernment().getColor() + "_" + (attackStep * 16 + attackDirection + 129)));
     }
@@ -248,11 +250,10 @@ public class Troop extends ImageView {
     }
 
     public void showProgressBar() {
-        if (military.getDefenseRating() == 0) {
+        if (military.getDefenseRating() == 0 || dead != 1) {
             return;
         }
         int num = (int) Math.ceil((((double) military.getHealth() / military.getDefenseRating()) * 100) / 10);
-        System.out.println(num);
         health.setImage(GameImages.imageViews.get("health_" + num));
         if (!GameMenu.gameMap.getChildren().contains(health)) {
             GameMenu.gameMap.getChildren().add(health);

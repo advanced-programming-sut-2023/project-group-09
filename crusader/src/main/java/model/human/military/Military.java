@@ -4,8 +4,11 @@ import enumeration.MilitaryStates;
 import model.activity.Attack;
 import model.activity.Move;
 import model.human.Human;
+import view.controllers.GameViewController;
+import view.controllers.HumanViewController;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public abstract class Military extends Human{
     private final int attackRating;
@@ -159,6 +162,12 @@ public abstract class Military extends Human{
     public int takeDamage(int damage){
         int newHp = this.getHealth() - damage;
         this.setHealth(newHp);
+        if (HumanViewController.getTroopFromMilitary(this) != null){
+            Objects.requireNonNull(HumanViewController.getTroopFromMilitary(this)).showProgressBar();
+            if (newHp <= 0){
+                Objects.requireNonNull(HumanViewController.getTroopFromMilitary(this)).hideProgressBar();
+            }
+        }
         return newHp;
     }
 
