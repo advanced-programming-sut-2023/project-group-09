@@ -724,8 +724,9 @@ public class GameController {
                 GameMap.getGameTile(tile.getFirst() , tile.getSecond()).setSickness();
             }
         }));
+        timeline.setCycleCount(150);
         timeline.play();
-        timeline.setCycleCount(300);
+
         timeline.setOnFinished(e -> {
             for (Pair<Integer , Integer> tile : tiles) {
                 GameMap.getGameTile(tile.getFirst() , tile.getSecond()).clearSickness();

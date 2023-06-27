@@ -23,6 +23,7 @@ import model.human.military.Military;
 import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
 import view.menus.GameMenu;
+import view.menus.SignupMenu;
 
 import java.util.Random;
 
@@ -101,8 +102,10 @@ public class GameTile {
     }
 
     public void setSickness() {
-        if (sicknessImage == null)
+        if (sicknessImage == null) {
             sicknessImage = new ImageView();
+            GameMenu.gameMap.getChildren().add(sicknessImage);
+        }
         int random  = Math.abs(new Random().nextInt()) % 32 + 1;
         sicknessImage.setImage(new Image(GameViewController.class.getResource(Paths.MAP_IMAGES.getPath())
                 .toExternalForm() + "sickness/Image" + random + ".png"));
@@ -111,7 +114,6 @@ public class GameTile {
         sicknessImage.setFitWidth(width*2);
         sicknessImage.setFitHeight(height*2);
         sicknessImage.setViewOrder(-100000);
-        GameMenu.gameMap.getChildren().add(sicknessImage);
     }
 
     public void clearSickness() {
