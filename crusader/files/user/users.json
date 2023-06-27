@@ -723,5 +723,37 @@
     "passwordRecoveryAnswer": "185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969",
     "slogan": "Strategize to win!",
     "path": "files/img/avatars/2.png"
+  },
+  {
+    "username": "Amirhossein",
+    "password": "8b509b17e5408d6a2443a24681bad8b9b66530ec4d2ce27e7105b4379d7dea87",
+    "nickname": "Amir",
+    "email": "amirhsnsouri@gmail.com",
+    "highScore": 0,
+    "passwordRecoveryQuestion": "What\u0027s my father\u0027s name?",
+    "passwordRecoveryAnswer": "185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969",
+    "slogan": "Every obstacle is an opportunity to strategize!",
+    "path": "files/img/avatars/2.png"
+  },
+  {
+    "username": "Amirhossein2",
+    "password": "8b509b17e5408d6a2443a24681bad8b9b66530ec4d2ce27e7105b4379d7dea87",
+    "nickname": "Amir2",
+    "email": "amir2@gmail.com",
+    "highScore": 0,
+    "passwordRecoveryQuestion": "What was my first pet\u0027s name?",
+    "passwordRecoveryAnswer": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
+    "slogan": "Attack the weakness, defend the strengths!",
+    "path": "files/img/avatars/3.png"
+  },
+  {
+    "username": "Amirhossein3",
+    "password": "8b509b17e5408d6a2443a24681bad8b9b66530ec4d2ce27e7105b4379d7dea87",
+    "nickname": "Amir3",
+    "email": "amir3@gmail.com",
+    "highScore": 0,
+    "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
+    "passwordRecoveryAnswer": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
+    "path": "files/img/avatars/3.png"
   }
 ]

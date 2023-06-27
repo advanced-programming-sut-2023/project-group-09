@@ -680,7 +680,29 @@ public class GameViewController {
             case "engineer" -> {
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar(2);
-                setCenterToEngineerMenu();
+//                setCenterToEngineerMenu();
+            }
+            case "engineerGuild" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToEngineerGuild();
+            }
+            case "tunnelersGuild" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(2);
+                setCenterToTunnelersGuild();
+            }
+            case "fletcher" -> {
+
+            }
+            case "blackSmith" -> {
+
+            }
+            case "armourer" -> {
+
+            }
+            case "poleTurner" -> {
+
             }
         }
     }
@@ -1880,7 +1902,82 @@ public class GameViewController {
         GameMenu.menuBar.getChildren().addAll(cost, name, peasantsNumber);
     }
 
-    private static void setCenterToEngineerMenu() {
+//    private static void setCenterToEngineerMenu() {
+//
+//    }
+
+    private static void setCenterToEngineerGuild() {
+        setTitle("Engineer's Guild", 32, 275, 95);
+
+        Text peasantsNumber = new Text();
+        peasantsNumber.setTranslateX(650);
+        peasantsNumber.setTranslateY(75);
+        peasantsNumber.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 16));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, actionEvent -> {
+            int count = 0;
+            for (Human human : GameController.getGame().getCurrentGovernment().getSociety()) {
+                if (human instanceof Civilian civilian && !civilian.isHasJob()) {
+                    count++;
+                }
+            }
+            peasantsNumber.setText("Available Peasants " + count);
+        }), new KeyFrame(Duration.millis(500), actionEvent -> {
+        }));
+        timeline.setCycleCount(-1);
+        timeline.play();
+
+        ImageView engineer = new ImageView(GameViewController.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "troops/engineer.png");
+        engineer.setTranslateX(400);
+        engineer.setTranslateY(100);
+        engineer.setOnMouseClicked(mouseEvent -> {
+            ((Barrack) selectedBuilding).makeUnit("engineer");
+            selectedBuilding.getGovernment().updatePopulationWithRemove(1);
+        });
+
+        ImageView ladderman = new ImageView(GameViewController.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "troops/ladderman.png");
+        ladderman.setTranslateX(600);
+        ladderman.setTranslateY(90);
+        ladderman.setOnMouseClicked(mouseEvent -> {
+            ((Barrack) selectedBuilding).makeUnit("ladderman");
+            selectedBuilding.getGovernment().updatePopulationWithRemove(1);
+        });
+        GameMenu.menuBar.getChildren().addAll(engineer, ladderman, peasantsNumber);
+    }
+
+    private static void setCenterToTunnelersGuild() {
+        setTitle("Tunneler's Guild", 32, 275, 95);
+
+        Text peasantsNumber = new Text();
+        peasantsNumber.setTranslateX(650);
+        peasantsNumber.setTranslateY(75);
+        peasantsNumber.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 16));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, actionEvent -> {
+            int count = 0;
+            for (Human human : GameController.getGame().getCurrentGovernment().getSociety()) {
+                if (human instanceof Civilian civilian && !civilian.isHasJob()) {
+                    count++;
+                }
+            }
+            peasantsNumber.setText("Available Peasants " + count);
+        }), new KeyFrame(Duration.millis(500), actionEvent -> {
+        }));
+        timeline.setCycleCount(-1);
+        timeline.play();
+
+        ImageView tunneler = new ImageView(GameViewController.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "troops/tunneler.png");
+        tunneler.setTranslateX(500);
+        tunneler.setTranslateY(90);
+        tunneler.setOnMouseClicked(mouseEvent -> {
+            ((Barrack) selectedBuilding).makeUnit("tunneler");
+            selectedBuilding.getGovernment().updatePopulationWithRemove(1);
+        });
+        GameMenu.menuBar.getChildren().addAll(tunneler, peasantsNumber);
+    }
+
+    private static void setCenterToFletcher() {
 
     }
 
@@ -2202,6 +2299,7 @@ public class GameViewController {
         });
         image.setOnMouseClicked(mouseEvent -> {
             ((Barrack) selectedBuilding).makeUnit(troop);
+            selectedBuilding.getGovernment().updatePopulationWithRemove(1);
         });
         GameMenu.menuBar.getChildren().add(image);
     }

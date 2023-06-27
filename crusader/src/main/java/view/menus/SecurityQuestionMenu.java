@@ -12,10 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.User;
 import model.captcha.Captcha;
-import model.menugui.MenuBox;
-import model.menugui.MenuButton;
-import model.menugui.MenuChoiceBox;
-import model.menugui.MenuTextField;
+import model.menugui.*;
 import view.controllers.ViewController;
 
 import java.net.MalformedURLException;
@@ -95,6 +92,9 @@ public class SecurityQuestionMenu extends Application {
         LoginMenu loginMenu = new LoginMenu();
         try {
             loginMenu.start(this.stage);
+//            MenuPopUp popUp = new MenuPopUp(LoginMenu.root, 400, 400, "success",
+//                    "signup done successfully");
+//            loginMenu.root.getChildren().add(popUp);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
