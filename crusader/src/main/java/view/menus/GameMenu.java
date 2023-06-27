@@ -145,7 +145,7 @@ public class GameMenu extends Application {
 
     }
     public static void createGameBar(int state) {
-//        state: 0=buildings  /  1=nemidunam(farzam midune)  /  2=menu
+//        state: 0=buildings  /  1=nemidunam(farzam midune)  /  2=menu / 3=mercenaryPost
         barImage = new ImageView(GameImages.imageViews.get("bar"));
         barImage.setFitWidth(menuBar.getMaxWidth());
         barImage.setFitHeight(menuBar.getMaxHeight());
@@ -184,6 +184,15 @@ public class GameMenu extends Application {
             menuBox.setTranslateX(247);
             menuBox.setTranslateY(55);
             menuBox.setScaleY(1.08);
+            menuBar.getChildren().add(menuBox);
+            hoveringButton.setTranslateX(275);
+            hoveringButton.setTranslateY(45);
+        }
+        else if (state == 3) {
+            ImageView menuBox = new ImageView(GameMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
+                    + "mercenaryPostBar.png");
+            menuBox.setTranslateX(175);
+            menuBox.setTranslateY(-30);
             menuBar.getChildren().add(menuBox);
             hoveringButton.setTranslateX(275);
             hoveringButton.setTranslateY(45);

@@ -151,41 +151,41 @@ public class CreateGameMenu extends Application {
         startGame.setOnAction(actionEvent -> {
             if (governmentNumber < 3) return;
             GameMenu gameMenu = new GameMenu();
-            Trade trade1 = new Trade("hello", "apple", 10, 100,
-                    GameController.getGame().getGovernments().get(1), GameController.getGame().getGovernments().get(0));
-            Trade trade2 = new Trade("good bye", "cheese", 20, 150,
-                    GameController.getGame().getGovernments().get(1), GameController.getGame().getGovernments().get(0));
-            Trade trade3 = new Trade("how are you?", "wood", 1, 10,
-                    GameController.getGame().getGovernments().get(1), GameController.getGame().getGovernments().get(0));
-            Trade trade4 = new Trade("how are you", "wood", 1, 10,
-                    GameController.getGame().getGovernments().get(1), GameController.getGame().getGovernments().get(0));
-            Trade trade5 = new Trade("how are yo", "wood", 1, 10,
-                    GameController.getGame().getGovernments().get(1), GameController.getGame().getGovernments().get(0));
-            Trade trade6 = new Trade("how are y", "wood", 1, 10,
-                    GameController.getGame().getGovernments().get(1), GameController.getGame().getGovernments().get(0));
-            Trade trade7 = new Trade("how are y", "wood", 1, 10,
-                    GameController.getGame().getGovernments().get(0), GameController.getGame().getGovernments().get(1));
-            Trade trade8 = new Trade("how are y", "wood", 1, 10,
-                    GameController.getGame().getGovernments().get(0), GameController.getGame().getGovernments().get(1));
-            trade1.accept();
-            trade2.accept();
-            trade3.accept();
-            GameController.getGame().getGovernments().get(0).addReceivedTrade(trade1);
-            GameController.getGame().getGovernments().get(0).addReceivedTrade(trade2);
-            GameController.getGame().getGovernments().get(0).addReceivedTrade(trade3);
-            GameController.getGame().getGovernments().get(0).addReceivedTrade(trade4);
-            GameController.getGame().getGovernments().get(0).addReceivedTrade(trade5);
-            GameController.getGame().getGovernments().get(0).addReceivedTrade(trade6);
-            GameController.getGame().getGovernments().get(0).addSentTrade(trade7);
-            GameController.getGame().getGovernments().get(0).addSentTrade(trade8);
-            TradeController.allTrades.put(trade1.getId(), trade1);
-            TradeController.allTrades.put(trade2.getId(), trade2);
-            TradeController.allTrades.put(trade3.getId(), trade3);
-            TradeController.allTrades.put(trade4.getId(), trade4);
-            TradeController.allTrades.put(trade5.getId(), trade5);
-            TradeController.allTrades.put(trade6.getId(), trade6);
-            TradeController.allTrades.put(trade7.getId(), trade7);
-            TradeController.allTrades.put(trade8.getId(), trade8);
+//            Trade trade1 = new Trade("hello", "apple", 10, 100,
+//                    GameController.getGame().getGovernments().get(1), GameController.getGame().getGovernments().get(0));
+//            Trade trade2 = new Trade("good bye", "cheese", 20, 150,
+//                    GameController.getGame().getGovernments().get(1), GameController.getGame().getGovernments().get(0));
+//            Trade trade3 = new Trade("how are you?", "wood", 1, 10,
+//                    GameController.getGame().getGovernments().get(1), GameController.getGame().getGovernments().get(0));
+//            Trade trade4 = new Trade("how are you", "wood", 1, 10,
+//                    GameController.getGame().getGovernments().get(1), GameController.getGame().getGovernments().get(0));
+//            Trade trade5 = new Trade("how are yo", "wood", 1, 10,
+//                    GameController.getGame().getGovernments().get(1), GameController.getGame().getGovernments().get(0));
+//            Trade trade6 = new Trade("how are y", "wood", 1, 10,
+//                    GameController.getGame().getGovernments().get(1), GameController.getGame().getGovernments().get(0));
+//            Trade trade7 = new Trade("how are y", "wood", 1, 10,
+//                    GameController.getGame().getGovernments().get(0), GameController.getGame().getGovernments().get(1));
+//            Trade trade8 = new Trade("how are y", "wood", 1, 10,
+//                    GameController.getGame().getGovernments().get(0), GameController.getGame().getGovernments().get(1));
+//            trade1.accept();
+//            trade2.accept();
+//            trade3.accept();
+//            GameController.getGame().getGovernments().get(0).addReceivedTrade(trade1);
+//            GameController.getGame().getGovernments().get(0).addReceivedTrade(trade2);
+//            GameController.getGame().getGovernments().get(0).addReceivedTrade(trade3);
+//            GameController.getGame().getGovernments().get(0).addReceivedTrade(trade4);
+//            GameController.getGame().getGovernments().get(0).addReceivedTrade(trade5);
+//            GameController.getGame().getGovernments().get(0).addReceivedTrade(trade6);
+//            GameController.getGame().getGovernments().get(0).addSentTrade(trade7);
+//            GameController.getGame().getGovernments().get(0).addSentTrade(trade8);
+//            TradeController.allTrades.put(trade1.getId(), trade1);
+//            TradeController.allTrades.put(trade2.getId(), trade2);
+//            TradeController.allTrades.put(trade3.getId(), trade3);
+//            TradeController.allTrades.put(trade4.getId(), trade4);
+//            TradeController.allTrades.put(trade5.getId(), trade5);
+//            TradeController.allTrades.put(trade6.getId(), trade6);
+//            TradeController.allTrades.put(trade7.getId(), trade7);
+//            TradeController.allTrades.put(trade8.getId(), trade8);
 
             try {
                 gameMenu.start(stage);

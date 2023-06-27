@@ -3,6 +3,7 @@ package view.controllers;
 import controller.*;
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameGoods;
+import controller.gamestructure.GameHumans;
 import controller.gamestructure.GameImages;
 import enumeration.Pair;
 import enumeration.Paths;
@@ -27,6 +28,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -49,6 +51,8 @@ import view.menus.LoginMenu;
 import java.util.ArrayList;
 import java.util.HashMap;
 import model.building.castlebuildings.MainCastle;
+
+import javax.swing.plaf.ColorUIResource;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -583,6 +587,11 @@ public class GameViewController {
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar(2);
                 setCenterToArmoury();
+            }
+            case "mercenaryPost" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(3);
+                setCenterToMercenaryPost();
             }
         }
     }
@@ -1526,6 +1535,31 @@ public class GameViewController {
         putShopIcon("metalArmour", 705, 120, true);
     }
 
+    private static void setCenterToMercenaryPost() {
+        Text cost = new Text();
+        cost.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+        cost.setFill(new Color(0.93, 0.88, 0.61, 1));
+        cost.setStrokeWidth(0.2);
+        cost.setStroke(Color.BLACK);
+        Text name = new Text();
+        name.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+        name.setFill(new Color(0.93, 0.88, 0.61, 1));
+        name.setStrokeWidth(0.2);
+        name.setStroke(Color.BLACK);
+        cost.setTranslateX(275);
+        cost.setTranslateY(210);
+        name.setTranslateX(500);
+        name.setTranslateY(210);
+        putTroopImage("archerBow", 260, 74, cost, name);
+        putTroopImage("slave", 330, 65, cost, name);
+        putTroopImage("slinger", 412, 75, cost, name);
+        putTroopImage("assassin", 480, 85, cost, name);
+        putTroopImage("horseArcher", 553, 68, cost, name);
+        putTroopImage("arabianSwordsman", 645, 75, cost, name);
+        putTroopImage("fireThrower", 723, 92, cost, name);
+        GameMenu.menuBar.getChildren().addAll(cost, name);
+    }
+
     private static void setTitle(String title, int fontSize, double x, double y) {
         Text menuTitle = new Text(title);
         menuTitle.setTranslateX(x);
@@ -1794,6 +1828,33 @@ public class GameViewController {
             setCenterOfBar("shop");
         });
         GameMenu.menuBar.getChildren().add(icon);
+    }
+
+    private static void putTroopImage(String troop, int x, int y, Text cost, Text name) {
+        ImageView image = new ImageView(GameViewController.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "troops/" + troop + ".png");
+        image.setTranslateX(x);
+        image.setTranslateY(y);
+        ColorAdjust colorAdjust = new ColorAdjust();
+        image.setOnMouseEntered(mouseEvent -> {
+            colorAdjust.setSaturation(0.2);
+            colorAdjust.setBrightness(-0.1);
+            image.setEffect(colorAdjust);
+            cost.setText("Cost " + GameHumans.getUnit(troop).getPrice());
+            String troopName = convertFileName(troop);
+            name.setText(troopName);
+            name.setTranslateX(name.getTranslateX() - 3.5 * troopName.length());
+        });
+        image.setOnMouseExited(mouseEvent -> {
+            colorAdjust.setSaturation(0);
+            colorAdjust.setBrightness(0);
+            image.setEffect(colorAdjust);
+            String troopName = convertFileName(troop);
+            name.setTranslateX(name.getTranslateX() + 3.5 * troopName.length());
+            cost.setText("");
+            name.setText("");
+        });
+        GameMenu.menuBar.getChildren().add(image);
     }
 
     private static void putImageView(String fileName, String name, double x, double y) {
