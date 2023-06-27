@@ -443,8 +443,8 @@ public class GameMenu extends Application {
                         }
                     }
                 }
-                MenuHoverBox details = new MenuHoverBox(root, endSelectionTile.getX() - 450,
-                        endSelectionTile.getY() - 250, 300, 300, "Hello world");
+//                MenuHoverBox details = new MenuHoverBox(root, endSelectionTile.getX() - 450,
+//                        endSelectionTile.getY() - 250, 300, 300, "Hello world");
             }
         }));
         selectDoneTimeline.setCycleCount(-1);
