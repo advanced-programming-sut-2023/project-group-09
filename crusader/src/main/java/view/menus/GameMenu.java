@@ -38,6 +38,7 @@ import model.game.Tile;
 import model.human.military.Engineer;
 import model.human.military.EuropeanTroop;
 import model.human.military.Military;
+import model.menugui.MenuHoverBox;
 import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
@@ -443,7 +444,8 @@ public class GameMenu extends Application {
                         }
                     }
                 }
-
+//                MenuHoverBox details = new MenuHoverBox(root, endSelectionTile.getX() + GameMap.tileWidth / 2 - scene.getWidth() / 2,
+//                        endSelectionTile.getY() + GameMap.tileHeight / 2 - scene.getHeight() / 2, 300, 300, "Hello world");
             }
         }));
         selectDoneTimeline.setCycleCount(-1);
