@@ -21,11 +21,9 @@ import javafx.scene.paint.ImagePattern;
 import javafx.util.Duration;
 import model.building.Building;
 import model.game.Tile;
+import model.human.civilian.Civilian;
 import model.human.military.Military;
-import model.menugui.game.GameMap;
-import model.menugui.game.GameTile;
-import model.menugui.game.Troop;
-import model.menugui.game.TypeBTN;
+import model.menugui.game.*;
 import view.menus.GameMenu;
 import view.menus.LoginMenu;
 
@@ -230,7 +228,12 @@ public class HumanViewController {
         }
         GameMap.gameTroops[y][x].add(troop);
     }
-
+    public static void dropCivilian(int x, int y, Tile tile, Civilian civilian) {
+        GameTile gameTile = GameMap.getGameTile(x, y);
+        GameMap gameMap = GameMenu.gameMap;
+        Citizen citizen = new Citizen(civilian,tile,gameTile);
+        gameMap.getChildren().add(citizen);
+    }
 
     public static void divideTroops(Tile tile) {
         Set<String> names = GameHumans.militaries.keySet();

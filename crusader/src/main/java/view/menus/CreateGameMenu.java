@@ -297,7 +297,7 @@ public class CreateGameMenu extends Application {
         MainCastle mainCastle = (MainCastle) GameController.getGame().getMap().getTile(x, y).getBuilding();
         mainCastle.setGovernment(government);
         government.setMainCastle(mainCastle);
-        mainCastle.makeUnemployed(10);
+        //mainCastle.makeUnemployed(10);
 
         if (governmentNumber == 1) mapsField.setDisable(true);
         governmentUsernames.get(governmentNumber - 1).setEditable(false);

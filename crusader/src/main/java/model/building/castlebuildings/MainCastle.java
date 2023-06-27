@@ -70,8 +70,7 @@ public class MainCastle extends CastleBuilding {
         Tuple tuple = makePositionOfUnit();
         int x = tuple.getX();
         int y = tuple.getY();
-        Civilian civilian = new Civilian(x, y, false, this.getGovernment());
-        MapController.addHuman(x, y, civilian);
+        MapController.dropCivilian(x, y,getGovernment(),false);
     }
 
     public void makeUnemployed(int numberToAdd) {

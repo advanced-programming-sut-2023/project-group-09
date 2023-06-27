@@ -116,6 +116,7 @@ public class GameMenu extends Application {
         MapController.dropMilitary(21, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
         MapController.dropMilitary(22, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
         MapController.dropMilitary(22, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
+        MapController.dropCivilian(10,10,GameController.getGame().getCurrentGovernment(),false);
         setEventListeners();
         GameViewController.setCenterOfBar();
         GameViewController.createBorderRectangles(gameMap, miniMap);

@@ -1,6 +1,8 @@
 package model.human.civilian;
 
 
+import controller.GameController;
+import controller.MapController;
 import controller.human.MoveController;
 import enumeration.DefenseRating;
 import enumeration.Speed;
@@ -9,9 +11,11 @@ import model.activity.Move;
 import model.building.Building;
 import model.building.castlebuildings.MainCastle;
 import model.building.producerbuildings.ProducerBuilding;
+import model.game.Tile;
 import model.game.Tuple;
 import model.human.Human;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Civilian extends Human {
@@ -50,8 +54,10 @@ public class Civilian extends Human {
         MainCastle mainCastle = this.getGovernment().getMainCastle();
         int x = this.getX();
         int y = this.getY();
-
-        boolean isInCastle = mainCastle.getStartX() <= x && mainCastle.getEndX() >= x && mainCastle.getStartY() <= y && mainCastle.getEndY() >= y;
+        Tile tile = MapController.map.getTile(x,y);
+        ArrayList<Tile> tiles = GameController.getNeighborTiles(mainCastle.getEndSpecialX(),mainCastle.getEndSpecialY()
+        ,mainCastle.getWidth(),mainCastle.getLength());
+        boolean isInCastle = tiles.contains(tile);
         if (isInCastle) {
             return;
         }

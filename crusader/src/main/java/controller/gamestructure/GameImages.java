@@ -17,6 +17,7 @@ public class GameImages {
         addCursor();
         addRed();
         addBars();
+        addCivilian();
     }
 
     public static void addTextures() {
@@ -74,6 +75,22 @@ public class GameImages {
         addLadderman();
     }
 
+    public static void addCivilian(){
+        int counter = 1;
+        for (int j = 0; j < 16; j++) {
+            for (int k = 0; k < 8; k++) {
+                Image worker = new Image(GameTile.class.getResource(Paths.GAME_IMAGES.getPath()).toExternalForm() +
+                        "civilian/worker/Image" + counter + ".png");
+                imageViews.put("worker_" + counter, worker);
+                Image peasant = new Image(GameTile.class.getResource(Paths.GAME_IMAGES.getPath()).toExternalForm() +
+                        "civilian/peasant/Image" + counter + ".png");
+                imageViews.put("peasant_" + counter, peasant);
+                counter++;
+
+            }
+            counter += 8;
+        }
+    }
     public static void addMainBar() {
         Image image = new Image(GameImages.class.getResource
                 (Paths.BAR_IMAGES.getPath()).toExternalForm() + "bar.png");

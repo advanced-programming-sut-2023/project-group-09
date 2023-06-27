@@ -433,6 +433,16 @@ public class MapController {
         HumanViewController.dropUnit(x, y, tile, military);
     }
 
+    public static void dropCivilian(int x, int y, Government government,boolean job) {
+        Civilian civilian = new Civilian(x,y,job,government);
+        Tile tile = map.getTile(x, y);
+        government.addHuman(civilian);
+        tile.addHuman(civilian);
+        HumanViewController.dropCivilian(x, y, tile, civilian);
+    }
+
+
+
     public static void deleteMilitary(int x, int y, Military military) {
         Tile tile = map.getTile(x, y);
         military.getGovernment().removeMilitary(military);

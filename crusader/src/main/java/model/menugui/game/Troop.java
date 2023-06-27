@@ -2,7 +2,6 @@ package model.menugui.game;
 
 import controller.gamestructure.GameImages;
 import controller.human.HumanController;
-import controller.human.MoveController;
 import enumeration.Paths;
 import enumeration.UnitMovingState;
 import javafx.animation.KeyFrame;
@@ -11,9 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.util.Duration;
-import model.building.castlebuildings.CastleBuilding;
 import model.game.Tile;
-import model.game.Tuple;
 import model.human.military.Military;
 import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
@@ -147,6 +144,8 @@ public class Troop extends ImageView {
                     step = (step + 1) % 8;
                 }
                 setImage();
+            } else {
+                doAttack();
             }
         }));
         GameMenu.timelines.add(move);
