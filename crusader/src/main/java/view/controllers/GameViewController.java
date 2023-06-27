@@ -22,14 +22,12 @@ import javafx.scene.ImageCursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
-import javafx.scene.effect.BlurType;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -43,6 +41,8 @@ import javafx.util.Duration;
 import model.Government;
 import model.Trade;
 import model.building.Building;
+import model.building.producerbuildings.Barrack;
+import model.human.military.Military;
 import model.menugui.*;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
@@ -53,7 +53,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import model.building.castlebuildings.MainCastle;
 
-import javax.swing.plaf.ColorUIResource;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -63,7 +62,7 @@ public class GameViewController {
     public static Timeline timeline;
     public static boolean isSelected = false;
     public static boolean isDelete = false;
-    public static boolean isDroped = false;
+    public static boolean isDropped = false;
     public static boolean isTextureSelected = false;
     public static int tileX, tileY;
     public static int shopMenuPhase = -1;
@@ -631,6 +630,11 @@ public class GameViewController {
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar(2);
                 setCenterToChangeRates();
+            }
+            case "barrack" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(4);
+                setCenterToBarrack();
             }
         }
     }
@@ -1217,10 +1221,10 @@ public class GameViewController {
         currentCategory = null;
         shopMenuPhase = 0;
         setTitle("The Marketplace", 32, 275, 95);
-        putShopIcon("foods", 340, 135, false);
-        putShopIcon("rawMaterials", 440, 135, false);
-        putShopIcon("weapons", 540, 130, false);
-        putShopIcon("resources", 640, 132, false);
+        putShopIcon("foods", 340, 135, false, true);
+        putShopIcon("rawMaterials", 440, 135, false, true);
+        putShopIcon("weapons", 540, 130, false, true);
+        putShopIcon("resources", 640, 132, false, true);
         putTradeHistoryButton();
         putTradeListButton();
     }
@@ -1229,14 +1233,14 @@ public class GameViewController {
         currentItem = null;
         shopMenuPhase = 1;
         setTitle("Food", 32, 275, 95);
-        putShopIcon("meat", 320, 125, true);
-        putShopIcon("cheese", 375, 125, true);
-        putShopIcon("apple", 430, 120, true);
-        putShopIcon("hops", 485, 120, true);
-        putShopIcon("ale", 540, 120, true);
-        putShopIcon("wheat", 595, 115, true);
-        putShopIcon("flour", 645, 117, true);
-        putShopIcon("bread", 700, 122, true);
+        putShopIcon("meat", 320, 125, true, true);
+        putShopIcon("cheese", 375, 125, true, true);
+        putShopIcon("apple", 430, 120, true, true);
+        putShopIcon("hops", 485, 120, true, true);
+        putShopIcon("ale", 540, 120, true, true);
+        putShopIcon("wheat", 595, 115, true, true);
+        putShopIcon("flour", 645, 117, true, true);
+        putShopIcon("bread", 700, 122, true, true);
         putBackButton("shop");
     }
 
@@ -1244,10 +1248,10 @@ public class GameViewController {
         currentItem = null;
         shopMenuPhase = 1;
         setTitle("Raw Materials", 32, 275, 95);
-        putShopIcon("wood", 375, 120, true);
-        putShopIcon("stone", 475, 120, true);
-        putShopIcon("iron", 575, 120, true);
-        putShopIcon("pitch", 675, 120, true);
+        putShopIcon("wood", 375, 120, true, true);
+        putShopIcon("stone", 475, 120, true, true);
+        putShopIcon("iron", 575, 120, true, true);
+        putShopIcon("pitch", 675, 120, true, true);
         putBackButton("shop");
     }
 
@@ -1255,14 +1259,14 @@ public class GameViewController {
         currentItem = null;
         shopMenuPhase = 1;
         setTitle("Weapons", 32, 275, 95);
-        putShopIcon("spear", 320, 120, true);
-        putShopIcon("bow", 375, 120, true);
-        putShopIcon("mace", 430, 120, true);
-        putShopIcon("leatherArmour", 485, 120, true);
-        putShopIcon("crossBow", 540, 120, true);
-        putShopIcon("pike", 595, 120, true);
-        putShopIcon("sword", 650, 120, true);
-        putShopIcon("metalArmour", 705, 120, true);
+        putShopIcon("spear", 320, 120, true, true);
+        putShopIcon("bow", 375, 120, true, true);
+        putShopIcon("mace", 430, 120, true, true);
+        putShopIcon("leatherArmour", 485, 120, true, true);
+        putShopIcon("crossBow", 540, 120, true, true);
+        putShopIcon("pike", 595, 120, true, true);
+        putShopIcon("sword", 650, 120, true, true);
+        putShopIcon("metalArmour", 705, 120, true, true);
         putBackButton("shop");
     }
 
@@ -1296,7 +1300,7 @@ public class GameViewController {
     private static void setCenterToShopItem(String fileName) {
         shopMenuPhase = 2;
         setTitle(convertFileName(fileName), 32, 275, 85);
-        putShopIcon(fileName, 320, 130, true);
+        putShopIcon(fileName, 320, 130, true, false);
         MenuTextField buyAmount = new MenuTextField(GameMenu.menuBar, "", "", 400, 90, 100);
         MenuTextField sellAmount = new MenuTextField(GameMenu.menuBar, "", "", 400, 160, 100);
         buyAmount.setText("1");
@@ -1703,38 +1707,82 @@ public class GameViewController {
 
     private static void setCenterToArmoury() {
         setTitle("Armory", 32, 275, 95);
-        putShopIcon("bow", 285, 120, true);
-        putShopIcon("spear", 345, 120, true);
-        putShopIcon("mace", 405, 120, true);
-        putShopIcon("crossBow", 465, 120, true);
-        putShopIcon("pike", 525, 120, true);
-        putShopIcon("sword", 585, 120, true);
-        putShopIcon("leatherArmour", 655, 120, true);
-        putShopIcon("metalArmour", 705, 120, true);
+        putShopIcon("bow", 285, 120, true, false);
+        putShopIcon("spear", 345, 120, true, false);
+        putShopIcon("mace", 405, 120, true, false);
+        putShopIcon("crossBow", 465, 120, true, false);
+        putShopIcon("pike", 525, 120, true, false);
+        putShopIcon("sword", 585, 120, true, false);
+        putShopIcon("leatherArmour", 655, 120, true, false);
+        putShopIcon("metalArmour", 705, 120, true, false);
     }
 
     private static void setCenterToMercenaryPost() {
         Text cost = new Text();
-        cost.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+        cost.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 18));
         cost.setFill(new Color(0.93, 0.88, 0.61, 1));
-        cost.setStrokeWidth(0.2);
+        cost.setStrokeWidth(0.1);
         cost.setStroke(Color.BLACK);
         Text name = new Text();
-        name.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+        name.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 18));
         name.setFill(new Color(0.93, 0.88, 0.61, 1));
-        name.setStrokeWidth(0.2);
+        name.setStrokeWidth(0.1);
         name.setStroke(Color.BLACK);
         cost.setTranslateX(275);
-        cost.setTranslateY(210);
-        name.setTranslateX(500);
-        name.setTranslateY(210);
-        putTroopImage("archerBow", 260, 74, cost, name);
-        putTroopImage("slave", 330, 65, cost, name);
-        putTroopImage("slinger", 412, 75, cost, name);
-        putTroopImage("assassin", 480, 85, cost, name);
-        putTroopImage("horseArcher", 553, 68, cost, name);
-        putTroopImage("arabianSwordsman", 645, 75, cost, name);
-        putTroopImage("fireThrower", 723, 92, cost, name);
+        cost.setTranslateY(207);
+        name.setTranslateX(530);
+        name.setTranslateY(207);
+
+        ImageView coin = new ImageView(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                .toExternalForm() + "coin.png");
+        coin.setTranslateX(337);
+        coin.setTranslateY(192);
+
+        putTroopImage("archerBow", 260, 74, cost, name, null, coin);
+        putTroopImage("slave", 330, 65, cost, name, null, coin);
+        putTroopImage("slinger", 412, 75, cost, name, null, coin);
+        putTroopImage("assassin", 480, 85, cost, name, null, coin);
+        putTroopImage("horseArcher", 553, 68, cost, name, null, coin);
+        putTroopImage("arabianSwordsman", 645, 75, cost, name, null, coin);
+        putTroopImage("fireThrower", 723, 92, cost, name, null, coin);
+        GameMenu.menuBar.getChildren().addAll(cost, name);
+    }
+
+    private static void setCenterToBarrack() {
+        Text cost = new Text();
+        cost.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 16));
+        cost.setFill(new Color(0.93, 0.88, 0.61, 1));
+        Text name = new Text();
+        name.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.REGULAR, 16));
+        name.setFill(new Color(0.93, 0.88, 0.61, 1));
+        cost.setTranslateX(265);
+        cost.setTranslateY(55);
+        name.setTranslateX(530);
+        name.setTranslateY(55);
+
+        ImageView coin = new ImageView(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
+                .toExternalForm() + "coin.png");
+        coin.setTranslateX(315);
+        coin.setTranslateY(40);
+
+        HashMap<String, ImageView> requirements = new HashMap<>();
+        requirements.put("bow", putShopIcon("bow", 260, 175, false, false));
+        requirements.put("spear", putShopIcon("spear", 325, 175, false, false));
+        requirements.put("mace", putShopIcon("mace", 385, 173, false, false));
+        requirements.put("crossBow", putShopIcon("crossBow", 435, 175, false, false));
+        requirements.put("pike", putShopIcon("pike", 500, 173, false, false));
+        requirements.put("sword", putShopIcon("sword", 555, 173, false, false));
+        requirements.put("leatherArmour", putShopIcon("leatherArmour", 625, 175, false, false));
+        requirements.put("metalArmour", putShopIcon("metalArmour", 670, 173, false, false));
+        requirements.put("horse", putShopIcon("horse", 743, 173, false, false));
+
+        putTroopImage("archer", 265, 54, cost, name, requirements, coin);
+        putTroopImage("spearman", 332, 75, cost, name, requirements, coin);
+        putTroopImage("maceman", 422, 70, cost, name, requirements, coin);
+        putTroopImage("crossbowman", 500, 78, cost, name, requirements, coin);
+        putTroopImage("pikeman", 578, 60, cost, name, requirements, coin);
+        putTroopImage("swordsman", 650, 60, cost, name, requirements, coin);
+        putTroopImage("knight", 718, 60, cost, name, requirements, coin);
         GameMenu.menuBar.getChildren().addAll(cost, name);
     }
 
@@ -1761,24 +1809,26 @@ public class GameViewController {
         return fileName;
     }
 
-    private static void putShopIcon(String fileName, double x, double y, boolean count) {
+    private static ImageView putShopIcon(String fileName, double x, double y, boolean count, boolean canHover) {
         ImageView icon = new ImageView(GameViewController.class.getResource(Paths.RESOURCE_IMAGES.getPath())
                 .toExternalForm() + fileName + ".png");
         icon.setTranslateX(x);
         icon.setTranslateY(y);
         ColorAdjust colorAdjust = new ColorAdjust();
-        icon.setOnMouseEntered(mouseEvent -> {
-            colorAdjust.setSaturation(0.2);
-            colorAdjust.setBrightness(-0.1);
-            icon.setEffect(colorAdjust);
-            if (shopMenuPhase == 0) currentCategory = fileName;
-            else if (shopMenuPhase == 1) currentItem = fileName;
-        });
-        icon.setOnMouseExited(mouseEvent -> {
-            colorAdjust.setSaturation(0);
-            colorAdjust.setBrightness(0);
-            icon.setEffect(colorAdjust);
-        });
+        if (canHover) {
+            icon.setOnMouseEntered(mouseEvent -> {
+                colorAdjust.setSaturation(0.2);
+                colorAdjust.setBrightness(-0.1);
+                icon.setEffect(colorAdjust);
+                if (shopMenuPhase == 0) currentCategory = fileName;
+                else if (shopMenuPhase == 1) currentItem = fileName;
+            });
+            icon.setOnMouseExited(mouseEvent -> {
+                colorAdjust.setSaturation(0);
+                colorAdjust.setBrightness(0);
+                icon.setEffect(colorAdjust);
+            });
+        }
         icon.setOnMouseClicked(mouseEvent -> {
             if (shopMenuPhase == 1) setCenterOfBar("shopItem");
             else setCenterOfBar(fileName);
@@ -1792,6 +1842,7 @@ public class GameViewController {
             GameMenu.menuBar.getChildren().add(resourceCount);
         }
         GameMenu.menuBar.getChildren().add(icon);
+        return icon;
     }
 
     private static void putShopIcon(String fileName, double x, double y, double countY) {
@@ -2008,7 +2059,8 @@ public class GameViewController {
         GameMenu.menuBar.getChildren().add(icon);
     }
 
-    private static void putTroopImage(String troop, int x, int y, Text cost, Text name) {
+    private static void putTroopImage(String troop, int x, int y, Text cost, Text name,
+                                      HashMap<String, ImageView> requirements, ImageView coin) {
         ImageView image = new ImageView(GameViewController.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "troops/" + troop + ".png");
         image.setTranslateX(x);
@@ -2017,20 +2069,42 @@ public class GameViewController {
         image.setOnMouseEntered(mouseEvent -> {
             colorAdjust.setSaturation(0.2);
             colorAdjust.setBrightness(-0.1);
+            if (requirements != null) {
+                Military human = (Military) GameHumans.getUnit(troop);
+                requirements.get(human.getWeapon()).setEffect(colorAdjust);
+                for (String armour : human.getArmours())
+                    requirements.get(armour).setEffect(colorAdjust);
+                if (human.isUsesHorse())
+                    requirements.get("horse").setEffect(colorAdjust);
+            }
             image.setEffect(colorAdjust);
             cost.setText("Cost " + GameHumans.getUnit(troop).getPrice());
             String troopName = convertFileName(troop);
             name.setText(troopName);
-            name.setTranslateX(name.getTranslateX() - 3.5 * troopName.length());
+            name.setTranslateX(name.getTranslateX() - 5 * troopName.length());
+            GameMenu.menuBar.getChildren().add(coin);
         });
         image.setOnMouseExited(mouseEvent -> {
             colorAdjust.setSaturation(0);
             colorAdjust.setBrightness(0);
+            if (requirements != null) {
+                Military human = (Military) GameHumans.getUnit(troop);
+                System.out.println(human.getWeapon());
+                requirements.get(human.getWeapon()).setEffect(colorAdjust);
+                for (String armour : human.getArmours())
+                    requirements.get(armour).setEffect(colorAdjust);
+                if (human.isUsesHorse())
+                    requirements.get("horse").setEffect(colorAdjust);
+            }
             image.setEffect(colorAdjust);
             String troopName = convertFileName(troop);
-            name.setTranslateX(name.getTranslateX() + 3.5 * troopName.length());
+            name.setTranslateX(name.getTranslateX() + 5 * troopName.length());
             cost.setText("");
             name.setText("");
+            GameMenu.menuBar.getChildren().remove(coin);
+        });
+        image.setOnMouseClicked(mouseEvent -> {
+            ((Barrack) selectedBuilding).makeUnit(troop);
         });
         GameMenu.menuBar.getChildren().add(image);
     }
@@ -2400,9 +2474,9 @@ public class GameViewController {
                         GameMenu.gameMap.getChildren().remove(imageView);
                         droppedPicFileName = picFileName;
                         droppedBuildingName = buildingName;
-                        isDroped = true;
+                        isDropped = true;
                         dropBuildingAfterSelectingTile(mouseEvent);
-                        isDroped = false;
+                        isDropped = false;
                     }
                 });
             }

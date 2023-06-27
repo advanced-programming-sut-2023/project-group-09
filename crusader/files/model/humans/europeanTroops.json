@@ -28,7 +28,7 @@
     "digsMoat": false,
     "attackStepCount" : 8,
     "airAttackStepCount": 3 ,
-    "weapon": "crossbow",
+    "weapon": "crossBow",
     "armours": [
       "leatherArmour"
     ],

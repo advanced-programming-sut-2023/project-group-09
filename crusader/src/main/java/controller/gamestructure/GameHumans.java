@@ -84,7 +84,7 @@ public class GameHumans {
         int attackRating = AttackRating.LOW.getRate();
         EuropeanTroop crossbowman = new EuropeanTroop(speed, defenseRating, 3, attackRating, 20);
         crossbowman.setName("crossbowman");
-        crossbowman.setWeapon("crossbow");
+        crossbowman.setWeapon("crossBow");
         crossbowman.addArmour("leatherArmour");
         crossbowman.setDefenseRange(6);
         crossbowman.setAggressiveRange(9);
@@ -157,6 +157,7 @@ public class GameHumans {
         knight.addArmour("metalArmour");
         knight.setDefenseRange(4);
         knight.setAggressiveRange(7);
+        knight.setUsesHorse(true);
         militaries.put("knight", knight);
     }
 
