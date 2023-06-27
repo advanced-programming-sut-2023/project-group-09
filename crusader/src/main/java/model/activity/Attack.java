@@ -14,9 +14,7 @@ import model.game.Tuple;
 import model.human.civilian.Civilian;
 import model.human.military.Engineer;
 import model.human.military.Military;
-import model.menugui.game.GameMap;
 import model.tools.Tool;
-import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
 
 import java.util.ArrayList;
@@ -33,8 +31,8 @@ public class Attack {
     }
 
     public ArrayList<Military> getEnemyOfRange(int x, int y, int range) {
-        if (range == 1){
-            return getNearEnemy(x,y);
+        if (range == 1) {
+            return getNearEnemy(x, y);
         }
         int startX = x - range;
         int startY = y - range;
@@ -59,15 +57,16 @@ public class Attack {
         return HumanController.getEnemiesOfArea(startX, startY, endX, endY, military.getGovernment());
     }
 
-    public ArrayList<Military> getNearEnemy(int x , int y){
+    public ArrayList<Military> getNearEnemy(int x, int y) {
         ArrayList<Military> troops = new ArrayList<>();
-        ArrayList<Tile> tiles = HumanController.getNeighbor(x,y);
-        for (Tile tile : tiles){
+        ArrayList<Tile> tiles = HumanController.getNeighbor(x, y);
+        for (Tile tile : tiles) {
 
             troops.addAll(MapController.getMilitariesOfOtherGovernment(tile.x, tile.y, military.getGovernment()));
         }
         return troops;
     }
+
     public void attackCiviliansOfRange(int x, int y, int range) {
         Map map = GameController.getGame().getMap();
         int startX = x - range;
@@ -183,7 +182,7 @@ public class Attack {
         this.tool = tool;
     }
 
-    public boolean shouldAttack(int range)  {
+    public boolean shouldAttack(int range) {
         if (enemy != null || tool != null) {
             return true;
         }
@@ -251,12 +250,12 @@ public class Attack {
             enemy.getAttack().setEnemy(military);
         }
 
-        ArrayList<Tile> neighbors = HumanController.getNeighbor(military.getX(),military.getY());
-        Tile enemyTile = MapController.map.getTile(enemy.getX(),enemy.getY());
-        if (neighbors.contains(enemyTile)){
-            HumanViewController.attackToEnemy(military,enemy);
-        }else if (military.canAirAttack()){
-            HumanViewController.airAttackToEnemy(military,enemy);
+        ArrayList<Tile> neighbors = HumanController.getNeighbor(military.getX(), military.getY());
+        Tile enemyTile = MapController.map.getTile(enemy.getX(), enemy.getY());
+        if (neighbors.contains(enemyTile)) {
+            HumanViewController.attackToEnemy(military, enemy);
+        } else if (military.canAirAttack()) {
+            HumanViewController.airAttackToEnemy(military, enemy);
         }
 
 
@@ -308,14 +307,15 @@ public class Attack {
             return false;
         }
         if (military.canAirAttack()) {
-            return isInRange(building.getStartX(), building.getStartY(), military.getShootingRange());
+            System.out.println(")))))" + isInRange(building.getEndX(), building.getEndY(), military.getShootingRange()));
+            return isInRange(building.getEndX(), building.getEndY(), military.getShootingRange());
         }
         Tuple tuple = new Tuple(military.getY(), military.getX());
         return building.getNeighborTiles().contains(tuple);
     }
 
     public void attackToBuilding() {
-        if (targetBuilding instanceof MainCastle){
+        if (targetBuilding instanceof MainCastle) {
             return;
         }
         if (military.getName().equals("ladderman")) {
@@ -334,18 +334,18 @@ public class Attack {
 
         int hp = targetBuilding.takeDamage(military.getAttackRating());
         boolean airAttack = true;
-        ArrayList<Tile> troopNeighborTiles = HumanController.getNeighbor(military.getX(),military.getY());
-        for (Tile tile :troopNeighborTiles){
-            if (tile.getBuilding() != null && tile.getBuilding().equals(targetBuilding)){
+        ArrayList<Tile> troopNeighborTiles = HumanController.getNeighbor(military.getX(), military.getY());
+        for (Tile tile : troopNeighborTiles) {
+            if (tile.getBuilding() != null && tile.getBuilding().equals(targetBuilding)) {
                 airAttack = false;
                 break;
             }
         }
 
-        if (!airAttack){
-            HumanViewController.attackToBuilding(military,targetBuilding);
-        }else if (military.canAirAttack()){
-            HumanViewController.airAttackToBuilding(military,targetBuilding);
+        if (!airAttack) {
+            HumanViewController.attackToBuilding(military, targetBuilding);
+        } else if (military.canAirAttack()) {
+            HumanViewController.airAttackToBuilding(military, targetBuilding);
         }
 
 

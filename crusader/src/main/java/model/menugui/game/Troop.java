@@ -225,7 +225,7 @@ public class Troop extends ImageView {
 
     public void setAirAttackStep() {
         if (military.getAirAttackStepCount() != 0) {
-            this.attackStep = (attackStep + 1) % military.getAirAttackStepCount();
+            this.airAttackStep = (airAttackStep + 1) % military.getAirAttackStepCount();
         }
     }
 
@@ -235,6 +235,6 @@ public class Troop extends ImageView {
 
     public void updateImageAirAttack() {
         setImage(GameImages.imageViews.get(
-                military.getName() + "_" + military.getGovernment().getColor() + "_" + (attackStep * 16 + attackDirection + 257)));
+                military.getName() + "_" + military.getGovernment().getColor() + "_" + (airAttackStep * 16 + airAttackDirection + 257)));
     }
 }

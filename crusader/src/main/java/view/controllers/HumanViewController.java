@@ -514,7 +514,6 @@ public class HumanViewController {
     }
 
     public static void attack(GameTile end) {
-        System.out.println("enter attack: " + end.getTileX() + " " + end.getTileY());
         for (Military military : selectedMilitaries) {
             HumanController.militaries.clear();
             HumanController.militaries.add(military);
@@ -523,7 +522,6 @@ public class HumanViewController {
                 continue;
             }
             if (GameController.validateAttackBuilding(end.getTileX(), end.getTileY())) {
-                System.out.println("before attack: " + end.getTileX() + " " + end.getTileY());
                 GameController.attackBuilding(end.getTileX(), end.getTileY());
                 continue;
             }

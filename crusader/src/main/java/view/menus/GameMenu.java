@@ -111,7 +111,7 @@ public class GameMenu extends Application {
         Rectangle clipRectangle = new Rectangle(1200, 800);
         root.setClip(clipRectangle);
         //MapController.dropMilitary(14, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(11, 5, "archerBow", GameController.getGame().getCurrentGovernment());
+        //MapController.dropMilitary(11, 5, "archerBow", GameController.getGame().getCurrentGovernment());
         //MapController.dropMilitary(20, 5, "horseArcher", GameController.getGame().getCurrentGovernment());
         //MapController.dropMilitary(22, 5, "slinger", GameController.getGame().getCurrentGovernment());
         //MapController.dropMilitary(18, 5, "assassin", GameController.getGame().getCurrentGovernment());
