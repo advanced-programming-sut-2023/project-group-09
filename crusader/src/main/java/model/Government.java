@@ -6,6 +6,7 @@ import controller.MapController;
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameGoods;
 import enumeration.dictionary.Colors;
+import javafx.scene.text.Text;
 import model.building.Building;
 import model.building.castlebuildings.CastleBuilding;
 import model.building.castlebuildings.MainCastle;
@@ -18,6 +19,7 @@ import model.human.civilian.Civilian;
 import model.human.military.EuropeanTroop;
 import model.human.military.Military;
 import model.tools.Tool;
+import view.controllers.GameViewController;
 
 import java.util.*;
 
@@ -202,6 +204,7 @@ public class Government {
 
     public void addGold(int amount) {
         this.gold += amount;
+        GameViewController.goldReporter.setText(String.format("%d" , gold));
     }
 
     public int getGold() {
@@ -210,6 +213,9 @@ public class Government {
 
     public void setGold(int gold) {
         this.gold = gold;
+        if (GameViewController.goldReporter != null) {
+            GameViewController.goldReporter.setText(String.format("%d", gold));
+        }
     }
 
     public int getPopulation() {
@@ -414,6 +420,9 @@ public class Government {
         this.foodDistribution();
         this.workerDistribution();
         this.workersNeededNotification();
+        GameViewController.populationReporter.setText(
+                String.format("%d/%d", GovernmentController.getCurrentGovernment().getPopulation(),
+                GovernmentController.getCurrentGovernment().getMaxPopulation()));
     }
 
     public void updateCowAndHorseNumber() {

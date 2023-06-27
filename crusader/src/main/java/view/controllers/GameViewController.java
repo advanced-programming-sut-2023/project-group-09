@@ -73,6 +73,9 @@ public class GameViewController {
     public static Textures selectedTexture;
     public static Building selectedBuilding;
 
+    public static ImageView nowFace;
+    public static Text popularityReporter , populationReporter , goldReporter;
+
     public static HashMap<String, String> buildingNameToFileName = new HashMap<>();
     public static HashMap<String, String> buildingNameToPicName = new HashMap<>();
     public static HashMap<String, String> buildingNameToName = new HashMap<>();
@@ -92,8 +95,8 @@ public class GameViewController {
 
         int popularity = GovernmentController.getCurrentGovernment().getPopularity() + 37;
         Text popularityText = new Text(String.format("%d", popularity));
-        popularityText.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 30)); //TODO: update in change turn!
-        popularityText.setFill(Color.GREEN); // TODO : change color with chang popularity
+        popularityText.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 30));
+        popularityText.setFill(Color.GREEN);
         popularityText.setTranslateY(140);
         popularityText.setTranslateX(980);
         GameMenu.menuBar.getChildren().add(popularityText);
@@ -102,7 +105,7 @@ public class GameViewController {
         coinText.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 18));
         coinText.setFill(Color.GREEN);
         coinText.setTranslateY(160);
-        coinText.setTranslateX(950); //TODO : update with cost and receiving money
+        coinText.setTranslateX(950);
         GameMenu.menuBar.getChildren().add(coinText);
 
         Text populationText = new Text(String.format("%d/%d", GovernmentController.getCurrentGovernment().getPopulation(),
@@ -113,7 +116,14 @@ public class GameViewController {
         populationText.setTranslateX(950);
         GameMenu.menuBar.getChildren().add(populationText);
 
-        // TODO : update with changes.
+        popularityReporter = popularityText;
+        populationReporter = populationText;
+        goldReporter = coinText;
+
+        if (nowFace != null) {
+            GameMenu.menuBar.getChildren().remove(nowFace);
+        }
+        nowFace = null;
         if (popularity < 21) {
             ImageView angryFace = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
                     + "angryFace.png");
@@ -122,6 +132,7 @@ public class GameViewController {
             angryFace.setScaleY(0.29);
             angryFace.setScaleX(0.25);
             GameMenu.menuBar.getChildren().add(angryFace);
+            nowFace = angryFace;
         } else if (popularity < 42) {
             ImageView pokerFace = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
                     + "pokerFace.png");
@@ -130,9 +141,37 @@ public class GameViewController {
             pokerFace.setScaleX(0.25);
             pokerFace.setScaleY(0.29);
             GameMenu.menuBar.getChildren().add(pokerFace);
+            nowFace = pokerFace;
         }
 
 
+    }
+
+    public static void updateFaceOfReporter() {
+        int popularity = GovernmentController.getCurrentGovernment().getPopularity() + 37;
+        if (nowFace != null) {
+            GameMenu.menuBar.getChildren().remove(nowFace);
+        }
+        nowFace = null;
+        if (popularity < 21) {
+            ImageView angryFace = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
+                    + "angryFace.png");
+            angryFace.setTranslateX(758);
+            angryFace.setTranslateY(-160);
+            angryFace.setScaleY(0.29);
+            angryFace.setScaleX(0.25);
+            GameMenu.menuBar.getChildren().add(angryFace);
+            nowFace = angryFace;
+        } else if (popularity < 42) {
+            ImageView pokerFace = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
+                    + "pokerFace.png");
+            pokerFace.setTranslateX(750);
+            pokerFace.setTranslateY(-160);
+            pokerFace.setScaleX(0.25);
+            pokerFace.setScaleY(0.29);
+            GameMenu.menuBar.getChildren().add(pokerFace);
+            nowFace = pokerFace;
+        }
     }
 
     private static void setEventForEmptyPage(ImageView emptyPage) {
@@ -283,7 +322,7 @@ public class GameViewController {
     }
 
     public static void setCenterOfBar() {
-        if (GameMenu.hoveringBarStateText == null) {
+        if (GameMenu.hoveringBarStateText == null || GameMenu.hoveringBarStateText.getText().startsWith("Lord")) {
             GameMenu.menuBar.getChildren().clear();
             GameMenu.createGameBar(0);
             setCenterToCastleBuildings();
@@ -730,6 +769,9 @@ public class GameViewController {
             GovernmentController.getCurrentGovernment().setFoodRate((int) foodRate.getValue());
             text.setText(String.format("Food Rate : %d",
                     GovernmentController.getCurrentGovernment().getFoodRate()));
+            int popularity = GovernmentController.getCurrentGovernment().getPopularity() + 37;
+            GameViewController.popularityReporter.setText(String.format("%d", popularity));
+            updateFaceOfReporter();
         });
 
         Text text2 = new Text(String.format("Fear Rate : %d",
@@ -752,6 +794,9 @@ public class GameViewController {
             GovernmentController.getCurrentGovernment().setFearRate((int) fearRate.getValue());
             text2.setText(String.format("Fear Rate : %d",
                     GovernmentController.getCurrentGovernment().getFearRate()));
+            int popularity = GovernmentController.getCurrentGovernment().getPopularity() + 37;
+            GameViewController.popularityReporter.setText(String.format("%d", popularity));
+            updateFaceOfReporter();
         });
     }
 
@@ -824,9 +869,13 @@ public class GameViewController {
         rightButton.setTranslateX(625);
         rightButton.setOnMouseClicked(e -> {
             GameMenu.hoveringBarStateText.setText(GovernmentController.changeTaxRate
-                    (selectedBuilding.getGovernment().getTaxRate() + 1));
-            numberOfPeople.setText(String.format("%d            =            %d", GameController.getGame().getCurrentGovernment().getPopulation()
-                    , ((MainCastle) selectedBuilding).getTotalTax()));
+                    (selectedBuilding.getGovernment().getTaxRate()+1));
+            numberOfPeople.setText(String.format("%d            =            %d" ,GameController.getGame().getCurrentGovernment().getPopulation()
+                    , ((MainCastle)selectedBuilding).getTotalTax()));
+            int popularity = GovernmentController.getCurrentGovernment().getPopularity() + 37;
+            GameViewController.popularityReporter.setText(String.format("%d", popularity));
+            updateFaceOfReporter();
+
         });
 
         ImageView leftButton = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
@@ -957,7 +1006,6 @@ public class GameViewController {
         GameMenu.menuBar.getChildren().add(repairButton);
         repairButton.setOnMouseClicked(e -> {
             GameMenu.hoveringBarStateText.setText(BuildingController.repair());
-            ;
             if (GameMenu.hoveringBarStateText.getText().equals("Successfully repaired!")) {
                 progressBar.setProgress(1);
             }
@@ -1213,7 +1261,7 @@ public class GameViewController {
         putButtonImageViewWithDestination("backButtonIcon", "Back To Castles", "Castle Buildings", 225, 60, 0.2);
     }
 
-    private static void setCenterToCastleBuildings() {
+    public static void setCenterToCastleBuildings() {
         putBuildingImageView("stairsIcon", "Stairs", "stairs", 240, 80, 0.4, "stairs");
         putBuildingImageView("smallWallIcon", "Low Wall", "lowWall", 265, 80, 0.4, "lowWall");
         putBuildingImageView("bigWallIcon", "Stone Wall", "stoneWall", 310, 60, 0.4, "stoneWall");
