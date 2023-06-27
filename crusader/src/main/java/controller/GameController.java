@@ -275,7 +275,7 @@ public class GameController {
         if (building.getGovernment().equals(game.getCurrentGovernment())) {
             return false;
         }
-        return HumanController.airAttack(building);
+        return HumanController.validateAirAttack(building);
     }
 
     public static boolean validateAttackTool(int x, int y) {
@@ -1039,9 +1039,9 @@ public class GameController {
 
     public static ArrayList<Tile> getDirectNeighborTiles(Building building) {
         ArrayList<Tile> neighborTiles = new ArrayList<>();
-        ArrayList<Tile> tiles = getNeighborTiles(building.getEndX(),building.getEndY(),building.getWidth(),building.getLength());
-        for (Tile tile : tiles){
-            ArrayList<Tile> neighbors = HumanController.getNeighbor(tile.x,tile.y);
+        ArrayList<Tile> tiles = getNeighborTiles(building.getEndX(), building.getEndY(), building.getWidth(), building.getLength());
+        for (Tile tile : tiles) {
+            ArrayList<Tile> neighbors = HumanController.getNeighbor(tile.x, tile.y);
             for (Tile neighbor : neighbors) {
                 if (!tiles.contains(neighbor)) {
                     neighborTiles.add(neighbor);

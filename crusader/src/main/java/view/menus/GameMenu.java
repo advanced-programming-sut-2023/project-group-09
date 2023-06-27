@@ -111,13 +111,13 @@ public class GameMenu extends Application {
         Rectangle clipRectangle = new Rectangle(1200, 800);
         root.setClip(clipRectangle);
         //MapController.dropMilitary(14, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(11, 5, "archerBow", GameController.getGame().getCurrentGovernment());
+        //MapController.dropMilitary(11, 5, "archerBow", GameController.getGame().getCurrentGovernment());
         //MapController.dropMilitary(20, 5, "horseArcher", GameController.getGame().getCurrentGovernment());
         //MapController.dropMilitary(22, 5, "slinger", GameController.getGame().getCurrentGovernment());
         //MapController.dropMilitary(18, 5, "assassin", GameController.getGame().getCurrentGovernment());
         //MapController.dropMilitary(23, 5, "fireThrower", GameController.getGame().getCurrentGovernment());
 
-        MapController.dropMilitary(20, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
+        MapController.dropMilitary(20, 5, "archerBow", GameController.getGame().getGovernments().get(1));
         MapController.dropMilitary(21, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
         MapController.dropMilitary(21, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
         MapController.dropMilitary(22, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
@@ -141,9 +141,6 @@ public class GameMenu extends Application {
         stage.show();
     }
 
-    public static void renderMap(){
-
-    }
     public static void createGameBar(int state) {
 //        state: 0=buildings  /  1=nemidunam(farzam midune)  /  2=menu / 3=mercenaryPost
         barImage = new ImageView(GameImages.imageViews.get("bar"));

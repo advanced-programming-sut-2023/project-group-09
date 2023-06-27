@@ -133,6 +133,9 @@ public class GameTile {
             buildingImage.setTranslateY(-image.getHeight() + textureImage.getFitHeight() + textureImage.getTranslateY());
             buildingImage.setViewOrder(-tileY - 1);
             GameMenu.gameMap.getChildren().add(buildingImage);
+            buildingImage.setOnMouseEntered(mouseEvent -> {
+                GameMenu.currentTile = GameMap.getGameTile(building.getEndX(),building.getEndY());
+            });
             buildingImage.setOnMouseClicked(mouseEvent -> {
                 if (mouseEvent.getButton() == MouseButton.PRIMARY && building.getGovernment().equals
                         (GovernmentController.getCurrentGovernment()) && !GameMenu.selectedUnit) {
