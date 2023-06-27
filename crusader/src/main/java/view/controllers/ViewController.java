@@ -161,6 +161,14 @@ public class ViewController {
 
     }
 
+    public synchronized static void playDeadSong() {
+        Media media = new Media(ViewController.class.getResource(Paths.MENU_IMAGES.getPath())
+                .toExternalForm() + "evil_laugh.mp3");
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(1);
+        mediaPlayer.play();
+    }
+
     public static double getScreenHeight() {
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();

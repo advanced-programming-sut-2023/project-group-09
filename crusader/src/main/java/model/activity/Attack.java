@@ -260,6 +260,7 @@ public class Attack {
 
 
         if (enemyHp <= 0) {
+            military.getGovernment().removeNumberOfTroopInAttack(military);
             MapController.deleteMilitary(enemy.getX(), enemy.getY(), enemy);
             enemy.setGovernment(null);
             enemy = null;
@@ -350,6 +351,8 @@ public class Attack {
 
 
         if (hp <= 0) {
+            military.getGovernment().removeNumberOfTroopInAttack(military);
+            enemy.getGovernment().removeNumberOfTroopInAttack(military);
             MapController.deleteBuilding(targetBuilding);
             targetBuilding.setGovernment(null);
             targetBuilding = null;
@@ -359,6 +362,7 @@ public class Attack {
     public void attackToTool() {
         int hp = tool.takeDamage(military.getAttackRating());
         if (hp <= 0) {
+            military.getGovernment().removeNumberOfTroopInAttack(military);
             MapController.deleteTool(tool.getX(), tool.getY(), tool);
             tool.setGovernment(null);
             tool = null;

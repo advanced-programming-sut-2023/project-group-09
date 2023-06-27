@@ -23,6 +23,7 @@ import model.human.military.Military;
 import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
 import view.menus.GameMenu;
+import view.menus.SignupMenu;
 
 import java.util.Random;
 
@@ -39,6 +40,7 @@ public class GameTile {
     private ImageView humanImage;
     private ImageView treeImage;
     private ImageView rockImage;
+    private ImageView sicknessImage;
     private static int tileXOn, tileYOn;
     public boolean touch = false;
 
@@ -99,6 +101,26 @@ public class GameTile {
         GameMenu.gameMap.getChildren().add(textureImage);
     }
 
+    public void setSickness() {
+        if (sicknessImage == null) {
+            sicknessImage = new ImageView();
+            GameMenu.gameMap.getChildren().add(sicknessImage);
+        }
+        int random  = Math.abs(new Random().nextInt()) % 32 + 1;
+        sicknessImage.setImage(new Image(GameViewController.class.getResource(Paths.MAP_IMAGES.getPath())
+                .toExternalForm() + "sickness/Image" + random + ".png"));
+        sicknessImage.setTranslateX(x);
+        sicknessImage.setTranslateY(y);
+        sicknessImage.setFitWidth(width*2);
+        sicknessImage.setFitHeight(height*2);
+        sicknessImage.setViewOrder(-100000);
+    }
+
+    public void clearSickness() {
+        GameMenu.gameMap.getChildren().remove(sicknessImage);
+        sicknessImage = null;
+    }
+
     public void setBuilding() {
         Building building = tile.getBuilding();
         if (building == null && buildingImage != null) {
@@ -157,7 +179,7 @@ public class GameTile {
                         } else if (mouseEvent.getClickCount() == 1) {
                             GameViewController.selectedBuilding = building;
                             BuildingController.setBuilding(building);
-
+                            GameViewController.showWorkerStateOfBuilding(building);
                             GameViewController.setCenterOfBar(building.getName());
                         }
                     }

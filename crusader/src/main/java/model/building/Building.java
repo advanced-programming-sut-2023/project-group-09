@@ -7,6 +7,7 @@ import model.game.Tile;
 import model.game.Tuple;
 import model.human.Human;
 import model.human.civilian.Civilian;
+import model.human.military.Engineer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -267,6 +268,26 @@ public class Building implements Cloneable {
                 counterOfWorkers++;
         }
         return counterOfWorkers;
+    }
+
+    public int getNumberOfWorkers() {
+        int number = 0;
+        for (Human human : requiredHumans) {
+            if (!(human instanceof Engineer)) {
+                number++;
+            }
+        }
+        return number;
+    }
+
+    public int getNumberOfEngineers() {
+        int number = 0;
+        for (Human human : requiredHumans) {
+            if (human instanceof Engineer) {
+                number++;
+            }
+        }
+        return number;
     }
 
     public boolean isDestroyed() {

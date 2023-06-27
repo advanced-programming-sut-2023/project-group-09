@@ -6,7 +6,6 @@ import controller.MapController;
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameGoods;
 import enumeration.dictionary.Colors;
-import javafx.scene.text.Text;
 import model.building.Building;
 import model.building.castlebuildings.CastleBuilding;
 import model.building.castlebuildings.MainCastle;
@@ -20,6 +19,7 @@ import model.human.military.EuropeanTroop;
 import model.human.military.Military;
 import model.tools.Tool;
 import view.controllers.GameViewController;
+import view.menus.GameMenu;
 
 import java.util.*;
 
@@ -41,12 +41,24 @@ public class Government {
     private ArrayList<Human> society = new ArrayList<>();
     private MainCastle mainCastle;
 
+    private ArrayList<Military> numberOfTroopInAttack = new ArrayList<>();
 
-    public void setAlive(boolean alive) {
-        isAlive = alive;
+    public ArrayList<Military> getNumberOfTroopInAttack() {
+        return numberOfTroopInAttack;
+    }
+
+    public void addNumberOfTroopInAttack(Military military) {
+        this.numberOfTroopInAttack.add(military);
+        GameMenu.showAttacking();
+    }
+
+    public void removeNumberOfTroopInAttack(Military military) {
+        this.numberOfTroopInAttack.remove(military);
+        GameMenu.showAttacking();
     }
 
     private boolean isAlive = true;
+    private boolean isDead = false;
 
     private int foodRate;
 
@@ -204,7 +216,7 @@ public class Government {
 
     public void addGold(int amount) {
         this.gold += amount;
-        GameViewController.goldReporter.setText(String.format("%d" , gold));
+        GameViewController.goldReporter.setText(String.format("%d", gold));
     }
 
     public int getGold() {
@@ -288,15 +300,16 @@ public class Government {
         newReceivedTrades.put(trade.getId(), trade);
     }
 
-    public int getUnemployedCount(){
+    public int getUnemployedCount() {
         int count = 0;
-        for (Human human : society){
-            if(human instanceof Civilian civilian && !civilian.isHasJob()){
+        for (Human human : society) {
+            if (human instanceof Civilian civilian && !civilian.isHasJob()) {
                 count++;
             }
         }
         return count;
     }
+
     public void addSentTrade(Trade trade) {
         this.sentTrades.put(trade.getId(), trade);
     }
@@ -499,7 +512,8 @@ public class Government {
 
     public void updatePopulationWithAdd(int wanted) {
         int counterOfAddedPeople = wanted - population;
-        this.mainCastle.makeUnemployed(counterOfAddedPeople);
+        this.mainCastle.makeUnemployed(Math.min(maxPopulation - population ,counterOfAddedPeople));
+        population = wanted;
     }
 
 
@@ -533,6 +547,7 @@ public class Government {
                 }
             }
         }
+        population = wanted;
     }
 
     public void updatePeopleAfterTurn() {
@@ -563,7 +578,6 @@ public class Government {
             this.updatePopulationWithRemove(number);
         }
     }
-
 
 
     public int getPopularity() {
@@ -654,29 +668,38 @@ public class Government {
         System.out.println("Lord " + this.user.getNickname() + " is Dead!");
         for (BuildingCounter bc : buildings.values()) {
             Iterator itr = bc.getBuildings().iterator();
-            while (itr.hasNext()){
-                Building building = (Building)itr.next();
+            while (itr.hasNext()) {
+                Building building = (Building) itr.next();
                 itr.remove();
                 MapController.deleteBuilding(building);
             }
         }
         Iterator itr = getSociety().iterator();
-        while (itr.hasNext()){
-            Human human = (Human)itr.next();
+        while (itr.hasNext()) {
+            Human human = (Human) itr.next();
             itr.remove();
-            MapController.deleteHuman(human.getX() , human.getY() , (Civilian) human);
+            MapController.deleteHuman(human.getX(), human.getY(), (Civilian) human);
             human.setGovernment(null);
         }
         itr = getTroops().iterator();
-        while (itr.hasNext()){
-            Military military = (Military)itr.next();
+        while (itr.hasNext()) {
+            Military military = (Military) itr.next();
             itr.remove();
-            MapController.deleteMilitary(military.getX() , military.getY() , military);
+            MapController.deleteMilitary(military.getX(), military.getY(), military);
             military.setGovernment(null);
         }
+        isDead = true;
     }
 
     public int getRealTaxRate() {
         return this.taxRate;
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
     }
 }
