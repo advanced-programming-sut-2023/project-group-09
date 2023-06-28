@@ -1,5 +1,6 @@
 package view.menus;
 
+import client.Packet;
 import controller.DBController;
 import controller.GameController;
 import controller.UserController;
@@ -57,22 +58,22 @@ public class LoginMenu extends Application {
     }
 
 
-    public void forgotPassword(MouseEvent mouseEvent) {
+    public void forgotPassword(MouseEvent mouseEvent) throws IOException {
         username.clearErrorOrMessage();
         password.clearErrorOrMessage();
         CaptchaController.clearErrorOrMessage();
         if (username.getText() == null ||
-                !controller.Application.isUserExistsByName(username.getText())) {
+                !UserController.checkUserNameExist(username.getText())) {
             username.handlingError(LoginAnswers.USER_DOESNT_EXIST_MESSAGE.getMessage());
             return;
         } else if (!CaptchaController.isInputCorrect()) {
             return;
         }
-        User user = controller.Application.getUserByUsername(username.getText());
+        User user = UserController.getUserFromServer(username.getText());
         loginPane.getChildren().clear();
 
         MenuBox menuBox = new MenuBox("Forgot Password" , 500, 150 , 500 , 500);
-        Label label = new Label(UserController.getSecurityQuestionWithUsername(username.getText()));
+        Label label = new Label(user.getPasswordRecoveryQuestion());
         menuBox.getChildren().add(label);
         label.setFont(Font.font("Times New Roman" , FontWeight.BOLD , FontPosture.ITALIC , 25));
         label.setTextFill(Color.BLACK);
@@ -161,7 +162,11 @@ public class LoginMenu extends Application {
                     if (passField.getText() != null && passField.getText().
                             equals(confirmationField.getText())) {
                         user.setPassword(UserController.convertPasswordToHash(passField.getText()));
-                        DBController.saveAllUsers();
+                        try {
+                            UserController.sendUserToServer(user);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                         loginPane.getChildren().clear();
                         setLoginMenu(loginPane);
                     }
@@ -176,6 +181,12 @@ public class LoginMenu extends Application {
             public void handle(MouseEvent mouseEvent) {
                 loginPane.getChildren().clear();
                 setLoginMenu(loginPane);
+                Packet packet = new Packet("do nothing!");
+                try {
+                    packet.sendPacket();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }
@@ -223,7 +234,11 @@ public class LoginMenu extends Application {
         forgotPassword.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                forgotPassword(mouseEvent);
+                try {
+                    forgotPassword(mouseEvent);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 

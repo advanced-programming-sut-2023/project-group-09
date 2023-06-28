@@ -28,4 +28,8 @@ public class Packet {
         String json = new GsonBuilder().setPrettyPrinting().create().toJson(this);
         Main.connection.getDataOutputStream().writeUTF(json);
     }
+
+    public Object getAttribute(String key) {
+        return attributes.get(key);
+    }
 }

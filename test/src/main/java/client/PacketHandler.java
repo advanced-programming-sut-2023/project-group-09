@@ -20,6 +20,7 @@ public class PacketHandler {
             case "successful login" -> {
                 UserController.loginUserSuccessfulAct();
             }
+
         }
     }
 }
