@@ -300,6 +300,16 @@ public class UserController {
         }
     }
 
+    public static boolean checkUserNameExist(String username) throws IOException {
+        Packet packet = new Packet("is username exists?");
+        packet.addAttribute("username" , username);
+        packet.sendPacket();
+        Packet resultPacket = new GsonBuilder().setPrettyPrinting().create().fromJson(Main.connection.getDataInputStream().readUTF(),
+                Packet.class);
+        return ((String)resultPacket.getAttribute("boolean")).equals("true");
+    }
+
+
     public static String forgotPassword(String username) {
         if (!Application.isUserExistsByName(username)) {
             return LoginAnswers.USER_DOESNT_EXIST_MESSAGE.getMessage();
@@ -602,5 +612,19 @@ public class UserController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static User getUserFromServer(String text) throws IOException {
+        Packet packet = new Packet("send user");
+        packet.addAttribute("username" , text);
+        packet.sendPacket();
+        User user = new GsonBuilder().setPrettyPrinting().create().fromJson(Main.connection.getDataInputStream().readUTF(),
+                User.class);
+        return user;
+    }
+
+    public static void sendUserToServer(User user) throws IOException {
+        String json = new GsonBuilder().setPrettyPrinting().create().toJson(user);
+        Main.connection.getDataOutputStream().writeUTF(json);
     }
 }

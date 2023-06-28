@@ -6,6 +6,8 @@ import controller.Application;
 import controller.DBController;
 import controller.UserController;
 import model.User;
+import model.User;
+import view.Main;
 
 import java.io.IOException;
 
@@ -24,6 +26,11 @@ public class PacketHandler {
 
     public void sendPacket(Packet packet) throws IOException {
         String json = new GsonBuilder().setPrettyPrinting().create().toJson(packet);
+        connection.getDataOutputStream().writeUTF(json);
+    }
+
+    public void sendUser(User user) throws IOException {
+        String json = new GsonBuilder().setPrettyPrinting().create().toJson(user);
         connection.getDataOutputStream().writeUTF(json);
     }
 
@@ -54,6 +61,21 @@ public class PacketHandler {
             case "signup user" -> {
                 Application.addUser(new Gson().fromJson((String) packet.getAttribute("user"), User.class));
                 DBController.saveAllUsers();
+            }
+            case "is username exists?" -> {
+                Packet result = UserController.isUserExists((String)packet.getAttribute("username"));
+                sendPacket(result);
+            }
+            case "send user" -> {
+                User user = Application.getUserByUsername((String)packet.getAttribute("username"));
+                sendUser(user);
+                String input = connection.getDataInputStream().readUTF();
+                if (!input.equals("do nothing!")) {
+                    Application.getUsers().remove(user);
+                    user = new GsonBuilder().setPrettyPrinting().create().fromJson(input , User.class);
+                    Application.getUsers().add(user);
+                    DBController.saveAllUsers();
+                }
             }
         }
     }

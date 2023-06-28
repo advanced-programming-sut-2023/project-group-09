@@ -598,4 +598,13 @@ public class UserController {
     }
 
 
+    public static Packet isUserExists(String username) {
+        Packet packet = new Packet("is user exists");
+        if (Application.isUserExistsByName(username)) {
+            packet.addAttribute("boolean" , "true");
+        } else {
+            packet.addAttribute("boolean" , "false");
+        }
+        return packet;
+    }
 }
