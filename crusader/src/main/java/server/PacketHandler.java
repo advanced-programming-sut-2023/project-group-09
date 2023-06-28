@@ -14,15 +14,13 @@ import java.io.IOException;
 public class PacketHandler {
     Packet packet;
     Connection connection;
+    Connection connection;
 
     public PacketHandler(Packet packet, Connection connection) {
         this.packet = packet;
         this.connection = connection;
     }
 
-    public PacketHandler(Packet packet) {
-        this.packet = packet;
-    }
 
     public void sendPacket(Packet packet) throws IOException {
         String json = new GsonBuilder().setPrettyPrinting().create().toJson(packet);
@@ -36,6 +34,17 @@ public class PacketHandler {
 
 
     public void handle() throws IOException {
+        if (!validateAuthenticationToken()){
+            return;
+        }
+
+        switch (packet.handler) {
+            case "profile":
+                new ProfileHandler().handle(packet,connection);
+                break;
+            case "user":
+                new UserHandler().handle(packet,connection);
+        }
         switch (packet.command) {
             case "login user" -> {
                 Packet result = UserController.loginUser((String) packet.getAttribute("username"),
@@ -78,5 +87,16 @@ public class PacketHandler {
                 }
             }
         }
+    }
+    public boolean validateAuthenticationToken() throws IOException {
+        if (packet.handler.equals("login") || packet.handler.equals("register")|| packet.command.equals("make a fake token")){
+            return true;
+        }
+        boolean check = TokenController.validateToken(packet.token);
+        if (!check){
+            Packet packet = new Packet("authentication error","error");
+            Packet.sendPacket(packet,connection);
+        }
+        return check;
     }
 }

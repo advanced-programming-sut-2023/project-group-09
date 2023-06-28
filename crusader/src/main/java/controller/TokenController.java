@@ -9,10 +9,11 @@ public class TokenController {
     public static HashMap<String, Long> expires = new HashMap<>();
 
     public static String generateToken(User user) {
+        System.out.println(user);
         long currentTime = System.currentTimeMillis();
         String helper = user.getUsername() + currentTime;
         String token = UserController.convertPasswordToHash(helper);
-        expires.put(token, 1800000l + currentTime);
+        expires.put(token, 1800000L + currentTime);
         tokens.put(token, user);
         return token;
     }

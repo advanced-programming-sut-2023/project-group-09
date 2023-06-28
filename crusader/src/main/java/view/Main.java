@@ -17,6 +17,10 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         //Main.stage = stage;
 //        ViewController.playMenuMusic();
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            DBController.saveAllUsers();
+            DBController.saveCurrentUser();
+        }));
         DBController.loadAllUsers();
         Server server = new Server(8080);
         //MainController.run(stage);

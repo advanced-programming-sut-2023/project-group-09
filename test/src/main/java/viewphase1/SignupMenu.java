@@ -7,6 +7,7 @@ import controller.UserController;
 import enumeration.commands.SignupMenuCommands;
 import model.User;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -18,7 +19,7 @@ public class SignupMenu {
     public static User currentUser = null;
     public static HashMap<String, String> user = new HashMap<>();
 
-    public static void run(Scanner scanner) throws MalformedURLException {
+    public static void run(Scanner scanner) throws IOException {
         System.out.println("<< Signup Menu >>");
         while (true) {
             if (signupState == 0) runRegister(scanner);

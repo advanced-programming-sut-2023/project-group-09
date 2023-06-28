@@ -369,17 +369,16 @@ public class UserController {
         DBController.saveCurrentUser();
     }
 
-    public static String validateUsername(String username) {
-        if (checkNullFields(username)) {
-            return "username field is required!";
+    public static String validateUsername(String username) throws IOException {
+        Packet packet = new Packet("validate username","profile");
+        packet.addAttribute("username",username);
+        packet.sendPacket();
+
+        Packet recPacket = Packet.receivePacket();
+        if (recPacket.attributes.get("massage") != null){
+            return recPacket.attributes.get("massage").toString();
         }
-        if (checkUsernameChars(username)) {
-            return "username is invalid!";
-        }
-        if (Application.isUserExistsByName(username)) {
-            return "username is duplicate!";
-        }
-        return null;
+        return  null;
     }
 
     public static boolean checkUsernameChars(String username) {
@@ -390,45 +389,33 @@ public class UserController {
 
 
     //==================================================
-    public static String changeUsername(String newUsername) {
+    public static String changeUsername(String newUsername) throws IOException {
 
-        String message = validateUsername(newUsername);
-        if (message != null) {
-            return message;
-        }
-        User user = Application.getCurrentUser();
-        user.setUsername(newUsername);
-        return "username changed successfully!";
+        Packet packet = new Packet("change username","profile");
+        packet.addAttribute("username",newUsername);
+        packet.sendPacket();
+
+        Packet recPacket = Packet.receivePacket();
+        return  recPacket.attributes.get("massage").toString();
     }
 
-    public static String changeNickname(String newNickname) {
-        if (UserController.checkNullFields(newNickname)) {
-            return "nickname field is required!";
-        }
+    public static String changeNickname(String newNickname) throws IOException {
+        Packet packet = new Packet("change nickname","profile");
+        packet.addAttribute("nickname",newNickname);
+        packet.sendPacket();
 
-        User user = Application.getCurrentUser();
-        user.setNickname(newNickname);
-        return "nickname changed successfully!";
+        Packet recPacket = Packet.receivePacket();
+        return  recPacket.attributes.get("massage").toString();
     }
 
-    public static String validateChangePassword(String oldPassword, String newPassword) {
-        if (checkNullFields(oldPassword)) {
-            return "old password field is required!";
-        }
-        if (checkNullFields(newPassword)) {
-            return "new password field is required!";
-        }
-        if (!Application.getCurrentUser().arePasswordsEqual(oldPassword)) {
-            return "current password is incorrect!";
-        }
+    public static String validateChangePassword(String oldPassword, String newPassword) throws IOException {
+        Packet packet = new Packet("validate password","profile");
+        packet.addAttribute("oldPassword",oldPassword);
+        packet.addAttribute("newPassword",newPassword);
+        packet.sendPacket();
 
-        if (checkPasswordPower(newPassword)) {
-            return "new password is weak!";
-        }
-        if (Application.getCurrentUser().arePasswordsEqual(newPassword)) {
-            return "please enter a new password!";
-        }
-        return null;
+        Packet recPacket = Packet.receivePacket();
+        return  recPacket.attributes.get("massage").toString();
     }
 
     public static boolean checkPasswordPower(String password) {
@@ -447,25 +434,23 @@ public class UserController {
         return !(matcher1.find() && matcher2.find() && matcher3.find() && matcher4.find());
     }
 
-    public static String changePassword(String oldPassword, String newPassword) {
-        String message = validateChangePassword(oldPassword, newPassword);
-        if (message != null) {
-            return message;
-        }
-        newPassword = convertPasswordToHash(newPassword);
-        Application.getCurrentUser().setPassword(newPassword);
-        return "password changed successfully!";
+    public static String changePassword(String oldPassword, String newPassword) throws IOException {
+        Packet packet = new Packet("change password","profile");
+        packet.addAttribute("oldPassword",oldPassword);
+        packet.addAttribute("newPassword",newPassword);
+        packet.sendPacket();
+
+        Packet recPacket = Packet.receivePacket();
+        return  recPacket.attributes.get("massage").toString();
     }
 
-    public static String changeEmail(String newEmail) {
+    public static String changeEmail(String newEmail) throws IOException {
+        Packet packet = new Packet("change email","profile");
+        packet.addAttribute("email",newEmail);
+        packet.sendPacket();
 
-        String message = validateEmail(newEmail);
-        if (message != null) {
-            return message;
-        }
-        User user = Application.getCurrentUser();
-        user.setEmail(newEmail);
-        return "email changed successfully!";
+        Packet recPacket = Packet.receivePacket();
+        return  recPacket.attributes.get("massage").toString();
     }
 
     public static boolean checkNullFields(String input) {
@@ -478,28 +463,31 @@ public class UserController {
         return !matcher.matches();
     }
 
-    public static String validateEmail(String email) {
-        if (checkNullFields(email)) {
-            return "email field is required!";
+    public static String validateEmail(String email) throws IOException {
+        Packet packet = new Packet("validate email","profile");
+        packet.addAttribute("email",email);
+        packet.sendPacket();
+
+        Packet recPacket = Packet.receivePacket();
+        if (recPacket.attributes.get("massage") != null){
+            return recPacket.attributes.get("massage").toString();
         }
-        if (checkEmailFormat(email)) {
-            return "email is invalid!";
-        }
-        if (Application.isUserExistsByEmail(email)) {
-            return "email is duplicate!";
-        }
-        return null;
+        return  null;
     }
 
-    public static String changeSlogan(String newSlogan) {
-        if (newSlogan.equals("random")) {
-            String slogan = generateRandomSlogan();
-            Application.getCurrentUser().setSlogan(slogan);
-            return "new slogan is : " + slogan;
-        } else {
-            Application.getCurrentUser().setSlogan(newSlogan);
-            return "slogan changed successfully!";
+    public static String changeSlogan(String newSlogan) throws IOException {
+        if (newSlogan == null){
+            newSlogan = "";
         }
+        Packet packet = new Packet("change slogan","profile");
+        packet.addAttribute("slogan",newSlogan);
+        packet.sendPacket();
+
+        Packet recPacket = Packet.receivePacket();
+        if (recPacket.attributes.get("massage") != null){
+            return recPacket.attributes.get("massage").toString();
+        }
+        return  null;
     }
 
     public static String removeSlogan() {

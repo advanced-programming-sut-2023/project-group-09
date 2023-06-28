@@ -90,7 +90,12 @@ public class ChangePasswordDialog extends Pane {
         submit = new MenuButton("save", block, 0, 200,false);
 
         submit.setOnMouseClicked(mouseEvent -> {
-            String massage = controller.UserController.validateChangePassword(oldPassword.getText(),newPassword.getText());
+            String massage = null;
+            try {
+                massage = controller.UserController.validateChangePassword(oldPassword.getText(),newPassword.getText());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             try {
                 if(!captcha.isInputCorrect()){
                     MenuPopUp menuPopUp = new MenuPopUp(parent, 400, 400,
@@ -109,6 +114,8 @@ public class ChangePasswordDialog extends Pane {
                     parent.getChildren().add(menuPopUp);
                 }
             } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });

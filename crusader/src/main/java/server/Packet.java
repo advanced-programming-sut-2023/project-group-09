@@ -16,10 +16,15 @@ import java.util.Objects;
 public class Packet {
     public String command;
     public String token;
+    public String handler;
     public HashMap<String , Object> attributes = new HashMap<>();
 
     public Packet(String command) {
         this.command = command;
+    }
+    public Packet(String command,String handler) {
+        this.command = command;
+        this.handler = handler;
     }
 
     public Object getAttribute(String key) {
@@ -46,6 +51,13 @@ public class Packet {
 
     public void setCommand(String command) {
         this.command = command;
+    }
+    public static void sendPacket(Packet packet,Connection connection) throws IOException {
+
+        String json = new GsonBuilder().setPrettyPrinting().create().toJson(packet);
+        System.out.println("send packet: ");
+        System.out.println(json);
+        connection.getDataOutputStream().writeUTF(json);
     }
 
 

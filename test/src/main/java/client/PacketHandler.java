@@ -11,6 +11,10 @@ public class PacketHandler {
     }
 
     public void handle() {
+        switch (packet.handler) {
+            case "profile":
+                break;
+        }
         switch (packet.command) {
             case "username doesn't exist" -> {
                 UserController.loginUsernameExistsAct();

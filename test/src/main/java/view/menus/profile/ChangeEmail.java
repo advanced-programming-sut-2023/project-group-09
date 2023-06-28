@@ -1,5 +1,6 @@
 package view.menus.profile;
 
+import controller.network.DataController;
 import enumeration.Paths;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -49,7 +50,7 @@ public class ChangeEmail extends Application {
         menuBox = new MenuBox("change email",0,0,500,400);
         email = new MenuTextField(menuBox,"email...","email",50,-50, 300);
         submit = new MenuButton("save",menuBox,0,50,false);
-        email.setText(user.getEmail());
+        email.setText(DataController.getEmail());
         menuBox.getChildren().addAll(email,submit);
         setEvents();
         back = new MenuFingerBack(-400,300);
@@ -72,10 +73,20 @@ public class ChangeEmail extends Application {
             email.handlingError(massage);
         });
         submit.setOnMouseClicked(mouseEvent -> {
-            String massage = controller.UserController.validateEmail(email.getText());
+            String massage = null;
+            try {
+                massage = controller.UserController.validateEmail(email.getText());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             if (massage == null || massage.equals("")) {
-                MenuPopUp menuPopUp = new MenuPopUp(root, 400, 400,
-                        "success", controller.UserController.changeEmail(email.getText()));
+                MenuPopUp menuPopUp = null;
+                try {
+                    menuPopUp = new MenuPopUp(root, 400, 400,
+                            "success", controller.UserController.changeEmail(email.getText()));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 root.getChildren().add(menuPopUp);
             }else{
                 MenuPopUp menuPopUp = new MenuPopUp(root, 400, 400,

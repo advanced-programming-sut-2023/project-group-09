@@ -32,6 +32,7 @@ public class Connection extends Thread {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            System.out.println(packet.getCommand());
         }
     }
 

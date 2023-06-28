@@ -1,5 +1,6 @@
 package view.menus.profile;
 
+import controller.network.DataController;
 import enumeration.Paths;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -51,7 +52,8 @@ public class ChangeUsername extends Application {
         menuBox = new MenuBox("change username",0,0,500,400);
         username = new MenuTextField(menuBox,"username...","username",50,-50, 300);
         submit = new MenuButton("save",menuBox,0,50,false);
-        username.setText(user.getUsername());
+
+        username.setText(DataController.getUsername());
         menuBox.getChildren().addAll(username,submit);
         setEvents();
         back = new MenuFingerBack(-400,300);
@@ -74,10 +76,20 @@ public class ChangeUsername extends Application {
             username.handlingError(massage);
         });
         submit.setOnMouseClicked(mouseEvent -> {
-            String massage = controller.UserController.validateUsername(username.getText());
+            String massage = null;
+            try {
+                massage = controller.UserController.validateUsername(username.getText());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             if (massage == null || massage.equals("")) {
-                MenuPopUp menuPopUp = new MenuPopUp(root, 400, 400,
-                        "success", controller.UserController.changeUsername(username.getText()));
+                MenuPopUp menuPopUp = null;
+                try {
+                    menuPopUp = new MenuPopUp(root, 400, 400,
+                            "success", controller.UserController.changeUsername(username.getText()));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 root.getChildren().add(menuPopUp);
             }else{
                 MenuPopUp menuPopUp = new MenuPopUp(root, 400, 400,

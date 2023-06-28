@@ -1,6 +1,8 @@
 package view.menus.profile;
 
+import client.Packet;
 import controller.DBController;
+import controller.network.DataController;
 import enumeration.Paths;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -21,12 +23,12 @@ import javafx.stage.Stage;
 import model.User;
 import model.menugui.MenuBox;
 import model.menugui.MenuFingerBack;
+import view.Main;
 import view.controllers.ViewController;
 import view.menus.LoginMenu;
 import view.menus.MainMenu;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -70,7 +72,9 @@ public class ChangeAvatar extends Application {
         avatarsGrid.setTranslateX(300);
         avatarsGrid.setTranslateY(300);
         profilePhoto = new Rectangle(0, -200, 100, 100);
-        profilePhoto.setFill(new ImagePattern(new Image(String.valueOf(new File(user.getPath()).toURI()))));
+        String path = String.valueOf(new File(user.getPath()).toURI());
+        ByteArrayOutputStream byteArrayOutputStream = DataController.getImageFromServer(path);
+        profilePhoto.setFill(new ImagePattern(new Image(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()))));
         profilePhoto.setArcHeight(100);
         profilePhoto.setArcWidth(100);
         profilePhoto.setStroke(Color.DARKRED);
@@ -78,7 +82,8 @@ public class ChangeAvatar extends Application {
         profilePhoto.setTranslateY(-120);
 
         fileChooser = new Rectangle(0, 0, 100, 100);
-        fileChooser.setFill(new ImagePattern(new Image(getClass().getResource(Paths.ICONS.getPath()).toExternalForm() + "upload.png")));
+        String path1 = getClass().getResource(Paths.ICONS.getPath()).toExternalForm() + "upload.png";
+        fileChooser.setFill(new ImagePattern(new Image(path1)));
         fileChooser.setArcHeight(100);
         fileChooser.setArcWidth(100);
         fileChooser.setTranslateY(100);
@@ -111,17 +116,24 @@ public class ChangeAvatar extends Application {
             if (db.hasFiles()) {
                 File file = db.getFiles().get(0);
                 if (file != null) {
-                    String path = Paths.USER_AVATARS.getPath() + user.getUsername();
-                    boolean check = new File(path).mkdirs();
+                    String path3 = Paths.USER_AVATARS.getPath() + user.getUsername();
+                    boolean check = new File(path3).mkdirs();
                     try {
-                        Files.copy(file.toPath(), (new File(path + "/" + file.getName())).toPath());
+                        Files.copy(file.toPath(), (new File(path3 + "/" + file.getName())).toPath());
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    user.setPath(path + "/" + file.getName());
+                    user.setPath(path3 + "/" + file.getName());
                     DBController.saveCurrentUser();
                     DBController.saveAllUsers();
-                    profilePhoto.setFill(new ImagePattern(new Image(new File(path + "/" + file.getName()).toURI().toString())));
+                    String path2 = String.valueOf(new File(user.getPath()).toURI());
+                    ByteArrayOutputStream byteArrayOutputStream2 = null;
+                    try {
+                        byteArrayOutputStream2 = DataController.getImageFromServer(path2);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    profilePhoto.setFill(new ImagePattern(new Image(new ByteArrayInputStream(byteArrayOutputStream2.toByteArray()))));
 
                 }
             }
@@ -158,7 +170,9 @@ public class ChangeAvatar extends Application {
             user.setPath(path + "/" + file.getName());
             DBController.saveCurrentUser();
             DBController.saveAllUsers();
-            profilePhoto.setFill(new ImagePattern(new Image(new File(path + "/" + file.getName()).toURI().toString())));
+            String path4 = String.valueOf(new File(user.getPath()).toURI());
+            ByteArrayOutputStream byteArrayOutputStream4 = DataController.getImageFromServer(path4);
+            profilePhoto.setFill(new ImagePattern(new Image(new ByteArrayInputStream(byteArrayOutputStream4.toByteArray()))));
 
         }
     }
@@ -170,12 +184,13 @@ public class ChangeAvatar extends Application {
         );
     }
 
-    public void setEvents() {
+    public void setEvents() throws IOException {
         String path;
         for (int i = 0; i < 4; i++) {
             Rectangle rectangle = new Rectangle(0, 0, 80, 80);
             path = String.valueOf(new File(Paths.USER_AVATARS.getPath() + (i + 1) + ".png").toURI());
-            rectangle.setFill(new ImagePattern(new Image(path)));
+            ByteArrayOutputStream byteArrayOutputStream4 = DataController.getImageFromServer(path);
+            rectangle.setFill(new ImagePattern(new Image(new ByteArrayInputStream(byteArrayOutputStream4.toByteArray()))));
             rectangle.setArcHeight(50);
             rectangle.setArcWidth(50);
 
@@ -195,7 +210,13 @@ public class ChangeAvatar extends Application {
                 DBController.saveCurrentUser();
                 DBController.saveAllUsers();
                 String path1 = String.valueOf(new File(user.getPath()).toURI());
-                profilePhoto.setFill(new ImagePattern(new Image(path1)));
+                ByteArrayOutputStream byteArrayOutputStream5 = null;
+                try {
+                    byteArrayOutputStream5 = DataController.getImageFromServer(path1);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                profilePhoto.setFill(new ImagePattern(new Image(new ByteArrayInputStream(byteArrayOutputStream5.toByteArray()))));
             });
 
             avatarsGrid.add(rectangle, i % 4, i / 4);
@@ -212,4 +233,6 @@ public class ChangeAvatar extends Application {
         Background background = new Background(backgroundImage);
         root.setBackground(background);
     }
+
+
 }

@@ -3,16 +3,24 @@ package client;
 import com.google.gson.GsonBuilder;
 import view.Main;
 
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 
 public class Packet {
     public String command;
     public String token;
-    public HashMap<String, Object> attributes = new HashMap<>();
+    public String handler;
+    public HashMap<String , Object> attributes = new HashMap<>();
 
     public Packet(String command) {
         this.command = command;
+        this.token = Main.connection.getToken();
+    }
+
+    public Packet(String command,String handler) {
+        this.command = command;
+        this.handler = handler;
         this.token = Main.connection.getToken();
     }
 

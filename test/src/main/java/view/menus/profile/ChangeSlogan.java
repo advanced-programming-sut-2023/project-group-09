@@ -1,6 +1,7 @@
 package view.menus.profile;
 
 import controller.UserController;
+import controller.network.DataController;
 import enumeration.Paths;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -49,7 +50,7 @@ public class ChangeSlogan extends Application {
         menuBox = new MenuBox("change slogan",0,0,500,400);
         slogan = new MenuTextField(menuBox,"slogan...","slogan",50,-50, 300);
         submit = new MenuButton("save",menuBox,0,50,false);
-        slogan.setText(user.getSlogan());
+        slogan.setText(DataController.getSlogan());
         menuBox.getChildren().addAll(slogan,submit);
         setEvents();
         back = new MenuFingerBack(-400,300);
@@ -68,9 +69,18 @@ public class ChangeSlogan extends Application {
 
     public void setEvents(){
         submit.setOnMouseClicked(mouseEvent -> {
-            MenuPopUp menuPopUp = new MenuPopUp(root, 400, 400,
-                    "success", UserController.changeSlogan(slogan.getText()));
-            slogan.setText(user.getSlogan());
+            MenuPopUp menuPopUp = null;
+            try {
+                menuPopUp = new MenuPopUp(root, 400, 400,
+                        "success", UserController.changeSlogan(slogan.getText()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                slogan.setText(DataController.getSlogan());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             root.getChildren().add(menuPopUp);
         });
     }
