@@ -1,12 +1,15 @@
 package controller;
 
 import client.Packet;
+import client.PacketHandler;
+import com.google.gson.GsonBuilder;
 import enumeration.dictionary.SecurityQuestions;
 import enumeration.answers.LoginAnswers;
 import enumeration.commands.SignupMenuCommands;
 import enumeration.dictionary.Slogans;
 import javafx.scene.control.Alert;
 import model.User;
+import view.Main;
 import view.controllers.ViewController;
 import view.menus.LoginMenu;
 import view.menus.MainMenu;
@@ -270,18 +273,42 @@ public class UserController {
         else questionAndAnswer.put("answerConfirm", matchers.get("answerConfirm").group("answerConfirm1"));
     }
 
-    public static String loginUser(String username, String password, boolean stayedLoggedIn) throws MalformedURLException {
-        Packet packet = new Packet("login user","login");
-        packet.addAttribute("username" , username);
-        packet.addAttribute("password" , password);
-        packet.addAttribute("stayedLoggedIn" , stayedLoggedIn);
-        try {
-            packet.sendPacket();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return "";
+    public static void loginUsernameExistsAct() {
+        LoginMenu.username.handlingError(LoginAnswers.USER_DOESNT_EXIST_MESSAGE.getMessage());
+        view.controllers.CaptchaController.changingCaptcha();
     }
+
+    public static void loginUserPasswordWrongAct() {
+        LoginMenu.password.handlingError(LoginAnswers.WRONG_PASSWORD_MESSAGE.getMessage());
+        view.controllers.CaptchaController.changingCaptcha();
+    }
+
+    public static void loginUser(String username, String password, boolean stayedLoggedIn) throws IOException {
+        if (view.controllers.CaptchaController.isInputCorrect()) {
+            Packet packet = new Packet("login user");
+            packet.addAttribute("username", username);
+            packet.addAttribute("password", password);
+            packet.addAttribute("stayedLoggedIn", stayedLoggedIn);
+            try {
+                packet.sendPacket();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            Packet resultPacket = new GsonBuilder().setPrettyPrinting().create().fromJson(Main.connection.getDataInputStream().readUTF(),
+                    Packet.class);
+            new PacketHandler(resultPacket).handle();
+        }
+    }
+
+    public static boolean checkUserNameExist(String username) throws IOException {
+        Packet packet = new Packet("is username exists?");
+        packet.addAttribute("username" , username);
+        packet.sendPacket();
+        Packet resultPacket = new GsonBuilder().setPrettyPrinting().create().fromJson(Main.connection.getDataInputStream().readUTF(),
+                Packet.class);
+        return ((String)resultPacket.getAttribute("boolean")).equals("true");
+    }
+
 
     public static String forgotPassword(String username) {
         if (!Application.isUserExistsByName(username)) {
@@ -567,4 +594,25 @@ public class UserController {
     }
 
 
+    public static void loginUserSuccessfulAct() {
+        try {
+            new MainMenu().start(LoginMenu.stage);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static User getUserFromServer(String text) throws IOException {
+        Packet packet = new Packet("send user");
+        packet.addAttribute("username" , text);
+        packet.sendPacket();
+        User user = new GsonBuilder().setPrettyPrinting().create().fromJson(Main.connection.getDataInputStream().readUTF(),
+                User.class);
+        return user;
+    }
+
+    public static void sendUserToServer(User user) throws IOException {
+        String json = new GsonBuilder().setPrettyPrinting().create().toJson(user);
+        Main.connection.getDataOutputStream().writeUTF(json);
+    }
 }

@@ -1,5 +1,7 @@
 package client;
 
+import controller.UserController;
+
 public class PacketHandler {
     Packet packet;
 
@@ -11,6 +13,18 @@ public class PacketHandler {
         switch (packet.handler) {
             case "profile":
                 break;
+        }
+        switch (packet.command) {
+            case "username doesn't exist" -> {
+                UserController.loginUsernameExistsAct();
+            }
+            case "password isn't correct" -> {
+                UserController.loginUserPasswordWrongAct();
+            }
+            case "successful login" -> {
+                UserController.loginUserSuccessfulAct();
+            }
+
         }
     }
 }

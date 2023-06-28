@@ -3,6 +3,7 @@ package server;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import controller.DBController;
+import controller.TokenController;
 import enumeration.Pair;
 import view.Main;
 
@@ -18,9 +19,16 @@ public class Packet {
     public String handler;
     public HashMap<String , Object> attributes = new HashMap<>();
 
+    public Packet(String command) {
+        this.command = command;
+    }
     public Packet(String command,String handler) {
         this.command = command;
         this.handler = handler;
+    }
+
+    public Object getAttribute(String key) {
+        return attributes.get(key);
     }
 
     public void addAttribute(String key , Object value) {
@@ -29,9 +37,11 @@ public class Packet {
 
     public static Packet receivePacket(DataInputStream dataInputStream) throws IOException {
         String receivingPacket = dataInputStream.readUTF();
-        System.out.println("receive packet: ");
-        System.out.println(receivingPacket);
-        Packet packet = new GsonBuilder().setPrettyPrinting().create().fromJson(receivingPacket , Packet.class);
+        Packet packet = null;
+        try {
+            packet = new GsonBuilder().setPrettyPrinting().create().fromJson(receivingPacket , Packet.class);
+        } catch (Exception e) {
+        }
         return packet;
     }
 
@@ -48,5 +58,14 @@ public class Packet {
         System.out.println("send packet: ");
         System.out.println(json);
         connection.getDataOutputStream().writeUTF(json);
+    }
+
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

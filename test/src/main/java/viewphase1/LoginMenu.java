@@ -62,7 +62,7 @@ public class LoginMenu {
                             usernameMatcher.group("username") : usernameMatcher.group("username2");
                     String password = passwordMatcher.group("password") != null ?
                             passwordMatcher.group("password") : passwordMatcher.group("password2");
-                    result = UserController.loginUser(username, password, stayLoggedInMatcher.find());
+                    //result = UserController.loginUser(username, password, stayLoggedInMatcher.find());
                 }
                 System.out.println(result);
                 if (result.equals(LoginAnswers.WRONG_PASSWORD_MESSAGE.getMessage())) {

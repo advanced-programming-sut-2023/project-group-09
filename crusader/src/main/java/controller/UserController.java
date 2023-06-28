@@ -6,6 +6,7 @@ import enumeration.commands.SignupMenuCommands;
 import enumeration.dictionary.Slogans;
 import javafx.scene.control.Alert;
 import model.User;
+import server.Packet;
 import view.controllers.ViewController;
 import view.menus.LoginMenu;
 import view.menus.MainMenu;
@@ -268,31 +269,37 @@ public class UserController {
         else questionAndAnswer.put("answerConfirm", matchers.get("answerConfirm").group("answerConfirm1"));
     }
 
-    public static String loginUser(String username, String password, boolean stayedLoggedIn) throws MalformedURLException {
+    public static Packet loginUser(String username, String password, boolean stayedLoggedIn) throws MalformedURLException {
         DBController.loadAllUsers();
+        Packet packet = null;
         if (!Application.isUserExistsByName(username)) {
-            LoginMenu.username.handlingError(LoginAnswers.USER_DOESNT_EXIST_MESSAGE.getMessage());
+            packet = new Packet("username doesn't exist");
+            /*LoginMenu.username.handlingError(LoginAnswers.USER_DOESNT_EXIST_MESSAGE.getMessage());
             view.controllers.CaptchaController.changingCaptcha();
-            return LoginAnswers.USER_DOESNT_EXIST_MESSAGE.getMessage();
-        }
-        User user = Application.getUserByUsername(username);
-        if (!user.isPasswordCorrect(password)) {
-            LoginMenu.password.handlingError(LoginAnswers.WRONG_PASSWORD_MESSAGE.getMessage());
+            return LoginAnswers.USER_DOESNT_EXIST_MESSAGE.getMessage();*/
+        } else {
+            User user = Application.getUserByUsername(username);
+            if (!user.isPasswordCorrect(password)) {
+                packet = new Packet("password isn't correct");
+            /*LoginMenu.password.handlingError(LoginAnswers.WRONG_PASSWORD_MESSAGE.getMessage());
             view.controllers.CaptchaController.changingCaptcha();
-            return LoginAnswers.WRONG_PASSWORD_MESSAGE.getMessage();
-        }
-        if (view.controllers.CaptchaController.getCaptcha().isInputCorrect()) {
-            Application.setCurrentUser(user);
-            Application.setStayLoggedIn(stayedLoggedIn);
-            DBController.saveCurrentUser();
-            try {
-                new MainMenu().start(LoginMenu.stage);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            return LoginAnswers.WRONG_PASSWORD_MESSAGE.getMessage();*/
+            } else {
+                packet = new Packet("successful login");
+                //Application.setCurrentUser(user);
+                //Application.setStayLoggedIn(stayedLoggedIn);
+                //DBController.saveCurrentUser();
+                packet.setToken(TokenController.generateToken(user));
+                //try {
+                //new MainMenu().start(LoginMenu.stage);
+                //} catch (Exception e) {
+                //throw new RuntimeException(e);
+                //}
+                //return LoginAnswers.SUCCESSFUL_LOGIN_MESSAGE.getMessage();
             }
-            return LoginAnswers.SUCCESSFUL_LOGIN_MESSAGE.getMessage();
         }
-        return "";
+        //return "";
+        return packet;
     }
 
     public static String forgotPassword(String username) {
@@ -672,4 +679,13 @@ public class UserController {
     }
 
 
+    public static Packet isUserExists(String username) {
+        Packet packet = new Packet("is user exists");
+        if (Application.isUserExistsByName(username)) {
+            packet.addAttribute("boolean" , "true");
+        } else {
+            packet.addAttribute("boolean" , "false");
+        }
+        return packet;
+    }
 }
