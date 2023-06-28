@@ -1,9 +1,7 @@
 package view.controllers;
 
 import controller.GameController;
-import controller.MainController;
 import controller.MapController;
-import controller.UserController;
 import controller.gamestructure.GameHumans;
 import controller.gamestructure.GameImages;
 import controller.human.HumanController;
@@ -40,6 +38,8 @@ public class HumanViewController {
     public static ArrayList<ImageView> moveBTNS = new ArrayList<>();
     public static TypeBTN lastType;
     public static ArrayList<Military> selectedMilitaries = new ArrayList<>();
+    public static ArrayList<Engineer> selectedEngineers = new ArrayList<>();
+    public static String selectedTool;
 
     //----------------------------------------------------------
     public static void setCenterOfUnitMenu() {
@@ -59,8 +59,46 @@ public class HumanViewController {
             if (military instanceof Engineer) engineers.add((Engineer) military);
         }
         if (engineers.size() != 0) {
+            selectedEngineers = engineers;
             putBuild();
         }
+    }
+
+    public static void setCenterToBuildMenu() {
+        GameMenu.barImage.setImage(GameImages.imageViews.get("unit bar"));
+        addTypes();
+        putStand();
+        putDefensive();
+        putAggressive();
+        updateStateOfMilitary();
+        putTool("catapult", 127, 127);
+        putTool("trebuchet", 177, 127);
+        putTool("siegeTower", 227, 127);
+        putTool("batteringRam", 127, 177);
+        putTool("portableShield", 177, 177);
+        putTool("fireBallista", 227, 177);
+    }
+
+    public static void putTool(String toolName, double x, double y) {
+        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/" + toolName + ".png");
+        icon.setTranslateX(x);
+        icon.setTranslateY(y);
+        icon.setScaleY(1.1);
+        icon.setScaleX(1.2);
+        icon.setOnMouseEntered(mouseEvent -> {
+            icon.setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                    .toExternalForm() + "icons/" + toolName + "-select.png"));
+        });
+        icon.setOnMouseExited(mouseEvent -> {
+            icon.setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                    .toExternalForm() + "icons/" + toolName + ".png"));
+        });
+        icon.setOnMouseClicked(mouseEvent -> {
+            selectedTool = toolName;
+            GameViewController.setCenterOfBar("Unit Menu");
+        });
+        GameMenu.menuBar.getChildren().add(icon);
     }
 
     public static void addTypes() {
@@ -152,17 +190,16 @@ public class HumanViewController {
     public static void putBuild() {
         ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/engineer.png");
-        icon.setTranslateX(127);
-        icon.setTranslateY(167);
+        icon.setTranslateX(132);
+        icon.setTranslateY(175);
         icon.setScaleY(1.1);
-        icon.setScaleX(1.3);
+        icon.setScaleX(1.2);
         GameMenu.menuBar.getChildren().add(icon);
         GameViewController.setHoverEventForBarOnUnitMenu(icon, "engineer");
         icon.setOnMouseClicked(mouseEvent -> {
-//            TODO
+            GameViewController.setCenterOfBar("Build Menu");
         });
         icon.setOnMousePressed(mouseEvent -> {
-//            TODO
             icon.setEffect(new InnerShadow(BlurType.THREE_PASS_BOX, Color.GRAY, 10, 0, 0, 0));
         });
         icon.setOnMouseReleased(mouseEvent -> {
@@ -562,35 +599,35 @@ public class HumanViewController {
 
         if (option.get() == yes) {
             for (Military military : selectedMilitaries) {
-            HumanController.militaries.clear();
-            HumanController.militaries.add(military);
-            if (GameController.validateAttackEnemy(end.getTileX(), end.getTileY())) {
-                GameController.attackEnemy(end.getTileX(), end.getTileY());
-                continue;
-            }
-            if (GameController.validateAttackBuilding(end.getTileX(), end.getTileY())) {
-                GameController.attackBuilding(end.getTileX(), end.getTileY());
-                continue;
-            }
-            if (GameController.validateAttackTool(end.getTileX(), end.getTileY())) {
-                GameController.attackTool(end.getTileX(), end.getTileY());
-                continue;
-            }
-            if (GameController.validateAirAttack(end.getTileX(), end.getTileY())) {
-                GameController.airAttack(end.getTileX(), end.getTileY());
-                continue;
-            }
-            if (GameController.validateAirAttackBuilding(end.getTileX(), end.getTileY())) {
-                GameController.airAttackBuilding(end.getTileX(), end.getTileY());
-                continue;
-            }
-            if (GameController.validateAirAttackTool(end.getTileX(), end.getTileY())) {
-                GameController.airAttackTool(end.getTileX(), end.getTileY());
-                continue;
-            }
+                HumanController.militaries.clear();
+                HumanController.militaries.add(military);
+                if (GameController.validateAttackEnemy(end.getTileX(), end.getTileY())) {
+                    GameController.attackEnemy(end.getTileX(), end.getTileY());
+                    continue;
+                }
+                if (GameController.validateAttackBuilding(end.getTileX(), end.getTileY())) {
+                    GameController.attackBuilding(end.getTileX(), end.getTileY());
+                    continue;
+                }
+                if (GameController.validateAttackTool(end.getTileX(), end.getTileY())) {
+                    GameController.attackTool(end.getTileX(), end.getTileY());
+                    continue;
+                }
+                if (GameController.validateAirAttack(end.getTileX(), end.getTileY())) {
+                    GameController.airAttack(end.getTileX(), end.getTileY());
+                    continue;
+                }
+                if (GameController.validateAirAttackBuilding(end.getTileX(), end.getTileY())) {
+                    GameController.airAttackBuilding(end.getTileX(), end.getTileY());
+                    continue;
+                }
+                if (GameController.validateAirAttackTool(end.getTileX(), end.getTileY())) {
+                    GameController.airAttackTool(end.getTileX(), end.getTileY());
+                    continue;
+                }
 
-            GameController.moveUnit(end.getTileX(), end.getTileY());
-        }
+                GameController.moveUnit(end.getTileX(), end.getTileY());
+            }
             GameMenu.unitsCount = new HashMap<>();
             GameMenu.selectedTroops.clear();
             GameMenu.selectedTilesTroop.clear();
@@ -625,8 +662,7 @@ public class HumanViewController {
         troop.updateImageAttack();
     }
 
-    public static void airAttackToEnemy(Military military, Military enemy)
-    {
+    public static void airAttackToEnemy(Military military, Military enemy) {
         Troop troop = getTroopFromMilitary(military);
         GameTile start = GameMap.getGameTile(military.getX(), military.getY());
         GameTile end = GameMap.getGameTile(enemy.getX(), enemy.getY());
@@ -640,11 +676,12 @@ public class HumanViewController {
         troop.updateImageAirAttack();
     }
 
-    public static void hideProgressBar(){
-        for (Military military : selectedMilitaries){
+    public static void hideProgressBar() {
+        for (Military military : selectedMilitaries) {
             Objects.requireNonNull(getTroopFromMilitary(military)).hideProgressBar();
         }
     }
+
     public static void attackToBuilding(Military military, Building building) {
         Troop troop = getTroopFromMilitary(military);
         GameTile start = GameMap.getGameTile(military.getX(), military.getY());

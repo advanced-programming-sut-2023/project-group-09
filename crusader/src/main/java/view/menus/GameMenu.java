@@ -1,5 +1,6 @@
 package view.menus;
 
+import controller.DBController;
 import controller.GameController;
 import controller.GovernmentController;
 import controller.MapController;
@@ -8,7 +9,6 @@ import controller.gamestructure.GameMaps;
 import controller.human.HumanController;
 import enumeration.Paths;
 import enumeration.UnitMovingState;
-import enumeration.dictionary.Colors;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.Transition;
@@ -32,17 +32,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Government;
-import model.game.Game;
 import model.game.Map;
 import model.game.Tile;
-import model.human.military.Engineer;
 import model.human.military.EuropeanTroop;
 import model.human.military.Military;
-import model.menugui.MenuHoverBox;
 import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
-import model.menugui.game.Troop;
 import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
 import view.controllers.ViewController;
@@ -167,8 +163,8 @@ public class GameMenu extends Application {
             GameMenu.menuBar.getChildren().add(shield);
             shield.setScaleX(2);
             shield.setScaleY(2);
-            shield.setTranslateY(100 + (index/4) * 50);
-            shield.setTranslateX(10 + 50*(index%4));
+            shield.setTranslateY(100 + (index / 4) * 50);
+            shield.setTranslateX(10 + 50 * (index % 4));
             shield.setOnMouseEntered(e -> {
                 hoveringBarStateText.setText("Lord " + government.getUser().getNickname());
                 if (government.isAlive()) {
@@ -214,7 +210,6 @@ public class GameMenu extends Application {
         miniMap.setTranslateY(66);
         miniMap.setTranslateX(813);
         menuBar.getChildren().add(barImage);
-
 
 
         Text hoveringButton = new Text("");
@@ -301,6 +296,9 @@ public class GameMenu extends Application {
             if (keyName.equals("P")) {
                 movingState = UnitMovingState.PATROL.getState();
             }
+            if (keyName.equals("S")) {
+                DBController.saveMap(GameController.getGame().getMap(), "src/main/resources/savedmaps/myMap.json");
+            }
 
             if (keyName.equals("Down")) {
                 if (HumanViewController.lastType != null && HumanViewController.lastType.count != 0) {
@@ -336,14 +334,14 @@ public class GameMenu extends Application {
         });
     }
 
-    public static void showAttacking(){
+    public static void showAttacking() {
 
-        if (GameController.getGame().getCurrentGovernment().getNumberOfTroopInAttack().size() > 0){
-            if (root.getChildren().contains(attacking)){
+        if (GameController.getGame().getCurrentGovernment().getNumberOfTroopInAttack().size() > 0) {
+            if (root.getChildren().contains(attacking)) {
                 return;
             }
             root.getChildren().add(attacking);
-        }else{
+        } else {
             root.getChildren().remove(attacking);
         }
     }

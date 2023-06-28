@@ -430,4 +430,10 @@ public class DBController {
             e.printStackTrace();
         }
     }
+
+    public static Map loadMap(String filePath) {
+        Map map = new GsonBuilder().excludeFieldsWithModifiers(Modifier.STATIC, Modifier.TRANSIENT, Modifier.VOLATILE).create()
+                .fromJson(FileController.readFile(filePath), Map.class);
+        return map;
+    }
 }

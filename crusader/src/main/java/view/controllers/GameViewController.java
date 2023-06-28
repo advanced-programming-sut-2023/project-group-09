@@ -685,11 +685,6 @@ public class GameViewController {
                 GameMenu.createGameBar(4);
                 setCenterToBarrack();
             }
-//            case "engineer" -> {
-//                GameMenu.menuBar.getChildren().clear();
-//                GameMenu.createGameBar(2);
-//                setCenterToEngineerMenu();
-//            }
             case "engineerGuild" -> {
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar(2);
@@ -719,6 +714,16 @@ public class GameViewController {
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar(2);
                 setCenterToBlackSmith();
+            }
+            case "Unit Menu" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(-1);
+                HumanViewController.setCenterOfUnitMenu();
+            }
+            case "Build Menu" -> {
+                GameMenu.menuBar.getChildren().clear();
+                GameMenu.createGameBar(-1);
+                HumanViewController.setCenterToBuildMenu();
             }
         }
     }
