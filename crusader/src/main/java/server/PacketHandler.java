@@ -9,6 +9,10 @@ import controller.UserController;
 import model.User;
 import server.handlers.ProfileHandler;
 import server.handlers.UserHandler;
+import model.User;
+import server.handlers.ProfileHandler;
+import server.handlers.UserHandler;
+import view.Main;
 
 import java.io.IOException;
 
