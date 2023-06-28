@@ -4,6 +4,7 @@ import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameImages;
 import controller.gamestructure.GameMaps;
 import javafx.stage.Stage;
+import view.Main;
 import view.controllers.ImageLoader;
 import view.menus.LoginMenu;
 import view.menus.MainMenu;
@@ -25,7 +26,7 @@ public class MainController {
 
     public static void run(Stage stage) throws Exception {
         loadGame();
-        if (Application.getCurrentUser() == null){
+        if (Main.connection.getToken() == null){
             new LoginMenu().start(stage);
         }else{
             Application.setStayLoggedIn(true);

@@ -23,6 +23,7 @@ public class Main extends Application {
             DBController.saveCurrentUser();
         }));*/
         connection = new Connection("localhost",8080);
+        connection.makeFakeConnection();
         MainController.run(stage);
     }
 }

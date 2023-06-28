@@ -1,5 +1,7 @@
 package client;
 
+import view.Main;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -40,5 +42,15 @@ public class Connection {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    //
+    public void makeFakeConnection() throws IOException {
+        //deleted
+        Packet packet = new Packet("make a fake token","profile");
+        packet.sendPacket();
+        Packet packet1 = Packet.receivePacket();
+        String token = packet1.attributes.get("authentication token").toString();
+        setToken(token);
     }
 }

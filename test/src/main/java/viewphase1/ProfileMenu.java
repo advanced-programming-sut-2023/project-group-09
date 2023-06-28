@@ -7,12 +7,13 @@ import enumeration.answers.Answers;
 import enumeration.commands.Commands;
 import enumeration.commands.ProfileMenuCommands;
 
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class ProfileMenu {
     public static Scanner profileMenuScanner;
-    public static void run(Scanner scanner) {
+    public static void run(Scanner scanner) throws IOException {
 
         String input, output;
         profileMenuScanner = scanner;

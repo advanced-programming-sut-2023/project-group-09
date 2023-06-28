@@ -375,8 +375,8 @@ public class UserController {
 
 
     //==================================================
+    //TODO remove this
     public static String changeUsername(String newUsername) {
-
         String message = validateUsername(newUsername);
         if (message != null) {
             return message;
@@ -386,12 +386,36 @@ public class UserController {
         return "username changed successfully!";
     }
 
+    public static String changeUsername(String newUsername,String token) {
+        User user = TokenController.getUserByToken(token);
+        String message = validateUsername(newUsername);
+        if (message != null) {
+            return message;
+        }
+        user.setUsername(newUsername);
+        return "username changed successfully!";
+    }
+
+
+
+    //TODO remove this
     public static String changeNickname(String newNickname) {
         if (UserController.checkNullFields(newNickname)) {
             return "nickname field is required!";
         }
 
         User user = Application.getCurrentUser();
+        user.setNickname(newNickname);
+        return "nickname changed successfully!";
+    }
+
+
+    public static String changeNickname(String newNickname,String token) {
+        if (UserController.checkNullFields(newNickname)) {
+            return "nickname field is required!";
+        }
+
+        User user = TokenController.getUserByToken(token);
         user.setNickname(newNickname);
         return "nickname changed successfully!";
     }
@@ -416,6 +440,26 @@ public class UserController {
         return null;
     }
 
+    public static String validateChangePassword(String oldPassword, String newPassword,String token) {
+        User user = TokenController.getUserByToken(token);
+        if (checkNullFields(oldPassword)) {
+            return "old password field is required!";
+        }
+        if (checkNullFields(newPassword)) {
+            return "new password field is required!";
+        }
+        if (!user.arePasswordsEqual(oldPassword)) {
+            return "current password is incorrect!";
+        }
+
+        if (checkPasswordPower(newPassword)) {
+            return "new password is weak!";
+        }
+        if (user.arePasswordsEqual(newPassword)) {
+            return "please enter a new password!";
+        }
+        return null;
+    }
     public static boolean checkPasswordPower(String password) {
         if (password.length() < 6) {
             return true;
@@ -442,6 +486,18 @@ public class UserController {
         return "password changed successfully!";
     }
 
+    public static String changePassword(String oldPassword, String newPassword,String token) {
+        User user = TokenController.getUserByToken(token);
+        String message = validateChangePassword(oldPassword, newPassword);
+        if (message != null) {
+            return message;
+        }
+        newPassword = convertPasswordToHash(newPassword);
+        user.setPassword(newPassword);
+        return "password changed successfully!";
+    }
+
+    //TODO remove this
     public static String changeEmail(String newEmail) {
 
         String message = validateEmail(newEmail);
@@ -452,6 +508,18 @@ public class UserController {
         user.setEmail(newEmail);
         return "email changed successfully!";
     }
+
+    public static String changeEmail(String newEmail,String token) {
+
+        String message = validateEmail(newEmail);
+        if (message != null) {
+            return message;
+        }
+        User user = TokenController.getUserByToken(token);
+        user.setEmail(newEmail);
+        return "email changed successfully!";
+    }
+
 
     public static boolean checkNullFields(String input) {
         return input == null || input.length() == 0;
@@ -475,7 +543,7 @@ public class UserController {
         }
         return null;
     }
-
+   //TODO remove this
     public static String changeSlogan(String newSlogan) {
         if (newSlogan.equals("random")) {
             String slogan = generateRandomSlogan();
@@ -483,6 +551,19 @@ public class UserController {
             return "new slogan is : " + slogan;
         } else {
             Application.getCurrentUser().setSlogan(newSlogan);
+            return "slogan changed successfully!";
+        }
+    }
+
+
+    public static String changeSlogan(String newSlogan,String token) {
+        User user = TokenController.getUserByToken(token);
+        if (newSlogan.equals("random")) {
+            String slogan = generateRandomSlogan();
+           user.setSlogan(slogan);
+            return "new slogan is : " + slogan;
+        } else {
+            user.setSlogan(newSlogan);
             return "slogan changed successfully!";
         }
     }

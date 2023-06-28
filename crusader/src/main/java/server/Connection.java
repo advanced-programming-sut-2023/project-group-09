@@ -24,9 +24,10 @@ public class Connection extends Thread {
     @Override
     public synchronized void run() {
         while (true) {
-            Packet packet = null;
+            Packet packet;
             try {
                 packet = Packet.receivePacket(dataInputStream);
+                new PacketHandler(packet,this).handle();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

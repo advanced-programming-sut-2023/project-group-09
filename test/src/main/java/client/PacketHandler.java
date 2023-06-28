@@ -8,8 +8,9 @@ public class PacketHandler {
     }
 
     public void handle() {
-        switch (packet.command) {
-
+        switch (packet.handler) {
+            case "profile":
+                break;
         }
     }
 }

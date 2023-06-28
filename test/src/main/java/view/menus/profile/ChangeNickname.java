@@ -1,6 +1,7 @@
 package view.menus.profile;
 
 import controller.UserController;
+import controller.network.DataController;
 import enumeration.Paths;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -49,7 +50,7 @@ public class ChangeNickname extends Application {
         menuBox = new MenuBox("change nickname",0,0,500,400);
         nickname = new MenuTextField(menuBox,"nickname...","nickname",50,-50, 300);
         submit = new MenuButton("save",menuBox,0,50,false);
-        nickname.setText(user.getNickname());
+        nickname.setText(DataController.getNickname());
         menuBox.getChildren().addAll(nickname,submit);
         setEvents();
         back = new MenuFingerBack(-400,300);
@@ -70,8 +71,9 @@ public class ChangeNickname extends Application {
         nickname.textProperty().addListener((observableValue, o, n) -> {
             if (UserController.checkNullFields(n)) {
                 nickname.handlingError("nickname field is required!");
+            }else{
+                nickname.handlingError("");
             }
-            nickname.handlingError("");
         });
         submit.setOnMouseClicked(mouseEvent -> {
             if (UserController.checkNullFields(nickname.getText())) {
@@ -79,8 +81,13 @@ public class ChangeNickname extends Application {
                         "error", "nickname field is required!");
                 root.getChildren().add(menuPopUp);
             }else{
-                MenuPopUp menuPopUp = new MenuPopUp(root, 400, 400,
-                        "success", UserController.changeNickname(nickname.getText()));
+                MenuPopUp menuPopUp = null;
+                try {
+                    menuPopUp = new MenuPopUp(root, 400, 400,
+                            "success", UserController.changeNickname(nickname.getText()));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 root.getChildren().add(menuPopUp);
             }
         });

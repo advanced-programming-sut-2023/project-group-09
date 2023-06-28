@@ -50,16 +50,13 @@ public class MenuPasswordField extends PasswordField {
                 "-fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-padding: 3; -fx-background-radius: 3");
         showPassword.setTranslateX(this.getTranslateX() + 185);
         showPassword.setTranslateY(this.getTranslateY());
-        showPassword.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
-                if (newValue) {
-                    setVisible(false);
-                    passwordTextField.setVisible(true);
-                } else {
-                    setVisible(true);
-                    passwordTextField.setVisible(false);
-                }
+        showPassword.selectedProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (newValue) {
+                setVisible(false);
+                passwordTextField.setVisible(true);
+            } else {
+                setVisible(true);
+                passwordTextField.setVisible(false);
             }
         });
         pane.getChildren().add(showPassword);
@@ -95,19 +92,9 @@ public class MenuPasswordField extends PasswordField {
     }
 
     private void updateFieldValues() {
-        this.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                passwordTextField.setText(newValue);
-            }
-        });
+        this.textProperty().addListener((observableValue, oldValue, newValue) -> passwordTextField.setText(newValue));
 
-        passwordTextField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                setText(newValue);
-            }
-        });
+        passwordTextField.textProperty().addListener((observableValue, oldValue, newValue) -> setText(newValue));
     }
 
     public void clearErrorOrMessage() {

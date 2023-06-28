@@ -15,10 +15,12 @@ import java.util.Objects;
 public class Packet {
     public String command;
     public String token;
-    public HashMap<String , Object> attributes;
+    public String handler;
+    public HashMap<String , Object> attributes = new HashMap<>();
 
-    public Packet(String command) {
+    public Packet(String command,String handler) {
         this.command = command;
+        this.handler = handler;
     }
 
     public void addAttribute(String key , Object value) {
@@ -27,11 +29,9 @@ public class Packet {
 
     public static Packet receivePacket(DataInputStream dataInputStream) throws IOException {
         String receivingPacket = dataInputStream.readUTF();
-        Packet packet = null;
-        try {
-            packet = new GsonBuilder().setPrettyPrinting().create().fromJson(receivingPacket , Packet.class);
-        } catch (Exception e) {
-        }
+        System.out.println("receive packet: ");
+        System.out.println(receivingPacket);
+        Packet packet = new GsonBuilder().setPrettyPrinting().create().fromJson(receivingPacket , Packet.class);
         return packet;
     }
 
@@ -41,5 +41,12 @@ public class Packet {
 
     public void setCommand(String command) {
         this.command = command;
+    }
+    public static void sendPacket(Packet packet,Connection connection) throws IOException {
+
+        String json = new GsonBuilder().setPrettyPrinting().create().toJson(packet);
+        System.out.println("send packet: ");
+        System.out.println(json);
+        connection.getDataOutputStream().writeUTF(json);
     }
 }
