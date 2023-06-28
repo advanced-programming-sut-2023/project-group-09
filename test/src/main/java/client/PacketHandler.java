@@ -1,6 +1,7 @@
 package client;
 
 import controller.UserController;
+import view.Main;
 
 public class PacketHandler {
     Packet packet;
@@ -19,6 +20,7 @@ public class PacketHandler {
             }
             case "successful login" -> {
                 UserController.loginUserSuccessfulAct();
+                Main.connection.setToken(packet.token);
             }
 
         }
