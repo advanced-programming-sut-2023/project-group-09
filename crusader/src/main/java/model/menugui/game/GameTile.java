@@ -361,7 +361,7 @@ public class GameTile {
 
     public void burning(){
         Image image = new Image(GameTile.class.getResource(Paths.GAME_IMAGES.getPath()).toExternalForm() + "burning.gif");
-        burning = new ImageView();
+        burning = new ImageView(image);
         burning.setViewOrder(-2000);
         burning.setTranslateX(textureImage.getTranslateX() - image.getWidth() / 2 + textureImage.getFitWidth() / 2);
         burning.setTranslateY(textureImage.getTranslateY() - image.getHeight() / 2 + textureImage.getFitHeight()/ 2);

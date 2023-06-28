@@ -123,8 +123,8 @@ public class GameMenu extends Application {
         MapController.dropMilitary(14, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
         MapController.dropMilitary(11, 5, "slave", GameController.getGame().getCurrentGovernment());
 
-        MapController.dropMilitary(20, 5, "archerBow", GameController.getGame().getGovernments().get(1));
-        MapController.dropMilitary(21, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
+        MapController.dropMilitary(20, 5, "slave", GameController.getGame().getGovernments().get(1));
+        MapController.dropMilitary(21, 5, "fireThrower", GameController.getGame().getGovernments().get(1));
         MapController.dropMilitary(21, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
         MapController.dropMilitary(22, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
         MapController.dropMilitary(22, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
