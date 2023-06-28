@@ -12,10 +12,12 @@ import java.util.Objects;
 
 public class Packet {
     public String command;
+    public String token;
     public HashMap<String , Object> attributes = new HashMap<>();
 
     public Packet(String command) {
         this.command = command;
+        this.token = Main.connection.getToken();
     }
 
     public void addAttribute(String key , Object value) {

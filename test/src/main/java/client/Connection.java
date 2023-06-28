@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class Connection {
+    private String token;
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
 
@@ -31,5 +32,13 @@ public class Connection {
 
     public void setDataOutputStream(DataOutputStream dataOutputStream) {
         this.dataOutputStream = dataOutputStream;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

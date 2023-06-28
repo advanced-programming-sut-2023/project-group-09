@@ -10,7 +10,7 @@ import java.net.Socket;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Connection extends Thread{
+public class Connection extends Thread {
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
     private Socket socket;
