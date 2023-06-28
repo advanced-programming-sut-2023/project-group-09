@@ -1,6 +1,7 @@
 package view.menus.profile;
 
 import controller.UserController;
+import controller.network.DataController;
 import enumeration.Paths;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -22,6 +23,8 @@ import model.menugui.MenuFingerBack;
 import view.controllers.ViewController;
 import view.menus.LoginMenu;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -60,7 +63,9 @@ public class ShowDetails extends Application {
         root = ViewController.makeStackPaneScreen(stage, pane, 1000, -1);
         setBackground();
         profileImage= new Rectangle(0,-200,100,100);
-        profileImage.setFill(new ImagePattern(new Image(String.valueOf(new File(user.getPath()).toURI()))));
+        String path = DataController.getPath();
+        ByteArrayOutputStream byteArrayOutputStream = DataController.getImageFromServer(path);
+        profileImage.setFill(new ImagePattern(new Image(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()))));
         profileImage.setArcHeight(100);
         profileImage.setArcWidth(100);
         profileImage.setStroke(Color.DARKRED);
@@ -77,12 +82,14 @@ public class ShowDetails extends Application {
 
         menuBox = new MenuBox("profile", 0, 0, 500, 400);
         menuBox.box.setStyle("-fx-fill: #fff");
-        username = new Label("username: " + user.getUsername());
-        nickname = new Label("nickname: " + user.getNickname());
-        email = new Label("email: " + user.getEmail());
-        slogan = new Label("slogan: " + ((user.getSlogan() == null || user.getSlogan().equals("")) ? "Slogan is empty!" : user.getSlogan()));
-        highScore = new Label("highscore: " + user.getHighScore());
-        rank = new Label("rank: " + UserController.getRank());
+        username = new Label("username: " + DataController.getUsername());
+        nickname = new Label("nickname: " + DataController.getNickname());
+        email = new Label("email: " + DataController.getEmail());
+        String sloganText = DataController.getSlogan();
+        sloganText = ( sloganText == null || sloganText.equals("")) ? "Slogan is empty!" : sloganText;
+        slogan = new Label("slogan: " + sloganText);
+        highScore = new Label("highscore: " + DataController.getHighScore());
+        rank = new Label("rank: " + DataController.getRank());
         setEvents();
         menuBox.getChildren().addAll(profileImage,username,nickname,email,slogan,rank,highScore);
         back = new MenuFingerBack(-400,300);

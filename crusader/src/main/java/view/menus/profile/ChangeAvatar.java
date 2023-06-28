@@ -46,7 +46,6 @@ public class ChangeAvatar extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         ChangeAvatar.stage = stage;
-        user = controller.Application.getCurrentUser();
         makeScene();
     }
 
