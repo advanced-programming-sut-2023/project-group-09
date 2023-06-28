@@ -27,12 +27,13 @@ public class Connection extends Thread {
             Packet packet = null;
             try {
                 packet = Packet.receivePacket(dataInputStream);
+                PacketHandler packetHandler = new PacketHandler(packet , this);
+                packetHandler.handle();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println(packet.getCommand());
         }
-    }//
+    }
 
     public Socket getSocket() {
         return socket;

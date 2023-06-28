@@ -3,6 +3,7 @@ package server;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import controller.DBController;
+import controller.TokenController;
 import enumeration.Pair;
 import view.Main;
 
@@ -19,6 +20,10 @@ public class Packet {
 
     public Packet(String command) {
         this.command = command;
+    }
+
+    public Object getAttribute(String key) {
+        return attributes.get(key);
     }
 
     public void addAttribute(String key , Object value) {
@@ -41,5 +46,14 @@ public class Packet {
 
     public void setCommand(String command) {
         this.command = command;
+    }
+
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

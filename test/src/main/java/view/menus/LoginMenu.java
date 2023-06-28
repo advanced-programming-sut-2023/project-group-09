@@ -180,7 +180,7 @@ public class LoginMenu extends Application {
         });
     }
 
-    public void login(MouseEvent mouseEvent) throws MalformedURLException {
+    public void login(MouseEvent mouseEvent) throws IOException {
         username.clearErrorOrMessage();
         password.clearErrorOrMessage();
         CaptchaController.clearErrorOrMessage();
@@ -254,6 +254,8 @@ public class LoginMenu extends Application {
                 try {
                     login(mouseEvent);
                 } catch (MalformedURLException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
