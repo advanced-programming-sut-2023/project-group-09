@@ -1,5 +1,6 @@
 package controller;
 
+import client.Packet;
 import enumeration.dictionary.SecurityQuestions;
 import enumeration.answers.LoginAnswers;
 import enumeration.commands.SignupMenuCommands;
@@ -13,6 +14,7 @@ import viewphase1.ProfileMenu;
 import viewphase1.SignupMenu;
 
 import javax.swing.text.View;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -269,28 +271,14 @@ public class UserController {
     }
 
     public static String loginUser(String username, String password, boolean stayedLoggedIn) throws MalformedURLException {
-        DBController.loadAllUsers();
-        if (!Application.isUserExistsByName(username)) {
-            LoginMenu.username.handlingError(LoginAnswers.USER_DOESNT_EXIST_MESSAGE.getMessage());
-            view.controllers.CaptchaController.changingCaptcha();
-            return LoginAnswers.USER_DOESNT_EXIST_MESSAGE.getMessage();
-        }
-        User user = Application.getUserByUsername(username);
-        if (!user.isPasswordCorrect(password)) {
-            LoginMenu.password.handlingError(LoginAnswers.WRONG_PASSWORD_MESSAGE.getMessage());
-            view.controllers.CaptchaController.changingCaptcha();
-            return LoginAnswers.WRONG_PASSWORD_MESSAGE.getMessage();
-        }
-        if (view.controllers.CaptchaController.getCaptcha().isInputCorrect()) {
-            Application.setCurrentUser(user);
-            Application.setStayLoggedIn(stayedLoggedIn);
-            DBController.saveCurrentUser();
-            try {
-                new MainMenu().start(LoginMenu.stage);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            return LoginAnswers.SUCCESSFUL_LOGIN_MESSAGE.getMessage();
+        Packet packet = new Packet("login user");
+        packet.addAttribute("username" , username);
+        packet.addAttribute("password" , password);
+        packet.addAttribute("stayedLoggedIn" , stayedLoggedIn);
+        try {
+            packet.sendPacket();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         return "";
     }
