@@ -16,7 +16,7 @@ import java.util.Objects;
 public class Packet {
     public String command;
     public String token;
-    public HashMap<String , Object> attributes;
+    public HashMap<String , Object> attributes = new HashMap<>();
 
     public Packet(String command) {
         this.command = command;

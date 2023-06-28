@@ -1,5 +1,6 @@
 package view.menus;
 
+import client.Packet;
 import controller.DBController;
 import controller.UserController;
 import enumeration.dictionary.Slogans;
@@ -11,7 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Hyperlink;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -19,6 +19,7 @@ import model.User;
 import model.menugui.*;
 import view.controllers.ViewController;
 
+import java.io.IOException;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -166,12 +167,21 @@ public class SignupMenu extends Application {
                     usernameField.handlingError("invalid username!");
                     usernameLiveInvalid = true;
                 }
-                if (controller.Application.isUserExistsByName(newValue)) {
-                    usernameField.handlingError("username already exists!");
-                    usernameLiveInvalid = true;
-                } else {
-                    usernameField.handlingCorrect("valid username");
-                    usernameLiveInvalid = false;
+
+                Packet validateUsername = new Packet("username validation");
+                validateUsername.addAttribute("username", newValue);
+                try {
+                    validateUsername.sendPacket();
+                    Packet usernameResponse = Packet.receivePacket();
+                    if (usernameResponse.getAttribute("error") != null) {
+                        usernameField.handlingError((String) usernameResponse.getAttribute("error"));
+                        usernameLiveInvalid = true;
+                    } else {
+                        usernameField.handlingCorrect((String) usernameResponse.getAttribute("success"));
+                        usernameLiveInvalid = false;
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             }
         });
@@ -287,9 +297,14 @@ public class SignupMenu extends Application {
             emailField.handlingError("invalid email!");
             return;
         }
-        if (controller.Application.isUserExistsByEmail(emailField.getText())) {
-            emailField.handlingError("email already exists!");
-            return;
+        Packet validateEmail = new Packet("email validation");
+        validateEmail.addAttribute("email", emailField.getText());
+        try {
+            validateEmail.sendPacket();
+            String error = (String) Packet.receivePacket().getAttribute("error");
+            if (error != null) emailField.handlingError("email already exists!");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         String sloganValue = (isSlogan.isSelected()) ? (String) sloganField.getValue() : null;

@@ -1,6 +1,9 @@
 package view.menus;
 
+import client.Packet;
+import com.google.gson.Gson;
 import controller.DBController;
+import enumeration.Paths;
 import enumeration.dictionary.SecurityQuestions;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -15,6 +18,7 @@ import model.captcha.Captcha;
 import model.menugui.*;
 import view.controllers.ViewController;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 
 public class SecurityQuestionMenu extends Application {
@@ -69,7 +73,6 @@ public class SecurityQuestionMenu extends Application {
     }
 
     private void signup() {
-
         if (securityQuestionField.getValue() == null) {
             securityQuestionField.handlingError("security question is required!");
             return;
@@ -86,8 +89,13 @@ public class SecurityQuestionMenu extends Application {
 
         user.setPasswordRecoveryQuestion(securityQuestionField.getValue().toString());
         user.setPasswordRecoveryAnswer(answerField.getText());
-        controller.Application.addUser(user);
-        DBController.saveAllUsers();
+        Packet signupUser = new Packet("signup user");
+        signupUser.addAttribute("user", new Gson().toJson(user));
+        try {
+            signupUser.sendPacket();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         this.user = null;
         LoginMenu loginMenu = new LoginMenu();
         try {
