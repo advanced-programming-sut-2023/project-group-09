@@ -32,7 +32,7 @@ public class Connection extends Thread{
             }
             System.out.println(packet.getCommand());
         }
-    }
+    }//
 
     public Socket getSocket() {
         return socket;
