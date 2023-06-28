@@ -25,6 +25,9 @@ module crusader {
     exports model.goods;
     opens model.goods to com.google.gson;
 
+    exports server;
+    opens server to com.google.gson;
+
     exports model.game;
     opens model.game to com.google.gson;
 

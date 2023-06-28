@@ -4,6 +4,7 @@ import controller.DBController;
 import controller.MainController;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import server.Server;
 
 public class Main extends Application {
     public static Stage stage;
@@ -14,12 +15,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Main.stage = stage;
+        //Main.stage = stage;
 //        ViewController.playMenuMusic();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             DBController.saveAllUsers();
             DBController.saveCurrentUser();
         }));
-        MainController.run(stage);
+        Server server = new Server(8080);
+        //MainController.run(stage);
     }
 }
