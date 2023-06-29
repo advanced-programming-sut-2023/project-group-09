@@ -329,7 +329,7 @@ public class GameViewController {
             GameMenu.menuBar.getChildren().clear();
             GameMenu.createGameBar(0);
             setCenterToCastleBuildings();
-            GameMenu.setShieldsForGovernments();                       //TODO: revert comment
+//            GameMenu.setShieldsForGovernments();                       //TODO: revert comment
             return;
         }
         if (!GameMenu.selectedUnit) {

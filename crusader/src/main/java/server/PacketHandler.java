@@ -102,6 +102,7 @@ public class PacketHandler {
                 Map selectedMap = (packet.getAttribute("mapNumber").equals("Map 1")) ?
                         GameMaps.largeMaps.get(0) : GameMaps.smallMaps.get(0);
                 GameController.getGame().setMap(selectedMap);
+                MapController.map = selectedMap;
             }
             case "current user" -> {
                 Packet currentUser = new Packet("current user");
@@ -120,10 +121,10 @@ public class PacketHandler {
                 int y = Integer.parseInt((String) packet.getAttribute("y"));
                 System.out.println(government);
                 GameController.getGame().addGovernment(government);
-                MapController.dropBuilding(x, y, "mainCastle", government);
-                MainCastle mainCastle = (MainCastle) GameController.getGame().getMap().getTile(x, y).getBuilding();
-                mainCastle.setGovernment(government);
-                government.setMainCastle(mainCastle);
+//                MapController.dropBuilding(x, y, "mainCastle", government);
+//                MainCastle mainCastle = (MainCastle) GameController.getGame().getMap().getTile(x, y).getBuilding();
+//                mainCastle.setGovernment(government);
+//                government.setMainCastle(mainCastle);
             }
         }
         if (!validateAuthenticationToken()) {

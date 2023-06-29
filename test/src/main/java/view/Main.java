@@ -18,10 +18,10 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         Main.stage = stage;
 //        ViewController.playMenuMusic();
-        /*Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            DBController.saveAllUsers();
-            DBController.saveCurrentUser();
-        }));*/
+//        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+//            DBController.saveAllUsers();
+//            DBController.saveCurrentUser();
+//        }));
         connection = new Connection("localhost",8080);
         connection.makeFakeConnection();
         MainController.run(stage);
