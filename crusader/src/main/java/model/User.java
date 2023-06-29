@@ -1,7 +1,9 @@
 package model;
 
 import controller.UserController;
+import server.handlers.UserHandler;
 
+import java.io.IOException;
 import java.util.Random;
 
 public class User {
@@ -13,8 +15,10 @@ public class User {
     private String passwordRecoveryQuestion;
     private String passwordRecoveryAnswer;
     private String slogan;
-    private boolean online;
+    private transient boolean online;
     private String path;
+
+    private boolean userChanged;
 
     public User(String username, String password, String nickname, String email, String slogan) {
         this.username = username;
@@ -103,10 +107,12 @@ public class User {
 
     public void setHighScore(int highScore) {
         this.highScore = highScore;
+        UserHandler.sendChangedPacket();
     }
 
     public void addHighScore(int highScore) {
         this.highScore += highScore;
+        UserHandler.sendChangedPacket();
     }
 
     public boolean arePasswordsEqual(String secondPassword) {
@@ -120,6 +126,7 @@ public class User {
 
     public void setPath(String path) {
         this.path = path;
+        UserHandler.sendChangedPacket();
     }
 
     public String getPassword() {
@@ -132,5 +139,6 @@ public class User {
 
     public void setOnline(boolean online) {
         this.online = online;
+        UserHandler.sendChangedPacket();
     }
 }

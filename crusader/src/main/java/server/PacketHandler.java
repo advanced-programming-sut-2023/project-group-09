@@ -6,12 +6,12 @@ import controller.*;
 import controller.gamestructure.GameMaps;
 import model.Government;
 import model.User;
-import model.building.castlebuildings.MainCastle;
 import model.game.Game;
 import model.game.Map;
 import server.handlers.FileHandler;
 import server.handlers.ProfileHandler;
 import server.handlers.UserHandler;
+
 import java.io.IOException;
 
 public class PacketHandler {
@@ -42,8 +42,9 @@ public class PacketHandler {
                 Packet result = UserController.loginUser((String) packet.getAttribute("username"),
                         (String) packet.getAttribute("password"),
                         (boolean) packet.getAttribute("stayedLoggedIn"));
-                if (packet.token != null){
+                if (result.token != null) {
                     connection.setToken(packet.token);
+                    System.out.println("set token connection");
                 }
                 sendPacket(result);
                 return;

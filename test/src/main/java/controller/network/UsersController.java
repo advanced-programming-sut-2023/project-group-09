@@ -213,7 +213,7 @@ public class UsersController {
         packet.sendPacket();
 
         Packet receivePacket = Packet.receivePacket();
-        return (Boolean) receivePacket.attributes.get("rank");
+        return (Boolean) receivePacket.attributes.get("online");
     }
 
     public static Boolean getOnline(String username) throws IOException {
@@ -223,5 +223,13 @@ public class UsersController {
 
         Packet receivePacket = Packet.receivePacket();
         return (Boolean) receivePacket.attributes.get("online");
+    }
+
+    public static boolean areUserChanged() throws IOException {
+        Packet packet = new Packet("are user changed", "profile");
+        packet.sendPacket();
+
+        Packet receivePacket = Packet.receivePacket();
+        return (Boolean) receivePacket.attributes.get("check");
     }
 }
