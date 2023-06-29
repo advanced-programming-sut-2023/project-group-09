@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Game {
-    private Map map;
+    private transient Map map;
     private final ArrayList<Government> governments = new ArrayList<>();
     private Government currentGovernment;
     private Government winner;

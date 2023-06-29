@@ -2,6 +2,7 @@ package client;
 
 import controller.UserController;
 import view.Main;
+import view.menus.LoginMenu;
 
 public class PacketHandler {
     Packet packet;

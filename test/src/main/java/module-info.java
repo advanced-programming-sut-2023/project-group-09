@@ -60,6 +60,8 @@ module crusader {
 
     exports model.building.storagebuildings;
     opens model.building.storagebuildings to com.google.gson;
+    exports view.menus.chat;
+    opens view.menus.chat to javafx.fxml;
 
 
 }

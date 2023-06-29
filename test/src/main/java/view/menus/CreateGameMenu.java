@@ -1,5 +1,8 @@
 package view.menus;
 
+import client.Packet;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import controller.DBController;
 import controller.GameController;
 import controller.MapController;
@@ -21,14 +24,19 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Government;
 import model.Trade;
+import model.User;
 import model.building.castlebuildings.MainCastle;
 import model.game.Game;
 import model.game.Map;
 import model.human.military.EuropeanTroop;
 import model.menugui.*;
+import view.Main;
 import view.controllers.ViewController;
 import viewphase1.EditMapEnvironmentMenu;
 
+import java.beans.Transient;
+import java.io.IOException;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 
 public class CreateGameMenu extends Application {
@@ -42,6 +50,7 @@ public class CreateGameMenu extends Application {
     public PreviewMap previewMap;
     public Text governmentTitle;
     public Button addGovernment;
+    public static User currentUser;
     public ArrayList<MenuTextField> governmentUsernames = new ArrayList<>();
     public ArrayList<MenuChoiceBox> governmentColors = new ArrayList<>();
     public ArrayList<MenuChoiceBox> castleNumbers = new ArrayList<>();
@@ -207,10 +216,20 @@ public class CreateGameMenu extends Application {
                 governmentUsernames.get(0).setDisable(false);
                 castleNumbers.get(0).setDisable(false);
                 governmentColors.get(0).setDisable(false);
-                governmentUsernames.get(0).setText(controller.Application.getCurrentUser().getUsername());
+                Packet currentUser = new Packet("current user");
+                try {
+                    currentUser.setToken(Main.connection.getToken());
+                    currentUser.sendPacket();
+                    CreateGameMenu.currentUser = new Gson().fromJson((String) Packet.receivePacket().
+                            getAttribute("user"), User.class);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                governmentUsernames.get(0).setText(CreateGameMenu.currentUser.getUsername());
                 governmentUsernames.get(0).setEditable(false);
                 addGovernment.setDisable(false);
                 castles = new ArrayList<>();
+//                TODO: better to get from server
                 GameMaps.createMaps();
                 Map selectedMap = (mapsField.getValue().equals("Map 1")) ?
                         GameMaps.largeMaps.get(0) : GameMaps.smallMaps.get(0);
@@ -228,6 +247,14 @@ public class CreateGameMenu extends Application {
                 castleNumbers.get(0).setItems(FXCollections.observableArrayList(castles));
                 MapController.map = selectedMap;
                 game = new Game(selectedMap);
+                Packet newGame = new Packet("new game");
+                try {
+                    newGame.addAttribute("mapNumber", mapsField.getValue());
+                    newGame.addAttribute("game", new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create().toJson(game));
+                    newGame.sendPacket();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 GameController.setGame(game);
             }
         });
@@ -257,9 +284,18 @@ public class CreateGameMenu extends Application {
             governmentUsernames.get(governmentNumber - 1).handlingError("username is required!");
             return;
         }
-        if (!controller.Application.isUserExistsByName(governmentUsernames.get(governmentNumber - 1).getText())) {
-            governmentUsernames.get(governmentNumber - 1).handlingError("username doesn't exist!");
-            return;
+        Packet usernameExistence = new Packet("username existence");
+        usernameExistence.addAttribute("username", governmentUsernames.get(governmentNumber - 1).getText());
+        try {
+            usernameExistence.sendPacket();
+            Packet usernameResponse = Packet.receivePacket();
+            if (usernameResponse.getAttribute("error") != null) {
+                governmentUsernames.get(governmentNumber - 1).handlingError(
+                        (String) usernameResponse.getAttribute("error"));
+                return;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         if (addedGovernments.contains(governmentUsernames.get(governmentNumber - 1).getText())){
             governmentUsernames.get(governmentNumber - 1).handlingError("this government has been added!");
@@ -281,19 +317,35 @@ public class CreateGameMenu extends Application {
 
         Colors color = (Colors) governmentColors.get(governmentNumber - 1).getValue();
         colors.remove(color);
-        Government government = new Government(controller.Application.getUserByUsername
-                (governmentUsernames.get(governmentNumber - 1).getText()), x, y, color);
+        User user = null;
+        Packet getUser = new Packet("get user");
+        try {
+            getUser.addAttribute("username", governmentUsernames.get(governmentNumber - 1).getText());
+            getUser.sendPacket();
+            user = new Gson().fromJson((String) Packet.receivePacket().getAttribute("user"), User.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Government government = new Government(user, x, y, color);
         government.addAmountToProperties("wood", "resource", 1000);
         government.addAmountToProperties("stone", "resource", 500);
         government.addAmountToProperties("iron", "resource", 500);
         government.addAmountToProperties("bread", "food", 60);
         government.setGold(4000);
+        Packet addGovernmentPacket = new Packet("add government");
+        try {
+            addGovernmentPacket.addAttribute("government", new Gson().toJson(government));
+            addGovernmentPacket.addAttribute("x", Integer.toString(x));
+            addGovernmentPacket.addAttribute("y", Integer.toString(y));
+            addGovernmentPacket.sendPacket();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         game.addGovernment(government);
         MapController.dropBuilding(x, y, "mainCastle", government);
         MainCastle mainCastle = (MainCastle) GameController.getGame().getMap().getTile(x, y).getBuilding();
         mainCastle.setGovernment(government);
         government.setMainCastle(mainCastle);
-        //mainCastle.makeUnemployed(10);
 
         if (governmentNumber == 1) mapsField.setDisable(true);
         governmentUsernames.get(governmentNumber - 1).setEditable(false);

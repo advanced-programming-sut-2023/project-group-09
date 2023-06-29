@@ -36,12 +36,14 @@ import model.game.Map;
 import model.game.Tile;
 import model.human.military.EuropeanTroop;
 import model.human.military.Military;
+import model.menugui.MenuHoverBox;
 import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
 import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
 import view.controllers.ViewController;
+import view.menus.chat.ChatMenu;
 
 import java.net.URL;
 import java.util.*;
@@ -103,6 +105,7 @@ public class GameMenu extends Application {
         miniMap = new MiniMap(125, 143, 0, 0);
 
 
+//        TODO: revert comment
         for (Government government : GameController.getGame().getGovernments()) {
             MapController.dropMilitary(government.getCastleX(), government.getCastleY() + 2, "lord", government);
             EuropeanTroop lordMilitary = (EuropeanTroop) GameController.getGame().getMap().
@@ -116,7 +119,12 @@ public class GameMenu extends Application {
         menuBar.setMaxWidth(1200);
         menuBar.setMaxHeight(220);
         root.getChildren().addAll(gameMap, menuBar);
+
+//        ChatMenu chatMenu = new ChatMenu();
+//        GameMenu.root.getChildren().add(chatMenu);
+
         selectCursor = new Rectangle(50, 75);
+//        TODO: revert comment
         selectCursor.setFill(new ImagePattern(GameImages.imageViews.get("selectMove")));
         Rectangle clipRectangle = new Rectangle(1200, 800);
         root.setClip(clipRectangle);
@@ -222,7 +230,7 @@ public class GameMenu extends Application {
         menuBar.getChildren().add(hoveringButton);
         hoveringBarStateText = hoveringButton;
         menuBar.setViewOrder(-2000);
-        GameViewController.setBarForCurrentGovernment();
+        GameViewController.setBarForCurrentGovernment();                       // TODO: revert comment
         if (state == 0) {
             GameViewController.createShortcutBars(menuBar, hoveringButton);
             hoveringButton.setTranslateX(275);

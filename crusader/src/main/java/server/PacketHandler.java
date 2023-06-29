@@ -2,11 +2,13 @@ package server;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import controller.Application;
-import controller.DBController;
-import controller.TokenController;
-import controller.UserController;
+import controller.*;
+import controller.gamestructure.GameMaps;
+import model.Government;
 import model.User;
+import model.building.castlebuildings.MainCastle;
+import model.game.Game;
+import model.game.Map;
 import server.handlers.ProfileHandler;
 import server.handlers.UserHandler;
 import model.User;
@@ -64,6 +66,14 @@ public class PacketHandler {
                 sendPacket(validateUsername);
                 return;
             }
+            case "username existence" -> {
+                Packet usernameExistence = new Packet("username existence");
+                if (!controller.Application.isUserExistsByName((String) packet.getAttribute("username")))
+                    usernameExistence.addAttribute("error", "username doesn't exist!");
+                else usernameExistence.addAttribute("success", "");
+                sendPacket(usernameExistence);
+                return;
+            }
             case "signup user" -> {
                 Application.addUser(new Gson().fromJson((String) packet.getAttribute("user"), User.class));
                 DBController.saveAllUsers();
@@ -86,6 +96,35 @@ public class PacketHandler {
                 }
                 return;
             }
+            case "new game" -> {
+                GameController.setGame(new GsonBuilder().setPrettyPrinting().create()
+                        .fromJson((String) packet.getAttribute("game"), Game.class));
+                GameMaps.createMaps();
+                Map selectedMap = (packet.getAttribute("mapNumber").equals("Map 1")) ?
+                        GameMaps.largeMaps.get(0) : GameMaps.smallMaps.get(0);
+                GameController.getGame().setMap(selectedMap);
+            }
+            case "current user" -> {
+                Packet currentUser = new Packet("current user");
+                currentUser.addAttribute("user", new Gson().toJson(TokenController.getUserByToken(packet.getToken())));
+                sendPacket(currentUser);
+            }
+            case "get user" -> {
+                Packet sendUser = new Packet("send user");
+                User user = controller.Application.getUserByUsername((String) packet.getAttribute("username"));
+                sendUser.addAttribute("user", new Gson().toJson(user));
+                sendPacket(sendUser);
+            }
+            case "add government" -> {
+                Government government = new Gson().fromJson((String) packet.getAttribute("government"), Government.class);
+                int x = Integer.parseInt((String) packet.getAttribute("x"));
+                int y = Integer.parseInt((String) packet.getAttribute("y"));
+                GameController.getGame().addGovernment(government);
+                MapController.dropBuilding(x, y, "mainCastle", government);
+                MainCastle mainCastle = (MainCastle) GameController.getGame().getMap().getTile(x, y).getBuilding();
+                mainCastle.setGovernment(government);
+                government.setMainCastle(mainCastle);
+            }
         }
         if (!validateAuthenticationToken()) {
             return;
@@ -101,6 +140,7 @@ public class PacketHandler {
     }
 
     public boolean validateAuthenticationToken() throws IOException {
+        if (packet.handler == null) return false;
         if (packet.handler.equals("login") || packet.handler.equals("register") || packet.command.equals("make a fake token")) {
             return true;
         }
