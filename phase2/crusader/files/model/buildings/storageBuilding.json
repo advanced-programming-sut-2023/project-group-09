@@ -1,0 +1,83 @@
+{
+  "armoury": {
+    "itemType": "weapon",
+    "capacity": 100,
+    "amount": 0,
+    "items": {},
+    "cost": {
+      "wood": 5
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "armoury",
+    "neighborTiles": [],
+    "maxHp": 30,
+    "hp": 30,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 4,
+    "length": 4
+  },
+  "granary": {
+    "itemType": "food",
+    "capacity": 100,
+    "amount": 0,
+    "items": {},
+    "cost": {
+      "wood": 5
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "granary",
+    "neighborTiles": [],
+    "maxHp": 30,
+    "hp": 30,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 4,
+    "length": 4
+  },
+  "stockPile": {
+    "itemType": "resource",
+    "capacity": 100,
+    "amount": 0,
+    "items": {},
+    "cost": {
+      "wood": 20
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "stockPile",
+    "neighborTiles": [],
+    "maxHp": 30,
+    "hp": 30,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 5,
+    "length": 5
+  }
+}

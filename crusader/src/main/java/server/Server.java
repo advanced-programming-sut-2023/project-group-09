@@ -7,6 +7,7 @@ import java.net.Socket;
 public class Server {
     public Server(int port) {
         System.out.println("Starting Stronghold service...");
+        System.out.println("new");
         try {
             ServerSocket serverSocket = new ServerSocket(port);
             while (true){

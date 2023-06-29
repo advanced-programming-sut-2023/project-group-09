@@ -185,19 +185,22 @@ public class Tile {
             this.texture = texture;
             passable = texture.isPassable();
             canPutBuilding = texture.getCanPutBuilding();
-            Color prmColor = texture.getColor();
-            Color tmpColor = texture.getTempColor();
-            Random random = new Random();
-            textureNum = random.nextInt(texture.getCount());
-            int whichColor = random.nextInt(texture.getRatio());
-            if (whichColor == 0) {
-                color = tmpColor;
-            } else {
-                color = prmColor;
-            }
+            setColor();
         }
     }
 
+    public void setColor(){
+        Color prmColor = texture.getColor();
+        Color tmpColor = texture.getTempColor();
+        Random random = new Random();
+        textureNum = random.nextInt(texture.getCount());
+        int whichColor = random.nextInt(texture.getRatio());
+        if (whichColor == 0) {
+            color = tmpColor;
+        } else {
+            color = prmColor;
+        }
+    }
     public Building getBuilding() {
         return building;
     }

@@ -19,6 +19,7 @@ import model.building.producerbuildings.ProducerBuilding;
 import model.building.producerbuildings.WeaponProducer;
 import model.building.storagebuildings.StorageBuilding;
 import model.game.Map;
+import model.game.Tile;
 import model.goods.Goods;
 import model.gsonmodels.ColorDeserializer;
 import model.gsonmodels.ColorSerializer;
@@ -434,6 +435,13 @@ public class DBController {
     public static Map loadMap(String filePath) {
         Map map = new GsonBuilder().excludeFieldsWithModifiers(Modifier.STATIC, Modifier.TRANSIENT, Modifier.VOLATILE).create()
                 .fromJson(FileController.readFile(filePath), Map.class);
+
+        for (int i = 0;i < map.getLength();i++){
+            for (int j = 0;j < map.getWidth();j++){
+                Tile tile = map.getTile(i,j);
+                tile.setColor();
+            }
+        }
         return map;
     }
 }

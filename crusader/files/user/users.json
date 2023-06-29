@@ -7,8 +7,9 @@
     "highScore": 66000,
     "passwordRecoveryQuestion": "What\u0027s my father\u0027s name?",
     "passwordRecoveryAnswer": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
-    "slogan": "hello world",
-    "path": "files/img/avatars/1.png"
+    "slogan": "-------",
+    "online": false,
+    "path": "files/img/avatars/a/accept.png"
   },
   {
     "username": "Moeein",
@@ -19,6 +20,7 @@
     "passwordRecoveryQuestion": "What\u0027s my father\u0027s name?",
     "passwordRecoveryAnswer": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
     "slogan": "Attack the weakness, defend the strengths!",
+    "online": false,
     "path": "files/img/avatars/2.png"
   },
   {
@@ -29,6 +31,7 @@
     "highScore": 0,
     "passwordRecoveryQuestion": "What was my first pet\u0027s name?",
     "passwordRecoveryAnswer": "30c238ae8ae249d2bd2a9935084897cf6dadfdbbd32422eb1fba497079779412",
+    "online": false,
     "path": "files/img/avatars/3.png"
   },
   {
@@ -40,6 +43,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "17eb73cedd6d2afa0c1ce3fa861a31966527ce6d86366f26d59812d3a75f6c02",
     "slogan": "Think long term, act short term!",
+    "online": false,
     "path": "files/img/avatars/2.png"
   },
   {
@@ -51,6 +55,7 @@
     "passwordRecoveryQuestion": "What\u0027s my father\u0027s name?",
     "passwordRecoveryAnswer": "1a83a04f1cd08062a2c076844c148152218732770362022a86492e78363186e7",
     "slogan": "",
+    "online": false,
     "path": "files/img/avatars/3.png"
   },
   {
@@ -62,6 +67,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/3.png"
   },
   {
@@ -73,6 +79,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/3.png"
   },
   {
@@ -84,6 +91,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/3.png"
   },
   {
@@ -95,6 +103,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -106,6 +115,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -117,6 +127,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -128,6 +139,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -139,6 +151,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -150,6 +163,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -161,6 +175,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -172,6 +187,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -183,6 +199,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -194,6 +211,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -205,6 +223,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/1.png"
   },
   {
@@ -216,6 +235,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/1.png"
   },
   {
@@ -227,6 +247,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -238,6 +259,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -249,6 +271,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/3.png"
   },
   {
@@ -260,6 +283,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/3.png"
   },
   {
@@ -271,6 +295,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -282,6 +307,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -293,6 +319,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -304,6 +331,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -315,6 +343,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -326,6 +355,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -337,6 +367,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -348,6 +379,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -359,6 +391,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -370,6 +403,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -381,6 +415,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -392,6 +427,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -403,6 +439,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -414,6 +451,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -425,6 +463,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/3.png"
   },
   {
@@ -436,6 +475,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/3.png"
   },
   {
@@ -447,6 +487,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -458,6 +499,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -469,6 +511,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -480,6 +523,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -491,6 +535,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -502,6 +547,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -513,6 +559,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -524,6 +571,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -535,6 +583,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -546,6 +595,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -557,6 +607,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -568,6 +619,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -579,6 +631,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -590,6 +643,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -601,6 +655,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -612,6 +667,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -623,6 +679,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -634,6 +691,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -645,6 +703,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -656,6 +715,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -667,6 +727,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -678,6 +739,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -689,6 +751,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -700,6 +763,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -711,6 +775,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
+    "online": false,
     "path": "files/img/avatars/4.png"
   },
   {
@@ -722,6 +787,19 @@
     "passwordRecoveryQuestion": "What\u0027s my father\u0027s name?",
     "passwordRecoveryAnswer": "185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969",
     "slogan": "Strategize to win!",
+    "online": false,
+    "path": "files/img/avatars/2.png"
+  },
+  {
+    "username": "Amirhossein",
+    "password": "8b509b17e5408d6a2443a24681bad8b9b66530ec4d2ce27e7105b4379d7dea87",
+    "nickname": "Amir",
+    "email": "amirhsnsouri@gmail.com",
+    "highScore": 0,
+    "passwordRecoveryQuestion": "What\u0027s my father\u0027s name?",
+    "passwordRecoveryAnswer": "185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969",
+    "slogan": "Every obstacle is an opportunity to strategize!",
+    "online": false,
     "path": "files/img/avatars/2.png"
   },
   {
@@ -733,6 +811,7 @@
     "passwordRecoveryQuestion": "What was my first pet\u0027s name?",
     "passwordRecoveryAnswer": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
     "slogan": "Attack the weakness, defend the strengths!",
+    "online": false,
     "path": "files/img/avatars/3.png"
   },
   {
@@ -743,16 +822,7 @@
     "highScore": 0,
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
+    "online": false,
     "path": "files/img/avatars/3.png"
-  },
-  {
-    "username": "Farzam",
-    "password": "8e88ea02ae85d56ccfabc96e220b0e67b1817642ff9b9cb1fd5028a15e2bc5c3",
-    "nickname": "feri",
-    "email": "feri2@gmail.com",
-    "highScore": 0,
-    "passwordRecoveryQuestion": "What was my first pet\u0027s name?",
-    "passwordRecoveryAnswer": "dfd3283ee904fe5aca680cf0b4a12af8a227577353326b029f7062d67fad90d4",
-    "path": "files/img/avatars/1.png"
   }
 ]

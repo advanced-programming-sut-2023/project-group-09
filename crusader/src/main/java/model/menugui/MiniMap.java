@@ -22,12 +22,13 @@ public class MiniMap extends StackPane {
     private final int width;
     private final int height;
     private int pointerWidth = (int) Math.ceil((double) 1200 / GameMap.tileWidth) + 1;
-    private int pointerHeight = (int) Math.ceil((double) 800 / (GameMap.tileHeight/2));
+    private int pointerHeight = (int) Math.ceil((double) 800 / (GameMap.tileHeight / 2));
     private Rectangle pointer;
 
     private final Map map;
 
     public MiniMap(int width, int height, int startX, int startY) {
+
         this.startX = startX;
         this.startY = startY;
         this.width = width;
@@ -70,6 +71,7 @@ public class MiniMap extends StackPane {
         paintMap();
     }
 
+
     public void setPointer() {
         pointer = new Rectangle(pointerWidth, pointerHeight);
         pointer.setStyle("-fx-fill: transparent");
@@ -83,31 +85,31 @@ public class MiniMap extends StackPane {
         double width = pointer.getWidth();
         double height = pointer.getHeight();
         pointerWidth = (int) Math.ceil((double) 1200 / (GameMap.tileWidth * zoom)) + 1;
-        pointerHeight = (int) Math.ceil((double) 800 / (GameMap.tileHeight * zoom/2));
+        pointerHeight = (int) Math.ceil((double) 800 / (GameMap.tileHeight * zoom / 2));
         pointer.setWidth(pointerWidth);
         pointer.setHeight(pointerHeight);
 
-        double translateX = (pointerWidth - width)/2;
-        double translateY = (pointerHeight - height)/2;
+        double translateX = (pointerWidth - width) / 2;
+        double translateY = (pointerHeight - height) / 2;
 
         pointer.setTranslateX(pointer.getTranslateX() + translateX);
         pointer.setTranslateY(pointer.getTranslateY() + translateY);
     }
 
     public void setStartX(int startX) {
-        while (startX + getX() > startX){
+        while (startX + getX() > startX) {
             moveLeft(false);
         }
-        while (startX + getX() < startX){
+        while (startX + getX() < startX) {
             moveRight(false);
         }
     }
 
     public void setStartY(int startY) {
-        while (startY + getY() > startY){
+        while (startY + getY() > startY) {
             moveUp(false);
         }
-        while (startY + getY() < startY){
+        while (startY + getY() < startY) {
             moveDown(false);
         }
     }

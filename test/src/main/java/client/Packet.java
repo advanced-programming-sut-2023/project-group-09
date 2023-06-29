@@ -30,11 +30,15 @@ public class Packet {
 
     public void sendPacket() throws IOException {
         String json = new GsonBuilder().setPrettyPrinting().create().toJson(this);
+        System.out.println("send:");
+        System.out.println(json);
         Main.connection.getDataOutputStream().writeUTF(json);
     }
 
     public static Packet receivePacket() throws IOException {
         String receivingPacket = Main.connection.getDataInputStream().readUTF();
+        System.out.println("receive:");
+        System.out.println(receivingPacket);
         Packet packet = null;
         try {
             packet = new GsonBuilder().setPrettyPrinting().create().fromJson(receivingPacket, Packet.class);

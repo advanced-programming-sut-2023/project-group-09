@@ -1,6 +1,7 @@
 package server.handlers;
 
 import controller.TokenController;
+import controller.UserController;
 import model.User;
 import server.Connection;
 import server.Packet;
@@ -14,7 +15,6 @@ public class UserHandler {
     public void handle(Packet packet, Connection connection) throws IOException {
         this.connection = connection;
         this.packet = packet;
-        //give commands to suitable methods
         switch (packet.command) {
             case "get username":
                 getUsername();
@@ -28,8 +28,14 @@ public class UserHandler {
             case "get slogan":
                 getSlogan();
                 break;
-            case "get Path":
+            case "get path":
                 getPath();
+                break;
+            case "get high score" :
+                getHighScore();
+                break;
+            case "get rank":
+                getRank();
                 break;
         }
     }
@@ -63,7 +69,20 @@ public class UserHandler {
     public void getPath() throws IOException {
         User user = TokenController.getUserByToken(packet.token);
         Packet packet = new Packet("success","user");
-        packet.addAttribute("path",user.getSlogan());
+        packet.addAttribute("path",user.getPath());
+        Packet.sendPacket(packet,connection);
+    }
+
+    public void getHighScore() throws IOException {
+        User user = TokenController.getUserByToken(packet.token);
+        Packet packet = new Packet("success","user");
+        packet.addAttribute("high score",Integer.toString(user.getHighScore()));
+        Packet.sendPacket(packet,connection);
+    }
+
+    public void getRank() throws IOException {
+        Packet packet = new Packet("success","user");
+        packet.addAttribute("rank", Integer.toString(UserController.getRank(this.packet.token)));
         Packet.sendPacket(packet,connection);
     }
 }

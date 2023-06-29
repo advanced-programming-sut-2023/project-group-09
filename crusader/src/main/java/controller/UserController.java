@@ -465,7 +465,7 @@ public class UserController {
         if (user.arePasswordsEqual(newPassword)) {
             return "please enter a new password!";
         }
-        return null;
+        return "";
     }
     public static boolean checkPasswordPower(String password) {
         if (password.length() < 6) {
@@ -495,8 +495,8 @@ public class UserController {
 
     public static String changePassword(String oldPassword, String newPassword,String token) {
         User user = TokenController.getUserByToken(token);
-        String message = validateChangePassword(oldPassword, newPassword);
-        if (message != null) {
+        String message = validateChangePassword(oldPassword, newPassword,token);
+        if (!message.equals("")) {
             return message;
         }
         newPassword = convertPasswordToHash(newPassword);
@@ -625,7 +625,18 @@ public class UserController {
         }
         return -1;
     }
-
+    public static int getRank(String token) {
+        User wanted = TokenController.getUserByToken(token);
+        ArrayList<User> users = getSortedListOfUsers();
+        int index = 1;
+        for (User user : users) {
+            if (user.getUsername().equals(wanted.getUsername())) {
+                return index;
+            }
+            index++;
+        }
+        return -1;
+    }
     public static ArrayList<User> getSortedListOfUsers() {
         ArrayList<User> sortedList = new ArrayList<>(Application.getUsers());
         sortedList.sort((user1, user2) -> {

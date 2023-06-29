@@ -12,9 +12,9 @@ import model.game.Map;
 import server.handlers.ProfileHandler;
 import server.handlers.UserHandler;
 import model.User;
+import server.handlers.FileHandler;
 import server.handlers.ProfileHandler;
 import server.handlers.UserHandler;
-import view.Main;
 
 import java.io.IOException;
 
@@ -135,6 +135,9 @@ public class PacketHandler {
                 break;
             case "user":
                 new UserHandler().handle(packet, connection);
+                break;
+            case "file":
+                new FileHandler().handle(packet, connection);
         }
 
     }

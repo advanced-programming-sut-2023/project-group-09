@@ -1,0 +1,150 @@
+{
+  "fletcher": {
+    "weapons": [
+      "bow",
+      "crossBow"
+    ],
+    "nameOfStorage": "armoury",
+    "itemName": "bow",
+    "itemType": "weapon",
+    "rate": 1,
+    "inUse": 0,
+    "countOfRoundsToProduce": 0,
+    "start": false,
+    "required": {
+      "wood": 2
+    },
+    "cost": {
+      "wood": 20
+    },
+    "requiredHumans": [],
+    "price": 100,
+    "numberOfRequiredWorkers": 1,
+    "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "fletcher",
+    "neighborTiles": [],
+    "maxHp": 25,
+    "hp": 25,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 4,
+    "length": 4
+  },
+  "blackSmith": {
+    "weapons": [
+      "sword",
+      "mace"
+    ],
+    "nameOfStorage": "armoury",
+    "itemName": "sword",
+    "itemType": "weapon",
+    "rate": 1,
+    "inUse": 0,
+    "countOfRoundsToProduce": 0,
+    "start": false,
+    "required": {
+      "iron": 1
+    },
+    "cost": {
+      "wood": 20
+    },
+    "requiredHumans": [],
+    "price": 100,
+    "numberOfRequiredWorkers": 1,
+    "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "blackSmith",
+    "neighborTiles": [],
+    "maxHp": 25,
+    "hp": 25,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 4,
+    "length": 4
+  },
+  "armourer": {
+    "weapons": [
+      "metalArmour",
+      "leatherArmour"
+    ],
+    "nameOfStorage": "armoury",
+    "itemName": "metalArmour",
+    "itemType": "weapon",
+    "rate": 1,
+    "inUse": 0,
+    "countOfRoundsToProduce": 0,
+    "start": false,
+    "required": {
+      "iron": 1
+    },
+    "cost": {
+      "wood": 20
+    },
+    "requiredHumans": [],
+    "price": 100,
+    "numberOfRequiredWorkers": 1,
+    "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "armourer",
+    "neighborTiles": [],
+    "maxHp": 25,
+    "hp": 25,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 4,
+    "length": 4
+  },
+  "poleTurner": {
+    "weapons": [
+      "spear",
+      "pike"
+    ],
+    "nameOfStorage": "armoury",
+    "itemName": "spear",
+    "itemType": "weapon",
+    "rate": 1,
+    "inUse": 0,
+    "countOfRoundsToProduce": 0,
+    "start": false,
+    "required": {
+      "wood": 1
+    },
+    "cost": {
+      "wood": 20
+    },
+    "requiredHumans": [],
+    "price": 100,
+    "numberOfRequiredWorkers": 1,
+    "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "poleTurner",
+    "neighborTiles": [],
+    "maxHp": 25,
+    "hp": 25,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 4,
+    "length": 4
+  }
+}

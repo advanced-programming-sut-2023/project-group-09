@@ -1,0 +1,143 @@
+{
+  "engineerGuild": {
+    "units": [
+      "engineer",
+      "ladderman"
+    ],
+    "cost": {
+      "wood": 10
+    },
+    "requiredHumans": [],
+    "price": 100,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": 4,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": true,
+    "name": "engineerGuild",
+    "neighborTiles": [],
+    "maxHp": 20,
+    "hp": 20,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 5,
+    "length": 10
+  },
+  "mercenaryPost": {
+    "units": [
+      "archerBow",
+      "slave",
+      "slinger",
+      "assassin",
+      "horseArcher",
+      "arabianSwordsman",
+      "fireThrower"
+    ],
+    "cost": {
+      "wood": 10
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": 5,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": true,
+    "name": "mercenaryPost",
+    "neighborTiles": [],
+    "maxHp": 20,
+    "hp": 20,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 5,
+    "length": 10
+  },
+  "tunnelersGuild": {
+    "units": [
+      "tunneler"
+    ],
+    "cost": {
+      "wood": 10
+    },
+    "requiredHumans": [],
+    "price": 100,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": 4,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": true,
+    "name": "tunnelersGuild",
+    "neighborTiles": [],
+    "maxHp": 20,
+    "hp": 20,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 5,
+    "length": 10
+  },
+  "barrack": {
+    "units": [
+      "archer",
+      "crossbowman",
+      "spearman",
+      "pikeman",
+      "maceman",
+      "swordsman",
+      "knight"
+    ],
+    "cost": {
+      "stone": 15
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": 5,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": true,
+    "name": "barrack",
+    "neighborTiles": [],
+    "maxHp": 20,
+    "hp": 20,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 10,
+    "length": 10
+  },
+  "cathedral": {
+    "units": [
+      "blackmonk"
+    ],
+    "cost": {},
+    "requiredHumans": [],
+    "price": 1000,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": 15,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "cathedral",
+    "neighborTiles": [],
+    "maxHp": 30,
+    "hp": 30,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 13,
+    "length": 13
+  }
+}

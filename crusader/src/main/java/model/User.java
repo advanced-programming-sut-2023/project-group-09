@@ -13,8 +13,9 @@ public class User {
     private String passwordRecoveryQuestion;
     private String passwordRecoveryAnswer;
     private String slogan;
-
+    private boolean online;
     private String path;
+
     public User(String username, String password, String nickname, String email, String slogan) {
         this.username = username;
         this.password = password;
@@ -23,7 +24,7 @@ public class User {
         this.slogan = slogan;
         Random random = new Random();
         this.highScore = 0;
-        path = "files/img/avatars/"+(random.nextInt(4) + 1) + ".png";
+        path = "files/img/avatars/" + (random.nextInt(4) + 1) + ".png";
     }
 
     public String getUsername() {
@@ -87,12 +88,14 @@ public class User {
 
         return UserController.convertPasswordToHash(password).equals(this.password);
     }
+
     public boolean isAnswerToSecurityQuestionCorrect(String answer) {
         if (answer == null)
             return false;
         answer = UserController.convertPasswordToHash(answer);
         return this.passwordRecoveryAnswer.hashCode() == answer.hashCode();
     }
+
     //=============================
     public int getHighScore() {
         return highScore;
@@ -101,19 +104,33 @@ public class User {
     public void setHighScore(int highScore) {
         this.highScore = highScore;
     }
+
     public void addHighScore(int highScore) {
         this.highScore += highScore;
     }
 
-    public boolean arePasswordsEqual(String secondPassword){
+    public boolean arePasswordsEqual(String secondPassword) {
         secondPassword = UserController.convertPasswordToHash(secondPassword);
         return password.hashCode() == secondPassword.hashCode();
     }
+
     public String getPath() {
         return path;
     }
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public boolean isOnline() {
+        return online;
+    }
+
+    public void setOnline(boolean online) {
+        this.online = online;
     }
 }
