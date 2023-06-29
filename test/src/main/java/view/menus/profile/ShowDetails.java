@@ -1,17 +1,13 @@
 package view.menus.profile;
 
-import controller.UserController;
-import controller.network.DataController;
+import controller.network.UsersController;
 import enumeration.Paths;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -25,7 +21,6 @@ import view.menus.LoginMenu;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
@@ -63,8 +58,8 @@ public class ShowDetails extends Application {
         root = ViewController.makeStackPaneScreen(stage, pane, 1000, -1);
         setBackground();
         profileImage= new Rectangle(0,-200,100,100);
-        String path = DataController.getPath();
-        ByteArrayOutputStream byteArrayOutputStream = DataController.getImageFromServer(path);
+        String path = UsersController.getPath();
+        ByteArrayOutputStream byteArrayOutputStream = UsersController.getImageFromServer(path);
         profileImage.setFill(new ImagePattern(new Image(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()))));
         profileImage.setArcHeight(100);
         profileImage.setArcWidth(100);
@@ -82,14 +77,14 @@ public class ShowDetails extends Application {
 
         menuBox = new MenuBox("profile", 0, 0, 500, 400);
         menuBox.box.setStyle("-fx-fill: #fff");
-        username = new Label("username: " + DataController.getUsername());
-        nickname = new Label("nickname: " + DataController.getNickname());
-        email = new Label("email: " + DataController.getEmail());
-        String sloganText = DataController.getSlogan();
+        username = new Label("username: " + UsersController.getUsername());
+        nickname = new Label("nickname: " + UsersController.getNickname());
+        email = new Label("email: " + UsersController.getEmail());
+        String sloganText = UsersController.getSlogan();
         sloganText = ( sloganText == null || sloganText.equals("")) ? "Slogan is empty!" : sloganText;
         slogan = new Label("slogan: " + sloganText);
-        highScore = new Label("highscore: " + DataController.getHighScore());
-        rank = new Label("rank: " + DataController.getRank());
+        highScore = new Label("highscore: " + UsersController.getHighScore());
+        rank = new Label("rank: " + UsersController.getRank());
         setEvents();
         menuBox.getChildren().addAll(profileImage,username,nickname,email,slogan,rank,highScore);
         back = new MenuFingerBack(-400,300);

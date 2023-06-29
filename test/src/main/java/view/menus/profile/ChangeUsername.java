@@ -1,14 +1,12 @@
 package view.menus.profile;
 
-import controller.network.DataController;
+import controller.network.UsersController;
 import enumeration.Paths;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.User;
@@ -16,7 +14,6 @@ import model.menugui.*;
 import view.controllers.UserController;
 import view.controllers.ViewController;
 import view.menus.LoginMenu;
-import view.menus.MainMenu;
 
 import java.io.IOException;
 import java.net.URL;
@@ -53,7 +50,7 @@ public class ChangeUsername extends Application {
         username = new MenuTextField(menuBox,"username...","username",50,-50, 300);
         submit = new MenuButton("save",menuBox,0,50,false);
 
-        username.setText(DataController.getUsername());
+        username.setText(UsersController.getUsername());
         menuBox.getChildren().addAll(username,submit);
         setEvents();
         back = new MenuFingerBack(-400,300);

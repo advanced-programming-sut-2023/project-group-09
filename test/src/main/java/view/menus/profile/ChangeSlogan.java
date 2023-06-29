@@ -1,7 +1,7 @@
 package view.menus.profile;
 
 import controller.UserController;
-import controller.network.DataController;
+import controller.network.UsersController;
 import enumeration.Paths;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -14,7 +14,6 @@ import model.User;
 import model.menugui.*;
 import view.controllers.ViewController;
 import view.menus.LoginMenu;
-import view.menus.MainMenu;
 
 import java.io.IOException;
 import java.net.URL;
@@ -50,7 +49,7 @@ public class ChangeSlogan extends Application {
         menuBox = new MenuBox("change slogan",0,0,500,400);
         slogan = new MenuTextField(menuBox,"slogan...","slogan",50,-50, 300);
         submit = new MenuButton("save",menuBox,0,50,false);
-        slogan.setText(DataController.getSlogan());
+        slogan.setText(UsersController.getSlogan());
         menuBox.getChildren().addAll(slogan,submit);
         setEvents();
         back = new MenuFingerBack(-400,300);
@@ -77,7 +76,7 @@ public class ChangeSlogan extends Application {
                 throw new RuntimeException(e);
             }
             try {
-                slogan.setText(DataController.getSlogan());
+                slogan.setText(UsersController.getSlogan());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

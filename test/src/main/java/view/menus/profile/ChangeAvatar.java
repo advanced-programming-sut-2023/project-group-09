@@ -1,16 +1,14 @@
 package view.menus.profile;
 
-import client.Packet;
 import controller.DBController;
-import controller.network.DataController;
+import controller.network.FilesController;
+import controller.network.UsersController;
 import enumeration.Paths;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
@@ -20,19 +18,14 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import model.User;
 import model.menugui.MenuBox;
 import model.menugui.MenuFingerBack;
-import view.Main;
 import view.controllers.ViewController;
 import view.menus.LoginMenu;
-import view.menus.MainMenu;
 
 import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
 public class ChangeAvatar extends Application {
@@ -70,8 +63,8 @@ public class ChangeAvatar extends Application {
         avatarsGrid.setTranslateX(300);
         avatarsGrid.setTranslateY(300);
         profilePhoto = new Rectangle(0, -200, 100, 100);
-        String path = DataController.getPath();
-        ByteArrayOutputStream byteArrayOutputStream = DataController.getImageFromServer(path);
+        String path = UsersController.getPath();
+        ByteArrayOutputStream byteArrayOutputStream = UsersController.getImageFromServer(path);
         profilePhoto.setFill(new ImagePattern(new Image(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()))));
         profilePhoto.setArcHeight(100);
         profilePhoto.setArcWidth(100);
@@ -116,30 +109,30 @@ public class ChangeAvatar extends Application {
                 if (file != null) {
                     String path3 = null;
                     try {
-                        path3 = Paths.USER_AVATARS.getPath() + DataController.getUsername();
+                        path3 = Paths.USER_AVATARS.getPath() + UsersController.getUsername();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                     boolean check = new File(path3).mkdirs();
                     try {
-                        DataController.uploadImage(path3 + "/" + file.getName(), file);
+                        FilesController.uploadImage(path3 + "/" + file.getName(), file);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                     try {
-                        DataController.setPath(path3 + "/" + file.getName());
+                        UsersController.setPath(path3 + "/" + file.getName());
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                     String path2 = null;
                     try {
-                        path2 = DataController.getPath();
+                        path2 = UsersController.getPath();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                     ByteArrayOutputStream byteArrayOutputStream2 = null;
                     try {
-                        byteArrayOutputStream2 = DataController.getImageFromServer(path2);
+                        byteArrayOutputStream2 = UsersController.getImageFromServer(path2);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -174,14 +167,14 @@ public class ChangeAvatar extends Application {
         configureFileChooser(fileChooser);
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
-            String path = Paths.USER_AVATARS.getPath() + DataController.getUsername();
+            String path = Paths.USER_AVATARS.getPath() + UsersController.getUsername();
 
-            DataController.uploadImage((new File(path + "/" + file.getName())).getPath(),file);
-            DataController.setPath(path + "/" + file.getName());
+            FilesController.uploadImage((new File(path + "/" + file.getName())).getPath(),file);
+            UsersController.setPath(path + "/" + file.getName());
             DBController.saveCurrentUser();
             DBController.saveAllUsers();
-            String path4 = DataController.getPath();
-            ByteArrayOutputStream byteArrayOutputStream4 = DataController.getImageFromServer(path4);
+            String path4 = UsersController.getPath();
+            ByteArrayOutputStream byteArrayOutputStream4 = UsersController.getImageFromServer(path4);
             profilePhoto.setFill(new ImagePattern(new Image(new ByteArrayInputStream(byteArrayOutputStream4.toByteArray()))));
 
         }
@@ -199,7 +192,7 @@ public class ChangeAvatar extends Application {
         for (int i = 0; i < 4; i++) {
             Rectangle rectangle = new Rectangle(0, 0, 80, 80);
             path = Paths.USER_AVATARS.getPath() + (i + 1) + ".png";
-            ByteArrayOutputStream byteArrayOutputStream4 = DataController.getImageFromServer(path);
+            ByteArrayOutputStream byteArrayOutputStream4 = UsersController.getImageFromServer(path);
             rectangle.setFill(new ImagePattern(new Image(new ByteArrayInputStream(byteArrayOutputStream4.toByteArray()))));
             rectangle.setArcHeight(50);
             rectangle.setArcWidth(50);
@@ -217,7 +210,7 @@ public class ChangeAvatar extends Application {
             int finalI = i;
             rectangle.setOnMouseClicked(mouseEvent -> {
                 try {
-                    DataController.setPath(Paths.USER_AVATARS.getPath() + (finalI + 1) + ".png");
+                    UsersController.setPath(Paths.USER_AVATARS.getPath() + (finalI + 1) + ".png");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -225,13 +218,13 @@ public class ChangeAvatar extends Application {
                 DBController.saveAllUsers();
                 String path1 = null;
                 try {
-                    path1 = DataController.getPath();
+                    path1 = UsersController.getPath();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
                 ByteArrayOutputStream byteArrayOutputStream5 = null;
                 try {
-                    byteArrayOutputStream5 = DataController.getImageFromServer(path1);
+                    byteArrayOutputStream5 = UsersController.getImageFromServer(path1);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

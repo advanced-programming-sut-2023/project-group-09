@@ -21,7 +21,7 @@ public class Main extends Application {
             DBController.saveAllUsers();
             DBController.saveCurrentUser();
         }));
-        DBController.loadAllUsers();
+        MainController.loadGame();
         Server server = new Server(8080);
         //MainController.run(stage);
     }

@@ -1,6 +1,8 @@
 package view.menus.profile;
 
 import controller.UserController;
+import controller.network.FilesController;
+import controller.network.UsersController;
 import enumeration.Paths;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -24,7 +26,7 @@ import model.menugui.MenuBox;
 import model.menugui.MenuFingerBack;
 import view.controllers.ViewController;
 
-import java.io.File;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -37,10 +39,11 @@ public class Scoreboard extends Application {
     public static MenuFingerBack back;
     public static TableView<ScoreboardData> tableView;
     public static int firstIndex;
-    public ArrayList<User> users;
+    public ArrayList<String> users;
 
     public Timeline loaderTimeLine;
 
+    public Timeline checkTimeline;
     public Pane loader;
 
 
@@ -62,7 +65,6 @@ public class Scoreboard extends Application {
         stage.setScene(scene);
         root = ViewController.makePaneScreen(stage, pane, 1100, -1);
         menuBox = new MenuBox("scoreboard", 250, 110, 500, 600);
-        setBackground();
         makeTable();
         addLoader();
         root.getChildren().add(menuBox);
@@ -75,7 +77,11 @@ public class Scoreboard extends Application {
                     menuBox.getChildren().remove(loader);
                     menuBox.getChildren().add(loader);
                     setLoaderTimeLine();
-                    setIndexes();
+                    try {
+                        setIndexes();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             });
         });
@@ -88,6 +94,7 @@ public class Scoreboard extends Application {
             }
         });
         root.getChildren().add(back);
+        setBackground();
         stage.show();
     }
 
@@ -102,24 +109,27 @@ public class Scoreboard extends Application {
         root.setBackground(background);
     }
 
-    public void makeTable() {
-        users = UserController.getSortedListOfUsers();
+    public void makeTable() throws IOException {
+        users = UsersController.getSortedUsersUsername();
         firstIndex = 0;
         setupTable();
         setScoreboardData();
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        TableColumn<ScoreboardData, ImageView> column = (TableColumn<ScoreboardData, ImageView>) tableView.getColumns().get(1);
-
     }
 
     public void setupTable() {
 
         TableColumn<ScoreboardData, Integer> dateCol = new TableColumn<>("rank");
-        dateCol.setPrefWidth(120);
+        dateCol.setPrefWidth(100);
         dateCol.setCellValueFactory(new PropertyValueFactory<>("rank"));
 
         TableColumn<ScoreboardData, Button> value1Col = new TableColumn<>("avatar");
         value1Col.setPrefWidth(50);
+
+        TableColumn<ScoreboardData, Button> value4Col = new TableColumn<>("");
+        value4Col.setPrefWidth(20);
+
+
         value1Col.setCellValueFactory(new PropertyValueFactory<>("avatar"));
 
         TableColumn<ScoreboardData, String> value2Col = new TableColumn<>("username");
@@ -130,7 +140,7 @@ public class Scoreboard extends Application {
         value3Col.setPrefWidth(90);
         value3Col.setCellValueFactory(new PropertyValueFactory<>("highScore"));
         tableView = new TableView<>();
-        tableView.getColumns().addAll(dateCol, value1Col, value2Col, value3Col);
+        tableView.getColumns().addAll(dateCol,value4Col, value1Col, value2Col, value3Col);
         tableView.setMaxHeight(540);
         tableView.setMaxWidth(490);
         tableView.setTranslateY(25);
@@ -138,27 +148,25 @@ public class Scoreboard extends Application {
 
     private static <T> TableCell<T, ?> findCell(MouseEvent event, TableView<T> table) {
         Node node = event.getPickResult().getIntersectedNode();
-        // go up in node hierarchy until a cell is found or we can be sure no cell was clicked
+        // go up in node hierarchy until a cell is found, or we can be sure no cell was clicked
         while (node != table && !(node instanceof TableCell)) {
             node = node.getParent();
         }
         return node instanceof TableCell ? (TableCell<T, ?>) node : null;
     }
 
-    public static void setScoreboardData() {
-        ArrayList<User> users = UserController.getSortedListOfUsers();
+    public static void setScoreboardData() throws IOException {
+        ArrayList<String> users = UsersController.getSortedUsersUsername();
         ArrayList<ScoreboardData> data = new ArrayList<>();
         for (int i = 0; i < Math.min(firstIndex + 11, users.size()); i++) {
-            User user = users.get(i);
-            String path = String.valueOf(new File(user.getPath()).toURI());
-            ImageView imageView = new ImageView(new Image(path));
-            data.add(new ScoreboardData(imageView, i + 1, user.getUsername(), user.getHighScore(), user));
+            String username = users.get(i);
+            data.add(new ScoreboardData(i + 1, username, UsersController.getHighScore(username),UsersController.getOnline()));
         }
         tableView.setItems(FXCollections.observableList(data));
     }
 
 
-    public void setIndexes() {
+    public void setIndexes() throws IOException {
         firstIndex = Math.min(firstIndex + 11, users.size());
         setScoreboardData();
     }
@@ -182,7 +190,7 @@ public class Scoreboard extends Application {
             menuBox.getChildren().remove(loader);
             menuBox.getChildren().add(0, loader);
         }));
-        loaderTimeLine.setCycleCount(-1);
+        loaderTimeLine.setCycleCount(1);
         loaderTimeLine.play();
     }
 

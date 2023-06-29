@@ -9,13 +9,9 @@ import model.User;
 import model.building.castlebuildings.MainCastle;
 import model.game.Game;
 import model.game.Map;
-import server.handlers.ProfileHandler;
-import server.handlers.UserHandler;
-import model.User;
 import server.handlers.FileHandler;
 import server.handlers.ProfileHandler;
 import server.handlers.UserHandler;
-
 import java.io.IOException;
 
 public class PacketHandler {
@@ -46,6 +42,9 @@ public class PacketHandler {
                 Packet result = UserController.loginUser((String) packet.getAttribute("username"),
                         (String) packet.getAttribute("password"),
                         (boolean) packet.getAttribute("stayedLoggedIn"));
+                if (packet.token != null){
+                    connection.setToken(packet.token);
+                }
                 sendPacket(result);
                 return;
             }
@@ -119,6 +118,7 @@ public class PacketHandler {
                 Government government = new Gson().fromJson((String) packet.getAttribute("government"), Government.class);
                 int x = Integer.parseInt((String) packet.getAttribute("x"));
                 int y = Integer.parseInt((String) packet.getAttribute("y"));
+                System.out.println(government);
                 GameController.getGame().addGovernment(government);
                 MapController.dropBuilding(x, y, "mainCastle", government);
                 MainCastle mainCastle = (MainCastle) GameController.getGame().getMap().getTile(x, y).getBuilding();

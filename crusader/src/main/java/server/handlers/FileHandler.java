@@ -23,17 +23,10 @@ public class FileHandler {
         this.packet = packet;
         //give commands to suitable methods
         switch (packet.command) {
-            case "download image of user by username":
-                downloadImageOfUser();
-                break;
-            case "upload image":
-                uploadImage();
-                break;
-            case "download image":
-                downloadImage();
-                break;
-            case "copy file":
-                copyFile();
+            case "download image by username" -> downloadImageOfUser();
+            case "upload image" -> uploadImage();
+            case "download image" -> downloadImage();
+            case "copy file" -> copyFile();
         }
     }
 
@@ -90,9 +83,12 @@ public class FileHandler {
         User user = TokenController.getUserByToken(packet.token);
         String path = enumeration.Paths.USER_AVATARS.getPath() + user.getUsername();
         boolean check = new File(path).mkdirs();
+
         String path1 = packet.attributes.get("path1").toString();
         String path2 = packet.attributes.get("path2").toString();
-        System.out.println(Paths.get(path1));
+        File file = new File(path1);
+        path2 = path2 + "/" + file.getName();
+        user.setPath(path2);
         Files.copy(Paths.get(path1), new File(path2).toPath(), StandardCopyOption.REPLACE_EXISTING);
     }
 
