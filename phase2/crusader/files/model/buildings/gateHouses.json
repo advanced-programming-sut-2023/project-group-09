@@ -1,0 +1,82 @@
+{
+  "smallStoneGatehouse": {
+    "isRightSide": false,
+    "isOpen": true,
+    "capacity": 8,
+    "cost": {
+      "stone": 10
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "height": 7,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "smallStoneGatehouse",
+    "neighborTiles": [],
+    "maxHp": 30,
+    "hp": 30,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 5,
+    "length": 5
+  },
+  "drawBridge": {
+    "isRightSide": false,
+    "isOpen": true,
+    "capacity": 0,
+    "cost": {
+      "wood": 10
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "drawBridge",
+    "neighborTiles": [],
+    "maxHp": 20,
+    "hp": 20,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 5,
+    "length": 5
+  },
+  "bigStoneGatehouse": {
+    "isRightSide": false,
+    "height": 8,
+    "isOpen": true,
+    "capacity": 10,
+    "cost": {
+      "stone": 20
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "bigStoneGatehouse",
+    "neighborTiles": [],
+    "maxHp": 30,
+    "hp": 30,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 7,
+    "length": 7
+  }
+}

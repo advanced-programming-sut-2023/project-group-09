@@ -122,7 +122,7 @@ public class ChangeAvatar extends Application {
                     }
                     boolean check = new File(path3).mkdirs();
                     try {
-                        DataController.copyFile(file.getPath(), (new File(path3 + "/" + file.getName())).getPath());
+                        DataController.uploadImage(path3 + "/" + file.getName(), file);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -131,8 +131,6 @@ public class ChangeAvatar extends Application {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    DBController.saveCurrentUser();
-                    DBController.saveAllUsers();
                     String path2 = null;
                     try {
                         path2 = DataController.getPath();
@@ -177,7 +175,8 @@ public class ChangeAvatar extends Application {
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
             String path = Paths.USER_AVATARS.getPath() + DataController.getUsername();
-            DataController.copyFile(file.getPath(), (new File(path + "/" + file.getName())).getPath());
+
+            DataController.uploadImage((new File(path + "/" + file.getName())).getPath(),file);
             DataController.setPath(path + "/" + file.getName());
             DBController.saveCurrentUser();
             DBController.saveAllUsers();

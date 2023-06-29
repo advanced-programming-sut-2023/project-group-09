@@ -1,12 +1,9 @@
 package controller.network;
 
 import client.Packet;
-import javafx.scene.image.Image;
 import view.Main;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.IOException;
+import java.io.*;
 
 public class DataController {
 
@@ -90,6 +87,33 @@ public class DataController {
 
         return byteArrayOutputStream;
     }
+
+    public static void uploadImage(String path, File file) throws IOException {
+        Packet packet = new Packet("upload image","file");
+        packet.addAttribute("path",path);
+        packet.sendPacket();
+
+        byte[] buffer = new byte[8192];
+        FileInputStream fileInputStream = new FileInputStream(file);
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+
+        // Send the image data size to the client
+        DataOutputStream dataOutputStream = new DataOutputStream(Main.connection.getDataOutputStream());
+        long imageSize = file.length();
+        dataOutputStream.writeLong(imageSize);
+        dataOutputStream.flush();
+
+        // Send the image data to the client
+        int bytesRead;
+        while ((bytesRead = bufferedInputStream.read(buffer)) != -1) {
+            dataOutputStream.write(buffer, 0, bytesRead);
+        }
+        dataOutputStream.flush();
+        fileInputStream.close();
+        bufferedInputStream.close();
+    }
+
+
 
     public static void setPath(String path) throws IOException {
         Packet packet = new Packet("set path", "profile");

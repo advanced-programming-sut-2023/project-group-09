@@ -1,0 +1,102 @@
+{
+  "stairs": {
+    "height": 0,
+    "capacity": 0,
+    "cost": {
+      "stone": 1
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "stairs",
+    "neighborTiles": [],
+    "maxHp": 15,
+    "hp": 15,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 1,
+    "length": 1
+  },
+  "stoneWall": {
+    "height": 6,
+    "capacity": 0,
+    "cost": {
+      "stone": 1
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "stoneWall",
+    "neighborTiles": [],
+    "maxHp": 20,
+    "hp": 20,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 1,
+    "length": 1
+  },
+  "crenulatedWall": {
+    "height": 8,
+    "capacity": 0,
+    "cost": {
+      "stone": 1
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "crenulatedWall",
+    "neighborTiles": [],
+    "maxHp": 30,
+    "hp": 30,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 1,
+    "length": 1
+  },
+  "lowWall": {
+    "height": 4,
+    "capacity": 0,
+    "cost": {
+      "stone": 1
+    },
+    "requiredHumans": [],
+    "price": 0,
+    "numberOfRequiredWorkers": 0,
+    "numberOfRequiredEngineers": 0,
+    "buildingImpassableLength": -1,
+    "hasSpecialTexture": false,
+    "suitableTextures": [],
+    "shouldBeOne": false,
+    "name": "lowWall",
+    "neighborTiles": [],
+    "maxHp": 20,
+    "hp": 20,
+    "startX": 0,
+    "startY": 0,
+    "endX": 0,
+    "endY": 0,
+    "width": 1,
+    "length": 1
+  }
+}

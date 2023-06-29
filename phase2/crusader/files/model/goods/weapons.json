@@ -1,0 +1,74 @@
+{
+  "spear": {
+    "name": "spear",
+    "nameOfStorage": "armoury",
+    "type": "weapon",
+    "required": {
+      "wood": 1
+    },
+    "price": 20
+  },
+  "sword": {
+    "name": "sword",
+    "nameOfStorage": "armoury",
+    "type": "weapon",
+    "required": {
+      "iron": 1
+    },
+    "price": 58
+  },
+  "leatherArmour": {
+    "name": "leatherArmour",
+    "nameOfStorage": "armoury",
+    "type": "weapon",
+    "required": {
+      "cow": 1
+    },
+    "price": 25
+  },
+  "metalArmour": {
+    "name": "metalArmour",
+    "nameOfStorage": "armoury",
+    "type": "weapon",
+    "required": {
+      "iron": 1
+    },
+    "price": 58
+  },
+  "crossBow": {
+    "name": "crossbow",
+    "nameOfStorage": "armoury",
+    "type": "weapon",
+    "required": {
+      "wood": 3
+    },
+    "price": 58
+  },
+  "mace": {
+    "name": "mace",
+    "nameOfStorage": "armoury",
+    "type": "weapon",
+    "required": {
+      "iron": 1
+    },
+    "price": 58
+  },
+  "pike": {
+    "name": "pike",
+    "nameOfStorage": "armoury",
+    "type": "weapon",
+    "required": {
+      "wood": 2
+    },
+    "price": 36
+  },
+  "bow": {
+    "name": "bow",
+    "nameOfStorage": "armoury",
+    "type": "weapon",
+    "required": {
+      "wood": 2
+    },
+    "price": 31
+  }
+}
