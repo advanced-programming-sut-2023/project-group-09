@@ -1,7 +1,11 @@
 package model;
 
 import controller.UserController;
+import server.handlers.UserHandler;
+import model.chat.Room;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class User {
@@ -13,8 +17,11 @@ public class User {
     private String passwordRecoveryQuestion;
     private String passwordRecoveryAnswer;
     private String slogan;
-    private boolean online;
+    private transient boolean online;
     private String path;
+    private ArrayList<Room> rooms = new ArrayList<>();
+
+    private boolean userChanged;
 
     public User(String username, String password, String nickname, String email, String slogan) {
         this.username = username;
@@ -103,10 +110,12 @@ public class User {
 
     public void setHighScore(int highScore) {
         this.highScore = highScore;
+        UserHandler.sendChangedPacket();
     }
 
     public void addHighScore(int highScore) {
         this.highScore += highScore;
+        UserHandler.sendChangedPacket();
     }
 
     public boolean arePasswordsEqual(String secondPassword) {
@@ -120,6 +129,7 @@ public class User {
 
     public void setPath(String path) {
         this.path = path;
+        UserHandler.sendChangedPacket();
     }
 
     public String getPassword() {
@@ -132,5 +142,22 @@ public class User {
 
     public void setOnline(boolean online) {
         this.online = online;
+        UserHandler.sendChangedPacket();
+    }
+
+    public ArrayList<Room> getRooms() {
+        return rooms;
+    }
+
+    public Room getRoomByName(String name) {
+        for (int i = 0; i < rooms.size(); i++) {
+            if (rooms.get(i).getName().equals(name))
+                return rooms.get(i);
+        }
+        return null;
+    }
+
+    public void addRoom(Room room) {
+        this.rooms.add(room);
     }
 }

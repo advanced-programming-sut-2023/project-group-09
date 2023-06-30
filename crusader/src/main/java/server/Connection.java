@@ -2,6 +2,9 @@ package server;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import controller.TokenController;
+import model.User;
+import server.handlers.UserHandler;
 
 import java.io.*;
 import java.net.Socket;
@@ -14,6 +17,9 @@ public class Connection extends Thread {
     private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
     private Socket socket;
+    private String token;
+    public boolean userChanged = false;
+
 
     public Connection(Socket socket) throws IOException {
         this.socket = socket;
@@ -26,15 +32,28 @@ public class Connection extends Thread {
     @Override
     public synchronized void run() {
         while (true) {
-            Packet packet = null;
+            Packet packet;
             try {
                 packet = Packet.receivePacket(dataInputStream);
                 PacketHandler packetHandler = new PacketHandler(packet , this);
                 packetHandler.handle();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println("connection interrupted!" + token);
+                if (token != null){
+                    User user = TokenController.getUserByToken(token);
+                    user.setOnline(false);
+                    TokenController.tokens.remove(token);
+                    TokenController.expires.remove(token);
+                    token = null;
+                }
+                Server.connections.remove(this);
+                try {
+                    socket.close();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                break;
             }
-            System.out.println(packet.getCommand());
         }
     }
 
@@ -60,6 +79,14 @@ public class Connection extends Thread {
 
     public void setDataOutputStream(DataOutputStream dataOutputStream) {
         this.dataOutputStream = dataOutputStream;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public ObjectOutputStream getObjectOutputStream() {

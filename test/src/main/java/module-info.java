@@ -31,6 +31,9 @@ module crusader {
     exports model.game;
     opens model.game to com.google.gson;
 
+    exports model.chat;
+    opens model.chat to com.google.gson;
+
     exports model.activity;
     opens model.activity to com.google.gson;
 

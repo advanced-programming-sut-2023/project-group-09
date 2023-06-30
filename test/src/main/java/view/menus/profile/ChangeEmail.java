@@ -1,6 +1,6 @@
 package view.menus.profile;
 
-import controller.network.DataController;
+import controller.network.UsersController;
 import enumeration.Paths;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -14,7 +14,6 @@ import model.menugui.*;
 import view.controllers.UserController;
 import view.controllers.ViewController;
 import view.menus.LoginMenu;
-import view.menus.MainMenu;
 
 import java.io.IOException;
 import java.net.URL;
@@ -50,7 +49,7 @@ public class ChangeEmail extends Application {
         menuBox = new MenuBox("change email",0,0,500,400);
         email = new MenuTextField(menuBox,"email...","email",50,-50, 300);
         submit = new MenuButton("save",menuBox,0,50,false);
-        email.setText(DataController.getEmail());
+        email.setText(UsersController.getEmail());
         menuBox.getChildren().addAll(email,submit);
         setEvents();
         back = new MenuFingerBack(-400,300);

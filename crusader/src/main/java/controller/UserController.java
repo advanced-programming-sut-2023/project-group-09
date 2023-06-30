@@ -290,6 +290,7 @@ public class UserController {
                 //Application.setStayLoggedIn(stayedLoggedIn);
                 //DBController.saveCurrentUser();
                 packet.setToken(TokenController.generateToken(user));
+
                 //try {
                 //new MainMenu().start(LoginMenu.stage);
                 //} catch (Exception e) {
@@ -625,8 +626,7 @@ public class UserController {
         }
         return -1;
     }
-    public static int getRank(String token) {
-        User wanted = TokenController.getUserByToken(token);
+    public static int getRank(User wanted) {
         ArrayList<User> users = getSortedListOfUsers();
         int index = 1;
         for (User user : users) {
@@ -651,7 +651,14 @@ public class UserController {
         });
         return sortedList;
     }
-
+    public static ArrayList<String> getSortedList() {
+        ArrayList<User> sortedList = getSortedListOfUsers();
+        ArrayList<String> usernames = new ArrayList<>();
+        for (User user : sortedList){
+            usernames.add(user.getUsername());
+        }
+        return usernames;
+    }
     public static String convertPasswordToHash(String password) {
         return org.apache.commons.codec.digest.DigestUtils.sha256Hex(password);
     }

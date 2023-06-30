@@ -26,10 +26,6 @@ public class Connection {
         return dataInputStream;
     }
 
-    public void setDataInputStream(DataInputStream dataInputStream) {
-        this.dataInputStream = dataInputStream;
-    }
-
     public DataOutputStream getDataOutputStream() {
         return dataOutputStream;
     }

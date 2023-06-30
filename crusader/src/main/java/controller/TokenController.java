@@ -15,6 +15,7 @@ public class TokenController {
         String token = UserController.convertPasswordToHash(helper);
         expires.put(token, 1800000L + currentTime);
         tokens.put(token, user);
+        user.setOnline(true);
         return token;
     }
 
@@ -23,6 +24,9 @@ public class TokenController {
         if (tokens.get(token) == null) return false;
         if (currentTime > expires.get(token)) {
             tokens.remove(token);
+            expires.remove(token);
+            User user = tokens.get(token);
+            user.setOnline(false);
             return false;
         }
         return true;

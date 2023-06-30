@@ -1,7 +1,6 @@
 package model.menugui;
 
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
 public class MenuHoverBox extends Pane {

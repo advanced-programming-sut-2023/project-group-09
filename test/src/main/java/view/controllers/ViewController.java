@@ -55,7 +55,6 @@ public class ViewController {
             newPane.setMaxHeight(height);
             newPane.setMinHeight(height);
         }
-        newPane.setStyle("-fx-background-color: #fff");
         pane.getChildren().add(newPane);
         return newPane;
     }
@@ -69,7 +68,6 @@ public class ViewController {
         if (height != -1) {
             newPane.setMaxHeight(height);
         }
-        newPane.setStyle("-fx-background-color: #fff");
         pane.setCenter(newPane);
         return newPane;
     }

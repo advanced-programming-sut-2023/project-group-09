@@ -1,7 +1,9 @@
 package model;
 
 import controller.UserController;
+import model.chat.Room;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class User {
@@ -13,8 +15,9 @@ public class User {
     private String passwordRecoveryQuestion;
     private String passwordRecoveryAnswer;
     private String slogan;
-
     private String path;
+    private ArrayList<Room> rooms = new ArrayList<>();
+
     public User(String username, String password, String nickname, String email, String slogan) {
         this.username = username;
         this.password = password;
@@ -23,7 +26,7 @@ public class User {
         this.slogan = slogan;
         Random random = new Random();
         this.highScore = 0;
-        path = "files/img/avatars/"+(random.nextInt(4) + 1) + ".png";
+        path = "files/img/avatars/" + (random.nextInt(4) + 1) + ".png";
     }
 
     public String getUsername() {
@@ -87,12 +90,14 @@ public class User {
 
         return UserController.convertPasswordToHash(password).equals(this.password);
     }
+
     public boolean isAnswerToSecurityQuestionCorrect(String answer) {
         if (answer == null)
             return false;
         answer = UserController.convertPasswordToHash(answer);
         return this.passwordRecoveryAnswer.hashCode() == answer.hashCode();
     }
+
     //=============================
     public int getHighScore() {
         return highScore;
@@ -101,19 +106,37 @@ public class User {
     public void setHighScore(int highScore) {
         this.highScore = highScore;
     }
+
     public void addHighScore(int highScore) {
         this.highScore += highScore;
     }
 
-    public boolean arePasswordsEqual(String secondPassword){
+    public boolean arePasswordsEqual(String secondPassword) {
         secondPassword = UserController.convertPasswordToHash(secondPassword);
         return password.hashCode() == secondPassword.hashCode();
     }
+
     public String getPath() {
         return path;
     }
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public ArrayList<Room> getRooms() {
+        return rooms;
+    }
+
+    public Room getRoomByName(String name) {
+        for (int i = 0; i < rooms.size(); i++) {
+            if (rooms.get(i).getName().equals(name))
+                return rooms.get(i);
+        }
+        return null;
+    }
+
+    public void addRoom(Room room) {
+        this.rooms.add(room);
     }
 }

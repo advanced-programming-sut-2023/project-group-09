@@ -97,14 +97,11 @@ public class LoginMenu extends Application {
     }
 
     private void setEventForNextButton(Button button , User user , MenuTextField answer) {
-        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (user.isAnswerToSecurityQuestionCorrect(answer.getText())) {
-                    setChangePassword(user);
-                } else {
-                    answer.handlingError("answer is wrong!");
-                }
+        button.setOnMouseClicked(mouseEvent -> {
+            if (user.isAnswerToSecurityQuestionCorrect(answer.getText())) {
+                setChangePassword(user);
+            } else {
+                answer.handlingError("answer is wrong!");
             }
         });
     }
@@ -127,25 +124,19 @@ public class LoginMenu extends Application {
         passField.requestFocus();
         confirmationField.requestFocus();
 
-        passField.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (UserController.isPasswordStrong(passField.getText()) != 6) {
-                    passField.handlingError("password is weak!");
-                } else {
-                    passField.handlingCorrect("password is strong!");
-                }
+        passField.setOnKeyReleased(keyEvent -> {
+            if (UserController.isPasswordStrong(passField.getText()) != 6) {
+                passField.handlingError("password is weak!");
+            } else {
+                passField.handlingCorrect("password is strong!");
             }
         });
 
-        confirmationField.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (confirmationField != null && confirmationField.getText().equals(passField.getText())) {;
-                    confirmationField.clearErrorOrMessage();
-                } else {
-                    confirmationField.handlingError("confirmation doesn't match!");
-                }
+        confirmationField.setOnKeyReleased(keyEvent -> {
+            if (confirmationField != null && confirmationField.getText().equals(passField.getText())) {;
+                confirmationField.clearErrorOrMessage();
+            } else {
+                confirmationField.handlingError("confirmation doesn't match!");
             }
         });
 
@@ -155,21 +146,18 @@ public class LoginMenu extends Application {
 
     private void setChangeButtonEvent(Button button , MenuPasswordField passField ,
                                       MenuPasswordField confirmationField , User user) {
-        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (passField != null && UserController.isPasswordStrong(passField.getText()) == 6) {
-                    if (passField.getText() != null && passField.getText().
-                            equals(confirmationField.getText())) {
-                        user.setPassword(UserController.convertPasswordToHash(passField.getText()));
-                        try {
-                            UserController.sendUserToServer(user);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        loginPane.getChildren().clear();
-                        setLoginMenu(loginPane);
+        button.setOnMouseClicked(mouseEvent -> {
+            if (passField != null && UserController.isPasswordStrong(passField.getText()) == 6) {
+                if (passField.getText() != null && passField.getText().
+                        equals(confirmationField.getText())) {
+                    user.setPassword(UserController.convertPasswordToHash(passField.getText()));
+                    try {
+                        UserController.sendUserToServer(user);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
+                    loginPane.getChildren().clear();
+                    setLoginMenu(loginPane);
                 }
             }
         });
@@ -231,14 +219,11 @@ public class LoginMenu extends Application {
                 }
             }
         });
-        forgotPassword.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                try {
-                    forgotPassword(mouseEvent);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+        forgotPassword.setOnMouseClicked(mouseEvent -> {
+            try {
+                forgotPassword(mouseEvent);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         });
 
@@ -263,16 +248,11 @@ public class LoginMenu extends Application {
         MenuButton loginButton = new MenuButton("Login" , menuBox , 0 , 170, true);
         menuBox.getChildren().add(loginButton);
 
-        loginButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                try {
-                    login(mouseEvent);
-                } catch (MalformedURLException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+        loginButton.setOnMouseClicked(mouseEvent -> {
+            try {
+                login(mouseEvent);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         });
 

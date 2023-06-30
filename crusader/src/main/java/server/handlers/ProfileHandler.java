@@ -9,7 +9,6 @@ import server.Packet;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
@@ -56,14 +55,26 @@ public class ProfileHandler {
             case "get image":
                 downloadImage();
                 break;
+            case "are user changed":
+                areUserChanged();
+                break;
             case "copy file":
                 copyFile();
         }
     }
 
     public void makeFakeToken() throws IOException {
-        User user = Application.getUserByUsername("a");
+        User user;
+        if (TokenController.tokens.size() == 0){
+            user = Application.getUserByUsername("a");
+        }else if (TokenController.tokens.size() == 1){
+            user = Application.getUserByUsername("f");
+        }else{
+            user = Application.getUserByUsername("Moeein");
+        }
+
         String token = TokenController.generateToken(user);
+        connection.setToken(token);
         Packet packet = new Packet("fake token", "main");
         packet.addAttribute("authentication token", token);
         Packet.sendPacket(packet, connection);
@@ -74,6 +85,7 @@ public class ProfileHandler {
         System.out.println(packet.token);
         packet.addAttribute("massage", UserController.changeUsername(this.packet.attributes.get("username").toString(), this.packet.token));
         Packet.sendPacket(packet, connection);
+        UserHandler.sendChangedPacket();
     }
 
     public void validateUsername() throws IOException {
@@ -177,5 +189,12 @@ public class ProfileHandler {
         String path2 = packet.attributes.get("path2").toString();
         System.out.println(Paths.get(path1));
         Files.copy(Paths.get(path1), new File(path2).toPath(), StandardCopyOption.REPLACE_EXISTING);
+    }
+
+    public void areUserChanged() throws IOException {
+        Packet packet = new Packet("user are changed");
+        packet.addAttribute("check",connection.userChanged);
+        connection.userChanged = false;
+        Packet.sendPacket(packet,connection);
     }
 }

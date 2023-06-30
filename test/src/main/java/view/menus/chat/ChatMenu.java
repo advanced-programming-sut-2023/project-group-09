@@ -9,7 +9,7 @@ public class ChatMenu extends Pane {
     public ChatMenu() {
         this.setWidth(1200);
         this.setHeight(800);
-        this.setStyle("-fx-background-color: rgba(256, 256, 256, 0.5)");
+        this.setStyle("-fx-background-color: rgba(256, 256, 256, 0.7)");
         this.chatPart = new StackPane();
         this.chatPart.setMinWidth(400);
         this.chatPart.setMaxWidth(400);
@@ -17,11 +17,11 @@ public class ChatMenu extends Pane {
         this.chatPart.setMaxHeight(794);
         this.chatPart.setTranslateX(797);
         this.chatPart.setTranslateY(3);
-        this.chatPart.setStyle("-fx-background-color: rgba(256, 256, 256, 1); -fx-border-width: 1.5;" +
+        this.chatPart.setStyle("-fx-background-color: rgb(198, 245, 239); -fx-border-width: 1.5;" +
                 "-fx-border-color: black; -fx-border-radius: 20; -fx-background-radius: 20");
         this.getChildren().add(this.chatPart);
         this.setViewOrder(-10000);
-        ChatController.setChatMenu("", this);
+        new ChatViewController(this).setChatMenu("private");
     }
 
     public StackPane getChatPart() {
