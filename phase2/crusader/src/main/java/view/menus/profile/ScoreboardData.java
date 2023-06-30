@@ -1,7 +1,7 @@
 package view.menus.profile;
 
-import controllers.Application;
-import controllers.DBController;
+import controller.Application;
+import controller.DBController;
 import enumeration.Paths;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;

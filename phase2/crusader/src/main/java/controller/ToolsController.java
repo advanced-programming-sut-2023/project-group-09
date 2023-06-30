@@ -1,6 +1,6 @@
-package controllers;
+package controller;
 
-import controllers.human.MoveController;
+import controller.human.MoveController;
 import model.activity.ToolAttack;
 import model.activity.ToolMove;
 import model.building.Building;
@@ -11,7 +11,7 @@ import model.tools.Tool;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class ToolsController {
+public class ToolsController{
     public static boolean[][] checkArray;
     public static Tool tool;
 

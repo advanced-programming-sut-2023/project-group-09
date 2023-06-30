@@ -1,6 +1,6 @@
 package view.menus.profile;
 
-import controllers.UserController;
+import controller.UserController;
 import enumeration.Paths;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -30,7 +30,7 @@ public class ChangeSlogan extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         ChangeSlogan.stage = stage;
-        user = controllers.Application.getCurrentUser();
+        user = controller.Application.getCurrentUser();
         makeScene();
     }
 

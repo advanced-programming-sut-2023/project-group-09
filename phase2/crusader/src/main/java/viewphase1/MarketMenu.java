@@ -1,7 +1,7 @@
 package viewphase1;
 
-import controllers.MarketController;
-import controllers.ViewController;
+import controller.MarketController;
+import controller.ViewController;
 import enumeration.answers.Answers;
 import enumeration.commands.Commands;
 import enumeration.commands.MarketMenuCommands;

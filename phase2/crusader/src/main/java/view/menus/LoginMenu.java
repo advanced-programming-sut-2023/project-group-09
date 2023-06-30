@@ -1,7 +1,7 @@
 package view.menus;
 
-import controllers.DBController;
-import controllers.UserController;
+import controller.DBController;
+import controller.UserController;
 import enumeration.answers.LoginAnswers;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -58,13 +58,13 @@ public class LoginMenu extends Application {
         password.clearErrorOrMessage();
         CaptchaController.clearErrorOrMessage();
         if (username.getText() == null ||
-                !controllers.Application.isUserExistsByName(username.getText())) {
+                !controller.Application.isUserExistsByName(username.getText())) {
             username.handlingError(LoginAnswers.USER_DOESNT_EXIST_MESSAGE.getMessage());
             return;
         } else if (!CaptchaController.isInputCorrect()) {
             return;
         }
-        User user = controllers.Application.getUserByUsername(username.getText());
+        User user = controller.Application.getUserByUsername(username.getText());
         loginPane.getChildren().clear();
 
         MenuBox menuBox = new MenuBox("Forgot Password" , 500, 150 , 500 , 500);

@@ -1,6 +1,6 @@
 package model.menugui.game;
 
-import controllers.gamestructure.GameImages;
+import controller.gamestructure.GameImages;
 import enumeration.Paths;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

@@ -1,6 +1,6 @@
 package view.controllers;
 
-import controllers.gamestructure.GameImages;
+import controller.gamestructure.GameImages;
 
 public class ImageLoader extends Thread{
     @Override

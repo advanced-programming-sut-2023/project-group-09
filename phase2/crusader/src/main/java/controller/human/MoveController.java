@@ -1,7 +1,7 @@
-package controllers.human;
+package controller.human;
 
-import controllers.GameController;
-import controllers.gamestructure.GameHumans;
+import controller.GameController;
+import controller.gamestructure.GameHumans;
 import model.Government;
 import model.building.Building;
 import model.building.castlebuildings.CastleBuilding;

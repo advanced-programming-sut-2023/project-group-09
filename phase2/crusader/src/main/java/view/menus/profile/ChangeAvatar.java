@@ -1,6 +1,6 @@
 package view.menus.profile;
 
-import controllers.DBController;
+import controller.DBController;
 import enumeration.Paths;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -43,7 +43,7 @@ public class ChangeAvatar extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         ChangeAvatar.stage = stage;
-        user = controllers.Application.getCurrentUser();
+        user = controller.Application.getCurrentUser();
         makeScene();
     }
 

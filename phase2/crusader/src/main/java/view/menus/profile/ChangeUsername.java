@@ -30,7 +30,7 @@ public class ChangeUsername extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         ChangeUsername.stage = stage;
-        user = controllers.Application.getCurrentUser();
+        user = controller.Application.getCurrentUser();
         makeScene();
     }
 
@@ -71,10 +71,10 @@ public class ChangeUsername extends Application {
             username.handlingError(massage);
         });
         submit.setOnMouseClicked(mouseEvent -> {
-            String massage = controllers.UserController.validateUsername(username.getText());
+            String massage = controller.UserController.validateUsername(username.getText());
             if (massage == null || massage.equals("")) {
                 MenuPopUp menuPopUp = new MenuPopUp(root, 400, 400,
-                        "success", controllers.UserController.changeUsername(username.getText()));
+                        "success", controller.UserController.changeUsername(username.getText()));
                 root.getChildren().add(menuPopUp);
             }else{
                 MenuPopUp menuPopUp = new MenuPopUp(root, 400, 400,

@@ -1,8 +1,8 @@
 package model.building.castlebuildings;
 
-import controllers.GameController;
-import controllers.MapController;
-import controllers.human.HumanController;
+import controller.GameController;
+import controller.MapController;
+import controller.human.HumanController;
 import model.building.Building;
 import model.game.Map;
 import model.game.Tile;

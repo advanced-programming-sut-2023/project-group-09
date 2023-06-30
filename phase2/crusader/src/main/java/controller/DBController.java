@@ -1,12 +1,12 @@
-package controllers;
+package controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import controllers.gamestructure.GameBuildings;
-import controllers.gamestructure.GameGoods;
-import controllers.gamestructure.GameHumans;
-import controllers.gamestructure.GameTools;
+import controller.gamestructure.GameBuildings;
+import controller.gamestructure.GameGoods;
+import controller.gamestructure.GameHumans;
+import controller.gamestructure.GameTools;
 import enumeration.Paths;
 import javafx.scene.paint.Color;
 import model.User;

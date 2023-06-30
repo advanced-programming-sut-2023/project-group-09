@@ -1,7 +1,7 @@
-package controllers;
+package controller;
 
-import controllers.gamestructure.GameTools;
-import controllers.human.MoveController;
+import controller.gamestructure.GameTools;
+import controller.human.MoveController;
 import model.activity.Move;
 import model.game.Tile;
 import model.game.Tuple;

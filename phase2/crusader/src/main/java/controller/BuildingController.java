@@ -1,7 +1,7 @@
-package controllers;
+package controller;
 
-import controllers.human.HumanController;
-import controllers.human.MoveController;
+import controller.human.HumanController;
+import controller.human.MoveController;
 import enumeration.answers.BuildingAnswers;
 import model.Government;
 import model.building.Building;

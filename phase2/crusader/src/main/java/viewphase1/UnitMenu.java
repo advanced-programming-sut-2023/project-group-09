@@ -1,8 +1,8 @@
 package viewphase1;
 
-import controllers.GameController;
-import controllers.MapController;
-import controllers.ViewController;
+import controller.GameController;
+import controller.MapController;
+import controller.ViewController;
 import enumeration.answers.Answers;
 import enumeration.commands.Commands;
 import enumeration.commands.UnitMenuCommands;

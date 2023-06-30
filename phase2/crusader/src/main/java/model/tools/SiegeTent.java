@@ -1,6 +1,6 @@
 package model.tools;
 
-import controllers.MapController;
+import controller.MapController;
 import model.activity.ToolAttack;
 import model.human.military.Engineer;
 

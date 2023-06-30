@@ -1,6 +1,6 @@
 package model.building.castlebuildings;
 
-import controllers.GameController;
+import controller.GameController;
 import model.game.Map;
 
 public class Wall extends CastleBuilding {

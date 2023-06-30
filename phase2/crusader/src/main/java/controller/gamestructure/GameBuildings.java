@@ -1,6 +1,6 @@
-package controllers.gamestructure;
+package controller.gamestructure;
 
-import controllers.MapController;
+import controller.MapController;
 import model.Government;
 import model.building.Building;
 import model.building.castlebuildings.Gatehouse;

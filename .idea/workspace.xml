@@ -4,7 +4,107 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="" />
+    <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/Application.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/BuildingController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/CaptchaController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/DBController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/DeletedController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/EngineerController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/FileController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/GameController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/GovernmentController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/MainController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/MapController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/MarketController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/PixelCanvas.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/ToolsController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/TradeController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/UserController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/ViewController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/gamestructure/GameBuildings.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/gamestructure/GameFoods.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/gamestructure/GameGoods.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/gamestructure/GameHumans.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/gamestructure/GameImages.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/gamestructure/GameMaps.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/gamestructure/GameResources.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/gamestructure/GameTools.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/gamestructure/GameWeapons.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/human/HumanController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/controller/human/MoveController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/Government.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/Government.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/Trade.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/Trade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/activity/Attack.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/activity/Attack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/activity/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/activity/Move.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/activity/ToolAttack.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/activity/ToolAttack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/activity/ToolMove.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/activity/ToolMove.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/building/Building.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/building/Building.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/building/castlebuildings/Gatehouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/building/castlebuildings/Gatehouse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/building/castlebuildings/MainCastle.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/building/castlebuildings/MainCastle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/building/castlebuildings/Wall.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/building/castlebuildings/Wall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/building/producerbuildings/Barrack.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/building/producerbuildings/Barrack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/building/producerbuildings/ProducerBuilding.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/building/producerbuildings/ProducerBuilding.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/building/producerbuildings/WeaponProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/building/producerbuildings/WeaponProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/captcha/captchaPhase1/Captcha.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/captcha/captchaPhase1/Captcha.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/human/civilian/Civilian.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/human/civilian/Civilian.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/human/military/Tunneler.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/human/military/Tunneler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/menugui/ChangePasswordDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/menugui/ChangePasswordDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/menugui/MiniMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/menugui/MiniMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/menugui/PreviewMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/menugui/PreviewMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/menugui/game/Citizen.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/menugui/game/Citizen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/menugui/game/GameTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/menugui/game/GameTile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/menugui/game/Tool.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/menugui/game/Tool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/menugui/game/Troop.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/menugui/game/Troop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/tools/Moat.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/tools/Moat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/tools/SiegeTent.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/tools/SiegeTent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/tools/Tool.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/model/tools/Tool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/controllers/GameViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/controllers/GameViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/controllers/HumanViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/controllers/HumanViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/controllers/ImageLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/controllers/ImageLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/controllers/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/CreateGameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/CreateGameMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/GameMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/LoginMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/LoginMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/MainMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/SecurityQuestionMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/SecurityQuestionMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/SignupMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/SignupMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/profile/ChangeAvatar.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/profile/ChangeAvatar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/profile/ChangeEmail.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/profile/ChangeEmail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/profile/ChangeNickname.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/profile/ChangeNickname.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/profile/ChangeSlogan.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/profile/ChangeSlogan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/profile/ChangeUsername.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/profile/ChangeUsername.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/profile/Scoreboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/profile/Scoreboard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/profile/ScoreboardData.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/profile/ScoreboardData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/profile/ShowDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/view/menus/profile/ShowDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/BuildingMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/BuildingMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/CreateGameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/CreateGameMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/EditMapEnvironmentMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/EditMapEnvironmentMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/EditMapMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/EditMapMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/GameMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/GovernmentMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/GovernmentMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/LoginMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/LoginMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/MainMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/MapMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/MapMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/MarketMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/MarketMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/PrimaryMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/PrimaryMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/ProfileMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/ProfileMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/SignupMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/SignupMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/ToolMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/ToolMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/TradeMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/TradeMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/UnitMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/main/java/viewphase1/UnitMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/test/java/AttackAndMoveTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/test/java/AttackAndMoveTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/test/java/Controller/UserControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/test/java/Controller/UserControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/test/java/TradeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/test/java/TradeTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phase2/crusader/src/test/java/makeSample.java" beforeDir="false" afterPath="$PROJECT_DIR$/phase2/crusader/src/test/java/makeSample.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/main/java/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/main/java/controller/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/main/java/view/menus/profile/FriendMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/main/java/view/menus/profile/FriendMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/main/resources/CSS/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/main/resources/CSS/style.css" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -53,7 +153,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/mi/OneDrive/Desktop/phase3/project-group-09",
+    "last_opened_file_path": "C:/Users/mi/OneDrive/Desktop/phase3/project-group-09/phase2/crusader",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
   }
@@ -211,6 +311,7 @@
       <workItem from="1687953029544" duration="973000" />
       <workItem from="1687954560527" duration="753000" />
       <workItem from="1688126787250" duration="380000" />
+      <workItem from="1688128233048" duration="932000" />
     </task>
     <task id="LOCAL-00022" summary="a commit to solve a problem.">
       <created>1682353891980</created>

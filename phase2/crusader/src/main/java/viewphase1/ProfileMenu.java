@@ -1,8 +1,8 @@
 package viewphase1;
 
-import controllers.DBController;
-import controllers.UserController;
-import controllers.ViewController;
+import controller.DBController;
+import controller.UserController;
+import controller.ViewController;
 import enumeration.answers.Answers;
 import enumeration.commands.Commands;
 import enumeration.commands.ProfileMenuCommands;

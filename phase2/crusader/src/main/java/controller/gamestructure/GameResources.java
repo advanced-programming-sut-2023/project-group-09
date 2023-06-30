@@ -1,4 +1,4 @@
-package controllers.gamestructure;
+package controller.gamestructure;
 
 import model.goods.Goods;
 

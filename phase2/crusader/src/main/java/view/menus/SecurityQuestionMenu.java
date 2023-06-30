@@ -1,6 +1,6 @@
 package view.menus;
 
-import controllers.DBController;
+import controller.DBController;
 import enumeration.dictionary.SecurityQuestions;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -86,7 +86,7 @@ public class SecurityQuestionMenu extends Application {
 
         user.setPasswordRecoveryQuestion(securityQuestionField.getValue().toString());
         user.setPasswordRecoveryAnswer(answerField.getText());
-        controllers.Application.addUser(user);
+        controller.Application.addUser(user);
         DBController.saveAllUsers();
         this.user = null;
         LoginMenu loginMenu = new LoginMenu();

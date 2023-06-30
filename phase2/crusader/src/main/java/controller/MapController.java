@@ -1,8 +1,8 @@
-package controllers;
+package controller;
 
-import controllers.gamestructure.GameBuildings;
-import controllers.gamestructure.GameHumans;
-import controllers.gamestructure.GameTools;
+import controller.gamestructure.GameBuildings;
+import controller.gamestructure.GameHumans;
+import controller.gamestructure.GameTools;
 import enumeration.Pair;
 import enumeration.Textures;
 import enumeration.dictionary.RockDirections;

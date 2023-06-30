@@ -1,6 +1,6 @@
-package controllers;
+package controller;
 
-import controllers.gamestructure.GameMaps;
+import controller.gamestructure.GameMaps;
 import javafx.stage.Stage;
 import view.controllers.ImageLoader;
 import view.menus.LoginMenu;

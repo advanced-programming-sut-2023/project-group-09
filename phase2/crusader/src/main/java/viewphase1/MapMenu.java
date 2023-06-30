@@ -1,7 +1,7 @@
 package viewphase1;
 
-import controllers.GameController;
-import controllers.MapController;
+import controller.GameController;
+import controller.MapController;
 import enumeration.commands.MapCommands;
 
 import java.util.Scanner;

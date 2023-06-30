@@ -1,4 +1,4 @@
-package controllers;
+package controller;
 
 import model.building.castlebuildings.MainCastle;
 import model.game.Map;

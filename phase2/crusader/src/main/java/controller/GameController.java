@@ -1,9 +1,9 @@
-package controllers;
+package controller;
 
-import controllers.gamestructure.GameBuildings;
-import controllers.gamestructure.GameHumans;
-import controllers.human.HumanController;
-import controllers.human.MoveController;
+import controller.gamestructure.GameBuildings;
+import controller.gamestructure.GameHumans;
+import controller.human.HumanController;
+import controller.human.MoveController;
 import enumeration.MilitaryStates;
 import enumeration.Pair;
 import javafx.animation.KeyFrame;
@@ -59,7 +59,7 @@ public class GameController {
     public static String selectUnit(int x, int y, String type) {
         ArrayList<Military> militaries;
         if (type == null) {
-            militaries = MapController.getMilitariesOfGovernment(x, y, game.getCurrentGovernment());
+            militaries = controller.MapController.getMilitariesOfGovernment(x, y, game.getCurrentGovernment());
         } else if (GameHumans.getUnit(type) == null) {
             return "invalid type!";
         } else {

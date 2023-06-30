@@ -1,12 +1,12 @@
 package view.menus;
 
-import controllers.DBController;
-import controllers.GameController;
-import controllers.GovernmentController;
-import controllers.MapController;
-import controllers.gamestructure.GameImages;
-import controllers.gamestructure.GameMaps;
-import controllers.human.HumanController;
+import controller.DBController;
+import controller.GameController;
+import controller.GovernmentController;
+import controller.MapController;
+import controller.gamestructure.GameImages;
+import controller.gamestructure.GameMaps;
+import controller.human.HumanController;
 import enumeration.Paths;
 import enumeration.UnitMovingState;
 import javafx.animation.KeyFrame;

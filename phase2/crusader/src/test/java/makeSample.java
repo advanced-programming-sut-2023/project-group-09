@@ -1,10 +1,10 @@
-import controllers.Application;
-import controllers.GameController;
-import controllers.MainController;
-import controllers.MapController;
-import controllers.gamestructure.GameHumans;
-import controllers.gamestructure.GameMaps;
-import controllers.human.HumanController;
+import controller.Application;
+import controller.GameController;
+import controller.MainController;
+import controller.MapController;
+import controller.gamestructure.GameHumans;
+import controller.gamestructure.GameMaps;
+import controller.human.HumanController;
 import enumeration.Pair;
 import enumeration.dictionary.Colors;
 import model.Government;

@@ -1,6 +1,6 @@
 package model.building;
 
-import controllers.GameController;
+import controller.GameController;
 import model.Government;
 import model.Permission;
 import model.game.Tile;
