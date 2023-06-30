@@ -6,6 +6,7 @@ import controller.GovernmentController;
 import controller.MapController;
 import controller.gamestructure.GameImages;
 import controller.human.HumanController;
+import enumeration.Pair;
 import enumeration.Paths;
 import enumeration.UnitMovingState;
 import enumeration.dictionary.RockDirections;
@@ -24,7 +25,7 @@ import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
 import view.menus.EditMapMenu;
 import view.menus.GameMenu;
-import view.menus.SignupMenu;
+import view.menus.SharedMapMenu;
 
 import java.util.Random;
 
@@ -43,6 +44,7 @@ public class GameTile {
     private ImageView rockImage;
     private ImageView sicknessImage;
     private ImageView burning;
+    private ImageView shieldImage;
     private static int tileXOn, tileYOn;
     public boolean touch = false;
 
@@ -100,10 +102,14 @@ public class GameTile {
         setTexture2();
         setTree2();
         setRock2();
+        setShield();
     }
 
     private void setRock2() {
         RockDirections rockDirections = tile.getRockDirection();
+        if (rockImage != null) {
+            EditMapMenu.gameMap.getChildren().remove(rockImage);
+        }
         if (rockDirections != null) {
             System.out.println("Yep!");
             String rockNumber = Integer.toString(new Random().nextInt(16) + 1);
@@ -121,6 +127,9 @@ public class GameTile {
 
     private void setTree2() {
         Trees tree = tile.getTree();
+        if (treeImage != null) {
+            EditMapMenu.gameMap.getChildren().remove(treeImage);
+        }
         if (tree != null) {
             String shrubNumber = "";
             if (tree.equals(Trees.DESERT_SHRUB))
@@ -260,6 +269,9 @@ public class GameTile {
 
     public void setRock() {
         RockDirections rockDirections = tile.getRockDirection();
+        if (rockImage != null) {
+            GameMenu.gameMap.getChildren().remove(rockImage);
+        }
         if (rockDirections != null) {
             System.out.println("Yep!");
             String rockNumber = Integer.toString(new Random().nextInt(16) + 1);
@@ -277,6 +289,9 @@ public class GameTile {
 
     public void setTree() {
         Trees tree = tile.getTree();
+        if (treeImage != null) {
+            GameMenu.gameMap.getChildren().remove(treeImage);
+        }
         if (tree != null) {
             String shrubNumber = "";
             if (tree.equals(Trees.DESERT_SHRUB))
@@ -437,4 +452,36 @@ public class GameTile {
         GameMenu.gameMap.getChildren().remove(burning);
     }
 
+    public void setShield() {
+        if (shieldImage != null) {
+            EditMapMenu.gameMap.getChildren().remove(shieldImage);
+        }
+        boolean check = false;
+        for (Pair<Integer , Integer> pair : SharedMapMenu.selectedMap.getDefaultCastles()) {
+            if (pair.getFirst() == tileX && pair.getSecond() == tileY) {
+                check = true;
+                break;
+            }
+        }
+        if (check) {
+            Image image = new Image(GameMenu.class.getResource(Paths.FLAG_IMAGES.getPath()).toExternalForm()
+                    + "transparent" + "Flag.png");
+            shieldImage = new ImageView(image);
+            shieldImage.setTranslateY(textureImage.getTranslateY() + textureImage.getFitHeight()/2 - image.getHeight());
+            shieldImage.setTranslateX(textureImage.getTranslateX() + image.getWidth()/4);
+            shieldImage.setViewOrder(-tileY-1);
+            EditMapMenu.gameMap.getChildren().add(shieldImage);
+        } else {
+            shieldImage = null;
+        }
+    }
+
+    public void deleteTile() {
+        getTile().setTree(null);
+        getTile().setRockDirection(null);
+        if (shieldImage != null) {
+            SharedMapMenu.selectedMap.removeDefaultCastle(tileX , tileY);
+        }
+        refreshTile2();
+    }
 }

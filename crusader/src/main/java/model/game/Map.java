@@ -63,6 +63,11 @@ public class Map implements Serializable {
     }
 
     public ArrayList<Pair<Integer, Integer>> getDefaultCastles() {
+        defaultCastles = new ArrayList<>();
+        defaultCastles.clear();
+        for (int i = 0; i != index; i++) {
+            defaultCastles.add(new Pair<>(defaultCastlesX[i] , defaultCastlesY[i]));
+        }
         return defaultCastles;
     }
 
@@ -101,5 +106,16 @@ public class Map implements Serializable {
 
     public int getDefaultCastleY(int ind) {
         return this.defaultCastlesY[ind];
+    }
+
+    public void removeDefaultCastle(int tileX, int tileY) {
+        getDefaultCastles();
+        defaultCastles.remove(new Pair<>(tileX , tileY));
+        index = 0;
+        for (Pair<Integer , Integer> pair : defaultCastles) {
+            defaultCastlesX[index] = pair.getFirst();
+            defaultCastlesY[index] = pair.getSecond();
+            index++;
+        }
     }
 }

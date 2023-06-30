@@ -1,7 +1,9 @@
 package controller;
 
+import client.Connection;
 import client.Packet;
 import client.PacketHandler;
+import com.google.gson.GsonBuilder;
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameHumans;
 import controller.gamestructure.GameTools;
@@ -10,6 +12,7 @@ import enumeration.Textures;
 import enumeration.dictionary.RockDirections;
 import enumeration.dictionary.Trees;
 import model.Government;
+import model.User;
 import model.building.Building;
 import model.building.castlebuildings.CastleBuilding;
 import model.building.castlebuildings.Gatehouse;
@@ -27,6 +30,8 @@ import model.tools.Tool;
 import view.Main;
 import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
+import view.menus.LoginMenu;
+import view.menus.SharedMapMenu;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -82,7 +87,7 @@ public class MapController {
     public static String dropRock(int x, int y, RockDirections direction) {
         Tile tile = map.getTile(x, y);
         if (!tile.getTexture().equals(Textures.SMALL_POND) && !tile.getTexture().equals(Textures.LARGE_POND) && tile.getTree() == null && tile.getBuilding() == null
-                && tile.getMilitaries().size() == 0 && tile.getBuilding() == null && tile.getTree() == null) {
+                && (tile.getMilitaries() == null || tile.getMilitaries().size() == 0) && tile.getBuilding() == null && tile.getTree() == null) {
             tile.setRockDirection(direction);
             tile.setCanPutBuilding(false);
             tile.setPassable(false);
@@ -163,6 +168,23 @@ public class MapController {
                 if (!building.getSuitableTextures().contains(map.getTile(i, j).getTexture().getName())) {
                     return false;
                 }
+            }
+        }
+        return true;
+    }
+
+    public static boolean checkCanPutMainCastle(int x , int y){
+        ArrayList<Pair<Integer, Integer>> neighborTiles = GameController.getNeighborPairs(x, y, 7 , 13);
+        for (Pair<Integer, Integer> pair : neighborTiles) {
+            int i = pair.getFirst();
+            int j = pair.getSecond();
+            if (i < 0 || j < 0)
+                return false;
+            Tile tile = map.getTile(i, j);
+            if (tile.getTexture() == Textures.OIL) {
+                return false;
+            } else if (!map.getTile(i, j).getCanPutBuilding()) {
+                return false;
             }
         }
         return true;
@@ -641,5 +663,20 @@ public class MapController {
             }
         }
         return map;
+    }
+
+    public static void dropShield(int x , int y) {
+        map.addDefaultCastle(x , y);
+    }
+
+    public static void saveMap(String name) throws IOException {
+        Packet packet = new Packet("current user");
+        packet.setToken(Main.connection.getToken());
+        packet.sendPacket();
+        User currentUser = new GsonBuilder().create().fromJson((String)Packet.receivePacket().getAttributes().get("user")
+                , User.class);
+        SharedMapMenu.selectedMap.setOwner(currentUser.getUsername());
+        SharedMapMenu.selectedMap.setName(name);
+        ////////// send Map.
     }
 }

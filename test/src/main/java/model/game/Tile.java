@@ -181,7 +181,9 @@ public class Tile implements Serializable {
     }
 
     public void setTexture(Textures texture) {
-        if (building == null && civilians.size() == 0 && militaries.size() == 0 && rockDirection == null && tree == null) {
+        if (building == null && (civilians == null || civilians.size() == 0) && (
+                militaries == null || militaries.size() == 0)
+                && rockDirection == null && tree == null) {
             this.texture = texture;
             passable = texture.isPassable();
             canPutBuilding = texture.getCanPutBuilding();

@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import model.menugui.MenuButton;
 import view.controllers.ViewController;
 import view.menus.profile.ProfileMenu;
+import view.menus.profile.Scoreboard;
 
 import java.io.IOException;
 import java.net.URL;
