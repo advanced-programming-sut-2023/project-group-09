@@ -21,7 +21,7 @@ public class ChatMenu extends Pane {
                 "-fx-border-color: black; -fx-border-radius: 20; -fx-background-radius: 20");
         this.getChildren().add(this.chatPart);
         this.setViewOrder(-10000);
-        new ChatViewController(this).setChatMenu("private");
+        new ChatViewController(this).setChatMenu("public");
     }
 
     public StackPane getChatPart() {
