@@ -1,8 +1,8 @@
-package controllers;
+package controller;
 
-import controllers.gamestructure.GameBuildings;
-import controllers.gamestructure.GameHumans;
-import controllers.gamestructure.GameTools;
+import controller.gamestructure.GameBuildings;
+import controller.gamestructure.GameHumans;
+import controller.gamestructure.GameTools;
 import enumeration.Pair;
 import enumeration.Textures;
 import enumeration.dictionary.RockDirections;
@@ -200,7 +200,7 @@ public class MapController {
         int counter = 0;
         assert building != null;
         if (building.getBuildingImpassableLength() >= 1) {
-            dropSpecialBuilding(x, y, building,type);
+            dropSpecialBuilding(x, y, building, type);
             return;
         }
         ArrayList<Pair<Integer, Integer>> tiles = GameController.getNeighborPairs
@@ -264,7 +264,7 @@ public class MapController {
         }
     }
 
-    public static void dropSpecialBuilding(int x, int y, Building building,String type) {
+    public static void dropSpecialBuilding(int x, int y, Building building, String type) {
         ArrayList<Tile> tiles = GameController.getNeighborTiles
                 (x, y, building.getBuildingImpassableLength(), building.getBuildingImpassableLength());
 
@@ -433,14 +433,13 @@ public class MapController {
         HumanViewController.dropUnit(x, y, tile, military);
     }
 
-    public static void dropCivilian(int x, int y, Government government,boolean job) {
-        Civilian civilian = new Civilian(x,y,job,government);
+    public static void dropCivilian(int x, int y, Government government, boolean job) {
+        Civilian civilian = new Civilian(x, y, job, government);
         Tile tile = map.getTile(x, y);
         government.addHuman(civilian);
         tile.addHuman(civilian);
         HumanViewController.dropCivilian(x, y, tile, civilian);
     }
-
 
 
     public static void deleteMilitary(int x, int y, Military military) {
@@ -549,10 +548,10 @@ public class MapController {
 
     public static synchronized void deleteBuilding(Building building) {
         ArrayList<Pair<Integer, Integer>> tiles;
-        if (building.getBuildingImpassableLength() > 0){
+        if (building.getBuildingImpassableLength() > 0) {
             tiles = GameController.getNeighborPairs
                     (building.getEndSpecialX(), building.getEndSpecialY(), building.getWidth(), building.getLength());
-        }else{
+        } else {
             tiles = GameController.getNeighborPairs
                     (building.getEndX(), building.getEndY(), building.getWidth(), building.getLength());
         }
@@ -565,7 +564,7 @@ public class MapController {
             ((StorageBuilding) building).deleteStorage();
         }
 
-        if (building.isBurning()){
+        if (building.isBurning()) {
             GameViewController.putOutBuilding(building);
         }
         for (Pair<Integer, Integer> pair : tiles) {

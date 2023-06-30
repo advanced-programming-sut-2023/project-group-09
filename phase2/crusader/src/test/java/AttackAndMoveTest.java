@@ -1,7 +1,7 @@
-import controllers.GameController;
-import controllers.MapController;
-import controllers.ToolsController;
-import controllers.human.HumanController;
+import controller.GameController;
+import controller.MapController;
+import controller.ToolsController;
+import controller.human.HumanController;
 import enumeration.MilitaryStates;
 import model.Government;
 import model.activity.ToolMove;

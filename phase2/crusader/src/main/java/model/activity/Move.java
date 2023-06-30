@@ -1,9 +1,9 @@
 package model.activity;
 
-import controllers.GameController;
-import controllers.MapController;
-import controllers.human.HumanController;
-import controllers.human.MoveController;
+import controller.GameController;
+import controller.MapController;
+import controller.human.HumanController;
+import controller.human.MoveController;
 import enumeration.MoveStates;
 import model.building.Building;
 import model.game.Map;

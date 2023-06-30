@@ -1,7 +1,7 @@
 package viewphase1;
 
-import controllers.GameController;
-import controllers.GovernmentController;
+import controller.GameController;
+import controller.GovernmentController;
 import enumeration.answers.Answers;
 import enumeration.commands.Commands;
 import enumeration.commands.GovernmentMenuCommands;

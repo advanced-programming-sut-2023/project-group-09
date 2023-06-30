@@ -1,7 +1,7 @@
 package view.menus;
 
-import controllers.DBController;
-import controllers.MainController;
+import controller.DBController;
+import controller.MainController;
 import enumeration.Paths;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -67,8 +67,8 @@ public class MainMenu extends Application {
         MenuButton logoutButton = new MenuButton("Logout" ,  root , 0 , -25 , true);
 
         logoutButton.setOnMouseClicked(mouseEvent -> {
-            controllers.Application.setCurrentUser(null);
-            controllers.Application.setStayLoggedIn(false);
+            controller.Application.setCurrentUser(null);
+            controller.Application.setStayLoggedIn(false);
             DBController.saveCurrentUser();
             try {
                 new LoginMenu().start(stage);

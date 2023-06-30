@@ -1,9 +1,9 @@
 package viewphase1;
 
-import controllers.Application;
-import controllers.CaptchaController;
-import controllers.DBController;
-import controllers.UserController;
+import controller.Application;
+import controller.CaptchaController;
+import controller.DBController;
+import controller.UserController;
 import enumeration.commands.SignupMenuCommands;
 import model.User;
 

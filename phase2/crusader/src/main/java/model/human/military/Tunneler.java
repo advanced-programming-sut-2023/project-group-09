@@ -1,6 +1,6 @@
 package model.human.military;
 
-import controllers.MapController;
+import controller.MapController;
 import model.building.Building;
 
 public class Tunneler extends EuropeanTroop {

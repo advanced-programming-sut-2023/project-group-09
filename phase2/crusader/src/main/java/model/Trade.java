@@ -1,6 +1,6 @@
 package model;
 
-import controllers.TradeController;
+import controller.TradeController;
 
 import java.util.HashMap;
 import java.util.Random;

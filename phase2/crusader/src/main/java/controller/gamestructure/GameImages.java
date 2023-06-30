@@ -1,4 +1,4 @@
-package controllers.gamestructure;
+package controller.gamestructure;
 
 import enumeration.Paths;
 import enumeration.Textures;

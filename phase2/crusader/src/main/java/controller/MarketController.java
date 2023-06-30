@@ -1,6 +1,6 @@
-package controllers;
+package controller;
 
-import controllers.gamestructure.GameGoods;
+import controller.gamestructure.GameGoods;
 import model.Government;
 import model.goods.Goods;
 import model.menugui.MenuPopUp;

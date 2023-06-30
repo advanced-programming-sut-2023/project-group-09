@@ -1,7 +1,7 @@
 package model.activity;
 
-import controllers.GameController;
-import controllers.MapController;
+import controller.GameController;
+import controller.MapController;
 import enumeration.MoveStates;
 import model.building.Building;
 import model.building.castlebuildings.MainCastle;

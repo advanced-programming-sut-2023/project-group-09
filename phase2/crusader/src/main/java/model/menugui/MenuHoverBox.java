@@ -1,30 +1,62 @@
 package model.menugui;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import model.menugui.game.GameMap;
+import view.menus.GameMenu;
 
-public class MenuHoverBox extends Pane {
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class MenuHoverBox extends StackPane {
     private Pane parent;
     private double width;
     private double height;
     private String text;
 
-    public MenuHoverBox(Pane parent, double x, double y, double width, double height, String text) {
+    public MenuHoverBox(Pane parent, String text) {
         this.parent = parent;
-        this.width = width;
-        this.height = height;
         this.text = text;
+        this.width = getLineWidth() * 7 + 20;
+        this.height = getNumberOfLines() * 20 + 20;
         this.setMaxHeight(height);
         this.setMinHeight(height);
         this.setMaxWidth(width);
         this.setMinWidth(width);
-        this.setTranslateX(x);
-        this.setTranslateY(y);
-        this.setStyle("-fx-background-color: rgba(256, 256, 256, 0.5)");
+        this.setTranslateX(GameMenu.endSelectionTile.getX() - GameMenu.gameMap.getCameraX() * GameMap.tileWidth - (1200.0 - width) / 2);
+        this.setTranslateY(GameMenu.endSelectionTile.getY() - (double) GameMenu.gameMap.getCameraY() * GameMap.tileHeight / 2 - (800.0 - height) / 2);
+        this.setStyle("-fx-background-radius: 5; -fx-background-color: rgba(256, 256, 256, 0.8); -fx-font-size: 15;" +
+                "-fx-border-radius: 5; -fx-border-color: black; -fx-border-width: 0.5");
         Text textBox = new Text(text);
-        textBox.setTranslateX(width / 2 - textBox.getWrappingWidth() / 2);
-        textBox.setTranslateY(height / 2);
         this.getChildren().add(textBox);
         this.parent.getChildren().add(this);
+    }
+
+    public int getNumberOfLines() {
+        int count = 0;
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+            if (c == '\n') count++;
+        }
+        return count + 1;
+    }
+
+    public int getLineWidth() {
+        ArrayList<Integer> lineChars = new ArrayList<>();
+        int count = 0;
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+            if (c == '\n') {
+                lineChars.add(count);
+                count = 0;
+            } else count++;
+        }
+        lineChars.add(count);
+        return Collections.max(lineChars);
+    }
+
+    public Pane getDetailsParent() {
+        return this.parent;
     }
 }

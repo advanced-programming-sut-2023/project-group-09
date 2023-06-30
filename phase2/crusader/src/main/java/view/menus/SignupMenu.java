@@ -1,7 +1,7 @@
 package view.menus;
 
-import controllers.DBController;
-import controllers.UserController;
+import controller.DBController;
+import controller.UserController;
 import enumeration.dictionary.Slogans;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -165,7 +165,7 @@ public class SignupMenu extends Application {
                     usernameField.handlingError("invalid username!");
                     usernameLiveInvalid = true;
                 }
-                if (controllers.Application.isUserExistsByName(newValue)) {
+                if (controller.Application.isUserExistsByName(newValue)) {
                     usernameField.handlingError("username already exists!");
                     usernameLiveInvalid = true;
                 } else {
@@ -286,7 +286,7 @@ public class SignupMenu extends Application {
             emailField.handlingError("invalid email!");
             return;
         }
-        if (controllers.Application.isUserExistsByEmail(emailField.getText())) {
+        if (controller.Application.isUserExistsByEmail(emailField.getText())) {
             emailField.handlingError("email already exists!");
             return;
         }

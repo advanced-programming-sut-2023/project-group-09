@@ -1,10 +1,10 @@
 package model.building.producerbuildings;
 
 
-import controllers.GameController;
-import controllers.GovernmentController;
-import controllers.MapController;
-import controllers.gamestructure.GameHumans;
+import controller.GameController;
+import controller.GovernmentController;
+import controller.MapController;
+import controller.gamestructure.GameHumans;
 import model.Government;
 import model.building.Building;
 import model.game.Tile;

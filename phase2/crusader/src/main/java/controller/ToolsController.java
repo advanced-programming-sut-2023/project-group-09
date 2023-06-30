@@ -1,6 +1,6 @@
-package controllers;
+package controller;
 
-import controllers.human.MoveController;
+import controller.human.MoveController;
 import model.activity.ToolAttack;
 import model.activity.ToolMove;
 import model.building.Building;
@@ -62,18 +62,18 @@ public class ToolsController {
             int x = pair.getX();
             if (y != 0) {
                 if (map.getTile(x, y - 1).isPassable() && map.getTile(x, y - 1).getTool() == null && !checkArray[y - 1][x]) {
-                    secondPairs.add(new Tuple(y - 1, x,pair));
+                    secondPairs.add(new Tuple(y - 1, x, pair));
                 }
             }
 
             if (x != 0 && !checkArray[y][x - 1]) {
                 if (map.getTile(x - 1, y).isPassable() && map.getTile(x - 1, y).getTool() == null && !checkArray[y][x - 1]) {
-                    secondPairs.add(new Tuple(y, x - 1,pair));
+                    secondPairs.add(new Tuple(y, x - 1, pair));
                 }
             }
             if (x != 0 && y != 0) {
                 if (map.getTile(x - 1, y - 1).isPassable() && map.getTile(x - 1, y - 1).getTool() == null && !checkArray[y - 1][x - 1]) {
-                    secondPairs.add(new Tuple(y - 1, x - 1,pair));
+                    secondPairs.add(new Tuple(y - 1, x - 1, pair));
                 }
             }
             if (x != GameController.getGame().getMap().getWidth() - 1) {
@@ -152,8 +152,8 @@ public class ToolsController {
         Tuple endPair = new Tuple(y1, x1);
         Tuple startPair = MoveController.getStartPair();
         boolean check = false;
-        if (endPair.equals(startPair)){
-            endPair = new Tuple(y2,x2);
+        if (endPair.equals(startPair)) {
+            endPair = new Tuple(y2, x2);
             check = true;
         }
 

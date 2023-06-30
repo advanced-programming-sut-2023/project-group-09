@@ -1,9 +1,9 @@
 package view.menus;
 
-import controllers.DBController;
-import controllers.GameController;
-import controllers.MapController;
-import controllers.gamestructure.GameMaps;
+import controller.DBController;
+import controller.GameController;
+import controller.MapController;
+import controller.gamestructure.GameMaps;
 import enumeration.dictionary.Colors;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -202,7 +202,7 @@ public class CreateGameMenu extends Application {
                 governmentUsernames.get(0).setDisable(false);
                 castleNumbers.get(0).setDisable(false);
                 governmentColors.get(0).setDisable(false);
-                governmentUsernames.get(0).setText(controllers.Application.getCurrentUser().getUsername());
+                governmentUsernames.get(0).setText(controller.Application.getCurrentUser().getUsername());
                 governmentUsernames.get(0).setEditable(false);
                 addGovernment.setDisable(false);
                 castles = new ArrayList<>();
@@ -252,7 +252,7 @@ public class CreateGameMenu extends Application {
             governmentUsernames.get(governmentNumber - 1).handlingError("username is required!");
             return;
         }
-        if (!controllers.Application.isUserExistsByName(governmentUsernames.get(governmentNumber - 1).getText())) {
+        if (!controller.Application.isUserExistsByName(governmentUsernames.get(governmentNumber - 1).getText())) {
             governmentUsernames.get(governmentNumber - 1).handlingError("username doesn't exist!");
             return;
         }
@@ -276,7 +276,7 @@ public class CreateGameMenu extends Application {
 
         Colors color = (Colors) governmentColors.get(governmentNumber - 1).getValue();
         colors.remove(color);
-        Government government = new Government(controllers.Application.getUserByUsername
+        Government government = new Government(controller.Application.getUserByUsername
                 (governmentUsernames.get(governmentNumber - 1).getText()), x, y, color);
         government.addAmountToProperties("wood", "resource", 1000);
         government.addAmountToProperties("stone", "resource", 500);

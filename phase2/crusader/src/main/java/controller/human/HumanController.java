@@ -1,9 +1,9 @@
-package controllers.human;
+package controller.human;
 
 
-import controllers.GameController;
-import controllers.MapController;
-import controllers.gamestructure.GameBuildings;
+import controller.GameController;
+import controller.MapController;
+import controller.gamestructure.GameBuildings;
 import enumeration.MilitaryStates;
 import enumeration.MoveStates;
 import model.Government;

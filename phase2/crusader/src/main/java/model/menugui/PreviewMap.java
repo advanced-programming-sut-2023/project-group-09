@@ -1,6 +1,6 @@
 package model.menugui;
 
-import controllers.gamestructure.GameMaps;
+import controller.gamestructure.GameMaps;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.PixelWriter;

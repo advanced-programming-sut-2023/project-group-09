@@ -1,7 +1,7 @@
 package model.building.castlebuildings;
 
-import controllers.GameController;
-import controllers.MapController;
+import controller.GameController;
+import controller.MapController;
 import model.Government;
 import model.game.Tile;
 import model.game.Tuple;

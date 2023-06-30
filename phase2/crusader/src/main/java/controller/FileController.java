@@ -1,4 +1,4 @@
-package controllers;
+package controller;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
