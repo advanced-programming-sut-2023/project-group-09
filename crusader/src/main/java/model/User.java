@@ -1,10 +1,13 @@
 package model;
 
 import controller.UserController;
+import enumeration.Pair;
 import server.handlers.UserHandler;
 import model.chat.Room;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -21,7 +24,8 @@ public class User {
     private String path;
     private ArrayList<Room> rooms = new ArrayList<>();
 
-    private boolean userChanged;
+    public ArrayList<String> friends;
+    public HashMap<String,String> friendsRequest;
 
     public User(String username, String password, String nickname, String email, String slogan) {
         this.username = username;
@@ -159,5 +163,24 @@ public class User {
 
     public void addRoom(Room room) {
         this.rooms.add(room);
+    }
+
+    public void addFriend(String username){
+        friends.add(username);
+        if (friendsRequest.get(username) != null){
+            friendsRequest.remove(username);
+        }
+    }
+    public void addRequest(String username,String state){
+        if (friends.contains(username)) return;
+        friendsRequest.put(username,state);
+    }
+
+    public void removeRequest(String username){
+        friendsRequest.remove(username);
+    }
+
+    public void deleteFriend(String username){
+        friends.remove(username);
     }
 }

@@ -11,6 +11,7 @@ import model.chat.Room;
 import model.game.Game;
 import model.game.Map;
 import server.handlers.FileHandler;
+import server.handlers.FriendHandler;
 import server.handlers.ProfileHandler;
 import server.handlers.UserHandler;
 
@@ -158,6 +159,9 @@ public class PacketHandler {
                 break;
             case "file":
                 new FileHandler().handle(packet, connection);
+                break;
+            case "friend":
+                new FriendHandler().handle(packet, connection);
         }
 
     }

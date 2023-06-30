@@ -68,8 +68,16 @@ public class MainMenu extends Application {
                 throw new RuntimeException(e);
             }
         });
+        MenuButton scoreboard = new MenuButton("scoreboard",root,0,-25,true);
+        scoreboard.setOnMouseClicked(mouseEvent -> {
+            try {
+                new Scoreboard().start(stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
 
-        MenuButton logoutButton = new MenuButton("Logout" ,  root , 0 , -25 , true);
+        MenuButton logoutButton = new MenuButton("Logout" ,  root , 0 , 50 , true);
 
         logoutButton.setOnMouseClicked(mouseEvent -> {
             controller.Application.setCurrentUser(null);
@@ -82,11 +90,12 @@ public class MainMenu extends Application {
             }
         });
 
-        MenuButton exitButton = new MenuButton("Exit" , root , 0 , 50 , true);
+        MenuButton exitButton = new MenuButton("Exit" , root , 0 , 125 , true);
         exitButton.setOnMouseClicked(mouseEvent -> MainController.exitCrusader());
 
         root.getChildren().add(menuButton);
         root.getChildren().add(logoutButton);
+        root.getChildren().add(scoreboard);
         root.getChildren().add(exitButton);
         root.getChildren().add(startGameButton);
 

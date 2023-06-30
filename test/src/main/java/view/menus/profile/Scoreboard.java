@@ -23,6 +23,7 @@ import javafx.util.Duration;
 import model.menugui.MenuBox;
 import model.menugui.MenuFingerBack;
 import view.controllers.ViewController;
+import view.menus.MainMenu;
 
 import java.io.IOException;
 import java.net.URL;
@@ -87,7 +88,7 @@ public class Scoreboard extends Application {
         back = new MenuFingerBack(100, (int) (stage.getHeight() / 2 + 300));
         back.setOnMouseClicked(mouseEvent -> {
             try {
-                new ProfileMenu().start(stage);
+                new MainMenu().start(stage);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
