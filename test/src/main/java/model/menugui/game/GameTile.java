@@ -22,6 +22,7 @@ import model.game.Tile;
 import model.human.military.Military;
 import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
+import view.menus.EditMapMenu;
 import view.menus.GameMenu;
 import view.menus.SignupMenu;
 
@@ -64,6 +65,23 @@ public class GameTile {
         setSensor();
     }
 
+    public GameTile(Tile tile, double x, double y, int tileX, int tileY , boolean check) {
+        this.tileX = tileXOn = tileX;
+        this.tileY = tileYOn = tileY;
+        this.x = x;
+        this.y = y;
+        this.width = GameMap.tileWidth;
+        this.height = GameMap.tileHeight;
+        this.tile = tile;
+        textureImage = new ImageView();
+        textureImage.setFitWidth(width);
+        textureImage.setFitHeight(height);
+        textureImage.setTranslateX(x);
+        textureImage.setTranslateY(y);
+        textureImage.setViewOrder(1);
+        refreshTile2();
+    }
+
     private void setEventListener() {
         textureImage.setOnMouseClicked(mouseEvent -> {
             System.out.println(textureImage);
@@ -76,6 +94,52 @@ public class GameTile {
         setTree();
         setPit();
         setRock();
+    }
+
+    public void refreshTile2() {
+        setTexture2();
+        setTree2();
+        setRock2();
+    }
+
+    private void setRock2() {
+        RockDirections rockDirections = tile.getRockDirection();
+        if (rockDirections != null) {
+            System.out.println("Yep!");
+            String rockNumber = Integer.toString(new Random().nextInt(16) + 1);
+            Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()).toExternalForm()
+                    + "rocks/Image (" + rockNumber + ").png");
+            rockImage = new ImageView(image);
+            rockImage.setFitWidth(GameMap.tileWidth);
+            rockImage.setFitHeight(GameMap.tileHeight);
+            rockImage.setTranslateY(-rockImage.getFitHeight() + textureImage.getFitHeight() + textureImage.getTranslateY());
+            rockImage.setTranslateX(textureImage.getTranslateX() - rockImage.getFitWidth() / 2 + textureImage.getFitWidth() / 2);
+            rockImage.setViewOrder(-tileY - 1);
+            EditMapMenu.gameMap.getChildren().add(rockImage);
+        }
+    }
+
+    private void setTree2() {
+        Trees tree = tile.getTree();
+        if (tree != null) {
+            String shrubNumber = "";
+            if (tree.equals(Trees.DESERT_SHRUB))
+                shrubNumber = Integer.toString(new Random().nextInt(6) + 1);
+            Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                    + "trees/" + tree.getTreeName() + shrubNumber + ".png").toExternalForm());
+            treeImage = new ImageView(image);
+            treeImage.setTranslateY(-image.getHeight() + textureImage.getFitHeight() + textureImage.getTranslateY());
+            treeImage.setTranslateX(textureImage.getTranslateX() - image.getWidth() / 2 + textureImage.getFitWidth() / 2);
+            treeImage.setViewOrder(-tileY - 1);
+            EditMapMenu.gameMap.getChildren().add(treeImage);
+        }
+    }
+
+    private void setTexture2() {
+        EditMapMenu.gameMap.getChildren().remove(textureImage);
+        Image image = GameImages.imageViews.get(tile.getTexture().getName() + tile.getTextureNum());
+        textureImage.setImage(image);
+        EditMapMenu.gameMap.getChildren().add(textureImage);
     }
 
     public void selectTile() {

@@ -9,10 +9,8 @@ import model.User;
 import model.building.castlebuildings.MainCastle;
 import model.game.Game;
 import model.game.Map;
-import server.handlers.ProfileHandler;
-import server.handlers.UserHandler;
+import server.handlers.*;
 import model.User;
-import server.handlers.FileHandler;
 import server.handlers.ProfileHandler;
 import server.handlers.UserHandler;
 
@@ -139,6 +137,8 @@ public class PacketHandler {
                 break;
             case "file":
                 new FileHandler().handle(packet, connection);
+            case "create map" :
+                new CreateMapHandler().handle(packet , connection);
         }
 
     }

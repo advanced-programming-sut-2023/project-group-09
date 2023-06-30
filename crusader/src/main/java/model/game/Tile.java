@@ -1,6 +1,7 @@
 package model.game;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import enumeration.Textures;
 import enumeration.dictionary.RockDirections;
 import enumeration.dictionary.Trees;
@@ -16,23 +17,25 @@ import model.human.civilian.Civilian;
 import model.human.military.Military;
 import model.tools.Tool;
 
+import java.beans.Transient;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Tile {
+public class Tile implements Serializable {
 
     private Textures texture;
     private Trees tree;
     private RockDirections rockDirection;
-    private Tool tool;
+    private transient Tool tool;
     private boolean isDefaultCastle;
-    private Building building = null;
+    private transient Building building = null;
     private boolean isMoat;
     private boolean isPit;
     private int textureNum;
     private transient Color color;
 
-    private Government pitGovernment;
+    private transient Government pitGovernment;
     private boolean passable = true;
     private boolean canPutBuilding = true;
 
@@ -77,7 +80,7 @@ public class Tile {
     }
 
 
-    private ArrayList<Civilian> civilians = new ArrayList<>();
+    private transient ArrayList<Civilian> civilians = new ArrayList<>();
 
     public ArrayList<Military> getMilitaries() {
         return militaries;
@@ -105,7 +108,7 @@ public class Tile {
         this.rockDirection = rockDirection;
     }
 
-    private ArrayList<Military> militaries = new ArrayList<>();
+    private transient ArrayList<Military> militaries = new ArrayList<>();
 
 
     public ArrayList<Civilian> getCivilians() {

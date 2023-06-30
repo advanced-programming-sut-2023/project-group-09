@@ -2,12 +2,20 @@ package model.game;
 
 import enumeration.Pair;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Map {
+public class Map implements Serializable {
+
+    private int index = 0;
     private int length, width;
     private Tile[][] mapTiles;
-    private ArrayList<Pair<Integer, Integer>> defaultCastles = new ArrayList<>();
+    private String name;
+    private String owner;
+    private transient ArrayList<Pair<Integer, Integer>> defaultCastles = new ArrayList<>();
+
+    private int[] defaultCastlesX = new int[8];
+    private int[] defaultCastlesY = new int[8];
 
     public Map(int length, int width) {
         this.length = length;
@@ -58,12 +66,40 @@ public class Map {
         return defaultCastles;
     }
 
-    public void setDefaultCastles(ArrayList<Pair<Integer, Integer>> defaultCastles) {
-        this.defaultCastles = defaultCastles;
-    }
 
     public void addDefaultCastle(int x , int y) {
         this.defaultCastles.add(new Pair<>(x, y));
         this.getTile(x , y).setDefaultCastle(true);
+        this.defaultCastlesX[index] = x;
+        this.defaultCastlesY[index] = y;
+        index++;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public int getIndex() {
+        return this.index;
+    }
+
+    public int getDefaultCastleX(int ind) {
+        return this.defaultCastlesX[ind];
+    }
+
+    public int getDefaultCastleY(int ind) {
+        return this.defaultCastlesY[ind];
     }
 }

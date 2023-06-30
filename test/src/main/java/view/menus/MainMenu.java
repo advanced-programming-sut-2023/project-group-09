@@ -2,7 +2,6 @@ package view.menus;
 
 import controller.DBController;
 import controller.MainController;
-import controller.gamestructure.GameBuildings;
 import enumeration.Paths;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -13,20 +12,13 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import model.User;
-import model.menugui.MenuBox;
 import model.menugui.MenuButton;
 import view.controllers.ViewController;
 import view.menus.profile.ProfileMenu;
-import view.menus.profile.Scoreboard;
-import viewphase1.PrimaryMenu;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Objects;
-import java.util.Random;
 
 public class MainMenu extends Application {
     public static Stage stage;
@@ -49,6 +41,18 @@ public class MainMenu extends Application {
         stage.setScene(scene);
         root = ViewController.makeStackPaneScreen(stage, pane, 1000, -1);
         setBackground();
+
+        MenuButton createMapButton = new MenuButton("Create Map" , root , 0 , -240 , true);
+        createMapButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                try {
+                    new SharedMapMenu().start(stage);
+                } catch (Exception e) {
+
+                }
+            }
+        });
 
         MenuButton startGameButton = new MenuButton("Start game" , root , 0 , -170 , true);
         startGameButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -92,6 +96,7 @@ public class MainMenu extends Application {
         root.getChildren().add(logoutButton);
         root.getChildren().add(exitButton);
         root.getChildren().add(startGameButton);
+        root.getChildren().add(createMapButton);
 
         stage.show();
     }

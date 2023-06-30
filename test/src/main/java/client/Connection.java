@@ -2,9 +2,7 @@ package client;
 
 import view.Main;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -12,12 +10,16 @@ public class Connection {
     private String token;
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
+    private ObjectInputStream objectInputStream;
+    private ObjectOutputStream objectOutputStream;
 
     public Connection(String host, int port) throws IOException {
         System.out.println("Starting Client service...");
         Socket socket = new Socket(host, port);
         dataInputStream = new DataInputStream(socket.getInputStream());
         dataOutputStream = new DataOutputStream(socket.getOutputStream());
+        objectInputStream = new ObjectInputStream(socket.getInputStream());
+        objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
     }
 
     public DataInputStream getDataInputStream() {
@@ -52,5 +54,21 @@ public class Connection {
         Packet packet1 = Packet.receivePacket();
         String token = packet1.attributes.get("authentication token").toString();
         setToken(token);
+    }
+
+    public ObjectInputStream getObjectInputStream() {
+        return objectInputStream;
+    }
+
+    public void setObjectInputStream(ObjectInputStream objectInputStream) {
+        this.objectInputStream = objectInputStream;
+    }
+
+    public ObjectOutputStream getObjectOutputStream() {
+        return objectOutputStream;
+    }
+
+    public void setObjectOutputStream(ObjectOutputStream objectOutputStream) {
+        this.objectOutputStream = objectOutputStream;
     }
 }

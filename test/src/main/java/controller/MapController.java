@@ -1,5 +1,7 @@
 package controller;
 
+import client.Packet;
+import client.PacketHandler;
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameHumans;
 import controller.gamestructure.GameTools;
@@ -22,9 +24,11 @@ import model.human.military.Engineer;
 import model.human.military.Military;
 import model.menugui.game.GameMap;
 import model.tools.Tool;
+import view.Main;
 import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MapController {
@@ -613,5 +617,29 @@ public class MapController {
         if (building instanceof Gatehouse gatehouse) {
             gatehouse.setDoor(map.getTile(x, y));
         }
+    }
+
+    public static ArrayList<String> getMapNamesFromServer() throws IOException {
+        ArrayList<String> names = new ArrayList<>();
+        Packet packet = new Packet("get map names" , "create map");
+        packet.sendPacket();
+        Packet namesPacket = Packet.receivePacket();
+        for (Object name : namesPacket.attributes.values()) {
+            names.add((String)name);
+        }
+        return names;
+    }
+
+    public static Map getMapFromServer(Object newValue) throws IOException, ClassNotFoundException {
+        Packet packet = new Packet("send Map" , "create map");
+        packet.addAttribute("map name" , newValue);
+        packet.sendPacket();
+        Map map = (Map)Main.connection.getObjectInputStream().readObject();
+        for (int i = 0; i != map.getLength(); i++) {
+            for (int j = 0; j != map.getWidth(); j++) {
+                map.getTile(i , j).setColor();
+            }
+        }
+        return map;
     }
 }
