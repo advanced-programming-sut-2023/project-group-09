@@ -11,9 +11,28 @@
     "path": "files/img/avatars/a/4.png",
     "friends": [
       "Moeein",
+      "Moeein",
+      "Moeein",
+      "Moeein",
+      "Moeein",
+      "Moeein",
+      "Moeein",
+      "Moeein",
+      "Farzammm",
+      "Farzammm",
+      "Farzammm",
+      "Farzammm",
+      "Farzammm",
+      "Farzammm",
+      "Farzammm",
+      "Farzammm",
       "Farzammm",
       "f"
-    ]
+    ],
+    "friendsRequest": {
+      "Narges": "requesting",
+      "Narges1": "requesting"
+    }
   },
   {
     "username": "Moeein",
@@ -67,7 +86,11 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/3.png"
+    "path": "files/img/avatars/3.png",
+    "friends": [],
+    "friendsRequest": {
+      "a": "requested"
+    }
   },
   {
     "username": "Narges1",
@@ -78,7 +101,11 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/3.png"
+    "path": "files/img/avatars/3.png",
+    "friends": [],
+    "friendsRequest": {
+      "a": "requested"
+    }
   },
   {
     "username": "Narges2",

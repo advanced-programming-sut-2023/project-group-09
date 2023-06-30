@@ -20,12 +20,13 @@ public class User {
     private String passwordRecoveryQuestion;
     private String passwordRecoveryAnswer;
     private String slogan;
-    private transient boolean online;
+    private transient boolean online = false;
+    private transient boolean updateFriend = false;
     private String path;
     private ArrayList<Room> rooms = new ArrayList<>();
 
-    public ArrayList<String> friends;
-    public HashMap<String,String> friendsRequest;
+    public ArrayList<String> friends = new ArrayList<>();
+    public HashMap<String,String> friendsRequest = new HashMap<>();
 
     public User(String username, String password, String nickname, String email, String slogan) {
         this.username = username;
@@ -166,21 +167,51 @@ public class User {
     }
 
     public void addFriend(String username){
+        if (friends == null){
+            friends = new ArrayList<>();
+        }
+        if (friendsRequest == null){
+            friendsRequest = new HashMap<>();
+        }
         friends.add(username);
+        updateFriend = true;
         if (friendsRequest.get(username) != null){
             friendsRequest.remove(username);
         }
     }
     public void addRequest(String username,String state){
+        if (friendsRequest == null){
+            friendsRequest = new HashMap<>();
+        }
+        if (friends == null){
+            friends = new ArrayList<>();
+        }
         if (friends.contains(username)) return;
         friendsRequest.put(username,state);
+        updateFriend = true;
     }
 
     public void removeRequest(String username){
+        if (friendsRequest == null){
+            friendsRequest = new HashMap<>();
+        }
         friendsRequest.remove(username);
+        updateFriend = true;
     }
 
     public void deleteFriend(String username){
+        if (friends == null){
+            friends = new ArrayList<>();
+        }
         friends.remove(username);
+        updateFriend = true;
+    }
+
+    public boolean isUpdateFriend() {
+        return updateFriend;
+    }
+
+    public void setUpdateFriend(boolean updateFriend) {
+        this.updateFriend = updateFriend;
     }
 }

@@ -26,7 +26,16 @@ public class FriendHandler {
             case "get friends" -> getFriends();
             case "get requests" -> getRequests();
             case "search user" -> searchUser();
+            case "update user" -> updateUser();
         }
+    }
+
+    private void updateUser() throws IOException {
+        User sender = TokenController.getUserByToken(packet.token);
+        Packet packet = new Packet("success","user");
+        packet.addAttribute("update",sender.isUpdateFriend());
+        sender.setUpdateFriend(false);
+        Packet.sendPacket(packet,connection);
     }
 
     public void sendRequest() throws IOException {

@@ -96,25 +96,48 @@
     -fx-background-color: #202020;
 }
 
-.small-label{
+.small-label {
     -fx-text-fill: #505050;
     -fx-font-size: 9;
 }
-.big-label{
+
+.big-label {
     -fx-text-fill: #000;
     -fx-font-size: 15;
 }
 
-ProfileView{
+ProfileView {
+    -fx-background-color: #fff;
     -fx-border-color: transparent transparent #858585 transparent;
     -fx-border-width: 1;
     -fx-border-insets: 0 0 1 0;
 }
-.title-label{
+
+.title-label {
     -fx-text-fill: #000;
     -fx-font-size: 20;
-    -fx-border-color: #858585 #858585 transparent #858585;
+    -fx-border-color: #858585 transparent transparent transparent;
     -fx-border-width: 1;
-    -fx-border-insets: 1 1 0 1;
-    -fx-background-color: #e0e0e0;
+    -fx-border-insets: 1 0 0 0;
+    -fx-background-color: #fff;
+}
+.request-label {
+    -fx-text-fill: #000;
+    -fx-font-size: 20;
+    -fx-border-color: transparent transparent transparent transparent;
+}
+
+.input-text {
+    -fx-border-color: transparent transparent transparent transparent;
+}
+.scroll-pane{
+    -fx-background-color: #fff;
+    -fx-border-color: transparent transparent transparent transparent;
+    -fx-border-insets: 0 0 0 0;
+}
+.friend-btn{
+    -fx-background-color: #288eff;
+    -fx-text-fill: #fff;
+    -fx-border-color: transparent transparent transparent transparent;
+    -fx-border-insets: 0 0 0 0;
 }

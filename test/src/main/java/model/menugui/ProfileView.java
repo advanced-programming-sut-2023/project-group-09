@@ -45,6 +45,7 @@ public class ProfileView extends Pane {
         avatarPart.getChildren().add(rectangle);
         HBox.setMargin(rectangle,new Insets(10,20,10,20));
         HBox dataPart = new HBox();
+        HBox.setMargin(dataPart,new Insets(10,0,0,0));
         VBox vBox = new VBox();
         VBox vBox1 = new VBox();
         VBox vBox2 = new VBox();

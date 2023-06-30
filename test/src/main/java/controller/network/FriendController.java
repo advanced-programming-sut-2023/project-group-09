@@ -44,6 +44,9 @@ public class FriendController {
         packet.sendPacket();
 
         Packet receivePacket = Packet.receivePacket();
+        if (receivePacket.attributes.get("friends") == null){
+            return new ArrayList<>();
+        }
         return new Gson().fromJson(receivePacket.attributes.get("friends").toString(), new TypeToken<ArrayList<String>>(){}.getType());
     }
     public static HashMap<String,String> getRequests() throws IOException {
@@ -51,6 +54,10 @@ public class FriendController {
         packet.sendPacket();
 
         Packet receivePacket = Packet.receivePacket();
+        if (receivePacket.attributes.get("requests") == null){
+            return new HashMap<>();
+        }
+        System.out.println("pi_pi_pi");
         return new Gson().fromJson(receivePacket.attributes.get("requests").toString(), new TypeToken<HashMap<String,String>>(){}.getType());
     }
     public static ArrayList<String> searchUser(String word) throws IOException {
@@ -59,6 +66,16 @@ public class FriendController {
         packet.sendPacket();
 
         Packet receivePacket = Packet.receivePacket();
+        if (receivePacket.attributes.get("users") == null){
+            return new ArrayList<>();
+        }
         return new Gson().fromJson(receivePacket.attributes.get("users").toString(), new TypeToken<ArrayList<String>>(){}.getType());
+    }
+
+    public static boolean shouldUpdate() throws IOException {
+        Packet packet = new Packet("update user","friend");
+        packet.sendPacket();
+        Packet receivePacket = Packet.receivePacket();
+        return !receivePacket.command.equals("update");
     }
 }
