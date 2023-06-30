@@ -7,9 +7,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import model.User;
 import model.menugui.MenuFingerBack;
@@ -74,9 +76,14 @@ public class FriendMenu extends Application {
     }
 
     public void makeFriendPart() throws IOException {
-        Button button = new Button("friends");
-        button.getStyleClass().add("title-button");
-
+        Label label = new Label("friends");
+        label.getStyleClass().add("title-label");
+        label.setMaxWidth(300);
+        label.setMinWidth(300);
+        label.setMaxHeight(50);
+        label.setMaxHeight(50);
+        label.setTranslateY(50);
+        label.setTextAlignment(TextAlignment.CENTER);
 
         ArrayList<String> friends = FriendController.getFriends();
         VBox friendList = new VBox();
@@ -94,6 +101,7 @@ public class FriendMenu extends Application {
         scrollPane.setFitToHeight(false);
         scrollPane.setTranslateY(100);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        leftSide.getChildren().add(label);
         leftSide.getChildren().add(scrollPane);
     }
 

@@ -11,7 +11,7 @@ import model.tools.Tool;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class ToolsController {
+public class ToolsController{
     public static boolean[][] checkArray;
     public static Tool tool;
 

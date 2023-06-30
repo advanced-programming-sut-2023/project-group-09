@@ -59,7 +59,7 @@ public class GameController {
     public static String selectUnit(int x, int y, String type) {
         ArrayList<Military> militaries;
         if (type == null) {
-            militaries = MapController.getMilitariesOfGovernment(x, y, game.getCurrentGovernment());
+            militaries = controller.MapController.getMilitariesOfGovernment(x, y, game.getCurrentGovernment());
         } else if (GameHumans.getUnit(type) == null) {
             return "invalid type!";
         } else {
