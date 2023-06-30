@@ -7,12 +7,15 @@ import controller.gamestructure.GameMaps;
 import model.Government;
 import model.User;
 import model.building.castlebuildings.MainCastle;
+import model.chat.Room;
 import model.game.Game;
 import model.game.Map;
 import server.handlers.FileHandler;
 import server.handlers.ProfileHandler;
 import server.handlers.UserHandler;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PacketHandler {
     Packet packet;
@@ -125,6 +128,20 @@ public class PacketHandler {
 //                MainCastle mainCastle = (MainCastle) GameController.getGame().getMap().getTile(x, y).getBuilding();
 //                mainCastle.setGovernment(government);
 //                government.setMainCastle(mainCastle);
+            }
+            case "chat data" -> {
+                Packet data = new Packet("chat data");
+                User currentUser = TokenController.getUserByToken(packet.getToken());
+                data.addAttribute("currentUser", new Gson().toJson(currentUser));
+                HashMap<String, String> users = new HashMap<>();
+                for (User user : Application.getUsers()) {
+                    if (!users.equals(currentUser))
+                        users.put(user.getUsername(), user.getPath());
+                }
+                data.addAttribute("otherUsers", new Gson().toJson(users));
+                ArrayList<Room> rooms = currentUser.getRooms();
+                data.addAttribute("currentUserRooms", new Gson().toJson(rooms));
+                sendPacket(data);
             }
         }
         if (!validateAuthenticationToken()) {

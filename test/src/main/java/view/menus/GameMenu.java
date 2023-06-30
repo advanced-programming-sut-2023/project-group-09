@@ -106,30 +106,30 @@ public class GameMenu extends Application {
 
 
 //        TODO: revert comment
-//        for (Government government : GameController.getGame().getGovernments()) {
-//            MapController.dropMilitary(government.getCastleX(), government.getCastleY() + 2, "lord", government);
-//            EuropeanTroop lordMilitary = (EuropeanTroop) GameController.getGame().getMap().
-//                    getTile(government.getCastleX(), government.getCastleY() + 2).getMilitaries().get(0);
-//            lordMilitary.setGovernment(government);
-//            government.setLord(lordMilitary);
-//            government.getMainCastle().makeUnemployed(10);
-//        }
+        for (Government government : GameController.getGame().getGovernments()) {
+            MapController.dropMilitary(government.getCastleX(), government.getCastleY() + 2, "lord", government);
+            EuropeanTroop lordMilitary = (EuropeanTroop) GameController.getGame().getMap().
+                    getTile(government.getCastleX(), government.getCastleY() + 2).getMilitaries().get(0);
+            lordMilitary.setGovernment(government);
+            government.setLord(lordMilitary);
+            government.getMainCastle().makeUnemployed(10);
+        }
 
         menuBar = new Pane();
         menuBar.setMaxWidth(1200);
         menuBar.setMaxHeight(220);
         root.getChildren().addAll(gameMap, menuBar);
 
-        ChatMenu chatMenu = new ChatMenu();
-        GameMenu.root.getChildren().add(chatMenu);
+//        ChatMenu chatMenu = new ChatMenu();
+//        GameMenu.root.getChildren().add(chatMenu);
 
         selectCursor = new Rectangle(50, 75);
 //        TODO: revert comment
-//        selectCursor.setFill(new ImagePattern(GameImages.imageViews.get("selectMove")));
-//        Rectangle clipRectangle = new Rectangle(1200, 800);
-//        root.setClip(clipRectangle);
-//        MapController.dropMilitary(14, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
-//        MapController.dropMilitary(11, 5, "slave", GameController.getGame().getCurrentGovernment());
+        selectCursor.setFill(new ImagePattern(GameImages.imageViews.get("selectMove")));
+        Rectangle clipRectangle = new Rectangle(1200, 800);
+        root.setClip(clipRectangle);
+        MapController.dropMilitary(14, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
+        MapController.dropMilitary(11, 5, "slave", GameController.getGame().getCurrentGovernment());
 
 //        MapController.dropMilitary(20, 5, "slave", GameController.getGame().getGovernments().get(1));
 //        MapController.dropMilitary(21, 5, "fireThrower", GameController.getGame().getGovernments().get(1));
@@ -230,7 +230,7 @@ public class GameMenu extends Application {
         menuBar.getChildren().add(hoveringButton);
         hoveringBarStateText = hoveringButton;
         menuBar.setViewOrder(-2000);
-//        GameViewController.setBarForCurrentGovernment();                       // TODO: revert comment
+        GameViewController.setBarForCurrentGovernment();                       // TODO: revert comment
         if (state == 0) {
             GameViewController.createShortcutBars(menuBar, hoveringButton);
             hoveringButton.setTranslateX(275);

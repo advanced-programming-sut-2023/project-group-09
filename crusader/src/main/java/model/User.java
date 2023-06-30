@@ -1,7 +1,9 @@
 package model;
 
 import controller.UserController;
+import model.chat.Room;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class User {
@@ -15,6 +17,7 @@ public class User {
     private String slogan;
     private boolean online;
     private String path;
+    private ArrayList<Room> rooms = new ArrayList<>();
 
     public User(String username, String password, String nickname, String email, String slogan) {
         this.username = username;
@@ -132,5 +135,21 @@ public class User {
 
     public void setOnline(boolean online) {
         this.online = online;
+    }
+
+    public ArrayList<Room> getRooms() {
+        return rooms;
+    }
+
+    public Room getRoomByName(String name) {
+        for (int i = 0; i < rooms.size(); i++) {
+            if (rooms.get(i).getName().equals(name))
+                return rooms.get(i);
+        }
+        return null;
+    }
+
+    public void addRoom(Room room) {
+        this.rooms.add(room);
     }
 }
