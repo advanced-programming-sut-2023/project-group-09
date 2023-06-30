@@ -51,15 +51,12 @@ public class MainMenu extends Application {
         setBackground();
 
         MenuButton startGameButton = new MenuButton("Start game" , root , 0 , -170 , true);
-        startGameButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                CreateGameMenu createGameMenu = new CreateGameMenu();
-                try {
-                    createGameMenu.start(stage);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+        startGameButton.setOnMouseClicked(mouseEvent -> {
+            CreateGameMenu createGameMenu = new CreateGameMenu();
+            try {
+                createGameMenu.start(stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         });
 

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import controller.TokenController;
 import model.User;
+import server.handlers.UserHandler;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -16,8 +17,10 @@ public class Connection extends Thread {
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
     private Socket socket;
-
     private String token;
+    public boolean userChanged = false;
+
+
     public Connection(Socket socket) throws IOException {
         this.socket = socket;
         this.dataInputStream = new DataInputStream(socket.getInputStream());
@@ -27,12 +30,13 @@ public class Connection extends Thread {
     @Override
     public synchronized void run() {
         while (true) {
-            Packet packet = null;
+            Packet packet;
             try {
                 packet = Packet.receivePacket(dataInputStream);
                 PacketHandler packetHandler = new PacketHandler(packet , this);
                 packetHandler.handle();
             } catch (IOException e) {
+                System.out.println("connection interrupted!" + token);
                 if (token != null){
                     User user = TokenController.getUserByToken(token);
                     user.setOnline(false);
@@ -40,8 +44,14 @@ public class Connection extends Thread {
                     TokenController.expires.remove(token);
                     token = null;
                 }
+                Server.connections.remove(this);
+                try {
+                    socket.close();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                break;
             }
-            System.out.println(packet.getCommand());
         }
     }
 

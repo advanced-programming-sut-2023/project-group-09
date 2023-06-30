@@ -13,6 +13,7 @@ import model.game.Map;
 import server.handlers.FileHandler;
 import server.handlers.ProfileHandler;
 import server.handlers.UserHandler;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,8 +46,9 @@ public class PacketHandler {
                 Packet result = UserController.loginUser((String) packet.getAttribute("username"),
                         (String) packet.getAttribute("password"),
                         (boolean) packet.getAttribute("stayedLoggedIn"));
-                if (packet.token != null){
+                if (result.token != null) {
                     connection.setToken(packet.token);
+                    System.out.println("set token connection");
                 }
                 sendPacket(result);
                 return;

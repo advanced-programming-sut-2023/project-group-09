@@ -6,6 +6,7 @@ import controller.UserController;
 import model.User;
 import server.Connection;
 import server.Packet;
+import server.Server;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -149,5 +150,13 @@ public class UserHandler {
         Packet packet = new Packet("success","user");
         packet.addAttribute("online",user.isOnline());
         Packet.sendPacket(packet,connection);
+    }
+
+    public static void sendChangedPacket() {
+        for (Connection connection : Server.connections){
+            if (connection.isAlive() && !connection.getSocket().isClosed()){
+                connection.userChanged = true;
+            }
+        }
     }
 }

@@ -26,15 +26,14 @@ public class ScoreboardData {
     private final SimpleIntegerProperty rank;
     private final SimpleStringProperty username;
     private final SimpleIntegerProperty highScore;
-    private final ObjectProperty<Button> onlineGif;
-    boolean online;
+    private final ObjectProperty<ImageView> online;
+    boolean show;
 
     public ScoreboardData(int rank, String username, String highScore,boolean online) throws IOException {
-        ObjectProperty<Button> onlineGif1;
         this.rank = new SimpleIntegerProperty(rank);
         this.username = new SimpleStringProperty(username);
         this.highScore = new SimpleIntegerProperty(Integer.parseInt(highScore));
-        this.online = online;
+        this.show = online;
         Button button = new Button();
         BackgroundImage backgroundImage =
                 new BackgroundImage(new Image(new ByteArrayInputStream(UsersController.getImageFromServerByUsername(username).toByteArray())),
@@ -45,18 +44,10 @@ public class ScoreboardData {
         button.setBackground(background);
 
 
-        Button button1 = new Button();
-        BackgroundImage backgroundImage1 =
-                new BackgroundImage(new Image(getClass().getResource(Paths.ICONS.getPath()).toExternalForm() + "online.gif"),
-                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.REPEAT,
-                        BackgroundPosition.DEFAULT,
-                        new BackgroundSize(1.0, 1.0, true, true, false, false));
-        Background background1 = new Background(backgroundImage1);
-        button1.setBackground(background1);
+        ImageView imageView = new ImageView(new Image(getClass().getResource(Paths.ICONS.getPath()).toExternalForm() + "online.gif"));
 
         this.avatar = new SimpleObjectProperty<>(setButton(button));
-        onlineGif1 = new SimpleObjectProperty<>(setOnlineGif(button1));
-        this.onlineGif = onlineGif1;
+        this.online= new SimpleObjectProperty<>(setOnlineGif(imageView));
     }
 
     public Button setButton(Button button){
@@ -85,17 +76,17 @@ public class ScoreboardData {
     }
 
 
-    public Button setOnlineGif(Button button){
-        button.setMaxWidth(50);
-        button.setMaxWidth(50);
-        button.setMinHeight(50);
-        button.setMinHeight(50);
-        if (!online){
-            button.setOpacity(0);
+    public ImageView setOnlineGif(ImageView imageView){
+        imageView.setFitHeight(20);
+        imageView.setFitWidth(20);
+        System.out.println(show);
+        if (!show){
+            imageView.setOpacity(0);
         }else{
-            button.setOpacity(1);
+            System.out.println("++++");
+            imageView.setOpacity(1);
         }
-        return button;
+        return imageView;
     }
 
 
@@ -142,7 +133,7 @@ public class ScoreboardData {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Scoreboard.setScoreboardData();
+        //Scoreboard.setScoreboardData();
     }
 
     public Button getAvatar() {
@@ -155,5 +146,17 @@ public class ScoreboardData {
 
     public void setAvatar(Button avatar) {
         this.avatar.set(avatar);
+    }
+
+    public ImageView getOnline() {
+        return online.get();
+    }
+
+    public ObjectProperty<ImageView> onlineProperty() {
+        return online;
+    }
+
+    public void setOnline(ImageView online) {
+        this.online.set(online);
     }
 }
