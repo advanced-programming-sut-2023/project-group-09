@@ -83,7 +83,9 @@ public class FriendMenu extends Application {
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(friendList);
+        friendList.setPrefHeight(700);
         scrollPane.setMaxHeight(700);
+        scrollPane.setFitToHeight(false);
         scrollPane.setTranslateY(100);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         leftSide.getChildren().add(scrollPane);
