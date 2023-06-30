@@ -120,8 +120,8 @@ public class GameMenu extends Application {
         menuBar.setMaxHeight(220);
         root.getChildren().addAll(gameMap, menuBar);
 
-//        ChatMenu chatMenu = new ChatMenu();
-//        GameMenu.root.getChildren().add(chatMenu);
+        ChatMenu chatMenu = new ChatMenu();
+        GameMenu.root.getChildren().add(chatMenu);
 
         selectCursor = new Rectangle(50, 75);
 //        TODO: revert comment

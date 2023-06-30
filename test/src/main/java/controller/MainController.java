@@ -8,6 +8,7 @@ import view.Main;
 import view.controllers.ImageLoader;
 import view.menus.LoginMenu;
 import view.menus.MainMenu;
+import view.menus.profile.FriendMenu;
 
 
 public class MainController {

@@ -32,7 +32,7 @@ public class ProfileMenu extends Application {
     public static MenuButton changeEmail;
     public static MenuButton changeSlogan;
     public static MenuButton changeAvatar;
-    public static MenuButton scoreboard;
+    public static MenuButton friends;
     public static MenuFingerBack back;
 
 
@@ -60,7 +60,7 @@ public class ProfileMenu extends Application {
         changeEmail = new MenuButton("change email",root,0,-60,true);
         changeSlogan = new MenuButton("change slogan",root,0,20,true);
         changeNickname = new MenuButton("change nickname",root,0,100,true);
-        scoreboard = new MenuButton("scoreboard",root,0,180,true);
+        friends = new MenuButton("friends",root,0,180,true);
         changeAvatar = new MenuButton("change avatar",root,0,260,true);
         back = new MenuFingerBack(-400,300);
         back.setOnMouseClicked(mouseEvent -> {
@@ -105,16 +105,16 @@ public class ProfileMenu extends Application {
                 throw new RuntimeException(e);
             }
         });
-        scoreboard.setOnMouseClicked(mouseEvent -> {
+        changeAvatar.setOnMouseClicked(mouseEvent -> {
             try {
-                new Scoreboard().start(stage);
+                new ChangeAvatar().start(stage);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         });
-        changeAvatar.setOnMouseClicked(mouseEvent -> {
+        friends.setOnMouseClicked(mouseEvent -> {
             try {
-                new ChangeAvatar().start(stage);
+                new FriendMenu().start(stage);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -139,7 +139,7 @@ public class ProfileMenu extends Application {
         root.getChildren().add(changeEmail);
         root.getChildren().add(changePassword);
         root.getChildren().add(changeSlogan);
-        root.getChildren().add(scoreboard);
+        root.getChildren().add(friends);
         root.getChildren().add(changeAvatar);
     }
     public void setBackground(){

@@ -95,3 +95,18 @@
 .addButton:hover {
     -fx-background-color: #202020;
 }
+
+.small-label{
+    -fx-text-fill: #505050;
+    -fx-font-size: 9;
+}
+.big-label{
+    -fx-text-fill: #000;
+    -fx-font-size: 15;
+}
+
+ProfileView{
+    -fx-border-color: transparent transparent #858585 transparent;
+    -fx-border-width: 1;
+    -fx-border-insets: 0 0 1 0;
+}

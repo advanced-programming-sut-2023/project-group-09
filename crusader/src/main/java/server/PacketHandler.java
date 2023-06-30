@@ -13,6 +13,7 @@ import model.game.Map;
 import server.handlers.*;
 import model.User;
 import server.handlers.FileHandler;
+import server.handlers.FriendHandler;
 import server.handlers.ProfileHandler;
 import server.handlers.UserHandler;
 
@@ -160,8 +161,12 @@ public class PacketHandler {
                 break;
             case "file":
                 new FileHandler().handle(packet, connection);
+                break;
             case "create map" :
                 new CreateMapHandler().handle(packet , connection);
+                break;
+            case "friend":
+                new FriendHandler().handle(packet, connection);
         }
 
     }
