@@ -1,7 +1,7 @@
 package viewphase1;
 
-import controller.BuildingController;
-import controller.GameController;
+import controllers.BuildingController;
+import controllers.GameController;
 import enumeration.answers.Answers;
 import enumeration.commands.BuildingMenuCommands;
 import enumeration.commands.Commands;

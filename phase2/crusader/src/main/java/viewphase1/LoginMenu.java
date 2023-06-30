@@ -1,6 +1,6 @@
 package viewphase1;
 
-import controller.UserController;
+import controllers.UserController;
 import enumeration.answers.LoginAnswers;
 import enumeration.commands.LoginMenuCommands;
 

@@ -1,11 +1,11 @@
 package model.menugui.game;
 
-import controller.BuildingController;
-import controller.FileController;
-import controller.GovernmentController;
-import controller.MapController;
-import controller.gamestructure.GameImages;
-import controller.human.HumanController;
+import controllers.BuildingController;
+import controllers.FileController;
+import controllers.GovernmentController;
+import controllers.MapController;
+import controllers.gamestructure.GameImages;
+import controllers.human.HumanController;
 import enumeration.Paths;
 import enumeration.UnitMovingState;
 import enumeration.dictionary.RockDirections;

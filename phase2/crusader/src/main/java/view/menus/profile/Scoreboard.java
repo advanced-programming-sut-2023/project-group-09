@@ -1,6 +1,6 @@
 package view.menus.profile;
 
-import controller.UserController;
+import controllers.UserController;
 import enumeration.Paths;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

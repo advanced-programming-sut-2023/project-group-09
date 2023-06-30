@@ -1,6 +1,6 @@
 package model.captcha.captchaPhase1;
 
-import controller.CaptchaController;
+import controllers.CaptchaController;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;

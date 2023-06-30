@@ -1,7 +1,7 @@
 package viewphase1;
 
-import controller.MapController;
-import controller.gamestructure.GameBuildings;
+import controllers.MapController;
+import controllers.gamestructure.GameBuildings;
 import enumeration.commands.MapCommands;
 import model.Government;
 import model.building.Building;

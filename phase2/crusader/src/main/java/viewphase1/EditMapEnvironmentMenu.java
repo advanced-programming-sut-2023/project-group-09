@@ -1,6 +1,6 @@
 package viewphase1;
 
-import controller.MapController;
+import controllers.MapController;
 import enumeration.Textures;
 import enumeration.commands.MapCommands;
 import enumeration.dictionary.RockDirections;

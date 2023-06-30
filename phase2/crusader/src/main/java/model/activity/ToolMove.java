@@ -1,8 +1,8 @@
 package model.activity;
 
-import controller.GameController;
-import controller.MapController;
-import controller.ToolsController;
+import controllers.GameController;
+import controllers.MapController;
+import controllers.ToolsController;
 import enumeration.MoveStates;
 import model.building.Building;
 import model.game.Map;

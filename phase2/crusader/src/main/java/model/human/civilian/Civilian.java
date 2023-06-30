@@ -1,9 +1,9 @@
 package model.human.civilian;
 
 
-import controller.GameController;
-import controller.MapController;
-import controller.human.MoveController;
+import controllers.GameController;
+import controllers.MapController;
+import controllers.human.MoveController;
 import enumeration.DefenseRating;
 import enumeration.Speed;
 import model.Government;

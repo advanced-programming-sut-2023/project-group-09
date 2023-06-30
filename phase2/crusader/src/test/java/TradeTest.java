@@ -1,5 +1,5 @@
-import controller.*;
-import controller.gamestructure.GameMaps;
+import controllers.*;
+import controllers.gamestructure.GameMaps;
 import enumeration.Pair;
 import enumeration.dictionary.Colors;
 import model.Government;

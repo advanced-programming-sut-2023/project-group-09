@@ -1,7 +1,7 @@
 package view.menus;
 
-import controller.DBController;
-import controller.UserController;
+import controllers.DBController;
+import controllers.UserController;
 import enumeration.dictionary.Slogans;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -11,7 +11,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Hyperlink;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -166,7 +165,7 @@ public class SignupMenu extends Application {
                     usernameField.handlingError("invalid username!");
                     usernameLiveInvalid = true;
                 }
-                if (controller.Application.isUserExistsByName(newValue)) {
+                if (controllers.Application.isUserExistsByName(newValue)) {
                     usernameField.handlingError("username already exists!");
                     usernameLiveInvalid = true;
                 } else {
@@ -287,7 +286,7 @@ public class SignupMenu extends Application {
             emailField.handlingError("invalid email!");
             return;
         }
-        if (controller.Application.isUserExistsByEmail(emailField.getText())) {
+        if (controllers.Application.isUserExistsByEmail(emailField.getText())) {
             emailField.handlingError("email already exists!");
             return;
         }

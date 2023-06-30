@@ -1,15 +1,13 @@
 package model.game;
 
-import controller.GovernmentController;
+import controllers.GovernmentController;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import model.Government;
 import model.menugui.MenuBox;
 import model.menugui.MenuButton;
-import view.Main;
 import view.menus.GameMenu;
-import view.menus.LoginMenu;
 import view.menus.MainMenu;
 
 import java.util.ArrayList;

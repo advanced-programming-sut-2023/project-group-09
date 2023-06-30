@@ -1,11 +1,10 @@
 package model.building.castlebuildings;
 
-import controller.GameController;
-import controller.MapController;
+import controllers.GameController;
+import controllers.MapController;
 import model.Government;
 import model.game.Tile;
 import model.game.Tuple;
-import model.human.civilian.Civilian;
 import model.human.military.EuropeanTroop;
 
 import java.util.ArrayList;

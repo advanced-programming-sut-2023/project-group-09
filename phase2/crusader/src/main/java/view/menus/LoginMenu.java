@@ -1,13 +1,9 @@
 package view.menus;
 
-import controller.DBController;
-import controller.GameController;
-import controller.UserController;
-import enumeration.Paths;
-import enumeration.answers.Answers;
+import controllers.DBController;
+import controllers.UserController;
 import enumeration.answers.LoginAnswers;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -62,13 +58,13 @@ public class LoginMenu extends Application {
         password.clearErrorOrMessage();
         CaptchaController.clearErrorOrMessage();
         if (username.getText() == null ||
-                !controller.Application.isUserExistsByName(username.getText())) {
+                !controllers.Application.isUserExistsByName(username.getText())) {
             username.handlingError(LoginAnswers.USER_DOESNT_EXIST_MESSAGE.getMessage());
             return;
         } else if (!CaptchaController.isInputCorrect()) {
             return;
         }
-        User user = controller.Application.getUserByUsername(username.getText());
+        User user = controllers.Application.getUserByUsername(username.getText());
         loginPane.getChildren().clear();
 
         MenuBox menuBox = new MenuBox("Forgot Password" , 500, 150 , 500 , 500);

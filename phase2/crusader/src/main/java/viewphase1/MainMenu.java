@@ -1,9 +1,9 @@
 package viewphase1;
 
-import controller.Application;
-import controller.DBController;
-import controller.MainController;
-import controller.UserController;
+import controllers.Application;
+import controllers.DBController;
+import controllers.MainController;
+import controllers.UserController;
 import enumeration.answers.Answers;
 
 import java.net.MalformedURLException;

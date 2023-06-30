@@ -1,7 +1,7 @@
 package model.menugui.game;
 
-import controller.gamestructure.GameImages;
-import controller.human.HumanController;
+import controllers.gamestructure.GameImages;
+import controllers.human.HumanController;
 import enumeration.Paths;
 import enumeration.UnitMovingState;
 import javafx.animation.KeyFrame;

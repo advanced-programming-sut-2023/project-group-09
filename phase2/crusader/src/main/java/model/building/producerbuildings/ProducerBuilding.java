@@ -1,7 +1,7 @@
 package model.building.producerbuildings;
 
-import controller.GovernmentController;
-import controller.human.MoveController;
+import controllers.GovernmentController;
+import controllers.human.MoveController;
 import model.Government;
 import model.building.Building;
 import model.building.storagebuildings.StorageBuilding;

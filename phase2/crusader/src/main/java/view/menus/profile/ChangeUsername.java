@@ -2,12 +2,10 @@ package view.menus.profile;
 
 import enumeration.Paths;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.User;
@@ -15,7 +13,6 @@ import model.menugui.*;
 import view.controllers.UserController;
 import view.controllers.ViewController;
 import view.menus.LoginMenu;
-import view.menus.MainMenu;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,7 +30,7 @@ public class ChangeUsername extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         ChangeUsername.stage = stage;
-        user = controller.Application.getCurrentUser();
+        user = controllers.Application.getCurrentUser();
         makeScene();
     }
 
@@ -74,10 +71,10 @@ public class ChangeUsername extends Application {
             username.handlingError(massage);
         });
         submit.setOnMouseClicked(mouseEvent -> {
-            String massage = controller.UserController.validateUsername(username.getText());
+            String massage = controllers.UserController.validateUsername(username.getText());
             if (massage == null || massage.equals("")) {
                 MenuPopUp menuPopUp = new MenuPopUp(root, 400, 400,
-                        "success", controller.UserController.changeUsername(username.getText()));
+                        "success", controllers.UserController.changeUsername(username.getText()));
                 root.getChildren().add(menuPopUp);
             }else{
                 MenuPopUp menuPopUp = new MenuPopUp(root, 400, 400,

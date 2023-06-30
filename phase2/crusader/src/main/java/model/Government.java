@@ -1,10 +1,10 @@
 package model;
 
-import controller.GameController;
-import controller.GovernmentController;
-import controller.MapController;
-import controller.gamestructure.GameBuildings;
-import controller.gamestructure.GameGoods;
+import controllers.GameController;
+import controllers.GovernmentController;
+import controllers.MapController;
+import controllers.gamestructure.GameBuildings;
+import controllers.gamestructure.GameGoods;
 import enumeration.dictionary.Colors;
 import model.building.Building;
 import model.building.castlebuildings.CastleBuilding;

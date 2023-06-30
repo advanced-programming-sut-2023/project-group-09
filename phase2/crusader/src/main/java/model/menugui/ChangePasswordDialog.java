@@ -1,25 +1,14 @@
 package model.menugui;
 
-import enumeration.Paths;
 import javafx.animation.FadeTransition;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import model.captcha.Captcha;
 import view.controllers.UserController;
-import viewphase1.LoginMenu;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.Objects;
 
 public class ChangePasswordDialog extends Pane {
     private Pane parent;
@@ -90,7 +79,7 @@ public class ChangePasswordDialog extends Pane {
         submit = new MenuButton("save", block, 0, 200,false);
 
         submit.setOnMouseClicked(mouseEvent -> {
-            String massage = controller.UserController.validateChangePassword(oldPassword.getText(),newPassword.getText());
+            String massage = controllers.UserController.validateChangePassword(oldPassword.getText(),newPassword.getText());
             try {
                 if(!captcha.isInputCorrect()){
                     MenuPopUp menuPopUp = new MenuPopUp(parent, 400, 400,
@@ -98,7 +87,7 @@ public class ChangePasswordDialog extends Pane {
                     parent.getChildren().add(menuPopUp);
                 } else if (massage == null || massage.equals("")) {
                     MenuPopUp menuPopUp = new MenuPopUp(parent, 400, 400,
-                            "success", controller.UserController.changePassword(oldPassword.getText(),newPassword.getText()));
+                            "success", controllers.UserController.changePassword(oldPassword.getText(),newPassword.getText()));
                     parent.getChildren().add(menuPopUp);
                     oldPassword.setText("");
                     newPassword.setText("");

@@ -1,20 +1,17 @@
-import controller.Application;
-import controller.GameController;
-import controller.MainController;
-import controller.MapController;
-import controller.gamestructure.GameHumans;
-import controller.gamestructure.GameMaps;
-import controller.human.HumanController;
-import controller.human.MoveController;
+import controllers.Application;
+import controllers.GameController;
+import controllers.MainController;
+import controllers.MapController;
+import controllers.gamestructure.GameHumans;
+import controllers.gamestructure.GameMaps;
+import controllers.human.HumanController;
 import enumeration.Pair;
 import enumeration.dictionary.Colors;
 import model.Government;
 import model.User;
 import model.game.Game;
 import model.game.Map;
-import model.game.Tuple;
 import model.human.military.Military;
-import org.junit.Test;
 import viewphase1.UnitMenu;
 
 import java.util.ArrayList;

@@ -1,10 +1,10 @@
 package view.controllers;
 
-import controller.GameController;
-import controller.MapController;
-import controller.gamestructure.GameHumans;
-import controller.gamestructure.GameImages;
-import controller.human.HumanController;
+import controllers.GameController;
+import controllers.MapController;
+import controllers.gamestructure.GameHumans;
+import controllers.gamestructure.GameImages;
+import controllers.human.HumanController;
 import enumeration.MilitaryStates;
 import enumeration.MoveStates;
 import enumeration.Paths;

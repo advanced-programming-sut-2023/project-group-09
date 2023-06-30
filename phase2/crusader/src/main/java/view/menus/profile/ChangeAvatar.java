@@ -1,14 +1,12 @@
 package view.menus.profile;
 
-import controller.DBController;
+import controllers.DBController;
 import enumeration.Paths;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
@@ -23,7 +21,6 @@ import model.menugui.MenuBox;
 import model.menugui.MenuFingerBack;
 import view.controllers.ViewController;
 import view.menus.LoginMenu;
-import view.menus.MainMenu;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,7 +43,7 @@ public class ChangeAvatar extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         ChangeAvatar.stage = stage;
-        user = controller.Application.getCurrentUser();
+        user = controllers.Application.getCurrentUser();
         makeScene();
     }
 

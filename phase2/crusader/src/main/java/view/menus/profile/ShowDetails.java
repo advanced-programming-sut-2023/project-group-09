@@ -1,16 +1,13 @@
 package view.menus.profile;
 
-import controller.UserController;
+import controllers.UserController;
 import enumeration.Paths;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -44,7 +41,7 @@ public class ShowDetails extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         ShowDetails.stage = stage;
-        user = controller.Application.getCurrentUser();
+        user = controllers.Application.getCurrentUser();
         makeScene();
     }
 

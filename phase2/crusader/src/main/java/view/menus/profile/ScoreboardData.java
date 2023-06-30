@@ -1,24 +1,18 @@
 package view.menus.profile;
 
-import controller.Application;
-import controller.DBController;
-import controller.MainController;
-import controller.UserController;
+import controllers.Application;
+import controllers.DBController;
 import enumeration.Paths;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.ImagePattern;
 import model.User;
 
 import java.io.File;

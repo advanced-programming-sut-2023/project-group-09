@@ -1,10 +1,10 @@
 package view.controllers;
 
-import controller.*;
-import controller.gamestructure.GameBuildings;
-import controller.gamestructure.GameGoods;
-import controller.gamestructure.GameHumans;
-import controller.gamestructure.GameImages;
+import controllers.*;
+import controllers.gamestructure.GameBuildings;
+import controllers.gamestructure.GameGoods;
+import controllers.gamestructure.GameHumans;
+import controllers.gamestructure.GameImages;
 import enumeration.Pair;
 import enumeration.Paths;
 import enumeration.Textures;

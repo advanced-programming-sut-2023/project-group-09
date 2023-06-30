@@ -1,10 +1,10 @@
 package viewphase1;
 
-import controller.Application;
-import controller.GameController;
-import controller.MapController;
-import controller.PixelCanvas;
-import controller.gamestructure.GameMaps;
+import controllers.Application;
+import controllers.GameController;
+import controllers.MapController;
+import controllers.PixelCanvas;
+import controllers.gamestructure.GameMaps;
 import enumeration.Pair;
 import enumeration.dictionary.Colors;
 import model.Government;

@@ -1,8 +1,8 @@
 package viewphase1;
 
-import controller.Application;
-import controller.DBController;
-import controller.MainController;
+import controllers.Application;
+import controllers.DBController;
+import controllers.MainController;
 import enumeration.answers.Answers;
 import enumeration.commands.Commands;
 

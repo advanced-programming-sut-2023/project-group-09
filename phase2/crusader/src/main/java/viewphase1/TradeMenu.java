@@ -1,8 +1,8 @@
 package viewphase1;
 
-import controller.GameController;
-import controller.TradeController;
-import controller.ViewController;
+import controllers.GameController;
+import controllers.TradeController;
+import controllers.ViewController;
 import enumeration.answers.Answers;
 import enumeration.commands.Commands;
 import enumeration.commands.TradeMenuCommands;

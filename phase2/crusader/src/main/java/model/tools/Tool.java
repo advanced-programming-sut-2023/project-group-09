@@ -1,7 +1,7 @@
 package model.tools;
 
-import controller.GovernmentController;
-import controller.MapController;
+import controllers.GovernmentController;
+import controllers.MapController;
 import model.Government;
 import model.activity.ToolAttack;
 import model.activity.ToolMove;

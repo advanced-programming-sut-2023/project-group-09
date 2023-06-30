@@ -1,7 +1,7 @@
 package view;
 
-import controller.DBController;
-import controller.MainController;
+import controllers.DBController;
+import controllers.MainController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

@@ -1,8 +1,8 @@
 package Controller;
 
-import controller.Application;
-import controller.DBController;
-import controller.UserController;
+import controllers.Application;
+import controllers.DBController;
+import controllers.UserController;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 

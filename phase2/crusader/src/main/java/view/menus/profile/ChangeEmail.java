@@ -13,7 +13,6 @@ import model.menugui.*;
 import view.controllers.UserController;
 import view.controllers.ViewController;
 import view.menus.LoginMenu;
-import view.menus.MainMenu;
 
 import java.io.IOException;
 import java.net.URL;
@@ -31,7 +30,7 @@ public class ChangeEmail extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         ChangeEmail.stage = stage;
-        user = controller.Application.getCurrentUser();
+        user = controllers.Application.getCurrentUser();
         makeScene();
     }
 
@@ -72,10 +71,10 @@ public class ChangeEmail extends Application {
             email.handlingError(massage);
         });
         submit.setOnMouseClicked(mouseEvent -> {
-            String massage = controller.UserController.validateEmail(email.getText());
+            String massage = controllers.UserController.validateEmail(email.getText());
             if (massage == null || massage.equals("")) {
                 MenuPopUp menuPopUp = new MenuPopUp(root, 400, 400,
-                        "success", controller.UserController.changeEmail(email.getText()));
+                        "success", controllers.UserController.changeEmail(email.getText()));
                 root.getChildren().add(menuPopUp);
             }else{
                 MenuPopUp menuPopUp = new MenuPopUp(root, 400, 400,

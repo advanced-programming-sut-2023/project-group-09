@@ -1,10 +1,10 @@
 package viewphase1;
 
-import controller.GameController;
-import controller.MapController;
-import controller.ToolsController;
-import controller.human.HumanController;
-import controller.human.MoveController;
+import controllers.GameController;
+import controllers.MapController;
+import controllers.ToolsController;
+import controllers.human.HumanController;
+import controllers.human.MoveController;
 import enumeration.commands.ToolMenuCommands;
 import model.activity.ToolAttack;
 import model.activity.ToolMove;

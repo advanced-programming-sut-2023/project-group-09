@@ -1,6 +1,6 @@
 package model.building.producerbuildings;
 
-import controller.gamestructure.GameGoods;
+import controllers.gamestructure.GameGoods;
 import model.goods.Goods;
 
 import java.util.ArrayList;

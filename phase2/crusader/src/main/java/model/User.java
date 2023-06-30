@@ -1,6 +1,6 @@
 package model;
 
-import controller.UserController;
+import controllers.UserController;
 
 import java.util.Random;
 

@@ -1,6 +1,6 @@
 package model.tools;
 
-import controller.GameController;
+import controllers.GameController;
 import enumeration.Textures;
 import model.game.Tile;
 import model.game.Tuple;
