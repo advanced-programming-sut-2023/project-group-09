@@ -1,25 +1,14 @@
 package model.menugui;
 
-import enumeration.Paths;
 import javafx.animation.FadeTransition;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import model.captcha.Captcha;
 import view.controllers.UserController;
-import viewphase1.LoginMenu;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.Objects;
 
 public class ChangePasswordDialog extends Pane {
     private Pane parent;

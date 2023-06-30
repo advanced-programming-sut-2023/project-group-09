@@ -1,13 +1,9 @@
 package view.menus;
 
 import controller.DBController;
-import controller.GameController;
 import controller.UserController;
-import enumeration.Paths;
-import enumeration.answers.Answers;
 import enumeration.answers.LoginAnswers;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

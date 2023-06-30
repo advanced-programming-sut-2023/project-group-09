@@ -7,9 +7,7 @@ import javafx.scene.text.Text;
 import model.Government;
 import model.menugui.MenuBox;
 import model.menugui.MenuButton;
-import view.Main;
 import view.menus.GameMenu;
-import view.menus.LoginMenu;
 import view.menus.MainMenu;
 
 import java.util.ArrayList;

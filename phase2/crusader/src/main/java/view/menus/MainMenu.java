@@ -2,7 +2,6 @@ package view.menus;
 
 import controller.DBController;
 import controller.MainController;
-import controller.gamestructure.GameBuildings;
 import enumeration.Paths;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -13,20 +12,13 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import model.User;
-import model.menugui.MenuBox;
 import model.menugui.MenuButton;
 import view.controllers.ViewController;
 import view.menus.profile.ProfileMenu;
-import view.menus.profile.Scoreboard;
-import viewphase1.PrimaryMenu;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Objects;
-import java.util.Random;
 
 public class MainMenu extends Application {
     public static Stage stage;

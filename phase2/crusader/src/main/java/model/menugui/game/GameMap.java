@@ -1,6 +1,5 @@
 package model.menugui.game;
 
-import controller.gamestructure.GameImages;
 import javafx.scene.layout.Pane;
 import model.game.Map;
 import model.game.Tile;

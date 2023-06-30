@@ -117,25 +117,25 @@ public class TradeTest {
         output5 = TradeController.acceptTrade(id1, "ok");
         Assert.assertEquals(output5, "request accepted successfully!");
         System.out.println(TradeController.showTradeHistory());
-        Assert.assertEquals(government.getPropertyAmount("bread"),65);
+        Assert.assertEquals(government.getPropertyAmount("bread"), 65);
         //===============================
-        Assert.assertEquals(TradeController.getTargetGovernment(),government1);
+        Assert.assertEquals(TradeController.getTargetGovernment(), government1);
 
 
         TradeController.setTargetGovernment(government2);
         output7 = TradeController.tradeGoods("bread", 10, 0, "thanks");
-        Assert.assertEquals(output7,"request sent successfully!");
+        Assert.assertEquals(output7, "request sent successfully!");
         TradeController.setTargetGovernment(government);
         output7 = TradeController.tradeGoods("bread", 10, 0, "thanks");
-        Assert.assertEquals(output7,"request sent successfully!");
+        Assert.assertEquals(output7, "request sent successfully!");
 
 
         Set<String> keys = government1.getSentTrades().keySet();
-        Assert.assertEquals(government1.getSentTrades().size(),2);
+        Assert.assertEquals(government1.getSentTrades().size(), 2);
         id = null;
         id1 = null;
         count = 1;
-        for (String key : keys){
+        for (String key : keys) {
             if (count == 1) {
                 id = key;
             }
@@ -146,12 +146,12 @@ public class TradeTest {
         }
 
         game.setCurrentGovernment(government2);
-        output1 = TradeController.acceptTrade(id,"tnx");
-        Assert.assertEquals("you don't have capacity to store!",output1);
+        output1 = TradeController.acceptTrade(id, "tnx");
+        Assert.assertEquals("you don't have capacity to store!", output1);
         game.setCurrentGovernment(government);
-        output1 = TradeController.acceptTrade(id1,"tnx");
-        Assert.assertEquals("request accepted successfully!",output1);
-        Assert.assertEquals(government.getPropertyAmount("bread"),75);
+        output1 = TradeController.acceptTrade(id1, "tnx");
+        Assert.assertEquals("request accepted successfully!", output1);
+        Assert.assertEquals(government.getPropertyAmount("bread"), 75);
 
     }
 }

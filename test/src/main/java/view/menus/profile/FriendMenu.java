@@ -1,20 +1,24 @@
 package view.menus.profile;
 
 import controller.network.FriendController;
-import controller.network.UsersController;
 import enumeration.Paths;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import model.User;
-import model.menugui.*;
+import model.menugui.MenuFingerBack;
+import model.menugui.ProfileView;
 import view.controllers.ViewController;
 import view.menus.LoginMenu;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -58,7 +62,7 @@ public class FriendMenu extends Application {
         makeFriendPart();
 
 
-        back = new MenuFingerBack(-400,300);
+        back = new MenuFingerBack(-400, 300);
         back.setOnMouseClicked(mouseEvent -> {
             try {
                 new ProfileMenu().start(stage);
@@ -72,20 +76,32 @@ public class FriendMenu extends Application {
     }
 
     public void makeFriendPart() throws IOException {
+        Label label = new Label("friends");
+        label.getStyleClass().add("title-label");
+        label.setMaxWidth(300);
+        label.setMinWidth(300);
+        label.setMaxHeight(50);
+        label.setMaxHeight(50);
+        label.setTranslateY(50);
+        label.setTextAlignment(TextAlignment.CENTER);
+
         ArrayList<String> friends = FriendController.getFriends();
-        VBox friendList= new VBox();
-        for (String username: friends){
+        VBox friendList = new VBox();
+        for (String username : friends) {
             VBox vBox = new VBox();
-            ProfileView profileView = new ProfileView(username,80,300);
+            ProfileView profileView = new ProfileView(username, 80, 300);
             vBox.getChildren().add(profileView);
             friendList.getChildren().add(vBox);
         }
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(friendList);
+        friendList.setPrefHeight(700);
         scrollPane.setMaxHeight(700);
+        scrollPane.setFitToHeight(false);
         scrollPane.setTranslateY(100);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        leftSide.getChildren().add(label);
         leftSide.getChildren().add(scrollPane);
     }
 

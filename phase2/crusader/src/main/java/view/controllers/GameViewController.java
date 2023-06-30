@@ -43,8 +43,8 @@ import model.Trade;
 import model.building.Building;
 import model.building.castlebuildings.MainCastle;
 import model.building.producerbuildings.Barrack;
-import model.game.Tile;
 import model.building.producerbuildings.WeaponProducer;
+import model.game.Tile;
 import model.human.Human;
 import model.human.civilian.Civilian;
 import model.human.military.Military;
@@ -77,7 +77,7 @@ public class GameViewController {
     public static Building selectedBuilding;
 
     public static ImageView nowFace;
-    public static Text popularityReporter , populationReporter , goldReporter;
+    public static Text popularityReporter, populationReporter, goldReporter;
 
     public static HashMap<String, String> buildingNameToFileName = new HashMap<>();
     public static HashMap<String, String> buildingNameToPicName = new HashMap<>();
@@ -913,9 +913,9 @@ public class GameViewController {
         rightButton.setTranslateX(625);
         rightButton.setOnMouseClicked(e -> {
             GameMenu.hoveringBarStateText.setText(GovernmentController.changeTaxRate
-                    (selectedBuilding.getGovernment().getTaxRate()+1));
-            numberOfPeople.setText(String.format("%d            =            %d" ,GameController.getGame().getCurrentGovernment().getPopulation()
-                    , ((MainCastle)selectedBuilding).getTotalTax()));
+                    (selectedBuilding.getGovernment().getTaxRate() + 1));
+            numberOfPeople.setText(String.format("%d            =            %d", GameController.getGame().getCurrentGovernment().getPopulation()
+                    , ((MainCastle) selectedBuilding).getTotalTax()));
             int popularity = GovernmentController.getCurrentGovernment().getPopularity() + 37;
             GameViewController.popularityReporter.setText(String.format("%d", popularity));
             updateFaceOfReporter();
@@ -1251,7 +1251,7 @@ public class GameViewController {
     private static void setCenterToWeaponsBuildings() {
         putBuildingImageView("fletcherWorkshopIcon", "Fletcher's Workshop", "fletcher", 300, 100, 1, "fletcher");
         putBuildingImageView("poleturnerWorkshopIcon", "Poleturner's Workshop", "poleTurner", 510, 100, 1, "poleTurner");
-        putBuildingImageView("blackSmithIcon" , "BlackSmith's Workshop" , "blackSmith" , 400 , 100 , 1 , "blackSmith");
+        putBuildingImageView("blackSmithIcon", "BlackSmith's Workshop", "blackSmith", 400, 100, 1, "blackSmith");
         putBuildingImageView("armourerIcon", "Armourer", "armourer", 500, 30, 0.25, "armourer");
     }
 
@@ -1954,7 +1954,7 @@ public class GameViewController {
         engineer.setTranslateY(100);
         engineer.setOnMouseClicked(mouseEvent -> {
             ((Barrack) selectedBuilding).makeUnit("engineer");
-            selectedBuilding.getGovernment().updatePopulationWithRemove(selectedBuilding.getGovernment().getPopulation()-1);
+            selectedBuilding.getGovernment().updatePopulationWithRemove(selectedBuilding.getGovernment().getPopulation() - 1);
         });
 
         ImageView ladderman = new ImageView(GameViewController.class.getResource(Paths.BAR_IMAGES.getPath())
@@ -2901,7 +2901,7 @@ public class GameViewController {
         setEventForRectangles(up, 0, 1, gameMap, miniMap);
         setEventForRectangles(right, 1, 0, gameMap, miniMap);
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(30) , actionEvent -> {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(30), actionEvent -> {
             GameController.nextTurn();
         }));
         timeline.setCycleCount(-1);
@@ -2965,42 +2965,42 @@ public class GameViewController {
 
     public static void showWorkerStateOfBuilding(Building building) {
         if (building.getNumberOfRequiredWorkers() + building.getNumberOfRequiredEngineers() >= 0) {
-            GameMenu.hoveringBarStateText.setText(String.format("%d/%d Engineers And %d/%d Workers" ,
-                    building.getNumberOfEngineers() , building.getNumberOfRequiredEngineers()
-                    ,building.getNumberOfWorkers()
+            GameMenu.hoveringBarStateText.setText(String.format("%d/%d Engineers And %d/%d Workers",
+                    building.getNumberOfEngineers(), building.getNumberOfRequiredEngineers()
+                    , building.getNumberOfWorkers()
                     , building.getNumberOfRequiredWorkers()));
         }
     }
 
-    public static void fireBuilding(Building building){
+    public static void fireBuilding(Building building) {
         ArrayList<Tile> tiles;
-        if (building.getBuildingImpassableLength() > 0){
-            tiles = GameController.getNeighborTiles(building.getEndX(),building.getEndY(),
-                    building.getBuildingImpassableLength(),building.getBuildingImpassableLength());
-        }else {
-            tiles = GameController.getNeighborTiles(building.getEndX(),building.getEndY(),
-                   building.getWidth(),building.getLength());
+        if (building.getBuildingImpassableLength() > 0) {
+            tiles = GameController.getNeighborTiles(building.getEndX(), building.getEndY(),
+                    building.getBuildingImpassableLength(), building.getBuildingImpassableLength());
+        } else {
+            tiles = GameController.getNeighborTiles(building.getEndX(), building.getEndY(),
+                    building.getWidth(), building.getLength());
         }
 
-        for (Tile tile : tiles){
-            GameTile gameTile = GameMap.getGameTile(tile.x,tile.y);
+        for (Tile tile : tiles) {
+            GameTile gameTile = GameMap.getGameTile(tile.x, tile.y);
             gameTile.burning();
         }
 
     }
 
-    public static void putOutBuilding(Building building){
+    public static void putOutBuilding(Building building) {
         ArrayList<Tile> tiles;
-        if (building.getBuildingImpassableLength() > 0){
-            tiles = GameController.getNeighborTiles(building.getEndX(),building.getEndY(),
-                    building.getBuildingImpassableLength(),building.getBuildingImpassableLength());
-        }else {
-            tiles = GameController.getNeighborTiles(building.getEndX(),building.getEndY(),
-                    building.getWidth(),building.getLength());
+        if (building.getBuildingImpassableLength() > 0) {
+            tiles = GameController.getNeighborTiles(building.getEndX(), building.getEndY(),
+                    building.getBuildingImpassableLength(), building.getBuildingImpassableLength());
+        } else {
+            tiles = GameController.getNeighborTiles(building.getEndX(), building.getEndY(),
+                    building.getWidth(), building.getLength());
         }
 
-        for (Tile tile : tiles){
-            GameTile gameTile = GameMap.getGameTile(tile.x,tile.y);
+        for (Tile tile : tiles) {
+            GameTile gameTile = GameMap.getGameTile(tile.x, tile.y);
             gameTile.putOutFire();
         }
 

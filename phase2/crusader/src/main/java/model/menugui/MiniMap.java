@@ -1,6 +1,5 @@
 package model.menugui;
 
-import controller.MapController;
 import controller.gamestructure.GameMaps;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

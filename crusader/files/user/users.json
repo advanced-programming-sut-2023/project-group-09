@@ -8,7 +8,12 @@
     "passwordRecoveryQuestion": "What\u0027s my father\u0027s name?",
     "passwordRecoveryAnswer": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
     "slogan": "-------",
-    "path": "files/img/avatars/a/4.png"
+    "path": "files/img/avatars/a/4.png",
+    "friends": [
+      "Moeein",
+      "Farzammm",
+      "f"
+    ]
   },
   {
     "username": "Moeein",
@@ -40,7 +45,7 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "17eb73cedd6d2afa0c1ce3fa861a31966527ce6d86366f26d59812d3a75f6c02",
     "slogan": "Think long term, act short term!",
-    "path": "files/img/avatars/f/4.png"
+    "path": "files/img/avatars/f/1.png"
   },
   {
     "username": "Farzam3",

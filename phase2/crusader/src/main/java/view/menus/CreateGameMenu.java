@@ -3,8 +3,6 @@ package view.menus;
 import controller.DBController;
 import controller.GameController;
 import controller.MapController;
-import controller.TradeController;
-import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameMaps;
 import enumeration.dictionary.Colors;
 import javafx.application.Application;
@@ -20,14 +18,11 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Government;
-import model.Trade;
 import model.building.castlebuildings.MainCastle;
 import model.game.Game;
 import model.game.Map;
-import model.human.military.EuropeanTroop;
 import model.menugui.*;
 import view.controllers.ViewController;
-import viewphase1.EditMapEnvironmentMenu;
 
 import java.util.ArrayList;
 

@@ -305,13 +305,8 @@ public class GameTile {
             if (GameViewController.isDelete) {
                 GameViewController.isDelete = false;
                 GameMenu.scene.setCursor(Cursor.DEFAULT);
-            } else if (mouseEvent.getButton() == MouseButton.PRIMARY && !GameMenu.selectedUnit && !GameViewController.isTextureSelected) {
+            } else if (mouseEvent.getButton() == MouseButton.PRIMARY && !GameMenu.selectedUnit && !GameViewController.isTextureSelected && GameMenu.isSelected) {
                 GameViewController.unselectTiles();
-                GameMenu.startSelectionTile = this;
-                GameMenu.endSelectionTile = this;
-                GameMenu.selectedTiles.add(this);
-                GameMenu.isSelected = true;
-                this.selectTile();
                 if (GameMenu.selectedUnit) {
                     if (GameMenu.unitsCount.get("lord") == null || GameMenu.unitsCount.get("lord") != 1 || GameMenu.selectedTroops.size() != 1) {
                         if (GameMenu.unitsCount.get("lord") != null && GameMenu.unitsCount.get("lord") != 0) {
@@ -342,6 +337,33 @@ public class GameTile {
                 GameViewController.unselectTilesWithOutUnits();
             } else if (GameMenu.isSelected && !GameViewController.isTextureSelected) {
                 GameViewController.unselectTiles();
+            } else if (!GameMenu.isSelected) {
+                GameMenu.startSelectionTile = this;
+                GameMenu.endSelectionTile = this;
+                GameMenu.selectedTiles.add(this);
+                GameMenu.isSelected = true;
+                this.selectTile();
+                if (GameMenu.selectedUnit) {
+                    if (GameMenu.unitsCount.get("lord") == null || GameMenu.unitsCount.get("lord") != 1 || GameMenu.selectedTroops.size() != 1) {
+                        if (GameMenu.unitsCount.get("lord") != null && GameMenu.unitsCount.get("lord") != 0) {
+                            GameMenu.selectedTroops.removeIf(i -> i.getName().equals("lord"));
+                            GameMenu.unitsCount.put("lord", 0);
+                        }
+                        GameMenu.hoveringBarStateText.setText("Unit Menu");
+                        GameViewController.setCenterOfBar();
+                    } else {
+                        HumanViewController.addTypes();
+                        if (GameMenu.selectedTroops.size() != 0) {
+                            Military military = null;
+                            for (Military m : GameMenu.selectedTroops) {
+                                military = m;
+                            }
+                            HumanController.militaries.clear();
+                            HumanController.militaries.add(military);
+                            System.out.println(HumanController.militaries);
+                        }
+                    }
+                }
             }
 
             if (GameViewController.shopMenuPhase != -1) {

@@ -1,7 +1,5 @@
 package view.controllers;
 
-import controller.Application;
-
 public class UserController {
     public static String validateUsername(String username){
         if (controller.UserController.checkNullFields(username)) {

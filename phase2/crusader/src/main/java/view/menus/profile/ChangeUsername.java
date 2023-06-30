@@ -2,12 +2,10 @@ package view.menus.profile;
 
 import enumeration.Paths;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.User;
@@ -15,7 +13,6 @@ import model.menugui.*;
 import view.controllers.UserController;
 import view.controllers.ViewController;
 import view.menus.LoginMenu;
-import view.menus.MainMenu;
 
 import java.io.IOException;
 import java.net.URL;

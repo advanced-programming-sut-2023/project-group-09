@@ -5,7 +5,6 @@ import controller.MapController;
 import model.Government;
 import model.game.Tile;
 import model.game.Tuple;
-import model.human.civilian.Civilian;
 import model.human.military.EuropeanTroop;
 
 import java.util.ArrayList;
