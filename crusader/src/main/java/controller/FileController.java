@@ -44,6 +44,25 @@ public class FileController {
         return "";
     }
 
+    public static String readFile(File file){
+        try {
+            Scanner myReader = new Scanner(file);
+            StringBuilder output = new StringBuilder();
+
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                output.append(data);
+            }
+            myReader.close();
+
+            return output.toString();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     public static String getClipboard() {
         Transferable t = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
         try {
