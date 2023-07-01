@@ -3246,7 +3246,7 @@ public class GameViewController {
         return distance;
     }
 
-    public static void createBorderRectangles(GameMap gameMap, MiniMap miniMap) {
+    public static void createBorderRectangles(GameMap gameMap, MiniMap miniMap,Pane root) {
         Rectangle downRight = new Rectangle(10, 10);
         Rectangle upRight = new Rectangle(10, 10);
         Rectangle upLeft = new Rectangle(10, 10);
@@ -3269,7 +3269,7 @@ public class GameViewController {
         setTranslateOfRectangle(down, 0, 395);
 
 
-        GameMenu.root.getChildren().addAll(downRight, downLeft, upRight,
+        root.getChildren().addAll(downRight, downLeft, upRight,
                 upLeft, right, left, up, down);
 
         downRight.setViewOrder(-3000);
@@ -3287,19 +3287,16 @@ public class GameViewController {
         setEventForRectangles(left, -1, 0, gameMap, miniMap);
         setEventForRectangles(up, 0, 1, gameMap, miniMap);
         setEventForRectangles(right, 1, 0, gameMap, miniMap);
+    }
 
+    public static void setNextTurnTimeline(){
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(30) , actionEvent -> {
             GameController.nextTurn();
-            System.out.println("next turn!");
         }));
         timeline.setCycleCount(-1);
         timeline.play();
         gameTimeLine = timeline;
-
-
-
     }
-
     private static void setEventForRectangles(Rectangle rectangle, int horizontal, int vertical, GameMap gameMap, MiniMap miniMap) {
         rectangle.setOnMouseEntered(e -> {
             timeline = new Timeline(new KeyFrame(Duration.ZERO, actionEvent -> {

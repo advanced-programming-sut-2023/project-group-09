@@ -20,7 +20,7 @@ public class MiniMap extends StackPane {
     private final Canvas canvas;
     private int startX;
     private int startY;
-
+    private GameMap gameMap;
     private final int width;
     private final int height;
     private int pointerWidth = (int) Math.ceil((double) 1200 / GameMap.tileWidth) + 1;
@@ -29,7 +29,7 @@ public class MiniMap extends StackPane {
 
     private final Map map;
 
-    public MiniMap(int width, int height, int startX, int startY) {
+    public MiniMap(int width, int height, int startX, int startY,Map map) {
         this.startX = startX;
         this.startY = startY;
         this.width = width;
@@ -39,10 +39,9 @@ public class MiniMap extends StackPane {
         this.setMaxHeight(width);
         this.setMaxHeight(width);
         canvas = new Canvas(width, height);
-        GameMaps.createMap1();
         setPointer();
         this.getChildren().addAll(canvas, pointer);
-        map = GameMaps.largeMaps.get(0);
+        this.map = map;
         graphicsContext = canvas.getGraphicsContext2D();
         this.setOnMouseClicked(mouseEvent -> {
             this.requestFocus();
@@ -112,6 +111,14 @@ public class MiniMap extends StackPane {
             this.setOnKeyPressed(null);
         });
         paintMap();
+    }
+
+    public GameMap getGameMap() {
+        return gameMap;
+    }
+
+    public void setGameMap(GameMap gameMap) {
+        this.gameMap = gameMap;
     }
 
     public void setPointer() {
@@ -194,7 +201,7 @@ public class MiniMap extends StackPane {
             return;
         }
         if (moveMap) {
-            GameMenu.gameMap.moveLeft();
+            gameMap.moveLeft();
         }
         if (Math.abs(getX() - 25) < 0.5 && startX + getX() <= 25) {
             pointer.setTranslateX(pointer.getTranslateX() - 1);
@@ -214,7 +221,7 @@ public class MiniMap extends StackPane {
             return;
         }
         if (moveMap) {
-            GameMenu.gameMap.moveRight();
+            gameMap.moveRight();
         }
 
         if (Math.abs(getX() - (width - (pointerWidth + 25))) < 0.5 && map.getWidth() - (startX + getX()) <= (pointerWidth + 25)) {
@@ -236,7 +243,7 @@ public class MiniMap extends StackPane {
             return;
         }
         if (moveMap) {
-            GameMenu.gameMap.moveUp();
+            gameMap.moveUp();
         }
         if (Math.abs(getY() - 25) < 0.5 && startY + getY() <= 25) {
             pointer.setTranslateY(pointer.getTranslateY() - 1);
@@ -257,7 +264,7 @@ public class MiniMap extends StackPane {
             return;
         }
         if (moveMap) {
-            GameMenu.gameMap.moveDown();
+            gameMap.moveDown();
         }
         if (Math.abs(getY() - (height - (pointerHeight + 25))) < 0.5 && map.getLength() - (startY + getY()) <= (pointerHeight + 25)) {
             pointer.setTranslateY(pointer.getTranslateY() + 1);
@@ -367,7 +374,7 @@ public class MiniMap extends StackPane {
         }
         moveLeft(false);
         moveUp(false);
-        GameMenu.gameMap.moveLeftUp();
+        gameMap.moveLeftUp();
     }
 
     public void moveRightUp() {
@@ -379,7 +386,7 @@ public class MiniMap extends StackPane {
         }
         moveRight(false);
         moveUp(false);
-        GameMenu.gameMap.moveRightUp();
+        gameMap.moveRightUp();
     }
 
     public void moveRightDown() {
@@ -391,7 +398,7 @@ public class MiniMap extends StackPane {
         }
         moveRight(false);
         moveDown(false);
-        GameMenu.gameMap.moveRightDown();
+        gameMap.moveRightDown();
     }
 
     public void moveLeftDown() {
@@ -403,7 +410,7 @@ public class MiniMap extends StackPane {
         }
         moveLeft(false);
         moveDown(false);
-        GameMenu.gameMap.moveLeftDown();
+        gameMap.moveLeftDown();
     }
 
     private double getX() {

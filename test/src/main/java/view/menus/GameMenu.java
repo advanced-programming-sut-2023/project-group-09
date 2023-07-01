@@ -106,8 +106,8 @@ public class GameMenu extends Application {
         Map map = GameMaps.largeMaps.get(0);
         gameMap = new GameMap(map, 0, 0, 30, 18);
         gameMap.loadMap();
-        miniMap = new MiniMap(125, 143, 0, 0);
-
+        miniMap = new MiniMap(125, 143, 0, 0,map);
+        miniMap.setGameMap(gameMap);
 
 //        TODO: revert comment
         for (Government government : GameController.getGame().getGovernments()) {
@@ -132,16 +132,11 @@ public class GameMenu extends Application {
         MapController.dropMilitary(14, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
         MapController.dropMilitary(11, 5, "slave", GameController.getGame().getCurrentGovernment());
 
-//        MapController.dropMilitary(20, 5, "slave", GameController.getGame().getGovernments().get(1));
-//        MapController.dropMilitary(21, 5, "fireThrower", GameController.getGame().getGovernments().get(1));
-//        MapController.dropMilitary(21, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
-//        MapController.dropMilitary(22, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
-//        MapController.dropMilitary(22, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
 
-        //MapController.dropCivilian(10,10,GameController.getGame().getCurrentGovernment(),false);
         setEventListeners();
         GameViewController.setCenterOfBar();
-        GameViewController.createBorderRectangles(gameMap, miniMap);
+        GameViewController.createBorderRectangles(gameMap, miniMap,root);
+        GameViewController.setNextTurnTimeline();
         attacking = new ImageView(new Image(GameTile.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm() +
                 "icons/attacking.gif"));
         attacking.setViewOrder(-2000);
