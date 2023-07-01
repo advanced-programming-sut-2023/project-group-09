@@ -36,7 +36,6 @@ public class GameTile {
     private double height;
     private ImageView textureImage;
     private ImageView buildingImage;
-    private ImageView humanImage;
     private ImageView treeImage;
     private ImageView rockImage;
     private ImageView sicknessImage;
@@ -59,14 +58,7 @@ public class GameTile {
         textureImage.setTranslateY(y);
         textureImage.setViewOrder(1);
         refreshTile();
-        setEventListener();
         setSensor();
-    }
-
-    private void setEventListener() {
-        textureImage.setOnMouseClicked(mouseEvent -> {
-            System.out.println(textureImage);
-        });
     }
 
     public void refreshTile() {
@@ -82,7 +74,6 @@ public class GameTile {
         colorAdjust.setBrightness(0.4);
         if (textureImage != null) textureImage.setEffect(colorAdjust);
         if (buildingImage != null) buildingImage.setEffect(colorAdjust);
-        if (humanImage != null) humanImage.setEffect(colorAdjust);
         if (treeImage != null) treeImage.setEffect(colorAdjust);
         HumanViewController.divideTroops(tile);
     }
@@ -90,7 +81,6 @@ public class GameTile {
     public void deselectTile() {
         if (textureImage != null) textureImage.setEffect(null);
         if (buildingImage != null) buildingImage.setEffect(null);
-        if (humanImage != null) humanImage.setEffect(null);
         if (treeImage != null) treeImage.setEffect(null);
     }
 
@@ -195,7 +185,6 @@ public class GameTile {
     public void setRock() {
         RockDirections rockDirections = tile.getRockDirection();
         if (rockDirections != null) {
-            System.out.println("Yep!");
             String rockNumber = Integer.toString(new Random().nextInt(16) + 1);
             Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()).toExternalForm()
                     + "rocks/Image (" + rockNumber + ").png");
@@ -227,7 +216,7 @@ public class GameTile {
 
     public void setPit() {
         if (tile.isPit()) {
-            System.out.println("is pit!");
+
             Image image;
             image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
                     + "buildings/killingPit.png").toExternalForm());
@@ -297,7 +286,6 @@ public class GameTile {
 
     public void setSensor() {
         textureImage.setOnMouseEntered(mouseEvent -> {
-            System.out.println(this.getTileX() + " " + this.getTileY());
             GameMenu.currentTile = this;
         });
 
@@ -324,7 +312,6 @@ public class GameTile {
                             }
                             HumanController.militaries.clear();
                             HumanController.militaries.add(military);
-                            System.out.println(HumanController.militaries);
                         }
                     }
                 }
@@ -360,7 +347,6 @@ public class GameTile {
                             }
                             HumanController.militaries.clear();
                             HumanController.militaries.add(military);
-                            System.out.println(HumanController.militaries);
                         }
                     }
                 }

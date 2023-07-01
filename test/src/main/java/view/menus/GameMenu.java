@@ -209,7 +209,8 @@ public class GameMenu extends Application {
 
     public static void createGameBar(int state) {
 //        state: 0=buildings  /  1=nemidunam(farzam midune)  /  2=menu  /  3=mercenaryPost  /  4=barrack
-        barImage = new ImageView(GameImages.imageViews.get("bar"));
+        barImage = new ImageView(new Image(GameImages.class.getResource
+                (Paths.BAR_IMAGES.getPath()).toExternalForm() + "bar.png"));
         barImage.setFitWidth(menuBar.getMaxWidth());
         barImage.setFitHeight(menuBar.getMaxHeight());
         menuBar.setTranslateX(0);

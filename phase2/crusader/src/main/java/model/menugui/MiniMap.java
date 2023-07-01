@@ -28,7 +28,7 @@ public class MiniMap extends StackPane {
 
     private final Map map;
 
-    public MiniMap(int width, int height, int startX, int startY) {
+    public MiniMap(int width, int height, int startX, int startY,Map map) {
 
         this.startX = startX;
         this.startY = startY;
@@ -42,7 +42,7 @@ public class MiniMap extends StackPane {
         GameMaps.createMap1();
         setPointer();
         this.getChildren().addAll(canvas, pointer);
-        map = GameMaps.largeMaps.get(0);
+        this.map = map;
         graphicsContext = canvas.getGraphicsContext2D();
         this.setOnMouseClicked(mouseEvent -> {
             this.requestFocus();

@@ -13,9 +13,10 @@
     "friendsRequest": {
       "Narges": "requesting",
       "Farzammm": "requesting",
+      "f": "requested",
       "Narges1": "requesting"
     },
-    "lastSeen": 0
+    "lastSeen": 1688220778699
   },
   {
     "username": "Moeein",
@@ -55,8 +56,11 @@
     "slogan": "Think long term, act short term!",
     "path": "files/img/avatars/f/1.png",
     "friends": [],
-    "friendsRequest": {},
-    "lastSeen": 0
+    "friendsRequest": {
+      "a": "requesting",
+      "Amirh": "requesting"
+    },
+    "lastSeen": 1688217590641
   },
   {
     "username": "Farzam3",
@@ -816,6 +820,10 @@
     "passwordRecoveryAnswer": "185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969",
     "slogan": "Strategize to win!",
     "path": "files/img/avatars/2.png",
+    "friends": [],
+    "friendsRequest": {
+      "f": "requested"
+    },
     "lastSeen": 0
   },
   {
