@@ -5,8 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="48940bc5-fa6d-4a81-b88a-cb236d4b61a3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/test/src/main/java/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/main/java/controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/src/main/java/view/menus/profile/FriendMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/main/java/view/menus/profile/FriendMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/phase2.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/phase3.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/e4/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crusader/files/user/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/crusader/files/user/users.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +59,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/mi/OneDrive/Desktop/phase3/project-group-09/phase2/crusader",
+    "last_opened_file_path": "C:/Users/mi/OneDrive/Desktop/java/e4",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
   }
@@ -215,6 +218,7 @@
       <workItem from="1687954560527" duration="753000" />
       <workItem from="1688126787250" duration="380000" />
       <workItem from="1688128233048" duration="1027000" />
+      <workItem from="1688226830448" duration="4084000" />
     </task>
     <task id="LOCAL-00023" summary="building menu edited.">
       <created>1682354296419</created>
