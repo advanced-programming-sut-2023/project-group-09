@@ -2,6 +2,7 @@ package view;
 
 import controller.DBController;
 import controller.MainController;
+import controller.gamestructure.GameMaps;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import server.Server;
@@ -21,6 +22,8 @@ public class Main extends Application {
             DBController.saveAllUsers();
             DBController.saveCurrentUser();
         }));
+        GameMaps.createMaps();
+        DBController.loadAllUsers();
         MainController.loadGame();
         Server server = new Server(8080);
         //MainController.run(stage);

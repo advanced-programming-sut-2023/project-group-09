@@ -27,6 +27,7 @@ public class MenuPopUp extends Pane {
     private String type;
     private String massage;
     public StackPane block;
+    public Label messageLabel;
 
     public MenuPopUp(Pane parent, int width, int height, String type, String massage) {
         this.parent = parent;
@@ -77,6 +78,7 @@ public class MenuPopUp extends Pane {
         label.setStyle("-fx-font-weight: bold;-fx-font-size: 24");
         VBox.setMargin(label,new Insets(0,0,30,0));
         block.getChildren().add(label);
+        messageLabel = label;
     }
 
     public void setTransitions(){
@@ -101,9 +103,27 @@ public class MenuPopUp extends Pane {
     }
 
     public void setButton(){
-        MenuButton menuButton = new MenuButton("close",block,0,100,false);
+        MenuButton menuButton = new MenuButton("close",block,0,90,false);
         menuButton.setOnMouseClicked(mouseEvent -> closePopUp());
         block.getChildren().add(menuButton);
 
+    }
+
+    public MenuButton addButton(String text , double x , double y) {
+        MenuButton menuButton = new MenuButton(text,block,x,y,false);
+        block.getChildren().add(menuButton);
+        return menuButton;
+    }
+
+    public MenuTextField addTextField(double x, double y) {
+        MenuTextField menuTextField = new MenuTextField(block , "FileName" , "name : ", x , y , 200);
+        block.getChildren().add(menuTextField);
+        return menuTextField;
+
+    }
+
+    public void changeMessage(String newMessage) {
+        this.massage = newMessage;
+        messageLabel.setText(newMessage);
     }
 }

@@ -18,6 +18,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
+import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
@@ -51,8 +52,10 @@ import model.human.military.Military;
 import model.menugui.*;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
+import view.menus.EditMapMenu;
 import view.menus.GameMenu;
 import view.menus.LoginMenu;
+import view.menus.SharedMapMenu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,9 +66,11 @@ public class GameViewController {
 
     public static String nameOfPageInBar;
     public static Timeline timeline;
+    public static int howManyShieldsDropped = 0;
     public static Timeline gameTimeLine;
     public static boolean isSelected = false;
     public static boolean isDelete = false;
+    public static boolean isDeleteInChangeMap = false;
     public static boolean isDropped = false;
     public static boolean isTextureSelected = false;
     public static int tileX, tileY;
@@ -316,6 +321,112 @@ public class GameViewController {
         imageView.setOnMouseEntered(mouseEvent -> GameMenu.hoveringBarStateText.setText(text));
         imageView.setOnMouseExited(mouseEvent -> GameMenu.hoveringBarStateText.setText(""));
         imageView.setOnMouseClicked(mouseEvent -> setCenterOfBar());
+    }
+
+    private static void setCenterOfBar2(){
+        if (EditMapMenu.hoveringBarStateText == null || EditMapMenu.hoveringBarStateText.getText() == null ||
+        EditMapMenu.hoveringBarStateText.getText().equals("")) {
+            EditMapMenu.menuBar.getChildren().clear();
+            EditMapMenu.createGameBar();
+            setCenterOfEditLand2();
+            return;
+        }
+        switch (EditMapMenu.hoveringBarStateText.getText()) {
+            case "Edit Land" -> {
+                EditMapMenu.menuBar.getChildren().clear();
+                EditMapMenu.createGameBar();
+                setCenterOfEditLand2();
+            }
+            case "Edit Water" -> {
+                EditMapMenu.menuBar.getChildren().clear();
+                EditMapMenu.createGameBar();
+                setCenterOfEditWater2();
+            }
+            case "Edit Features" -> {
+                EditMapMenu.menuBar.getChildren().clear();
+                EditMapMenu.createGameBar();
+                setCenterOfEditFeatures2();
+            }
+            case "Edit Vegetation" -> {
+                EditMapMenu.menuBar.getChildren().clear();
+                EditMapMenu.createGameBar();
+                setCenterOfEditVegetation2();
+            }
+        }
+
+    }
+
+    private static void setCenterOfEditVegetation2() {
+        putEditTreeImageView2("datePalmIcon", "Date Palm", Trees.DATE_PALM,
+                300, 0, 0.2);
+        putEditTreeImageView2("coconutPalmIcon", "Coconut Palm", Trees.COCONUT_PALM,
+                400, -20, 0.2);
+        putEditTreeImageView2("oliveTreeIcon", "Olive tree", Trees.OLIVE_TREE,
+                430, 20, 0.2);
+        putEditTreeImageView2("desertShrubIcon", "Desert Shrub", Trees.DESERT_SHRUB,
+                580, 50, 0.2);
+        putEditTreeImageView2("cherryPalmIcon", "Cherry Palm", Trees.CHERRY_PALM,
+                600, 0, 0.2);
+    }
+
+    private static void setCenterOfEditFeatures2() {
+        putEditRockImageView2("bigRockIcon", "Rock - South",
+                RockDirections.SOUTH, 290, 85, 0.2);
+        putEditRockImageView2("bigRockIcon", "Rock - East",
+                RockDirections.EAST, 325, 85, 0.2);
+        putEditRockImageView2("bigRockIcon", "Rock - North",
+                RockDirections.NORTH, 360, 85, 0.2);
+        putEditRockImageView2("bigRockIcon", "Rock - West",
+                RockDirections.WEST, 395, 85, 0.2);
+        putEditRockImageView2("bigRockIcon", "Rock - Random",
+                RockDirections.getRandomDirection(), 430, 85, 0.2);
+        
+    }
+
+    private static void setCenterOfEditWater2() {
+        putEditTextureImageView2("seaIcon", "Sea"
+                , Textures.SEA, 290, 65, 0.2);
+        putEditTextureImageView2("beachIcon", "Beach"
+                , Textures.BEACH, 305, 95, 0.2);
+        putEditTextureImageView2("largePoundIcon", "Large Pound"
+                , Textures.LARGE_POND, 350, 75, 0.2);
+
+        putEditTextureImageView2("smallPoundIcon", "Small Pound"
+                , Textures.SMALL_POND, 360, 40, 0.2);
+        putEditTextureImageView2("riverIcon", "River"
+                , Textures.RIVER, 475, 40, 0.2);
+        putEditTextureImageView2("fordIcon", "Ford"
+                , Textures.LOW_DEPTH_WATER, 460, 100, 0.2);
+        putEditTextureImageView2("marshIcon", "Marsh"
+                , Textures.MARSH, 550, 30, 0.2);
+        putEditTextureImageView2("oilIcon", "Oil"
+                , Textures.OIL, 505, 90, 0.2);
+    }
+
+    private static void setCenterOfEditLand2() {
+        putEditTextureImageView2("earthAndStoneIcon", "Earth And Stones"
+                , Textures.EARTH, 290, 85, 0.2);
+        putEditTextureImageView2("rocksIcon", "Rocks"
+                , Textures.ROCK_TEXTURE, 270, 105, 0.2);
+        putEditTextureImageView2("ironTextureIcon", "Iron"
+                , Textures.IRON_TEXTURE, 360, 90, 0.2);
+
+        putEditTextureImageView2("drivenSandIcon", "Driven Sand"
+                , Textures.EARTH_AND_SAND, 360, 40, 0.2);
+        putEditTextureImageView2("scrubIcon", "Scrub"
+                , Textures.GRASS, 450, 60, 0.2);
+        putEditTextureImageView2("thickScrubIcon", "Thick Scrub"
+                , Textures.THICK_GRASS, 450, 120, 0.2);
+        putEditTextureImageView2("oasisGrassIcon", "Oasis Grass"
+                , Textures.OASIS_GRASS, 520, 60, 0.2);
+        putEditTextureImageView2("bouldersIcon", "Boulder"
+                , Textures.BOULDER, 500, 70, 0.2);
+    }
+
+    public static void setHoverEventForBar2(ImageView imageView, String text) {
+        imageView.setOnMouseEntered(mouseEvent -> EditMapMenu.hoveringBarStateText.setText(text));
+        imageView.setOnMouseExited(mouseEvent -> EditMapMenu.hoveringBarStateText.setText(""));
+        imageView.setOnMouseClicked(mouseEvent -> setCenterOfBar2());
     }
 
     private static void setHoverEventForBar(ImageView imageView, String destination, String name) {
@@ -1154,6 +1265,52 @@ public class GameViewController {
                 600, 0, 0.2);
     }
 
+
+    public static void createShortcutBars3(Pane gamePane , Text text) {
+        ImageView deleteImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/deleteIcon.png");
+        deleteImage.setTranslateX(760);
+        deleteImage.setTranslateY(155);
+        gamePane.getChildren().add(deleteImage);
+        setEventForDeleteIcon2(deleteImage);
+
+        ImageView editLandShortcut = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/editLandShortcutIcon.png");
+        editLandShortcut.setTranslateX(220);
+        editLandShortcut.setTranslateY(30);
+        editLandShortcut.setScaleX(0.2);
+        editLandShortcut.setScaleY(0.2);
+        gamePane.getChildren().add(editLandShortcut);
+        setHoverEventForBar2(editLandShortcut, "Edit Land");
+
+        ImageView editWaterShortcut = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/editWaterIcon.png");
+        editWaterShortcut.setTranslateX(250);
+        editWaterShortcut.setTranslateY(30);
+        editWaterShortcut.setScaleX(0.2);
+        editWaterShortcut.setScaleY(0.2);
+        gamePane.getChildren().add(editWaterShortcut);
+        setHoverEventForBar2(editWaterShortcut, "Edit Water");
+
+        ImageView editVegetationShortcut = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/editVegetationIcon.png");
+        editVegetationShortcut.setTranslateX(217);
+        editVegetationShortcut.setTranslateY(65);
+        editVegetationShortcut.setScaleX(0.2);
+        editVegetationShortcut.setScaleY(0.2);
+        gamePane.getChildren().add(editVegetationShortcut);
+        setHoverEventForBar2(editVegetationShortcut, "Edit Vegetation");
+
+        ImageView editFeaturesShortcut = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/editFeaturesIcon.png");
+        editFeaturesShortcut.setTranslateX(250);
+        editFeaturesShortcut.setTranslateY(67);
+        editFeaturesShortcut.setScaleX(0.2);
+        editFeaturesShortcut.setScaleY(0.2);
+        gamePane.getChildren().add(editFeaturesShortcut);
+        setHoverEventForBar2(editFeaturesShortcut, "Edit Features");
+    }
+
     public static void createShortcutBars2(Pane gamePane, Text text) {
 
         ImageView keyImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
@@ -1237,6 +1394,49 @@ public class GameViewController {
             GameMenu.scene.setCursor(new ImageCursor(image,
                     image.getWidth() / 2,
                     image.getHeight() / 2));
+        });
+    }
+
+    private static void setEventForDeleteIcon2(ImageView deleteImage) {
+        deleteImage.setOnMouseEntered(mouseEvent -> EditMapMenu.hoveringBarStateText.setText("Delete"));
+        deleteImage.setOnMouseExited(mouseEvent -> EditMapMenu.hoveringBarStateText.setText(""));
+        deleteImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                isTextureSelected = true;
+                Image image = new Image(LoginMenu.class.getResource(Paths.GAME_IMAGES.getPath())
+                        .toExternalForm() + "cursor/crossCursor.png");
+                EditMapMenu.scene.setCursor(new ImageCursor(image,
+                        image.getWidth() / 2,
+                        image.getHeight() / 2));
+                EditMapMenu.gameMap.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        if (mouseEvent.getButton() == MouseButton.PRIMARY && isTextureSelected) {
+                            Pair<Integer, Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
+                            tileX = pair.getFirst();
+                            tileY = pair.getSecond();
+                            System.out.println("Tile founded at : " + tileX + " " + tileY);
+                            EditMapMenu.hoveringBarStateText.setText("Edits on tile (" + tileX + " , " + tileY + ") was deleted!");
+                            GameMap.getGameTile(tileX, tileY).deleteTile();
+                        } else {
+                            isTextureSelected = false;
+                            EditMapMenu.scene.setCursor(Cursor.DEFAULT);
+                        }
+                    }
+                });
+
+                EditMapMenu.gameMap.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                            isTextureSelected = false;
+                            EditMapMenu.scene.setCursor(Cursor.DEFAULT);
+                        }
+                    }
+                });
+
+            }
         });
     }
 
@@ -2513,6 +2713,116 @@ public class GameViewController {
         });
     }
 
+    private static void putEditRockImageView2(String fileName, String name, RockDirections rockDirection, double x, double y, double size) {
+        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/" + fileName + ".png");
+        icon.setTranslateX(x);
+        icon.setTranslateY(y);
+        icon.setScaleX(size);
+        icon.setScaleY(size);
+        EditMapMenu.menuBar.getChildren().add(icon);
+        icon.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                EditMapMenu.hoveringBarStateText.setText(name);
+            }
+        });
+        icon.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                EditMapMenu.hoveringBarStateText.setText("");
+            }
+        });
+
+
+        icon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                isTextureSelected = true;
+                EditMapMenu.gameMap.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        if (mouseEvent.getButton() == MouseButton.PRIMARY && isTextureSelected) {
+                            Pair<Integer, Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
+                            tileX = pair.getFirst();
+                            tileY = pair.getSecond();
+                            System.out.println("Tile founded at : " + tileX + " " + tileY);
+                            EditMapMenu.hoveringBarStateText.setText(MapController.dropRock(tileX, tileY, rockDirection));
+                            GameMap.getGameTile(tileX, tileY).refreshTile2();
+                        } else {
+                            isTextureSelected = false;
+                        }
+                    }
+                });
+
+                EditMapMenu.gameMap.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                            isTextureSelected = false;
+                        }
+                    }
+                });
+
+            }
+        });
+    }
+
+    private static void putEditTreeImageView2(String fileName, String name, Trees tree, double x, double y, double size) {
+        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/" + fileName + ".png");
+        icon.setTranslateX(x);
+        icon.setTranslateY(y);
+        icon.setScaleX(size);
+        icon.setScaleY(size);
+        EditMapMenu.menuBar.getChildren().add(icon);
+        icon.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                EditMapMenu.hoveringBarStateText.setText(name);
+            }
+        });
+        icon.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                EditMapMenu.hoveringBarStateText.setText("");
+            }
+        });
+
+
+        icon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                isTextureSelected = true;
+                EditMapMenu.gameMap.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        if (mouseEvent.getButton() == MouseButton.PRIMARY && isTextureSelected) {
+                            Pair<Integer, Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
+                            tileX = pair.getFirst();
+                            tileY = pair.getSecond();
+                            System.out.println("Tile founded at : " + tileX + " " + tileY);
+                            EditMapMenu.hoveringBarStateText.setText(MapController.dropTree(tileX, tileY, tree));
+                            GameMap.getGameTile(tileX, tileY).refreshTile2();
+                        } else {
+                            isTextureSelected = false;
+                        }
+                    }
+                });
+
+                EditMapMenu.gameMap.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                            isTextureSelected = false;
+                        }
+                    }
+                });
+
+            }
+        });
+    }
+
     private static void putEditTreeImageView(String fileName, String name, Trees tree, double x, double y, double size) {
         ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/" + fileName + ".png");
@@ -2623,6 +2933,61 @@ public class GameViewController {
         });
     }
 
+    private static void putEditTextureImageView2(String fileName, String name, Textures texture, double x, double y, double size) {
+        ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/" + fileName + ".png");
+        icon.setTranslateX(x);
+        icon.setTranslateY(y);
+        icon.setScaleX(size);
+        icon.setScaleY(size);
+        EditMapMenu.menuBar.getChildren().add(icon);
+        icon.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                EditMapMenu.hoveringBarStateText.setText(name);
+            }
+        });
+        icon.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                EditMapMenu.hoveringBarStateText.setText("");
+            }
+        });
+
+
+        icon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                isTextureSelected = true;
+                EditMapMenu.gameMap.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        if (mouseEvent.getButton() == MouseButton.PRIMARY && isTextureSelected) {
+                            Pair<Integer, Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
+                            tileX = pair.getFirst();
+                            tileY = pair.getSecond();
+                            System.out.println("Tile founded at : " + tileX + " " + tileY);
+                            EditMapMenu.hoveringBarStateText.setText(MapController.setTexture(tileX, tileY, texture));
+                            GameMap.getGameTile(tileX, tileY).refreshTile2();
+                        } else {
+                            isTextureSelected = false;
+                        }
+                    }
+                });
+
+                EditMapMenu.gameMap.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                            isTextureSelected = false;
+                        }
+                    }
+                });
+
+            }
+        });
+    }
+
     private static void putGatehouseImageView(String fileName, String name, String buildingName, double x, double y, double size, String picFileName) {
         ImageView icon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/" + fileName + ".png");
@@ -2654,7 +3019,8 @@ public class GameViewController {
         }
     }
 
-    private static void putBuildingImageView(String fileName, String name, String buildingName, double x, double y, double size, String picFileName) {
+    private static void putBuildingImageView(String fileName, String name, String buildingName,
+                                             double x, double y, double size, String picFileName) {
         buildingNameToFileName.put(buildingName, fileName);
         buildingNameToName.put(buildingName, name);
         buildingNameToPicName.put(buildingName, picFileName);
@@ -2821,10 +3187,18 @@ public class GameViewController {
     }
 
     public static Pair<Integer, Integer> tileCoordinateWithMouseEvent(MouseEvent mouseEvent) {
-        int halfTileX = (int) ((mouseEvent.getScreenX() -
-                (GameMenu.scene.getWidth() - 1200) / 2) / ((double) GameMap.tileWidth / 2));
-        int halfTileY = (int) ((mouseEvent.getScreenY() -
-                (GameMenu.scene.getHeight() - 800) / 2) / ((double) GameMap.tileHeight / 2));
+        int halfTileX , halfTileY;
+        try {
+            halfTileX = (int) ((mouseEvent.getScreenX() -
+                    (GameMenu.scene.getWidth() - 1200) / 2) / ((double) GameMap.tileWidth / 2));
+            halfTileY = (int) ((mouseEvent.getScreenY() -
+                    (GameMenu.scene.getHeight() - 800) / 2) / ((double) GameMap.tileHeight / 2));
+        } catch (Exception e) {
+            halfTileX = (int) ((mouseEvent.getScreenX() -
+                    (EditMapMenu.scene.getWidth() - 1200) / 2) / ((double) GameMap.tileWidth / 2));
+            halfTileY = (int) ((mouseEvent.getScreenY() -
+                    (EditMapMenu.scene.getHeight() - 800) / 2) / ((double) GameMap.tileHeight / 2));
+        }
         Pair<Integer, Integer> pair;
         if (halfTileX % 2 == 0) {
             pair = checkNearestTile(mouseEvent, halfTileX / 2, halfTileX / 2, halfTileY, halfTileY - 1);
@@ -2835,8 +3209,13 @@ public class GameViewController {
                 pair = checkNearestTile(mouseEvent, (halfTileX + 1) / 2, (halfTileX - 1) / 2, halfTileY - 1, halfTileY);
             }
         }
-        return new Pair<>(pair.getFirst() + GameMenu.gameMap.getCameraX(),
-                pair.getSecond() + GameMenu.gameMap.getCameraY());
+        try {
+            return new Pair<>(pair.getFirst() + GameMenu.gameMap.getCameraX(),
+                    pair.getSecond() + GameMenu.gameMap.getCameraY());
+        } catch (Exception e) {
+            return new Pair<>(pair.getFirst() + EditMapMenu.gameMap.getCameraX(),
+                    pair.getSecond() + EditMapMenu.gameMap.getCameraY());
+        }
     }
 
     private static Pair<Integer, Integer> checkNearestTile(MouseEvent mouseEvent, int x1, int x2, int y1, int y2) {
@@ -2849,10 +3228,18 @@ public class GameViewController {
     }
 
     private static double distanceOfTile(MouseEvent mouseEvent, int tileX, int tileY) {
-        double x = (mouseEvent.getScreenX() -
-                (GameMenu.scene.getWidth() - 1200) / 2);
-        double y = (mouseEvent.getScreenY() -
-                (GameMenu.scene.getHeight() - 800) / 2);
+        double x , y;
+        try {
+            x = (mouseEvent.getScreenX() -
+                    (GameMenu.scene.getWidth() - 1200) / 2);
+            y = (mouseEvent.getScreenY() -
+                    (GameMenu.scene.getHeight() - 800) / 2);
+        } catch (Exception e) {
+            x = (mouseEvent.getScreenX() -
+                    (EditMapMenu.scene.getWidth() - 1200) / 2);
+            y = (mouseEvent.getScreenY() -
+                    (EditMapMenu.scene.getHeight() - 800) / 2);
+        }
         GameTile tile = GameMap.getGameTile(tileX, tileY);
         double distance = Math.sqrt(Math.pow(tile.getX() - x, 2) +
                 Math.pow(tile.getY() - y, 2));
@@ -3007,5 +3394,21 @@ public class GameViewController {
             gameTile.putOutFire();
         }
 
+    }
+
+    public static void dropShieldAfterSelectingTile(MouseEvent mouseEvent) {
+        Pair<Integer, Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
+        tileX = pair.getFirst();
+        tileY = pair.getSecond();
+        System.out.println("Tile founded at : " + tileX + " " + tileY);
+        if (SharedMapMenu.selectedMap.getDefaultCastles().size() == 8) {
+            EditMapMenu.hoveringBarStateText.setText("Full of governments!");
+        } else if (MapController.checkCanPutMainCastle(tileX , tileY)) {
+            EditMapMenu.hoveringBarStateText.setText("Shield dropped successfully!");
+            MapController.dropShield(tileX , tileY);
+            GameMap.getGameTile(tileX, tileY).refreshTile2();
+        } else {
+            EditMapMenu.hoveringBarStateText.setText("You can't drop shield here!");
+        }
     }
 }

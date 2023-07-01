@@ -1,6 +1,5 @@
 package model.game;
 
-import com.google.gson.annotations.Expose;
 import enumeration.Textures;
 import enumeration.dictionary.RockDirections;
 import enumeration.dictionary.Trees;
@@ -16,23 +15,24 @@ import model.human.civilian.Civilian;
 import model.human.military.Military;
 import model.tools.Tool;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Tile {
+public class Tile implements Serializable {
 
     private Textures texture;
     private Trees tree;
     private RockDirections rockDirection;
-    private Tool tool;
+    private transient Tool tool;
     private boolean isDefaultCastle;
-    private Building building = null;
+    private transient Building building = null;
     private boolean isMoat;
     private boolean isPit;
     private int textureNum;
     private transient Color color;
 
-    private Government pitGovernment;
+    private transient Government pitGovernment;
     private boolean passable = true;
     private boolean canPutBuilding = true;
 
@@ -77,7 +77,7 @@ public class Tile {
     }
 
 
-    private ArrayList<Civilian> civilians = new ArrayList<>();
+    private transient ArrayList<Civilian> civilians = new ArrayList<>();
 
     public ArrayList<Military> getMilitaries() {
         return militaries;
@@ -105,7 +105,7 @@ public class Tile {
         this.rockDirection = rockDirection;
     }
 
-    private ArrayList<Military> militaries = new ArrayList<>();
+    private transient ArrayList<Military> militaries = new ArrayList<>();
 
 
     public ArrayList<Civilian> getCivilians() {
@@ -181,23 +181,28 @@ public class Tile {
     }
 
     public void setTexture(Textures texture) {
-        if (building == null && civilians.size() == 0 && militaries.size() == 0 && rockDirection == null && tree == null) {
+        if (building == null && (civilians == null || civilians.size() == 0) && (
+                militaries == null || militaries.size() == 0)
+                && rockDirection == null && tree == null) {
             this.texture = texture;
             passable = texture.isPassable();
             canPutBuilding = texture.getCanPutBuilding();
-            Color prmColor = texture.getColor();
-            Color tmpColor = texture.getTempColor();
-            Random random = new Random();
-            textureNum = random.nextInt(texture.getCount());
-            int whichColor = random.nextInt(texture.getRatio());
-            if (whichColor == 0) {
-                color = tmpColor;
-            } else {
-                color = prmColor;
-            }
+            setColor();
         }
     }
 
+    public void setColor(){
+        Color prmColor = texture.getColor();
+        Color tmpColor = texture.getTempColor();
+        Random random = new Random();
+        textureNum = random.nextInt(texture.getCount());
+        int whichColor = random.nextInt(texture.getRatio());
+        if (whichColor == 0) {
+            color = tmpColor;
+        } else {
+            color = prmColor;
+        }
+    }
     public Building getBuilding() {
         return building;
     }

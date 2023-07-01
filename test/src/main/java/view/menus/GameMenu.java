@@ -4,6 +4,7 @@ import controller.DBController;
 import controller.GameController;
 import controller.GovernmentController;
 import controller.MapController;
+import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameImages;
 import controller.gamestructure.GameMaps;
 import controller.human.HumanController;
@@ -13,6 +14,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.Transition;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -20,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -32,6 +35,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Government;
+import model.building.Building;
 import model.game.Map;
 import model.game.Tile;
 import model.human.military.EuropeanTroop;
@@ -205,6 +209,8 @@ public class GameMenu extends Application {
             index++;
         }
     }
+
+
 
     public static void createGameBar(int state) {
 //        state: 0=buildings  /  1=nemidunam(farzam midune)  /  2=menu  /  3=mercenaryPost  /  4=barrack

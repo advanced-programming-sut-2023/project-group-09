@@ -10,7 +10,9 @@ import javafx.scene.shape.Rectangle;
 import model.game.Map;
 import model.game.Tile;
 import model.menugui.game.GameMap;
+import view.menus.EditMapMenu;
 import view.menus.GameMenu;
+import view.menus.SharedMapMenu;
 
 public class MiniMap extends StackPane {
     private final GraphicsContext graphicsContext;
@@ -65,6 +67,48 @@ public class MiniMap extends StackPane {
         });
         this.setOnMouseExited(mouseEvent -> {
             GameMenu.menuBar.requestFocus();
+            this.setOnKeyPressed(null);
+        });
+        paintMap();
+    }
+
+    public MiniMap(int width, int height, int startX, int startY , boolean check) {
+        this.startX = startX;
+        this.startY = startY;
+        this.width = width;
+        this.height = height;
+        this.setMaxWidth(width);
+        this.setMinWidth(width);
+        this.setMaxHeight(width);
+        this.setMaxHeight(width);
+        canvas = new Canvas(width, height);
+        setPointer();
+        this.getChildren().addAll(canvas, pointer);
+        map = SharedMapMenu.selectedMap;
+        graphicsContext = canvas.getGraphicsContext2D();
+        this.setOnMouseClicked(mouseEvent -> {
+            this.requestFocus();
+            this.setOnKeyPressed(keyEvent -> {
+                String keyName = keyEvent.getCode().getName();
+                if (keyName.equals("Right")) {
+                    moveRight2(true);
+                }
+
+                if (keyName.equals("Left")) {
+                    moveLeft2(true);
+                }
+
+                if (keyName.equals("Up")) {
+                    moveUp2(true);
+                }
+
+                if (keyName.equals("Down")) {
+                    moveDown2(true);
+                }
+            });
+        });
+        this.setOnMouseExited(mouseEvent -> {
+            EditMapMenu.menuBar.requestFocus();
             this.setOnKeyPressed(null);
         });
         paintMap();
@@ -214,6 +258,90 @@ public class MiniMap extends StackPane {
         }
         if (moveMap) {
             GameMenu.gameMap.moveDown();
+        }
+        if (Math.abs(getY() - (height - (pointerHeight + 25))) < 0.5 && map.getLength() - (startY + getY()) <= (pointerHeight + 25)) {
+            pointer.setTranslateY(pointer.getTranslateY() + 1);
+            return;
+        }
+
+        if (Math.abs(getY() - (height - (pointerHeight + 25))) < 0.5) {
+            startY += 1;
+            paintMap();
+            return;
+        }
+
+        pointer.setTranslateY(pointer.getTranslateY() + 1);
+    }
+
+    public void moveLeft2(boolean moveMap) {
+        if (startX + getX() == 0) {
+            return;
+        }
+        if (moveMap) {
+            EditMapMenu.gameMap.moveLeft();
+        }
+        if (Math.abs(getX() - 25) < 0.5 && startX + getX() <= 25) {
+            pointer.setTranslateX(pointer.getTranslateX() - 1);
+            return;
+        }
+
+        if (Math.abs(getX() - 25) < 0.5) {
+            startX -= 1;
+            paintMap();
+            return;
+        }
+        pointer.setTranslateX(pointer.getTranslateX() - 1);
+    }
+
+    public void moveRight2(boolean moveMap) {
+        if (startX + getX() == map.getWidth() - pointerWidth) {
+            return;
+        }
+        if (moveMap) {
+            EditMapMenu.gameMap.moveRight();
+        }
+
+        if (Math.abs(getX() - (width - (pointerWidth + 25))) < 0.5 && map.getWidth() - (startX + getX()) <= (pointerWidth + 25)) {
+            pointer.setTranslateX(pointer.getTranslateX() + 1);
+            return;
+        }
+
+        if (Math.abs(getX() - (width - (pointerWidth + 25))) < 0.5) {
+            startX += 1;
+            paintMap();
+            return;
+        }
+
+        pointer.setTranslateX(pointer.getTranslateX() + 1);
+    }
+
+    public void moveUp2(boolean moveMap) {
+        if (startY + getY() == 0) {
+            return;
+        }
+        if (moveMap) {
+            EditMapMenu.gameMap.moveUp();
+        }
+        if (Math.abs(getY() - 25) < 0.5 && startY + getY() <= 25) {
+            pointer.setTranslateY(pointer.getTranslateY() - 1);
+            return;
+        }
+
+        if (Math.abs(getY() - 25) < 0.5) {
+            startY -= 1;
+            paintMap();
+            return;
+        }
+
+        pointer.setTranslateY(pointer.getTranslateY() - 1);
+    }
+
+    public void moveDown2(boolean moveMap) {
+        if (startY + getY() == map.getLength() - pointerHeight) {
+            return;
+        }
+        if (moveMap) {
+            EditMapMenu.gameMap.moveDown();
         }
         if (Math.abs(getY() - (height - (pointerHeight + 25))) < 0.5 && map.getLength() - (startY + getY()) <= (pointerHeight + 25)) {
             pointer.setTranslateY(pointer.getTranslateY() + 1);

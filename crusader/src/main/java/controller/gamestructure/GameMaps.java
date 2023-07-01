@@ -7,10 +7,12 @@ import enumeration.dictionary.Trees;
 import model.game.Map;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GameMaps {
     public static ArrayList<Map> smallMaps = new ArrayList<>();
     public static ArrayList<Map> largeMaps = new ArrayList<>();
+    public static HashMap<String , Map> allMaps = new HashMap<>();
 
     private static void changeTextureOfSomeTiles(int x1, int x2, int y1, int y2, Map map, Textures texture) {
         for (int i = x1; i <= x2; i++) {
@@ -76,6 +78,9 @@ public class GameMaps {
         map1.addDefaultCastle(80, 380);
         map1.addDefaultCastle(200, 250);
         map1.addDefaultCastle(30, 280);
+        map1.setName("map1");
+        map1.setOwner("@@@System@@@");
+        allMaps.put("map1" , map1);
 //        Map map1 = DBController.loadMap("src/main/resources/savedmaps/map1.json");
         largeMaps.add(map1);
 //        DBController.saveMap(map1, "src/main/resources/savedmaps/map1.json");
@@ -122,11 +127,30 @@ public class GameMaps {
         map2.addDefaultCastle(110, 180);
         map2.addDefaultCastle(180, 180);
         map2.addDefaultCastle(190, 120);
+        map2.setName("map2");
+        map2.setOwner("@@@System@@@");
+        allMaps.put("map2" , map2);
         smallMaps.add(map2);
+    }
+
+    private static void createNullMap1() {
+        Map map = new Map(400 , 400);
+        map.setName("Null Map 400*400");
+        map.setOwner("@@@System@@@");
+        allMaps.put("Null Map 400*400" , map);
+    }
+
+    private static void createNullMap2() {
+        Map map = new Map(200 , 200);
+        map.setName("Null Map 200*200");
+        map.setOwner("@@@System@@@");
+        allMaps.put("Null Map 200*200" , map);
     }
 
     public static void createMaps() {
         createMap1();
         createMap2();
+        createNullMap1();
+        createNullMap2();
     }
 }

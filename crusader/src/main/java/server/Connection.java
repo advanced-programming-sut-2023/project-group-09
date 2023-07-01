@@ -6,9 +6,7 @@ import controller.TokenController;
 import model.User;
 import server.handlers.UserHandler;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +14,8 @@ import java.util.Set;
 public class Connection extends Thread {
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
+    private ObjectOutputStream objectOutputStream;
+    private ObjectInputStream objectInputStream;
     private Socket socket;
     private String token;
     public boolean userChanged = false;
@@ -25,6 +25,8 @@ public class Connection extends Thread {
         this.socket = socket;
         this.dataInputStream = new DataInputStream(socket.getInputStream());
         this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
+        this.objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+        this.objectInputStream = new ObjectInputStream(socket.getInputStream());
     }
 
     @Override
@@ -85,5 +87,21 @@ public class Connection extends Thread {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public ObjectOutputStream getObjectOutputStream() {
+        return objectOutputStream;
+    }
+
+    public void setObjectOutputStream(ObjectOutputStream objectOutputStream) {
+        this.objectOutputStream = objectOutputStream;
+    }
+
+    public ObjectInputStream getObjectInputStream() {
+        return objectInputStream;
+    }
+
+    public void setObjectInputStream(ObjectInputStream objectInputStream) {
+        this.objectInputStream = objectInputStream;
     }
 }

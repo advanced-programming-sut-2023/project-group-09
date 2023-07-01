@@ -6,6 +6,7 @@ import controller.GovernmentController;
 import controller.MapController;
 import controller.gamestructure.GameImages;
 import controller.human.HumanController;
+import enumeration.Pair;
 import enumeration.Paths;
 import enumeration.UnitMovingState;
 import enumeration.dictionary.RockDirections;
@@ -22,8 +23,9 @@ import model.game.Tile;
 import model.human.military.Military;
 import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
+import view.menus.EditMapMenu;
 import view.menus.GameMenu;
-import view.menus.SignupMenu;
+import view.menus.SharedMapMenu;
 
 import java.util.Random;
 
@@ -42,6 +44,7 @@ public class GameTile {
     private ImageView rockImage;
     private ImageView sicknessImage;
     private ImageView burning;
+    private ImageView shieldImage;
     private static int tileXOn, tileYOn;
     public boolean touch = false;
 
@@ -64,6 +67,23 @@ public class GameTile {
         setSensor();
     }
 
+    public GameTile(Tile tile, double x, double y, int tileX, int tileY , boolean check) {
+        this.tileX = tileXOn = tileX;
+        this.tileY = tileYOn = tileY;
+        this.x = x;
+        this.y = y;
+        this.width = GameMap.tileWidth;
+        this.height = GameMap.tileHeight;
+        this.tile = tile;
+        textureImage = new ImageView();
+        textureImage.setFitWidth(width);
+        textureImage.setFitHeight(height);
+        textureImage.setTranslateX(x);
+        textureImage.setTranslateY(y);
+        textureImage.setViewOrder(1);
+        refreshTile2();
+    }
+
     private void setEventListener() {
         textureImage.setOnMouseClicked(mouseEvent -> {
             System.out.println(textureImage);
@@ -76,6 +96,59 @@ public class GameTile {
         setTree();
         setPit();
         setRock();
+    }
+
+    public void refreshTile2() {
+        setTexture2();
+        setTree2();
+        setRock2();
+        setShield();
+    }
+
+    private void setRock2() {
+        RockDirections rockDirections = tile.getRockDirection();
+        if (rockImage != null) {
+            EditMapMenu.gameMap.getChildren().remove(rockImage);
+        }
+        if (rockDirections != null) {
+            System.out.println("Yep!");
+            String rockNumber = Integer.toString(new Random().nextInt(16) + 1);
+            Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()).toExternalForm()
+                    + "rocks/Image (" + rockNumber + ").png");
+            rockImage = new ImageView(image);
+            rockImage.setFitWidth(GameMap.tileWidth);
+            rockImage.setFitHeight(GameMap.tileHeight);
+            rockImage.setTranslateY(-rockImage.getFitHeight() + textureImage.getFitHeight() + textureImage.getTranslateY());
+            rockImage.setTranslateX(textureImage.getTranslateX() - rockImage.getFitWidth() / 2 + textureImage.getFitWidth() / 2);
+            rockImage.setViewOrder(-tileY - 1);
+            EditMapMenu.gameMap.getChildren().add(rockImage);
+        }
+    }
+
+    private void setTree2() {
+        Trees tree = tile.getTree();
+        if (treeImage != null) {
+            EditMapMenu.gameMap.getChildren().remove(treeImage);
+        }
+        if (tree != null) {
+            String shrubNumber = "";
+            if (tree.equals(Trees.DESERT_SHRUB))
+                shrubNumber = Integer.toString(new Random().nextInt(6) + 1);
+            Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
+                    + "trees/" + tree.getTreeName() + shrubNumber + ".png").toExternalForm());
+            treeImage = new ImageView(image);
+            treeImage.setTranslateY(-image.getHeight() + textureImage.getFitHeight() + textureImage.getTranslateY());
+            treeImage.setTranslateX(textureImage.getTranslateX() - image.getWidth() / 2 + textureImage.getFitWidth() / 2);
+            treeImage.setViewOrder(-tileY - 1);
+            EditMapMenu.gameMap.getChildren().add(treeImage);
+        }
+    }
+
+    private void setTexture2() {
+        EditMapMenu.gameMap.getChildren().remove(textureImage);
+        Image image = GameImages.imageViews.get(tile.getTexture().getName() + tile.getTextureNum());
+        textureImage.setImage(image);
+        EditMapMenu.gameMap.getChildren().add(textureImage);
     }
 
     public void selectTile() {
@@ -196,6 +269,9 @@ public class GameTile {
 
     public void setRock() {
         RockDirections rockDirections = tile.getRockDirection();
+        if (rockImage != null) {
+            GameMenu.gameMap.getChildren().remove(rockImage);
+        }
         if (rockDirections != null) {
             System.out.println("Yep!");
             String rockNumber = Integer.toString(new Random().nextInt(16) + 1);
@@ -213,6 +289,9 @@ public class GameTile {
 
     public void setTree() {
         Trees tree = tile.getTree();
+        if (treeImage != null) {
+            GameMenu.gameMap.getChildren().remove(treeImage);
+        }
         if (tree != null) {
             String shrubNumber = "";
             if (tree.equals(Trees.DESERT_SHRUB))
@@ -373,4 +452,36 @@ public class GameTile {
         GameMenu.gameMap.getChildren().remove(burning);
     }
 
+    public void setShield() {
+        if (shieldImage != null) {
+            EditMapMenu.gameMap.getChildren().remove(shieldImage);
+        }
+        boolean check = false;
+        for (Pair<Integer , Integer> pair : SharedMapMenu.selectedMap.getDefaultCastles()) {
+            if (pair.getFirst() == tileX && pair.getSecond() == tileY) {
+                check = true;
+                break;
+            }
+        }
+        if (check) {
+            Image image = new Image(GameMenu.class.getResource(Paths.FLAG_IMAGES.getPath()).toExternalForm()
+                    + "transparent" + "Flag.png");
+            shieldImage = new ImageView(image);
+            shieldImage.setTranslateY(textureImage.getTranslateY() + textureImage.getFitHeight()/2 - image.getHeight());
+            shieldImage.setTranslateX(textureImage.getTranslateX() + image.getWidth()/4);
+            shieldImage.setViewOrder(-tileY-1);
+            EditMapMenu.gameMap.getChildren().add(shieldImage);
+        } else {
+            shieldImage = null;
+        }
+    }
+
+    public void deleteTile() {
+        getTile().setTree(null);
+        getTile().setRockDirection(null);
+        if (shieldImage != null) {
+            SharedMapMenu.selectedMap.removeDefaultCastle(tileX , tileY);
+        }
+        refreshTile2();
+    }
 }
