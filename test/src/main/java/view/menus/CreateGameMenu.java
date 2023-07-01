@@ -1,6 +1,7 @@
 package view.menus;
 
 import client.Packet;
+import client.PacketOnlineReceiver;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import controller.DBController;
@@ -88,6 +89,8 @@ public class CreateGameMenu extends Application {
         stage.setTitle("Create New Game");
 
         stage.show();
+
+
     }
 
     private void makeTitleStuff() {
@@ -160,6 +163,7 @@ public class CreateGameMenu extends Application {
         startGame.setOnAction(actionEvent -> {
             if (governmentNumber < 3) return;
             GameMenu gameMenu = new GameMenu();
+
 //            Trade trade1 = new Trade("hello", "apple", 10, 100,
 //                    GameController.getGame().getGovernments().get(1), GameController.getGame().getGovernments().get(0));
 //            Trade trade2 = new Trade("good bye", "cheese", 20, 150,
@@ -197,6 +201,8 @@ public class CreateGameMenu extends Application {
 //            TradeController.allTrades.put(trade8.getId(), trade8);
 
             try {
+                PacketOnlineReceiver packetOnlineReceiver = new PacketOnlineReceiver();
+                packetOnlineReceiver.start();
                 gameMenu.start(stage);
             } catch (Exception e) {
                 throw new RuntimeException(e);

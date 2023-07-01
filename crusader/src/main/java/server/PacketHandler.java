@@ -167,6 +167,9 @@ public class PacketHandler {
                 break;
             case "friend":
                 new FriendHandler().handle(packet, connection);
+                break;
+            case "Game" :
+                new GameHandler().handle(packet, connection);
         }
 
     }
