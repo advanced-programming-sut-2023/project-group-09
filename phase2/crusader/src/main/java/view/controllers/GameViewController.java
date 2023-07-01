@@ -2912,7 +2912,7 @@ public class GameViewController {
 
     private static void setEventForRectangles(Rectangle rectangle, int horizontal, int vertical, GameMap gameMap, MiniMap miniMap) {
         rectangle.setOnMouseEntered(e -> {
-            timeline = new Timeline(new KeyFrame(Duration.ZERO, actionEvent -> {
+            timeline = new Timeline( new KeyFrame(Duration.millis(100), actionEvent -> {
                 if (horizontal == 1 && vertical == 0) {
                     miniMap.moveRight(true);
                 } else if (horizontal == -1 && vertical == 0) {
@@ -2930,8 +2930,6 @@ public class GameViewController {
                 } else if (horizontal == -1 && vertical == -1) {
                     miniMap.moveLeftDown();
                 }
-
-            }), new KeyFrame(Duration.millis(100), actionEvent -> {
             }));
             timeline.setCycleCount(-1);
             timeline.play();

@@ -288,7 +288,6 @@ public class GameTile {
         textureImage.setOnMouseEntered(mouseEvent -> {
             GameMenu.currentTile = this;
         });
-
         textureImage.setOnMouseClicked(mouseEvent -> {
             if (GameViewController.isDelete) {
                 GameViewController.isDelete = false;
@@ -358,10 +357,6 @@ public class GameTile {
                 GameViewController.currentItem = null;
                 GameViewController.currentCategory = null;
             }
-        });
-
-        textureImage.setOnMouseDragEntered(mouseDragEvent -> {
-
         });
     }
 
