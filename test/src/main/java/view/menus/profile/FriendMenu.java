@@ -3,21 +3,22 @@ package view.menus.profile;
 import controller.network.FriendController;
 import enumeration.Paths;
 import javafx.animation.KeyFrame;
+import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
@@ -33,6 +34,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Optional;
 
 public class FriendMenu extends Application {
     public static Stage stage;
@@ -56,10 +58,13 @@ public class FriendMenu extends Application {
     public static VBox requests;
     public Timeline updateData;
 
-
+    public Circle requestCount;
+    public Label requestCountLabel;
     public ArrayList<String> updateFriend = new ArrayList<>();
-    public HashMap<String ,String> updateRequests = new HashMap<>();
+    public HashMap<String, String> updateRequests = new HashMap<>();
 
+    public String lastSearch;
+    public ScaleTransition heartBeat;
 
 
     @Override
@@ -89,11 +94,11 @@ public class FriendMenu extends Application {
         borderPane.setCenter(centerPane);
         leftSide.setStyle("-fx-background-color: #fff");
         root.getChildren().addAll(borderPane);
+        putIcons();
+        setRequestBox();
         makeFriendPart();
         setSearchBox();
         setSearchResult();
-        putIcons();
-        setRequestBox();
         setUpdateTimeline();
         stage.show();
     }
@@ -114,7 +119,7 @@ public class FriendMenu extends Application {
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(friendList);
         friendList.setPrefHeight(700);
-        friendList.setPrefWidth(295);
+        friendList.setPrefWidth(293);
         scrollPane.setMaxHeight(700);
         scrollPane.setFitToHeight(false);
         scrollPane.setTranslateY(100);
@@ -154,14 +159,18 @@ public class FriendMenu extends Application {
         rectangle.setTranslateY(100);
         search.setTranslateX(625);
         search.setTranslateY(115);
-
+        rectangle.setOnMouseEntered(this::scaleUp);
+        rectangle.setOnMouseExited(this::scaleDown);
         rectangle.setOnMouseClicked(mouseEvent -> {
             try {
                 if (searchInput.getText() == null || searchInput.getText().length() == 0) {
                     centerPane.getChildren().remove(searchResult);
+                    lastSearch = null;
                 } else {
-                    showResult();
-                    centerPane.getChildren().add(searchResult);
+                    showResult(false);
+                    if (!centerPane.getChildren().contains(searchResult)) {
+                        centerPane.getChildren().add(searchResult);
+                    }
                 }
 
             } catch (IOException e) {
@@ -173,8 +182,9 @@ public class FriendMenu extends Application {
             try {
                 if (searchInput.getText() == null || searchInput.getText().length() == 0) {
                     centerPane.getChildren().remove(searchResult);
+                    lastSearch = null;
                 } else {
-                    showResult();
+                    showResult(false);
                     centerPane.getChildren().add(searchResult);
                 }
             } catch (IOException e) {
@@ -196,7 +206,7 @@ public class FriendMenu extends Application {
         searchResult.setMinHeight(550);
         searchResult.setTranslateX(100);
         searchResult.setTranslateY(200);
-        showResult();
+        showResult(false);
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(searchResults);
         searchResults.setPrefHeight(500);
@@ -217,7 +227,6 @@ public class FriendMenu extends Application {
         label.setMaxHeight(40);
         label.setMaxHeight(40);
         label.setTranslateY(10);
-        ;
         label.setTextAlignment(TextAlignment.CENTER);
         label.setAlignment(Pos.CENTER);
         label.setPadding(new Insets(10, 0, 10, 0));
@@ -251,50 +260,155 @@ public class FriendMenu extends Application {
     }
 
     public void showRequests() throws IOException {
+        requests.getChildren().clear();
         HashMap<String, String> updateRequests = FriendController.getRequests();
-        System.out.println("ooo_iii"+updateRequests.size());
+        if (updateRequests.size() == 0) {
+            requests.getChildren().add(new Label("there is no request"));
+        }
         for (String username : updateRequests.keySet()) {
             VBox vBox = new VBox();
             ProfileView profileView = new ProfileView(username, 80, 460);
+            Button button = new Button();
+            button.setPadding(new Insets(10, 20, 10, 20));
+            button.setTranslateX(340);
+            button.setTranslateY(20);
+            button.getStyleClass().add("friend-btn");
+            button.setOnMouseEntered(this::scaleUp);
+            button.setOnMouseExited(this::scaleDown);
+            if (updateRequests.get(username) != null) {
+                String state = updateRequests.get(username);
+                if (state.equals("requested")) {
+                    Button button1 = new Button();
+                    button1.setPadding(new Insets(10, 20, 10, 20));
+                    button1.setTranslateX(260);
+                    button1.setTranslateY(20);
+                    button1.getStyleClass().add("friend-btn");
+                    button1.setText("reject");
+                    button1.setStyle("-fx-background-color: red");
+                    button.setText("accept");
+                    button1.setOnMouseEntered(this::scaleUp);
+                    button1.setOnMouseExited(this::scaleDown);
+                    button.setOnMouseClicked(mouseEvent -> {
+                        try {
+                            boolean check = FriendController.acceptRequest(username);
+                            if (!check) {
+                                new MenuPopUp(root, 400, 400, "error", "limitation of friends number!");
+                            } else {
+                                profileView.getChildren().removeAll(button, button1);
+                            }
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+
+                    button1.setOnMouseClicked(mouseEvent -> {
+                        try {
+                            FriendController.rejectFriend(username);
+                            profileView.getChildren().removeAll(button1);
+                            button.setText("request");
+                            button.setOnMouseClicked(mouseEvent1 -> {
+                                try {
+                                    boolean check = FriendController.sendRequest(username);
+                                    if (!check) {
+                                        new MenuPopUp(root, 400, 400, "error", "limitation of friends number!");
+                                    } else {
+                                        button.setOnMouseClicked(null);
+                                        button.setText("requesting");
+                                        button.setOpacity(0.5);
+                                    }
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            });
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+                    profileView.getChildren().addAll(button, button1);
+                } else {
+                    button.setText("requesting");
+                    button.setOpacity(0.5);
+                    profileView.getChildren().add(button);
+                }
+            }
             vBox.getChildren().add(profileView);
             requests.getChildren().add(vBox);
         }
     }
 
 
-    public void showResult() throws IOException {
+    public void showResult(boolean repeat) throws IOException {
         searchResults.getChildren().clear();
-        ArrayList<String> users = FriendController.searchUser(searchInput.getText());
+        if (!repeat) {
+            lastSearch = searchInput.getText();
+        }
+        ArrayList<String> users = FriendController.searchUser(lastSearch);
+        updateRequests = FriendController.getRequests();
+        updateFriend = FriendController.getFriends();
         if (users.size() == 0) {
-            searchResults.getChildren().add(new Label("no user with name exist"));
+            searchResults.getChildren().add(new Label("no user with this name exist"));
         }
         for (String username : users) {
             VBox vBox = new VBox();
             ProfileView profileView = new ProfileView(username, 80, 460);
             Button button = new Button();
-            button.setPadding(new Insets(10,20,10,20));
+            button.setPadding(new Insets(10, 20, 10, 20));
             button.setTranslateX(340);
             button.setTranslateY(20);
             button.getStyleClass().add("friend-btn");
-            System.out.println("i_i_i_: "+updateRequests.size());
-            if (updateRequests.get(username) != null){
+            button.setOnMouseEntered(this::scaleUp);
+            button.setOnMouseExited(this::scaleDown);
+            if (updateRequests.get(username) != null) {
                 String state = updateRequests.get(username);
-                if (state.equals("requested")){
+                if (state.equals("requested")) {
+                    Button button1 = new Button();
+                    button1.setPadding(new Insets(10, 20, 10, 20));
+                    button1.setTranslateX(260);
+                    button1.setTranslateY(20);
+                    button1.getStyleClass().add("friend-btn");
+                    button1.setText("reject");
+                    button1.setStyle("-fx-background-color: red");
                     button.setText("accept");
+                    button1.setOnMouseEntered(this::scaleUp);
+                    button1.setOnMouseExited(this::scaleDown);
                     button.setOnMouseClicked(mouseEvent -> {
                         try {
                             boolean check = FriendController.acceptRequest(username);
-                            if (!check){
-                                new MenuPopUp(root,400,400,"error","limitation of friends number!");
-                            }else{
-                                profileView.getChildren().remove(button);
+                            if (!check) {
+                                new MenuPopUp(root, 400, 400, "error", "limitation of friends number!");
+                            } else {
+                                profileView.getChildren().removeAll(button, button1);
                             }
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
                     });
-                    profileView.getChildren().add(button);
-                }else{
+
+                    button1.setOnMouseClicked(mouseEvent -> {
+                        try {
+                            FriendController.rejectFriend(username);
+                            profileView.getChildren().removeAll(button1);
+                            button.setText("request");
+                            button.setOnMouseClicked(mouseEvent1 -> {
+                                try {
+                                    boolean check = FriendController.sendRequest(username);
+                                    if (!check) {
+                                        new MenuPopUp(root, 400, 400, "error", "limitation of friends number!");
+                                    } else {
+                                        button.setOnMouseClicked(null);
+                                        button.setText("requesting");
+                                        button.setOpacity(0.5);
+                                    }
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            });
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+                    profileView.getChildren().addAll(button, button1);
+                } else {
                     button.setText("requesting");
                     button.setOpacity(0.5);
                     profileView.getChildren().add(button);
@@ -304,9 +418,9 @@ public class FriendMenu extends Application {
                 button.setOnMouseClicked(mouseEvent -> {
                     try {
                         boolean check = FriendController.sendRequest(username);
-                        if (!check){
-                            new MenuPopUp(root,400,400,"error","limitation of friends number!");
-                        }else{
+                        if (!check) {
+                            new MenuPopUp(root, 400, 400, "error", "limitation of friends number!");
+                        } else {
                             button.setOnMouseClicked(null);
                             button.setText("requesting");
                             button.setOpacity(0.5);
@@ -331,16 +445,44 @@ public class FriendMenu extends Application {
         for (String username : updateFriend) {
             VBox vBox = new VBox();
             ProfileView profileView = new ProfileView(username, 80, 300);
+            Rectangle rectangle = new Rectangle(20, 20);
+            rectangle.setFill(new ImagePattern(new Image(
+                    getClass().getResource(Paths.ICONS.getPath()).toExternalForm() + "delete.png"
+            )));
+            rectangle.setOnMouseEntered(this::scaleUp);
+            rectangle.setOnMouseExited(this::scaleDown);
+            rectangle.setOnMouseClicked(mouseEvent -> {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("delete friend");
+                alert.setContentText("do you want to delete " + username + " from your friends?");
+                ButtonType yes = new ButtonType("yes");
+                ButtonType no = new ButtonType("no");
+                alert.getButtonTypes().clear();
+                alert.getButtonTypes().addAll(yes, no);
+                Optional<ButtonType> option = alert.showAndWait();
+                if (option.get() == yes) {
+                    try {
+                        FriendController.deleteFriend(username);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+            });
+            rectangle.setTranslateX(240);
+            rectangle.setTranslateY(30);
+            profileView.getChildren().add(rectangle);
             vBox.getChildren().add(profileView);
             friendList.getChildren().add(vBox);
         }
     }
 
-    public void putIcons() {
+    public void putIcons() throws IOException {
         home = new Rectangle(20, 20);
         home.setFill(new ImagePattern(new Image(
                 getClass().getResource(Paths.ICONS.getPath()).toExternalForm() + "home.png"
         )));
+
         showRequests = new Rectangle(20, 20);
         showRequests.setFill(new ImagePattern(new Image(
                 getClass().getResource(Paths.ICONS.getPath()).toExternalForm() + "heart.png"
@@ -349,16 +491,33 @@ public class FriendMenu extends Application {
         home.setTranslateX(20);
         showRequests.setTranslateY(20);
         showRequests.setTranslateX(60);
-        leftSide.getChildren().addAll(home, showRequests);
+
+        requestCount = new Circle(6);
+        requestCount.setFill(Color.PINK);
+        int reqCnt = FriendController.getRequestsCount(FriendController.getRequests());
+        if (reqCnt != 0) {
+            setHeartBeat();
+        }
+        requestCountLabel = new Label(reqCnt + "");
+        requestCount.setTranslateY(20);
+        requestCount.setTranslateX(80);
+        requestCountLabel.setTranslateY(14);
+        requestCountLabel.setTranslateX(78);
+        requestCountLabel.setStyle("-fx-font-size: 8");
+
+
+        leftSide.getChildren().addAll(home, showRequests, requestCount, requestCountLabel);
 
         back = new Rectangle(20, 20);
         back.setFill(new ImagePattern(new Image(
                 getClass().getResource(Paths.ICONS.getPath()).toExternalForm() + "back.png"
         )));
 
-
+        home.setOnMouseEntered(this::scaleUp);
+        home.setOnMouseExited(this::scaleDown);
         home.setOnMouseClicked(mouseEvent -> {
             try {
+                updateData.stop();
                 new MainMenu().start(stage);
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -402,10 +561,71 @@ public class FriendMenu extends Application {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+                if (lastSearch != null) {
+                    try {
+                        showResult(true);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                int reqCnt = FriendController.getRequestsCount(updateRequests);
+                if (reqCnt != 0) {
+                    if (heartBeat == null) {
+                        setHeartBeat();
+                    } else {
+                        heartBeat.stop();
+                        heartBeat.play();
+                    }
+                } else {
+                    if (heartBeat != null) {
+                        heartBeat.stop();
+                        showRequests.setScaleX(1);
+                        showRequests.setScaleY(1);
+                    }
+                }
+                requestCountLabel.setText(reqCnt + "");
             }
         }));
         updateData.setCycleCount(-1);
         updateData.play();
+    }
+
+    public void setHeartBeat() {
+        heartBeat = new ScaleTransition(Duration.seconds(1), showRequests);
+        heartBeat.setFromX(1.0);
+        heartBeat.setFromY(1.0);
+        heartBeat.setToX(1.1);
+        heartBeat.setToY(1.1);
+        heartBeat.setAutoReverse(true);
+        heartBeat.setCycleCount(ScaleTransition.INDEFINITE);
+        heartBeat.setDuration(Duration.millis(500));
+
+        // Start the heartbeat animation
+        heartBeat.play();
+    }
+
+    public void scaleDown(MouseEvent mouseEvent) {
+        Node node = (Node) mouseEvent.getSource();
+        ScaleTransition st = new ScaleTransition(Duration.millis(100), node);
+        st.setFromX(1.1);
+        st.setFromY(1.1);
+        st.setToX(1);
+        st.setToY(1);
+        st.setAutoReverse(true);
+        st.play();
+    }
+
+    public void scaleUp(MouseEvent mouseEvent) {
+        Node node = (Node) mouseEvent.getSource();
+
+        ScaleTransition st = new ScaleTransition(Duration.millis(100), node);
+        st.setFromX(1);
+        st.setFromY(1);
+        st.setToX(1.1);
+        st.setToY(1.1);
+        st.setAutoReverse(true);
+        st.play();
+
     }
 
     public void setBackground() {

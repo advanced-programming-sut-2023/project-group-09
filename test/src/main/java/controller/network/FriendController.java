@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class FriendController {
@@ -57,7 +58,6 @@ public class FriendController {
         if (receivePacket.attributes.get("requests") == null){
             return new HashMap<>();
         }
-        System.out.println("pi_pi_pi");
         return new Gson().fromJson(receivePacket.attributes.get("requests").toString(), new TypeToken<HashMap<String,String>>(){}.getType());
     }
     public static ArrayList<String> searchUser(String word) throws IOException {
@@ -76,6 +76,10 @@ public class FriendController {
         Packet packet = new Packet("update user","friend");
         packet.sendPacket();
         Packet receivePacket = Packet.receivePacket();
-        return !receivePacket.command.equals("update");
+        return (boolean) receivePacket.attributes.get("update");
+    }
+
+    public static int getRequestsCount(HashMap<String,String> requests){
+        return Collections.frequency(requests.values(),"requested");
     }
 }

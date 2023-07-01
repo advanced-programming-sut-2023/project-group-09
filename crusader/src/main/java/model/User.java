@@ -2,6 +2,7 @@ package model;
 
 import controller.UserController;
 import enumeration.Pair;
+import javafx.animation.Transition;
 import server.handlers.UserHandler;
 import model.chat.Room;
 
@@ -27,6 +28,7 @@ public class User {
 
     public ArrayList<String> friends = new ArrayList<>();
     public HashMap<String,String> friendsRequest = new HashMap<>();
+
 
     public User(String username, String password, String nickname, String email, String slogan) {
         this.username = username;

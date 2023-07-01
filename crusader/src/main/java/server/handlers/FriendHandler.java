@@ -43,7 +43,7 @@ public class FriendHandler {
         String receiverUsername = packet.attributes.get("username").toString();
         User receiver = Application.getUserByUsername(receiverUsername);
 
-        if (sender.friends.size() > 100){
+        if (sender.friends != null && sender.friends.size() > 100){
             Packet packet = new Packet("failed");
             Packet.sendPacket(packet,connection);
             return;
@@ -76,7 +76,7 @@ public class FriendHandler {
         User sender = TokenController.getUserByToken(packet.token);
         String receiverUsername = packet.attributes.get("username").toString();
         User receiver = Application.getUserByUsername(receiverUsername);
-        if (sender.friends.size() > 100){
+        if (sender.friends != null && sender.friends.size() > 100){
             Packet packet = new Packet("failed");
             Packet.sendPacket(packet,connection);
             return;

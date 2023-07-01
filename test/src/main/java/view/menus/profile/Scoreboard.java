@@ -88,6 +88,7 @@ public class Scoreboard extends Application {
         back = new MenuFingerBack(100, (int) (stage.getHeight() / 2 + 300));
         back.setOnMouseClicked(mouseEvent -> {
             try {
+                checkTimeline.stop();
                 new MainMenu().start(stage);
             } catch (Exception e) {
                 throw new RuntimeException(e);
