@@ -10,7 +10,7 @@ import view.menus.MainMenu;
 public class MainController {
 
 
-    public static void loadGame(){
+    public static void loadGame() {
         DBController.loadAllUsers();
         DBController.loadCurrentUser();
         DBController.loadGoods();
@@ -23,19 +23,18 @@ public class MainController {
 
     public static void run(Stage stage) throws Exception {
         loadGame();
-        if (Application.getCurrentUser() == null){
+        if (Application.getCurrentUser() == null) {
             new LoginMenu().start(stage);
-        }else{
+        } else {
             Application.setStayLoggedIn(true);
             new MainMenu().start(stage);
         }
     }
 
-    public static void exitCrusader(){
+    public static void exitCrusader() {
         if (Application.isStayLoggedIn()) {
             DBController.saveCurrentUser();
-        }
-        else {
+        } else {
             Application.setCurrentUser(null);
             DBController.saveCurrentUser();
         }

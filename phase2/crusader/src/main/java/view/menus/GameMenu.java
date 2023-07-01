@@ -36,6 +36,7 @@ import model.game.Map;
 import model.game.Tile;
 import model.human.military.EuropeanTroop;
 import model.human.military.Military;
+import model.menugui.MenuHoverBox;
 import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
@@ -441,8 +442,15 @@ public class GameMenu extends Application {
                         }
                     }
                 }
-//                MenuHoverBox details = new MenuHoverBox(root, endSelectionTile.getX() - 450,
-//                        endSelectionTile.getY() - 250, 300, 300, "Hello world");
+                String text = (selectedTiles.size() == 1) ? GameController.showDetailsOfTile(startSelectionTile.getTileX(),
+                        startSelectionTile.getTileY()) : GameController.showDetailsOfTiles(selectedTiles);
+                if (text != "") {
+                    MenuHoverBox details = new MenuHoverBox(root, text);
+                    details.setOnMouseExited(mouseEvent -> {
+                        details.getDetailsParent().getChildren().remove(details);
+                    });
+                }
+
             }
         }));
         selectDoneTimeline.setCycleCount(-1);

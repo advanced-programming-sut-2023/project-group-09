@@ -40,7 +40,7 @@ public class DBController {
 
 
     // load & save users from files
-    public static void loadAllUsers(){
+    public static void loadAllUsers() {
         try {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(Color.class, new ColorSerializer())
@@ -48,7 +48,8 @@ public class DBController {
                     .create();
             checkFileExist(Paths.USERS_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.USERS_PATH.getPath())));
-            ArrayList<User> allUsers = gson.fromJson(text, new TypeToken<List<User>>(){}.getType());
+            ArrayList<User> allUsers = gson.fromJson(text, new TypeToken<List<User>>() {
+            }.getType());
             Application.setUsers(allUsers);
             if (allUsers == null) {
                 Application.setUsers(new ArrayList<>());
@@ -59,17 +60,17 @@ public class DBController {
         }
     }
 
-    public static void saveAllUsers(){
+    public static void saveAllUsers() {
 
         try {
             checkFileExist(Paths.USERS_PATH.getPath());
             File file = new File(Paths.USERS_PATH.getPath());
             FileWriter fileWriter = new FileWriter(file);
-            if(Application.getUsers() != null){
+            if (Application.getUsers() != null) {
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 String json = gson.toJson(Application.getUsers());
                 fileWriter.write(json);
-            }else {
+            } else {
                 fileWriter.write("");
             }
             fileWriter.close();
@@ -79,12 +80,13 @@ public class DBController {
         }
     }
 
-    public static void loadCurrentUser(){
+    public static void loadCurrentUser() {
         try {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(Color.class, new ColorSerializer())
                     .registerTypeAdapter(Color.class, new ColorDeserializer())
-                    .create();;
+                    .create();
+            ;
             checkFileExist(Paths.CURRENT_USER_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.CURRENT_USER_PATH.getPath())));
             User user = gson.fromJson(text, User.class);
@@ -100,16 +102,16 @@ public class DBController {
         }
     }
 
-    public static void saveCurrentUser(){
+    public static void saveCurrentUser() {
         try {
             checkFileExist(Paths.CURRENT_USER_PATH.getPath());
             File file = new File(Paths.CURRENT_USER_PATH.getPath());
             FileWriter fileWriter = new FileWriter(file);
-            if(Application.getCurrentUser() != null){
+            if (Application.getCurrentUser() != null) {
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 String json = gson.toJson(Application.getCurrentUser());
                 fileWriter.write(json);
-            }else {
+            } else {
                 fileWriter.write("");
             }
             fileWriter.close();
@@ -121,15 +123,17 @@ public class DBController {
 
 
     // load goods from file
-    public static void loadGoods(){
+    public static void loadGoods() {
         try {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(Color.class, new ColorSerializer())
                     .registerTypeAdapter(Color.class, new ColorDeserializer())
-                    .create();;
+                    .create();
+            ;
             checkFileExist(Paths.GOODS_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.GOODS_PATH.getPath())));
-            GameGoods.goods = gson.fromJson(text, new TypeToken<HashMap<String, Goods>>(){}.getType());
+            GameGoods.goods = gson.fromJson(text, new TypeToken<HashMap<String, Goods>>() {
+            }.getType());
             loadFoods();
             loadResources();
             loadWeapons();
@@ -139,43 +143,51 @@ public class DBController {
         }
     }
 
-    private static void loadFoods(){
+    private static void loadFoods() {
         try {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(Color.class, new ColorSerializer())
                     .registerTypeAdapter(Color.class, new ColorDeserializer())
-                    .create();;
+                    .create();
+            ;
             checkFileExist(Paths.FOODS_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.FOODS_PATH.getPath())));
-            GameGoods.foods = gson.fromJson(text, new TypeToken<HashMap<String, Goods>>(){}.getType());
+            GameGoods.foods = gson.fromJson(text, new TypeToken<HashMap<String, Goods>>() {
+            }.getType());
         } catch (IOException e) {
             System.out.println("An error occurred.[load goods]");
             e.printStackTrace();
         }
     }
-    private static void loadResources(){
+
+    private static void loadResources() {
         try {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(Color.class, new ColorSerializer())
                     .registerTypeAdapter(Color.class, new ColorDeserializer())
-                    .create();;
+                    .create();
+            ;
             checkFileExist(Paths.RESOURCES_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.RESOURCES_PATH.getPath())));
-            GameGoods.resources = gson.fromJson(text, new TypeToken<HashMap<String, Goods>>(){}.getType());
+            GameGoods.resources = gson.fromJson(text, new TypeToken<HashMap<String, Goods>>() {
+            }.getType());
         } catch (IOException e) {
             System.out.println("An error occurred.[load goods]");
             e.printStackTrace();
         }
     }
-    private static void loadWeapons(){
+
+    private static void loadWeapons() {
         try {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(Color.class, new ColorSerializer())
                     .registerTypeAdapter(Color.class, new ColorDeserializer())
-                    .create();;
+                    .create();
+            ;
             checkFileExist(Paths.WEAPONS_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.WEAPONS_PATH.getPath())));
-            GameGoods.weapons = gson.fromJson(text, new TypeToken<HashMap<String, Goods>>(){}.getType());
+            GameGoods.weapons = gson.fromJson(text, new TypeToken<HashMap<String, Goods>>() {
+            }.getType());
         } catch (IOException e) {
             System.out.println("An error occurred.[load goods]");
             e.printStackTrace();
@@ -184,7 +196,7 @@ public class DBController {
 
 
     //load military from file
-    public static void loadMilitary(){
+    public static void loadMilitary() {
         HashMap<String, EuropeanTroop> europeanTroops = loadEuropeanTroops();
         HashMap<String, ArabianMercenary> arabianMercenaries = loadArabianMercenaries();
 
@@ -194,7 +206,7 @@ public class DBController {
         GameHumans.createTunneler();
     }
 
-    public static HashMap<String, EuropeanTroop> loadEuropeanTroops(){
+    public static HashMap<String, EuropeanTroop> loadEuropeanTroops() {
         try {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(Color.class, new ColorSerializer())
@@ -202,7 +214,8 @@ public class DBController {
                     .create();
             checkFileExist(Paths.EUROPEAN_TROOP_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.EUROPEAN_TROOP_PATH.getPath())));
-            return gson.fromJson(text, new TypeToken<HashMap<String, EuropeanTroop>>(){}.getType());
+            return gson.fromJson(text, new TypeToken<HashMap<String, EuropeanTroop>>() {
+            }.getType());
         } catch (IOException e) {
             System.out.println("An error occurred.[load humans]");
             e.printStackTrace();
@@ -210,15 +223,17 @@ public class DBController {
         return null;
     }
 
-    public static HashMap<String, ArabianMercenary> loadArabianMercenaries(){
+    public static HashMap<String, ArabianMercenary> loadArabianMercenaries() {
         try {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(Color.class, new ColorSerializer())
                     .registerTypeAdapter(Color.class, new ColorDeserializer())
-                    .create();;
+                    .create();
+            ;
             checkFileExist(Paths.ARABIAN_MERCENARY_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.ARABIAN_MERCENARY_PATH.getPath())));
-            return gson.fromJson(text, new TypeToken<HashMap<String, ArabianMercenary>>(){}.getType());
+            return gson.fromJson(text, new TypeToken<HashMap<String, ArabianMercenary>>() {
+            }.getType());
         } catch (IOException e) {
             System.out.println("An error occurred.[load humans]");
             e.printStackTrace();
@@ -226,7 +241,7 @@ public class DBController {
         return null;
     }
 
-    public static void loadBuildings(){
+    public static void loadBuildings() {
         HashMap<String, Wall> wallHashMap = loadWalls();
         HashMap<String, Gatehouse> gatehouseHashMap = loadGatehouses();
         HashMap<String, Tower> towerHashMap = loadTowers();
@@ -257,15 +272,17 @@ public class DBController {
 
     }
 
-    public static HashMap<String, Wall> loadWalls(){
+    public static HashMap<String, Wall> loadWalls() {
         try {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(Color.class, new ColorSerializer())
                     .registerTypeAdapter(Color.class, new ColorDeserializer())
-                    .create();;
+                    .create();
+            ;
             checkFileExist(Paths.BUILDINGS_PATH.getPath() + "walls.json");
             String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "walls.json")));
-            return gson.fromJson(text, new TypeToken<HashMap<String, Wall>>(){}.getType());
+            return gson.fromJson(text, new TypeToken<HashMap<String, Wall>>() {
+            }.getType());
         } catch (IOException e) {
             System.out.println("An error occurred.[load buildings]");
             e.printStackTrace();
@@ -273,15 +290,17 @@ public class DBController {
         return null;
     }
 
-    public static HashMap<String, Gatehouse> loadGatehouses(){
+    public static HashMap<String, Gatehouse> loadGatehouses() {
         try {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(Color.class, new ColorSerializer())
                     .registerTypeAdapter(Color.class, new ColorDeserializer())
-                    .create();;
+                    .create();
+            ;
             checkFileExist(Paths.BUILDINGS_PATH.getPath() + "gateHouses.json");
             String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "gateHouses.json")));
-            return gson.fromJson(text, new TypeToken<HashMap<String, Gatehouse>>(){}.getType());
+            return gson.fromJson(text, new TypeToken<HashMap<String, Gatehouse>>() {
+            }.getType());
         } catch (IOException e) {
             System.out.println("An error occurred.[load buildings]");
             e.printStackTrace();
@@ -289,15 +308,17 @@ public class DBController {
         return null;
     }
 
-    public static HashMap<String, Tower> loadTowers(){
+    public static HashMap<String, Tower> loadTowers() {
         try {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(Color.class, new ColorSerializer())
                     .registerTypeAdapter(Color.class, new ColorDeserializer())
-                    .create();;
+                    .create();
+            ;
             checkFileExist(Paths.BUILDINGS_PATH.getPath() + "towers.json");
             String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "towers.json")));
-            return gson.fromJson(text, new TypeToken<HashMap<String, Tower>>(){}.getType());
+            return gson.fromJson(text, new TypeToken<HashMap<String, Tower>>() {
+            }.getType());
         } catch (IOException e) {
             System.out.println("An error occurred.[load buildings]");
             e.printStackTrace();
@@ -305,15 +326,17 @@ public class DBController {
         return null;
     }
 
-    public static HashMap<String, Barrack> loadBarracks(){
+    public static HashMap<String, Barrack> loadBarracks() {
         try {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(Color.class, new ColorSerializer())
                     .registerTypeAdapter(Color.class, new ColorDeserializer())
-                    .create();;
+                    .create();
+            ;
             checkFileExist(Paths.BUILDINGS_PATH.getPath() + "barracks.json");
             String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "barracks.json")));
-            return gson.fromJson(text, new TypeToken<HashMap<String, Barrack>>(){}.getType());
+            return gson.fromJson(text, new TypeToken<HashMap<String, Barrack>>() {
+            }.getType());
         } catch (IOException e) {
             System.out.println("An error occurred.[load buildings]");
             e.printStackTrace();
@@ -321,15 +344,17 @@ public class DBController {
         return null;
     }
 
-    public static HashMap<String, ProducerBuilding> loadProducerBuilding(){
+    public static HashMap<String, ProducerBuilding> loadProducerBuilding() {
         try {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(Color.class, new ColorSerializer())
                     .registerTypeAdapter(Color.class, new ColorDeserializer())
-                    .create();;
+                    .create();
+            ;
             checkFileExist(Paths.BUILDINGS_PATH.getPath() + "producerBuildings.json");
             String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "producerBuildings.json")));
-            return gson.fromJson(text, new TypeToken<HashMap<String, ProducerBuilding>>(){}.getType());
+            return gson.fromJson(text, new TypeToken<HashMap<String, ProducerBuilding>>() {
+            }.getType());
         } catch (IOException e) {
             System.out.println("An error occurred.[load buildings]");
             e.printStackTrace();
@@ -337,15 +362,17 @@ public class DBController {
         return null;
     }
 
-    public static HashMap<String, WeaponProducer> loadWeaponProducer(){
+    public static HashMap<String, WeaponProducer> loadWeaponProducer() {
         try {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(Color.class, new ColorSerializer())
                     .registerTypeAdapter(Color.class, new ColorDeserializer())
-                    .create();;
+                    .create();
+            ;
             checkFileExist(Paths.BUILDINGS_PATH.getPath() + "weaponProducers.json");
             String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "weaponProducers.json")));
-            return gson.fromJson(text, new TypeToken<HashMap<String, WeaponProducer>>(){}.getType());
+            return gson.fromJson(text, new TypeToken<HashMap<String, WeaponProducer>>() {
+            }.getType());
         } catch (IOException e) {
             System.out.println("An error occurred.[load buildings]");
             e.printStackTrace();
@@ -353,15 +380,17 @@ public class DBController {
         return null;
     }
 
-    public static HashMap<String, StorageBuilding> loadStorageBuilding(){
+    public static HashMap<String, StorageBuilding> loadStorageBuilding() {
         try {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(Color.class, new ColorSerializer())
                     .registerTypeAdapter(Color.class, new ColorDeserializer())
-                    .create();;
+                    .create();
+            ;
             checkFileExist(Paths.BUILDINGS_PATH.getPath() + "storageBuilding.json");
             String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "storageBuilding.json")));
-            return gson.fromJson(text, new TypeToken<HashMap<String, StorageBuilding>>(){}.getType());
+            return gson.fromJson(text, new TypeToken<HashMap<String, StorageBuilding>>() {
+            }.getType());
         } catch (IOException e) {
             System.out.println("An error occurred.[load buildings]");
             e.printStackTrace();
@@ -369,22 +398,25 @@ public class DBController {
         return null;
     }
 
-    public static HashMap<String, Building> loadOther(){
+    public static HashMap<String, Building> loadOther() {
         try {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(Color.class, new ColorSerializer())
                     .registerTypeAdapter(Color.class, new ColorDeserializer())
-                    .create();;
+                    .create();
+            ;
             checkFileExist(Paths.BUILDINGS_PATH.getPath() + "other.json");
             String text = new String(Files.readAllBytes(Path.of(Paths.BUILDINGS_PATH.getPath() + "other.json")));
-            return gson.fromJson(text, new TypeToken<HashMap<String, Building>>(){}.getType());
+            return gson.fromJson(text, new TypeToken<HashMap<String, Building>>() {
+            }.getType());
         } catch (IOException e) {
             System.out.println("An error occurred.[load buildings]");
             e.printStackTrace();
         }
         return null;
     }
-    public static void loadTools(){
+
+    public static void loadTools() {
         try {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(Color.class, new ColorSerializer())
@@ -392,13 +424,15 @@ public class DBController {
                     .create();
             checkFileExist(Paths.TOOLS_PATH.getPath());
             String text = new String(Files.readAllBytes(Path.of(Paths.TOOLS_PATH.getPath())));
-            GameTools.tools = gson.fromJson(text, new TypeToken<HashMap<String, Tool>>(){}.getType());
+            GameTools.tools = gson.fromJson(text, new TypeToken<HashMap<String, Tool>>() {
+            }.getType());
         } catch (IOException e) {
             System.out.println("An error occurred.[load tools]");
             e.printStackTrace();
         }
     }
-    public static void checkFileExist(String fileAddress){
+
+    public static void checkFileExist(String fileAddress) {
         try {
             File myObj = new File(fileAddress);
             boolean check = myObj.createNewFile();
@@ -413,7 +447,7 @@ public class DBController {
             checkFileExist(fileAddress);
             File file = new File(fileAddress);
             FileWriter fileWriter = new FileWriter(file);
-            if(Application.getCurrentUser() != null){
+            if (Application.getCurrentUser() != null) {
                 Gson gson = new GsonBuilder()
                         .excludeFieldsWithModifiers(Modifier.STATIC,
                                 Modifier.TRANSIENT,
@@ -421,7 +455,7 @@ public class DBController {
                         .create();
                 String json = gson.toJson(map);
                 fileWriter.write(json);
-            }else {
+            } else {
                 fileWriter.write("");
             }
             fileWriter.close();

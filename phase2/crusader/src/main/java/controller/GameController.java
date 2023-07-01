@@ -951,14 +951,32 @@ public class GameController {
 
         if (tile.isPit()) details += "there is a killing pit here\n";
         if (tile.isMoat()) details += "there is a moat here\n";
+
+        if (details.length() == 0) return "";
         return details.substring(0, details.length() - 1);
     }
 
-    public static String showDetailsOfTiles(ArrayList<GameTile> tiles) {
+    public static String showDetailsOfTiles(Set<GameTile> tiles) {
         String details = "";
         ArrayList<Military> militaries = new ArrayList<>();
+        int treesCount = 0, rocksCount = 0, buildingsCount = 0, toolsCount = 0, pitsCount = 0, moatsCount = 0;
+        Building building = null;
+        Tool tool = null;
         for (GameTile gameTile : tiles) {
-            militaries.addAll(filteredMilitariesList(gameTile.getTile().getMilitaries()));
+            Tile tile = gameTile.getTile();
+            militaries.addAll(filteredMilitariesList(tile.getMilitaries()));
+            if (tile.getTree() != null) treesCount++;
+            if (tile.getRockDirection() != null) rocksCount++;
+            if (tile.getBuilding() != null && !tile.getBuilding().equals(building)) {
+                buildingsCount++;
+                building = tile.getBuilding();
+            }
+            if (tile.getTool() != null && !tile.getTool().equals(tool)) {
+                toolsCount++;
+                tool = tile.getTool();
+            }
+            if (tile.isPit()) pitsCount++;
+            if (tile.isMoat()) moatsCount++;
         }
 
         HashMap<Government, Integer> militariesHashmap = new HashMap<>();
@@ -976,19 +994,36 @@ public class GameController {
 
         HashMap<Building, Integer> produceRates = new HashMap<>();
         for (GameTile gameTile : tiles) {
-            Building building = gameTile.getTile().getBuilding();
-            if (building != null && building instanceof ProducerBuilding && produceRates.get(building) == null)
-                produceRates.put(building, ((ProducerBuilding) building).getRate());
+            Building currentBuilding = gameTile.getTile().getBuilding();
+            if (currentBuilding != null && currentBuilding instanceof ProducerBuilding && produceRates.get(currentBuilding) == null)
+                produceRates.put(currentBuilding, ((ProducerBuilding) currentBuilding).getRate());
         }
         if (produceRates.size() != 0) {
-            details += "minimum production rate: " + Collections.min(produceRates.values());
-            details += "maximum production rate: " + Collections.max(produceRates.values());
+            details += "minimum production rate: " + Collections.min(produceRates.values()) + "\n";
+            details += "maximum production rate: " + Collections.max(produceRates.values()) + "\n";
             double sum = 0;
             for (Integer rate : produceRates.values()) sum += (double) rate;
-            details += "average production rate: " + sum / produceRates.size();
+            details += "average production rate: " + sum / produceRates.size() + "\n";
         }
 
-        return details;
+        if (treesCount != 0) details += "number of trees: " + treesCount + "\n";
+        if (rocksCount != 0) details += "number of rocks: " + rocksCount + "\n";
+        if (buildingsCount == 1) {
+            details += "building " + building.getName() + " from Lord " +
+                    building.getGovernment().getUser().getNickname() +
+                    " | HP: " + building.getHp() + "/" +
+                    building.getMaxHp() + "\n";
+        }
+        if (toolsCount == 1) {
+            details += "tool " + tool.getName() + " from Lord " +
+                    tool.getGovernment().getUser().getNickname() +
+                    " | HP: " + tool.getHp() + "/20\n";
+        }
+        if (pitsCount != 0) details += "number of pits: " + pitsCount + "\n";
+        if (moatsCount != 0) details += "number of moated tiles: " + moatsCount + "\n";
+
+        if (details.length() == 0) return "";
+        return details.substring(0, details.length() - 1);
     }
 
     public static String validateXAndY(int x, int y) {

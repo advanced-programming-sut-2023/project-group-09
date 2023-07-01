@@ -3,10 +3,12 @@ package view.menus.chat;
 import client.Packet;
 import com.google.gson.Gson;
 import controller.network.UsersController;
+import javafx.geometry.HPos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -29,7 +31,8 @@ public class ChatViewController {
     private String currentTabName;
     private TextField typeBox;
     private TextField searchBar;
-    private VBox list;
+    private ScrollPane scrollPane;
+    private GridPane list;
     HashMap<String, String> users = new HashMap<>();
     ArrayList<Room> rooms = new ArrayList<>();
 
@@ -152,42 +155,36 @@ public class ChatViewController {
     }
 
     private void addListBox() {
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setPrefViewportHeight(650);
+        scrollPane = new ScrollPane();
+        scrollPane.setPrefViewportHeight(400);
         scrollPane.setPrefViewportWidth(396);
+        scrollPane.setTranslateY(100);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setStyle("-fx-background: transparent; -fx-background-color: transparent");
-        list = new VBox();
-        list.setMinWidth(396);
-        list.setMaxWidth(396);
-        list.setMinHeight(650);
-        list.setMaxHeight(650);
-        list.setTranslateY(50);
+        list = new GridPane();
+        list.setVgap(20);
+        list.setHgap(20);
         scrollPane.setContent(list);
-        chat.getChatPart().getChildren().add(scrollPane);
     }
 
     private void showListOfUsers(HashMap<String, String> users) throws IOException {
+        chat.getChatPart().getChildren().remove(scrollPane);
         int count = 0;
         for (String username : users.keySet()) {
-            StackPane listItem = new StackPane();
-            listItem.setMinWidth(400);
-            listItem.setMaxWidth(400);
-            listItem.setMinHeight(50);
-            listItem.setMaxHeight(50);
-//            listItem.setTranslateY(y);
 
-            ImageView avatar = new ImageView(new Image(new ByteArrayInputStream(UsersController
-                    .getImageFromServerByUsername(username).toByteArray())));
-            System.out.println(avatar.getImage().getWidth());
-            System.out.println(avatar.getImage().getHeight());
-            avatar.setTranslateX(0);
+//            ImageView avatar = new ImageView(new Image(new ByteArrayInputStream(UsersController
+//                    .getImageFromServerByUsername(username).toByteArray())));
+//            System.out.println(avatar.getImage().getWidth());
+//            System.out.println(avatar.getImage().getHeight());
+//            avatar.setTranslateX(0);
 
             Text usernameText = new Text(username);
             usernameText.setTranslateX(0);
             usernameText.setFont(Font.font("Helvetica", FontWeight.BOLD, FontPosture.REGULAR, 18));
-            listItem.getChildren().addAll(avatar, usernameText);
+            GridPane.setHalignment(usernameText, HPos.LEFT);
+            list.add(usernameText, 0, count++);
         }
+        chat.getChatPart().getChildren().add(scrollPane);
     }
 }
