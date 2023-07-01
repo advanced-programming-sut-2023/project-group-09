@@ -177,8 +177,8 @@ public class EditMapMenu extends Application {
 
 
         public static void createGameBar() {
-            System.out.println("game bar" + GameImages.imageViews.get("bar"));
-            barImage = new ImageView(GameImages.imageViews.get("bar"));
+            barImage = new ImageView(new Image(GameImages.class.getResource
+                    (Paths.BAR_IMAGES.getPath()).toExternalForm() + "bar.png"));
             barImage.setFitWidth(menuBar.getMaxWidth());
             barImage.setFitHeight(menuBar.getMaxHeight());
             menuBar.setTranslateX(0);
