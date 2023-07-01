@@ -232,4 +232,13 @@ public class UsersController {
         Packet receivePacket = Packet.receivePacket();
         return (Boolean) receivePacket.attributes.get("check");
     }
+
+    public static String getLastSeen(String username) throws IOException {
+        Packet packet = new Packet("get last seen", "user");
+        packet.addAttribute("username",username);
+        packet.sendPacket();
+
+        Packet receivePacket = Packet.receivePacket();
+        return receivePacket.attributes.get("lastSeen").toString();
+    }
 }

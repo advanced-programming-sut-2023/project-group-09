@@ -29,6 +29,7 @@ public class User {
     public ArrayList<String> friends = new ArrayList<>();
     public HashMap<String,String> friendsRequest = new HashMap<>();
 
+    private long lastSeen;
 
     public User(String username, String password, String nickname, String email, String slogan) {
         this.username = username;
@@ -149,6 +150,11 @@ public class User {
 
     public void setOnline(boolean online) {
         this.online = online;
+        if (!online){
+            lastSeen = System.currentTimeMillis();
+        }else{
+            lastSeen = 0L;
+        }
         UserHandler.sendChangedPacket();
     }
 
@@ -215,5 +221,13 @@ public class User {
 
     public void setUpdateFriend(boolean updateFriend) {
         this.updateFriend = updateFriend;
+    }
+
+    public Long getLastSeen() {
+        return lastSeen;
+    }
+
+    public void setLastSeen(Long lastSeen) {
+        this.lastSeen = lastSeen;
     }
 }

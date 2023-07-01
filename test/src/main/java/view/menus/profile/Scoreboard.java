@@ -15,6 +15,7 @@ import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -64,7 +65,7 @@ public class Scoreboard extends Application {
         stage.setScene(scene);
         root = ViewController.makePaneScreen(stage, pane, 1100, -1);
         setBackground();
-        menuBox = new MenuBox("scoreboard", 250, 110, 500, 600);
+        menuBox = new MenuBox("scoreboard", 250, 110, 520, 600);
         makeTable();
         addLoader();
         root.getChildren().add(menuBox);
@@ -120,30 +121,47 @@ public class Scoreboard extends Application {
 
     public void setupTable() {
 
-        TableColumn<ScoreboardData, Integer> dateCol = new TableColumn<>("rank");
-        dateCol.setPrefWidth(100);
+        TableColumn<ScoreboardData, Integer> dateCol = new TableColumn<>("");
+        dateCol.setMinWidth(30);
+        dateCol.setMaxWidth(30);
         dateCol.setCellValueFactory(new PropertyValueFactory<>("rank"));
 
-        TableColumn<ScoreboardData, Button> value1Col = new TableColumn<>("avatar");
+        TableColumn<ScoreboardData, Button> value1Col = new TableColumn<>("");
         value1Col.setPrefWidth(50);
-
-        TableColumn<ScoreboardData, ImageView> value4Col = new TableColumn<>("online");
-        value4Col.setPrefWidth(20);
-        value4Col.setCellValueFactory(new PropertyValueFactory<>("online"));
-
+        value1Col.setMinWidth(50);
+        value1Col.setMaxWidth(50);
         value1Col.setCellValueFactory(new PropertyValueFactory<>("avatar"));
 
         TableColumn<ScoreboardData, String> value2Col = new TableColumn<>("username");
-        value2Col.setPrefWidth(90);
+        value2Col.setMinWidth(80);
+        value2Col.setMaxWidth(80);
         value2Col.setCellValueFactory(new PropertyValueFactory<>("username"));
 
         TableColumn<ScoreboardData, Integer> value3Col = new TableColumn<>("high score");
-        value3Col.setPrefWidth(90);
+        value3Col.setMinWidth(90);
+        value3Col.setMaxWidth(90);
         value3Col.setCellValueFactory(new PropertyValueFactory<>("highScore"));
+
+        TableColumn<ScoreboardData, String> value5Col = new TableColumn<>("last seen");
+        value5Col.setMinWidth(180);
+        value5Col.setMaxWidth(180);
+        value5Col.setCellValueFactory(new PropertyValueFactory<>("lastSeen"));
+
+        TableColumn<ScoreboardData, ImageView> value4Col = new TableColumn<>("");
+        value4Col.setMinWidth(30);
+        value4Col.setMaxWidth(30);
+        value4Col.setCellValueFactory(new PropertyValueFactory<>("online"));
+
+        TableColumn<ScoreboardData, Button> value6Col = new TableColumn<>("");
+        value6Col.setMinWidth(30);
+        value6Col.setMaxWidth(30);
+        value6Col.setCellValueFactory(new PropertyValueFactory<>("friend"));
+
         tableView = new TableView<>();
-        tableView.getColumns().addAll(dateCol, value1Col, value2Col, value3Col,value4Col);
+        tableView.getColumns().addAll(dateCol, value1Col, value2Col, value3Col,value4Col,value6Col,value5Col);
         tableView.setMaxHeight(540);
-        tableView.setMaxWidth(490);
+        tableView.setMaxWidth(510);
+        tableView.setMinWidth(510);
         tableView.setTranslateY(25);
     }
 
@@ -152,7 +170,9 @@ public class Scoreboard extends Application {
         ArrayList<ScoreboardData> data = new ArrayList<>();
         for (int i = 0; i < Math.min(firstIndex + 11, users.size()); i++) {
             String username = users.get(i);
-            data.add(new ScoreboardData(i + 1, username, UsersController.getHighScore(username),UsersController.getOnline(username)));
+            System.out.println("last seen : "+UsersController.getLastSeen(username));
+            data.add(new ScoreboardData(i + 1, username, UsersController.getHighScore(username),UsersController.getOnline(username)
+            ,UsersController.getLastSeen(username)));
         }
         tableView.setItems(FXCollections.observableList(data));
     }

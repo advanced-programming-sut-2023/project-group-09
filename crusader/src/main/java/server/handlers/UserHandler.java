@@ -9,6 +9,7 @@ import server.Packet;
 import server.Server;
 
 import java.io.IOException;
+import java.time.*;
 import java.util.ArrayList;
 
 public class UserHandler {
@@ -35,8 +36,56 @@ public class UserHandler {
             case "get high score by username" -> getHighScoreByUsername();
             case "get rank by username" -> getRankByUsername();
             case "get sorted user" -> getSortedUsers();
+            case "get last seen" -> getLastSeen();
         }
     }
+
+    private void getLastSeen() throws IOException {
+        User user = Application.getUserByUsername(packet.attributes.get("username").toString());
+        Packet packet = new Packet("success","user");
+        packet.addAttribute("lastSeen",getLastSeenString(user));
+        Packet.sendPacket(packet,connection);
+    }
+
+    private String getLastSeenString(User user){
+
+        long lastSeen = user.getLastSeen();
+        if (user.isOnline()){
+            return "online";
+        }
+        if (lastSeen == 0){
+            return "Last seen recently";
+        }
+        LocalDateTime pastTime= LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(lastSeen), ZoneId.systemDefault());
+        LocalDateTime now = LocalDateTime.now();
+        Duration duration = Duration.between(pastTime, now);
+        Period period = Period.between(pastTime.toLocalDate(), now.toLocalDate());
+        int years = period.getYears();
+        int months = period.getMonths();
+        if (years > 0 || months > 1) {
+            return "Last seen a long time ago";
+        }
+
+        long seconds = duration.getSeconds();
+        if (seconds < 60) {
+            return "Last seen recently";
+        } else if (seconds < 3600) {
+            long minutes = seconds / 60;
+            return minutes + " minutes ago";
+        } else if (seconds < 86400) {
+            long hours = seconds / 3600;
+            return hours + " hours ago";
+        } else {
+            long days = seconds / 86400;
+            if (days > 7){
+                return "Last seen within a month";
+            }else{
+                return days + " days ago";
+            }
+        }
+    }
+
 
     public void getUsername() throws IOException {
         User user = TokenController.getUserByToken(packet.token);

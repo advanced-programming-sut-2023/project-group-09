@@ -11,8 +11,11 @@
     "path": "files/img/avatars/a/4.png",
     "friends": [],
     "friendsRequest": {
-      "f": "requested"
-    }
+      "Narges": "requesting",
+      "Farzammm": "requesting",
+      "Narges1": "requesting"
+    },
+    "lastSeen": 1688194794572
   },
   {
     "username": "Moeein",
@@ -23,7 +26,8 @@
     "passwordRecoveryQuestion": "What\u0027s my father\u0027s name?",
     "passwordRecoveryAnswer": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
     "slogan": "Attack the weakness, defend the strengths!",
-    "path": "files/img/avatars/2.png"
+    "path": "files/img/avatars/2.png",
+    "lastSeen": 0
   },
   {
     "username": "Farzammm",
@@ -33,7 +37,12 @@
     "highScore": 0,
     "passwordRecoveryQuestion": "What was my first pet\u0027s name?",
     "passwordRecoveryAnswer": "30c238ae8ae249d2bd2a9935084897cf6dadfdbbd32422eb1fba497079779412",
-    "path": "files/img/avatars/3.png"
+    "path": "files/img/avatars/3.png",
+    "friends": [],
+    "friendsRequest": {
+      "a": "requested"
+    },
+    "lastSeen": 0
   },
   {
     "username": "f",
@@ -46,9 +55,8 @@
     "slogan": "Think long term, act short term!",
     "path": "files/img/avatars/f/1.png",
     "friends": [],
-    "friendsRequest": {
-      "a": "requesting"
-    }
+    "friendsRequest": {},
+    "lastSeen": 0
   },
   {
     "username": "Farzam3",
@@ -59,7 +67,8 @@
     "passwordRecoveryQuestion": "What\u0027s my father\u0027s name?",
     "passwordRecoveryAnswer": "1a83a04f1cd08062a2c076844c148152218732770362022a86492e78363186e7",
     "slogan": "",
-    "path": "files/img/avatars/3.png"
+    "path": "files/img/avatars/3.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges",
@@ -74,7 +83,8 @@
     "friends": [],
     "friendsRequest": {
       "a": "requested"
-    }
+    },
+    "lastSeen": 0
   },
   {
     "username": "Narges1",
@@ -89,7 +99,8 @@
     "friends": [],
     "friendsRequest": {
       "a": "requested"
-    }
+    },
+    "lastSeen": 0
   },
   {
     "username": "Narges2",
@@ -104,7 +115,8 @@
     "friends": [],
     "friendsRequest": {
       "a": "requested"
-    }
+    },
+    "lastSeen": 0
   },
   {
     "username": "Narges3",
@@ -115,7 +127,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges117",
@@ -126,7 +139,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges4",
@@ -141,7 +155,8 @@
     "friends": [],
     "friendsRequest": {
       "a": "requested"
-    }
+    },
+    "lastSeen": 0
   },
   {
     "username": "Narges5",
@@ -152,7 +167,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges6",
@@ -163,7 +179,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges7",
@@ -174,7 +191,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges8",
@@ -185,7 +203,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges9",
@@ -196,7 +215,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges15",
@@ -207,7 +227,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges14",
@@ -218,7 +239,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges13",
@@ -229,7 +251,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/1.png"
+    "path": "files/img/avatars/1.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges12",
@@ -240,7 +263,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/1.png"
+    "path": "files/img/avatars/1.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges11",
@@ -251,7 +275,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges10",
@@ -262,7 +287,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges1",
@@ -273,7 +299,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/3.png"
+    "path": "files/img/avatars/3.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges2",
@@ -284,7 +311,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/3.png"
+    "path": "files/img/avatars/3.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges3",
@@ -295,7 +323,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges117",
@@ -306,7 +335,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges4",
@@ -317,7 +347,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges5",
@@ -328,7 +359,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges6",
@@ -339,7 +371,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges7",
@@ -350,7 +383,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges8",
@@ -361,7 +395,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges9",
@@ -372,7 +407,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges15",
@@ -383,7 +419,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges14",
@@ -394,7 +431,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges13",
@@ -405,7 +443,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges12",
@@ -416,7 +455,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges11",
@@ -427,7 +467,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges10",
@@ -438,7 +479,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges1",
@@ -449,7 +491,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/3.png"
+    "path": "files/img/avatars/3.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges2",
@@ -460,7 +503,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/3.png"
+    "path": "files/img/avatars/3.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges3",
@@ -471,7 +515,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges117",
@@ -482,7 +527,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges4",
@@ -493,7 +539,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges5",
@@ -504,7 +551,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges6",
@@ -515,7 +563,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges7",
@@ -526,7 +575,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges8",
@@ -537,7 +587,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges9",
@@ -548,7 +599,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges15",
@@ -559,7 +611,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges14",
@@ -570,7 +623,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges13",
@@ -581,7 +635,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges12",
@@ -592,7 +647,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges11",
@@ -603,7 +659,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges10",
@@ -614,7 +671,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges5",
@@ -625,7 +683,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges6",
@@ -636,7 +695,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges7",
@@ -647,7 +707,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges8",
@@ -658,7 +719,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges9",
@@ -669,7 +731,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges15",
@@ -680,7 +743,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges14",
@@ -691,7 +755,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges13",
@@ -702,7 +767,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges12",
@@ -713,7 +779,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges11",
@@ -724,7 +791,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Narges10",
@@ -735,7 +803,8 @@
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "0d86ed7e65491fa390d1b4c9971e9261437a5cb86a6321904cd331d072f44461",
     "slogan": "Every move counts!",
-    "path": "files/img/avatars/4.png"
+    "path": "files/img/avatars/4.png",
+    "lastSeen": 0
   },
   {
     "username": "Amirh",
@@ -746,7 +815,8 @@
     "passwordRecoveryQuestion": "What\u0027s my father\u0027s name?",
     "passwordRecoveryAnswer": "185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969",
     "slogan": "Strategize to win!",
-    "path": "files/img/avatars/2.png"
+    "path": "files/img/avatars/2.png",
+    "lastSeen": 0
   },
   {
     "username": "Amirhossein",
@@ -757,7 +827,8 @@
     "passwordRecoveryQuestion": "What\u0027s my father\u0027s name?",
     "passwordRecoveryAnswer": "185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969",
     "slogan": "Every obstacle is an opportunity to strategize!",
-    "path": "files/img/avatars/2.png"
+    "path": "files/img/avatars/2.png",
+    "lastSeen": 0
   },
   {
     "username": "Amirhossein2",
@@ -768,7 +839,8 @@
     "passwordRecoveryQuestion": "What was my first pet\u0027s name?",
     "passwordRecoveryAnswer": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
     "slogan": "Attack the weakness, defend the strengths!",
-    "path": "files/img/avatars/3.png"
+    "path": "files/img/avatars/3.png",
+    "lastSeen": 0
   },
   {
     "username": "Amirhossein3",
@@ -778,6 +850,7 @@
     "highScore": 0,
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
-    "path": "files/img/avatars/3.png"
+    "path": "files/img/avatars/3.png",
+    "lastSeen": 0
   }
 ]

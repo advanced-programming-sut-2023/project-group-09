@@ -18,7 +18,6 @@ public class FriendController {
         Packet receivePacket = Packet.receivePacket();
         return !receivePacket.command.equals("failed");
     }
-
     public static void deleteFriend(String username) throws IOException {
         Packet packet = new Packet("delete friend","friend");
         packet.addAttribute("username",username);

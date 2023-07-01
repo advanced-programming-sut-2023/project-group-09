@@ -31,7 +31,7 @@ public class MainController {
             new LoginMenu().start(stage);
         }else{
             Application.setStayLoggedIn(true);
-            new FriendMenu().start(stage);
+            new MainMenu().start(stage);
         }
     }
 
