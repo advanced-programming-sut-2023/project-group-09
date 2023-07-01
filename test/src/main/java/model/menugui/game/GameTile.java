@@ -63,7 +63,6 @@ public class GameTile {
         textureImage.setTranslateY(y);
         textureImage.setViewOrder(1);
         refreshTile();
-        setEventListener();
         setSensor();
     }
 
@@ -84,11 +83,6 @@ public class GameTile {
         refreshTile2();
     }
 
-    private void setEventListener() {
-        textureImage.setOnMouseClicked(mouseEvent -> {
-            System.out.println(textureImage);
-        });
-    }
 
     public void refreshTile() {
         setTexture();
@@ -431,10 +425,6 @@ public class GameTile {
                 GameViewController.currentItem = null;
                 GameViewController.currentCategory = null;
             }
-        });
-
-        textureImage.setOnMouseDragEntered(mouseDragEvent -> {
-
         });
     }
 

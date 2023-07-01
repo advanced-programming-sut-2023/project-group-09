@@ -16,7 +16,6 @@ public class GameImages {
         addArabianTroop();
         addEuropeanTroops();
         addCursor();
-        addRed();
         addBars();
         addCivilian();
         addHealthProgressbar();
@@ -811,9 +810,5 @@ public class GameImages {
         }
     }
 
-    public static void addRed() {
-        Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath() + "textures/red.png").toExternalForm());
-        imageViews.put("red", image);
-    }
 
 }

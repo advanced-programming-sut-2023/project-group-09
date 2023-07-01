@@ -97,11 +97,10 @@ public class GameMenu extends Application {
         root.setOnMouseEntered(mouseEvent -> scene.setCursor(Cursor.DEFAULT));
         root.setOnMouseExited(mouseEvent -> scene.setCursor(Cursor.NONE));
 
-        GameMaps.createMap1();
-        Map map = GameMaps.largeMaps.get(0);
+        Map map = MapController.map;
         gameMap = new GameMap(map, 0, 0, 30, 18);
         gameMap.loadMap();
-        miniMap = new MiniMap(125, 143, 0, 0);
+        miniMap = new MiniMap(125, 143, 0, 0,map);
 
 
         for (Government government : GameController.getGame().getGovernments()) {
@@ -201,7 +200,8 @@ public class GameMenu extends Application {
 
     public static void createGameBar(int state) {
 //        state: 0=buildings  /  1=nemidunam(farzam midune)  /  2=menu  /  3=mercenaryPost  /  4=barrack
-        barImage = new ImageView(GameImages.imageViews.get("bar"));
+        barImage = new ImageView(new Image(GameImages.class.getResource
+                (Paths.BAR_IMAGES.getPath()).toExternalForm() + "bar.png"));
         barImage.setFitWidth(menuBar.getMaxWidth());
         barImage.setFitHeight(menuBar.getMaxHeight());
         menuBar.setTranslateX(0);
