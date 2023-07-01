@@ -3,10 +3,7 @@ package controller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import controller.gamestructure.GameBuildings;
-import controller.gamestructure.GameGoods;
-import controller.gamestructure.GameHumans;
-import controller.gamestructure.GameTools;
+import controller.gamestructure.*;
 import enumeration.Paths;
 import javafx.scene.paint.Color;
 import model.User;
@@ -414,7 +411,6 @@ public class DBController {
             checkFileExist(fileAddress);
             File file = new File(fileAddress);
             FileWriter fileWriter = new FileWriter(file);
-            if(Application.getCurrentUser() != null){
                 Gson gson = new GsonBuilder()
                         .excludeFieldsWithModifiers(Modifier.STATIC,
                                 Modifier.TRANSIENT,
@@ -422,9 +418,6 @@ public class DBController {
                         .create();
                 String json = gson.toJson(map);
                 fileWriter.write(json);
-            }else {
-                fileWriter.write("");
-            }
             fileWriter.close();
         } catch (IOException e) {
             System.out.println("An error occurred.[save current user]");
@@ -435,7 +428,6 @@ public class DBController {
     public static Map loadMap(String filePath) {
         Map map = new GsonBuilder().excludeFieldsWithModifiers(Modifier.STATIC, Modifier.TRANSIENT, Modifier.VOLATILE).create()
                 .fromJson(FileController.readFile(filePath), Map.class);
-
         for (int i = 0;i < map.getLength();i++){
             for (int j = 0;j < map.getWidth();j++){
                 Tile tile = map.getTile(i,j);
@@ -444,4 +436,16 @@ public class DBController {
         }
         return map;
     }
+
+    public static void loadAllMaps() {
+        File mapsFolder = new File("src/main/resources/savedmaps/");
+        for (File file : mapsFolder.listFiles()) {
+            if (file.getName().endsWith(".json")) {
+                Map map = new GsonBuilder().setPrettyPrinting().create().fromJson(FileController.readFile(file) , Map.class);
+                GameMaps.allMaps.put(map.getName() , map);
+            }
+        }
+    }
+
+
 }

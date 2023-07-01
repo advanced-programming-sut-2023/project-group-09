@@ -43,7 +43,7 @@ public class PacketHandler {
     }
 
 
-    public void handle() throws IOException {
+    public void handle() throws IOException, ClassNotFoundException {
         switch (packet.command) {
             case "login user" -> {
                 Packet result = UserController.loginUser((String) packet.getAttribute("username"),

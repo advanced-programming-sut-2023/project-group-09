@@ -24,7 +24,7 @@ public class Main extends Application {
         }));
         GameMaps.createMaps();
         MainController.loadGame();
-        Server server = new Server(8080);
+        Server server = new Server(8000);
         //MainController.run(stage);
     }
 }

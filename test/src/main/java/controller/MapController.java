@@ -677,6 +677,8 @@ public class MapController {
                 , User.class);
         SharedMapMenu.selectedMap.setOwner(currentUser.getUsername());
         SharedMapMenu.selectedMap.setName(name);
-        ////////// send Map.
+        Packet packet1 = new Packet("give my map" , "create map");
+        packet1.sendPacket();
+        Main.connection.getObjectOutputStream().writeObject(SharedMapMenu.selectedMap);
     }
 }

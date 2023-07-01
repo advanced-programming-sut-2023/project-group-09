@@ -53,6 +53,8 @@ public class Connection extends Thread {
                     throw new RuntimeException(ex);
                 }
                 break;
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
     }
