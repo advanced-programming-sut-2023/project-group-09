@@ -8,6 +8,8 @@ public class TokenController {
     public static HashMap<String, User> tokens = new HashMap<>();
     public static HashMap<String, Long> expires = new HashMap<>();
 
+    public static HashMap<User ,  String> users = new HashMap<>();
+
     public static String generateToken(User user) {
         System.out.println(user);
         long currentTime = System.currentTimeMillis();
@@ -15,6 +17,7 @@ public class TokenController {
         String token = UserController.convertPasswordToHash(helper);
         expires.put(token, 1800000L + currentTime);
         tokens.put(token, user);
+        users.put(user , token);
         user.setOnline(true);
         return token;
     }
@@ -30,6 +33,11 @@ public class TokenController {
             return false;
         }
         return true;
+    }
+
+    public static String getTokenByUsername(String username) {
+        User user = Application.getUserByUsername(username);
+        return users.get(user);
     }
 
     public static User getUserByToken(String token) {

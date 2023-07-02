@@ -8,10 +8,13 @@ import server.handlers.UserHandler;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Connection extends Thread {
+
+    public static ArrayList<Connection> allConnections = new ArrayList<>();
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
     private ObjectOutputStream objectOutputStream;
@@ -27,6 +30,7 @@ public class Connection extends Thread {
         this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
         this.objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
         this.objectInputStream = new ObjectInputStream(socket.getInputStream());
+        allConnections.add(this);
     }
 
     @Override

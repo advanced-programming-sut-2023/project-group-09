@@ -7,8 +7,10 @@ public class PacketOnlineReceiver extends Thread {
     public void run() {
         try {
             Packet packet = Packet.receivePacket();
-
+            new PacketOnlineHandler(packet).handle();
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

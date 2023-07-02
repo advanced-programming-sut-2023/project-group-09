@@ -156,8 +156,8 @@ public class GameMenu extends Application {
         });
         createSelectedArea();
 
-        ChatMenu chatMenu = new ChatMenu();
-        GameMenu.root.getChildren().add(chatMenu);
+        //ChatMenu chatMenu = new ChatMenu();
+        //GameMenu.root.getChildren().add(chatMenu);
 
         stage.show();
     }

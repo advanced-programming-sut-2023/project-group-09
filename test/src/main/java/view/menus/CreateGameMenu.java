@@ -1,5 +1,6 @@
 package view.menus;
 
+import model.FakeGame;
 import client.Packet;
 import client.PacketOnlineReceiver;
 import com.google.gson.Gson;
@@ -7,13 +8,9 @@ import com.google.gson.GsonBuilder;
 import controller.DBController;
 import controller.GameController;
 import controller.MapController;
-import controller.TradeController;
-import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameMaps;
 import enumeration.dictionary.Colors;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -24,24 +21,20 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Government;
-import model.Trade;
 import model.User;
 import model.building.castlebuildings.MainCastle;
 import model.game.Game;
 import model.game.Map;
-import model.human.military.EuropeanTroop;
 import model.menugui.*;
 import view.Main;
 import view.controllers.ViewController;
-import viewphase1.EditMapEnvironmentMenu;
 
-import java.beans.Transient;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 
 public class CreateGameMenu extends Application {
-    private Stage stage;
+    public static Stage stage;
     public static Pane createGamePane;
     private Game game;
     private ArrayList<String> castles;
@@ -201,6 +194,12 @@ public class CreateGameMenu extends Application {
 //            TradeController.allTrades.put(trade8.getId(), trade8);
 
             try {
+                //////// fake game
+                Packet packet = new Packet("create fake game" , "Game");
+                FakeGame fakeGame = createFakeGame();
+                packet.setToken(Main.connection.getToken());
+                packet.sendPacket();
+                Main.connection.getObjectOutputStream().writeObject(fakeGame);
                 PacketOnlineReceiver packetOnlineReceiver = new PacketOnlineReceiver();
                 packetOnlineReceiver.start();
                 gameMenu.start(stage);
@@ -209,6 +208,17 @@ public class CreateGameMenu extends Application {
             }
         });
         menuBox.getChildren().add(startGame);
+    }
+
+    private FakeGame createFakeGame() {
+        FakeGame fakeGame = new FakeGame();
+        for (Government government : game.getGovernments()) {
+            fakeGame.addPlayer(government.getUser().getUsername() ,
+                    government.getColor() , government.getCastleX() , government.getCastleY());
+        }
+        fakeGame.setAdminUsername(game.getGovernments().get(0).getUser().getUsername());
+        return fakeGame;
+
     }
 
     private void checkSelectedMap() {

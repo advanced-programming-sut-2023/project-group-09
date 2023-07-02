@@ -37,4 +37,12 @@ public enum Colors {
         for (Colors color : Colors.values())
             colors.add(color);
     }
+
+    public static Colors getColor(String name) {
+        for (Colors color : Colors.values()) {
+            if (color.name.equals(name))
+                return color;
+        }
+        return null;
+    }
 }
