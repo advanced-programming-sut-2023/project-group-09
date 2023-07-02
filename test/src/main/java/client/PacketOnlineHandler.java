@@ -58,6 +58,7 @@ public class PacketOnlineHandler {
                         game.addGovernment(government);
                     }
                 }
+                GameController.setFakeGame(fakeGame);
             }
         }
     }

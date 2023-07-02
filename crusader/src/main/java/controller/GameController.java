@@ -16,7 +16,9 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import model.FakeGame;
 import model.Government;
+import model.User;
 import model.activity.Move;
 import model.building.Building;
 import model.building.castlebuildings.Gatehouse;
@@ -47,6 +49,7 @@ import java.util.*;
 public class GameController {
     private static Game game;
     private static boolean isBuildingSelected = false;
+    private static HashMap<User, FakeGame> fakeGames = new HashMap<>();
 
     public static boolean isIsBuildingSelected() {
         return isBuildingSelected;
@@ -1210,4 +1213,15 @@ public class GameController {
         return null;
     }
 
+    public static HashMap<User, FakeGame> getFakeGames() {
+        return fakeGames;
+    }
+
+    public static void setFakeGames(HashMap<User, FakeGame> fakeGames) {
+        GameController.fakeGames = fakeGames;
+    }
+
+    public static void addFakeGame(User user , FakeGame fakeGame) {
+        fakeGames.put(user , fakeGame);
+    }
 }

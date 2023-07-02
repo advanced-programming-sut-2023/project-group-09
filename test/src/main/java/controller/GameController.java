@@ -1,5 +1,6 @@
 package controller;
 
+import client.Packet;
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameHumans;
 import controller.human.HumanController;
@@ -16,6 +17,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import model.FakeGame;
 import model.Government;
 import model.activity.Move;
 import model.building.Building;
@@ -42,10 +44,12 @@ import view.menus.GameMenu;
 import viewphase1.UnitMenu;
 
 
+import java.io.IOException;
 import java.util.*;
 
 public class GameController {
     private static Game game;
+    private static FakeGame fakeGame;
     private static boolean isBuildingSelected = false;
 
     public static boolean isIsBuildingSelected() {
@@ -1210,4 +1214,20 @@ public class GameController {
         return null;
     }
 
+    public static void sendDropBuidling(int tileX, int tileY, String droppedBuildingName, String side) throws IOException {
+        Packet packet = new Packet("drop building" , "Game");
+        packet.addAttribute("tileX" , tileX);
+        packet.addAttribute("tileY" , tileY);
+        packet.addAttribute("droppedBuildingName" , droppedBuildingName);
+        packet.addAttribute("side" , side);
+        packet.sendPacket();
+    }
+
+    public static FakeGame getFakeGame() {
+        return fakeGame;
+    }
+
+    public static void setFakeGame(FakeGame fakeGame) {
+        GameController.fakeGame = fakeGame;
+    }
 }

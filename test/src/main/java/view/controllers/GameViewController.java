@@ -57,6 +57,7 @@ import view.menus.GameMenu;
 import view.menus.LoginMenu;
 import view.menus.SharedMapMenu;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -3158,7 +3159,11 @@ public class GameViewController {
                         droppedPicFileName = picFileName;
                         droppedBuildingName = buildingName;
                         isDropped = true;
-                        dropBuildingAfterSelectingTile(mouseEvent);
+                        try {
+                            dropBuildingAfterSelectingTile(mouseEvent);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                         isDropped = false;
                     }
                 });
@@ -3167,7 +3172,7 @@ public class GameViewController {
 
     }
 
-    public static void dropBuildingAfterSelectingTile(MouseEvent mouseEvent) {
+    public static void dropBuildingAfterSelectingTile(MouseEvent mouseEvent) throws IOException {
         Pair<Integer, Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
         tileX = pair.getFirst();
         tileY = pair.getSecond();
@@ -3176,6 +3181,7 @@ public class GameViewController {
         String side = getSideOfGatehouseFromFilename(droppedPicFileName);
         GameMenu.hoveringBarStateText.setText(GameController.dropBuilding(tileX, tileY, droppedBuildingName, side));
         GameMap.getGameTile(tileX, tileY).refreshTile();
+        GameController.sendDropBuidling(tileX , tileY , droppedBuildingName , side);
     }
 
     private static String getSideOfGatehouseFromFilename(String fileName) {

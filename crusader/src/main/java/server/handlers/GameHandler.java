@@ -1,6 +1,7 @@
 package server.handlers;
 
 import controller.Application;
+import controller.GameController;
 import controller.TokenController;
 import model.User;
 import server.Connection;
@@ -29,8 +30,9 @@ public class GameHandler {
     private void createFakeGame() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
         for (String username : fakeGame.getAllUsernames()) {
-            if (username.equals(fakeGame.getAdminUsername())) continue;
             User user = Application.getUserByUsername(username);
+            GameController.addFakeGame(user, fakeGame);
+            if (username.equals(fakeGame.getAdminUsername())) continue;
             Packet packet1 = new Packet("create fake game" , "Game");
             packet1.addAttribute("username" , username);
             String token = TokenController.getTokenByUsername(username);
