@@ -1,5 +1,6 @@
 package view.menus;
 
+import client.PacketOnlineReceiver;
 import controller.DBController;
 import controller.MainController;
 import enumeration.Paths;
@@ -9,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -42,6 +44,16 @@ public class MainMenu extends Application {
         stage.setScene(scene);
         root = ViewController.makeStackPaneScreen(stage, pane, 1000, -1);
         setBackground();
+
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode().getName().equals("C")) {
+                    PacketOnlineReceiver packetOnlineReceiver = new PacketOnlineReceiver();
+                    packetOnlineReceiver.start();
+                }
+            }
+        });
 
         MenuButton createMapButton = new MenuButton("Create Map" , root , 0 , -240 , true);
         createMapButton.setOnMouseClicked(new EventHandler<MouseEvent>() {

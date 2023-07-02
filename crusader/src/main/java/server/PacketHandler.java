@@ -50,7 +50,7 @@ public class PacketHandler {
                         (String) packet.getAttribute("password"),
                         (boolean) packet.getAttribute("stayedLoggedIn"));
                 if (result.token != null) {
-                    connection.setToken(packet.token);
+                    connection.setToken(result.token);
                     System.out.println("set token connection");
                 }
                 sendPacket(result);
