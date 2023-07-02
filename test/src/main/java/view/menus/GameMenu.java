@@ -137,7 +137,7 @@ public class GameMenu extends Application {
         setEventListeners();
         GameViewController.setCenterOfBar();
         GameViewController.createBorderRectangles(gameMap, miniMap,root);
-        GameViewController.setNextTurnTimeline();
+        //GameViewController.setNextTurnTimeline();
         attacking = new ImageView(new Image(GameTile.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm() +
                 "icons/attacking.gif"));
         attacking.setViewOrder(-2000);
@@ -165,7 +165,7 @@ public class GameMenu extends Application {
     }
 
     public static void setShieldsForGovernments() {
-        int index = 0;
+        /*int index = 0;
         for (Government government : GameController.getGame().getGovernments()) {
             ImageView shield = new ImageView(GameMenu.class.getResource(Paths.FLAG_IMAGES.getPath()).toExternalForm()
                     + government.getColor() + "Flag.png");
@@ -204,7 +204,7 @@ public class GameMenu extends Application {
                 }
             });
             index++;
-        }
+        }*/
     }
 
 

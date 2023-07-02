@@ -179,7 +179,7 @@ public class LoginMenu extends Application {
         });
     }
 
-    public void login(MouseEvent mouseEvent) throws IOException {
+    public void login(MouseEvent mouseEvent) throws Exception {
         username.clearErrorOrMessage();
         password.clearErrorOrMessage();
         CaptchaController.clearErrorOrMessage();
@@ -252,6 +252,8 @@ public class LoginMenu extends Application {
             try {
                 login(mouseEvent);
             } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         });

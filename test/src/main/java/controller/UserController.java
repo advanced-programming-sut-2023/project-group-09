@@ -283,7 +283,7 @@ public class UserController {
         view.controllers.CaptchaController.changingCaptcha();
     }
 
-    public static void loginUser(String username, String password, boolean stayedLoggedIn) throws IOException {
+    public static void loginUser(String username, String password, boolean stayedLoggedIn) throws Exception {
         if (view.controllers.CaptchaController.isInputCorrect()) {
             Packet packet = new Packet("login user");
             packet.addAttribute("username", username);

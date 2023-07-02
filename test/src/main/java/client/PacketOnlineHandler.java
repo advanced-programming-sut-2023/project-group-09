@@ -1,6 +1,7 @@
 package client;
 
 import controller.GameController;
+import controller.GovernmentController;
 import controller.MapController;
 import controller.gamestructure.GameMaps;
 import enumeration.dictionary.Colors;
@@ -43,8 +44,16 @@ public class PacketOnlineHandler {
                             .getTile(government.getCastleX(), government.getCastleY()).getBuilding();
                     mainCastle.setGovernment(government);
                     government.setMainCastle(mainCastle);
+                    government.addAmountToProperties("wood", "resource", 1000);
+                    government.addAmountToProperties("stone", "resource", 500);
+                    government.addAmountToProperties("iron", "resource", 500);
+                    government.addAmountToProperties("bread", "food", 60);
+                    government.setGold(4000);
                     if (fakeGame.getAllUsernames().get(i).equals(username)) {
+                        System.out.println("test");
                         game.getGovernments().add(0 , government);
+                        GameController.getGame().setCurrentGovernment(government);
+                        GovernmentController.setCurrentGovernment(government);
                     } else {
                         game.addGovernment(government);
                     }

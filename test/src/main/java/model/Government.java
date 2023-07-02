@@ -465,7 +465,7 @@ public class Government {
     public void outOfStockNotification() {
         for (String name : storages.keySet()) {
             if (storages.get(name).isFull()) {
-                System.out.println("Lord " + this.getUser().getNickname() + " : Storage " + name + " is full!");
+                //System.out.println("Lord " + this.getUser().getNickname() + " : Storage " + name + " is full!");
             }
         }
     }
@@ -480,7 +480,7 @@ public class Government {
             }
         }
         if (workersNeeded > 0) {
-            System.out.println("Lord " + this.getUser().getNickname() + " : " + workersNeeded + " workers we need!");
+            //System.out.println("Lord " + this.getUser().getNickname() + " : " + workersNeeded + " workers we need!");
         }
     }
 
@@ -603,7 +603,7 @@ public class Government {
                 this.properties.get("apple") + this.properties.get("cheese");
         if (foodsNeeded > foodWeHave) {
             this.foodRate = -2;
-            System.out.println("Lord " + this.user.getNickname() + " : Not enough food!");
+            //System.out.println("Lord " + this.user.getNickname() + " : Not enough food!");
         }
         int consumedFoods = Math.min(foodsNeeded, foodWeHave);
         consumeFoods(consumedFoods);
@@ -668,7 +668,7 @@ public class Government {
     }
 
     public void beingDead() {
-        System.out.println("Lord " + this.user.getNickname() + " is Dead!");
+        //System.out.println("Lord " + this.user.getNickname() + " is Dead!");
         for (BuildingCounter bc : buildings.values()) {
             Iterator itr = bc.getBuildings().iterator();
             while (itr.hasNext()) {

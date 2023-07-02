@@ -192,7 +192,6 @@ public class CreateGameMenu extends Application {
 //            TradeController.allTrades.put(trade6.getId(), trade6);
 //            TradeController.allTrades.put(trade7.getId(), trade7);
 //            TradeController.allTrades.put(trade8.getId(), trade8);
-
             try {
                 //////// fake game
                 Packet packet = new Packet("create fake game" , "Game");
