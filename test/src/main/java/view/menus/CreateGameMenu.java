@@ -55,7 +55,7 @@ public class CreateGameMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        this.stage = stage;
+        CreateGameMenu.stage = stage;
         governmentNumber = 0;
         colors = new ArrayList<>();
         for (Colors color : Colors.values()) {
@@ -143,7 +143,7 @@ public class CreateGameMenu extends Application {
             GameController.setGame(null);
             MainMenu mainMenu = new MainMenu();
             try {
-                mainMenu.start(this.stage);
+                mainMenu.start(stage);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -200,8 +200,6 @@ public class CreateGameMenu extends Application {
                 packet.setToken(Main.connection.getToken());
                 packet.sendPacket();
                 Main.connection.getObjectOutputStream().writeObject(fakeGame);
-                PacketOnlineReceiver packetOnlineReceiver = new PacketOnlineReceiver();
-                packetOnlineReceiver.start();
                 gameMenu.start(stage);
             } catch (Exception e) {
                 throw new RuntimeException(e);

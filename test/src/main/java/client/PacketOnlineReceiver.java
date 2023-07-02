@@ -1,13 +1,11 @@
 package client;
 
-import javafx.application.Platform;
-
 import java.io.IOException;
 
 public class PacketOnlineReceiver extends Thread {
     @Override
     public void run() {
-        Platform.runLater(() -> {
+        while (true) {
             try {
                 Packet packet = Packet.receivePacket();
                 new PacketOnlineHandler(packet).handle();
@@ -16,7 +14,8 @@ public class PacketOnlineReceiver extends Thread {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-        });
+        }
+
     }
 
 }

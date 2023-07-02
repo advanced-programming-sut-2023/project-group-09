@@ -1,10 +1,13 @@
 package view.menus;
 
+import client.Packet;
+import client.PacketOnlineHandler;
 import client.PacketOnlineReceiver;
 import controller.DBController;
 import controller.MainController;
 import enumeration.Paths;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -45,25 +48,38 @@ public class MainMenu extends Application {
         root = ViewController.makeStackPaneScreen(stage, pane, 1000, -1);
         setBackground();
 
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode().getName().equals("C")) {
-                    PacketOnlineReceiver packetOnlineReceiver = new PacketOnlineReceiver();
-                    packetOnlineReceiver.start();
-                }
+        scene.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode().getName().equals("C")) {
+                Thread thread = new Thread(()->{
+                    Packet packet = null;
+                    try {
+                        packet = Packet.receivePacket();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    try {
+                        new PacketOnlineHandler(packet).handle();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                    Platform.runLater(() -> {
+                        try {
+                            new GameMenu().start(MainMenu.stage);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+                });
+                thread.start();
             }
         });
 
         MenuButton createMapButton = new MenuButton("Create Map" , root , 0 , -240 , true);
-        createMapButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                try {
-                    new SharedMapMenu().start(stage);
-                } catch (Exception e) {
+        createMapButton.setOnMouseClicked(mouseEvent -> {
+            try {
+                new SharedMapMenu().start(stage);
+            } catch (Exception e) {
 
-                }
             }
         });
 

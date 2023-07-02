@@ -1,7 +1,6 @@
 package view;
 
 import client.Connection;
-import controller.DBController;
 import controller.MainController;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -22,8 +21,8 @@ public class Main extends Application {
 //            DBController.saveAllUsers();
 //            DBController.saveCurrentUser();
 //        }));
-        connection = new Connection("localhost",8000);
-        //connection.makeFakeConnection();
+        connection = new Connection("localhost", 8080);
+        connection.makeFakeConnection();
         MainController.run(stage);
     }
 }

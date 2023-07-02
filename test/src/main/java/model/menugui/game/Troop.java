@@ -66,18 +66,6 @@ public class Troop extends ImageView {
         this.setTranslateY(gameTile.getTextureImage().getTranslateY() - this.getFitHeight() / 2);
         health.setTranslateX(this.getTranslateX() + 12);
         health.setTranslateY(this.getTranslateY() + 5);
-//        Tuple tuple = new Tuple(military.getY(), military.getX());
-//        tuple.setOverhead(overHead);
-//        overHead = MoveController.checkIsPathOverhead(gameTile.getTileX(), gameTile.getTileY(), military, tuple);
-//        if (overHead) {
-//            if (gameTile.getTile().getBuilding() instanceof CastleBuilding castleBuilding) {
-//                this.setTranslateX(gameTile.getTextureImage().getTranslateX() - this.getFitWidth() / 2 + GameMap.tileWidth / 2);
-//                this.setTranslateY(gameTile.getTextureImage().getTranslateY()
-//                        - this.getFitHeight() / 2 - castleBuilding.getHeight() * GameMap.tileHeight);
-//            }
-//        }else{
-//
-//        }
     }
 
     public void setEventListener() {

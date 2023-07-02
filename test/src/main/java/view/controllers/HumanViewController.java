@@ -522,7 +522,6 @@ public class HumanViewController {
     }
 
     public static void moveUnits(GameTile end) {
-        System.out.println(selectedMilitaries.size());
         for (Military military : selectedMilitaries) {
             HumanController.militaries.clear();
             HumanController.militaries.add(military);

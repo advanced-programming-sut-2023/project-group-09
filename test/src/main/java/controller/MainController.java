@@ -27,8 +27,12 @@ public class MainController {
 
     public static void run(Stage stage) throws Exception {
         loadGame();
-
+        if (Main.connection.getToken() == null){
             new LoginMenu().start(stage);
+        }else{
+            Application.setStayLoggedIn(true);
+            new MainMenu().start(stage);
+        }
     }
 
     public static void exitCrusader(){

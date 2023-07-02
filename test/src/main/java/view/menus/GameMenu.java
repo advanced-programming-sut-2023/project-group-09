@@ -1,5 +1,6 @@
 package view.menus;
 
+import client.PacketOnlineReceiver;
 import controller.DBController;
 import controller.GameController;
 import controller.GovernmentController;
@@ -158,7 +159,8 @@ public class GameMenu extends Application {
 
         //ChatMenu chatMenu = new ChatMenu();
         //GameMenu.root.getChildren().add(chatMenu);
-
+        PacketOnlineReceiver packetOnlineReceiver = new PacketOnlineReceiver();
+        packetOnlineReceiver.start();
         stage.show();
     }
 

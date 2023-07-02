@@ -49,7 +49,6 @@ public class PacketOnlineHandler {
                         game.addGovernment(government);
                     }
                 }
-                new GameMenu().start(MainMenu.stage);
             }
         }
     }

@@ -19,7 +19,7 @@ public class Server {
                 connection.start();
             }
         } catch (IOException e) {
-            System.out.println("main connection interrupted!");
+            System.out.println(e.getMessage());
         }
     }
 }

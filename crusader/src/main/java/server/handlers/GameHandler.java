@@ -43,9 +43,10 @@ public class GameHandler {
 
     private Connection getConnection(String username) {
         String token = TokenController.getTokenByUsername(username);
-        for (Connection connection1 : Connection.allConnections) {
-            if (connection1 != null && connection1.getToken() != null && connection1.getToken().equals(token))
-                return connection1;
+        for (Connection connection : Connection.allConnections) {
+            System.out.println(connection.getToken());
+            if (connection != null && connection.getToken().equals(token))
+                return connection;
         }
         return null;
     }
