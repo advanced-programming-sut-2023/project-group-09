@@ -7,11 +7,13 @@ import controller.gamestructure.GameMaps;
 import enumeration.Textures;
 import enumeration.dictionary.Colors;
 import enumeration.dictionary.RockDirections;
+import enumeration.dictionary.Trees;
 import javafx.application.Platform;
 import model.FakeGame;
 import model.Government;
 import model.building.castlebuildings.MainCastle;
 import model.game.Game;
+import model.game.Map;
 import model.menugui.game.GameMap;
 import view.Main;
 import view.menus.CreateGameMenu;
@@ -75,8 +77,22 @@ public class PacketOnlineHandler {
             case "drop rock" -> {
                 dropRock();
             }
+            case "drop tree" -> {
+                dropTree();
+            }
         }
     }
+
+    private void dropTree() {
+        double tileX = (Double)packet.getAttribute("tileX");
+        double tileY = (Double)packet.getAttribute("tileY");
+        String tree = (String)packet.getAttribute("tree");
+        MapController.dropTree((int)tileX , (int)tileY , Trees.getTreeByName(tree));
+        Platform.runLater(() -> {
+            GameMap.getGameTile((int)tileX , (int)tileY).refreshTile();
+        });
+    }
+
 
     private void dropRock() {
         double tileX = (Double)packet.getAttribute("tileX");

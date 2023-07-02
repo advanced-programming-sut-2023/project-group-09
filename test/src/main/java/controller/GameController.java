@@ -9,6 +9,7 @@ import enumeration.MilitaryStates;
 import enumeration.Pair;
 import enumeration.Textures;
 import enumeration.dictionary.RockDirections;
+import enumeration.dictionary.Trees;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -1288,6 +1289,15 @@ public class GameController {
         packet.addAttribute("tileX" , tileX);
         packet.addAttribute("tileY" , tileY);
         packet.addAttribute("rock" , rockDirection.getDirection());
+        packet.sendPacket();
+        Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
+    }
+
+    public static void sendDropTree(int tileX, int tileY, Trees tree) throws IOException {
+        Packet packet = new Packet("drop tree" , "Game");
+        packet.addAttribute("tileX" , tileX);
+        packet.addAttribute("tileY" , tileY);
+        packet.addAttribute("tree" , tree.getTreeName());
         packet.sendPacket();
         Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
     }

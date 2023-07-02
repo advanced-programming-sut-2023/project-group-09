@@ -2865,6 +2865,11 @@ public class GameViewController {
                             System.out.println("Tile founded at : " + tileX + " " + tileY);
                             GameMenu.hoveringBarStateText.setText(MapController.dropTree(tileX, tileY, tree));
                             GameMap.getGameTile(tileX, tileY).refreshTile();
+                            try {
+                                GameController.sendDropTree(tileX , tileY , tree);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
                         } else {
                             isTextureSelected = false;
                         }
