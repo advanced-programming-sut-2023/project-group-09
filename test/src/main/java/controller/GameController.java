@@ -8,6 +8,7 @@ import controller.human.MoveController;
 import enumeration.MilitaryStates;
 import enumeration.Pair;
 import enumeration.Textures;
+import enumeration.dictionary.RockDirections;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -1278,6 +1279,15 @@ public class GameController {
         packet.addAttribute("tileX" , tileX);
         packet.addAttribute("tileY" , tileY);
         packet.addAttribute("texture" , texture.getTextureName());
+        packet.sendPacket();
+        Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
+    }
+
+    public static void sendDropRock(int tileX, int tileY, RockDirections rockDirection) throws IOException {
+        Packet packet = new Packet("drop rock" , "Game");
+        packet.addAttribute("tileX" , tileX);
+        packet.addAttribute("tileY" , tileY);
+        packet.addAttribute("rock" , rockDirection.getDirection());
         packet.sendPacket();
         Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
     }

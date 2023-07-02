@@ -31,6 +31,17 @@ public class GameHandler {
             case "set texture" -> {
                 setTexture();
             }
+            case "drop rock" -> {
+                dropRock();
+            }
+        }
+    }
+
+    private void dropRock() throws IOException, ClassNotFoundException {
+        FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
+        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        for (Connection connection1 : connections) {
+            new PacketHandler(packet, connection1).sendPacket(packet);
         }
     }
 

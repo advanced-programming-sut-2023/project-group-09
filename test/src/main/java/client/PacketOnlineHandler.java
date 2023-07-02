@@ -6,6 +6,7 @@ import controller.MapController;
 import controller.gamestructure.GameMaps;
 import enumeration.Textures;
 import enumeration.dictionary.Colors;
+import enumeration.dictionary.RockDirections;
 import javafx.application.Platform;
 import model.FakeGame;
 import model.Government;
@@ -71,8 +72,22 @@ public class PacketOnlineHandler {
             case "set texture" -> {
                 setTexture();
             }
+            case "drop rock" -> {
+                dropRock();
+            }
         }
     }
+
+    private void dropRock() {
+        double tileX = (Double)packet.getAttribute("tileX");
+        double tileY = (Double)packet.getAttribute("tileY");
+        String rockDirection = (String)packet.getAttribute("rock");
+        MapController.dropRock((int)tileX , (int)tileY , RockDirections.getRockByDirection(rockDirection));
+        Platform.runLater(() -> {
+            GameMap.getGameTile((int)tileX , (int)tileY).refreshTile();
+        });
+    }
+
 
     private void setTexture() {
         double tileX = (Double)packet.getAttribute("tileX");
