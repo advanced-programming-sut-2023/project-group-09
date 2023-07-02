@@ -199,6 +199,7 @@ public class CreateGameMenu extends Application {
                 packet.setToken(Main.connection.getToken());
                 packet.sendPacket();
                 Main.connection.getObjectOutputStream().writeObject(fakeGame);
+                GameController.setFakeGame(fakeGame);
                 gameMenu.start(stage);
             } catch (Exception e) {
                 throw new RuntimeException(e);

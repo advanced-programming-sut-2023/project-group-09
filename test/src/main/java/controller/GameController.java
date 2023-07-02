@@ -7,15 +7,8 @@ import controller.human.HumanController;
 import controller.human.MoveController;
 import enumeration.MilitaryStates;
 import enumeration.Pair;
-import enumeration.Paths;
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 import model.FakeGame;
 import model.Government;
@@ -37,6 +30,7 @@ import model.human.military.Tunneler;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
 import model.tools.Tool;
+import view.Main;
 import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
 import view.controllers.ViewController;
@@ -1214,13 +1208,60 @@ public class GameController {
         return null;
     }
 
-    public static void sendDropBuidling(int tileX, int tileY, String droppedBuildingName, String side) throws IOException {
+    public static void sendDropBuilding(int tileX, int tileY, String droppedBuildingName, String side , Government government) throws IOException {
         Packet packet = new Packet("drop building" , "Game");
         packet.addAttribute("tileX" , tileX);
         packet.addAttribute("tileY" , tileY);
         packet.addAttribute("droppedBuildingName" , droppedBuildingName);
         packet.addAttribute("side" , side);
+        packet.addAttribute("color" , government.getColor());
         packet.sendPacket();
+        Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
+    }
+
+    public static String dropBuilding(int x, int y, String type, String side , Government government) {
+        if (type.equals("killingPit")) {
+            game.getMap().getTile(x, y).setPit(true);
+            game.getMap().getTile(x, y).setPitGovernment(government);
+            return "killing pit dropped successfully";
+        }
+        Building building = GameBuildings.getBuilding(type);
+        if (building == null) {
+            return "building type is invalid!";
+        }
+        if (!hasRequired(building.getCost())) {
+            return "your resource is not enough!";
+        }
+
+        if (type.equals("mainCastle") && government.getBuildingData("mainCastle").getNumber() != 0) {
+            return "a government just can have one main Castle!";
+        }
+
+        if (building instanceof Gatehouse && !building.getName().equals("drawBridge")) {
+            if (side != null && (side.equals("right") || side.equals("left"))) {
+                if (!MapController.checkCanPutBuilding(x, y, type, government)) {
+                    return "this coordinate is not suitable!";
+                }
+                MapController.isRightSide = side.equals("right");
+                MapController.dropBuilding(x, y, type, government);
+                return "building dropped successfully!";
+
+            } else {
+                return "side field is required!";
+            }
+        } else if (side != null) {
+            return "side field is not for this type of building!";
+        }
+
+
+        if (!MapController.checkCanPutBuilding(x, y, type, government)) {
+            return "this coordinate is not suitable!";
+        }
+        consumeRequired(building.getCost());
+        government.setGold(government.getGold() - building.getPrice());
+        MapController.dropBuilding(x, y, type, government);
+        int popularity = government.getPopularity() + 37;
+        return "building dropped successfully!";
     }
 
     public static FakeGame getFakeGame() {

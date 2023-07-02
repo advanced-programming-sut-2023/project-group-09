@@ -5,14 +5,18 @@ import controller.GovernmentController;
 import controller.MapController;
 import controller.gamestructure.GameMaps;
 import enumeration.dictionary.Colors;
+import javafx.application.Platform;
 import model.FakeGame;
 import model.Government;
 import model.building.castlebuildings.MainCastle;
 import model.game.Game;
+import model.menugui.game.GameMap;
 import view.Main;
 import view.menus.CreateGameMenu;
 import view.menus.GameMenu;
 import view.menus.MainMenu;
+
+import java.util.ArrayList;
 
 public class PacketOnlineHandler {
     private Packet packet;
@@ -60,6 +64,29 @@ public class PacketOnlineHandler {
                 }
                 GameController.setFakeGame(fakeGame);
             }
+            case "drop building" -> {
+                dropBuilding();
+            }
         }
     }
+
+    private void dropBuilding() {
+        double tileX = (Double)packet.getAttribute("tileX");
+        double tileY = (Double)packet.getAttribute("tileY");
+        String buildingName = (String)packet.getAttribute("droppedBuildingName");
+        String side = (String) packet.getAttribute("side");
+        String color = (String) packet.getAttribute("color");
+        Government supposedGovernment = null;
+        for (Government government : GameController.getGame().getGovernments()) {
+            if (government.getColor().equals(color)) {
+                supposedGovernment = government;
+            }
+        }
+        GameController.dropBuilding((int)tileX , (int)tileY , buildingName , side ,supposedGovernment);
+        Platform.runLater(() -> {
+            GameMap.getGameTile((int) tileX, (int) tileY).refreshTile();
+        });
+    }
+
+
 }

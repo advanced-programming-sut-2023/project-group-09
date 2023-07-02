@@ -573,6 +573,8 @@ public class GameController {
         return "building dropped successfully!";
     }
 
+
+
     public static boolean hasRequired(HashMap<String, Integer> required) {
         Government government = GameController.getGame().getCurrentGovernment();
         for (String product : required.keySet()) {

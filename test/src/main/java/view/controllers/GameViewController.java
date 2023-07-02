@@ -3181,7 +3181,8 @@ public class GameViewController {
         String side = getSideOfGatehouseFromFilename(droppedPicFileName);
         GameMenu.hoveringBarStateText.setText(GameController.dropBuilding(tileX, tileY, droppedBuildingName, side));
         GameMap.getGameTile(tileX, tileY).refreshTile();
-        GameController.sendDropBuidling(tileX , tileY , droppedBuildingName , side);
+        GameController.sendDropBuilding(tileX , tileY , droppedBuildingName , side , GameController.getGame().getCurrentGovernment());
+        GameMap.getGameTile(tileX , tileY).refreshTile();
     }
 
     private static String getSideOfGatehouseFromFilename(String fileName) {
