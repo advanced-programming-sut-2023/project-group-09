@@ -4,6 +4,7 @@ import controller.GameController;
 import controller.GovernmentController;
 import controller.MapController;
 import controller.gamestructure.GameMaps;
+import enumeration.Textures;
 import enumeration.dictionary.Colors;
 import javafx.application.Platform;
 import model.FakeGame;
@@ -67,7 +68,20 @@ public class PacketOnlineHandler {
             case "drop building" -> {
                 dropBuilding();
             }
+            case "set texture" -> {
+                setTexture();
+            }
         }
+    }
+
+    private void setTexture() {
+        double tileX = (Double)packet.getAttribute("tileX");
+        double tileY = (Double)packet.getAttribute("tileY");
+        String textures = (String) packet.getAttribute("texture");
+        MapController.setTexture((int)tileX , (int)tileY , Textures.getTextureByName(textures));
+        Platform.runLater(() -> {
+            GameMap.getGameTile((int)tileX , (int)tileY).refreshTile();
+        });
     }
 
     private void dropBuilding() {

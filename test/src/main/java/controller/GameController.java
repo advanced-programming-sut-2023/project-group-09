@@ -7,6 +7,7 @@ import controller.human.HumanController;
 import controller.human.MoveController;
 import enumeration.MilitaryStates;
 import enumeration.Pair;
+import enumeration.Textures;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -1270,5 +1271,14 @@ public class GameController {
 
     public static void setFakeGame(FakeGame fakeGame) {
         GameController.fakeGame = fakeGame;
+    }
+
+    public static void sendSetTexture(int tileX, int tileY, Textures texture) throws IOException {
+        Packet packet = new Packet("set texture" , "Game");
+        packet.addAttribute("tileX" , tileX);
+        packet.addAttribute("tileY" , tileY);
+        packet.addAttribute("texture" , texture.getTextureName());
+        packet.sendPacket();
+        Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
     }
 }
