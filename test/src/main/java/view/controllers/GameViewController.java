@@ -3227,13 +3227,11 @@ public class GameViewController {
         Pair<Integer, Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
         tileX = pair.getFirst();
         tileY = pair.getSecond();
-        tileY = pair.getSecond();
-        System.out.println("Tile founded at : " + tileX + " " + tileY);
         String side = getSideOfGatehouseFromFilename(droppedPicFileName);
         GameMenu.hoveringBarStateText.setText(GameController.dropBuilding(tileX, tileY, droppedBuildingName, side));
         GameMap.getGameTile(tileX, tileY).refreshTile();
         GameController.sendDropBuilding(tileX , tileY , droppedBuildingName , side , GameController.getGame().getCurrentGovernment());
-        GameMap.getGameTile(tileX , tileY).refreshTile();
+        System.out.println("haha you dropped : " + droppedBuildingName);
     }
 
     private static String getSideOfGatehouseFromFilename(String fileName) {
