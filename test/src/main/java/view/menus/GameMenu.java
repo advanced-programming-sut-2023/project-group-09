@@ -127,7 +127,7 @@ public class GameMenu extends Application {
 
         selectCursor = new Rectangle(50, 75);
 //        TODO: revert comment
-        selectCursor.setFill(new ImagePattern(GameImages.imageViews.get("selectMove")));
+//        selectCursor.setFill(new ImagePattern(GameImages.imageViews.get("selectMove")));
         Rectangle clipRectangle = new Rectangle(1200, 800);
         root.setClip(clipRectangle);
         MapController.dropMilitary(14, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());

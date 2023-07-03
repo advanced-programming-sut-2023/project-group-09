@@ -1,14 +1,31 @@
 package model.chat;
 
-import model.User;
+import controller.Application;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Message {
+    private String id;
     private String data;
-    private User sender;
-//    TODO: time
-    private ArrayList<User> readers = new ArrayList<>();
+    private String senderUsername;
+    private String sentTime;
+    private String roomId;
+    private ArrayList<String> readers = new ArrayList<>();
+
+    public Message(String data, String senderUsername, String roomId) {
+        this.sentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
+        this.data = data;
+        this.senderUsername = senderUsername;
+        this.roomId = roomId;
+        this.id = generateNewId();
+    }
+
+    public String getId() {
+        return id;
+    }
 
     public String getData() {
         return data;
@@ -18,19 +35,38 @@ public class Message {
         this.data = data;
     }
 
-    public User getSender() {
-        return sender;
+    public String getSender() {
+        return senderUsername;
     }
 
-    public void setSender(User sender) {
-        this.sender = sender;
+    public void setSender(String sender) {
+        this.senderUsername = sender;
     }
 
-    public ArrayList<User> getReaders() {
+    public ArrayList<String> getReaders() {
         return readers;
     }
 
-    public void setReaders(ArrayList<User> readers) {
+    public void setReaders(ArrayList<String> readers) {
         this.readers = readers;
+    }
+
+    public String getSentTime() {
+        return sentTime;
+    }
+
+    public void setSentTime(String sentTime) {
+        this.sentTime = sentTime;
+    }
+
+    public String generateNewId() {
+        int id = new Random().nextInt(10000);
+        String newId = Integer.toString(id);
+        if (Application.getMessageById(newId) == null) return newId;
+        return generateNewId();
+    }
+
+    public String getRoomId() {
+        return roomId;
     }
 }

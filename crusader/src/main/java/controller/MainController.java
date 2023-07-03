@@ -20,6 +20,8 @@ public class MainController {
         DBController.loadBuildings();
         DBController.loadTools();
         GameMaps.createMaps();
+        DBController.loadRooms();
+        DBController.loadMessages();
     }
 
     public static void run(Stage stage) throws Exception {

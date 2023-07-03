@@ -1,0 +1,40 @@
+.text-area {
+    -fx-background-color: transparent;
+    -fx-border: none;
+}
+
+.text-area .content {
+    -fx-background-color: rgb(50, 122, 237);
+    -fx-background-radius: 10;
+}
+
+.text-area.text-input {
+    -fx-font-size: 15;
+    -fx-font-family: Helvetica;
+    -fx-text-fill: white;
+}
+
+.text-area:focused .content {
+    fx-background-color: rgb(50, 122, 237);
+    -fx-background-radius: 10;
+}
+
+.text-area.other-side {
+    -fx-background-color: rgb(31, 207, 52);
+    -fx-background-radius: 10;
+}
+
+.text-area.other-side .content {
+    -fx-background-color: rgb(31, 207, 52);
+    -fx-background-radius: 10;
+}
+
+.text-area.edit-mode {
+    -fx-background-color: rgb(18, 31, 204);
+    -fx-background-radius: 10;
+}
+
+.text-area.edit-mode .content {
+    -fx-background-color: rgb(18, 31, 204);
+    -fx-background-radius: 10;
+}

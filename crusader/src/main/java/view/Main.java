@@ -21,6 +21,8 @@ public class Main extends Application {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             DBController.saveAllUsers();
             DBController.saveCurrentUser();
+            DBController.saveRooms();
+            DBController.saveMessages();
         }));
         GameMaps.createMaps();
         MainController.loadGame();

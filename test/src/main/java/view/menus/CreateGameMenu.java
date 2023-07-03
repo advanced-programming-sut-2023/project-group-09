@@ -233,7 +233,8 @@ public class CreateGameMenu extends Application {
                 try {
                     currentUser.setToken(Main.connection.getToken());
                     currentUser.sendPacket();
-                    CreateGameMenu.currentUser = new Gson().fromJson((String) Packet.receivePacket().
+                    CreateGameMenu.currentUser = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).
+                            create().fromJson((String) Packet.receivePacket().
                             getAttribute("user"), User.class);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -332,7 +333,8 @@ public class CreateGameMenu extends Application {
         try {
             getUser.addAttribute("username", governmentUsernames.get(governmentNumber - 1).getText());
             getUser.sendPacket();
-            user = new Gson().fromJson((String) Packet.receivePacket().getAttribute("user"), User.class);
+            user = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).
+                    create().fromJson((String) Packet.receivePacket().getAttribute("user"), User.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

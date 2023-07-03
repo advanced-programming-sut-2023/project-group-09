@@ -302,7 +302,10 @@ public class SignupMenu extends Application {
         try {
             validateEmail.sendPacket();
             String error = (String) Packet.receivePacket().getAttribute("error");
-            if (error != null) emailField.handlingError("email already exists!");
+            if (error != null) {
+                emailField.handlingError(error);
+                return;
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

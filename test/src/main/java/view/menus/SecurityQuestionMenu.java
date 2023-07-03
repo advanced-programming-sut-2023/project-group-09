@@ -2,6 +2,7 @@ package view.menus;
 
 import client.Packet;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import controller.DBController;
 import enumeration.Paths;
 import enumeration.dictionary.SecurityQuestions;
@@ -19,6 +20,7 @@ import model.menugui.*;
 import view.controllers.ViewController;
 
 import java.io.IOException;
+import java.lang.reflect.Modifier;
 import java.net.MalformedURLException;
 
 public class SecurityQuestionMenu extends Application {
@@ -90,7 +92,8 @@ public class SecurityQuestionMenu extends Application {
         user.setPasswordRecoveryQuestion(securityQuestionField.getValue().toString());
         user.setPasswordRecoveryAnswer(answerField.getText());
         Packet signupUser = new Packet("signup user");
-        signupUser.addAttribute("user", new Gson().toJson(user));
+        signupUser.addAttribute("user", new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).
+                create().toJson(user));
         try {
             signupUser.sendPacket();
         } catch (IOException e) {

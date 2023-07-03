@@ -16,7 +16,7 @@ public class User {
     private String passwordRecoveryAnswer;
     private String slogan;
     private String path;
-    private ArrayList<Room> rooms = new ArrayList<>();
+    private ArrayList<String> roomIds = new ArrayList<>();
 
     public User(String username, String password, String nickname, String email, String slogan) {
         this.username = username;
@@ -124,19 +124,15 @@ public class User {
         this.path = path;
     }
 
-    public ArrayList<Room> getRooms() {
-        return rooms;
+    public ArrayList<String> getRooms() {
+        return roomIds;
     }
 
-    public Room getRoomByName(String name) {
-        for (int i = 0; i < rooms.size(); i++) {
-            if (rooms.get(i).getName().equals(name))
-                return rooms.get(i);
+    public String getRoomById(String id) {
+        for (int i = 0; i < roomIds.size(); i++) {
+            if (roomIds.get(i).equals(id))
+                return roomIds.get(i);
         }
         return null;
-    }
-
-    public void addRoom(Room room) {
-        this.rooms.add(room);
     }
 }
