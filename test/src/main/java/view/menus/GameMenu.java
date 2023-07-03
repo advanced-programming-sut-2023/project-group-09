@@ -133,7 +133,6 @@ public class GameMenu extends Application {
         setEventListeners();
         GameViewController.setCenterOfBar();
         GameViewController.createBorderRectangles(gameMap, miniMap,root);
-        //GameViewController.setNextTurnTimeline();
         attacking = new ImageView(new Image(GameTile.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm() +
                 "icons/attacking.gif"));
         attacking.setViewOrder(-2000);
@@ -157,6 +156,7 @@ public class GameMenu extends Application {
         //GameMenu.root.getChildren().add(chatMenu);
         PacketOnlineReceiver packetOnlineReceiver = new PacketOnlineReceiver();
         packetOnlineReceiver.start();
+        GameViewController.setNextTurnTimeline();
         GovernmentController.sendGetLordName();
         stage.show();
     }
