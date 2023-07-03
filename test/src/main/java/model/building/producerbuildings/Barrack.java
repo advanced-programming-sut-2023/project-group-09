@@ -23,7 +23,7 @@ public class Barrack extends Building {
     public Barrack(int numberOfRequiredWorkers, int numberOfRequiredEngineers, String name, int maxHp, int width, int length) {
         super(numberOfRequiredWorkers, numberOfRequiredEngineers, name, maxHp, width, length);
         this.changeShouldBeOne();
-        this.setBuildingImpassableLength(4);
+        this.setBuildingImpassableLength(5);
     }
 
     public Barrack(Barrack barrack) {

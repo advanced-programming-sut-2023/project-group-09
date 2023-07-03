@@ -110,7 +110,6 @@ public class HumanViewController {
         int count = 0;
         for (String name : GameMenu.unitsCount.keySet()) {
             if (GameMenu.unitsCount.get(name) != 0) {
-                System.out.println(name);
                 TypeBTN btn = new TypeBTN(name, GameMenu.menuBar, GameMenu.unitsCount.get(name), translateX, translateY);
                 translateX += 62;
                 GameViewController.setHoverEventForBar(btn.imageView, name);
@@ -153,10 +152,13 @@ public class HumanViewController {
         icon.setScaleX(1.2);
         GameMenu.menuBar.getChildren().add(icon);
         GameViewController.setHoverEventForBarOnUnitMenu(icon, "stop");
-        System.out.println(selectedMilitaries.size());
         icon.setOnMouseClicked(mouseEvent -> {
             setSelectedUnits();
-            stopTroops();
+            try {
+                stopTroops();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
         icon.setOnMousePressed(mouseEvent -> {
             GameMenu.movingState = MoveStates.PATROL.getState();
@@ -397,7 +399,6 @@ public class HumanViewController {
             return true;
         }
         if (GameController.validateAttackBuilding(endTile.getTileX(), endTile.getTileY())) {
-            System.out.println("check: " + endTile.getTileX() + " " + endTile.getTileY());
             return true;
         }
         return GameController.validateAttackTool(endTile.getTileX(), endTile.getTileY());
@@ -528,7 +529,6 @@ public class HumanViewController {
         ArrayList<Integer> ids = new ArrayList<>();
         for (Military military : selectedMilitaries) {
             ids.add(military.getId());
-            System.out.println("ids: " + military.getId());
             HumanController.militaries.clear();
             HumanController.militaries.add(military);
             GameController.moveUnit(end.getTileX(), end.getTileY());
@@ -563,7 +563,7 @@ public class HumanViewController {
             GameController.patrolUnit(end.getTileX(), end.getTileY());
         }
         if (selectedMilitaries.size() != 0){
-            Packet packet = new Packet("move units","Game");
+            Packet packet = new Packet("patrol unit","Game");
             packet.addAttribute("x",end.getTileX());
             packet.addAttribute("y",end.getTileY());
             packet.addAttribute("ids",ids);
@@ -604,11 +604,19 @@ public class HumanViewController {
         GameMenu.gameMap.getChildren().addAll(flag1, flag2);
     }
 
-    public static void stopTroops() {
+    public static void stopTroops() throws IOException {
+        ArrayList<Integer> ids = new ArrayList<>();
         for (Military military : selectedMilitaries) {
             if (military.getMove() != null) {
+                ids.add(military.getId());
                 military.getMove().stopMove();
             }
+        }
+        if (selectedMilitaries.size() != 0){
+            Packet packet = new Packet("stop","Game");
+            packet.addAttribute("ids",ids);
+            packet.sendPacket();
+            Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
         }
         GameViewController.unselectTiles();
     }

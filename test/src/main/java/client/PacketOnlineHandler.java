@@ -161,7 +161,7 @@ public class PacketOnlineHandler {
         double x = (double) packet.getAttribute("x");
         double y = (double) packet.getAttribute("y");
         double id = (double) packet.getAttribute("id");
-        Human human = GameController.getGame().humans.get(id);
+        Human human = GameController.getGame().humans.get((int)id);
         if (human instanceof Military military) {
             HumanController.militaries.clear();
             HumanController.militaries.add(military);
@@ -212,7 +212,16 @@ public class PacketOnlineHandler {
     }
 
     private void stopUnits() {
-
+        if (packet.attributes.get("ids") == null) return;
+        String idsString = packet.attributes.get("ids").toString();
+        ArrayList<Integer> ids = new Gson().fromJson(idsString, new TypeToken<ArrayList<Integer>>() {
+        }.getType());
+        for (int id : ids) {
+            Human human = GameController.getGame().humans.get(id);
+            if (human instanceof Military military) {
+                military.getMove().stopMove();
+            }
+        }
     }
 
     private void repair() {

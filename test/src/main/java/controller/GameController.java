@@ -276,9 +276,11 @@ public class GameController {
 
     public static boolean validateAttackBuilding(int x, int y) {
         Building building = game.getMap().getTile(x, y).getBuilding();
+
         if (building == null) {
             return false;
         }
+
         if (building instanceof MainCastle) {
             return false;
         }
