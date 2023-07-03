@@ -1,33 +1,47 @@
 package model.chat;
 
+import controller.Application;
 import model.User;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Room {
+    private boolean isPrivate;
+    private String id;
     private String name;
-    private User admin;
-    private ArrayList<User> members = new ArrayList<>();
+    private String adminUsername;
+    private ArrayList<String> members = new ArrayList<>();
     private ArrayList<Message> messages = new ArrayList<>();
 
-    public Room(String name, User admin) {
+    public Room(String name, String admin, boolean isPrivate) {
         this.name = name;
-        this.admin = admin;
+        this.adminUsername = admin;
+        this.isPrivate = isPrivate;
+        this.id = generateNewId();
     }
 
-    public User getAdmin() {
-        return admin;
+    public String getId() {
+        return id;
     }
 
-    public void setAdmin(User admin) {
-        this.admin = admin;
+    public String getAdmin() {
+        return adminUsername;
     }
 
-    public ArrayList<User> getMembers() {
+    public void setAdmin(String admin) {
+        this.adminUsername = admin;
+    }
+
+    public ArrayList<String> getMembers() {
         return members;
     }
 
-    public void addMember(User member) {
+    public void setMembers(ArrayList<String> members) {
+        this.members = members;
+    }
+
+    public void addMember(String member) {
         this.members.add(member);
     }
 
@@ -43,7 +57,38 @@ public class Room {
         return name;
     }
 
+    public String getName(String currentUsername) {
+        if (isPrivate) {
+            if (members.get(0).equals(currentUsername)) return members.get(1);
+            return members.get(0);
+        }
+        return name;
+    }
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String generateNewId() {
+        int id = new Random().nextInt(10000);
+        String newId = Integer.toString(id);
+        if (Application.getRoomById(newId) == null) return newId;
+        return generateNewId();
+    }
+
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
+    public void setPrivate(boolean aPrivate) {
+        isPrivate = aPrivate;
+    }
+
+    public Message getMessageById(String messageId) {
+        for (int i = 0; i < messages.size(); i++) {
+            Message message = messages.get(i);
+            if (message.getId().equals(messageId)) return message;
+        }
+        return null;
     }
 }

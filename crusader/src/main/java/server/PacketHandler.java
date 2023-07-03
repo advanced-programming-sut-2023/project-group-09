@@ -6,7 +6,7 @@ import controller.*;
 import controller.gamestructure.GameMaps;
 import model.Government;
 import model.User;
-import model.building.castlebuildings.MainCastle;
+import model.chat.Message;
 import model.chat.Room;
 import model.game.Game;
 import model.game.Map;
@@ -18,8 +18,8 @@ import server.handlers.ProfileHandler;
 import server.handlers.UserHandler;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.lang.reflect.Modifier;
+import java.util.LinkedHashMap;
 
 public class PacketHandler {
     Packet packet;
@@ -82,7 +82,8 @@ public class PacketHandler {
                 return;
             }
             case "signup user" -> {
-                Application.addUser(new Gson().fromJson((String) packet.getAttribute("user"), User.class));
+                Application.addUser(new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create()
+                        .fromJson((String) packet.getAttribute("user"), User.class));
                 DBController.saveAllUsers();
                 return;
             }
@@ -104,8 +105,8 @@ public class PacketHandler {
                 return;
             }
             case "new game" -> {
-                GameController.setGame(new GsonBuilder().setPrettyPrinting().create()
-                        .fromJson((String) packet.getAttribute("game"), Game.class));
+                GameController.setGame(new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT)
+                        .create().fromJson((String) packet.getAttribute("game"), Game.class));
                 GameMaps.createMaps();
                 Map selectedMap = (packet.getAttribute("mapNumber").equals("Map 1")) ?
                         GameMaps.largeMaps.get(0) : GameMaps.smallMaps.get(0);
@@ -114,13 +115,15 @@ public class PacketHandler {
             }
             case "current user" -> {
                 Packet currentUser = new Packet("current user");
-                currentUser.addAttribute("user", new Gson().toJson(TokenController.getUserByToken(packet.getToken())));
+                currentUser.addAttribute("user", new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).
+                        create().toJson(TokenController.getUserByToken(packet.getToken())));
                 sendPacket(currentUser);
             }
             case "get user" -> {
                 Packet sendUser = new Packet("send user");
                 User user = controller.Application.getUserByUsername((String) packet.getAttribute("username"));
-                sendUser.addAttribute("user", new Gson().toJson(user));
+                sendUser.addAttribute("user", new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).
+                        create().toJson(user));
                 sendPacket(sendUser);
             }
             case "add government" -> {
@@ -137,16 +140,104 @@ public class PacketHandler {
             case "chat data" -> {
                 Packet data = new Packet("chat data");
                 User currentUser = TokenController.getUserByToken(packet.getToken());
-                data.addAttribute("currentUser", new Gson().toJson(currentUser));
-                HashMap<String, String> users = new HashMap<>();
+                data.addAttribute("currentUser", new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).
+                        create().toJson(currentUser));
+                LinkedHashMap<String, String> users = new LinkedHashMap<>();
                 for (User user : Application.getUsers()) {
                     if (!users.equals(currentUser))
                         users.put(user.getUsername(), user.getPath());
                 }
                 data.addAttribute("otherUsers", new Gson().toJson(users));
-                ArrayList<Room> rooms = currentUser.getRooms();
+                LinkedHashMap<String, String> rooms = new LinkedHashMap<>();
+                LinkedHashMap<String, String> privates = new LinkedHashMap<>();
+                if (currentUser.getRooms() != null)
+                    for (String roomId : currentUser.getRooms()) {
+                    Room room = Application.getRoomById(roomId);
+                    if (!room.isPrivate())
+                        rooms.put(room.getName(), room.getId());
+                    else privates.put(room.getName(currentUser.getUsername()), room.getId());
+                }
                 data.addAttribute("currentUserRooms", new Gson().toJson(rooms));
+                data.addAttribute("currentUserPrivates", new Gson().toJson(privates));
                 sendPacket(data);
+            }
+            case "send message - public" -> {
+                Message message = new Message((String) packet.getAttribute("message"), TokenController.
+                        getUserByToken(packet.getToken()).getUsername(), "0");
+                Application.getRoomById("0").addMessage(message);
+                Application.addMessage(message);
+            }
+            case "get messages - public" -> {
+                Packet response = new Packet("public messages");
+                for (int i = 0; i < Application.getRoomById("0").getMessages().size(); i++) {
+                    response.addAttribute("message" + i, new Gson().toJson(Application.getRoomById("0").getMessages()
+                            .get(i)));
+                }
+                sendPacket(response);
+            }
+            case "send message - private" -> {
+                Message message = new Message((String) packet.getAttribute("message"), TokenController.
+                        getUserByToken(packet.getToken()).getUsername(), (String) packet.getAttribute("roomId"));
+                Room room = Application.getRoomById((String) packet.getAttribute("roomId"));
+                room.addMessage(message);
+                Application.addMessage(message);
+            }
+            case "get messages - private" -> {
+                Packet response = new Packet("private messages");
+                Room room = null;
+                if ((String) packet.getAttribute("roomId") == null) {
+                    room = new Room(null, null, true);
+                    User sender = TokenController.getUserByToken((String) packet.getToken());
+                    User receiver = Application.getUserByUsername((String) packet.getAttribute("receiver"));
+                    room.addMember(sender.getUsername());
+                    room.addMember(receiver.getUsername());
+                    sender.addRoom(room.getId());
+                    receiver.addRoom(room.getId());
+                    Application.addRoom(room);
+                    response.addAttribute("roomId", room.getId());
+                } else room = Application.getRoomById((String) packet.getAttribute("roomId"));
+                for (int i = 0; i < room.getMessages().size(); i++) {
+                    response.addAttribute("message" + i, new Gson().toJson(room.getMessages().get(i)));
+                }
+                sendPacket(response);
+            }
+            case "new room" -> {
+                Packet response = new Packet("new room id");
+                User sender = TokenController.getUserByToken(packet.getToken());
+                Room newRoom = new Room((String) packet.getAttribute("roomName"), sender.getUsername(), false);
+                newRoom.addMember(sender.getUsername());
+                sender.addRoom(newRoom.getId());
+                Application.addRoom(newRoom);
+                response.addAttribute("roomId", newRoom.getId());
+                sendPacket(response);
+            }
+            case "send message - room" -> {
+                Message message = new Message((String) packet.getAttribute("message"), TokenController.
+                        getUserByToken(packet.getToken()).getUsername(), (String) packet.getAttribute("roomId"));
+                Room room = Application.getRoomById((String) packet.getAttribute("roomId"));
+                room.addMessage(message);
+                Application.addMessage(message);
+            }
+            case "get messages - room" -> {
+                Packet response = new Packet("room messages");
+                Room room = Application.getRoomById((String) packet.getAttribute("roomId"));
+                for (int i = 0; i < room.getMessages().size(); i++) {
+                    response.addAttribute("message" + i, new Gson().toJson(room.getMessages().get(i)));
+                }
+                sendPacket(response);
+            }
+            case "delete for all" -> {
+                Message message = Application.getMessageById((String) packet.getAttribute("messageId"));
+                Room room = Application.getRoomById(message.getRoomId());
+                room.getMessages().remove(room.getMessageById((String) packet.getAttribute("messageId")));
+                Application.getMessages().remove(message);
+            }
+            case "edit" -> {
+                Message message = Application.getMessageById((String) packet.getAttribute("messageId"));
+                Room room = Application.getRoomById(message.getRoomId());
+                message.setData((String) packet.getAttribute("newMessage"));
+                room.getMessageById((String) packet.getAttribute("messageId")).setData(
+                        (String) packet.getAttribute("newMessage"));
             }
         }
         if (!validateAuthenticationToken()) {

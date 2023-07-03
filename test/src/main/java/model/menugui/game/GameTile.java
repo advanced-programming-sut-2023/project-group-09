@@ -1,9 +1,6 @@
 package model.menugui.game;
 
-import controller.BuildingController;
-import controller.FileController;
-import controller.GovernmentController;
-import controller.MapController;
+import controller.*;
 import controller.gamestructure.GameImages;
 import controller.human.HumanController;
 import enumeration.Pair;
@@ -194,7 +191,7 @@ public class GameTile {
         if (building == null || buildingImage != null) {
             GameMenu.gameMap.getChildren().remove(buildingImage);
         }
-        if (building != null && building.getEndX() == tileX && building.getEndY() == tileY) {
+        if (building != null && (building.getEndX() == tileX && building.getEndY() == tileY)) {
             Image image;
             if (building instanceof Gatehouse) {
                 if (((Gatehouse) building).isRightSide()) {
@@ -304,7 +301,8 @@ public class GameTile {
     }
 
     public void setPit() {
-        if (tile.isPit()) {
+        if (tile.isPit() && tile.getPitGovernment().equals(GameController.getGame().getCurrentGovernment())) {
+            System.out.println("is pit!");
             Image image;
             image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
                     + "buildings/killingPit.png").toExternalForm());

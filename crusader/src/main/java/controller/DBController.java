@@ -15,6 +15,8 @@ import model.building.producerbuildings.Barrack;
 import model.building.producerbuildings.ProducerBuilding;
 import model.building.producerbuildings.WeaponProducer;
 import model.building.storagebuildings.StorageBuilding;
+import model.chat.Message;
+import model.chat.Room;
 import model.game.Map;
 import model.game.Tile;
 import model.goods.Goods;
@@ -114,6 +116,56 @@ public class DBController {
         } catch (IOException e) {
             System.out.println("An error occurred.[save current user]");
             e.printStackTrace();
+        }
+    }
+
+    public static void loadRooms() {
+        String content = null;
+        try {
+            content = new String(Files.readAllBytes(Path.of("files/chat/rooms.json")));
+            ArrayList<Room> rooms = new GsonBuilder().create().fromJson(content, new TypeToken<List<Room>>(){}.getType());
+            if (rooms == null) rooms = new ArrayList<>();
+            Application.setRooms(rooms);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void saveRooms() {
+        try {
+            String gson = new GsonBuilder().setPrettyPrinting().create().toJson(Application.getRooms());
+            File file = new File("files/chat/rooms.json");
+            FileWriter fileWriter = null;
+            fileWriter = new FileWriter(file);
+            fileWriter.write(gson);
+            fileWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void loadMessages() {
+        String content = null;
+        try {
+            content = new String(Files.readAllBytes(Path.of("files/chat/messages.json")));
+            ArrayList<Message> messages = new GsonBuilder().create().fromJson(content, new TypeToken<List<Message>>(){}.getType());
+            if (messages == null) messages = new ArrayList<>();
+            Application.setMessages(messages);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void saveMessages() {
+        try {
+            String gson = new GsonBuilder().setPrettyPrinting().create().toJson(Application.getMessages());
+            File file = new File("files/chat/messages.json");
+            FileWriter fileWriter = null;
+            fileWriter = new FileWriter(file);
+            fileWriter.write(gson);
+            fileWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

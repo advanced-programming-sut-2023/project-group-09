@@ -330,4 +330,14 @@ public class BuildingController {
             GameMap.getGameTile((int)tileX, (int)tileY).refreshTile();
         });
     }
+
+    public static void sendChangeWeapon(String weapon) throws IOException {
+        Packet packet = new Packet("change weapon" , "Game");
+        packet.addAttribute("tileX" , building.getEndX());
+        packet.addAttribute("tileY" , building.getEndY());
+        packet.addAttribute("government" , building.getGovernment().getColor());
+        packet.addAttribute("weapon" , weapon);
+        packet.sendPacket();
+        Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
+    }
 }

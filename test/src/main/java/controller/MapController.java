@@ -328,6 +328,8 @@ public class MapController {
                 tile.setTexture(textures);
             }
         }
+
+
         building.setStartX(lastTile.x);
         building.setStartY(lastTile.y);
         building.getGovernment().getBuildingData(type).addBuilding(building);
