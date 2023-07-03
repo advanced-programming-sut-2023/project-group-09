@@ -128,17 +128,17 @@ public class PacketOnlineHandler {
         double tileX = (Double)packet.getAttribute("tileX");
         double tileY = (Double)packet.getAttribute("tileY");
         String color = (String)packet.getAttribute("government");
-        String state = (String)packet.getAttribute("state");
-        BuildingController.changeGateStateOnline(tileX , tileY , getGovernmentByColor(color) , state);
+        String weapon = (String)packet.getAttribute("weapon");
+        Building building = GameMap.getGameTile((int)tileX , (int)tileY).getTile().getBuilding();
+        ((WeaponProducer)building).changeItemName(weapon);
     }
 
     private void changeGateState() {
         double tileX = (Double)packet.getAttribute("tileX");
         double tileY = (Double)packet.getAttribute("tileY");
         String color = (String)packet.getAttribute("government");
-        String weapon = (String)packet.getAttribute("weapon");
-        Building building = GameMap.getGameTile((int)tileX , (int)tileY).getTile().getBuilding();
-        ((WeaponProducer)building).changeItemName(weapon);
+        String state = (String)packet.getAttribute("state");
+        BuildingController.changeGateStateOnline(tileX , tileY , getGovernmentByColor(color) , state);
     }
 
     private void moveUnits() {
