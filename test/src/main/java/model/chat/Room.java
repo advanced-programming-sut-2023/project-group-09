@@ -1,18 +1,26 @@
 package model.chat;
 
+import client.Packet;
+import controller.Application;
 import model.User;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Room {
+    private String id;
     private String name;
     private User admin;
-    private ArrayList<User> members = new ArrayList<>();
+    private transient ArrayList<User> members = new ArrayList<>();
     private ArrayList<Message> messages = new ArrayList<>();
 
-    public Room(String name, User admin) {
+    public Room(String name, User admin, boolean isPrivate) {
         this.name = name;
         this.admin = admin;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public User getAdmin() {

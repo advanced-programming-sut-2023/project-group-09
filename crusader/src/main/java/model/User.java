@@ -24,8 +24,7 @@ public class User {
     private transient boolean online = false;
     private transient boolean updateFriend = false;
     private String path;
-    private ArrayList<Room> rooms = new ArrayList<>();
-
+    private ArrayList<String> roomIds = new ArrayList<>();
     public ArrayList<String> friends = new ArrayList<>();
     public HashMap<String,String> friendsRequest = new HashMap<>();
 
@@ -158,20 +157,22 @@ public class User {
         UserHandler.sendChangedPacket();
     }
 
-    public ArrayList<Room> getRooms() {
-        return rooms;
+    public ArrayList<String> getRooms() {
+        return roomIds;
     }
 
-    public Room getRoomByName(String name) {
-        for (int i = 0; i < rooms.size(); i++) {
-            if (rooms.get(i).getName().equals(name))
-                return rooms.get(i);
+    public String getRoomById(String id) {
+        for (int i = 0; i < roomIds.size(); i++) {
+            String roomId = roomIds.get(i);
+            if (roomId.equals(id))
+                return roomId;
         }
         return null;
     }
 
-    public void addRoom(Room room) {
-        this.rooms.add(room);
+    public void addRoom(String roomId) {
+        if (roomIds == null) roomIds = new ArrayList<>();
+        this.roomIds.add(roomId);
     }
 
     public void addFriend(String username){
