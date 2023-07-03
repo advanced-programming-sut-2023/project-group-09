@@ -262,7 +262,7 @@ public class Attack {
 
         if (enemyHp <= 0) {
             military.getGovernment().removeNumberOfTroopInAttack(military);
-            enemy.getGovernment().removeNumberOfTroopInAttack(military);
+            enemy.getGovernment().removeNumberOfTroopInAttack(enemy);
             MapController.deleteMilitary(enemy.getX(), enemy.getY(), enemy);
             enemy.setGovernment(null);
             enemy = null;
