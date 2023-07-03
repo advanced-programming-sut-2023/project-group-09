@@ -16,7 +16,7 @@
       "f": "requested",
       "Narges1": "requesting"
     },
-    "lastSeen": 1688408059269
+    "lastSeen": 0
   },
   {
     "username": "Moeein",
@@ -60,7 +60,7 @@
       "a": "requesting",
       "Amirh": "requesting"
     },
-    "lastSeen": 1688408059281
+    "lastSeen": 0
   },
   {
     "username": "Farzam3",
@@ -870,7 +870,6 @@
     "passwordRecoveryQuestion": "What\u0027s my father\u0027s name?",
     "passwordRecoveryAnswer": "1a83a04f1cd08062a2c076844c148152218732770362022a86492e78363186e7",
     "path": "files/img/avatars/1.png",
-    "rooms": [],
     "lastSeen": 1688308968736
   }
 ]

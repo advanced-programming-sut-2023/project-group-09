@@ -1,15 +1,19 @@
 package controller;
 
+import client.Packet;
 import controller.gamestructure.GameGoods;
 import model.Government;
 import model.building.Building;
 import model.building.storagebuildings.StorageBuilding;
 import model.goods.Goods;
+import view.Main;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GovernmentController {
     private static Government currentGovernment;
+    private static String nickname;
 
     public static Government getCurrentGovernment() {
         return currentGovernment;
@@ -70,6 +74,18 @@ public class GovernmentController {
             return "tax rate changed successfully!";
         }
         return "invalid tax rate!";
+    }
+
+    public static void changeTaxRateOnline(int rate , Government government) {
+        if (-3 <= rate && rate <= 8) {
+            government.setTaxRate(rate);
+        }
+    }
+
+    public static void changeFoodRateOnline(int rate , Government government) {
+        if (-2 <= rate && rate <= 2) {
+            government.setFoodRate(rate);
+        }
     }
 
     public static String changeFearRate(int rate) {
@@ -213,5 +229,50 @@ public class GovernmentController {
         }
         result += counter + ". GOLD : " + currentGovernment.getGold();
         return result;
+    }
+
+    public static void sendChangeTaxRate(int taxRate, Government government) throws IOException {
+        Packet packet = new Packet("change tax rate" , "Game");
+        packet.addAttribute("taxRate" , taxRate);
+        packet.addAttribute("color" , government.getColor());
+        packet.sendPacket();
+        Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
+    }
+
+    public static void sendGetLordName() throws IOException {
+        Packet packet = new Packet("get lord name" , "Game");
+        packet.addAttribute("color" , getCurrentGovernment().getColor());
+        packet.sendPacket();
+        Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
+    }
+
+    public static String getNickname() {
+        return nickname;
+    }
+
+    public static void setNickname(String nickname) {
+        GovernmentController.nickname = nickname;
+    }
+
+    public static void sendChangeFoodRate(int foodRate, String color) throws IOException {
+        Packet packet = new Packet("change food rate" , "Game");
+        packet.addAttribute("color" , color);
+        packet.addAttribute("foodRate" , foodRate);
+        packet.sendPacket();
+        Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
+    }
+
+    public static void sendChangeFearRate(int fearRate, String color) throws IOException {
+        Packet packet = new Packet("change fear rate" , "Game");
+        packet.addAttribute("color" , color);
+        packet.addAttribute("fearRate" ,fearRate);
+        packet.sendPacket();
+        Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
+    }
+
+    public static void changeFearRateOnline(int rate, Government governmentByColor) {
+        if (-5 <= rate && rate <= 5) {
+            governmentByColor.setFearRate(rate);
+        }
     }
 }

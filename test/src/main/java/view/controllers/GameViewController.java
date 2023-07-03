@@ -537,7 +537,11 @@ public class GameViewController {
             case "Government" -> {
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar(2);
-                setCenterToGovernment();
+                try {
+                    setCenterToGovernment();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
@@ -780,7 +784,11 @@ public class GameViewController {
             case "Government" -> {
                 GameMenu.menuBar.getChildren().clear();
                 GameMenu.createGameBar(2);
-                setCenterToGovernment();
+                try {
+                    setCenterToGovernment();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
             case "Popularity" -> {
                 GameMenu.menuBar.getChildren().clear();
@@ -927,6 +935,12 @@ public class GameViewController {
                     GovernmentController.getCurrentGovernment().getFoodRate()));
             int popularity = GovernmentController.getCurrentGovernment().getPopularity() + 37;
             GameViewController.popularityReporter.setText(String.format("%d", popularity));
+            try {
+                GovernmentController.sendChangeFoodRate(GovernmentController.getCurrentGovernment().getFoodRate(),
+                        GovernmentController.getCurrentGovernment().getColor());
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             updateFaceOfReporter();
         });
 
@@ -952,11 +966,17 @@ public class GameViewController {
                     GovernmentController.getCurrentGovernment().getFearRate()));
             int popularity = GovernmentController.getCurrentGovernment().getPopularity() + 37;
             GameViewController.popularityReporter.setText(String.format("%d", popularity));
+            try {
+                GovernmentController.sendChangeFearRate(GovernmentController.getCurrentGovernment().getFearRate() ,
+                        GovernmentController.getCurrentGovernment().getColor());
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             updateFaceOfReporter();
         });
     }
 
-    private static void setCenterToGovernment() {
+    private static void setCenterToGovernment() throws IOException {
         ImageView shieldIcon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/shieldIcon.png");
         shieldIcon.setScaleX(0.2);
@@ -965,7 +985,7 @@ public class GameViewController {
         shieldIcon.setTranslateY(-140);
         GameMenu.menuBar.getChildren().add(shieldIcon);
 
-        Text lordNameText = new Text("Lord " + GovernmentController.getCurrentGovernment().getUser().getNickname());
+        Text lordNameText = new Text("Lord " + GovernmentController.getNickname());
         lordNameText.setFont(Font.font("Times New Roman", FontWeight.BOLD, 15));
         lordNameText.setTranslateX(340);
         lordNameText.setTranslateY(100);
@@ -1030,6 +1050,11 @@ public class GameViewController {
                     , ((MainCastle)selectedBuilding).getTotalTax()));
             int popularity = GovernmentController.getCurrentGovernment().getPopularity() + 37;
             GameViewController.popularityReporter.setText(String.format("%d", popularity));
+            try {
+                GovernmentController.sendChangeTaxRate(selectedBuilding.getGovernment().getTaxRate() , selectedBuilding.getGovernment());
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             updateFaceOfReporter();
 
         });
@@ -1046,6 +1071,14 @@ public class GameViewController {
                     (selectedBuilding.getGovernment().getTaxRate() - 1));
             numberOfPeople.setText(String.format("%d            =            %d", GameController.getGame().getCurrentGovernment().getPopulation()
                     , ((MainCastle) selectedBuilding).getTotalTax()));
+            int popularity = GovernmentController.getCurrentGovernment().getPopularity() + 37;
+            GameViewController.popularityReporter.setText(String.format("%d", popularity));
+            try {
+                GovernmentController.sendChangeTaxRate(selectedBuilding.getGovernment().getTaxRate() , selectedBuilding.getGovernment());
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            updateFaceOfReporter();
         });
 
         ImageView headIcon = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())

@@ -2,6 +2,7 @@ package server.handlers;
 
 import controller.Application;
 import controller.GameController;
+import controller.GovernmentController;
 import controller.TokenController;
 import model.User;
 import server.Connection;
@@ -70,8 +71,63 @@ public class GameHandler {
             case "change weapon" -> {
                 changeWeapon();
             }
+            case "change tax rate" -> {
+                changeTaxRate();
+            }
+            case "get lord name" -> {
+                getLordName();
+            }
+            case "change food rate" -> {
+                changeFoodRate();
+            }
+            case "change fear rate" -> {
+                changeFearRate();
+            }
         }
     }
+
+    private void changeFearRate() throws IOException, ClassNotFoundException {
+        FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
+        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        for (Connection connection1 : connections) {
+            new PacketHandler(packet, connection1).sendPacket(packet);
+        }
+    }
+
+    private void changeFoodRate() throws IOException, ClassNotFoundException {
+        FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
+        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        for (Connection connection1 : connections) {
+            new PacketHandler(packet, connection1).sendPacket(packet);
+        }
+    }
+
+    private void getLordName() throws IOException, ClassNotFoundException {
+        FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
+        String color = (String)packet.getAttribute("color");
+        Packet packet1 = new Packet("send lord name" , "Game");
+        packet1.addAttribute("name" , getUserByColorInGame(color , fakeGame).getNickname());
+        PacketHandler packetHandler = new PacketHandler(packet1 , connection);
+        packetHandler.sendPacket(packet1);
+    }
+
+    private User getUserByColorInGame(String color , FakeGame fakeGame) {
+        for (int i = 0; i != fakeGame.getAllUsernames().size(); i++) {
+            if (fakeGame.getColors().get(i).equals(color)) {
+                return Application.getUserByUsername(fakeGame.getAllUsernames().get(i));
+            }
+        }
+        return null;
+    }
+
+    private void changeTaxRate() throws IOException, ClassNotFoundException {
+        FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
+        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        for (Connection connection1 : connections) {
+            new PacketHandler(packet, connection1).sendPacket(packet);
+        }
+    }
+
 
     private void changeWeapon() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();

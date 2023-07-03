@@ -121,8 +121,43 @@ public class PacketOnlineHandler {
             case "change weapon" -> {
                 changeWeapon();
             }
+            case "change tax rate" -> {
+                changeTaxRate();
+            }
+            case "send lord name" -> {
+                sendLordName();
+            }
+            case "change food rate" -> {
+                changeFoodRate();
+            }
+            case "change fear rate" -> {
+                changeFearRate();
+            }
         }
     }
+
+    private void changeFearRate() {
+        double fearRate = (Double) packet.getAttribute("fearRate");
+        String color = (String)packet.getAttribute("color");
+        GovernmentController.changeFearRateOnline((int)fearRate , getGovernmentByColor(color));
+    }
+
+    private void changeFoodRate() {
+        double foodRate = (Double) packet.getAttribute("foodRate");
+        String color = (String)packet.getAttribute("color");
+        GovernmentController.changeFoodRateOnline((int)foodRate , getGovernmentByColor(color));
+    }
+
+    private void sendLordName() {
+        GovernmentController.setNickname((String)packet.getAttribute("name"));
+    }
+
+    private void changeTaxRate() {
+        double taxRate = (Double) packet.getAttribute("taxRate");
+        String color = (String)packet.getAttribute("color");
+        GovernmentController.changeTaxRateOnline((int)taxRate , getGovernmentByColor(color));
+    }
+
 
     private void changeWeapon() {
         double tileX = (Double)packet.getAttribute("tileX");

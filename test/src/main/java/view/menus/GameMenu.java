@@ -161,6 +161,7 @@ public class GameMenu extends Application {
         //GameMenu.root.getChildren().add(chatMenu);
         PacketOnlineReceiver packetOnlineReceiver = new PacketOnlineReceiver();
         packetOnlineReceiver.start();
+        GovernmentController.sendGetLordName();
         stage.show();
     }
 
