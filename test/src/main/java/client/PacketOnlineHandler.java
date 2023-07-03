@@ -88,7 +88,18 @@ public class PacketOnlineHandler {
             case "repair" -> {
                 repair();
             }
+            case "change gate state" -> {
+                changeGateState();
+            }
         }
+    }
+
+    private void changeGateState() {
+        double tileX = (Double)packet.getAttribute("tileX");
+        double tileY = (Double)packet.getAttribute("tileY");
+        String color = (String)packet.getAttribute("government");
+        String state = (String)packet.getAttribute("state");
+        BuildingController.changeGateStateOnline(tileX , tileY , getGovernmentByColor(color) , state);
     }
 
     private void repair() {

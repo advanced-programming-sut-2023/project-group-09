@@ -191,7 +191,7 @@ public class GameTile {
 
     public void setBuilding() {
         Building building = tile.getBuilding();
-        if (building == null && buildingImage != null) {
+        if (building == null || buildingImage != null) {
             GameMenu.gameMap.getChildren().remove(buildingImage);
         }
         if (building != null && building.getEndX() == tileX && building.getEndY() == tileY) {

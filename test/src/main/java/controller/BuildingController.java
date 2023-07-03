@@ -5,6 +5,7 @@ import controller.human.HumanController;
 import controller.human.MoveController;
 import enumeration.Pair;
 import enumeration.answers.BuildingAnswers;
+import javafx.application.Platform;
 import model.Government;
 import model.building.Building;
 import model.building.castlebuildings.Gatehouse;
@@ -16,6 +17,7 @@ import model.human.civilian.Civilian;
 import model.human.military.Military;
 import model.menugui.game.GameMap;
 import view.Main;
+import view.menus.GameMenu;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -308,5 +310,24 @@ public class BuildingController {
         }
         building.setHp(building.getMaxHp());
         return;
+    }
+
+    public static void sendGateState(String state) throws IOException {
+        Packet packet = new Packet("change gate state" , "Game");
+        packet.addAttribute("tileX" , building.getEndX());
+        packet.addAttribute("tileY" , building.getEndY());
+        packet.addAttribute("government" , building.getGovernment().getColor());
+        packet.addAttribute("state" , state);
+        packet.sendPacket();
+        Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
+    }
+
+    public static void changeGateStateOnline(double tileX, double tileY, Government government, String state) {
+        boolean openIt = state.equals("open");
+        Building building = GameMap.getGameTile((int)tileX ,(int)tileY).getTile().getBuilding();
+        ((Gatehouse) building).openOrCloseGatehouse(openIt);
+        Platform.runLater(() -> {
+            GameMap.getGameTile((int)tileX, (int)tileY).refreshTile();
+        });
     }
 }
