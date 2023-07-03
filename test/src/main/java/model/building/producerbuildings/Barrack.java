@@ -55,7 +55,7 @@ public class Barrack extends Building {
         }
         consumeRequired(name);
         MapController.dropMilitary(x, y, name, getGovernment());
-        GameController.sendDropArabianMercenary(x , y , name , getGovernment());
+        GameController.sendDropUnit(x , y , name , getGovernment());
     }
 
     public static void makeUnitThroughNetwork(int x , int y , String name , Government government) {

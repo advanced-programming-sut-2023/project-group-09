@@ -1,7 +1,9 @@
 package controller;
 
+import client.Packet;
 import controller.human.HumanController;
 import controller.human.MoveController;
+import enumeration.Pair;
 import enumeration.answers.BuildingAnswers;
 import model.Government;
 import model.building.Building;
@@ -12,6 +14,8 @@ import model.building.storagebuildings.StorageBuilding;
 import model.game.Map;
 import model.human.civilian.Civilian;
 import model.human.military.Military;
+import model.menugui.game.GameMap;
+import view.Main;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -266,5 +270,43 @@ public class BuildingController {
         }
         return false;
 
+    }
+
+    public static void sendRepair() throws IOException {
+        Packet packet = new Packet("repair" , "Game");
+        packet.addAttribute("tileX" , building.getEndX());
+        packet.addAttribute("tileY" , building.getEndY());
+        packet.addAttribute("government" , building.getGovernment().getColor());
+        packet.sendPacket();
+        Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
+    }
+
+    public static void repairOnline(int tileX , int tileY , Government government) {
+        Building building = GameMap.getGameTile(tileX , tileY).getTile().getBuilding();
+        String itemNeeded = "";
+        boolean canRepaired = true;
+        double rateOfRepairNeeded = ((double) building.getHp()) / building.getMaxHp();
+        for (String item : building.getCost().keySet()) {
+            if (government.getPropertyAmount(item) < (int) (rateOfRepairNeeded * building.getCost().get(item))) {
+                itemNeeded = item;
+                canRepaired = false;
+                break;
+            }
+        }
+        if (!canRepaired) {
+            return;
+        }
+
+        ArrayList<Military> enemies = getEnemyOfRange(building.getStartX(), building.getStartY(), 5, government);
+        if (enemies.size() != 0) {
+            return;
+        }
+
+
+        for (String item : building.getCost().keySet()) {
+            GovernmentController.consumeProduct(government, item, (int) (rateOfRepairNeeded * building.getCost().get(item)));
+        }
+        building.setHp(building.getMaxHp());
+        return;
     }
 }

@@ -1302,7 +1302,7 @@ public class GameController {
         Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
     }
 
-    public static void sendDropArabianMercenary(int x, int y, String name, Government government) throws IOException {
+    public static void sendDropUnit(int x, int y, String name, Government government) throws IOException {
         Packet packet = new Packet("drop arabian mercenary" , "Game");
         packet.addAttribute("x" , x);
         packet.addAttribute("y" , y);

@@ -40,6 +40,17 @@ public class GameHandler {
             case "drop arabian mercenary" -> {
                 dropArabianMercenary();
             }
+            case "repair" -> {
+                repair();
+            }
+        }
+    }
+
+    private void repair() throws IOException, ClassNotFoundException {
+        FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
+        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        for (Connection connection1 : connections) {
+            new PacketHandler(packet, connection1).sendPacket(packet);
         }
     }
 

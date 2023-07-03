@@ -1,5 +1,6 @@
 package client;
 
+import controller.BuildingController;
 import controller.GameController;
 import controller.GovernmentController;
 import controller.MapController;
@@ -84,7 +85,17 @@ public class PacketOnlineHandler {
             case "drop arabian mercenary" -> {
                 dropArabianMercenary();
             }
+            case "repair" -> {
+                repair();
+            }
         }
+    }
+
+    private void repair() {
+        double tileX = (Double)packet.getAttribute("tileX");
+        double tileY = (Double)packet.getAttribute("tileY");
+        String color = (String)packet.getAttribute("government");
+        BuildingController.repairOnline((int)tileX , (int)tileY , getGovernmentByColor(color));
     }
 
     private void dropArabianMercenary() {

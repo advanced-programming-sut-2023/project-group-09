@@ -1162,6 +1162,11 @@ public class GameViewController {
         GameMenu.menuBar.getChildren().add(repairButton);
         repairButton.setOnMouseClicked(e -> {
             GameMenu.hoveringBarStateText.setText(BuildingController.repair());
+            try {
+                BuildingController.sendRepair();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             if (GameMenu.hoveringBarStateText.getText().equals("Successfully repaired!")) {
                 progressBar.setProgress(1);
             }
