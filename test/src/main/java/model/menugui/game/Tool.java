@@ -19,6 +19,7 @@ import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
 import view.menus.GameMenu;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Tool extends ImageView {
@@ -106,7 +107,11 @@ public class Tool extends ImageView {
             } else if (GameMenu.isSelected && mouseEvent.getButton() == MouseButton.SECONDARY) {
                 GameViewController.unselectTiles();
             } else if (GameMenu.selectedUnit) {
-                HumanViewController.doAction(true, gameTile);
+                try {
+                    HumanViewController.doAction(true, gameTile);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 GameMenu.root.getChildren().remove(GameMenu.selectCursor);
                 GameMenu.movingState = UnitMovingState.NORMAL.getState();
                 GameViewController.unselectTilesWithOutUnits();

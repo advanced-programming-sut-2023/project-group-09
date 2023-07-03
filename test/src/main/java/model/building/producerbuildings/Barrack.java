@@ -54,16 +54,17 @@ public class Barrack extends Building {
             return;
         }
         consumeRequired(name);
-        MapController.dropMilitary(x, y, name, getGovernment());
-        GameController.sendDropUnit(x , y , name , getGovernment());
+        int id = makeID();
+        MapController.dropMilitary(x, y, name, getGovernment(),id);
+        GameController.sendDropUnit(x , y , name , getGovernment(),id);
     }
 
-    public static void makeUnitThroughNetwork(int x , int y , String name , Government government) {
+    public static void makeUnitThroughNetwork(int x , int y , String name , Government government,int id) {
         if (!checkRequired(name , government)) {
             return;
         }
         consumeRequired(name , government);
-        MapController.dropMilitary(x , y , name , government);
+        MapController.dropMilitary(x , y , name , government,id);
         government.updatePopulationWithRemove(government.getPopulation() - 1);
     }
 
@@ -205,5 +206,15 @@ public class Barrack extends Building {
             i = random.nextInt(wholeTile.size());
         }
         return new int[]{wholeTile.get(i).x, wholeTile.get(i).y};
+    }
+
+
+    public int makeID(){
+        Random random = new Random();
+        int id = random.nextInt(100000);
+        while (GameController.getGame().humans.get(id) != null){
+            id = random.nextInt(100000);
+        }
+        return id;
     }
 }

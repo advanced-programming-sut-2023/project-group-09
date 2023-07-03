@@ -1,5 +1,6 @@
 package view.controllers;
 
+import client.Packet;
 import controller.GameController;
 import controller.MapController;
 import controller.gamestructure.GameHumans;
@@ -27,9 +28,11 @@ import model.human.civilian.Civilian;
 import model.human.military.Engineer;
 import model.human.military.Military;
 import model.menugui.game.*;
+import view.Main;
 import view.menus.GameMenu;
 import view.menus.LoginMenu;
 
+import java.io.IOException;
 import java.util.*;
 
 public class HumanViewController {
@@ -411,7 +414,7 @@ public class HumanViewController {
         return GameController.validateAirAttackTool(endTile.getTileX(), endTile.getTileY());
     }
 
-    public static void doAction(boolean changeCursor, GameTile endTile) {
+    public static void doAction(boolean changeCursor, GameTile endTile) throws IOException {
         setSelectedUnits();
         String state = GameMenu.movingState;
         if (Objects.equals(state, UnitMovingState.NORMAL.getState())) {
@@ -521,12 +524,27 @@ public class HumanViewController {
         updateStateOfMilitary();
     }
 
-    public static void moveUnits(GameTile end) {
+    public static void moveUnits(GameTile end) throws IOException {
+        ArrayList<Integer> ids = new ArrayList<>();
         for (Military military : selectedMilitaries) {
+            ids.add(military.getId());
+            System.out.println("ids: " + military.getId());
             HumanController.militaries.clear();
             HumanController.militaries.add(military);
             GameController.moveUnit(end.getTileX(), end.getTileY());
         }
+        if (selectedMilitaries.size() != 0){
+            Packet packet = new Packet("move units","Game");
+            packet.addAttribute("x",end.getTileX());
+            packet.addAttribute("y",end.getTileY());
+            packet.addAttribute("ids",ids);
+            packet.sendPacket();
+            Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
+        }
+
+
+
+
         GameMenu.unitsCount = new HashMap<>();
         GameMenu.selectedTroops.clear();
         GameMenu.selectedTilesTroop.clear();
@@ -536,11 +554,21 @@ public class HumanViewController {
         GameViewController.currentCategory = null;
     }
 
-    public static void patrolUnits(GameTile end) {
+    public static void patrolUnits(GameTile end) throws IOException {
+        ArrayList<Integer> ids = new ArrayList<>();
         for (Military military : selectedMilitaries) {
+            ids.add(military.getId());
             HumanController.militaries.clear();
             HumanController.militaries.add(military);
             GameController.patrolUnit(end.getTileX(), end.getTileY());
+        }
+        if (selectedMilitaries.size() != 0){
+            Packet packet = new Packet("move units","Game");
+            packet.addAttribute("x",end.getTileX());
+            packet.addAttribute("y",end.getTileY());
+            packet.addAttribute("ids",ids);
+            packet.sendPacket();
+            Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
         }
         GameMenu.unitsCount = new HashMap<>();
         GameMenu.selectedTroops.clear();
@@ -585,7 +613,7 @@ public class HumanViewController {
         GameViewController.unselectTiles();
     }
 
-    public static void attack(GameTile end) {
+    public static void attack(GameTile end) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("attack");
         alert.setHeaderText("are you sure of your attack?");
@@ -600,12 +628,25 @@ public class HumanViewController {
             for (Military military : selectedMilitaries) {
                 HumanController.militaries.clear();
                 HumanController.militaries.add(military);
+                Packet packet;
                 if (GameController.validateAttackEnemy(end.getTileX(), end.getTileY())) {
                     GameController.attackEnemy(end.getTileX(), end.getTileY());
+                    packet = new Packet("attack enemy","Game");
+                    packet.addAttribute("x",end.getTileX());
+                    packet.addAttribute("y",end.getTileY());
+                    packet.addAttribute("id",military.getId());
+                    packet.sendPacket();
+                    Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
                     continue;
                 }
                 if (GameController.validateAttackBuilding(end.getTileX(), end.getTileY())) {
                     GameController.attackBuilding(end.getTileX(), end.getTileY());
+                    packet = new Packet("attack building","Game");
+                    packet.addAttribute("x",end.getTileX());
+                    packet.addAttribute("y",end.getTileY());
+                    packet.addAttribute("id",military.getId());
+                    packet.sendPacket();
+                    Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
                     continue;
                 }
                 if (GameController.validateAttackTool(end.getTileX(), end.getTileY())) {
@@ -614,17 +655,28 @@ public class HumanViewController {
                 }
                 if (GameController.validateAirAttack(end.getTileX(), end.getTileY())) {
                     GameController.airAttack(end.getTileX(), end.getTileY());
+                    packet = new Packet("air attack enemy","Game");
+                    packet.addAttribute("x",end.getTileX());
+                    packet.addAttribute("y",end.getTileY());
+                    packet.addAttribute("id",military.getId());
+                    packet.sendPacket();
+                    Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
                     continue;
                 }
                 if (GameController.validateAirAttackBuilding(end.getTileX(), end.getTileY())) {
                     GameController.airAttackBuilding(end.getTileX(), end.getTileY());
+                    packet = new Packet("air attack building","Game");
+                    packet.addAttribute("x",end.getTileX());
+                    packet.addAttribute("y",end.getTileY());
+                    packet.addAttribute("id",military.getId());
+                    packet.sendPacket();
+                    Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
                     continue;
                 }
                 if (GameController.validateAirAttackTool(end.getTileX(), end.getTileY())) {
                     GameController.airAttackTool(end.getTileX(), end.getTileY());
                     continue;
                 }
-
                 GameController.moveUnit(end.getTileX(), end.getTileY());
             }
             GameMenu.unitsCount = new HashMap<>();

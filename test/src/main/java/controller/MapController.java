@@ -236,7 +236,6 @@ public class MapController {
         for (Pair<Integer, Integer> pair : tiles) {
             int i = pair.getFirst();
             int j = pair.getSecond();
-            System.out.println(++counter + " : x = " + i + " y = " + j);
             if (j >= map.getWidth() || i >= map.getLength()) {
                 System.out.println("you can't put a building here");
             }
@@ -462,6 +461,20 @@ public class MapController {
             HumanViewController.dropUnit(x, y, tile, military);
         });
     }
+
+    public static void dropMilitary(int x, int y, String type, Government government,int id) {
+        Military military = GameHumans.getUnit(type, government, x, y);
+        GameController.getGame().humans.put(id,military);
+        military.setId(id);
+        Tile tile = map.getTile(x, y);
+        government.addMilitary(military);
+        tile.addMilitary(military);
+        Platform.runLater(() -> {
+            HumanViewController.dropUnit(x, y, tile, military);
+        });
+    }
+
+
 
     public static void dropCivilian(int x, int y, Government government,boolean job) {
         Civilian civilian = new Civilian(x,y,job,government);

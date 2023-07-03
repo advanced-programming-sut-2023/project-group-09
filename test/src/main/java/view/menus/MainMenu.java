@@ -50,6 +50,7 @@ public class MainMenu extends Application {
 
         scene.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode().getName().equals("C")) {
+                //System.out.println("c pressed");
                 Thread thread = new Thread(()->{
                     Packet packet = null;
                     try {

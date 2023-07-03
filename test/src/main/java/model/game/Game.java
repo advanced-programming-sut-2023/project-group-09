@@ -5,19 +5,21 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import model.Government;
+import model.human.Human;
 import model.menugui.MenuBox;
 import model.menugui.MenuButton;
-import view.Main;
 import view.menus.GameMenu;
-import view.menus.LoginMenu;
 import view.menus.MainMenu;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 public class Game {
     private transient Map map;
     private final ArrayList<Government> governments = new ArrayList<>();
+
+    public HashMap<Integer, Human> humans = new HashMap<>();
     private Government currentGovernment;
     private Government winner;
     private int round;
@@ -50,12 +52,12 @@ public class Game {
     }
 
     private synchronized static void setWinPage(Government winnerGov) {
-        MenuBox menuBox = new MenuBox("Game Is Over" , 0 , 0 , 600 , 600);
+        MenuBox menuBox = new MenuBox("Game Is Over", 0, 0, 600, 600);
         Text winner = new Text("Winner : " + winnerGov.getUser().getNickname() + " With Score " +
                 winnerGov.getHowManyTurnsSurvive() * 100);
         winner.setFont(Font.font("Times New Roman", FontWeight.BOLD, 35));
         menuBox.getChildren().add(winner);
-        MenuButton endButton = new MenuButton("Exit!" , menuBox , 0 , 100 , false);
+        MenuButton endButton = new MenuButton("Exit!", menuBox, 0, 100, false);
         endButton.setOnMouseClicked(e -> {
             try {
                 new MainMenu().start(GameMenu.stage);

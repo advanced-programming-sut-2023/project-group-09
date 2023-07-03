@@ -1,8 +1,6 @@
 package view.menus;
 
-import model.FakeGame;
 import client.Packet;
-import client.PacketOnlineReceiver;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import controller.DBController;
@@ -20,6 +18,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.FakeGame;
 import model.Government;
 import model.User;
 import model.building.castlebuildings.MainCastle;
@@ -194,7 +193,7 @@ public class CreateGameMenu extends Application {
 //            TradeController.allTrades.put(trade8.getId(), trade8);
             try {
                 //////// fake game
-                Packet packet = new Packet("create fake game" , "Game");
+                Packet packet = new Packet("create fake game", "Game");
                 FakeGame fakeGame = createFakeGame();
                 packet.setToken(Main.connection.getToken());
                 packet.sendPacket();
@@ -211,8 +210,8 @@ public class CreateGameMenu extends Application {
     private FakeGame createFakeGame() {
         FakeGame fakeGame = new FakeGame();
         for (Government government : game.getGovernments()) {
-            fakeGame.addPlayer(government.getUser().getUsername() ,
-                    government.getColor() , government.getCastleX() , government.getCastleY());
+            fakeGame.addPlayer(government.getUser().getUsername(),
+                    government.getColor(), government.getCastleX(), government.getCastleY());
         }
         fakeGame.setAdminUsername(game.getGovernments().get(0).getUser().getUsername());
         return fakeGame;
@@ -308,7 +307,7 @@ public class CreateGameMenu extends Application {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        if (addedGovernments.contains(governmentUsernames.get(governmentNumber - 1).getText())){
+        if (addedGovernments.contains(governmentUsernames.get(governmentNumber - 1).getText())) {
             governmentUsernames.get(governmentNumber - 1).handlingError("this government has been added!");
             return;
         }

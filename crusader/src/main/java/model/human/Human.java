@@ -4,7 +4,9 @@ package model.human;
 import model.Government;
 import model.activity.Move;
 
-public abstract class Human implements Cloneable {
+import java.util.Random;
+
+public abstract class Human {
     private String name;
     private Government government = null;
     private int speed;
@@ -49,6 +51,7 @@ public abstract class Human implements Cloneable {
     public void setName(String name) {
         this.name = name;
     }
+
     public void enableInvisible() {
         this.isInvisible = true;
     }

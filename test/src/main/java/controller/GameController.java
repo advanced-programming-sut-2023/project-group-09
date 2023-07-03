@@ -152,7 +152,9 @@ public class GameController {
 
     //==================================================================================
     public static String attackEnemy(int x, int y) {
-        ArrayList<Military> militaries = MapController.getMilitariesOfOtherGovernment(x, y, GameController.getGame().getCurrentGovernment());
+        if (HumanController.militaries.size() == 0) return "";
+        Government government = HumanController.militaries.get(0).getGovernment();
+        ArrayList<Military> militaries = MapController.getMilitariesOfOtherGovernment(x, y, government);
         if (militaries.size() == 0) {
             return "your input is not valid please try again later!";
         }
@@ -166,7 +168,9 @@ public class GameController {
     }
 
     public static String airAttack(int x, int y) {
-        List<Military> enemies = MapController.getMilitariesOfOtherGovernment(x, y, GameController.getGame().getCurrentGovernment());
+        if (HumanController.militaries.size() == 0) return "";
+        Government government = HumanController.militaries.get(0).getGovernment();
+        List<Military> enemies = MapController.getMilitariesOfOtherGovernment(x, y, government);
         if (enemies.size() == 0) {
             return "there is no enemy in this position!";
         }
@@ -179,6 +183,8 @@ public class GameController {
     }
 
     public static String attackBuilding(int x, int y) {
+        if (HumanController.militaries.size() == 0) return "";
+        Government government = HumanController.militaries.get(0).getGovernment();
         Building building = game.getMap().getTile(x, y).getBuilding();
         if (building == null) {
             return "no building in this place!";
@@ -186,7 +192,7 @@ public class GameController {
         if (building instanceof MainCastle) {
             return "you can't attack to mainCastle";
         }
-        if (building.getGovernment().equals(game.getCurrentGovernment())) {
+        if (building.getGovernment().equals(government)) {
             return "this building is yours!";
         }
         boolean canAttack = HumanController.attack(building);
@@ -197,11 +203,13 @@ public class GameController {
     }
 
     public static String airAttackBuilding(int x, int y) {
+        if (HumanController.militaries.size() == 0) return "";
+        Government government = HumanController.militaries.get(0).getGovernment();
         Building building = game.getMap().getTile(x, y).getBuilding();
         if (building == null) {
             return "no building in this place!";
         }
-        if (building.getGovernment().equals(game.getCurrentGovernment())) {
+        if (building.getGovernment().equals(government)) {
             return "this building is yours!";
         }
         boolean canAttack = HumanController.airAttack(building);
@@ -1302,10 +1310,11 @@ public class GameController {
         Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
     }
 
-    public static void sendDropUnit(int x, int y, String name, Government government) throws IOException {
+    public static void sendDropUnit(int x, int y, String name, Government government,int id) throws IOException {
         Packet packet = new Packet("drop arabian mercenary" , "Game");
         packet.addAttribute("x" , x);
         packet.addAttribute("y" , y);
+        packet.addAttribute("id" , Integer.toString(id));
         packet.addAttribute("name" , name);
         packet.addAttribute("color" , government.getColor());
         packet.sendPacket();
