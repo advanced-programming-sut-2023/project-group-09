@@ -10,6 +10,7 @@ import model.building.Building;
 import model.building.producerbuildings.Barrack;
 import model.building.producerbuildings.WeaponProducer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -21,7 +22,7 @@ public class BuildingMenu {
         return Buildings.getName(building).equals(nameOfBuilding);
     }
 
-    public static void run(Scanner scanner) {
+    public static void run(Scanner scanner) throws IOException {
         System.out.println("<< Building Menu >>");
         BuildingController.setGovernment();
         Building building = BuildingController.getBuilding();

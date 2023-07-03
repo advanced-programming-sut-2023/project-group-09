@@ -1301,4 +1301,14 @@ public class GameController {
         packet.sendPacket();
         Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
     }
+
+    public static void sendDropArabianMercenary(int x, int y, String name, Government government) throws IOException {
+        Packet packet = new Packet("drop arabian mercenary" , "Game");
+        packet.addAttribute("x" , x);
+        packet.addAttribute("y" , y);
+        packet.addAttribute("name" , name);
+        packet.addAttribute("color" , government.getColor());
+        packet.sendPacket();
+        Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
+    }
 }

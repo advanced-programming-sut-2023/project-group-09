@@ -10,13 +10,14 @@ import enumeration.commands.MapCommands;
 import enumeration.commands.UnitMenuCommands;
 import model.game.Game;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class GameMenu {
 
-    public static void run(Scanner scanner, Game game) {
+    public static void run(Scanner scanner, Game game) throws IOException {
         String input, output;
         System.out.println("<< Game Menu >>");
         while (true) {

@@ -11,6 +11,7 @@ import enumeration.Pair;
 import enumeration.Textures;
 import enumeration.dictionary.RockDirections;
 import enumeration.dictionary.Trees;
+import javafx.application.Platform;
 import model.Government;
 import model.User;
 import model.building.Building;
@@ -457,7 +458,9 @@ public class MapController {
         Tile tile = map.getTile(x, y);
         government.addMilitary(military);
         tile.addMilitary(military);
-        HumanViewController.dropUnit(x, y, tile, military);
+        Platform.runLater(() -> {
+            HumanViewController.dropUnit(x, y, tile, military);
+        });
     }
 
     public static void dropCivilian(int x, int y, Government government,boolean job) {

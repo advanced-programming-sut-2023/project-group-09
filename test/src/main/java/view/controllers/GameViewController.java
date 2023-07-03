@@ -2154,7 +2154,11 @@ public class GameViewController {
         engineer.setTranslateX(400);
         engineer.setTranslateY(100);
         engineer.setOnMouseClicked(mouseEvent -> {
-            ((Barrack) selectedBuilding).makeUnit("engineer");
+            try {
+                ((Barrack) selectedBuilding).makeUnit("engineer");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             selectedBuilding.getGovernment().updatePopulationWithRemove(selectedBuilding.getGovernment().getPopulation()-1);
         });
 
@@ -2163,7 +2167,11 @@ public class GameViewController {
         ladderman.setTranslateX(600);
         ladderman.setTranslateY(90);
         ladderman.setOnMouseClicked(mouseEvent -> {
-            ((Barrack) selectedBuilding).makeUnit("ladderman");
+            try {
+                ((Barrack) selectedBuilding).makeUnit("ladderman");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             selectedBuilding.getGovernment().updatePopulationWithRemove(selectedBuilding.getGovernment().getPopulation() - 1);
         });
         GameMenu.menuBar.getChildren().addAll(engineer, ladderman, peasantsNumber);
@@ -2194,7 +2202,11 @@ public class GameViewController {
         tunneler.setTranslateX(500);
         tunneler.setTranslateY(90);
         tunneler.setOnMouseClicked(mouseEvent -> {
-            ((Barrack) selectedBuilding).makeUnit("tunneler");
+            try {
+                ((Barrack) selectedBuilding).makeUnit("tunneler");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             selectedBuilding.getGovernment().updatePopulationWithRemove(selectedBuilding.getGovernment().getPopulation() - 1);
         });
         GameMenu.menuBar.getChildren().addAll(tunneler, peasantsNumber);
@@ -2621,7 +2633,11 @@ public class GameViewController {
             GameMenu.menuBar.getChildren().remove(coin);
         });
         image.setOnMouseClicked(mouseEvent -> {
-            ((Barrack) selectedBuilding).makeUnit(troop);
+            try {
+                ((Barrack) selectedBuilding).makeUnit(troop);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             selectedBuilding.getGovernment().updatePopulationWithRemove(selectedBuilding.getGovernment().getPopulation() - 1);
         });
         GameMenu.menuBar.getChildren().add(image);

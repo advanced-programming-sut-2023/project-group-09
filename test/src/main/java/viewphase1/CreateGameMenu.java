@@ -14,6 +14,7 @@ import model.game.Game;
 import model.game.Map;
 import model.human.military.EuropeanTroop;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -25,7 +26,7 @@ public class CreateGameMenu {
     private static ArrayList<Pair<Integer, Integer>> castles = new ArrayList<>();
     private static ArrayList<String> users = new ArrayList<>();
 
-    public static void run(Scanner scanner) {
+    public static void run(Scanner scanner) throws IOException {
         System.out.println("<< Create Game Menu >>");
         colors.clear();
         castles.clear();

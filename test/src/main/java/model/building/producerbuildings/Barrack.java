@@ -11,6 +11,7 @@ import model.game.Tile;
 import model.human.military.EuropeanTroop;
 import model.human.military.Military;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -42,7 +43,7 @@ public class Barrack extends Building {
         units.add(unit);
     }
 
-    public void makeUnit(String name) {
+    public void makeUnit(String name) throws IOException {
         if (!checkRequired(name)) {
             return;
         }
@@ -54,6 +55,43 @@ public class Barrack extends Building {
         }
         consumeRequired(name);
         MapController.dropMilitary(x, y, name, getGovernment());
+        GameController.sendDropArabianMercenary(x , y , name , getGovernment());
+    }
+
+    public static void makeUnitThroughNetwork(int x , int y , String name , Government government) {
+        if (!checkRequired(name , government)) {
+            return;
+        }
+        consumeRequired(name , government);
+        MapController.dropMilitary(x , y , name , government);
+        government.updatePopulationWithRemove(government.getPopulation() - 1);
+    }
+
+    public static boolean checkRequired(String name , Government government) {
+        Military military = GameHumans.getUnit(name);
+        int price = military.getPrice();
+        if (government.getUnemployedCount() == 0) {
+            return false;
+        }
+        if (price > government.getGold()) {
+            return false;
+        }
+        if (military instanceof EuropeanTroop troop) {
+            for (String armour : troop.getArmours()) {
+                if (government.getPropertyAmount(armour) == 0) {
+                    return false;
+                }
+            }
+            if (military.isUsesHorse()) {
+                if (government.getPropertyAmount("horse") == 0) {
+                    return false;
+                }
+            }
+            if (military.getWeapon() != null) {
+                return government.getPropertyAmount(military.getWeapon()) != 0;
+            }
+        }
+        return true;
     }
 
 
@@ -123,6 +161,35 @@ public class Barrack extends Building {
         }
 
         this.getGovernment().addGold(-price);
+        return true;
+    }
+
+    public static boolean consumeRequired(String name , Government government) {
+        Military military = GameHumans.getUnit(name);
+        int price = military.getPrice();
+        if (price > government.getGold()) {
+            return false;
+        }
+        if (military instanceof EuropeanTroop troop) {
+            for (String armour : troop.getArmours()) {
+                if (government.getPropertyAmount(armour) == 0) {
+                    GovernmentController.consumeProduct(government, armour, 1);
+                }
+            }
+            if (military.isUsesHorse()) {
+                if (government.getPropertyAmount("horse") == 0) {
+                    return false;
+                } else {
+                    GovernmentController.consumeProduct(government, "horse", 1);
+                }
+            }
+            if (military.getWeapon() != null) {
+                GovernmentController.consumeProduct(government, military.getWeapon(), 1);
+            }
+
+        }
+
+        government.addGold(-price);
         return true;
     }
 

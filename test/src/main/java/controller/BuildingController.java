@@ -13,6 +13,7 @@ import model.game.Map;
 import model.human.civilian.Civilian;
 import model.human.military.Military;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -144,7 +145,7 @@ public class BuildingController {
         return result;
     }
 
-    public static String buyUnit(String unitName) {
+    public static String buyUnit(String unitName) throws IOException {
         Barrack barrack = (Barrack) building;
         if (!barrack.getUnits().contains(unitName)) {
             return BuildingAnswers.getMessage(BuildingAnswers.INVALID_UNIT_NAME);

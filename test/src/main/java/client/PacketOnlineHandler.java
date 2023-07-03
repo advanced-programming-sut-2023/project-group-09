@@ -12,6 +12,7 @@ import javafx.application.Platform;
 import model.FakeGame;
 import model.Government;
 import model.building.castlebuildings.MainCastle;
+import model.building.producerbuildings.Barrack;
 import model.game.Game;
 import model.game.Map;
 import model.menugui.game.GameMap;
@@ -80,7 +81,26 @@ public class PacketOnlineHandler {
             case "drop tree" -> {
                 dropTree();
             }
+            case "drop arabian mercenary" -> {
+                dropArabianMercenary();
+            }
         }
+    }
+
+    private void dropArabianMercenary() {
+        double tileX = (Double)packet.getAttribute("x");
+        double tileY = (Double)packet.getAttribute("y");
+        String name = (String)packet.getAttribute("name");
+        String color = (String)packet.getAttribute("color");
+        Barrack.makeUnitThroughNetwork((int)tileX , (int)tileY , name , getGovernmentByColor(color));
+    }
+
+    private Government getGovernmentByColor(String color) {
+        for (Government government : GameController.getGame().getGovernments()) {
+            if (government.getColor().equals(color))
+                return government;
+        }
+        return null;
     }
 
     private void dropTree() {
