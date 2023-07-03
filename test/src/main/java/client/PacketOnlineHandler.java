@@ -15,8 +15,10 @@ import enumeration.dictionary.Trees;
 import javafx.application.Platform;
 import model.FakeGame;
 import model.Government;
+import model.building.Building;
 import model.building.castlebuildings.MainCastle;
 import model.building.producerbuildings.Barrack;
+import model.building.producerbuildings.WeaponProducer;
 import model.game.Game;
 import model.human.Human;
 import model.human.military.Military;
@@ -116,15 +118,27 @@ public class PacketOnlineHandler {
             case "air attack building" -> {
                 airAttackBuilding();
             }
+            case "change weapon" -> {
+                changeWeapon();
+            }
         }
+    }
+
+    private void changeWeapon() {
+        double tileX = (Double)packet.getAttribute("tileX");
+        double tileY = (Double)packet.getAttribute("tileY");
+        String color = (String)packet.getAttribute("government");
+        String state = (String)packet.getAttribute("state");
+        BuildingController.changeGateStateOnline(tileX , tileY , getGovernmentByColor(color) , state);
     }
 
     private void changeGateState() {
         double tileX = (Double)packet.getAttribute("tileX");
         double tileY = (Double)packet.getAttribute("tileY");
         String color = (String)packet.getAttribute("government");
-        String state = (String)packet.getAttribute("state");
-        BuildingController.changeGateStateOnline(tileX , tileY , getGovernmentByColor(color) , state);
+        String weapon = (String)packet.getAttribute("weapon");
+        Building building = GameMap.getGameTile((int)tileX , (int)tileY).getTile().getBuilding();
+        ((WeaponProducer)building).changeItemName(weapon);
     }
 
     private void moveUnits() {

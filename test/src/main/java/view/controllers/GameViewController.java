@@ -2247,6 +2247,11 @@ public class GameViewController {
         bow.setOnMouseClicked(mouseEvent -> {
             ((WeaponProducer) selectedBuilding).setItemName("bow");
             setCenterOfBar("fletcher");
+            try {
+                BuildingController.sendChangeWeapon("bow");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         String crossBowActive = (((WeaponProducer) selectedBuilding).getItemName().equals("crossBow")) ? "Hovered" : "";
@@ -2257,6 +2262,11 @@ public class GameViewController {
         crossBow.setOnMouseClicked(mouseEvent -> {
             ((WeaponProducer) selectedBuilding).setItemName("crossBow");
             setCenterOfBar("fletcher");
+            try {
+                BuildingController.sendChangeWeapon("crossBow");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
         GameMenu.menuBar.getChildren().addAll(bow, crossBow);
     }
@@ -2272,6 +2282,11 @@ public class GameViewController {
         spear.setOnMouseClicked(mouseEvent -> {
             ((WeaponProducer) selectedBuilding).setItemName("spear");
             setCenterOfBar("poleTurner");
+            try {
+                BuildingController.sendChangeWeapon("spear");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         String pikeActive = (((WeaponProducer) selectedBuilding).getItemName().equals("pike")) ? "Hovered" : "";
@@ -2282,6 +2297,11 @@ public class GameViewController {
         pike.setOnMouseClicked(mouseEvent -> {
             ((WeaponProducer) selectedBuilding).setItemName("pike");
             setCenterOfBar("poleTurner");
+            try {
+                BuildingController.sendChangeWeapon("pike");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
         GameMenu.menuBar.getChildren().addAll(spear, pike);
     }
@@ -2297,6 +2317,11 @@ public class GameViewController {
         metalArmour.setOnMouseClicked(mouseEvent -> {
             ((WeaponProducer) selectedBuilding).setItemName("metalArmour");
             setCenterOfBar("armourer");
+            try {
+                BuildingController.sendChangeWeapon("metalArmour");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         String leatherArmourActive = (((WeaponProducer) selectedBuilding).getItemName().equals("leatherArmour")) ? "Hovered" : "";
@@ -2307,6 +2332,11 @@ public class GameViewController {
         leatherArmour.setOnMouseClicked(mouseEvent -> {
             ((WeaponProducer) selectedBuilding).setItemName("leatherArmour");
             setCenterOfBar("armourer");
+            try {
+                BuildingController.sendChangeWeapon("leatherArmour");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
         GameMenu.menuBar.getChildren().addAll(leatherArmour, metalArmour);
     }
@@ -2322,6 +2352,11 @@ public class GameViewController {
         sword.setOnMouseClicked(mouseEvent -> {
             ((WeaponProducer) selectedBuilding).setItemName("sword");
             setCenterOfBar("blackSmith");
+            try {
+                BuildingController.sendChangeWeapon("sword");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         String maceActive = (((WeaponProducer) selectedBuilding).getItemName().equals("mace")) ? "Hovered" : "";
@@ -2332,6 +2367,11 @@ public class GameViewController {
         mace.setOnMouseClicked(mouseEvent -> {
             ((WeaponProducer) selectedBuilding).setItemName("mace");
             setCenterOfBar("blackSmith");
+            try {
+                BuildingController.sendChangeWeapon("mace");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
         GameMenu.menuBar.getChildren().addAll(mace, sword);
     }
