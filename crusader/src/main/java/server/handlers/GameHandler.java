@@ -12,7 +12,6 @@ import server.PacketHandler;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 public class GameHandler {
 
     Connection connection;
@@ -44,6 +43,9 @@ public class GameHandler {
             case "repair" -> {
                 repair();
             }
+            case "change gate state" -> {
+                changeGateState();
+            }
             case "move units" -> {
                 moveUnits();
             }
@@ -68,6 +70,13 @@ public class GameHandler {
         }
     }
 
+    private void changeGateState() throws IOException, ClassNotFoundException {
+        FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
+        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        for (Connection connection1 : connections) {
+            new PacketHandler(packet, connection1).sendPacket(packet);
+        }
+    }
     private void moveUnits() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
         ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
@@ -124,7 +133,6 @@ public class GameHandler {
             new PacketHandler(packet, connection1).sendPacket(packet);
         }
     }
-
 
     private void repair() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();

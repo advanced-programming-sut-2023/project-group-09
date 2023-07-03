@@ -22,6 +22,9 @@ import model.human.Human;
 import model.human.military.Military;
 import model.menugui.game.GameMap;
 import view.Main;
+import view.menus.CreateGameMenu;
+import view.menus.GameMenu;
+import view.menus.MainMenu;
 
 import java.util.ArrayList;
 
@@ -89,6 +92,9 @@ public class PacketOnlineHandler {
             case "repair" -> {
                 repair();
             }
+            case "change gate state" -> {
+                changeGateState();
+            }
             case "move units" -> {
                 moveUnits();
             }
@@ -111,6 +117,14 @@ public class PacketOnlineHandler {
                 airAttackBuilding();
             }
         }
+    }
+
+    private void changeGateState() {
+        double tileX = (Double)packet.getAttribute("tileX");
+        double tileY = (Double)packet.getAttribute("tileY");
+        String color = (String)packet.getAttribute("government");
+        String state = (String)packet.getAttribute("state");
+        BuildingController.changeGateStateOnline(tileX , tileY , getGovernmentByColor(color) , state);
     }
 
     private void moveUnits() {
@@ -201,21 +215,20 @@ public class PacketOnlineHandler {
 
     }
 
-
     private void repair() {
-        double tileX = (Double) packet.getAttribute("tileX");
-        double tileY = (Double) packet.getAttribute("tileY");
-        String color = (String) packet.getAttribute("government");
-        BuildingController.repairOnline((int) tileX, (int) tileY, getGovernmentByColor(color));
+        double tileX = (Double)packet.getAttribute("tileX");
+        double tileY = (Double)packet.getAttribute("tileY");
+        String color = (String)packet.getAttribute("government");
+        BuildingController.repairOnline((int)tileX , (int)tileY , getGovernmentByColor(color));
     }
 
     private void dropArabianMercenary() {
-        double tileX = (Double) packet.getAttribute("x");
-        double tileY = (Double) packet.getAttribute("y");
+        double tileX = (Double)packet.getAttribute("x");
+        double tileY = (Double)packet.getAttribute("y");
         int id = Integer.parseInt(packet.getAttribute("id").toString());
-        String name = (String) packet.getAttribute("name");
-        String color = (String) packet.getAttribute("color");
-        Barrack.makeUnitThroughNetwork((int) tileX, (int) tileY, name, getGovernmentByColor(color), id);
+        String name = (String)packet.getAttribute("name");
+        String color = (String)packet.getAttribute("color");
+        Barrack.makeUnitThroughNetwork((int)tileX , (int)tileY , name , getGovernmentByColor(color),id);
     }
 
     private Government getGovernmentByColor(String color) {
@@ -227,41 +240,41 @@ public class PacketOnlineHandler {
     }
 
     private void dropTree() {
-        double tileX = (Double) packet.getAttribute("tileX");
-        double tileY = (Double) packet.getAttribute("tileY");
-        String tree = (String) packet.getAttribute("tree");
-        MapController.dropTree((int) tileX, (int) tileY, Trees.getTreeByName(tree));
+        double tileX = (Double)packet.getAttribute("tileX");
+        double tileY = (Double)packet.getAttribute("tileY");
+        String tree = (String)packet.getAttribute("tree");
+        MapController.dropTree((int)tileX , (int)tileY , Trees.getTreeByName(tree));
         Platform.runLater(() -> {
-            GameMap.getGameTile((int) tileX, (int) tileY).refreshTile();
+            GameMap.getGameTile((int)tileX , (int)tileY).refreshTile();
         });
     }
 
 
     private void dropRock() {
-        double tileX = (Double) packet.getAttribute("tileX");
-        double tileY = (Double) packet.getAttribute("tileY");
-        String rockDirection = (String) packet.getAttribute("rock");
-        MapController.dropRock((int) tileX, (int) tileY, RockDirections.getRockByDirection(rockDirection));
+        double tileX = (Double)packet.getAttribute("tileX");
+        double tileY = (Double)packet.getAttribute("tileY");
+        String rockDirection = (String)packet.getAttribute("rock");
+        MapController.dropRock((int)tileX , (int)tileY , RockDirections.getRockByDirection(rockDirection));
         Platform.runLater(() -> {
-            GameMap.getGameTile((int) tileX, (int) tileY).refreshTile();
+            GameMap.getGameTile((int)tileX , (int)tileY).refreshTile();
         });
     }
 
 
     private void setTexture() {
-        double tileX = (Double) packet.getAttribute("tileX");
-        double tileY = (Double) packet.getAttribute("tileY");
+        double tileX = (Double)packet.getAttribute("tileX");
+        double tileY = (Double)packet.getAttribute("tileY");
         String textures = (String) packet.getAttribute("texture");
-        MapController.setTexture((int) tileX, (int) tileY, Textures.getTextureByName(textures));
+        MapController.setTexture((int)tileX , (int)tileY , Textures.getTextureByName(textures));
         Platform.runLater(() -> {
-            GameMap.getGameTile((int) tileX, (int) tileY).refreshTile();
+            GameMap.getGameTile((int)tileX , (int)tileY).refreshTile();
         });
     }
 
     private void dropBuilding() {
-        double tileX = (Double) packet.getAttribute("tileX");
-        double tileY = (Double) packet.getAttribute("tileY");
-        String buildingName = (String) packet.getAttribute("droppedBuildingName");
+        double tileX = (Double)packet.getAttribute("tileX");
+        double tileY = (Double)packet.getAttribute("tileY");
+        String buildingName = (String)packet.getAttribute("droppedBuildingName");
         String side = (String) packet.getAttribute("side");
         String color = (String) packet.getAttribute("color");
         Government supposedGovernment = null;
@@ -270,7 +283,7 @@ public class PacketOnlineHandler {
                 supposedGovernment = government;
             }
         }
-        GameController.dropBuilding((int) tileX, (int) tileY, buildingName, side, supposedGovernment);
+        GameController.dropBuilding((int)tileX , (int)tileY , buildingName , side ,supposedGovernment);
         Platform.runLater(() -> {
             GameMap.getGameTile((int) tileX, (int) tileY).refreshTile();
         });

@@ -1091,6 +1091,11 @@ public class GameViewController {
         GameMenu.menuBar.getChildren().add(repairButton);
         repairButton.setOnMouseClicked(e -> {
             GameMenu.hoveringBarStateText.setText(BuildingController.repair());
+            try {
+                BuildingController.sendRepair();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             if (GameMenu.hoveringBarStateText.getText().equals("Successfully repaired!")) {
                 progressBar.setProgress(1);
             }
@@ -1108,12 +1113,22 @@ public class GameViewController {
             GameMenu.hoveringBarStateText.setText(BuildingController.openOrCloseGatehouse("close"));
             GameMap.getGameTile(BuildingController.getBuilding().getEndX(), BuildingController.getBuilding().getEndY())
                     .refreshTile();
+            try {
+                BuildingController.sendGateState("close");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             System.out.println("pressed");
         });
         openIcon.setOnMouseClicked(e -> {
             GameMenu.hoveringBarStateText.setText(BuildingController.openOrCloseGatehouse("open"));
             GameMap.getGameTile(BuildingController.getBuilding().getEndX(), BuildingController.getBuilding().getEndY())
                     .refreshTile();
+            try {
+                BuildingController.sendGateState("open");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             System.out.println("pressed");
         });
         GameMenu.menuBar.getChildren().add(closeIcon);
