@@ -46,10 +46,87 @@ public class GameHandler {
             case "change gate state" -> {
                 changeGateState();
             }
+            case "move units" -> {
+                moveUnits();
+            }
+            case "attack enemy" -> {
+                attackEnemies();
+            }
+            case "patrol unit" -> {
+                patrolUnits();
+            }
+            case "stop" -> {
+                stopUnits();
+            }
+            case "attack building" -> {
+                attackBuilding();
+            }
+            case "air attack enemy"->{
+                airAttackEnemy();
+            }
+            case "air attack building" ->{
+                airAttackBuilding();
+            }
         }
     }
 
     private void changeGateState() throws IOException, ClassNotFoundException {
+        FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
+        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        for (Connection connection1 : connections) {
+            new PacketHandler(packet, connection1).sendPacket(packet);
+        }
+    }
+    private void moveUnits() throws IOException, ClassNotFoundException {
+        FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
+        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        for (Connection connection1 : connections) {
+            new PacketHandler(packet, connection1).sendPacket(packet);
+        }
+    }
+
+    private void attackEnemies() throws IOException, ClassNotFoundException {
+        FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
+        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        for (Connection connection1 : connections) {
+            new PacketHandler(packet, connection1).sendPacket(packet);
+        }
+    }
+
+    private void airAttackEnemy() throws IOException, ClassNotFoundException {
+        FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
+        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        for (Connection connection1 : connections) {
+            new PacketHandler(packet, connection1).sendPacket(packet);
+        }
+    }
+
+    private void airAttackBuilding() throws IOException, ClassNotFoundException {
+        FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
+        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        for (Connection connection1 : connections) {
+            new PacketHandler(packet, connection1).sendPacket(packet);
+        }
+    }
+
+
+    private void stopUnits() throws IOException, ClassNotFoundException {
+        FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
+        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        for (Connection connection1 : connections) {
+            new PacketHandler(packet, connection1).sendPacket(packet);
+        }
+    }
+
+    private void patrolUnits() throws IOException, ClassNotFoundException {
+        FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
+        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        for (Connection connection1 : connections) {
+            new PacketHandler(packet, connection1).sendPacket(packet);
+        }
+    }
+
+    private void attackBuilding() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
         ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
         for (Connection connection1 : connections) {
@@ -135,8 +212,7 @@ public class GameHandler {
     private Connection getConnection(String username) {
         String token = TokenController.getTokenByUsername(username);
         for (Connection connection : Connection.allConnections) {
-            System.out.println(connection.getToken());
-            if (connection != null && connection.getToken().equals(token))
+            if (connection.getToken() != null && connection.getToken().equals(token))
                 return connection;
         }
         return null;

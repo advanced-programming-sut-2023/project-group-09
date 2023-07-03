@@ -24,6 +24,7 @@ import view.menus.EditMapMenu;
 import view.menus.GameMenu;
 import view.menus.SharedMapMenu;
 
+import java.io.IOException;
 import java.util.Random;
 
 public class GameTile {
@@ -102,7 +103,6 @@ public class GameTile {
             EditMapMenu.gameMap.getChildren().remove(rockImage);
         }
         if (rockDirections != null) {
-            System.out.println("Yep!");
             String rockNumber = Integer.toString(new Random().nextInt(16) + 1);
             Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()).toExternalForm()
                     + "rocks/Image (" + rockNumber + ").png");
@@ -212,7 +212,6 @@ public class GameTile {
             } else {
                 image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()
                         + "buildings/" + building.getName() + ".png").toExternalForm());
-                System.out.println("building dropped : " + building.getName());
             }
             buildingImage = new ImageView(image);
             double translateX = image.getWidth() *
@@ -250,7 +249,11 @@ public class GameTile {
                         }
                     }
                 } else if (GameMenu.selectedUnit) {
-                    HumanViewController.doAction(true, this);
+                    try {
+                        HumanViewController.doAction(true, this);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                     GameMenu.root.getChildren().remove(GameMenu.selectCursor);
                     GameMenu.movingState = UnitMovingState.NORMAL.getState();
                     GameViewController.unselectTilesWithOutUnits();
@@ -265,7 +268,6 @@ public class GameTile {
             GameMenu.gameMap.getChildren().remove(rockImage);
         }
         if (rockDirections != null) {
-            System.out.println("Yep!");
             String rockNumber = Integer.toString(new Random().nextInt(16) + 1);
             Image image = new Image(GameTile.class.getResource(Paths.MAP_IMAGES.getPath()).toExternalForm()
                     + "rocks/Image (" + rockNumber + ").png");
@@ -370,7 +372,6 @@ public class GameTile {
 
     public void setSensor() {
         textureImage.setOnMouseEntered(mouseEvent -> {
-            System.out.println(this.getTileX() + " " + this.getTileY());
             GameMenu.currentTile = this;
         });
 
@@ -402,14 +403,17 @@ public class GameTile {
                             }
                             HumanController.militaries.clear();
                             HumanController.militaries.add(military);
-                            System.out.println(HumanController.militaries);
                         }
                     }
                 }
             } else if (GameMenu.isSelected && mouseEvent.getButton() == MouseButton.SECONDARY && !GameViewController.isTextureSelected) {
                 GameViewController.unselectTiles();
             } else if (GameMenu.selectedUnit && !GameViewController.isTextureSelected) {
-                HumanViewController.doAction(true, this);
+                try {
+                    HumanViewController.doAction(true, this);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 GameMenu.root.getChildren().remove(GameMenu.selectCursor);
                 GameMenu.movingState = UnitMovingState.NORMAL.getState();
                 GameViewController.unselectTilesWithOutUnits();
