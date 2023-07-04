@@ -10,6 +10,7 @@ import server.PacketHandler;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 public class GameHandler {
 
@@ -83,7 +84,11 @@ public class GameHandler {
             }
             case "end game" -> {
                 FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
-                GameController.getFakeGames().remove(fakeGame);
+                for (String username : fakeGame.getAllUsernames()) {
+                    User user = Application.getUserByUsername(username);
+                    GameController.getFakeGames().remove(user , fakeGame);
+                }
+                GameController.getAllFakeGames().remove(fakeGame);
             }
             case "add score" -> {
                 FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
@@ -97,6 +102,14 @@ public class GameHandler {
             }
             case "get map" -> {
                 sendMap();
+            }
+            case "get fake games" -> {
+                for (FakeGame fakeGame : GameController.getAllFakeGames()) {
+                    connection.getObjectOutputStream().writeObject(fakeGame);
+                }
+                FakeGame fakeGame = new FakeGame();
+                fakeGame.setMapName("Null Map 400*400");
+                connection.getObjectOutputStream().writeObject(fakeGame);
             }
         }
     }
@@ -277,6 +290,7 @@ public class GameHandler {
             packetHandler.sendPacket(packet1);
             getConnection(username).getObjectOutputStream().writeObject(fakeGame);
         }
+        GameController.addFakeGame(fakeGame);
     }
 
     private void dropBuilding() throws IOException, ClassNotFoundException {

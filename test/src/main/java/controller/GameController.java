@@ -1324,4 +1324,17 @@ public class GameController {
         packet.sendPacket();
         Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
     }
+
+    public static ArrayList<FakeGame> getAllRunningFakeGames() throws IOException, ClassNotFoundException {
+        Packet packet = new Packet("get fake games" , "Game");
+        packet.sendPacket();
+        FakeGame fakeGame1 = null;
+        ArrayList <FakeGame> result = new ArrayList<>();
+        do {
+            fakeGame1 = (FakeGame) Main.connection.getObjectInputStream().readObject();
+            if (fakeGame1.getMapName().equals("Null Map 400*400")) break;
+            result.add(fakeGame1);
+        } while (true);
+        return result;
+    }
 }

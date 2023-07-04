@@ -50,6 +50,15 @@ public class GameController {
     private static Game game;
     private static boolean isBuildingSelected = false;
     private static HashMap<User, FakeGame> fakeGames = new HashMap<>();
+    private static ArrayList<FakeGame> allFakeGames = new ArrayList<>();
+
+    public static ArrayList<FakeGame> getAllFakeGames() {
+        return allFakeGames;
+    }
+
+    public static void setAllFakeGames(ArrayList<FakeGame> allFakeGames) {
+        GameController.allFakeGames = allFakeGames;
+    }
 
     public static boolean isIsBuildingSelected() {
         return isBuildingSelected;
@@ -1117,6 +1126,10 @@ public class GameController {
         return filteredList;
     }
 
+    public static void addFakeGame(FakeGame fakeGame) {
+        allFakeGames.add(fakeGame);
+    }
+
     public static ArrayList<Pair<Integer, Integer>> getNeighborPairs(int endX, int endY, int width, int length) {
         ArrayList<Pair<Integer, Integer>> neighborTiles = new ArrayList<>();
         int headX = endX, headY = endY;
@@ -1226,4 +1239,6 @@ public class GameController {
     public static void addFakeGame(User user , FakeGame fakeGame) {
         fakeGames.put(user , fakeGame);
     }
+
+
 }

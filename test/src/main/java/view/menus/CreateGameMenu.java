@@ -216,7 +216,6 @@ public class CreateGameMenu extends Application {
         fakeGame.setAdminUsername(game.getGovernments().get(0).getUser().getUsername());
         fakeGame.setMapName(MapController.map.getName());
         return fakeGame;
-
     }
 
     private void checkSelectedMap() {
