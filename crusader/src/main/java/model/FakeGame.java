@@ -5,11 +5,19 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class FakeGame implements Serializable {
+
+    private boolean isPrivate = false;
+    private String password;
+    private String mapName;
+    private int gameId;
+    private String gameName;
     private String adminUsername;
     private ArrayList<String> allUsernames = new ArrayList<>();
     private ArrayList<String> colors = new ArrayList<>();
     private ArrayList<Integer> castleXs = new ArrayList<>();
     private ArrayList<Integer> castleYs = new ArrayList<>();
+    private ArrayList<String> spectatorsUsernames = new ArrayList<>();
+    private boolean isGameStarted = false;
 
 
     public String getAdminUsername() {
@@ -57,5 +65,61 @@ public class FakeGame implements Serializable {
 
     public void setCastleYs(ArrayList<Integer> castleYs) {
         this.castleYs = castleYs;
+    }
+
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
+    public void setPrivate(boolean aPrivate) {
+        isPrivate = aPrivate;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getMapName() {
+        return mapName;
+    }
+
+    public void setMapName(String mapName) {
+        this.mapName = mapName;
+    }
+
+    public int getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(int gameId) {
+        this.gameId = gameId;
+    }
+
+    public String getGameName() {
+        return gameName;
+    }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
+
+    public ArrayList<String> getSpectatorsUsernames() {
+        return spectatorsUsernames;
+    }
+
+    public void setSpectatorsUsernames(ArrayList<String> spectatorsUsernames) {
+        this.spectatorsUsernames = spectatorsUsernames;
+    }
+
+    public boolean isGameStarted() {
+        return isGameStarted;
+    }
+
+    public void setGameStarted(boolean gameStarted) {
+        isGameStarted = gameStarted;
     }
 }

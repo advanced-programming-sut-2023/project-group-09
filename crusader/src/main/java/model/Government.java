@@ -692,6 +692,8 @@ public class Government {
             military.setGovernment(null);
         }
         isDead = true;
+
+
     }
 
     public int getRealTaxRate() {

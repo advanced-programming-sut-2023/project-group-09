@@ -6,6 +6,9 @@ import controller.MapController;
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameGoods;
 import enumeration.dictionary.Colors;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import model.building.Building;
 import model.building.castlebuildings.CastleBuilding;
 import model.building.castlebuildings.MainCastle;
@@ -17,9 +20,12 @@ import model.human.Human;
 import model.human.civilian.Civilian;
 import model.human.military.EuropeanTroop;
 import model.human.military.Military;
+import model.menugui.MenuBox;
+import model.menugui.MenuButton;
 import model.tools.Tool;
 import view.controllers.GameViewController;
 import view.menus.GameMenu;
+import view.menus.MainMenu;
 
 import java.util.*;
 
@@ -692,6 +698,24 @@ public class Government {
             military.setGovernment(null);
         }
         isDead = true;
+        if (this.equals(GameController.getGame().getCurrentGovernment())) {
+            MenuBox menuBox = new MenuBox("Game Is Over", 0, 0, 600, 600);
+            Text winner = new Text("You lose With Score " +
+                    this.getHowManyTurnsSurvive() * 100);
+            winner.setFont(Font.font("Times New Roman", FontWeight.BOLD, 35));
+            menuBox.getChildren().add(winner);
+            MenuButton endButton = new MenuButton("Exit!", menuBox, 0, 100, false);
+            endButton.setOnMouseClicked(e -> {
+                try {
+                    new MainMenu().start(GameMenu.stage);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
+            menuBox.getChildren().add(endButton);
+            menuBox.setViewOrder(-10000);
+            GameMenu.root.getChildren().add(menuBox);
+        }
     }
 
     public int getRealTaxRate() {

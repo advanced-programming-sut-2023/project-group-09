@@ -632,7 +632,7 @@ public class GameController {
                 government.addTurnsSurvive();
                 numberOfGovernments++;
             } else if (!government.isDead()){
-                deadMessage += government.getUser().getNickname() + " With Score " + government.getHowManyTurnsSurvive() * 100
+                deadMessage += government.getColor() + " With Score " + government.getHowManyTurnsSurvive() * 100
             + ", ";
                 government.beingDead();
                 governmentDead = true;
@@ -693,7 +693,7 @@ public class GameController {
     }
 
 
-    public static String changeTurn() {
+    public static String changeTurn() throws IOException {
         String nickname = game.getCurrentGovernment().getUser().getNickname();
         String result = "Lord " + nickname + " was playing!\n";
         int round = game.getRound();
@@ -746,38 +746,40 @@ public class GameController {
         });
     }
 
-    public static String nextTurn() {
+    public static String nextTurn() throws IOException {
             for (Government government : game.getGovernments()) {
                 government.updateAfterTurnGraphical();
             }
             int numberOfRemainedGovernments = howManyGovernmentsRemainsInGame();
-            int randomGovernment = new Random().nextInt(numberOfRemainedGovernments-1);
-            Government government = null;
-            int index = 0;
-            for (Government iterator : game.getGovernments()) {
-                if (iterator.isAlive() && !iterator.isDead()) {
-                    if (index == randomGovernment) {
-                        government = iterator;
-                        break;
-                    } else {
-                        index++;
+            if (numberOfRemainedGovernments - 1 > 0) {
+                int randomGovernment = new Random().nextInt(numberOfRemainedGovernments - 1);
+                Government government = null;
+                int index = 0;
+                for (Government iterator : game.getGovernments()) {
+                    if (iterator.isAlive() && !iterator.isDead()) {
+                        if (index == randomGovernment) {
+                            government = iterator;
+                            break;
+                        } else {
+                            index++;
+                        }
                     }
                 }
+                beingSick(government);
             }
-            beingSick(government);
-            if (numberOfRemainedGovernments == 1) {
-                if (!game.isEndGame()) {
-                    game.setWinner();
-                    game.setScores();
-                }
-                game.setEndGame(true);
-            } else if (numberOfRemainedGovernments == 0) {
-                if (!game.isEndGame()) {
-                    game.setWinner();
-                    game.setScores();
-                }
-                game.setEndGame(true);
+        if (numberOfRemainedGovernments == 1) {
+            if (!game.isEndGame()) {
+                game.setWinner();
+                game.setScores();
             }
+            game.setEndGame(true);
+        } else if (numberOfRemainedGovernments == 0) {
+            if (!game.isEndGame()) {
+                game.setWinner();
+                game.setScores();
+            }
+            game.setEndGame(true);
+        }
             return "";
     }
 

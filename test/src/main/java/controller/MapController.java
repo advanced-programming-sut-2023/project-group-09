@@ -478,6 +478,8 @@ public class MapController {
 
 
 
+
+
     public static void dropCivilian(int x, int y, Government government,boolean job) {
         Civilian civilian = new Civilian(x,y,job,government);
         Tile tile = map.getTile(x, y);

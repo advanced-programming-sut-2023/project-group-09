@@ -20,6 +20,7 @@ import model.building.castlebuildings.MainCastle;
 import model.building.producerbuildings.Barrack;
 import model.building.producerbuildings.WeaponProducer;
 import model.game.Game;
+import model.game.Map;
 import model.human.Human;
 import model.human.military.Military;
 import model.menugui.game.GameMap;
@@ -48,18 +49,16 @@ public class PacketOnlineHandler {
             case "create fake game" -> {
                 String username = (String) packet.getAttribute("username");
                 FakeGame fakeGame = (FakeGame) Main.connection.getObjectInputStream().readObject();
-                GameMaps.createMap1();
-                Game game = new Game(GameMaps.largeMaps.get(0));
-                MapController.map = GameMaps.largeMaps.get(0);
+                Packet packet1 = new Packet("get map" , "Game");
+                packet1.addAttribute("map name" , fakeGame.getMapName());
+                packet1.sendPacket();
+                Map map = (Map)Main.connection.getObjectInputStream().readObject();
+                Game game = new Game(map);
+                MapController.map = map;
                 GameController.setGame(game);
                 for (int i = 0; i != fakeGame.getAllUsernames().size(); i++) {
                     Government government = new Government(null, fakeGame.getCastleXs().get(i),
                             fakeGame.getCastleYs().get(i), Colors.getColor(fakeGame.getColors().get(i)));
-                    MapController.dropBuilding(government.getCastleX(), government.getCastleY(), "mainCastle", government);
-                    MainCastle mainCastle = (MainCastle) GameController.getGame().getMap()
-                            .getTile(government.getCastleX(), government.getCastleY()).getBuilding();
-                    mainCastle.setGovernment(government);
-                    government.setMainCastle(mainCastle);
                     government.addAmountToProperties("wood", "resource", 1000);
                     government.addAmountToProperties("stone", "resource", 500);
                     government.addAmountToProperties("iron", "resource", 500);
@@ -121,8 +120,43 @@ public class PacketOnlineHandler {
             case "change weapon" -> {
                 changeWeapon();
             }
+            case "change tax rate" -> {
+                changeTaxRate();
+            }
+            case "send lord name" -> {
+                sendLordName();
+            }
+            case "change food rate" -> {
+                changeFoodRate();
+            }
+            case "change fear rate" -> {
+                changeFearRate();
+            }
         }
     }
+
+    private void changeFearRate() {
+        double fearRate = (Double) packet.getAttribute("fearRate");
+        String color = (String)packet.getAttribute("color");
+        GovernmentController.changeFearRateOnline((int)fearRate , getGovernmentByColor(color));
+    }
+
+    private void changeFoodRate() {
+        double foodRate = (Double) packet.getAttribute("foodRate");
+        String color = (String)packet.getAttribute("color");
+        GovernmentController.changeFoodRateOnline((int)foodRate , getGovernmentByColor(color));
+    }
+
+    private void sendLordName() {
+        GovernmentController.setNickname((String)packet.getAttribute("name"));
+    }
+
+    private void changeTaxRate() {
+        double taxRate = (Double) packet.getAttribute("taxRate");
+        String color = (String)packet.getAttribute("color");
+        GovernmentController.changeTaxRateOnline((int)taxRate , getGovernmentByColor(color));
+    }
+
 
     private void changeWeapon() {
         double tileX = (Double)packet.getAttribute("tileX");
