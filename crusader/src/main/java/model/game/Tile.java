@@ -1,7 +1,5 @@
 package model.game;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 import enumeration.Textures;
 import enumeration.dictionary.RockDirections;
 import enumeration.dictionary.Trees;
@@ -17,7 +15,6 @@ import model.human.civilian.Civilian;
 import model.human.military.Military;
 import model.tools.Tool;
 
-import java.beans.Transient;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
@@ -83,6 +80,9 @@ public class Tile implements Serializable {
     private transient ArrayList<Civilian> civilians = new ArrayList<>();
 
     public ArrayList<Military> getMilitaries() {
+        if (militaries == null) {
+            militaries = new ArrayList<>();
+        }
         return militaries;
     }
 
@@ -112,6 +112,9 @@ public class Tile implements Serializable {
 
 
     public ArrayList<Civilian> getCivilians() {
+        if (civilians == null) {
+            civilians = new ArrayList<>();
+        }
         return civilians;
     }
 
@@ -184,7 +187,9 @@ public class Tile implements Serializable {
     }
 
     public void setTexture(Textures texture) {
-        if (building == null && civilians.size() == 0 && militaries.size() == 0 && rockDirection == null && tree == null) {
+        if (building == null && (civilians == null || civilians.size() == 0) && (
+                militaries == null || militaries.size() == 0)
+                && rockDirection == null && tree == null) {
             this.texture = texture;
             passable = texture.isPassable();
             canPutBuilding = texture.getCanPutBuilding();
@@ -220,6 +225,9 @@ public class Tile implements Serializable {
     }
 
     public ArrayList<Civilian> getCivilian() {
+        if (civilians == null) {
+            civilians = new ArrayList<>();
+        }
         return civilians;
     }
 
@@ -236,18 +244,30 @@ public class Tile implements Serializable {
     }
 
     public void addMilitary(Military military) {
+        if (militaries == null) {
+            militaries = new ArrayList<>();
+        }
         militaries.add(military);
     }
 
     public void removeMilitary(Military military) {
+        if (militaries == null) {
+            militaries = new ArrayList<>();
+        }
         militaries.remove(military);
     }
 
     public void addHuman(Civilian civilian) {
+        if (civilians == null) {
+            civilians = new ArrayList<>();
+        }
         civilians.add(civilian);
     }
 
     public void removeHuman(Civilian civilian) {
+        if (civilians == null) {
+            civilians = new ArrayList<>();
+        }
         civilians.remove(civilian);
     }
 
@@ -273,10 +293,16 @@ public class Tile implements Serializable {
     }
 
     public void clearCivilian() {
+        if (civilians == null) {
+            civilians = new ArrayList<>();
+        }
         civilians.clear();
     }
 
     public void clearMilitary() {
+        if (militaries == null) {
+            militaries = new ArrayList<>();
+        }
         militaries.clear();
     }
 

@@ -85,10 +85,12 @@ public class CreateGameMenu extends Application {
 
     }
 
-    private void makeTitleStuff() {
-        String[] maps = {"Map 1", "Map 2"};
+    private void makeTitleStuff() throws IOException {
+        ArrayList<String> mapNames = MapController.getMapNamesFromServer();
+        mapNames.remove("Null Map 400*400");
+        mapNames.remove("Null Map 200*200");
         mapsField = new MenuChoiceBox(menuBox, "Map", -90, -250,
-                FXCollections.observableArrayList(maps), 300);
+                FXCollections.observableArrayList(mapNames), 300);
         menuBox.getChildren().add(mapsField);
 
         governmentTitle = new Text("Governments");
@@ -214,6 +216,7 @@ public class CreateGameMenu extends Application {
                     government.getColor(), government.getCastleX(), government.getCastleY());
         }
         fakeGame.setAdminUsername(game.getGovernments().get(0).getUser().getUsername());
+        fakeGame.setMapName(MapController.map.getName());
         return fakeGame;
 
     }
@@ -243,10 +246,14 @@ public class CreateGameMenu extends Application {
                 governmentUsernames.get(0).setEditable(false);
                 addGovernment.setDisable(false);
                 castles = new ArrayList<>();
-//                TODO: better to get from server
-                GameMaps.createMaps();
-                Map selectedMap = (mapsField.getValue().equals("Map 1")) ?
-                        GameMaps.largeMaps.get(0) : GameMaps.smallMaps.get(0);
+                Map selectedMap = null;
+                try {
+                    selectedMap = MapController.getMapFromServer(mapsField.getValue());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
                 menuBox.getChildren().remove(previewMap);
                 previewMap = new PreviewMap(selectedMap, 230, -120);
                 menuBox.getChildren().add(previewMap);
@@ -354,10 +361,6 @@ public class CreateGameMenu extends Application {
             throw new RuntimeException(e);
         }
         game.addGovernment(government);
-        MapController.dropBuilding(x, y, "mainCastle", government);
-        MainCastle mainCastle = (MainCastle) GameController.getGame().getMap().getTile(x, y).getBuilding();
-        mainCastle.setGovernment(government);
-        government.setMainCastle(mainCastle);
 
         if (governmentNumber == 1) mapsField.setDisable(true);
         governmentUsernames.get(governmentNumber - 1).setEditable(false);

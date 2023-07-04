@@ -1,9 +1,7 @@
 package server.handlers;
 
-import controller.Application;
-import controller.GameController;
-import controller.GovernmentController;
-import controller.TokenController;
+import controller.*;
+import controller.gamestructure.GameMaps;
 import model.User;
 import server.Connection;
 import model.FakeGame;
@@ -97,7 +95,16 @@ public class GameHandler {
                     }
                 }
             }
+            case "get map" -> {
+                sendMap();
+            }
         }
+    }
+
+    private void sendMap() throws IOException {
+        DBController.loadAllMaps();
+        connection.getObjectOutputStream().writeObject(GameMaps.allMaps.get((
+                String)packet.getAttribute("map name")));
     }
 
     private void changeFearRate() throws IOException, ClassNotFoundException {

@@ -37,6 +37,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Government;
 import model.building.Building;
+import model.building.castlebuildings.MainCastle;
 import model.game.Map;
 import model.game.Tile;
 import model.human.military.EuropeanTroop;
@@ -103,8 +104,7 @@ public class GameMenu extends Application {
         root.setOnMouseEntered(mouseEvent -> scene.setCursor(Cursor.DEFAULT));
         root.setOnMouseExited(mouseEvent -> scene.setCursor(Cursor.NONE));
 
-        GameMaps.createMap1();
-        Map map = GameMaps.largeMaps.get(0);
+        Map map = GameController.getGame().getMap();
         gameMap = new GameMap(map, 0, 0, 30, 18);
         gameMap.loadMap();
         miniMap = new MiniMap(125, 143, 0, 0,map);
@@ -112,6 +112,12 @@ public class GameMenu extends Application {
 
 //        TODO: revert comment
         for (Government government : GameController.getGame().getGovernments()) {
+            MapController.dropBuilding(government.getCastleX(), government.getCastleY(), "mainCastle", government);
+            MainCastle mainCastle = (MainCastle) GameController.getGame().getMap().getTile(government.getCastleX(),
+                    government.getCastleY()).getBuilding();
+            GameMap.getGameTile(government.getCastleX() , government.getCastleY()).refreshTile();
+            mainCastle.setGovernment(government);
+            government.setMainCastle(mainCastle);
             MapController.dropMilitary(government.getCastleX(), government.getCastleY() + 2, "lord", government);
             EuropeanTroop lordMilitary = (EuropeanTroop) GameController.getGame().getMap().
                     getTile(government.getCastleX(), government.getCastleY() + 2).getMilitaries().get(0);

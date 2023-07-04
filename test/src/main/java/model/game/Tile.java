@@ -80,6 +80,9 @@ public class Tile implements Serializable {
     private transient ArrayList<Civilian> civilians = new ArrayList<>();
 
     public ArrayList<Military> getMilitaries() {
+        if (militaries == null) {
+            militaries = new ArrayList<>();
+        }
         return militaries;
     }
 
@@ -109,6 +112,9 @@ public class Tile implements Serializable {
 
 
     public ArrayList<Civilian> getCivilians() {
+        if (civilians == null) {
+            civilians = new ArrayList<>();
+        }
         return civilians;
     }
 
@@ -219,6 +225,9 @@ public class Tile implements Serializable {
     }
 
     public ArrayList<Civilian> getCivilian() {
+        if (civilians == null) {
+            civilians = new ArrayList<>();
+        }
         return civilians;
     }
 
@@ -235,18 +244,30 @@ public class Tile implements Serializable {
     }
 
     public void addMilitary(Military military) {
+        if (militaries == null) {
+            militaries = new ArrayList<>();
+        }
         militaries.add(military);
     }
 
     public void removeMilitary(Military military) {
+        if (militaries == null) {
+            militaries = new ArrayList<>();
+        }
         militaries.remove(military);
     }
 
     public void addHuman(Civilian civilian) {
+        if (civilians == null) {
+            civilians = new ArrayList<>();
+        }
         civilians.add(civilian);
     }
 
     public void removeHuman(Civilian civilian) {
+        if (civilians == null) {
+            civilians = new ArrayList<>();
+        }
         civilians.remove(civilian);
     }
 
@@ -272,10 +293,16 @@ public class Tile implements Serializable {
     }
 
     public void clearCivilian() {
+        if (civilians == null) {
+            civilians = new ArrayList<>();
+        }
         civilians.clear();
     }
 
     public void clearMilitary() {
+        if (militaries == null) {
+            militaries = new ArrayList<>();
+        }
         militaries.clear();
     }
 

@@ -190,7 +190,7 @@ public class MiniMap extends StackPane {
                     pixelWriter.setColor(i - startX, j - startY, Color.DARKGRAY);
                     continue;
                 }
-                pixelWriter.setColor(i - startX, j - startY, tile.getColor());
+                pixelWriter.setColor(i - startX, j - startY, tile.getTexture().getColor());
             }
         }
     }
