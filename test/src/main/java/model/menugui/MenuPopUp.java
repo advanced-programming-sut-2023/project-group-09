@@ -51,7 +51,12 @@ public class MenuPopUp extends Pane {
         block.setMinWidth(width);
         block.setMaxHeight(height);
         block.setMinHeight(height);
-        block.setTranslateX(parent.getMaxWidth() / 2 - (double) width / 2);
+        if (parent.getMaxWidth() < 100){
+            block.setTranslateX(parent.getWidth() / 2 - (double) width / 2);
+        }else{
+            block.setTranslateX(parent.getMaxWidth() / 2 - (double) width / 2);
+        }
+
         block.setTranslateY(200);
         this.getChildren().add(block);
     }

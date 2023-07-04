@@ -1,11 +1,10 @@
 package model;
 
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class FakeGame implements Serializable {
+public class FakeGame implements Serializable{
 
     private boolean isPrivate = false;
     private String password;
@@ -22,6 +21,25 @@ public class FakeGame implements Serializable {
     private int maxPlayer;
     public String getAdminUsername() {
         return adminUsername;
+    }
+
+    public FakeGame() {
+    }
+
+    public FakeGame(FakeGame fakeGame) {
+        this.setAllUsernames(new ArrayList<>(fakeGame.allUsernames));
+        this.setGameId(fakeGame.gameId);
+        this.setGameName(fakeGame.gameName);
+        this.setMaxPlayer(fakeGame.maxPlayer);
+        this.setGameStarted(fakeGame.isGameStarted);
+        this.setPassword(fakeGame.password);
+        this.setColors(new ArrayList<>(colors));
+        this.setCastleXs(new ArrayList<>(castleXs));
+        this.setCastleYs(new ArrayList<>(castleYs));
+        this.setPrivate(fakeGame.isPrivate);
+        this.setMapName(fakeGame.mapName);
+        this.setAdminUsername(fakeGame.adminUsername);
+        this.setSpectatorsUsernames(new ArrayList<>(spectatorsUsernames));
     }
 
     public void setAdminUsername(String adminUsername) {
@@ -98,6 +116,9 @@ public class FakeGame implements Serializable {
     public void setGameId() {
         this.gameId = System.currentTimeMillis();
     }
+    public void setGameId(long id) {
+        this.gameId = id;
+    }
 
     public String getGameName() {
         return gameName;
@@ -130,4 +151,5 @@ public class FakeGame implements Serializable {
     public void setMaxPlayer(int maxPlayer) {
         this.maxPlayer = maxPlayer;
     }
+
 }

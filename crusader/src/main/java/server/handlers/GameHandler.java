@@ -117,10 +117,17 @@ public class GameHandler {
             case "create a fake game" -> CreateFakeGame();
             case "add player" -> addPlayer();
             case "update player" -> updateGame();
+            case "get fake game" -> getFakeGame();
         }
     }
 
-    private void addPlayer() throws IOException {
+    private void getFakeGame() throws IOException {
+        double id = (double) packet.getAttribute("id");
+        FakeGame fakeGame = GameController.fakeGameHashMap.get((long) id);
+        connection.getObjectOutputStream().writeObject(fakeGame);
+    }
+
+    private void addPlayer() {
         User user = TokenController.getUserByToken(packet.token);
         double id = (double) packet.getAttribute("id");
         double x = (double) packet.getAttribute("x");
@@ -137,14 +144,9 @@ public class GameHandler {
             Connection connection = getConnection(username);
             if (connection != null) {
                 Packet packet = new Packet("update fake game","Game");
-                packet.addAttribute("id",fakeGame.getGameId());
-                packet.addAttribute("name",fakeGame.getGameName());
-                packet.addAttribute("size",fakeGame.getAllUsernames().size());
-                packet.addAttribute("befor",fakeGame.isPrivate());
-                fakeGame.setPrivate(true);
-                packet.addAttribute("after",fakeGame.isPrivate());
                 Packet.sendPacket(packet,connection);
-                connection.getObjectOutputStream().writeObject(fakeGame);
+                FakeGame fakeGame1 = new FakeGame(fakeGame);
+                connection.getObjectOutputStream().writeObject(fakeGame1);
             }
         }
     }
@@ -174,8 +176,7 @@ public class GameHandler {
 
     private void sendMap() throws IOException {
         DBController.loadAllMaps();
-        connection.getObjectOutputStream().writeObject(GameMaps.allMaps.get((
-                String) packet.getAttribute("map name")));
+        connection.getObjectOutputStream().writeObject(GameMaps.allMaps.get((String) packet.getAttribute("map name")));
     }
 
     private void changeFearRate() throws IOException, ClassNotFoundException {

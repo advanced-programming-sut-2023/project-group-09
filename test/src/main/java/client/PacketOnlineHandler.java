@@ -136,10 +136,9 @@ public class PacketOnlineHandler {
                 changeFearRate();
             }
             case "update fake game" -> {
-                FakeGame fakeGame = (FakeGame) Main.connection.getObjectInputStream().readObject();
-                System.out.println("000 " + fakeGame.isPrivate());
+                Lobby.fakeGame = (FakeGame) Main.connection.getObjectInputStream().readObject();
                 Platform.runLater(Lobby::updateDatas);
-                //Lobby.receiver.pauseThread();
+                Lobby.receiver.pauseThread();
             }
         }
     }

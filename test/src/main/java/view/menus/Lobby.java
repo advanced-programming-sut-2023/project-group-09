@@ -3,8 +3,6 @@ package view.menus;
 import client.Packet;
 import client.PacketOnlineReceiver;
 import controller.MapController;
-import controller.network.FriendController;
-import controller.network.LobbyController;
 import enumeration.Paths;
 import enumeration.dictionary.Colors;
 import javafx.animation.ScaleTransition;
@@ -14,15 +12,12 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
@@ -38,7 +33,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Optional;
 
 public class Lobby extends Application {
     public static Stage stage;
@@ -60,9 +54,8 @@ public class Lobby extends Application {
 
     public ArrayList<String> users = new ArrayList<>();
     public static VBox usersList;
-    
-    
-    
+
+
     Map selectedMap;
     public static PacketOnlineReceiver receiver;
 
@@ -108,6 +101,8 @@ public class Lobby extends Application {
             flag.setVisible(false);
             castleFlags.add(flag);
         }
+
+        receiver = new PacketOnlineReceiver();
     }
 
     public void scaleDown(MouseEvent mouseEvent) {
@@ -295,10 +290,9 @@ public class Lobby extends Application {
     }
 
     public void setThread() {
-        receiver = new PacketOnlineReceiver();
         receiver.start();
     }
-    
+
     public void setBackground() {
         BackgroundImage backgroundImage =
                 new BackgroundImage(new Image(getClass().getResource
@@ -313,11 +307,11 @@ public class Lobby extends Application {
     public static synchronized void updateDatas() {
         try {
             showUsers();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-    
+
     public void setUsers() throws IOException {
         Label label = new Label("users");
         label.getStyleClass().add("title-label");
@@ -352,36 +346,9 @@ public class Lobby extends Application {
         for (String username : fakeGame.getAllUsernames()) {
             VBox vBox = new VBox();
             ProfileView profileView = new ProfileView(username, 80, 300);
-            Rectangle rectangle = new Rectangle(20, 20);
-            rectangle.setFill(new ImagePattern(new Image(
-                    LobbyMenu.class.getResource(Paths.ICONS.getPath()).toExternalForm() + "delete.png"
-            )));
-            rectangle.setOnMouseEntered(LobbyController::scaleUp);
-            rectangle.setOnMouseExited(LobbyController::scaleDown);
-            rectangle.setOnMouseClicked(mouseEvent -> {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("delete friend");
-                alert.setContentText("do you want to delete " + username + " from your friends?");
-                ButtonType yes = new ButtonType("yes");
-                ButtonType no = new ButtonType("no");
-                alert.getButtonTypes().clear();
-                alert.getButtonTypes().addAll(yes, no);
-                Optional<ButtonType> option = alert.showAndWait();
-                if (option.get() == yes) {
-                    try {
-                        FriendController.deleteFriend(username);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-
-            });
-            rectangle.setTranslateX(240);
-            rectangle.setTranslateY(30);
-            profileView.getChildren().add(rectangle);
             vBox.getChildren().add(profileView);
             usersList.getChildren().add(vBox);
         }
-        //receiver.resumeThread();
+        receiver.resumeThread();
     }
 }

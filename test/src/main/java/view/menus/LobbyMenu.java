@@ -21,13 +21,11 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.FakeGame;
-import model.menugui.GameData;
-import model.menugui.MakeNewGame;
-import model.menugui.MenuButton;
-import model.menugui.MenuFingerBack;
+import model.menugui.*;
 import view.controllers.ViewController;
 import java.io.IOException;
 import java.net.URL;
@@ -200,14 +198,38 @@ public class LobbyMenu extends Application {
             button.setOnMouseEntered(this::scaleUp);
             button.setOnMouseExited(this::scaleDown);
             button.setText("join");
+            button.setOnMouseClicked(mouseEvent -> {
+                try {
+                    FakeGame game = LobbyController.getFakeGame(fakeGame.getGameId());
+                    if (game == null){
+                        MenuPopUp popUp = new MenuPopUp(stackPane,400,400,"error","Game not found!");
+                        stackPane.getChildren().add(popUp);
+                    }else if (game.getMaxPlayer() == game.getAllUsernames().size()){
+                        MenuPopUp popUp = new MenuPopUp(stackPane,400,400,"error","The capacity is complete!");
+                        stackPane.getChildren().add(popUp);
+                    } else if (game.isGameStarted()) {
+                        MenuPopUp popUp = new MenuPopUp(stackPane,400,400,"error","The game is in progress!");
+                        stackPane.getChildren().add(popUp);
+                    }else{
+                        Lobby.fakeGame = game;
+                        new Lobby().start(stage);
+                    }
 
-            Rectangle rectangle = new Rectangle(20,20);
-            rectangle.setFill(new ImagePattern(new Image(
-                    getClass().getResource(Paths.ICONS.getPath()).toExternalForm() + "view.png"
-            )));
-            rectangle.setTranslateX(300);
-            rectangle.setTranslateY(30);
-            gameData.getChildren().addAll(button,rectangle);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            if (fakeGame.isPrivate()){
+                Rectangle rectangle = new Rectangle(20,20);
+                rectangle.setFill(new ImagePattern(new Image(
+                        getClass().getResource(Paths.ICONS.getPath()).toExternalForm() + "view.png"
+                )));
+                rectangle.setTranslateX(300);
+                rectangle.setTranslateY(30);
+                gameData.getChildren().add(rectangle);
+            }
+
+            gameData.getChildren().add(button);
             gameList.getChildren().add(vBox);
         }
     }

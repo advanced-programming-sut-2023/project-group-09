@@ -74,3 +74,8 @@ ProfileView ,GameData{
 .input-text {
     -fx-border-color: transparent transparent transparent transparent;
 }
+.pop-up {
+    -fx-background-color: #fff;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 15, -3, 0, 0);
+}
