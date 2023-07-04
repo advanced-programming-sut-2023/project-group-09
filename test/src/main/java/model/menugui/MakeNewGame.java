@@ -1,7 +1,12 @@
 package model.menugui;
 
+import client.Packet;
+import com.google.gson.GsonBuilder;
+import controller.GameController;
+import controller.MapController;
 import enumeration.Paths;
 import enumeration.dictionary.Colors;
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -13,9 +18,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
+import model.User;
+import model.game.Game;
+import model.game.Map;
 import org.controlsfx.control.ToggleSwitch;
+import view.Main;
+import view.menus.CreateGameMenu;
 import view.menus.LobbyMenu;
 
+import java.io.IOException;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 
 public class MakeNewGame extends Pane {
@@ -27,9 +39,14 @@ public class MakeNewGame extends Pane {
     public Label error;
 
     private ArrayList<Colors> colors = new ArrayList<>();
+    public ArrayList<MenuFlag> castleFlags = new ArrayList<>();
+    public MenuChoiceBox mapsField;
+
+
+
     public int id;
     public Button makeGame;
-
+    public PreviewMap previewMap;
 
     public MakeNewGame() {
         this.setStyle("-fx-background-color: #fff;-fx-background-radius: 10");
@@ -107,6 +124,58 @@ public class MakeNewGame extends Pane {
         }else{
             error.setText("");
         }
+    }
+
+    private void checkSelectedMap() {
+//        mapsField.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+//
+//                Packet currentUser = new Packet("current user");
+//                try {
+//                    currentUser.setToken(Main.connection.getToken());
+//                    currentUser.sendPacket();
+//                    CreateGameMenu.currentUser = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).
+//                            create().fromJson((String) Packet.receivePacket().
+//                                    getAttribute("user"), User.class);
+//                } catch (IOException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                governmentUsernames.get(0).setText(CreateGameMenu.currentUser.getUsername());
+//                governmentUsernames.get(0).setEditable(false);
+//                addGovernment.setDisable(false);
+//                castles = new ArrayList<>();
+//                Map selectedMap = null;
+//                try {
+//                    selectedMap = MapController.getMapFromServer(mapsField.getValue());
+//                } catch (IOException e) {
+//                    throw new RuntimeException(e);
+//                } catch (ClassNotFoundException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                menuBox.getChildren().remove(previewMap);
+//                previewMap = new PreviewMap(selectedMap, 230, -120);
+//                menuBox.getChildren().add(previewMap);
+//                for (int i = 0; i < 8; i++) {
+//                    castleFlags.get(i).setTranslateX(selectedMap.getDefaultCastles().get(i).getFirst() - selectedMap.getWidth() / 2);
+//                    castleFlags.get(i).setTranslateY(selectedMap.getDefaultCastles().get(i).getSecond() - selectedMap.getWidth() / 2);
+//                    castleFlags.get(i).setVisible(true);
+//                    previewMap.getChildren().add(castleFlags.get(i));
+//                    castles.add("Castle " + (i + 1));
+//                    selectCastle(castleFlags.get(i));
+//                }
+//                castleNumbers.get(0).setItems(FXCollections.observableArrayList(castles));
+//                MapController.map = selectedMap;
+//                game = new Game(selectedMap);
+//                Packet newGame = new Packet("new game");
+//                try {
+//                    newGame.addAttribute("mapNumber", mapsField.getValue());
+//                    newGame.addAttribute("game", new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create().toJson(game));
+//                    newGame.sendPacket();
+//                } catch (IOException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                GameController.setGame(game);
+//            }
+//        });
     }
 
 }

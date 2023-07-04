@@ -6,7 +6,6 @@ import com.google.gson.GsonBuilder;
 import controller.DBController;
 import controller.GameController;
 import controller.MapController;
-import controller.gamestructure.GameMaps;
 import enumeration.dictionary.Colors;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -21,7 +20,6 @@ import javafx.stage.Stage;
 import model.FakeGame;
 import model.Government;
 import model.User;
-import model.building.castlebuildings.MainCastle;
 import model.game.Game;
 import model.game.Map;
 import model.menugui.*;
@@ -238,7 +236,7 @@ public class CreateGameMenu extends Application {
                     currentUser.sendPacket();
                     CreateGameMenu.currentUser = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).
                             create().fromJson((String) Packet.receivePacket().
-                            getAttribute("user"), User.class);
+                                    getAttribute("user"), User.class);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
