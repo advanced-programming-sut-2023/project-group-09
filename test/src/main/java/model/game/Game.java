@@ -1,5 +1,7 @@
 package model.game;
 
+import client.Packet;
+import controller.GameController;
 import controller.GovernmentController;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -8,9 +10,11 @@ import model.Government;
 import model.human.Human;
 import model.menugui.MenuBox;
 import model.menugui.MenuButton;
+import view.Main;
 import view.menus.GameMenu;
 import view.menus.MainMenu;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -31,8 +35,13 @@ public class Game {
         return endGame;
     }
 
-    public void setEndGame(boolean endGame) {
+    public void setEndGame(boolean endGame) throws IOException {
         this.endGame = endGame;
+        if (endGame) {
+            Packet packet = new Packet("end game" , "Game");
+            packet.sendPacket();
+            Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
+        }
     }
 
     public Government getWinner() {
@@ -44,7 +53,7 @@ public class Game {
         Iterator itr = getGovernments().iterator();
         while (itr.hasNext()) {
             Government government = (Government) itr.next();
-            if (government.isAlive()) {
+            if (government.isAlive() && government.equals(GameController.getGame().getCurrentGovernment())) {
                 this.winner = government;
                 setWinPage(government);
             }
@@ -53,7 +62,7 @@ public class Game {
 
     private synchronized static void setWinPage(Government winnerGov) {
         MenuBox menuBox = new MenuBox("Game Is Over", 0, 0, 600, 600);
-        Text winner = new Text("Winner : " + winnerGov.getUser().getNickname() + " With Score " +
+        Text winner = new Text("You Win With Score " +
                 winnerGov.getHowManyTurnsSurvive() * 100);
         winner.setFont(Font.font("Times New Roman", FontWeight.BOLD, 35));
         menuBox.getChildren().add(winner);
@@ -146,9 +155,13 @@ public class Game {
         this.currentMapY = currentMapY;
     }
 
-    public void setScores() {
+    public void setScores() throws IOException {
         for (Government government : getGovernments()) {
-            government.getUser().addHighScore(government.getHowManyTurnsSurvive() * 100);
+            Packet packet = new Packet("add score" , "Game");
+            packet.addAttribute("color" , government.getColor());
+            packet.addAttribute("score" , government.getHowManyTurnsSurvive() * 100);
+            packet.sendPacket();
+            Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
         }
     }
 }

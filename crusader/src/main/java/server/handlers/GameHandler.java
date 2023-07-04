@@ -83,6 +83,20 @@ public class GameHandler {
             case "change fear rate" -> {
                 changeFearRate();
             }
+            case "end game" -> {
+                FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
+                GameController.getFakeGames().remove(fakeGame);
+            }
+            case "add score" -> {
+                FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
+                String color = (String)packet.getAttribute("color");
+                double score = (Double)packet.getAttribute("score");
+                for (int i = 0; i != fakeGame.getAllUsernames().size(); i++) {
+                    if (fakeGame.getColors().get(i).equals(color)) {
+                        Application.getUserByUsername(fakeGame.getAllUsernames().get(i)).addHighScore((int)score);
+                    }
+                }
+            }
         }
     }
 

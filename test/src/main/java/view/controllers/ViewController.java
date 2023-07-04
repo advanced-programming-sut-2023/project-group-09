@@ -19,6 +19,8 @@ public class ViewController {
 
     public static MediaPlayer musicPlayer;
 
+    public static MediaPlayer deadSongPlayer;
+
     //give -1 if you want full height
     public static Pane makeScreen(Stage stage, BorderPane pane, double width, double height) {
         stage.setFullScreen(true);
@@ -162,9 +164,9 @@ public class ViewController {
     public synchronized static void playDeadSong() {
         Media media = new Media(ViewController.class.getResource(Paths.MENU_IMAGES.getPath())
                 .toExternalForm() + "evil_laugh.mp3");
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setCycleCount(1);
-        mediaPlayer.play();
+        deadSongPlayer = new MediaPlayer(media);
+        deadSongPlayer.setCycleCount(1);
+        deadSongPlayer.play();
     }
 
     public static double getScreenHeight() {

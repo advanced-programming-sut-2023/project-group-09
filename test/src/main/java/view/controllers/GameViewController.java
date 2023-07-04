@@ -3420,7 +3420,11 @@ public class GameViewController {
 
     public static void setNextTurnTimeline(){
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(30) , actionEvent -> {
-            GameController.nextTurn();
+            try {
+                GameController.nextTurn();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }));
         timeline.setCycleCount(-1);
         timeline.play();

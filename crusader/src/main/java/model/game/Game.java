@@ -148,5 +148,6 @@ public class Game {
         for (Government government : getGovernments()) {
             government.getUser().addHighScore(government.getHowManyTurnsSurvive() * 100);
         }
+
     }
 }
