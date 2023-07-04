@@ -5,6 +5,7 @@ module crusader {
     requires org.apache.commons.codec;
     requires com.google.gson;
     requires java.desktop;
+    requires org.controlsfx.controls;
 
 
     exports view;
@@ -65,6 +66,4 @@ module crusader {
     opens model.building.storagebuildings to com.google.gson;
     exports view.menus.chat;
     opens view.menus.chat to javafx.fxml;
-
-
 }

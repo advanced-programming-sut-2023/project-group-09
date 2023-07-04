@@ -2,19 +2,15 @@ package view.menus;
 
 import client.Packet;
 import client.PacketOnlineHandler;
-import client.PacketOnlineReceiver;
 import controller.DBController;
 import controller.MainController;
 import enumeration.Paths;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.menugui.MenuButton;
@@ -51,7 +47,7 @@ public class MainMenu extends Application {
         scene.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode().getName().equals("C")) {
                 //System.out.println("c pressed");
-                Thread thread = new Thread(()->{
+                Thread thread = new Thread(() -> {
                     Packet packet = null;
                     try {
                         packet = Packet.receivePacket();
@@ -75,7 +71,7 @@ public class MainMenu extends Application {
             }
         });
 
-        MenuButton createMapButton = new MenuButton("Create Map" , root , 0 , -240 , true);
+        MenuButton createMapButton = new MenuButton("Create Map", root, 0, -240, true);
         createMapButton.setOnMouseClicked(mouseEvent -> {
             try {
                 new SharedMapMenu().start(stage);
@@ -84,7 +80,7 @@ public class MainMenu extends Application {
             }
         });
 
-        MenuButton startGameButton = new MenuButton("Start game" , root , 0 , -170 , true);
+        MenuButton startGameButton = new MenuButton("Start game", root, 0, -170, true);
         startGameButton.setOnMouseClicked(mouseEvent -> {
             CreateGameMenu createGameMenu = new CreateGameMenu();
             try {
@@ -94,7 +90,7 @@ public class MainMenu extends Application {
             }
         });
 
-        MenuButton menuButton = new MenuButton("Profile menu",root,0,-100,true);
+        MenuButton menuButton = new MenuButton("Profile menu", root, 0, -100, true);
         menuButton.setOnMouseClicked(mouseEvent -> {
             try {
                 new ProfileMenu().start(stage);
@@ -102,7 +98,7 @@ public class MainMenu extends Application {
                 throw new RuntimeException(e);
             }
         });
-        MenuButton scoreboard = new MenuButton("scoreboard",root,0,-25,true);
+        MenuButton scoreboard = new MenuButton("scoreboard", root, 0, -25, true);
         scoreboard.setOnMouseClicked(mouseEvent -> {
             try {
                 new Scoreboard().start(stage);
@@ -111,7 +107,7 @@ public class MainMenu extends Application {
             }
         });
 
-        MenuButton logoutButton = new MenuButton("Logout" ,  root , 0 , 50 , true);
+        MenuButton logoutButton = new MenuButton("Logout", root, 0, 50, true);
 
         logoutButton.setOnMouseClicked(mouseEvent -> {
             controller.Application.setCurrentUser(null);
@@ -124,8 +120,18 @@ public class MainMenu extends Application {
             }
         });
 
-        MenuButton exitButton = new MenuButton("Exit" , root , 0 , 125 , true);
+        MenuButton exitButton = new MenuButton("Exit", root, 0, 125, true);
         exitButton.setOnMouseClicked(mouseEvent -> MainController.exitCrusader());
+
+        MenuButton lobby = new MenuButton("lobby", root, 0, 200, true);
+        lobby.setOnMouseClicked(mouseEvent -> {
+            try {
+                new LobbyMenu().start(stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
 
         root.getChildren().add(menuButton);
         root.getChildren().add(logoutButton);
@@ -133,13 +139,14 @@ public class MainMenu extends Application {
         root.getChildren().add(exitButton);
         root.getChildren().add(startGameButton);
         root.getChildren().add(createMapButton);
+        root.getChildren().add(lobby);
 
         stage.show();
     }
 
-    public void setBackground(){
+    public void setBackground() {
         BackgroundImage backgroundImage =
-                new BackgroundImage( new Image( getClass().getResource
+                new BackgroundImage(new Image(getClass().getResource
                         (Paths.BACKGROUND_IMAGES.getPath()).toExternalForm() + "01.jpg"),
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.REPEAT,
                         BackgroundPosition.DEFAULT,
