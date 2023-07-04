@@ -1,16 +1,18 @@
 package server.handlers;
 
-import controller.*;
+import controller.Application;
+import controller.DBController;
+import controller.GameController;
+import controller.TokenController;
 import controller.gamestructure.GameMaps;
+import model.FakeGame;
 import model.User;
 import server.Connection;
-import model.FakeGame;
 import server.Packet;
 import server.PacketHandler;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.PriorityQueue;
 
 public class GameHandler {
 
@@ -61,10 +63,10 @@ public class GameHandler {
             case "attack building" -> {
                 attackBuilding();
             }
-            case "air attack enemy"->{
+            case "air attack enemy" -> {
                 airAttackEnemy();
             }
-            case "air attack building" ->{
+            case "air attack building" -> {
                 airAttackBuilding();
             }
             case "change weapon" -> {
@@ -86,17 +88,17 @@ public class GameHandler {
                 FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
                 for (String username : fakeGame.getAllUsernames()) {
                     User user = Application.getUserByUsername(username);
-                    GameController.getFakeGames().remove(user , fakeGame);
+                    GameController.getFakeGames().remove(user, fakeGame);
                 }
                 GameController.getAllFakeGames().remove(fakeGame);
             }
             case "add score" -> {
                 FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
-                String color = (String)packet.getAttribute("color");
-                double score = (Double)packet.getAttribute("score");
+                String color = (String) packet.getAttribute("color");
+                double score = (Double) packet.getAttribute("score");
                 for (int i = 0; i != fakeGame.getAllUsernames().size(); i++) {
                     if (fakeGame.getColors().get(i).equals(color)) {
-                        Application.getUserByUsername(fakeGame.getAllUsernames().get(i)).addHighScore((int)score);
+                        Application.getUserByUsername(fakeGame.getAllUsernames().get(i)).addHighScore((int) score);
                     }
                 }
             }
@@ -111,18 +113,74 @@ public class GameHandler {
                 fakeGame.setMapName("Null Map 400*400");
                 connection.getObjectOutputStream().writeObject(fakeGame);
             }
+
+            case "create a fake game" -> CreateFakeGame();
+            case "add player" -> addPlayer();
+            case "update player" -> updateGame();
         }
+    }
+
+    private void addPlayer() throws IOException {
+        User user = TokenController.getUserByToken(packet.token);
+        double id = (double) packet.getAttribute("id");
+        double x = (double) packet.getAttribute("x");
+        double y = (double) packet.getAttribute("y");
+        String color = packet.getAttribute("color").toString();
+        FakeGame fakeGame = GameController.fakeGameHashMap.get((long) id);
+        fakeGame.addPlayer(user.getUsername(), color, (int) x, (int) y);
+    }
+
+    private void updateGame() throws IOException {
+        double id = (double) packet.getAttribute("id");
+        FakeGame fakeGame = GameController.fakeGameHashMap.get((long) id);
+        for (String username : fakeGame.getAllUsernames()) {
+            Connection connection = getConnection(username);
+            if (connection != null) {
+                Packet packet = new Packet("update fake game","Game");
+                packet.addAttribute("id",fakeGame.getGameId());
+                packet.addAttribute("name",fakeGame.getGameName());
+                packet.addAttribute("size",fakeGame.getAllUsernames().size());
+                packet.addAttribute("befor",fakeGame.isPrivate());
+                fakeGame.setPrivate(true);
+                packet.addAttribute("after",fakeGame.isPrivate());
+                Packet.sendPacket(packet,connection);
+                connection.getObjectOutputStream().writeObject(fakeGame);
+            }
+        }
+    }
+
+    private void CreateFakeGame() throws IOException {
+        String name = packet.getAttribute("name").toString();
+        double count = (Double) packet.getAttribute("count");
+        boolean isPrivate = (boolean) packet.getAttribute("private");
+        String map = packet.getAttribute("map").toString();
+        String password = "";
+        if (isPrivate) {
+            password = packet.getAttribute("password").toString();
+        }
+        User user = TokenController.getUserByToken(packet.token);
+        FakeGame fakeGame = new FakeGame();
+        fakeGame.setGameName(name);
+        fakeGame.setMaxPlayer((int) count);
+        fakeGame.setMapName(map);
+        fakeGame.setPrivate(isPrivate);
+        fakeGame.setPassword(password);
+        fakeGame.setGameId();
+        GameController.fakeGameHashMap.put(fakeGame.getGameId(), fakeGame);
+        fakeGame.setAdminUsername(user.getUsername());
+        GameController.getAllFakeGames().add(fakeGame);
+        connection.getObjectOutputStream().writeObject(fakeGame);
     }
 
     private void sendMap() throws IOException {
         DBController.loadAllMaps();
         connection.getObjectOutputStream().writeObject(GameMaps.allMaps.get((
-                String)packet.getAttribute("map name")));
+                String) packet.getAttribute("map name")));
     }
 
     private void changeFearRate() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
-        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        ArrayList<Connection> connections = connectionsInGameExceptThis(fakeGame);
         for (Connection connection1 : connections) {
             new PacketHandler(packet, connection1).sendPacket(packet);
         }
@@ -130,7 +188,7 @@ public class GameHandler {
 
     private void changeFoodRate() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
-        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        ArrayList<Connection> connections = connectionsInGameExceptThis(fakeGame);
         for (Connection connection1 : connections) {
             new PacketHandler(packet, connection1).sendPacket(packet);
         }
@@ -138,14 +196,14 @@ public class GameHandler {
 
     private void getLordName() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
-        String color = (String)packet.getAttribute("color");
-        Packet packet1 = new Packet("send lord name" , "Game");
-        packet1.addAttribute("name" , getUserByColorInGame(color , fakeGame).getNickname());
-        PacketHandler packetHandler = new PacketHandler(packet1 , connection);
+        String color = (String) packet.getAttribute("color");
+        Packet packet1 = new Packet("send lord name", "Game");
+        packet1.addAttribute("name", getUserByColorInGame(color, fakeGame).getNickname());
+        PacketHandler packetHandler = new PacketHandler(packet1, connection);
         packetHandler.sendPacket(packet1);
     }
 
-    private User getUserByColorInGame(String color , FakeGame fakeGame) {
+    private User getUserByColorInGame(String color, FakeGame fakeGame) {
         for (int i = 0; i != fakeGame.getAllUsernames().size(); i++) {
             if (fakeGame.getColors().get(i).equals(color)) {
                 return Application.getUserByUsername(fakeGame.getAllUsernames().get(i));
@@ -156,7 +214,7 @@ public class GameHandler {
 
     private void changeTaxRate() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
-        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        ArrayList<Connection> connections = connectionsInGameExceptThis(fakeGame);
         for (Connection connection1 : connections) {
             new PacketHandler(packet, connection1).sendPacket(packet);
         }
@@ -165,7 +223,7 @@ public class GameHandler {
 
     private void changeWeapon() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
-        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        ArrayList<Connection> connections = connectionsInGameExceptThis(fakeGame);
         for (Connection connection1 : connections) {
             new PacketHandler(packet, connection1).sendPacket(packet);
         }
@@ -173,14 +231,15 @@ public class GameHandler {
 
     private void changeGateState() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
-        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        ArrayList<Connection> connections = connectionsInGameExceptThis(fakeGame);
         for (Connection connection1 : connections) {
             new PacketHandler(packet, connection1).sendPacket(packet);
         }
     }
+
     private void moveUnits() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
-        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        ArrayList<Connection> connections = connectionsInGameExceptThis(fakeGame);
         for (Connection connection1 : connections) {
             new PacketHandler(packet, connection1).sendPacket(packet);
         }
@@ -188,7 +247,7 @@ public class GameHandler {
 
     private void attackEnemies() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
-        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        ArrayList<Connection> connections = connectionsInGameExceptThis(fakeGame);
         for (Connection connection1 : connections) {
             new PacketHandler(packet, connection1).sendPacket(packet);
         }
@@ -196,7 +255,7 @@ public class GameHandler {
 
     private void airAttackEnemy() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
-        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        ArrayList<Connection> connections = connectionsInGameExceptThis(fakeGame);
         for (Connection connection1 : connections) {
             new PacketHandler(packet, connection1).sendPacket(packet);
         }
@@ -204,7 +263,7 @@ public class GameHandler {
 
     private void airAttackBuilding() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
-        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        ArrayList<Connection> connections = connectionsInGameExceptThis(fakeGame);
         for (Connection connection1 : connections) {
             new PacketHandler(packet, connection1).sendPacket(packet);
         }
@@ -213,7 +272,7 @@ public class GameHandler {
 
     private void stopUnits() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
-        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        ArrayList<Connection> connections = connectionsInGameExceptThis(fakeGame);
         for (Connection connection1 : connections) {
             new PacketHandler(packet, connection1).sendPacket(packet);
         }
@@ -221,7 +280,7 @@ public class GameHandler {
 
     private void patrolUnits() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
-        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        ArrayList<Connection> connections = connectionsInGameExceptThis(fakeGame);
         for (Connection connection1 : connections) {
             new PacketHandler(packet, connection1).sendPacket(packet);
         }
@@ -229,7 +288,7 @@ public class GameHandler {
 
     private void attackBuilding() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
-        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        ArrayList<Connection> connections = connectionsInGameExceptThis(fakeGame);
         for (Connection connection1 : connections) {
             new PacketHandler(packet, connection1).sendPacket(packet);
         }
@@ -237,7 +296,7 @@ public class GameHandler {
 
     private void repair() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
-        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        ArrayList<Connection> connections = connectionsInGameExceptThis(fakeGame);
         for (Connection connection1 : connections) {
             new PacketHandler(packet, connection1).sendPacket(packet);
         }
@@ -245,7 +304,7 @@ public class GameHandler {
 
     private void dropArabianMercenary() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
-        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        ArrayList<Connection> connections = connectionsInGameExceptThis(fakeGame);
         for (Connection connection1 : connections) {
             new PacketHandler(packet, connection1).sendPacket(packet);
         }
@@ -253,7 +312,7 @@ public class GameHandler {
 
     private void dropTree() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
-        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        ArrayList<Connection> connections = connectionsInGameExceptThis(fakeGame);
         for (Connection connection1 : connections) {
             new PacketHandler(packet, connection1).sendPacket(packet);
         }
@@ -261,7 +320,7 @@ public class GameHandler {
 
     private void dropRock() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
-        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        ArrayList<Connection> connections = connectionsInGameExceptThis(fakeGame);
         for (Connection connection1 : connections) {
             new PacketHandler(packet, connection1).sendPacket(packet);
         }
@@ -269,7 +328,7 @@ public class GameHandler {
 
     private void setTexture() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
-        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        ArrayList<Connection> connections = connectionsInGameExceptThis(fakeGame);
         for (Connection connection1 : connections) {
             new PacketHandler(packet, connection1).sendPacket(packet);
         }
@@ -282,11 +341,11 @@ public class GameHandler {
             User user = Application.getUserByUsername(username);
             GameController.addFakeGame(user, fakeGame);
             if (username.equals(fakeGame.getAdminUsername())) continue;
-            Packet packet1 = new Packet("create fake game" , "Game");
-            packet1.addAttribute("username" , username);
+            Packet packet1 = new Packet("create fake game", "Game");
+            packet1.addAttribute("username", username);
             String token = TokenController.getTokenByUsername(username);
             packet1.setToken(token);
-            PacketHandler packetHandler = new PacketHandler(packet1 , getConnection(username));
+            PacketHandler packetHandler = new PacketHandler(packet1, getConnection(username));
             packetHandler.sendPacket(packet1);
             getConnection(username).getObjectOutputStream().writeObject(fakeGame);
         }
@@ -295,7 +354,7 @@ public class GameHandler {
 
     private void dropBuilding() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
-        ArrayList <Connection> connections = connectionsInGameExceptThis(fakeGame);
+        ArrayList<Connection> connections = connectionsInGameExceptThis(fakeGame);
         for (Connection connection1 : connections) {
             new PacketHandler(packet, connection1).sendPacket(packet);
         }

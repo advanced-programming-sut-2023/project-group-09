@@ -1,0 +1,76 @@
+.new-game-btn{
+    -fx-background-color: #6b1b1b;
+    -fx-text-fill: #fff;
+    -fx-font-size: 15;
+    -fx-border-color: transparent transparent transparent transparent;
+    -fx-border-insets: 0 0 0 0;
+    -fx-padding: 10px 20px;
+}
+
+.toggle-switch .thumb {
+    -fx-border: none;
+    -fx-background-color: #000000;
+}
+
+.toggle-switch .track {
+    -fx-border: none;
+    -fx-background-color: #407076;
+}
+
+.toggle-switch .thumb-area, .toggle-switch:focused .thumb-area {
+    -fx-background-color: #ff9898;
+}
+
+.toggle-switch:selected .thumb-area, .toggle-switch:selected:focused .thumb-area {
+    -fx-background-color: #b8ff98;
+}
+.game-name{
+    -fx-background-color: #eaeaea;
+    -fx-border-color: transparent transparent transparent transparent;
+    -fx-border-insets: 0 0 0 0;
+    -fx-padding: 10px 20px;
+}
+.combo-box-base , .combo-box{
+    -fx-background-color: #fff;
+    -fx-text-fill: #000;
+}
+.scroll-pane{
+    -fx-background-color: #fff;
+    -fx-border-color: transparent transparent transparent transparent;
+    -fx-border-insets: 0 0 0 0;
+}
+
+.small-label {
+    -fx-text-fill: #505050;
+    -fx-font-size: 9;
+}
+
+.big-label {
+    -fx-text-fill: #000;
+    -fx-font-size: 15;
+}
+
+ProfileView ,GameData{
+    -fx-background-color: #fff;
+    -fx-border-color: transparent transparent #858585 transparent;
+    -fx-border-width: 1;
+    -fx-border-insets: 0 0 1 0;
+}
+
+.title-label {
+    -fx-text-fill: #000;
+    -fx-font-size: 20;
+    -fx-border-color: #858585 transparent transparent transparent;
+    -fx-border-width: 1;
+    -fx-border-insets: 1 0 0 0;
+    -fx-background-color: #fff;
+}
+.request-label {
+    -fx-text-fill: #000;
+    -fx-font-size: 20;
+    -fx-border-color: transparent transparent transparent transparent;
+}
+
+.input-text {
+    -fx-border-color: transparent transparent transparent transparent;
+}

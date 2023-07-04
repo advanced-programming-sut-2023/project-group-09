@@ -3,8 +3,8 @@
 <?import javafx.scene.layout.BorderPane?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.menus.LobbyMenu"
-            stylesheets="@../CSS/lobby.css"
+            fx:controller="view.menus.Lobby"
+            stylesheets="@../CSS/style.css"
             prefHeight="400.0" prefWidth="600.0">
 
 </BorderPane>

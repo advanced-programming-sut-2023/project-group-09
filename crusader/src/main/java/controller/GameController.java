@@ -51,6 +51,7 @@ public class GameController {
     private static boolean isBuildingSelected = false;
     private static HashMap<User, FakeGame> fakeGames = new HashMap<>();
     private static ArrayList<FakeGame> allFakeGames = new ArrayList<>();
+    public static HashMap<Long,FakeGame> fakeGameHashMap = new HashMap<>();
 
     public static ArrayList<FakeGame> getAllFakeGames() {
         return allFakeGames;

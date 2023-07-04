@@ -6,6 +6,7 @@ import controller.gamestructure.GameMaps;
 import javafx.stage.Stage;
 import view.Main;
 import view.controllers.ImageLoader;
+import view.menus.LobbyMenu;
 import view.menus.LoginMenu;
 import view.menus.MainMenu;
 import view.menus.profile.FriendMenu;
@@ -31,7 +32,7 @@ public class MainController {
             new LoginMenu().start(stage);
         }else{
             Application.setStayLoggedIn(true);
-            new MainMenu().start(stage);
+            new LobbyMenu().start(stage);
         }
     }
 

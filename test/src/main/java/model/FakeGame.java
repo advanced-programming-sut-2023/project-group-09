@@ -1,6 +1,7 @@
 package model;
 
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -9,7 +10,7 @@ public class FakeGame implements Serializable {
     private boolean isPrivate = false;
     private String password;
     private String mapName;
-    private int gameId;
+    private long gameId;
     private String gameName;
     private String adminUsername;
     private ArrayList<String> allUsernames = new ArrayList<>();
@@ -18,8 +19,7 @@ public class FakeGame implements Serializable {
     private ArrayList<Integer> castleYs = new ArrayList<>();
     private ArrayList<String> spectatorsUsernames = new ArrayList<>();
     private boolean isGameStarted = false;
-
-
+    private int maxPlayer;
     public String getAdminUsername() {
         return adminUsername;
     }
@@ -91,12 +91,12 @@ public class FakeGame implements Serializable {
         this.mapName = mapName;
     }
 
-    public int getGameId() {
+    public long getGameId() {
         return gameId;
     }
 
-    public void setGameId(int gameId) {
-        this.gameId = gameId;
+    public void setGameId() {
+        this.gameId = System.currentTimeMillis();
     }
 
     public String getGameName() {
@@ -121,5 +121,13 @@ public class FakeGame implements Serializable {
 
     public void setGameStarted(boolean gameStarted) {
         isGameStarted = gameStarted;
+    }
+
+    public int getMaxPlayer() {
+        return maxPlayer;
+    }
+
+    public void setMaxPlayer(int maxPlayer) {
+        this.maxPlayer = maxPlayer;
     }
 }

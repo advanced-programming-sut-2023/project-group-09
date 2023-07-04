@@ -27,9 +27,12 @@ import model.menugui.game.GameMap;
 import view.Main;
 import view.menus.CreateGameMenu;
 import view.menus.GameMenu;
+import view.menus.Lobby;
 import view.menus.MainMenu;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PacketOnlineHandler {
     private Packet packet;
@@ -131,6 +134,12 @@ public class PacketOnlineHandler {
             }
             case "change fear rate" -> {
                 changeFearRate();
+            }
+            case "update fake game" -> {
+                FakeGame fakeGame = (FakeGame) Main.connection.getObjectInputStream().readObject();
+                System.out.println("000 " + fakeGame.isPrivate());
+                Platform.runLater(Lobby::updateDatas);
+                //Lobby.receiver.pauseThread();
             }
         }
     }

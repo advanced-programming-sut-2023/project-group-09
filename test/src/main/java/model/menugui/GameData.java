@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import model.FakeGame;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -24,14 +25,21 @@ public class GameData extends Pane {
     String map;
     boolean privateSate;
 
-    public GameData(Integer id,int height,int width) throws IOException {
-        this.name = "test name";
-        this.id = "340";
-        this.numberOfPlayer = "3";
-        this.players= "3";
-        this.state = "waiting...";
-        this.map = "hard";
-        this.privateSate = true;
+    public FakeGame fakeGame;
+
+    public GameData(FakeGame fakeGame, int height, int width) throws IOException {
+        this.name = fakeGame.getGameName();
+        this.id = String.valueOf(fakeGame.getGameId());
+        this.numberOfPlayer = String.valueOf(fakeGame.getMaxPlayer());
+        this.players= String.valueOf(fakeGame.getAllUsernames().size());
+        if (fakeGame.isGameStarted()){
+            this.state = "gaming...";
+        }else{
+            this.state = "waiting...";
+        }
+
+        this.map = fakeGame.getMapName();
+        this.privateSate = fakeGame.isPrivate();
 
         this.setMaxWidth(width);
         this.setMinWidth(width);
@@ -79,5 +87,4 @@ public class GameData extends Pane {
 
         this.getChildren().add(profilePart);
     }
-
 }

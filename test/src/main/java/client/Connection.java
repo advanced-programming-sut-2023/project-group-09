@@ -1,10 +1,7 @@
 package client;
 
-import view.Main;
-
 import java.io.*;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class Connection {
     private String token;
@@ -45,7 +42,7 @@ public class Connection {
     //
     public void makeFakeConnection() throws IOException {
         //deleted
-        Packet packet = new Packet("make a fake token","profile");
+        Packet packet = new Packet("make a fake token", "profile");
         packet.sendPacket();
         Packet packet1 = Packet.receivePacket();
         String token = packet1.attributes.get("authentication token").toString();

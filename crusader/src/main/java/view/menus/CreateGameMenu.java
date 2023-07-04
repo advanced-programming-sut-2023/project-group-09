@@ -242,12 +242,9 @@ public class CreateGameMenu extends Application {
     }
 
     private void checkSelectedColor(MenuChoiceBox colors) {
-        colors.valueProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
-                Colors color = (Colors) newValue;
-                colors.setStyle("-fx-background-color: " + color.getRgb());
-            }
+        colors.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            Colors color = (Colors) newValue;
+            colors.setStyle("-fx-background-color: " + color.getRgb());
         });
     }
 

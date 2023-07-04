@@ -16,6 +16,11 @@
     -fx-font-weight: bold;
 }
 
+LobbyChoiceBox  .label {
+    -fx-text-fill: black;
+    -fx-font-family: "San Francisco";
+}
+
 .choice-box .context-menu {
     -fx-background-color: rgb(42, 42, 42);
     -fx-background-radius: 5;
@@ -176,4 +181,8 @@ ProfileView ,GameData{
 .combo-box-base , .combo-box{
     -fx-background-color: #fff;
     -fx-text-fill: #000;
+}
+.color-btn{
+    -fx-border-color: transparent transparent transparent transparent;
+    -fx-border-insets: 0 0 0 0;
 }

@@ -1,5 +1,6 @@
 package view.menus;
 
+import controller.GameController;
 import controller.network.LobbyController;
 import enumeration.Paths;
 import javafx.animation.RotateTransition;
@@ -22,6 +23,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.FakeGame;
 import model.menugui.GameData;
 import model.menugui.MakeNewGame;
 import model.menugui.MenuButton;
@@ -45,6 +47,7 @@ public class LobbyMenu extends Application {
     public static MakeNewGame makeGameBlock;
 
 
+
     @Override
     public void start(Stage stage) throws Exception {
         LobbyMenu.stage = stage;
@@ -56,7 +59,7 @@ public class LobbyMenu extends Application {
 
     }
 
-    public void makeScene() throws IOException {
+    public void makeScene() throws IOException, ClassNotFoundException {
         BorderPane pane = FXMLLoader.load(
                 new URL(Objects.requireNonNull(LoginMenu.class.getResource("/FXML/lobbyMenu.fxml")).toExternalForm()));
         Scene scene = new Scene(pane);
@@ -84,7 +87,7 @@ public class LobbyMenu extends Application {
 
     }
 
-    public void setGameList() throws IOException {
+    public void setGameList() throws IOException, ClassNotFoundException {
         Label label = new Label("Games");
         label.getStyleClass().add("request-label");
         label.setMaxWidth(600);
@@ -108,13 +111,21 @@ public class LobbyMenu extends Application {
         makeNewGameButton.setOnMouseExited(this::scaleDown);
         makeNewGameButton.setOnMouseClicked(mouseEvent -> {
             makeNewGamePane.getChildren().remove(makeGameBlock);
-            makeGameBlock = new MakeNewGame();
+            try {
+                makeGameBlock = new MakeNewGame();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             makeNewGamePane.getChildren().add(makeGameBlock);
             if (!stackPane.getChildren().contains(makeNewGamePane)){
                 stackPane.getChildren().add(makeNewGamePane);
             }
             makeGameBlock.makeGame.setOnMouseClicked(mouseEvent1 -> {
-                makeGameBlock.submit();
+                try {
+                    makeGameBlock.submit();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             });
         });
         makeNewGameButton.setTranslateX(60);
@@ -133,7 +144,7 @@ public class LobbyMenu extends Application {
         reload.setOnMouseClicked(mouseEvent -> {
             try {
                 showGames();
-            } catch (IOException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         });
@@ -156,8 +167,6 @@ public class LobbyMenu extends Application {
 
     public void setMakeNewGamePane(){
         makeNewGamePane = new Pane();
-        makeGameBlock = new MakeNewGame();
-        makeNewGamePane.getChildren().add(makeGameBlock);
         makeNewGamePane.setStyle("-fx-background-color: rgba(121, 121, 121, 0.58);");
     }
 
@@ -173,15 +182,15 @@ public class LobbyMenu extends Application {
     }
 
 
-    public void showGames() throws IOException {
+    public void showGames() throws IOException, ClassNotFoundException {
         gameList.getChildren().clear();
-        ArrayList<Integer> ids = LobbyController.getGames();
-        if (ids.size() == 0){
+        ArrayList<FakeGame> fakeGames = GameController.getAllRunningFakeGames();
+        if (fakeGames.size() == 0){
             gameList.getChildren().add(new Label("no game exist"));
         }
-        for (int id : ids){
+        for (FakeGame fakeGame : fakeGames){
             VBox vBox = new VBox();
-            GameData gameData = new GameData(id,100,460);
+            GameData gameData = new GameData(fakeGame,100,460);
             vBox.getChildren().add(gameData);
             Button button = new Button();
             button.setPadding(new Insets(10, 20, 10, 20));

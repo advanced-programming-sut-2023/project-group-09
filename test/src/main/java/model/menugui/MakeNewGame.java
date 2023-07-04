@@ -2,7 +2,6 @@ package model.menugui;
 
 import client.Packet;
 import com.google.gson.GsonBuilder;
-import controller.GameController;
 import controller.MapController;
 import enumeration.Paths;
 import enumeration.dictionary.Colors;
@@ -18,12 +17,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
+import model.FakeGame;
 import model.User;
-import model.game.Game;
 import model.game.Map;
 import org.controlsfx.control.ToggleSwitch;
 import view.Main;
 import view.menus.CreateGameMenu;
+import view.menus.Lobby;
 import view.menus.LobbyMenu;
 
 import java.io.IOException;
@@ -33,6 +33,7 @@ import java.util.ArrayList;
 public class MakeNewGame extends Pane {
 
     public TextField gameName;
+    public LobbyPasswordField passwordField;
     public ComboBox<Integer> countOfPlayer;
     public ToggleSwitch publicGame;
 
@@ -40,15 +41,16 @@ public class MakeNewGame extends Pane {
 
     private ArrayList<Colors> colors = new ArrayList<>();
     public ArrayList<MenuFlag> castleFlags = new ArrayList<>();
-    public MenuChoiceBox mapsField;
+    public LobbyChoiceBox mapsField;
 
-
-
+    boolean privateState;
     public int id;
     public Button makeGame;
-    public PreviewMap previewMap;
+    public LobbyPreviewMap previewMap;
+    public int x;
+    public int y;
 
-    public MakeNewGame() {
+    public MakeNewGame() throws IOException {
         this.setStyle("-fx-background-color: #fff;-fx-background-radius: 10");
         this.setMaxWidth(800);
         this.setMinWidth(800);
@@ -79,7 +81,7 @@ public class MakeNewGame extends Pane {
         makeForm();
     }
 
-    public void makeForm(){
+    public void makeForm() throws IOException {
         error = new Label();
         error.setTranslateX(100);
         error.setTranslateY(100);
@@ -90,8 +92,9 @@ public class MakeNewGame extends Pane {
         gameName.setPromptText("game name...");
         countOfPlayer = new ComboBox<>();
         countOfPlayer.getItems().addAll(
-                2,3,4,5,6,7,8
+                2, 3, 4, 5, 6, 7, 8
         );
+
         Label label = new Label("private: ");
         publicGame = new ToggleSwitch();
         gameName.getStyleClass().add("game-name");
@@ -106,76 +109,103 @@ public class MakeNewGame extends Pane {
         label2.setTranslateY(250);
         publicGame.setTranslateX(200);
         publicGame.setTranslateY(300);
-
+        publicGame.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                if (passwordField != null) {
+                    passwordField.removeFromPane();
+                }
+                passwordField = new LobbyPasswordField(this, "password...", "password: ", 200, 450);
+                this.getChildren().add(passwordField);
+            } else {
+                if (passwordField != null) {
+                    passwordField.removeFromPane();
+                }
+            }
+        });
         label.setTranslateX(100);
         label.setTranslateY(300);
         makeGame = new Button("create");
         makeGame.getStyleClass().add("new-game-btn");
         makeGame.setTranslateX(700);
         makeGame.setTranslateY(500);
-        this.getChildren().addAll(gameName,countOfPlayer,label,label1,label2,publicGame,makeGame,error);
+        chooseMap();
+
+        this.getChildren().addAll(gameName, countOfPlayer, label, label1, label2, publicGame, makeGame, error);
     }
 
-    public void submit(){
-        if (gameName.getText() == null || gameName.getText().length() ==0){
+    public void chooseMap() throws IOException {
+        for (int i = 0; i < 8; i++) {
+            MenuFlag flag = new MenuFlag("transparent");
+            flag.setVisible(false);
+            castleFlags.add(flag);
+        }
+        ArrayList<String> mapNames = MapController.getMapNamesFromServer();
+        mapNames.remove("Null Map 400*400");
+        mapNames.remove("Null Map 200*200");
+        mapsField = new LobbyChoiceBox(this, "map: ", 200, 350,
+                FXCollections.observableArrayList(mapNames), 200);
+        this.getChildren().add(mapsField);
+        checkSelectedMap();
+
+    }
+
+    public void submit() throws Exception {
+        if (gameName.getText() == null || gameName.getText().length() == 0) {
             error.setText("please enter a name for your game");
-        }else if (countOfPlayer.getValue() == null){
+        } else if (countOfPlayer.getValue() == null) {
             error.setText("please select the number of players");
-        }else{
+        } else if (mapsField.getValue() == null) {
+            error.setText("you choose a map for your game");
+        } else if (publicGame.isSelected() && (passwordField.getValue() == null || passwordField.getValue().length() == 0)) {
+            error.setText("please enter a password");
+        } else {
             error.setText("");
+            Packet packet = new Packet("create a fake game", "Game");
+            packet.addAttribute("name", gameName.getText());
+            packet.addAttribute("count", countOfPlayer.getValue());
+            packet.addAttribute("map", mapsField.getValue());
+            packet.addAttribute("private", publicGame.isSelected());
+            if (passwordField != null){
+                packet.addAttribute("password", passwordField.getValue());
+            }else {
+                packet.addAttribute("password", "");
+            }
+            packet.sendPacket();
+            FakeGame fakeGame = (FakeGame) Main.connection.getObjectInputStream().readObject();
+            Lobby.fakeGame = fakeGame;
+            new Lobby().start(LobbyMenu.stage);
         }
     }
 
     private void checkSelectedMap() {
-//        mapsField.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-//
-//                Packet currentUser = new Packet("current user");
-//                try {
-//                    currentUser.setToken(Main.connection.getToken());
-//                    currentUser.sendPacket();
-//                    CreateGameMenu.currentUser = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).
-//                            create().fromJson((String) Packet.receivePacket().
-//                                    getAttribute("user"), User.class);
-//                } catch (IOException e) {
-//                    throw new RuntimeException(e);
-//                }
-//                governmentUsernames.get(0).setText(CreateGameMenu.currentUser.getUsername());
-//                governmentUsernames.get(0).setEditable(false);
-//                addGovernment.setDisable(false);
-//                castles = new ArrayList<>();
-//                Map selectedMap = null;
-//                try {
-//                    selectedMap = MapController.getMapFromServer(mapsField.getValue());
-//                } catch (IOException e) {
-//                    throw new RuntimeException(e);
-//                } catch (ClassNotFoundException e) {
-//                    throw new RuntimeException(e);
-//                }
-//                menuBox.getChildren().remove(previewMap);
-//                previewMap = new PreviewMap(selectedMap, 230, -120);
-//                menuBox.getChildren().add(previewMap);
-//                for (int i = 0; i < 8; i++) {
-//                    castleFlags.get(i).setTranslateX(selectedMap.getDefaultCastles().get(i).getFirst() - selectedMap.getWidth() / 2);
-//                    castleFlags.get(i).setTranslateY(selectedMap.getDefaultCastles().get(i).getSecond() - selectedMap.getWidth() / 2);
-//                    castleFlags.get(i).setVisible(true);
-//                    previewMap.getChildren().add(castleFlags.get(i));
-//                    castles.add("Castle " + (i + 1));
-//                    selectCastle(castleFlags.get(i));
-//                }
-//                castleNumbers.get(0).setItems(FXCollections.observableArrayList(castles));
-//                MapController.map = selectedMap;
-//                game = new Game(selectedMap);
-//                Packet newGame = new Packet("new game");
-//                try {
-//                    newGame.addAttribute("mapNumber", mapsField.getValue());
-//                    newGame.addAttribute("game", new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create().toJson(game));
-//                    newGame.sendPacket();
-//                } catch (IOException e) {
-//                    throw new RuntimeException(e);
-//                }
-//                GameController.setGame(game);
-//            }
-//        });
+        mapsField.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            Packet currentUser = new Packet("current user");
+            try {
+                currentUser.setToken(Main.connection.getToken());
+                currentUser.sendPacket();
+                CreateGameMenu.currentUser = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).
+                        create().fromJson((String) Packet.receivePacket().
+                                getAttribute("user"), User.class);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            Map selectedMap = null;
+            try {
+                selectedMap = MapController.getMapFromServer(mapsField.getValue());
+            } catch (IOException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            this.getChildren().remove(previewMap);
+            previewMap = new LobbyPreviewMap(selectedMap, 430, 100);
+            this.getChildren().add(previewMap);
+            for (int i = 0; i < 8; i++) {
+                castleFlags.get(i).setTranslateX(selectedMap.getDefaultCastles().get(i).getFirst() - selectedMap.getWidth() / 2);
+                castleFlags.get(i).setTranslateY(selectedMap.getDefaultCastles().get(i).getSecond() - selectedMap.getWidth() / 2);
+                castleFlags.get(i).setVisible(true);
+                previewMap.getChildren().add(castleFlags.get(i));
+            }
+            MapController.map = selectedMap;
+        });
     }
 
 }

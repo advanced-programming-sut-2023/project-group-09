@@ -246,9 +246,7 @@ public class CreateGameMenu extends Application {
                 Map selectedMap = null;
                 try {
                     selectedMap = MapController.getMapFromServer(mapsField.getValue());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (ClassNotFoundException e) {
+                } catch (IOException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
                 menuBox.getChildren().remove(previewMap);
