@@ -6,7 +6,6 @@ import controller.BuildingController;
 import controller.GameController;
 import controller.GovernmentController;
 import controller.MapController;
-import controller.gamestructure.GameMaps;
 import controller.human.HumanController;
 import enumeration.Textures;
 import enumeration.dictionary.Colors;
@@ -16,7 +15,6 @@ import javafx.application.Platform;
 import model.FakeGame;
 import model.Government;
 import model.building.Building;
-import model.building.castlebuildings.MainCastle;
 import model.building.producerbuildings.Barrack;
 import model.building.producerbuildings.WeaponProducer;
 import model.game.Game;
@@ -25,14 +23,9 @@ import model.human.Human;
 import model.human.military.Military;
 import model.menugui.game.GameMap;
 import view.Main;
-import view.menus.CreateGameMenu;
-import view.menus.GameMenu;
 import view.menus.Lobby;
-import view.menus.MainMenu;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class PacketOnlineHandler {
     private Packet packet;
@@ -52,10 +45,10 @@ public class PacketOnlineHandler {
             case "create fake game" -> {
                 String username = (String) packet.getAttribute("username");
                 FakeGame fakeGame = (FakeGame) Main.connection.getObjectInputStream().readObject();
-                Packet packet1 = new Packet("get map" , "Game");
-                packet1.addAttribute("map name" , fakeGame.getMapName());
+                Packet packet1 = new Packet("get map", "Game");
+                packet1.addAttribute("map name", fakeGame.getMapName());
                 packet1.sendPacket();
-                Map map = (Map)Main.connection.getObjectInputStream().readObject();
+                Map map = (Map) Main.connection.getObjectInputStream().readObject();
                 Game game = new Game(map);
                 MapController.map = map;
                 GameController.setGame(game);
@@ -140,47 +133,48 @@ public class PacketOnlineHandler {
                 Platform.runLater(Lobby::updateDatas);
                 Lobby.receiver.pauseThread();
             }
+            case "leave game" -> Lobby.receiver.stopThread();
         }
     }
 
     private void changeFearRate() {
         double fearRate = (Double) packet.getAttribute("fearRate");
-        String color = (String)packet.getAttribute("color");
-        GovernmentController.changeFearRateOnline((int)fearRate , getGovernmentByColor(color));
+        String color = (String) packet.getAttribute("color");
+        GovernmentController.changeFearRateOnline((int) fearRate, getGovernmentByColor(color));
     }
 
     private void changeFoodRate() {
         double foodRate = (Double) packet.getAttribute("foodRate");
-        String color = (String)packet.getAttribute("color");
-        GovernmentController.changeFoodRateOnline((int)foodRate , getGovernmentByColor(color));
+        String color = (String) packet.getAttribute("color");
+        GovernmentController.changeFoodRateOnline((int) foodRate, getGovernmentByColor(color));
     }
 
     private void sendLordName() {
-        GovernmentController.setNickname((String)packet.getAttribute("name"));
+        GovernmentController.setNickname((String) packet.getAttribute("name"));
     }
 
     private void changeTaxRate() {
         double taxRate = (Double) packet.getAttribute("taxRate");
-        String color = (String)packet.getAttribute("color");
-        GovernmentController.changeTaxRateOnline((int)taxRate , getGovernmentByColor(color));
+        String color = (String) packet.getAttribute("color");
+        GovernmentController.changeTaxRateOnline((int) taxRate, getGovernmentByColor(color));
     }
 
 
     private void changeWeapon() {
-        double tileX = (Double)packet.getAttribute("tileX");
-        double tileY = (Double)packet.getAttribute("tileY");
-        String color = (String)packet.getAttribute("government");
-        String weapon = (String)packet.getAttribute("weapon");
-        Building building = GameMap.getGameTile((int)tileX , (int)tileY).getTile().getBuilding();
-        ((WeaponProducer)building).changeItemName(weapon);
+        double tileX = (Double) packet.getAttribute("tileX");
+        double tileY = (Double) packet.getAttribute("tileY");
+        String color = (String) packet.getAttribute("government");
+        String weapon = (String) packet.getAttribute("weapon");
+        Building building = GameMap.getGameTile((int) tileX, (int) tileY).getTile().getBuilding();
+        ((WeaponProducer) building).changeItemName(weapon);
     }
 
     private void changeGateState() {
-        double tileX = (Double)packet.getAttribute("tileX");
-        double tileY = (Double)packet.getAttribute("tileY");
-        String color = (String)packet.getAttribute("government");
-        String state = (String)packet.getAttribute("state");
-        BuildingController.changeGateStateOnline(tileX , tileY , getGovernmentByColor(color) , state);
+        double tileX = (Double) packet.getAttribute("tileX");
+        double tileY = (Double) packet.getAttribute("tileY");
+        String color = (String) packet.getAttribute("government");
+        String state = (String) packet.getAttribute("state");
+        BuildingController.changeGateStateOnline(tileX, tileY, getGovernmentByColor(color), state);
     }
 
     private void moveUnits() {
@@ -204,7 +198,7 @@ public class PacketOnlineHandler {
         double x = (double) packet.getAttribute("x");
         double y = (double) packet.getAttribute("y");
         double id = (double) packet.getAttribute("id");
-        Human human = GameController.getGame().humans.get((int)id);
+        Human human = GameController.getGame().humans.get((int) id);
         if (human instanceof Military military) {
             HumanController.militaries.clear();
             HumanController.militaries.add(military);
@@ -217,7 +211,7 @@ public class PacketOnlineHandler {
         double x = (double) packet.getAttribute("x");
         double y = (double) packet.getAttribute("y");
         double id = (double) packet.getAttribute("id");
-        Human human = GameController.getGame().humans.get((int)id);
+        Human human = GameController.getGame().humans.get((int) id);
         if (human instanceof Military military) {
             HumanController.militaries.clear();
             HumanController.militaries.add(military);
@@ -281,19 +275,19 @@ public class PacketOnlineHandler {
     }
 
     private void repair() {
-        double tileX = (Double)packet.getAttribute("tileX");
-        double tileY = (Double)packet.getAttribute("tileY");
-        String color = (String)packet.getAttribute("government");
-        BuildingController.repairOnline((int)tileX , (int)tileY , getGovernmentByColor(color));
+        double tileX = (Double) packet.getAttribute("tileX");
+        double tileY = (Double) packet.getAttribute("tileY");
+        String color = (String) packet.getAttribute("government");
+        BuildingController.repairOnline((int) tileX, (int) tileY, getGovernmentByColor(color));
     }
 
     private void dropArabianMercenary() {
-        double tileX = (Double)packet.getAttribute("x");
-        double tileY = (Double)packet.getAttribute("y");
+        double tileX = (Double) packet.getAttribute("x");
+        double tileY = (Double) packet.getAttribute("y");
         int id = Integer.parseInt(packet.getAttribute("id").toString());
-        String name = (String)packet.getAttribute("name");
-        String color = (String)packet.getAttribute("color");
-        Barrack.makeUnitThroughNetwork((int)tileX , (int)tileY , name , getGovernmentByColor(color),id);
+        String name = (String) packet.getAttribute("name");
+        String color = (String) packet.getAttribute("color");
+        Barrack.makeUnitThroughNetwork((int) tileX, (int) tileY, name, getGovernmentByColor(color), id);
     }
 
     private Government getGovernmentByColor(String color) {
@@ -305,41 +299,41 @@ public class PacketOnlineHandler {
     }
 
     private void dropTree() {
-        double tileX = (Double)packet.getAttribute("tileX");
-        double tileY = (Double)packet.getAttribute("tileY");
-        String tree = (String)packet.getAttribute("tree");
-        MapController.dropTree((int)tileX , (int)tileY , Trees.getTreeByName(tree));
+        double tileX = (Double) packet.getAttribute("tileX");
+        double tileY = (Double) packet.getAttribute("tileY");
+        String tree = (String) packet.getAttribute("tree");
+        MapController.dropTree((int) tileX, (int) tileY, Trees.getTreeByName(tree));
         Platform.runLater(() -> {
-            GameMap.getGameTile((int)tileX , (int)tileY).refreshTile();
+            GameMap.getGameTile((int) tileX, (int) tileY).refreshTile();
         });
     }
 
 
     private void dropRock() {
-        double tileX = (Double)packet.getAttribute("tileX");
-        double tileY = (Double)packet.getAttribute("tileY");
-        String rockDirection = (String)packet.getAttribute("rock");
-        MapController.dropRock((int)tileX , (int)tileY , RockDirections.getRockByDirection(rockDirection));
+        double tileX = (Double) packet.getAttribute("tileX");
+        double tileY = (Double) packet.getAttribute("tileY");
+        String rockDirection = (String) packet.getAttribute("rock");
+        MapController.dropRock((int) tileX, (int) tileY, RockDirections.getRockByDirection(rockDirection));
         Platform.runLater(() -> {
-            GameMap.getGameTile((int)tileX , (int)tileY).refreshTile();
+            GameMap.getGameTile((int) tileX, (int) tileY).refreshTile();
         });
     }
 
 
     private void setTexture() {
-        double tileX = (Double)packet.getAttribute("tileX");
-        double tileY = (Double)packet.getAttribute("tileY");
+        double tileX = (Double) packet.getAttribute("tileX");
+        double tileY = (Double) packet.getAttribute("tileY");
         String textures = (String) packet.getAttribute("texture");
-        MapController.setTexture((int)tileX , (int)tileY , Textures.getTextureByName(textures));
+        MapController.setTexture((int) tileX, (int) tileY, Textures.getTextureByName(textures));
         Platform.runLater(() -> {
-            GameMap.getGameTile((int)tileX , (int)tileY).refreshTile();
+            GameMap.getGameTile((int) tileX, (int) tileY).refreshTile();
         });
     }
 
     private void dropBuilding() {
-        double tileX = (Double)packet.getAttribute("tileX");
-        double tileY = (Double)packet.getAttribute("tileY");
-        String buildingName = (String)packet.getAttribute("droppedBuildingName");
+        double tileX = (Double) packet.getAttribute("tileX");
+        double tileY = (Double) packet.getAttribute("tileY");
+        String buildingName = (String) packet.getAttribute("droppedBuildingName");
         String side = (String) packet.getAttribute("side");
         String color = (String) packet.getAttribute("color");
         Government supposedGovernment = null;
@@ -348,7 +342,7 @@ public class PacketOnlineHandler {
                 supposedGovernment = government;
             }
         }
-        GameController.dropBuilding((int)tileX , (int)tileY , buildingName , side ,supposedGovernment);
+        GameController.dropBuilding((int) tileX, (int) tileY, buildingName, side, supposedGovernment);
         Platform.runLater(() -> {
             GameMap.getGameTile((int) tileX, (int) tileY).refreshTile();
         });

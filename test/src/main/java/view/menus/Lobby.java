@@ -6,7 +6,9 @@ import controller.MapController;
 import controller.network.LobbyController;
 import enumeration.Paths;
 import enumeration.dictionary.Colors;
+import javafx.animation.KeyFrame;
 import javafx.animation.ScaleTransition;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -356,7 +358,21 @@ public class Lobby extends Application {
         exit.setOnMouseEntered(LobbyController::scaleUp);
         exit.setOnMouseEntered(LobbyController::scaleDown);
         exit.setOnMouseClicked(mouseEvent -> {
-
+            Packet packet = new Packet("leave game","Game");
+            packet.addAttribute("id",fakeGame.getGameId());
+            try {
+                packet.sendPacket();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500),actionEvent -> {
+                try {
+                    new LobbyMenu().start(stage);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }));
+            timeline.play();
         });
         exit.setTranslateX(20);
         exit.setTranslateY(20);
@@ -364,7 +380,7 @@ public class Lobby extends Application {
         addAdminButton();
     }
 
-    public void addAdminButton(){
+    public static void addAdminButton(){
         if (!LobbyMenu.playerUsername.equals(fakeGame.getAdminUsername())){
             return;
         }
@@ -384,11 +400,11 @@ public class Lobby extends Application {
 
 
         setting.setFill(new ImagePattern( new Image(
-                getClass().getResource(Paths.ICONS.getPath()).toExternalForm() + "setting.png"
+                Lobby.class.getResource(Paths.ICONS.getPath()).toExternalForm() + "setting.png"
         )));
 
         run.setFill(new ImagePattern( new Image(
-                getClass().getResource(Paths.ICONS.getPath()).toExternalForm() + "play.png"
+                Lobby.class.getResource(Paths.ICONS.getPath()).toExternalForm() + "play.png"
         )));
         setting.setOnMouseClicked(mouseEvent -> {
             try {
@@ -409,7 +425,7 @@ public class Lobby extends Application {
     }
 
 
-    public void showSetting() throws IOException {
+    public static void showSetting() throws IOException {
         if (overPane != null){
             if (lobbySetting != null){
                 overPane.getChildren().remove(lobbySetting);
@@ -443,6 +459,7 @@ public class Lobby extends Application {
             vBox.getChildren().add(profileView);
             usersList.getChildren().add(vBox);
         }
+        addAdminButton();
         receiver.resumeThread();
     }
 }

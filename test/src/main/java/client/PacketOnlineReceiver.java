@@ -4,12 +4,16 @@ import java.io.IOException;
 
 public class PacketOnlineReceiver extends Thread {
     private boolean isPaused = false;
+    private boolean shouldStop = false;
     @Override
     public void run() {
         while (true) {
             try {
                 Packet packet = Packet.receivePacket();
                 new PacketOnlineHandler(packet).handle();
+                if (shouldStop){
+                    break;
+                }
                 synchronized (this){
                     while (isPaused) {
                         try {
@@ -19,8 +23,6 @@ public class PacketOnlineReceiver extends Thread {
                         }
                     }
                 }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -33,7 +35,10 @@ public class PacketOnlineReceiver extends Thread {
 
     public synchronized void resumeThread() {
         isPaused = false;
-        notify(); // Resume the thread
+        notify();
     }
 
+    public void stopThread(){
+        shouldStop = true;
+    }
 }
