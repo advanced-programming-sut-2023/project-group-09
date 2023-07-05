@@ -556,14 +556,18 @@ public class GameHandler {
         Packet packet1 = new Packet("remove lord" , "Game");
         packet1.addAttribute("color" , fakeGame.getColors().get(fakeGame.getAllUsernames().indexOf(user.getUsername())));
         System.out.println("disconnect from game :");
-        System.out.println(user.getUsername());
+        System.out.println("ooo user "+ user.getUsername());
+        System.out.println("ooo index "+ fakeGame.getAllUsernames().indexOf(user.getUsername()));
+
+
+
         for (String username : fakeGame.getAllUsernames()) {
             Connection connection1 = getConnection(username);
             if (connection1 != null && connection1.isAlive() && !connection1.getSocket().isClosed()) {
                 try {
                     Packet.sendPacket(packet1 , connection1);
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    //
                 }
             }
         }
