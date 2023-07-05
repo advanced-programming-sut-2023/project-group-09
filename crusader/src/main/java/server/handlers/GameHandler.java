@@ -11,6 +11,7 @@ import server.Connection;
 import server.Packet;
 import server.PacketHandler;
 
+import javax.print.attribute.UnmodifiableSetException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -88,9 +89,10 @@ public class GameHandler {
                 FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
                 for (String username : fakeGame.getAllUsernames()) {
                     User user = Application.getUserByUsername(username);
-                    GameController.getFakeGames().remove(user, fakeGame);
+                    GameController.getFakeGames().remove(user);
                 }
                 GameController.getAllFakeGames().remove(fakeGame);
+                GameController.fakeGameHashMap.remove(fakeGame.getGameId());
             }
             case "add score" -> {
                 FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
@@ -435,9 +437,8 @@ public class GameHandler {
         if (checkPer && (!checkPermission(fakeGame, admin) || fakeGame.getAllUsernames().size() < 2)) {
             return;
         }
+        fakeGame.setGameStarted(true);
         for (String username : fakeGame.getAllUsernames()) {
-            User user = Application.getUserByUsername(username);
-            GameController.addFakeGame(user, fakeGame);
             Packet packet1 = new Packet("create fake game", "Game");
             packet1.addAttribute("username", username);
             String token = TokenController.getTokenByUsername(username);
@@ -482,5 +483,39 @@ public class GameHandler {
             return true;
         }
         return false;
+    }
+
+    private void closeLobby(){
+
+    }
+    public void disconnectInLobby(String token,FakeGame fakeGame) throws IOException {
+        User user = TokenController.getUserByToken(token);
+        int index = fakeGame.getAllUsernames().indexOf(user.getUsername());
+        if (fakeGame.getAllUsernames().size() <= 1) {
+            GameController.fakeGameHashMap.remove(fakeGame.getGameId());
+            GameController.getAllFakeGames().remove(fakeGame);
+            GameController.getFakeGames().remove(user);
+            Packet packet1 = new Packet("leave game", "Game");
+            Packet.sendPacket(packet1, connection);
+            return;
+        }
+        if (checkPermission(fakeGame, user)) {
+            fakeGame.getAllUsernames().remove(index);
+            fakeGame.getColors().remove(index);
+            fakeGame.getCastleXs().remove(index);
+            fakeGame.getCastleYs().remove(index);
+            fakeGame.setAdminUsername(fakeGame.getAllUsernames().get(0));
+            updateGame(fakeGame);
+            return;
+        }
+        fakeGame.getAllUsernames().remove(index);
+        fakeGame.getColors().remove(index);
+        fakeGame.getCastleXs().remove(index);
+        fakeGame.getCastleYs().remove(index);
+        updateGame(fakeGame);
+    }
+
+    public void disconnectInGame(){
+
     }
 }

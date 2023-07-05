@@ -2,8 +2,11 @@ package server;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import controller.GameController;
 import controller.TokenController;
+import model.FakeGame;
 import model.User;
+import server.handlers.GameHandler;
 import server.handlers.UserHandler;
 
 import java.io.*;
@@ -42,9 +45,21 @@ public class Connection extends Thread {
                 PacketHandler packetHandler = new PacketHandler(packet , this);
                 packetHandler.handle();
             } catch (IOException e) {
-                System.out.println("connection interrupted!" + token);
+                System.out.println("connection interrupted! " + token);
                 if (token != null){
                     User user = TokenController.getUserByToken(token);
+                    FakeGame fakeGame = GameController.getFakeGames().get(user);
+                    if ( fakeGame != null && !fakeGame.isGameStarted()){
+                        try {
+                            new GameHandler().disconnectInLobby(token,fakeGame);
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }else if (fakeGame != null){
+
+                        //TODO
+                        new GameHandler().disconnectInGame();
+                    }
                     user.setOnline(false);
                     TokenController.tokens.remove(token);
                     TokenController.expires.remove(token);
