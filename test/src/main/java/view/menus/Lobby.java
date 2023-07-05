@@ -409,7 +409,18 @@ public class Lobby extends Application {
         });
 
         run.setOnMouseClicked(mouseEvent -> {
-
+            if (fakeGame.getAllUsernames().size() == 1){
+                MenuPopUp menuPopUp = new MenuPopUp(root,400,400,"error","You cannot start alone!");
+                root.getChildren().add(menuPopUp);
+            }else{
+                Packet packet = new Packet("start game","Game");
+                packet.addAttribute("id",fakeGame.getGameId());
+                try {
+                    packet.sendPacket();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         });
         setting.setTranslateX(50);
         setting.setTranslateY(20);

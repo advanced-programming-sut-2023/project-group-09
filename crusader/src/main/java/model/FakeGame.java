@@ -39,7 +39,7 @@ public class FakeGame implements Serializable{
         this.setPrivate(fakeGame.isPrivate);
         this.setMapName(fakeGame.mapName);
         this.setAdminUsername(fakeGame.adminUsername);
-        this.setSpectatorsUsernames(new ArrayList<>(spectatorsUsernames));
+        this.setSpectatorsUsernames(new ArrayList<>(fakeGame.spectatorsUsernames));
     }
 
     public void setAdminUsername(String adminUsername) {

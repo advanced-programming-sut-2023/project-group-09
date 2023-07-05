@@ -53,8 +53,9 @@ public class PacketOnlineHandler {
                 MapController.map = map;
                 GameController.setGame(game);
 
-                System.out.println("castle" + fakeGame.getCastleXs().size());
-                System.out.println("users" + fakeGame.getAllUsernames().size());
+                System.out.println("castle " + fakeGame.getCastleXs().size());
+                System.out.println("users " + fakeGame.getAllUsernames().size());
+                System.out.println("colors " + fakeGame.getColors().size());
 
 
                 for (int i = 0; i != fakeGame.getAllUsernames().size(); i++) {
