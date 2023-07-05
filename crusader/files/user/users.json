@@ -17,7 +17,7 @@
       "f": "requested",
       "Narges1": "requesting"
     },
-    "lastSeen": 1688552281264
+    "lastSeen": 1688560878170
   },
   {
     "username": "Moeein",
@@ -29,8 +29,8 @@
     "passwordRecoveryAnswer": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
     "slogan": "Attack the weakness, defend the strengths!",
     "path": "files/img/avatars/2.png",
-    "lastSeen": 0
-    "roomIds": []
+    "roomIds": [],
+    "lastSeen": 1688558769965
   },
   {
     "username": "Farzammm",
@@ -64,7 +64,7 @@
       "a": "requesting",
       "Amirh": "requesting"
     },
-    "lastSeen": 1688552266032
+    "lastSeen": 1688560877353
   },
   {
     "username": "Farzam3",
@@ -940,6 +940,6 @@
     "passwordRecoveryAnswer": "1a83a04f1cd08062a2c076844c148152218732770362022a86492e78363186e7",
     "path": "files/img/avatars/1.png",
     "roomIds": [],
-    "lastSeen": 1688410778199
+    "lastSeen": 1688308968736
   }
 ]

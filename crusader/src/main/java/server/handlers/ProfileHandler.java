@@ -65,11 +65,11 @@ public class ProfileHandler {
 
     public void makeFakeToken() throws IOException {
         User user;
-        if (TokenController.tokens.size() == 0){
+        if (TokenController.tokens.size() == 0) {
             user = Application.getUserByUsername("a");
-        }else if (TokenController.tokens.size() == 1){
+        } else if (TokenController.tokens.size() == 1) {
             user = Application.getUserByUsername("f");
-        }else{
+        } else {
             user = Application.getUserByUsername("Moeein");
         }
 
@@ -193,8 +193,8 @@ public class ProfileHandler {
 
     public void areUserChanged() throws IOException {
         Packet packet = new Packet("user are changed");
-        packet.addAttribute("check",connection.userChanged);
+        packet.addAttribute("check", connection.userChanged);
         connection.userChanged = false;
-        Packet.sendPacket(packet,connection);
+        Packet.sendPacket(packet, connection);
     }
 }

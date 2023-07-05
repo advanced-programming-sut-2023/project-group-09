@@ -440,9 +440,8 @@ public class PacketHandler {
                     if (sender.isOnline())
                         sendPacket(seen, Connection.getOutputByUsername(sender.getUsername()));
                 } else {
-                    User sender = TokenController.getUserByToken(packet.getToken());
-                    User receiver = (room.getMembers().get(0).equals(sender.getUsername())) ? Application.getUserByUsername(room.getMembers().get(1)) :
-                            Application.getUserByUsername(room.getMembers().get(0));
+                    User sender = Application.getUserByUsername(message.getSender());
+                    User receiver = user;
                     seen.addAttribute("roomName", receiver.getUsername());
                     if (sender.isOnline())
                         sendPacket(seen, Connection.getOutputByUsername(sender.getUsername()));
