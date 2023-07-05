@@ -50,16 +50,17 @@ public class GameController {
     private static Game game;
     private static boolean isBuildingSelected = false;
     private static HashMap<User, FakeGame> fakeGames = new HashMap<>();
-    private static ArrayList<FakeGame> allFakeGames = new ArrayList<>();
+    private static HashSet<FakeGame> allFakeGames = new HashSet<>();
     public static HashMap<Long,FakeGame> fakeGameHashMap = new HashMap<>();
 
-    public static ArrayList<FakeGame> getAllFakeGames() {
+    public static HashSet<FakeGame> getAllFakeGames() {
         return allFakeGames;
     }
 
-    public static void setAllFakeGames(ArrayList<FakeGame> allFakeGames) {
+    public static void setAllFakeGames(HashSet<FakeGame> allFakeGames) {
         GameController.allFakeGames = allFakeGames;
     }
+
 
     public static boolean isIsBuildingSelected() {
         return isBuildingSelected;

@@ -56,9 +56,7 @@ public class Connection extends Thread {
                             throw new RuntimeException(ex);
                         }
                     }else if (fakeGame != null){
-
-                        //TODO
-                        new GameHandler().disconnectInGame();
+                        new GameHandler().disconnectInGame(fakeGame , user);
                     }
                     user.setOnline(false);
                     TokenController.tokens.remove(token);

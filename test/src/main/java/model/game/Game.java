@@ -11,6 +11,7 @@ import model.human.Human;
 import model.menugui.MenuBox;
 import model.menugui.MenuButton;
 import view.Main;
+import view.controllers.GameViewController;
 import view.menus.GameMenu;
 import view.menus.MainMenu;
 
@@ -42,6 +43,7 @@ public class Game {
             packet.sendPacket();
             Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
         }
+        GameViewController.gameTimeLine.stop();
     }
 
     public Government getWinner() {
@@ -58,6 +60,7 @@ public class Game {
                 setWinPage(government);
             }
         }
+        GameViewController.gameTimeLine.stop();
     }
 
     private synchronized static void setWinPage(Government winnerGov) {

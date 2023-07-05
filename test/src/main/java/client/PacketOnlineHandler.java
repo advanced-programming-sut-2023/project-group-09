@@ -142,7 +142,15 @@ public class PacketOnlineHandler {
                 Lobby.receiver.pauseThread();
             }
             case "leave game" -> Lobby.receiver.stopThread();
+            case "remove lord" -> {
+                removeLord();
+            }
         }
+    }
+
+    private void removeLord() {
+        String color = (String) packet.getAttribute("color");
+        getGovernmentByColor(color).getLord().setHealth(0);
     }
 
     private void changeFearRate() {

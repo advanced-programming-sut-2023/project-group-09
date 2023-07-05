@@ -92,6 +92,13 @@ public class GameMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        System.out.println("game is started : ");
+        for (String username : GameController.getFakeGame().getAllUsernames()) {
+            System.out.println(username);
+        }
+        for (String color : GameController.getFakeGame().getColors()) {
+            System.out.println(color);
+        }
         GameMenu.stage = stage;
         BorderPane pane = FXMLLoader.load(
                 new URL(Objects.requireNonNull(LoginMenu.class.getResource("/FXML/gameMenu.fxml")).toExternalForm()));
@@ -157,6 +164,7 @@ public class GameMenu extends Application {
             }
         });
         createSelectedArea();
+
 
         //ChatMenu chatMenu = new ChatMenu();
         //GameMenu.root.getChildren().add(chatMenu);

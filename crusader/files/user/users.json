@@ -4,7 +4,7 @@
     "password": "8b509b17e5408d6a2443a24681bad8b9b66530ec4d2ce27e7105b4379d7dea87",
     "nickname": "Amir---",
     "email": "some@gmail.com",
-    "highScore": 67400,
+    "highScore": 72700,
     "passwordRecoveryQuestion": "What\u0027s my father\u0027s name?",
     "passwordRecoveryAnswer": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
     "slogan": "-------",
@@ -16,14 +16,14 @@
       "f": "requested",
       "Narges1": "requesting"
     },
-    "lastSeen": 1688552281264
+    "lastSeen": 0
   },
   {
     "username": "Moeein",
     "password": "43df78ca8859106fe7cd9ae819bbbab34ddf06d3d235a7f322372fc8d101f815",
     "nickname": "moeein",
     "email": "something@gmail.com",
-    "highScore": 0,
+    "highScore": 4700,
     "passwordRecoveryQuestion": "What\u0027s my father\u0027s name?",
     "passwordRecoveryAnswer": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
     "slogan": "Attack the weakness, defend the strengths!",
@@ -50,7 +50,7 @@
     "password": "09ffcd67f5108ce206d39cf9c67272d5ccb86deb11d81fc597c6ad92a586b4dd",
     "nickname": "Fery1440",
     "email": "f@m.m",
-    "highScore": 79200,
+    "highScore": 82000,
     "passwordRecoveryQuestion": "What\u0027s my mother\u0027s last name?",
     "passwordRecoveryAnswer": "17eb73cedd6d2afa0c1ce3fa861a31966527ce6d86366f26d59812d3a75f6c02",
     "slogan": "Think long term, act short term!",
@@ -60,7 +60,7 @@
       "a": "requesting",
       "Amirh": "requesting"
     },
-    "lastSeen": 1688552266032
+    "lastSeen": 0
   },
   {
     "username": "Farzam3",

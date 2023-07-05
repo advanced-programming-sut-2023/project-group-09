@@ -93,6 +93,13 @@ public class GameHandler {
                 }
                 GameController.getAllFakeGames().remove(fakeGame);
                 GameController.fakeGameHashMap.remove(fakeGame.getGameId());
+                System.out.println("wow your game is ended!");
+                for (String username : fakeGame.getAllUsernames()) {
+                    System.out.println(username);
+                }
+                for (String color : fakeGame.getColors()) {
+                    System.out.println(color);
+                }
             }
             case "add score" -> {
                 FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
@@ -425,7 +432,6 @@ public class GameHandler {
             packet1.setToken(token);
             PacketHandler packetHandler = new PacketHandler(packet1, getConnection(username));
             packetHandler.sendPacket(packet1);
-            getConnection(username).getObjectOutputStream().writeObject(fakeGame);
         }
         GameController.addFakeGame(fakeGame);
     }
@@ -438,6 +444,13 @@ public class GameHandler {
             return;
         }
         fakeGame.setGameStarted(true);
+        System.out.println("wow your game is started!");
+        for (String username : fakeGame.getAllUsernames()) {
+            System.out.println(username);
+        }
+        for (String color : fakeGame.getColors()) {
+            System.out.println(color);
+        }
         for (String username : fakeGame.getAllUsernames()) {
             Packet packet1 = new Packet("create fake game", "Game");
             packet1.addAttribute("username", username);
@@ -515,7 +528,24 @@ public class GameHandler {
         updateGame(fakeGame);
     }
 
-    public void disconnectInGame(){
-
+    public void disconnectInGame(FakeGame fakeGame , User user) {
+        Packet packet1 = new Packet("remove lord" , "Game");
+        packet1.addAttribute("color" , fakeGame.getColors().get(fakeGame.getAllUsernames().indexOf(user.getUsername())));
+        System.out.println("disconnect from game :");
+        for (String username : fakeGame.getAllUsernames()) {
+            Connection connection1 = getConnection(username);
+            System.out.println(username);
+            if (connection1 != null && connection1.isAlive() && !connection1.getSocket().isClosed()) {
+                try {
+                    Packet.sendPacket(packet1 , connection1);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        for (String color : fakeGame.getColors()) {
+            System.out.println(color);
+        }
+        GameController.getFakeGames().remove(user , fakeGame);
     }
 }
