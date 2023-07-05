@@ -12,7 +12,7 @@ public class Room {
     private String name;
     private String adminUsername;
     private ArrayList<String> members = new ArrayList<>();
-    private ArrayList<Message> messages = new ArrayList<>();
+    private ArrayList<String> messageIds = new ArrayList<>();
 
     public Room(String name, String admin, boolean isPrivate) {
         this.name = name;
@@ -45,12 +45,13 @@ public class Room {
         this.members.add(member);
     }
 
-    public ArrayList<Message> getMessages() {
-        return messages;
+    public ArrayList<String> getMessages() {
+        if(messageIds == null) messageIds = new ArrayList<>();
+        return messageIds;
     }
 
-    public void addMessage(Message message) {
-        this.messages.add(message);
+    public void addMessage(String message) {
+        this.messageIds.add(message);
     }
 
     public String getName() {
@@ -82,13 +83,5 @@ public class Room {
 
     public void setPrivate(boolean aPrivate) {
         isPrivate = aPrivate;
-    }
-
-    public Message getMessageById(String messageId) {
-        for (int i = 0; i < messages.size(); i++) {
-            Message message = messages.get(i);
-            if (message.getId().equals(messageId)) return message;
-        }
-        return null;
     }
 }

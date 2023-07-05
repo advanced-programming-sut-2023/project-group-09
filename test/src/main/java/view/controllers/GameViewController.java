@@ -442,6 +442,7 @@ public class GameViewController {
             GameMenu.createGameBar(0);
             setCenterToCastleBuildings();
             GameMenu.setShieldsForGovernments();                       //TODO: revert comment
+            GameMenu.addChatIcon();
             return;
         }
         if (!GameMenu.selectedUnit) {
@@ -453,6 +454,7 @@ public class GameViewController {
                 GameMenu.createGameBar(0);
                 setCenterToCastleBuildings();
                 GameMenu.setShieldsForGovernments();
+                GameMenu.addChatIcon();
             }
             case "Towers" -> {
                 GameMenu.menuBar.getChildren().clear();
@@ -613,6 +615,7 @@ public class GameViewController {
             GameMenu.createGameBar(0);
             setCenterToCastleBuildings();
             GameMenu.setShieldsForGovernments();
+            GameMenu.addChatIcon();
             return;
         }
         switch (destination) {
@@ -621,6 +624,7 @@ public class GameViewController {
                 GameMenu.createGameBar(0);
                 setCenterToCastleBuildings();
                 GameMenu.setShieldsForGovernments();
+                GameMenu.addChatIcon();
             }
             case "Towers" -> {
                 GameMenu.menuBar.getChildren().clear();
