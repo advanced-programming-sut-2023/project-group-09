@@ -21,7 +21,7 @@ public class Main extends Application {
 //            DBController.saveAllUsers();
 //            DBController.saveCurrentUser();
 //        }));
-        connection = new Connection("localhost", 8080);
+        connection = new Connection("localhost", 8888);
         connection.makeFakeConnection();
         MainController.run(stage);
     }

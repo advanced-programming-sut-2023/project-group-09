@@ -5,9 +5,7 @@ import controller.DBController;
 import controller.GameController;
 import controller.GovernmentController;
 import controller.MapController;
-import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameImages;
-import controller.gamestructure.GameMaps;
 import controller.human.HumanController;
 import enumeration.Paths;
 import enumeration.UnitMovingState;
@@ -15,20 +13,18 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.Transition;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -36,13 +32,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Government;
-import model.building.Building;
 import model.building.castlebuildings.MainCastle;
 import model.game.Map;
 import model.game.Tile;
 import model.human.military.EuropeanTroop;
 import model.human.military.Military;
-import model.menugui.MenuHoverBox;
 import model.menugui.MiniMap;
 import model.menugui.game.GameMap;
 import model.menugui.game.GameTile;
@@ -50,7 +44,10 @@ import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
 import view.controllers.ViewController;
 import view.menus.chat.ChatMenu;
-
+import javafx.scene.robot.Robot;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -91,10 +88,15 @@ public class GameMenu extends Application {
     public static ImageView attacking;
 
     //-----------------------------------
-
-
     @Override
     public void start(Stage stage) throws Exception {
+        System.out.println("game is started : ");
+        for (String username : GameController.getFakeGame().getAllUsernames()) {
+            System.out.println(username);
+        }
+        for (String color : GameController.getFakeGame().getColors()) {
+            System.out.println(color);
+        }
         GameMenu.stage = stage;
         BorderPane pane = FXMLLoader.load(
                 new URL(Objects.requireNonNull(LoginMenu.class.getResource("/FXML/gameMenu.fxml")).toExternalForm()));
@@ -110,7 +112,7 @@ public class GameMenu extends Application {
         Map map = GameController.getGame().getMap();
         gameMap = new GameMap(map, 0, 0, 30, 18);
         gameMap.loadMap();
-        miniMap = new MiniMap(125, 143, 0, 0,map);
+        miniMap = new MiniMap(125, 143, 0, 0, map);
         miniMap.setGameMap(gameMap);
 
 //        TODO: revert comment
@@ -118,7 +120,7 @@ public class GameMenu extends Application {
             MapController.dropBuilding(government.getCastleX(), government.getCastleY(), "mainCastle", government);
             MainCastle mainCastle = (MainCastle) GameController.getGame().getMap().getTile(government.getCastleX(),
                     government.getCastleY()).getBuilding();
-            GameMap.getGameTile(government.getCastleX() , government.getCastleY()).refreshTile();
+            GameMap.getGameTile(government.getCastleX(), government.getCastleY()).refreshTile();
             mainCastle.setGovernment(government);
             government.setMainCastle(mainCastle);
             MapController.dropMilitary(government.getCastleX(), government.getCastleY() + 2, "lord", government);
@@ -169,7 +171,8 @@ public class GameMenu extends Application {
         PacketOnlineReceiver packetOnlineReceiver = new PacketOnlineReceiver();
         packetOnlineReceiver.start();
         GameViewController.setNextTurnTimeline();
-        //GovernmentController.sendGetLordName();
+        if (!GameMenu.isSpectator)
+            GovernmentController.sendGetLordName();
 
         stage.show();
     }
@@ -296,7 +299,6 @@ public class GameMenu extends Application {
             hoveringButton.setTranslateY(45);
         }
     }
-
 
     public static void setEventListeners() {
         root.setOnMouseMoved(mouseEvent -> {
