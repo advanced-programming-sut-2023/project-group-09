@@ -195,7 +195,7 @@ public class Lobby extends Application {
         }
         colorBlock.getChildren().add(label);
         overPane.getChildren().add(colorBlock);
-        if (fakeGame.isPrivate()){
+        if (fakeGame.isPrivate()) {
             privateChecker = new PrivateChecker(fakeGame);
             overPane.getChildren().add(privateChecker);
         }
@@ -245,6 +245,7 @@ public class Lobby extends Application {
                 flag.setOnMouseClicked(mouseEvent -> {
                     root.getChildren().remove(overPane);
                     overPane.getChildren().clear();
+                    setThread();
                     Packet packet = new Packet("add player", "Game");
                     packet.addAttribute("id", fakeGame.getGameId());
                     packet.addAttribute("x", x);
@@ -252,14 +253,6 @@ public class Lobby extends Application {
                     packet.addAttribute("color", selectedColor);
                     try {
                         packet.sendPacket();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    setThread();
-                    Packet packet1 = new Packet("update player", "Game");
-                    packet1.addAttribute("id", fakeGame.getGameId());
-                    try {
-                        packet1.sendPacket();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -348,24 +341,25 @@ public class Lobby extends Application {
         leftSide.getChildren().add(label);
         leftSide.getChildren().add(scrollPane);
     }
-    public void putIcons(){
-        Rectangle exit = new Rectangle(20,20);
+
+    public void putIcons() {
+        Rectangle exit = new Rectangle(20, 20);
         addAdminButton();
 
-        exit.setFill(new ImagePattern( new Image(
+        exit.setFill(new ImagePattern(new Image(
                 getClass().getResource(Paths.ICONS.getPath()).toExternalForm() + "exit.png"
         )));
         exit.setOnMouseEntered(LobbyController::scaleUp);
         exit.setOnMouseEntered(LobbyController::scaleDown);
         exit.setOnMouseClicked(mouseEvent -> {
-            Packet packet = new Packet("leave game","Game");
-            packet.addAttribute("id",fakeGame.getGameId());
+            Packet packet = new Packet("leave game", "Game");
+            packet.addAttribute("id", fakeGame.getGameId());
             try {
                 packet.sendPacket();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500),actionEvent -> {
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), actionEvent -> {
                 try {
                     new LobbyMenu().start(stage);
                 } catch (Exception e) {
@@ -380,30 +374,30 @@ public class Lobby extends Application {
         addAdminButton();
     }
 
-    public static void addAdminButton(){
-        if (!LobbyMenu.playerUsername.equals(fakeGame.getAdminUsername())){
+    public static void addAdminButton() {
+        if (!LobbyMenu.playerUsername.equals(fakeGame.getAdminUsername())) {
             return;
         }
-        if (setting != null){
+        if (setting != null) {
             leftSide.getChildren().remove(setting);
         }
-        if (run != null){
+        if (run != null) {
             leftSide.getChildren().remove(run);
         }
 
-        setting = new Rectangle(20,20);
-        run = new Rectangle(20,20);
+        setting = new Rectangle(20, 20);
+        run = new Rectangle(20, 20);
         setting.setOnMouseEntered(LobbyController::scaleUp);
         setting.setOnMouseEntered(LobbyController::scaleDown);
         run.setOnMouseEntered(LobbyController::scaleUp);
         run.setOnMouseEntered(LobbyController::scaleDown);
 
 
-        setting.setFill(new ImagePattern( new Image(
+        setting.setFill(new ImagePattern(new Image(
                 Lobby.class.getResource(Paths.ICONS.getPath()).toExternalForm() + "setting.png"
         )));
 
-        run.setFill(new ImagePattern( new Image(
+        run.setFill(new ImagePattern(new Image(
                 Lobby.class.getResource(Paths.ICONS.getPath()).toExternalForm() + "play.png"
         )));
         setting.setOnMouseClicked(mouseEvent -> {
@@ -421,26 +415,22 @@ public class Lobby extends Application {
         setting.setTranslateY(20);
         run.setTranslateX(80);
         run.setTranslateY(20);
-        leftSide.getChildren().addAll(setting,run);
+        leftSide.getChildren().addAll(setting, run);
     }
 
 
     public static void showSetting() throws IOException {
-        if (overPane != null){
-            if (lobbySetting != null){
+        if (overPane != null) {
+            if (lobbySetting != null) {
                 overPane.getChildren().remove(lobbySetting);
             }
             lobbySetting = new LobbySetting(fakeGame);
             overPane.getChildren().add(lobbySetting);
-            if (!root.getChildren().contains(overPane)){
+            if (!root.getChildren().contains(overPane)) {
                 root.getChildren().add(overPane);
             }
         }
     }
-
-
-
-
 
     private static void showUsers() throws IOException {
         usersList.getChildren().clear();
@@ -450,8 +440,8 @@ public class Lobby extends Application {
         for (String username : fakeGame.getAllUsernames()) {
             VBox vBox = new VBox();
             ProfileView profileView = new ProfileView(username, 80, 300);
-            if (username.equals(fakeGame.getAdminUsername())){
-                Label label  = new Label("admin");
+            if (username.equals(fakeGame.getAdminUsername())) {
+                Label label = new Label("admin");
                 label.setTranslateX(240);
                 label.setTranslateY(20);
                 profileView.getChildren().add(label);
@@ -462,4 +452,13 @@ public class Lobby extends Application {
         addAdminButton();
         receiver.resumeThread();
     }
+
+    public static void createGame() {
+        try {
+            new GameMenu().start(Lobby.stage);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

@@ -12,7 +12,6 @@ import server.Packet;
 import server.PacketHandler;
 
 import java.io.IOException;
-import java.nio.file.attribute.UserPrincipal;
 import java.util.ArrayList;
 
 public class GameHandler {
@@ -122,30 +121,31 @@ public class GameHandler {
             case "get fake game" -> getFakeGame();
             case "update private game" -> updatePrivateState();
             case "leave game" -> leaveGame();
+            case "start game" -> startFakeGame(true);
         }
     }
 
     private void leaveGame() throws IOException {
         User user = TokenController.getUserByToken(packet.token);
         double id = (double) packet.getAttribute("id");
-        FakeGame fakeGame = GameController.fakeGameHashMap.get((long)id);
+        FakeGame fakeGame = GameController.fakeGameHashMap.get((long) id);
         int index = fakeGame.getAllUsernames().indexOf(user.getUsername());
-        if (fakeGame.getAllUsernames().size() <=1 ){
-            GameController.fakeGameHashMap.remove((long)id);
+        if (fakeGame.getAllUsernames().size() <= 1) {
+            GameController.fakeGameHashMap.remove((long) id);
             GameController.getAllFakeGames().remove(fakeGame);
             GameController.getFakeGames().remove(user);
-            Packet packet1= new Packet("leave game","Game");
-            Packet.sendPacket(packet1,connection);
+            Packet packet1 = new Packet("leave game", "Game");
+            Packet.sendPacket(packet1, connection);
             return;
         }
-        if (checkPermission(fakeGame,user)){
+        if (checkPermission(fakeGame, user)) {
             fakeGame.getAllUsernames().remove(index);
             fakeGame.getColors().remove(index);
             fakeGame.getCastleXs().remove(index);
             fakeGame.getCastleYs().remove(index);
             fakeGame.setAdminUsername(fakeGame.getAllUsernames().get(0));
-            Packet packet1= new Packet("leave game","Game");
-            Packet.sendPacket(packet1,connection);
+            Packet packet1 = new Packet("leave game", "Game");
+            Packet.sendPacket(packet1, connection);
             updateGame(fakeGame);
             return;
         }
@@ -154,24 +154,24 @@ public class GameHandler {
         fakeGame.getCastleXs().remove(index);
         fakeGame.getCastleYs().remove(index);
 
-        Packet packet1= new Packet("leave game","Game");
-        Packet.sendPacket(packet1,connection);
+        Packet packet1 = new Packet("leave game", "Game");
+        Packet.sendPacket(packet1, connection);
         updateGame(fakeGame);
     }
 
     private void updatePrivateState() throws IOException {
         User user = TokenController.getUserByToken(packet.token);
         double id = (double) packet.getAttribute("id");
-        FakeGame fakeGame = GameController.fakeGameHashMap.get((long)id);
-        if (!checkPermission(fakeGame,user)){
+        FakeGame fakeGame = GameController.fakeGameHashMap.get((long) id);
+        if (!checkPermission(fakeGame, user)) {
             return;
         }
         boolean isPrivate = (boolean) packet.getAttribute("private");
         String password = (String) packet.getAttribute("password");
-        if (isPrivate){
+        if (isPrivate) {
             fakeGame.setPrivate(true);
             fakeGame.setPassword(password);
-        }else {
+        } else {
             fakeGame.setPrivate(false);
             fakeGame.setPassword("");
         }
@@ -184,7 +184,7 @@ public class GameHandler {
         connection.getObjectOutputStream().writeObject(fakeGame);
     }
 
-    private void addPlayer() {
+    private void addPlayer() throws IOException {
         User user = TokenController.getUserByToken(packet.token);
         double id = (double) packet.getAttribute("id");
         double x = (double) packet.getAttribute("x");
@@ -192,7 +192,12 @@ public class GameHandler {
         String color = packet.getAttribute("color").toString();
         FakeGame fakeGame = GameController.fakeGameHashMap.get((long) id);
         fakeGame.addPlayer(user.getUsername(), color, (int) x, (int) y);
-        GameController.addFakeGame(user,fakeGame);
+        GameController.addFakeGame(user, fakeGame);
+        if (fakeGame.getMaxPlayer() == fakeGame.getAllUsernames().size()){
+            startFakeGame(false);
+        }else {
+            updateGame(fakeGame);
+        }
     }
 
     private void updateGame() throws IOException {
@@ -201,8 +206,8 @@ public class GameHandler {
         for (String username : fakeGame.getAllUsernames()) {
             Connection connection = getConnection(username);
             if (connection != null) {
-                Packet packet = new Packet("update fake game","Game");
-                Packet.sendPacket(packet,connection);
+                Packet packet = new Packet("update fake game", "Game");
+                Packet.sendPacket(packet, connection);
                 FakeGame fakeGame1 = new FakeGame(fakeGame);
                 connection.getObjectOutputStream().writeObject(fakeGame1);
             }
@@ -213,8 +218,8 @@ public class GameHandler {
         for (String username : fakeGame.getAllUsernames()) {
             Connection connection = getConnection(username);
             if (connection != null) {
-                Packet packet = new Packet("update fake game","Game");
-                Packet.sendPacket(packet,connection);
+                Packet packet = new Packet("update fake game", "Game");
+                Packet.sendPacket(packet, connection);
                 FakeGame fakeGame1 = new FakeGame(fakeGame);
                 connection.getObjectOutputStream().writeObject(fakeGame1);
             }
@@ -423,6 +428,27 @@ public class GameHandler {
         GameController.addFakeGame(fakeGame);
     }
 
+    private void startFakeGame(boolean checkPer) throws IOException {
+        User admin = TokenController.getUserByToken(packet.token);
+        double id = (double) packet.getAttribute("id");
+        FakeGame fakeGame = GameController.fakeGameHashMap.get((long) id);
+        if (checkPer && (!checkPermission(fakeGame, admin) || fakeGame.getAllUsernames().size() < 2)) {
+            return;
+        }
+        for (String username : fakeGame.getAllUsernames()) {
+            User user = Application.getUserByUsername(username);
+            GameController.addFakeGame(user, fakeGame);
+            Packet packet1 = new Packet("create fake game", "Game");
+            packet1.addAttribute("username", username);
+            String token = TokenController.getTokenByUsername(username);
+            packet1.setToken(token);
+            PacketHandler packetHandler = new PacketHandler(packet1, getConnection(username));
+            packetHandler.sendPacket(packet1);
+            getConnection(username).getObjectOutputStream().writeObject(fakeGame);
+        }
+        GameController.addFakeGame(fakeGame);
+    }
+
     private void dropBuilding() throws IOException, ClassNotFoundException {
         FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
         ArrayList<Connection> connections = connectionsInGameExceptThis(fakeGame);
@@ -450,8 +476,8 @@ public class GameHandler {
         return null;
     }
 
-    private boolean checkPermission(FakeGame fakeGame,User user){
-        if (user.getUsername().equals(fakeGame.getAdminUsername())){
+    private boolean checkPermission(FakeGame fakeGame, User user) {
+        if (user.getUsername().equals(fakeGame.getAdminUsername())) {
             return true;
         }
         return false;

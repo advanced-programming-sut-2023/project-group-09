@@ -70,6 +70,8 @@ public class PacketOnlineHandler {
                     }
                 }
                 GameController.setFakeGame(fakeGame);
+                Lobby.receiver.stopThread();
+                Platform.runLater(Lobby::createGame);
             }
             case "drop building" -> {
                 dropBuilding();
