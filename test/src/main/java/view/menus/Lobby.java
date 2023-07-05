@@ -61,7 +61,7 @@ public class Lobby extends Application {
     public static LobbySetting lobbySetting;
     public static PrivateChecker privateChecker;
 
-
+    public static Timeline exitTimeline;
     Map selectedMap;
     public static PacketOnlineReceiver receiver;
 
@@ -108,7 +108,17 @@ public class Lobby extends Application {
             flag.setVisible(false);
             castleFlags.add(flag);
         }
-
+        exitTimeline = new Timeline(new KeyFrame(Duration.seconds(120), actionEvent -> {
+            Packet packet = new Packet("check fake game","Game");
+            packet.addAttribute("id",fakeGame.getGameId());
+            try {
+                packet.sendPacket();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }));
+        exitTimeline.setCycleCount(-1);
+        exitTimeline.play();
         receiver = new PacketOnlineReceiver();
     }
 
@@ -361,6 +371,7 @@ public class Lobby extends Application {
             }
             Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), actionEvent -> {
                 try {
+                    exitTimeline.stop();
                     new LobbyMenu().start(stage);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
@@ -409,12 +420,12 @@ public class Lobby extends Application {
         });
 
         run.setOnMouseClicked(mouseEvent -> {
-            if (fakeGame.getAllUsernames().size() == 1){
-                MenuPopUp menuPopUp = new MenuPopUp(root,400,400,"error","You cannot start alone!");
+            if (fakeGame.getAllUsernames().size() == 1) {
+                MenuPopUp menuPopUp = new MenuPopUp(root, 400, 400, "error", "You cannot start alone!");
                 root.getChildren().add(menuPopUp);
-            }else{
-                Packet packet = new Packet("start game","Game");
-                packet.addAttribute("id",fakeGame.getGameId());
+            } else {
+                Packet packet = new Packet("start game", "Game");
+                packet.addAttribute("id", fakeGame.getGameId());
                 try {
                     packet.sendPacket();
                 } catch (IOException e) {
@@ -470,6 +481,18 @@ public class Lobby extends Application {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void exitLobby() {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), actionEvent -> {
+            try {
+                exitTimeline.stop();
+                new LobbyMenu().start(stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }));
+        timeline.play();
     }
 
 }

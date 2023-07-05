@@ -310,7 +310,6 @@ public class Attack {
             return false;
         }
         if (military.canAirAttack()) {
-            System.out.println(")))))" + isInRange(building.getEndX(), building.getEndY(), military.getShootingRange()));
             return isInRange(building.getEndX(), building.getEndY(), military.getShootingRange());
         }
         Tuple tuple = new Tuple(military.getY(), military.getX());

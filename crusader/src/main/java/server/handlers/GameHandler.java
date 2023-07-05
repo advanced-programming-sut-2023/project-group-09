@@ -1,9 +1,6 @@
 package server.handlers;
 
-import controller.Application;
-import controller.DBController;
-import controller.GameController;
-import controller.TokenController;
+import controller.*;
 import controller.gamestructure.GameMaps;
 import model.FakeGame;
 import model.User;
@@ -14,6 +11,8 @@ import server.PacketHandler;
 import javax.print.attribute.UnmodifiableSetException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 
 public class GameHandler {
 
@@ -93,6 +92,13 @@ public class GameHandler {
                 }
                 GameController.getAllFakeGames().remove(fakeGame);
                 GameController.fakeGameHashMap.remove(fakeGame.getGameId());
+                System.out.println("wow your game is ended!");
+                for (String username : fakeGame.getAllUsernames()) {
+                    System.out.println(username);
+                }
+                for (String color : fakeGame.getColors()) {
+                    System.out.println(color);
+                }
             }
             case "add score" -> {
                 FakeGame fakeGame = (FakeGame) connection.getObjectInputStream().readObject();
@@ -109,14 +115,21 @@ public class GameHandler {
             }
             case "get fake games" -> {
                 for (FakeGame fakeGame : GameController.getAllFakeGames()) {
+                    if (fakeGame.isGameStarted()){
+                        continue;
+                    }else if (!fakeGame.isGameStarted() && System.currentTimeMillis() - fakeGame.getGameId() > 120000){
+                        continue;
+                    }
                     FakeGame fakeGame1 = new FakeGame(fakeGame);
                     connection.getObjectOutputStream().writeObject(fakeGame1);
                 }
                 FakeGame fakeGame = new FakeGame();
                 fakeGame.setMapName("Null Map 400*400");
                 connection.getObjectOutputStream().writeObject(fakeGame);
-            }
 
+
+            }
+            case "check fake game"-> checkFakeGame();
             case "create a fake game" -> CreateFakeGame();
             case "add player" -> addPlayer();
             case "update player" -> updateGame();
@@ -126,6 +139,26 @@ public class GameHandler {
             case "start game" -> startFakeGame(true);
         }
     }
+
+    private void checkFakeGame() throws IOException {
+        double id = (double) packet.getAttribute("id");
+        FakeGame fakeGame = GameController.fakeGameHashMap.get((long)id);
+        if (fakeGame != null && System.currentTimeMillis() - fakeGame.getGameId() > 110000){
+            for (String username : fakeGame.getAllUsernames()){
+                User user = Application.getUserByUsername(username);
+                Connection connection1 = getConnection(username);
+                GameController.fakeGameHashMap.remove(fakeGame.getGameId());
+                GameController.getAllFakeGames().remove(fakeGame);
+                GameController.getFakeGames().remove(user);
+                if (connection1 != null && connection1.isAlive() && !connection1.getSocket().isClosed()){
+                    Packet packet1 = new Packet("exit lobby","Game");
+                    Packet.sendPacket(packet1,connection1);
+                }
+
+            }
+        }
+    }
+
 
     private void leaveGame() throws IOException {
         User user = TokenController.getUserByToken(packet.token);
@@ -425,7 +458,6 @@ public class GameHandler {
             packet1.setToken(token);
             PacketHandler packetHandler = new PacketHandler(packet1, getConnection(username));
             packetHandler.sendPacket(packet1);
-            getConnection(username).getObjectOutputStream().writeObject(fakeGame);
         }
         GameController.addFakeGame(fakeGame);
     }
@@ -438,6 +470,13 @@ public class GameHandler {
             return;
         }
         fakeGame.setGameStarted(true);
+        System.out.println("wow your game is started!");
+        for (String username : fakeGame.getAllUsernames()) {
+            System.out.println(username);
+        }
+        for (String color : fakeGame.getColors()) {
+            System.out.println(color);
+        }
         for (String username : fakeGame.getAllUsernames()) {
             Packet packet1 = new Packet("create fake game", "Game");
             packet1.addAttribute("username", username);
@@ -495,8 +534,6 @@ public class GameHandler {
             GameController.fakeGameHashMap.remove(fakeGame.getGameId());
             GameController.getAllFakeGames().remove(fakeGame);
             GameController.getFakeGames().remove(user);
-            Packet packet1 = new Packet("leave game", "Game");
-            Packet.sendPacket(packet1, connection);
             return;
         }
         if (checkPermission(fakeGame, user)) {
@@ -515,7 +552,24 @@ public class GameHandler {
         updateGame(fakeGame);
     }
 
-    public void disconnectInGame(){
-
+    public void disconnectInGame(FakeGame fakeGame , User user) {
+        Packet packet1 = new Packet("remove lord" , "Game");
+        packet1.addAttribute("color" , fakeGame.getColors().get(fakeGame.getAllUsernames().indexOf(user.getUsername())));
+        System.out.println("disconnect from game :");
+        System.out.println(user.getUsername());
+        for (String username : fakeGame.getAllUsernames()) {
+            Connection connection1 = getConnection(username);
+            if (connection1 != null && connection1.isAlive() && !connection1.getSocket().isClosed()) {
+                try {
+                    Packet.sendPacket(packet1 , connection1);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        for (String color : fakeGame.getColors()) {
+            System.out.println(color);
+        }
+        GameController.getFakeGames().remove(user , fakeGame);
     }
 }
