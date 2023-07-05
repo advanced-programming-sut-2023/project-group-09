@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -46,7 +47,8 @@ public class LobbyMenu extends Application {
     public static MakeNewGame makeGameBlock;
 
     public static String playerUsername;
-
+    public static TextField search;
+    public ArrayList<FakeGame> fakeGames;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -151,21 +153,50 @@ public class LobbyMenu extends Application {
         });
         reload.setTranslateX(530);
         reload.setTranslateY(60);
+        addSearchBox();
         showGames();
-
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(gameList);
         gameList.setPrefHeight(500);
         gameList.setPrefWidth(460);
         scrollPane.setMaxHeight(700);
         scrollPane.setFitToHeight(false);
-        scrollPane.setTranslateY(100);
+        scrollPane.setTranslateY(150);
         scrollPane.setTranslateX(70);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         gameListPane.getChildren().addAll(label, scrollPane,makeNewGameButton,reload);
         stackPane.getChildren().add(gameListPane);
     }
 
+    public void addSearchBox(){
+        TextField textField = new TextField();
+        textField.getStyleClass().add("input-text");
+        textField.setMaxWidth(500);
+        textField.setMinWidth(500);
+        textField.setMaxHeight(45);
+        textField.setMinHeight(45);
+        textField.setPadding(new Insets(0, 10, 0, 10));
+        textField.setPromptText("search...");
+        textField.setTranslateX(50);
+        textField.setTranslateY(100);
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null || newValue.equals("")){
+                try {
+                    showGames("");
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }else {
+                try {
+                    showGames(newValue);
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        search = textField;
+        gameListPane.getChildren().add(textField);
+    }
     public void setMakeNewGamePane(){
         makeNewGamePane = new Pane();
         makeNewGamePane.setStyle("-fx-background-color: rgba(121, 121, 121, 0.58);");
@@ -185,7 +216,8 @@ public class LobbyMenu extends Application {
 
     public void showGames() throws IOException, ClassNotFoundException {
         gameList.getChildren().clear();
-        ArrayList<FakeGame> fakeGames = GameController.getAllRunningFakeGames();
+        search.setText("");
+        fakeGames = GameController.getAllRunningFakeGames();
         if (fakeGames.size() == 0){
             gameList.getChildren().add(new Label("no game exist"));
         }
@@ -234,6 +266,65 @@ public class LobbyMenu extends Application {
 
             gameData.getChildren().add(button);
             gameList.getChildren().add(vBox);
+        }
+    }
+
+    public void showGames(String input) throws IOException, ClassNotFoundException {
+        gameList.getChildren().clear();
+        fakeGames = GameController.getAllRunningFakeGames();
+        int count = 0;
+        for (FakeGame fakeGame : fakeGames){
+            String id = String.valueOf(fakeGame.getGameId());
+            if (!id.contains(input))continue;
+
+            count++;
+            VBox vBox = new VBox();
+            GameData gameData = new GameData(fakeGame,100,460);
+            vBox.getChildren().add(gameData);
+            Button button = new Button();
+            button.setPadding(new Insets(10, 20, 10, 20));
+            button.setTranslateX(340);
+            button.setTranslateY(20);
+            button.getStyleClass().add("new-game-btn");
+            button.setOnMouseEntered(this::scaleUp);
+            button.setOnMouseExited(this::scaleDown);
+            button.setText("join");
+            button.setOnMouseClicked(mouseEvent -> {
+                try {
+                    FakeGame game = LobbyController.getFakeGame(fakeGame.getGameId());
+                    if (game == null){
+                        MenuPopUp popUp = new MenuPopUp(stackPane,400,400,"error","Game not found!");
+                        stackPane.getChildren().add(popUp);
+                    }else if (game.getMaxPlayer() == game.getAllUsernames().size()){
+                        MenuPopUp popUp = new MenuPopUp(stackPane,400,400,"error","The capacity is complete!");
+                        stackPane.getChildren().add(popUp);
+                    } else if (game.isGameStarted()) {
+                        MenuPopUp popUp = new MenuPopUp(stackPane,400,400,"error","The game is in progress!");
+                        stackPane.getChildren().add(popUp);
+                    }else{
+                        Lobby.fakeGame = game;
+                        new Lobby().start(stage);
+                    }
+
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            if (!fakeGame.isPrivate()){
+                Rectangle rectangle = new Rectangle(20,20);
+                rectangle.setFill(new ImagePattern(new Image(
+                        getClass().getResource(Paths.ICONS.getPath()).toExternalForm() + "view.png"
+                )));
+                rectangle.setTranslateX(300);
+                rectangle.setTranslateY(30);
+                gameData.getChildren().add(rectangle);
+            }
+
+            gameData.getChildren().add(button);
+            gameList.getChildren().add(vBox);
+        }
+        if (count == 0){
+            gameList.getChildren().add(new Label("no game with this id found"));
         }
     }
     public void scaleUp(MouseEvent mouseEvent) {
