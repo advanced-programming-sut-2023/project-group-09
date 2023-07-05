@@ -3,6 +3,7 @@ package view.menus;
 import client.Packet;
 import client.PacketOnlineReceiver;
 import controller.MapController;
+import controller.network.LobbyController;
 import enumeration.Paths;
 import enumeration.dictionary.Colors;
 import javafx.animation.ScaleTransition;
@@ -18,15 +19,14 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.FakeGame;
 import model.game.Map;
-import model.menugui.LobbyPreviewMap;
-import model.menugui.MenuFlag;
-import model.menugui.ProfileView;
+import model.menugui.*;
 import view.controllers.ViewController;
 
 import java.io.IOException;
@@ -54,6 +54,10 @@ public class Lobby extends Application {
 
     public ArrayList<String> users = new ArrayList<>();
     public static VBox usersList;
+    public static Rectangle setting;
+    public static Rectangle run;
+    public static LobbySetting lobbySetting;
+    public static PrivateChecker privateChecker;
 
 
     Map selectedMap;
@@ -86,6 +90,7 @@ public class Lobby extends Application {
         setFlags();
         setColor();
         setUsers();
+        putIcons();
         stage.show();
     }
 
@@ -135,7 +140,7 @@ public class Lobby extends Application {
         overPane.setStyle("-fx-background-color: rgba(121, 121, 121, 0.58);");
     }
 
-    public void setColor() {
+    public void setColor() throws IOException {
         root.getChildren().add(overPane);
         colorBlock = new Pane();
         colorBlock.setStyle("-fx-background-color: #fff;-fx-background-radius: 10");
@@ -188,6 +193,10 @@ public class Lobby extends Application {
         }
         colorBlock.getChildren().add(label);
         overPane.getChildren().add(colorBlock);
+        if (fakeGame.isPrivate()){
+            privateChecker = new PrivateChecker(fakeGame);
+            overPane.getChildren().add(privateChecker);
+        }
     }
 
     public void setGovernment() {
@@ -337,6 +346,85 @@ public class Lobby extends Application {
         leftSide.getChildren().add(label);
         leftSide.getChildren().add(scrollPane);
     }
+    public void putIcons(){
+        Rectangle exit = new Rectangle(20,20);
+        addAdminButton();
+
+        exit.setFill(new ImagePattern( new Image(
+                getClass().getResource(Paths.ICONS.getPath()).toExternalForm() + "exit.png"
+        )));
+        exit.setOnMouseEntered(LobbyController::scaleUp);
+        exit.setOnMouseEntered(LobbyController::scaleDown);
+        exit.setOnMouseClicked(mouseEvent -> {
+
+        });
+        exit.setTranslateX(20);
+        exit.setTranslateY(20);
+        leftSide.getChildren().add(exit);
+        addAdminButton();
+    }
+
+    public void addAdminButton(){
+        if (!LobbyMenu.playerUsername.equals(fakeGame.getAdminUsername())){
+            return;
+        }
+        if (setting != null){
+            leftSide.getChildren().remove(setting);
+        }
+        if (run != null){
+            leftSide.getChildren().remove(run);
+        }
+
+        setting = new Rectangle(20,20);
+        run = new Rectangle(20,20);
+        setting.setOnMouseEntered(LobbyController::scaleUp);
+        setting.setOnMouseEntered(LobbyController::scaleDown);
+        run.setOnMouseEntered(LobbyController::scaleUp);
+        run.setOnMouseEntered(LobbyController::scaleDown);
+
+
+        setting.setFill(new ImagePattern( new Image(
+                getClass().getResource(Paths.ICONS.getPath()).toExternalForm() + "setting.png"
+        )));
+
+        run.setFill(new ImagePattern( new Image(
+                getClass().getResource(Paths.ICONS.getPath()).toExternalForm() + "play.png"
+        )));
+        setting.setOnMouseClicked(mouseEvent -> {
+            try {
+                showSetting();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        run.setOnMouseClicked(mouseEvent -> {
+
+        });
+        setting.setTranslateX(50);
+        setting.setTranslateY(20);
+        run.setTranslateX(80);
+        run.setTranslateY(20);
+        leftSide.getChildren().addAll(setting,run);
+    }
+
+
+    public void showSetting() throws IOException {
+        if (overPane != null){
+            if (lobbySetting != null){
+                overPane.getChildren().remove(lobbySetting);
+            }
+            lobbySetting = new LobbySetting(fakeGame);
+            overPane.getChildren().add(lobbySetting);
+            if (!root.getChildren().contains(overPane)){
+                root.getChildren().add(overPane);
+            }
+        }
+    }
+
+
+
+
 
     private static void showUsers() throws IOException {
         usersList.getChildren().clear();
@@ -346,6 +434,12 @@ public class Lobby extends Application {
         for (String username : fakeGame.getAllUsernames()) {
             VBox vBox = new VBox();
             ProfileView profileView = new ProfileView(username, 80, 300);
+            if (username.equals(fakeGame.getAdminUsername())){
+                Label label  = new Label("admin");
+                label.setTranslateX(240);
+                label.setTranslateY(20);
+                profileView.getChildren().add(label);
+            }
             vBox.getChildren().add(profileView);
             usersList.getChildren().add(vBox);
         }

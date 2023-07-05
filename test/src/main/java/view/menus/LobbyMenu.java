@@ -2,6 +2,7 @@ package view.menus;
 
 import controller.GameController;
 import controller.network.LobbyController;
+import controller.network.UsersController;
 import enumeration.Paths;
 import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
@@ -44,11 +45,13 @@ public class LobbyMenu extends Application {
     public static Pane makeNewGamePane;
     public static MakeNewGame makeGameBlock;
 
+    public static String playerUsername;
 
 
     @Override
     public void start(Stage stage) throws Exception {
         LobbyMenu.stage = stage;
+        playerUsername = UsersController.getUsername();
         makeScene();
     }
 
@@ -219,7 +222,7 @@ public class LobbyMenu extends Application {
                     throw new RuntimeException(e);
                 }
             });
-            if (fakeGame.isPrivate()){
+            if (!fakeGame.isPrivate()){
                 Rectangle rectangle = new Rectangle(20,20);
                 rectangle.setFill(new ImagePattern(new Image(
                         getClass().getResource(Paths.ICONS.getPath()).toExternalForm() + "view.png"

@@ -118,7 +118,28 @@ public class GameHandler {
             case "add player" -> addPlayer();
             case "update player" -> updateGame();
             case "get fake game" -> getFakeGame();
+            case "update private game" -> updatePrivateState();
         }
+    }
+
+    private void updatePrivateState() throws IOException {
+        User user = TokenController.getUserByToken(packet.token);
+
+        double id = (double) packet.getAttribute("id");
+        FakeGame fakeGame = GameController.fakeGameHashMap.get((long)id);
+        if (!checkPermission(fakeGame,user)){
+            return;
+        }
+        boolean isPrivate = (boolean) packet.getAttribute("private");
+        String password = (String) packet.getAttribute("password");
+        if (isPrivate){
+            fakeGame.setPrivate(true);
+            fakeGame.setPassword(password);
+        }else {
+            fakeGame.setPrivate(false);
+            fakeGame.setPassword("");
+        }
+        updateGame(fakeGame);
     }
 
     private void getFakeGame() throws IOException {
@@ -135,11 +156,24 @@ public class GameHandler {
         String color = packet.getAttribute("color").toString();
         FakeGame fakeGame = GameController.fakeGameHashMap.get((long) id);
         fakeGame.addPlayer(user.getUsername(), color, (int) x, (int) y);
+        GameController.addFakeGame(user,fakeGame);
     }
 
     private void updateGame() throws IOException {
         double id = (double) packet.getAttribute("id");
         FakeGame fakeGame = GameController.fakeGameHashMap.get((long) id);
+        for (String username : fakeGame.getAllUsernames()) {
+            Connection connection = getConnection(username);
+            if (connection != null) {
+                Packet packet = new Packet("update fake game","Game");
+                Packet.sendPacket(packet,connection);
+                FakeGame fakeGame1 = new FakeGame(fakeGame);
+                connection.getObjectOutputStream().writeObject(fakeGame1);
+            }
+        }
+    }
+
+    private void updateGame(FakeGame fakeGame) throws IOException {
         for (String username : fakeGame.getAllUsernames()) {
             Connection connection = getConnection(username);
             if (connection != null) {
@@ -378,5 +412,12 @@ public class GameHandler {
                 return connection;
         }
         return null;
+    }
+
+    private boolean checkPermission(FakeGame fakeGame,User user){
+        if (user.getUsername().equals(fakeGame.getAdminUsername())){
+            return true;
+        }
+        return false;
     }
 }

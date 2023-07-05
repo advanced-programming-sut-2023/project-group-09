@@ -27,7 +27,7 @@ public class GameData extends Pane {
 
     public FakeGame fakeGame;
 
-    public GameData(FakeGame fakeGame, int height, int width) throws IOException {
+    public GameData(FakeGame fakeGame, int height, int width) {
         this.name = fakeGame.getGameName();
         this.id = String.valueOf(fakeGame.getGameId());
         this.numberOfPlayer = String.valueOf(fakeGame.getMaxPlayer());
@@ -40,7 +40,7 @@ public class GameData extends Pane {
 
         this.map = fakeGame.getMapName();
         this.privateSate = fakeGame.isPrivate();
-
+        this.fakeGame =fakeGame;
         this.setMaxWidth(width);
         this.setMinWidth(width);
         this.setMaxHeight(height);
@@ -74,7 +74,7 @@ public class GameData extends Pane {
         dataPart.getChildren().addAll(vBox);
         profilePart.getChildren().addAll(dataPart);
         profilePart.setSpacing(10);
-        if (privateSate){
+        if (fakeGame.isPrivate()){
             Rectangle rectangle = new Rectangle(20,20);
             rectangle.setFill(new ImagePattern(new Image(
                     getClass().getResource(Paths.ICONS.getPath()).toExternalForm() + "lock.png"
