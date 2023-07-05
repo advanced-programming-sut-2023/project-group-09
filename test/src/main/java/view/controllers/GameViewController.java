@@ -1,5 +1,6 @@
 package view.controllers;
 
+import client.Packet;
 import controller.*;
 import controller.gamestructure.GameBuildings;
 import controller.gamestructure.GameGoods;
@@ -1727,10 +1728,10 @@ public class GameViewController {
 
         ArrayList<String> castles = new ArrayList<>();
         int count = 1;
-        for (int i = 0; i < GameController.getGame().getGovernments().size(); i++) {
-            Government government = GameController.getGame().getGovernments().get(i);
-            if (!government.equals(GameController.getGame().getCurrentGovernment()))
-                castles.add(count++ + ". " + government.getUser().getUsername());
+        for (int i = 0; i < GameController.getFakeGame().getAllUsernames().size(); i++) {
+            String username = GameController.getFakeGame().getAllUsernames().get(i);
+            if (!username.equals(Application.getCurrentUser().getUsername()))
+                castles.add(count++ + ". " + username);
         }
         MenuChoiceBox castleNumber = new MenuChoiceBox(GameMenu.menuBar, "", 375, 140,
                 FXCollections.observableArrayList(castles), 300);
@@ -2182,10 +2183,6 @@ public class GameViewController {
         GameMenu.menuBar.getChildren().addAll(cost, name, peasantsNumber);
     }
 
-//    private static void setCenterToEngineerMenu() {
-//
-//    }
-
     private static void setCenterToEngineerGuild() {
         setTitle("Engineer's Guild", 32, 275, 95);
 
@@ -2268,10 +2265,6 @@ public class GameViewController {
         });
         GameMenu.menuBar.getChildren().addAll(tunneler, peasantsNumber);
     }
-
-//    private static void setCenterToEngineerMenu() {
-//
-//    }
 
     private static void setCenterToFletcher() {
         setTitle("Fletcher's Workshop", 32, 275, 95);
@@ -2680,6 +2673,13 @@ public class GameViewController {
         });
         icon.setOnMouseClicked(mouseEvent -> {
             trade.reject();
+            try {
+                Packet packet = new Packet("reject trade", "ShopTrade");
+                packet.addAttribute("tradeId", trade.getId());
+                packet.sendPacket();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             setCenterOfBar("shop");
         });
         GameMenu.menuBar.getChildren().add(icon);

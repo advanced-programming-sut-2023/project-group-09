@@ -1,12 +1,16 @@
 package controller;
 
+import client.Packet;
+import client.PacketHandler;
 import controller.gamestructure.GameGoods;
 import model.Government;
 import model.goods.Goods;
 import model.menugui.MenuPopUp;
 import model.menugui.MenuTextField;
+import view.Main;
 import view.menus.GameMenu;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class MarketController {
@@ -48,6 +52,17 @@ public class MarketController {
         }
 
         government.addGold(-cost);
+        try {
+            Packet packet = new Packet("buy item", "ShopTrade");
+            packet.addAttribute("color", GovernmentController.getCurrentGovernment().getColor());
+            packet.addAttribute("name", name);
+            packet.addAttribute("amount", Integer.toString(amount));
+            packet.addAttribute("cost", Integer.toString(cost));
+            packet.sendPacket();
+            Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return true;
     }
 
@@ -69,6 +84,17 @@ public class MarketController {
             return false;
         }
         government.addGold(cost);
+        try {
+            Packet packet = new Packet("sell item", "ShopTrade");
+            packet.addAttribute("color", GovernmentController.getCurrentGovernment().getColor());
+            packet.addAttribute("name", name);
+            packet.addAttribute("amount", Integer.toString(amount));
+            packet.addAttribute("cost", Integer.toString(cost));
+            packet.sendPacket();
+            Main.connection.getObjectOutputStream().writeObject(GameController.getFakeGame());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return true;
     }
 

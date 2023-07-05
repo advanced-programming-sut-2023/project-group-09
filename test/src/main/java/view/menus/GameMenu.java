@@ -78,6 +78,7 @@ public class GameMenu extends Application {
     public static boolean selectDone = false;
     public static boolean isSelected = false;
     public static String movingState = UnitMovingState.NORMAL.getState();
+    public static PacketOnlineReceiver packetOnlineReceiver;
 
     public static ImageView standing;
     public static ImageView defensive;
@@ -166,10 +167,7 @@ public class GameMenu extends Application {
         });
         createSelectedArea();
 
-
-        //ChatMenu chatMenu = new ChatMenu();
-        //GameMenu.root.getChildren().add(chatMenu);
-        PacketOnlineReceiver packetOnlineReceiver = new PacketOnlineReceiver();
+        packetOnlineReceiver = new PacketOnlineReceiver();
         packetOnlineReceiver.start();
         GameViewController.setNextTurnTimeline();
         GovernmentController.sendGetLordName();

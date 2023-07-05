@@ -1,6 +1,5 @@
 package server.handlers;
 
-import com.google.gson.GsonBuilder;
 import controller.Application;
 import controller.TokenController;
 import model.User;
@@ -24,7 +23,9 @@ public class FileHandler {
         this.packet = packet;
         //give commands to suitable methods
         switch (packet.command) {
-            case "download image by username" -> downloadImageOfUser();
+            case "download image by username" -> {
+                downloadImageOfUser();
+            }
             case "upload image" -> uploadImage();
             case "download image" -> downloadImage();
             case "copy file" -> copyFile();
@@ -94,6 +95,11 @@ public class FileHandler {
     }
 
     public void downloadImageOfUser() throws IOException {
+       if ((boolean) packet.getAttribute("stopThread")) {
+           Packet stopThread = new Packet("stop thread");
+           Packet.sendPacket(stopThread, Connection.getConnectionByUsername(TokenController.getUserByToken(packet.getToken()).getUsername()));
+       }
+
 
         String username = packet.attributes.get("username").toString();
         User user = Application.getUserByUsername(username);

@@ -40,7 +40,7 @@ public class ScoreboardData {
         this.show = online;
         Button button = new Button();
         BackgroundImage backgroundImage =
-                new BackgroundImage(new Image(new ByteArrayInputStream(UsersController.getImageFromServerByUsername(username).toByteArray())),
+                new BackgroundImage(new Image(new ByteArrayInputStream(UsersController.getImageFromServerByUsername(username, false).toByteArray())),
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.REPEAT,
                         BackgroundPosition.DEFAULT,
                         new BackgroundSize(1.0, 1.0, true, true, false, false));

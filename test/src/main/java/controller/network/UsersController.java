@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import view.Main;
+import view.menus.GameMenu;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -110,10 +111,20 @@ public class UsersController {
         return byteArrayOutputStream;
     }
 
-    public static ByteArrayOutputStream getImageFromServerByUsername(String username) throws IOException {
+    public static ByteArrayOutputStream getImageFromServerByUsername(String username, boolean stopThread) throws IOException {
         Packet packet = new Packet("download image by username", "file");
+        packet.setToken(Main.connection.getToken());
+        packet.addAttribute("stopThread", stopThread);
         packet.addAttribute("username", username);
         packet.sendPacket();
+
+        if (stopThread) {
+            while (!GameMenu.packetOnlineReceiver.isPaused()) {
+                System.out.println("not paused");
+            }
+            System.out.println("paused");
+        }
+
 
         DataInputStream dataInputStream = new DataInputStream(Main.connection.getDataInputStream());
 

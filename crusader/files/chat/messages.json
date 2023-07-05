@@ -1,1 +1,28 @@
-[]
+[
+  {
+    "id": "8436",
+    "data": "hello world",
+    "senderUsername": "a",
+    "sentTime": "20:14",
+    "roomId": "0",
+    "likeCount": 0,
+    "dislikeCount": 0,
+    "fireCount": 0,
+    "shitCount": 0,
+    "seen": true,
+    "reactors": []
+  },
+  {
+    "id": "8359",
+    "data": "hello f",
+    "senderUsername": "a",
+    "sentTime": "21:15",
+    "roomId": "306",
+    "likeCount": 0,
+    "dislikeCount": 0,
+    "fireCount": 0,
+    "shitCount": 0,
+    "seen": false,
+    "reactors": []
+  }
+]

@@ -32,6 +32,19 @@ public class Trade {
         setId();
     }
 
+    public Trade(String requestMessage, String type, int amount, int price, Government sender, Government receiver, String id) {
+        this.requestMessage = requestMessage;
+        this.type = type;
+        this.amount = amount;
+        this.price = price;
+        this.sender = sender;
+        this.receiver = receiver;
+        if (price == 0) {
+            tradeType = "donate";
+        }
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }

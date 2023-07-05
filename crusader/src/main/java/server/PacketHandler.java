@@ -469,6 +469,8 @@ public class PacketHandler {
                 break;
             case "Game":
                 new GameHandler().handle(packet, connection);
+            case "ShopTrade":
+                new ShopTradeHandler().handle(packet, connection);
         }
 
     }
