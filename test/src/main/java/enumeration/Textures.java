@@ -2,6 +2,8 @@ package enumeration;
 
 import javafx.scene.paint.Color;
 
+import java.util.Random;
+
 public enum Textures {
     EARTH("earth", true, true, Color.WHEAT, Color.ROSYBROWN, 4,8),
     EARTH_AND_SAND("earthAndSand", true, true, Color.SLATEGRAY, Color.WHEAT, 2,3),
@@ -44,7 +46,15 @@ public enum Textures {
     }
 
     public Color getColor() {
-        return color;
+        Color clr;
+        Random random = new Random();
+        int whichColor = random.nextInt(ratio);
+        if (whichColor == 0) {
+            clr = tempColor;
+        } else {
+            clr = color;
+        }
+        return clr;
     }
 
     public Color getTempColor() {

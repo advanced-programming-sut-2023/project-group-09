@@ -44,9 +44,8 @@ import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
 import view.controllers.ViewController;
 import view.menus.chat.ChatMenu;
-
+import javafx.scene.robot.Robot;
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
