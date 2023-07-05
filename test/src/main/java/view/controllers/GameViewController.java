@@ -192,6 +192,8 @@ public class GameViewController {
     }
 
     public static void createShortcutBars(Pane gamePane, Text text) {
+        if (GameMenu.isSpectator)
+            return;
         setCenterOfBar();
         ImageView clipboardSign = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
                 + "icons/clipboardIcon.png");
@@ -326,6 +328,8 @@ public class GameViewController {
     }
 
     private static void setCenterOfBar2(){
+        if (GameMenu.isSpectator)
+            return;
         if (EditMapMenu.hoveringBarStateText == null || EditMapMenu.hoveringBarStateText.getText() == null ||
         EditMapMenu.hoveringBarStateText.getText().equals("")) {
             EditMapMenu.menuBar.getChildren().clear();
@@ -438,6 +442,8 @@ public class GameViewController {
     }
 
     public static void setCenterOfBar() {
+        if (GameMenu.isSpectator)
+            return;
         if (GameMenu.hoveringBarStateText == null || GameMenu.hoveringBarStateText.getText().startsWith("Lord")) {
             GameMenu.menuBar.getChildren().clear();
             GameMenu.createGameBar(0);
@@ -611,6 +617,8 @@ public class GameViewController {
 
 
     public static void setCenterOfBar(String destination) {
+        if (GameMenu.isSpectator)
+            return;
         if (destination == null) {
             GameMenu.menuBar.getChildren().clear();
             GameMenu.createGameBar(0);
@@ -1326,6 +1334,8 @@ public class GameViewController {
 
 
     public static void createShortcutBars3(Pane gamePane , Text text) {
+        if (GameMenu.isSpectator)
+            return;
         ImageView deleteImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/deleteIcon.png");
         deleteImage.setTranslateX(760);
@@ -1371,7 +1381,8 @@ public class GameViewController {
     }
 
     public static void createShortcutBars2(Pane gamePane, Text text) {
-
+        if (GameMenu.isSpectator)
+            return;
         ImageView keyImage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
                 .toExternalForm() + "icons/keyIcon.png");
         keyImage.setTranslateX(760);

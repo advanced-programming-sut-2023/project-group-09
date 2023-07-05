@@ -31,6 +31,7 @@ import model.tools.Tool;
 import view.Main;
 import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
+import view.menus.GameMenu;
 import view.menus.LoginMenu;
 import view.menus.SharedMapMenu;
 
@@ -624,9 +625,11 @@ public class MapController {
             tileOfBuilding.setBuilding(null);
         }
         GameMap.getGameTile(building.getEndX(), building.getEndY()).refreshTile();
-        int popularity = GovernmentController.getCurrentGovernment().getPopularity() + 37;
-        GameViewController.popularityReporter.setText(String.format("%d", popularity));
-        GameViewController.updateFaceOfReporter();
+        if (!GameMenu.isSpectator) {
+            int popularity = GovernmentController.getCurrentGovernment().getPopularity() + 37;
+            GameViewController.popularityReporter.setText(String.format("%d", popularity));
+            GameViewController.updateFaceOfReporter();
+        }
     }
 
     public static void setDoorForCastleBuilding(Building building) {

@@ -7,6 +7,7 @@ public class PacketOnlineReceiver extends Thread {
     private boolean shouldStop = false;
     @Override
     public void run() {
+        System.out.println("I'm in thread!");
         while (true) {
             try {
                 Packet packet = Packet.receivePacket();

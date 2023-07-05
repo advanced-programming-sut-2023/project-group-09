@@ -222,7 +222,11 @@ public class Government {
 
     public void addGold(int amount) {
         this.gold += amount;
-        GameViewController.goldReporter.setText(String.format("%d", gold));
+        if (GameController.getGame().getCurrentGovernment() != null &&
+                GameController.getGame().getCurrentGovernment().equals(this) &&
+        GameViewController.goldReporter != null) {
+            GameViewController.goldReporter.setText(String.format("%d", gold));
+        }
     }
 
     public int getGold() {
@@ -442,9 +446,11 @@ public class Government {
         this.foodDistribution();
         this.workerDistribution();
         //this.workersNeededNotification();
-        GameViewController.populationReporter.setText(
-                String.format("%d/%d", GovernmentController.getCurrentGovernment().getPopulation(),
-                        GovernmentController.getCurrentGovernment().getMaxPopulation()));
+        if (!GameMenu.isSpectator) {
+            GameViewController.populationReporter.setText(
+                    String.format("%d/%d", GovernmentController.getCurrentGovernment().getPopulation(),
+                            GovernmentController.getCurrentGovernment().getMaxPopulation()));
+        }
     }
 
     public void updateAfterTurn() {
@@ -702,6 +708,9 @@ public class Government {
             MenuBox menuBox = new MenuBox("Game Is Over", 0, 0, 600, 600);
             Text winner = new Text("You lose With Score " +
                     this.getHowManyTurnsSurvive() * 100);
+            if (GameMenu.isSpectator) {
+                winner.setText("Game is done!");
+            }
             winner.setFont(Font.font("Times New Roman", FontWeight.BOLD, 35));
             menuBox.getChildren().add(winner);
             MenuButton endButton = new MenuButton("Exit!", menuBox, 0, 100, false);

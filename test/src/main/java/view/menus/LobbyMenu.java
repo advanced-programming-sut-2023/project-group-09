@@ -1,5 +1,7 @@
 package view.menus;
 
+import client.Packet;
+import client.PacketOnlineReceiver;
 import controller.GameController;
 import controller.network.LobbyController;
 import controller.network.UsersController;
@@ -7,6 +9,7 @@ import enumeration.Paths;
 import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -49,6 +52,7 @@ public class LobbyMenu extends Application {
     public static String playerUsername;
     public static TextField search;
     public ArrayList<FakeGame> fakeGames;
+    public FakeGame game;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -234,8 +238,9 @@ public class LobbyMenu extends Application {
             button.setOnMouseExited(this::scaleDown);
             button.setText("join");
             button.setOnMouseClicked(mouseEvent -> {
+                GameMenu.isSpectator = false;
                 try {
-                    FakeGame game = LobbyController.getFakeGame(fakeGame.getGameId());
+                    game = LobbyController.getFakeGame(fakeGame.getGameId());
                     if (game == null){
                         MenuPopUp popUp = new MenuPopUp(stackPane,400,400,"error","Game not found!");
                         stackPane.getChildren().add(popUp);
@@ -259,6 +264,32 @@ public class LobbyMenu extends Application {
                 rectangle.setFill(new ImagePattern(new Image(
                         getClass().getResource(Paths.ICONS.getPath()).toExternalForm() + "view.png"
                 )));
+                rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        GameMenu.isSpectator = true;
+                        Packet packet = new Packet("add spectator" , "Game");
+                        try {
+                            game = LobbyController.getFakeGame(fakeGame.getGameId());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        } catch (ClassNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                        packet.addAttribute("id" , fakeGame.getGameId());
+                        try {
+                            packet.sendPacket();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        try {
+                            Lobby.fakeGame = game;
+                            new Lobby().start(stage);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                });
                 rectangle.setTranslateX(300);
                 rectangle.setTranslateY(30);
                 gameData.getChildren().add(rectangle);

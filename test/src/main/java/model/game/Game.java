@@ -67,6 +67,9 @@ public class Game {
         MenuBox menuBox = new MenuBox("Game Is Over", 0, 0, 600, 600);
         Text winner = new Text("You Win With Score " +
                 winnerGov.getHowManyTurnsSurvive() * 100);
+        if (GameMenu.isSpectator) {
+            winner.setText("Game is done!");
+        }
         winner.setFont(Font.font("Times New Roman", FontWeight.BOLD, 35));
         menuBox.getChildren().add(winner);
         MenuButton endButton = new MenuButton("Exit!", menuBox, 0, 100, false);
