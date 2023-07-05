@@ -33,9 +33,9 @@ public class FakeGame implements Serializable{
         this.setMaxPlayer(fakeGame.maxPlayer);
         this.setGameStarted(fakeGame.isGameStarted);
         this.setPassword(fakeGame.password);
-        this.setColors(new ArrayList<>(colors));
-        this.setCastleXs(new ArrayList<>(castleXs));
-        this.setCastleYs(new ArrayList<>(castleYs));
+        this.setColors(new ArrayList<>(fakeGame.colors));
+        this.setCastleXs(new ArrayList<>(fakeGame.castleXs));
+        this.setCastleYs(new ArrayList<>(fakeGame.castleYs));
         this.setPrivate(fakeGame.isPrivate);
         this.setMapName(fakeGame.mapName);
         this.setAdminUsername(fakeGame.adminUsername);

@@ -444,6 +444,9 @@ public class GameHandler {
             packet1.setToken(token);
             PacketHandler packetHandler = new PacketHandler(packet1, getConnection(username));
             packetHandler.sendPacket(packet1);
+            FakeGame fg = new FakeGame(fakeGame);
+            System.out.println("username: " + username);
+            System.out.println("castle " + fakeGame.getCastleXs().size());
             getConnection(username).getObjectOutputStream().writeObject(fakeGame);
         }
         GameController.addFakeGame(fakeGame);
