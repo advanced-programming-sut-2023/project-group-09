@@ -1,13 +1,14 @@
 package server.handlers;
 
+import com.google.gson.GsonBuilder;
 import controller.Application;
 import controller.TokenController;
-import controller.UserController;
 import model.User;
 import server.Connection;
 import server.Packet;
-import view.Main;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -97,7 +98,7 @@ public class FileHandler {
         String username = packet.attributes.get("username").toString();
         User user = Application.getUserByUsername(username);
         assert user != null;
-        String path =  user.getPath();
+        String path = user.getPath();
 
 
         File imageFile = new File(path);
@@ -119,5 +120,20 @@ public class FileHandler {
         dataOutputStream.flush();
         fileInputStream.close();
         bufferedInputStream.close();
+    }
+
+    public static byte[] downloadImageBuffer(String path) {
+        byte[] bytes = null;
+        try {
+            File imageFile = new File(path);
+            BufferedImage image = ImageIO.read(imageFile);
+
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", output);
+            bytes = output.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bytes;
     }
 }

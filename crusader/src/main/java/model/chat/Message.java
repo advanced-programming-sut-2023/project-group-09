@@ -13,7 +13,12 @@ public class Message {
     private String senderUsername;
     private String sentTime;
     private String roomId;
-    private ArrayList<String> readers = new ArrayList<>();
+    private int likeCount;
+    private int dislikeCount;
+    private int fireCount;
+    private int shitCount;
+    private boolean seen;
+    private ArrayList<String> reactors = new ArrayList<>();
 
     public Message(String data, String senderUsername, String roomId) {
         this.sentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
@@ -21,6 +26,10 @@ public class Message {
         this.senderUsername = senderUsername;
         this.roomId = roomId;
         this.id = generateNewId();
+        this.likeCount = 0;
+        this.dislikeCount = 0;
+        this.fireCount = 0;
+        this.shitCount = 0;
     }
 
     public String getId() {
@@ -43,14 +52,6 @@ public class Message {
         this.senderUsername = sender;
     }
 
-    public ArrayList<String> getReaders() {
-        return readers;
-    }
-
-    public void setReaders(ArrayList<String> readers) {
-        this.readers = readers;
-    }
-
     public String getSentTime() {
         return sentTime;
     }
@@ -68,5 +69,44 @@ public class Message {
 
     public String getRoomId() {
         return roomId;
+    }
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public int getDislikeCount() {
+        return dislikeCount;
+    }
+
+    public int getFireCount() {
+        return fireCount;
+    }
+
+    public int getShitCount() {
+        return shitCount;
+    }
+
+    public void react(String emoji, String username) {
+        switch (emoji) {
+            case "like" -> this.likeCount++;
+            case "dislike" -> this.dislikeCount++;
+            case "fire" -> this.fireCount++;
+            case "shit" -> this.shitCount++;
+        }
+        if (reactors == null) reactors = new ArrayList<>();
+        this.reactors.add(username);
+    }
+
+    public ArrayList<String> getReactors() {
+        return reactors;
+    }
+
+    public boolean isSeen() {
+        return seen;
+    }
+
+    public void setSeen(boolean seen) {
+        this.seen = seen;
     }
 }

@@ -1,6 +1,7 @@
 package client;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import controller.BuildingController;
 import controller.GameController;
@@ -14,18 +15,29 @@ import enumeration.dictionary.Trees;
 import javafx.application.Platform;
 import model.FakeGame;
 import model.Government;
+import model.User;
 import model.building.Building;
 import model.building.producerbuildings.Barrack;
 import model.building.producerbuildings.WeaponProducer;
+import model.chat.Message;
 import model.game.Game;
 import model.game.Map;
 import model.human.Human;
 import model.human.military.Military;
 import model.menugui.game.GameMap;
 import view.Main;
+import view.menus.GameMenu;
+import view.menus.chat.ChatViewController;
 import view.menus.Lobby;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 public class PacketOnlineHandler {
     private Packet packet;
@@ -78,6 +90,9 @@ public class PacketOnlineHandler {
                 GameController.setFakeGame(fakeGame);
                 Lobby.receiver.stopThread();
                 Platform.runLater(Lobby::createGame);
+            }
+            case "image bytes" -> {
+                convertBytesToImage();
             }
             case "drop building" -> {
                 dropBuilding();
@@ -142,6 +157,51 @@ public class PacketOnlineHandler {
                 Lobby.receiver.pauseThread();
             }
             case "leave game" -> Lobby.receiver.stopThread();
+            case "chat data" -> {
+                chatData();
+            }
+            case "public messages" -> {
+                getPublicMessages();
+            }
+            case "private messages" -> {
+                getPrivateMessages();
+            }
+            case "new room id" -> {
+                getNewRoomId();
+            }
+            case "users for room" -> {
+                getUsersForRoomList();
+            }
+            case "new room" -> {
+                getNewRoom();
+            }
+            case "new private" -> {
+                getNewPrivate();
+            }
+            case "room messages" -> {
+                getRoomMessages();
+            }
+            case "* public message" -> {
+                getNewPublicMessage();
+            }
+            case "* private message" -> {
+                getNewPrivateMessage();
+            }
+            case "* room message" -> {
+                getNewRoomMessage();
+            }
+            case "* deleted message" -> {
+                getDeletion();
+            }
+            case "* edited message" -> {
+                getEditedMessage();
+            }
+            case "* reacted message" -> {
+                getReactedMessage();
+            }
+            case "* seen message" -> {
+                getSeenMessage();
+            }
         }
     }
 
@@ -356,5 +416,366 @@ public class PacketOnlineHandler {
         });
     }
 
+    private void convertBytesToImage() {
+        try {
+            byte[] bytes = (byte[]) packet.getAttribute("bytes");
+            ByteArrayInputStream input = new ByteArrayInputStream(bytes);
+            BufferedImage image = ImageIO.read(input);
 
+            File outputFile = new File("files/img/temporary.png");
+            ImageIO.write(image, "png", outputFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void chatData() {
+        ChatViewController.currentUser = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).
+                create().fromJson((String) packet.getAttribute("currentUser"), User.class);
+        ChatViewController.users = new Gson().fromJson((String) packet.getAttribute("otherUsers"), ArrayList.class);
+        ChatViewController.rooms = new Gson().fromJson((String) packet.getAttribute("currentUserRooms"), LinkedHashMap.class);
+        ChatViewController.privates = new Gson().fromJson((String) packet.getAttribute("currentUserPrivates"), LinkedHashMap.class);
+    }
+
+    public void getPublicMessages() {
+        ChatViewController.messages = new ArrayList<>();
+        for (int i = 0; i < packet.getAttributes().size(); i++) {
+            String message = (String) packet.getAttribute("message" + i);
+            ChatViewController.messages.add(new Gson().fromJson((String) message, Message.class));
+        }
+        Platform.runLater(() -> {
+            ChatViewController.addListBox(2);
+            ChatViewController.showMessages(ChatViewController.messages);
+        });
+    }
+
+    public void getPrivateMessages() {
+        String username = (String) packet.getAttribute("username");
+        if (ChatViewController.privates.get(username) == null)
+            ChatViewController.privates.put(username, (String) packet.getAttribute("roomId"));
+        ChatViewController.messages = new ArrayList<>();
+        for (int i = 0; i < packet.getAttributes().size(); i++) {
+            String message = (String) packet.getAttribute("message" + i);
+            ChatViewController.messages.add(new Gson().fromJson((String) message, Message.class));
+        }
+        ChatViewController.currentRoomName = username;
+        Platform.runLater(() -> {
+            ChatViewController.list.getChildren().clear();
+            ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.searchBar);
+            ChatViewController.addListBox(2);
+            ChatViewController.showMessages(ChatViewController.messages);
+        });
+    }
+
+    public void getNewRoomId() {
+        ChatViewController.rooms.put(ChatViewController.newRoomBox.getText(), (String) packet.getAttribute("roomId"));
+        Platform.runLater(() -> {
+            try {
+                ChatViewController.list.getChildren().clear();
+                ChatViewController.addListBox(0);
+                ChatViewController.showListOfRooms(ChatViewController.rooms);
+                ChatViewController.newRoomBox.setText("");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    public void getNewRoom() {
+        if (GameMenu.chatMenu != null) {
+            if (ChatViewController.rooms == null) ChatViewController.rooms = new LinkedHashMap<>();
+            ChatViewController.rooms.put((String) packet.getAttribute("roomName"),
+                    (String) packet.getAttribute("roomId"));
+        }
+    }
+
+    public void getNewPrivate() {
+        if (GameMenu.chatMenu != null) {
+            if (ChatViewController.privates == null) ChatViewController.privates = new LinkedHashMap<>();
+            ChatViewController.privates.put((String) packet.getAttribute("username"),
+                    (String) packet.getAttribute("roomId"));
+        }
+    }
+
+    public void getUsersForRoomList() {
+        ChatViewController.usersForRoom = new ArrayList<>();
+        ChatViewController.usersForRoom = new Gson().fromJson((String) packet.getAttribute("list"), ArrayList.class);
+        Platform.runLater(() -> {
+            ChatViewController.addListBox(1);
+            ChatViewController.showListOfUsersForRoom(ChatViewController.usersForRoom);
+        });
+    }
+
+    public void getRoomMessages() {
+        ChatViewController.messages = new ArrayList<>();
+        for (int i = 0; i < packet.getAttributes().size(); i++) {
+            String message = (String) packet.getAttribute("message" + i);
+            ChatViewController.messages.add(new Gson().fromJson((String) message, Message.class));
+        }
+        ChatViewController.currentRoomName = (String) packet.getAttribute("roomName");
+        Platform.runLater(() -> {
+            ChatViewController.list.getChildren().clear();
+            ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.searchBar);
+            ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.newRoomBox);
+            ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.addRoom);
+            ChatViewController.addNewMember();
+            ChatViewController.addListBox(3);
+            ChatViewController.showMessages(ChatViewController.messages);
+        });
+    }
+
+    public void getNewPublicMessage() {
+        if (GameMenu.chatMenu != null && ChatViewController.currentTabName.equals("public")) {
+            ChatViewController.messages = new ArrayList<>();
+            for (int i = 0; i < packet.getAttributes().size(); i++) {
+                String message = (String) packet.getAttribute("message" + i);
+                ChatViewController.messages.add(new Gson().fromJson((String) message, Message.class));
+            }
+
+            try {
+                Packet seen = new Packet("new seen");
+                seen.setToken(Main.connection.getToken());
+                Message message = null;
+                for (int i = 0; ; i++) {
+                    message = ChatViewController.messages.get(ChatViewController.messages.size() - 1 - i);
+                    if (message == null) continue;
+                    seen.addAttribute("messageId", message.getId());
+                    break;
+                }
+                if (!message.getSender().equals(ChatViewController.currentUser.getUsername()))
+                    seen.sendPacket();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            Platform.runLater(() -> {
+                ChatViewController.typeBox.setText("");
+                ChatViewController.list.getChildren().clear();
+                ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.scrollPane);
+                ChatViewController.addListBox(2);
+                ChatViewController.showMessages(ChatViewController.messages);
+            });
+        }
+    }
+
+    public void getNewPrivateMessage() {
+        if (GameMenu.chatMenu != null && ChatViewController.currentTabName.equals("private") &&
+                ChatViewController.currentRoomName.equals(packet.getAttribute("username"))) {
+            String username = (String) packet.getAttribute("username");
+            ChatViewController.messages = new ArrayList<>();
+            for (int i = 0; i < packet.getAttributes().size(); i++) {
+                String message = (String) packet.getAttribute("message" + i);
+                ChatViewController.messages.add(new Gson().fromJson((String) message, Message.class));
+            }
+            ChatViewController.currentRoomName = username;
+
+            try {
+                Packet seen = new Packet("new seen");
+                seen.setToken(Main.connection.getToken());
+                Message message = null;
+                for (int i = 0; ; i++) {
+                    message = ChatViewController.messages.get(ChatViewController.messages.size() - 1 - i);
+                    if (message == null) continue;
+                    seen.addAttribute("messageId", message.getId());
+                    break;
+                }
+                if (!message.getSender().equals(ChatViewController.currentUser.getUsername()))
+                    seen.sendPacket();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            Platform.runLater(() -> {
+                ChatViewController.typeBox.setText("");
+                ChatViewController.list.getChildren().clear();
+                ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.searchBar);
+                ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.scrollPane);
+                ChatViewController.addListBox(2);
+                ChatViewController.showMessages(ChatViewController.messages);
+            });
+        }
+    }
+
+    public void getNewRoomMessage() {
+        if (GameMenu.chatMenu != null && ChatViewController.currentTabName.equals("room") &&
+                ChatViewController.currentRoomName.equals(packet.getAttribute("roomName"))) {
+            ChatViewController.messages = new ArrayList<>();
+            for (int i = 0; i < packet.getAttributes().size(); i++) {
+                String message = (String) packet.getAttribute("message" + i);
+                ChatViewController.messages.add(new Gson().fromJson((String) message, Message.class));
+            }
+            ChatViewController.currentRoomName = (String) packet.getAttribute("roomName");
+
+            try {
+                Packet seen = new Packet("new seen");
+                seen.setToken(Main.connection.getToken());
+                Message message = null;
+                for (int i = 0; ; i++) {
+                    message = ChatViewController.messages.get(ChatViewController.messages.size() - 1 - i);
+                    if (message == null) continue;
+                    seen.addAttribute("messageId", message.getId());
+                    break;
+                }
+                if (!message.getSender().equals(ChatViewController.currentUser.getUsername()))
+                    seen.sendPacket();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            Platform.runLater(() -> {
+                ChatViewController.typeBox.setText("");
+                ChatViewController.list.getChildren().clear();
+                ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.searchBar);
+                ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.newRoomBox);
+                ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.addRoom);
+                ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.scrollPane);
+                ChatViewController.addNewMember();
+                ChatViewController.addListBox(3);
+                ChatViewController.showMessages(ChatViewController.messages);
+            });
+        }
+    }
+
+    public void getDeletion() {
+        boolean validation = false;
+        try {
+            if (packet.getAttribute("roomName").equals("public"))
+                validation = ChatViewController.currentTabName.equals("public");
+            else validation = !ChatViewController.currentTabName.equals("public") &&
+                    ChatViewController.currentRoomName.equals((String) packet.getAttribute("roomName"));
+        } catch (NullPointerException e) {
+            System.out.println("null");
+        }
+        if (GameMenu.chatMenu != null && validation) {
+            ChatViewController.messages = new ArrayList<>();
+            for (int i = 0; i < packet.getAttributes().size(); i++) {
+                String message = (String) packet.getAttribute("message" + i);
+                ChatViewController.messages.add(new Gson().fromJson((String) message, Message.class));
+            }
+            ChatViewController.currentRoomName = (String) packet.getAttribute("roomName");
+            Platform.runLater(() -> {
+                ChatViewController.typeBox.setText("");
+                ChatViewController.list.getChildren().clear();
+                ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.searchBar);
+                ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.newRoomBox);
+                ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.addRoom);
+                ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.scrollPane);
+                if (ChatViewController.currentTabName.equals("room")) {
+                    ChatViewController.addNewMember();
+                    ChatViewController.addListBox(3);
+                } else ChatViewController.addListBox(2);
+                ChatViewController.showMessages(ChatViewController.messages);
+                ChatViewController.chat.getChildren().remove(ChatViewController.chat.getOptionsPart());
+                ChatViewController.chat.getChildren().remove(ChatViewController.chat.getReactPart());
+            });
+        }
+    }
+
+    public void getEditedMessage() {
+        boolean validation = false;
+        try {
+            if (packet.getAttribute("roomName").equals("public"))
+                validation = ChatViewController.currentTabName.equals("public");
+            else validation = !ChatViewController.currentTabName.equals("public") &&
+                    ChatViewController.currentRoomName.equals((String) packet.getAttribute("roomName"));
+        } catch (NullPointerException e) {
+            System.out.println("null");
+        }
+        if (GameMenu.chatMenu != null && validation) {
+            ChatViewController.messages = new ArrayList<>();
+            for (int i = 0; i < packet.getAttributes().size(); i++) {
+                String message = (String) packet.getAttribute("message" + i);
+                ChatViewController.messages.add(new Gson().fromJson((String) message, Message.class));
+            }
+            ChatViewController.currentRoomName = (String) packet.getAttribute("roomName");
+            Platform.runLater(() -> {
+                ChatViewController.typeBox.setText("");
+                ChatViewController.chat.getChildren().remove(ChatViewController.confirmEdit);
+                ChatViewController.list.getChildren().clear();
+                ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.searchBar);
+                ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.newRoomBox);
+                ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.addRoom);
+                ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.scrollPane);
+                if (ChatViewController.currentTabName.equals("room")) {
+                    ChatViewController.addNewMember();
+                    ChatViewController.addListBox(3);
+                } else ChatViewController.addListBox(2);
+                ChatViewController.showMessages(ChatViewController.messages);
+                ChatViewController.chat.getChildren().remove(ChatViewController.chat.getOptionsPart());
+                ChatViewController.chat.getChildren().remove(ChatViewController.chat.getReactPart());
+                ChatViewController.editingMessageBox.getStyleClass().remove("edit-mode");
+                ChatViewController.editingMessageBox = null;
+            });
+        }
+    }
+
+    public void getReactedMessage() {
+        boolean validation = false;
+        try {
+            if (packet.getAttribute("roomName").equals("public"))
+                validation = ChatViewController.currentTabName.equals("public");
+            else validation = !ChatViewController.currentTabName.equals("public") &&
+                    ChatViewController.currentRoomName.equals((String) packet.getAttribute("roomName"));
+        } catch (NullPointerException e) {
+            System.out.println("null");
+        }
+        if (GameMenu.chatMenu != null && validation) {
+            ChatViewController.messages = new ArrayList<>();
+            for (int i = 0; i < packet.getAttributes().size(); i++) {
+                String message = (String) packet.getAttribute("message" + i);
+                ChatViewController.messages.add(new Gson().fromJson((String) message, Message.class));
+            }
+            ChatViewController.currentRoomName = (String) packet.getAttribute("roomName");
+            Platform.runLater(() -> {
+                ChatViewController.typeBox.setText("");
+                ChatViewController.list.getChildren().clear();
+                ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.searchBar);
+                ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.newRoomBox);
+                ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.addRoom);
+                ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.scrollPane);
+                if (ChatViewController.currentTabName.equals("room")) {
+                    ChatViewController.addNewMember();
+                    ChatViewController.addListBox(3);
+                } else ChatViewController.addListBox(2);
+                ChatViewController.showMessages(ChatViewController.messages);
+                ChatViewController.chat.getChildren().remove(ChatViewController.chat.getOptionsPart());
+                ChatViewController.chat.getChildren().remove(ChatViewController.chat.getReactPart());
+            });
+        }
+    }
+
+    public void getSeenMessage() {
+        boolean validation = false;
+        try {
+            if (packet.getAttribute("roomName").equals("public"))
+                validation = ChatViewController.currentTabName.equals("public");
+            else validation = !ChatViewController.currentTabName.equals("public") &&
+                    ChatViewController.currentRoomName.equals((String) packet.getAttribute("roomName"));
+        } catch (NullPointerException e) {
+            System.out.println("null");
+        }
+        if (GameMenu.chatMenu != null && validation) {
+            ChatViewController.messages = new ArrayList<>();
+            for (int i = 0; i < packet.getAttributes().size(); i++) {
+                String message = (String) packet.getAttribute("message" + i);
+                ChatViewController.messages.add(new Gson().fromJson((String) message, Message.class));
+            }
+            ChatViewController.currentRoomName = (String) packet.getAttribute("roomName");
+            Platform.runLater(() -> {
+                ChatViewController.typeBox.setText("");
+                ChatViewController.list.getChildren().clear();
+                ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.searchBar);
+                ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.newRoomBox);
+                ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.addRoom);
+                ChatViewController.chat.getChatPart().getChildren().remove(ChatViewController.scrollPane);
+                if (ChatViewController.currentTabName.equals("room")) {
+                    ChatViewController.addNewMember();
+                    ChatViewController.addListBox(3);
+                } else ChatViewController.addListBox(2);
+                ChatViewController.showMessages(ChatViewController.messages);
+                ChatViewController.chat.getChildren().remove(ChatViewController.chat.getOptionsPart());
+                ChatViewController.chat.getChildren().remove(ChatViewController.chat.getReactPart());
+            });
+        }
+    }
 }

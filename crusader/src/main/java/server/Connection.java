@@ -125,4 +125,14 @@ public class Connection extends Thread {
     public void setObjectInputStream(ObjectInputStream objectInputStream) {
         this.objectInputStream = objectInputStream;
     }
+
+    public static DataOutputStream getOutputByUsername(String username) {
+        String token = TokenController.getTokenByUsername(username);
+        for (int i = 0; i < allConnections.size(); i++) {
+            Connection connection = allConnections.get(i);
+            if (connection.getToken().equals(token))
+                return connection.dataOutputStream;
+        }
+        return null;
+    }
 }

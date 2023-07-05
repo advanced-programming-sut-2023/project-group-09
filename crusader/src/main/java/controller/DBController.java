@@ -129,6 +129,13 @@ public class DBController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        Room publicRoom = Application.getRoomById("0");
+        if (publicRoom != null) {
+            publicRoom.getMembers().clear();
+            for (int i = 0; i < Application.getUsers().size(); i++) {
+                publicRoom.addMember(Application.getUsers().get(i).getUsername());
+            }
+        }
     }
 
     public static void saveRooms() {

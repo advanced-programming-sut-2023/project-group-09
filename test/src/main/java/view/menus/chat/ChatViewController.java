@@ -1,9 +1,6 @@
 package view.menus.chat;
 
 import client.Packet;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import controller.network.UsersController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
@@ -14,7 +11,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -23,49 +19,45 @@ import model.User;
 import model.chat.Message;
 import view.Main;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class ChatViewController {
-    public ChatMenu chat;
-    public User currentUser;
-    private HashMap<String, StackPane> tabs = new HashMap<>();
-    private String currentTabName;
-    private String currentRoomName;
-    private TextField typeBox;
-    private ImageView sendMessage;
-    private TextField searchBar;
-    private ImageView addRoom;
-    private TextField newRoomBox;
-    private ScrollPane scrollPane;
-    private GridPane list;
-    LinkedHashMap<String, String> users = new LinkedHashMap<>();
-    LinkedHashMap<String, String> rooms = new LinkedHashMap<>();
-    LinkedHashMap<String, String> privates = new LinkedHashMap<>();
-    ArrayList<Message> messages = new ArrayList<>();
+    public static ChatMenu chat;
+    public static User currentUser;
+    public static HashMap<String, StackPane> tabs = new HashMap<>();
+    public static String currentTabName;
+    public static String currentRoomName;
+    public static TextField typeBox;
+    public static ImageView sendMessage;
+    public static TextField searchBar;
+    public static ImageView addRoom;
+    public static ImageView newMember;
+    public static ImageView confirmEdit;
+    public static TextField newRoomBox;
+    public static TextArea editingMessageBox;
+    public static ScrollPane scrollPane;
+    public static GridPane list;
+    public static ArrayList<String> users = new ArrayList<>();
+    public static LinkedHashMap<String, String> rooms = new LinkedHashMap<>();
+    public static LinkedHashMap<String, String> privates = new LinkedHashMap<>();
+    public static ArrayList<Message> messages = new ArrayList<>();
+    public static ArrayList<String> usersForRoom = new ArrayList<>();
 
     public ChatViewController(ChatMenu chat) {
-        this.chat = chat;
+        ChatViewController.chat = chat;
         Packet dataRequest = new Packet("chat data");
         try {
             dataRequest.setToken(Main.connection.getToken());
             dataRequest.sendPacket();
-            Packet response = Packet.receivePacket();
-            currentUser = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).
-                    create().fromJson((String) response.getAttribute("currentUser"), User.class);
-            users = new Gson().fromJson((String) response.getAttribute("otherUsers"), LinkedHashMap.class);
-            rooms = new Gson().fromJson((String) response.getAttribute("currentUserRooms"), LinkedHashMap.class);
-            privates = new Gson().fromJson((String) response.getAttribute("currentUserPrivates"), LinkedHashMap.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void setChatMenu(String mode) {
+    public static void setChatMenu(String mode) {
         chat.getChatPart().getChildren().clear();
         switch (mode) {
             case "public" -> setPublicChatMenu();
@@ -74,7 +66,7 @@ public class ChatViewController {
         }
     }
 
-    private void setPublicChatMenu() {
+    public static void setPublicChatMenu() {
         addTabs();
         currentTabName = "public";
         selectTab("public");
@@ -83,20 +75,12 @@ public class ChatViewController {
             Packet packet = new Packet("get messages - public");
             packet.setToken(Main.connection.getToken());
             packet.sendPacket();
-            Packet response = Packet.receivePacket();
-            messages = new ArrayList<>();
-            for (int i = 0; i < response.getAttributes().size(); i++) {
-                String message = (String) response.getAttribute("message" + i);
-                messages.add(new Gson().fromJson((String) message, Message.class));
-            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        addListBox(2);
-        showMessages(messages);
     }
 
-    private void setRoomChatMenu() {
+    public static void setRoomChatMenu() {
         addTabs();
         currentTabName = "room";
         selectTab("room");
@@ -110,7 +94,7 @@ public class ChatViewController {
         }
     }
 
-    private void setPrivateChatMenu() {
+    public static void setPrivateChatMenu() {
         addTabs();
         currentTabName = "private";
         selectTab("private");
@@ -123,14 +107,14 @@ public class ChatViewController {
         }
     }
 
-    private void addTabs() {
+    public static void addTabs() {
         tabs.put("public", createTab("Public", -400.0 / 3, -371));
         tabs.put("room", createTab("Room", 0, -371));
         tabs.put("private", createTab("Private", 400.0 / 3, -371));
         chat.getChatPart().getChildren().addAll(tabs.values());
     }
 
-    private StackPane createTab(String title, double x, double y) {
+    public static StackPane createTab(String title, double x, double y) {
         StackPane tab = new StackPane();
         tab.setMinWidth(400 / 3);
         tab.setMaxWidth(400 / 3);
@@ -148,7 +132,7 @@ public class ChatViewController {
         return tab;
     }
 
-    private void selectTab(String tabName) {
+    public static void selectTab(String tabName) {
         for (String name : tabs.keySet()) {
             if (name.equals(tabName))
                 tabs.get(name).setStyle("-fx-background-color: rgba(127, 181, 240, 0.4); -fx-background-radius: 20");
@@ -156,7 +140,7 @@ public class ChatViewController {
         }
     }
 
-    private void addTypeBox() {
+    public static void addTypeBox() {
         typeBox = new TextField();
         typeBox.setStyle("-fx-background-radius: 20; -fx-background-color: white; -fx-font-size: 15;" +
                 "-fx-border-radius: 20; -fx-border-color: black; -fx-border-width: 0.5");
@@ -178,51 +162,11 @@ public class ChatViewController {
         sendMessage.setOnMouseClicked(mouseEvent -> {
             if (typeBox.getText().isEmpty() || typeBox.getText() == null) return;
             setSendAction();
-            try {
-                Packet packet = new Packet("get messages - " + currentTabName);
-                packet.setToken(Main.connection.getToken());
-                if (currentTabName.equals("private")) packet.addAttribute("roomId", privates.get(currentRoomName));
-                else if (currentTabName.equals("room")) packet.addAttribute("roomId", rooms.get(currentRoomName));
-                packet.sendPacket();
-                Packet response = Packet.receivePacket();
-                messages = new ArrayList<>();
-                for (int i = 0; i < response.getAttributes().size(); i++) {
-                    String message = (String) response.getAttribute("message" + i);
-                    messages.add(new Gson().fromJson((String) message, Message.class));
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            typeBox.setText("");
-            list.getChildren().clear();
-            chat.getChatPart().getChildren().remove(scrollPane);
-            addListBox(2);
-            showMessages(messages);
         });
         typeBox.setOnKeyReleased(keyEvent -> {
             if (keyEvent.getCode().getName().equals("Enter")) {
                 if (typeBox.getText().isEmpty() || typeBox.getText() == null) return;
                 setSendAction();
-                try {
-                    Packet packet = new Packet("get messages - " + currentTabName);
-                    packet.setToken(Main.connection.getToken());
-                    if (currentTabName.equals("private")) packet.addAttribute("roomId", privates.get(currentRoomName));
-                    else if (currentTabName.equals("room")) packet.addAttribute("roomId", rooms.get(currentRoomName));
-                    packet.sendPacket();
-                    Packet response = Packet.receivePacket();
-                    messages = new ArrayList<>();
-                    for (int i = 0; i < response.getAttributes().size(); i++) {
-                        String message = (String) response.getAttribute("message" + i);
-                        messages.add(new Gson().fromJson((String) message, Message.class));
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                typeBox.setText("");
-                list.getChildren().clear();
-                chat.getChatPart().getChildren().remove(scrollPane);
-                addListBox(2);
-                showMessages(messages);
             }
         });
         sendMessage.setFitWidth(50);
@@ -233,7 +177,7 @@ public class ChatViewController {
         chat.getChatPart().getChildren().addAll(typeBox, sendMessage);
     }
 
-    private void addSearchBar(boolean isInRoom) {
+    public static void addSearchBar(boolean isInRoom) {
         searchBar = new TextField();
         searchBar.setStyle("-fx-background-radius: 20; -fx-background-color: white; -fx-font-size: 15;" +
                 "-fx-border-radius: 20; -fx-border-color: black; -fx-border-width: 0.5");
@@ -248,23 +192,35 @@ public class ChatViewController {
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
                 try {
                     if (isInRoom) {
-                        if (newValue.isEmpty() || newValue == null)
-                            showListOfRooms(rooms);
-                        else {
-                            LinkedHashMap<String, String> filteredRooms = new LinkedHashMap<>();
-                            for (String roomName : rooms.keySet())
-                                if (roomName.toLowerCase().contains(newValue.toLowerCase()))
-                                    filteredRooms.put(roomName, rooms.get(roomName));
-                            showListOfRooms(filteredRooms);
+                        if (chat.getChatPart().getChildren().contains(newRoomBox)) {
+                            if (newValue.isEmpty() || newValue == null)
+                                showListOfRooms(rooms);
+                            else {
+                                LinkedHashMap<String, String> filteredRooms = new LinkedHashMap<>();
+                                for (String roomName : rooms.keySet())
+                                    if (roomName.toLowerCase().contains(newValue.toLowerCase()))
+                                        filteredRooms.put(roomName, rooms.get(roomName));
+                                showListOfRooms(filteredRooms);
+                            }
+                        } else {
+                            if (newValue.isEmpty() || newValue == null)
+                                showListOfUsersForRoom(usersForRoom);
+                            else {
+                                ArrayList<String> filteredUsersForRoom = new ArrayList<>();
+                                for (String username : usersForRoom)
+                                    if (username.toLowerCase().contains(newValue.toLowerCase()))
+                                        filteredUsersForRoom.add(username);
+                                showListOfUsersForRoom(filteredUsersForRoom);
+                            }
                         }
                     } else {
                         if (newValue.isEmpty() || newValue == null)
                             showListOfUsers(users);
                         else {
-                            LinkedHashMap<String, String> filteredUsers = new LinkedHashMap<>();
-                            for (String username : users.keySet())
+                            ArrayList<String> filteredUsers = new ArrayList<>();
+                            for (String username : users)
                                 if (username.toLowerCase().contains(newValue.toLowerCase()))
-                                    filteredUsers.put(username, users.get(username));
+                                    filteredUsers.add(username);
                             showListOfUsers(filteredUsers);
                         }
                     }
@@ -276,8 +232,8 @@ public class ChatViewController {
         chat.getChatPart().getChildren().add(searchBar);
     }
 
-    private void addListBox(int state) {
-//        state: 0=roomsList - 1=usersList - 2=chatMessages
+    public static void addListBox(int state) {
+//        state: 0=roomsList - 1=usersList - 2=chatMessages - 3=roomMessages
         scrollPane = new ScrollPane();
         scrollPane.setPrefViewportHeight(400);
         scrollPane.setPrefViewportWidth(396);
@@ -290,6 +246,10 @@ public class ChatViewController {
         } else if (state == 2) {
             scrollPane.setMaxHeight(680);
             scrollPane.setVvalue(1);
+        } else if (state == 3) {
+            scrollPane.setMaxHeight(630);
+            scrollPane.setTranslateY(25);
+            scrollPane.setVvalue(1);
         }
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
@@ -299,11 +259,11 @@ public class ChatViewController {
         scrollPane.setContent(list);
     }
 
-    private void showListOfUsers(LinkedHashMap<String, String> users) throws IOException {
+    public static void showListOfUsers(ArrayList<String> users) throws IOException {
         list.getChildren().clear();
         chat.getChatPart().getChildren().remove(scrollPane);
-        int count = 0;
-        for (String username : users.keySet()) {
+        for (int i = 0; i < users.size(); i++) {
+            String username = users.get(i);
             StackPane listItem = new StackPane();
             listItem.setMinWidth(400);
             listItem.setMaxWidth(400);
@@ -324,46 +284,33 @@ public class ChatViewController {
                     packet.addAttribute("roomId", privates.get(username));
                     packet.addAttribute("receiver", username);
                     packet.sendPacket();
-                    Packet response = Packet.receivePacket();
-                    if (privates.get(username) == null)
-                        privates.put(username, (String) response.getAttribute("roomId"));
-                    messages = new ArrayList<>();
-                    for (int i = 0; i < response.getAttributes().size(); i++) {
-                        String message = (String) response.getAttribute("message" + i);
-                        messages.add(new Gson().fromJson((String) message, Message.class));
-                    }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                currentRoomName = username;
-                list.getChildren().clear();
-                chat.getChatPart().getChildren().remove(searchBar);
-                addListBox(2);
-                showMessages(messages);
             });
 
-            Circle avatarCircle = new Circle(30);
-            avatarCircle.setTranslateX(30);
-            avatarCircle.setTranslateY(30);
-            ImageView avatar = new ImageView(new Image(new ByteArrayInputStream(UsersController
-                    .getImageFromServerByUsername(username).toByteArray())));
-            avatar.setClip(avatarCircle);
-            avatar.setFitWidth(60);
-            avatar.setFitHeight(60);
-            avatar.setTranslateX(-170);
+//            Circle avatarCircle = new Circle(30);
+//            avatarCircle.setTranslateX(30);
+//            avatarCircle.setTranslateY(30);
+//            ImageView avatar = new ImageView(new Image(new ByteArrayInputStream(UsersController
+//                    .getImageFromServerByUsername(username).toByteArray())));
+//            avatar.setClip(avatarCircle);
+//            avatar.setFitWidth(60);
+//            avatar.setFitHeight(60);
+//            avatar.setTranslateX(-170);
 
             Text usernameText = new Text(username);
             usernameText.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
             StackPane.setAlignment(usernameText, Pos.CENTER_LEFT);
             usernameText.setTranslateX(75);
 
-            listItem.getChildren().addAll(avatar, usernameText);
-            list.add(listItem, 0, count++);
+            listItem.getChildren().addAll(usernameText);
+            list.add(listItem, 0, i);
         }
         chat.getChatPart().getChildren().add(scrollPane);
     }
 
-    private void addNewRoomBox() {
+    public static void addNewRoomBox() {
         newRoomBox = new TextField();
         newRoomBox.setStyle("-fx-background-radius: 20; -fx-background-color: white; -fx-font-size: 15;" +
                 "-fx-border-radius: 20; -fx-border-color: black; -fx-border-width: 0.5");
@@ -392,15 +339,6 @@ public class ChatViewController {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            try {
-                rooms.put(newRoomBox.getText(), (String) Packet.receivePacket().getAttribute("roomId"));
-                list.getChildren().clear();
-                addListBox(0);
-                showListOfRooms(rooms);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            newRoomBox.setText("");
         });
         addRoom.setFitWidth(35);
         addRoom.setFitHeight(35);
@@ -410,7 +348,7 @@ public class ChatViewController {
         chat.getChatPart().getChildren().addAll(newRoomBox, addRoom);
     }
 
-    private void showListOfRooms(LinkedHashMap<String, String> rooms) throws IOException {
+    public static void showListOfRooms(LinkedHashMap<String, String> rooms) throws IOException {
         list.getChildren().clear();
         chat.getChatPart().getChildren().remove(scrollPane);
         int count = 0;
@@ -434,22 +372,9 @@ public class ChatViewController {
                     packet.setToken(Main.connection.getToken());
                     packet.addAttribute("roomId", rooms.get(roomName));
                     packet.sendPacket();
-                    Packet response = Packet.receivePacket();
-                    messages = new ArrayList<>();
-                    for (int i = 0; i < response.getAttributes().size(); i++) {
-                        String message = (String) response.getAttribute("message" + i);
-                        messages.add(new Gson().fromJson((String) message, Message.class));
-                    }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                currentRoomName = roomName;
-                list.getChildren().clear();
-                chat.getChatPart().getChildren().remove(searchBar);
-                chat.getChatPart().getChildren().remove(newRoomBox);
-                chat.getChatPart().getChildren().remove(addRoom);
-                addListBox(2);
-                showMessages(messages);
             });
 
             Text usernameText = new Text(roomName);
@@ -463,7 +388,7 @@ public class ChatViewController {
         chat.getChatPart().getChildren().add(scrollPane);
     }
 
-    private void setSendAction() {
+    public static void setSendAction() {
         if (currentTabName.equals("public")) {
             Packet sendMessageInPublic = new Packet("send message - public");
             sendMessageInPublic.setToken(Main.connection.getToken());
@@ -496,25 +421,27 @@ public class ChatViewController {
         }
     }
 
-    private void addLeftMessage(Message message, int count) throws IOException {
+    public static void addLeftMessage(Message message, int count) throws IOException {
         StackPane messagePane = new StackPane();
         messagePane.setMinWidth(400);
         messagePane.setMaxWidth(400);
 
-        Circle avatarCircle = new Circle(20);
-        avatarCircle.setTranslateX(20);
-        avatarCircle.setTranslateY(20);
-        ImageView avatar = new ImageView(new Image(new ByteArrayInputStream(UsersController
-                .getImageFromServerByUsername(message.getSender()).toByteArray())));
-        avatar.setClip(avatarCircle);
-        avatar.setFitWidth(40);
-        avatar.setFitHeight(40);
-        avatar.setTranslateX(-175);
+//        Circle avatarCircle = new Circle(20);
+//        avatarCircle.setTranslateX(20);
+//        avatarCircle.setTranslateY(20);
+//        ImageView avatar = new ImageView(new Image(new ByteArrayInputStream(UsersController
+//                .getImageFromServerByUsername(message.getSender()).toByteArray())));
+//        avatar.setClip(avatarCircle);
+//        avatar.setFitWidth(40);
+//        avatar.setFitHeight(40);
+//        avatar.setTranslateX(-175);
 
         TextArea messageBox = new TextArea(message.getSender() + ":\n" + message.getData());
         messageBox.setMaxWidth(250);
         messageBox.setPrefColumnCount(1);
-        messageBox.setPrefRowCount(2);
+        if (message.getLikeCount() == 0 && message.getDislikeCount() == 0 &&
+                message.getFireCount() == 0 && message.getShitCount() == 0) messageBox.setPrefRowCount(2);
+        else messageBox.setPrefRowCount(3);
         messageBox.setTranslateX(-20);
         messageBox.setWrapText(true);
         messageBox.setEditable(false);
@@ -524,29 +451,39 @@ public class ChatViewController {
         sentTime.setTranslateX(130);
         sentTime.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 12));
 
-        messagePane.getChildren().addAll(messageBox, avatar, sentTime);
+        messagePane.setOnMouseClicked(mouseEvent -> {
+            ChatViewController.chat.getChildren().add(ChatViewController.chat.getReactPart());
+            addEmojis(message);
+        });
+
+        addAllEmojis(message, messagePane, false);
+
+        messagePane.getChildren().addAll(messageBox, sentTime);
         list.add(messagePane, 0, count);
     }
 
-    private void addRightMessage(Message message, int count) throws IOException {
+    public static void addRightMessage(Message message, int count) throws IOException {
         StackPane messagePane = new StackPane();
         messagePane.setMinWidth(400);
         messagePane.setMaxWidth(400);
 
-        Circle avatarCircle = new Circle(20);
-        avatarCircle.setTranslateX(20);
-        avatarCircle.setTranslateY(20);
-        ImageView avatar = new ImageView(new Image(new ByteArrayInputStream(UsersController
-                .getImageFromServerByUsername(message.getSender()).toByteArray())));
-        avatar.setClip(avatarCircle);
-        avatar.setFitWidth(40);
-        avatar.setFitHeight(40);
-        avatar.setTranslateX(165);
+//        Circle avatarCircle = new Circle(20);
+//        avatarCircle.setTranslateX(20);
+//        avatarCircle.setTranslateY(20);
+//        ImageView avatar = new ImageView(new Image(new ByteArrayInputStream(UsersController
+//                .getImageFromServerByUsername(message.getSender()).toByteArray())));
+//        avatar.setClip(avatarCircle);
+//        avatar.setFitWidth(40);
+//        avatar.setFitHeight(40);
+//        avatar.setTranslateX(165);
 
         TextArea messageBox = new TextArea(message.getSender() + ":\n" + message.getData());
         messageBox.setMaxWidth(250);
         messageBox.setPrefColumnCount(1);
-        messageBox.setPrefRowCount(2);
+        boolean reacted = message.getLikeCount() != 0 || message.getDislikeCount() != 0 ||
+                message.getFireCount() != 0 || message.getShitCount() != 0;
+        if (!reacted) messageBox.setPrefRowCount(2);
+        else messageBox.setPrefRowCount(3);
         messageBox.setTranslateX(15);
         messageBox.setWrapText(true);
         messageBox.setEditable(false);
@@ -555,20 +492,95 @@ public class ChatViewController {
         sentTime.setTranslateX(-135);
         sentTime.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 12));
 
+        ImageView state = new ImageView();
+        state.setTranslateX(125);
+        state.setFitWidth(14);
+        if (!message.isSeen()) {
+            state.setImage(new Image(ChatViewController.class.getResource("/images/icons/sent.png").toExternalForm()));
+            state.setFitHeight(10);
+        } else {
+            state.setImage(new Image(ChatViewController.class.getResource("/images/icons/seen.png").toExternalForm()));
+            state.setFitHeight(14);
+        }
+        if (!reacted) state.setTranslateY(20);
+        else state.setTranslateY(30);
+
         messagePane.setOnMouseClicked(mouseEvent -> {
-            this.chat.getChildren().add(this.chat.getOptionsPart());
+            ChatViewController.chat.getChildren().add(ChatViewController.chat.getOptionsPart());
+            ChatViewController.chat.getChildren().add(ChatViewController.chat.getReactPart());
             addOptions(messageBox, message);
+            addEmojis(message);
         });
 
-        messagePane.getChildren().addAll(messageBox, avatar, sentTime);
+        addAllEmojis(message, messagePane, true);
+
+        messagePane.getChildren().addAll(messageBox, sentTime, state);
         list.add(messagePane, 0, count);
     }
 
-    private void showMessages(ArrayList<Message> messages) {
+    public static StackPane createEmoji(String emojiName, int count) {
+        StackPane emojiPane = new StackPane();
+        emojiPane.setMinWidth(50);
+        emojiPane.setMaxWidth(50);
+        emojiPane.setMinHeight(30);
+        emojiPane.setMaxHeight(30);
+        emojiPane.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: white;" +
+                "-fx-border-color: black; -fx-border-width: 0.5");
+        emojiPane.setViewOrder(-1000000000);
+
+        ImageView emoji = new ImageView(new Image(ChatViewController.class.getResource("/images/icons/").toExternalForm() +
+                emojiName + ".png"));
+        emoji.setFitWidth(20);
+        emoji.setFitHeight(20);
+        emoji.setTranslateX(-7);
+
+        Text countText = new Text(Integer.toString(count));
+        countText.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 14));
+        countText.setTranslateX(12);
+
+        emojiPane.getChildren().addAll(emoji, countText);
+        return emojiPane;
+    }
+
+    public static void addAllEmojis(Message message, StackPane messagePane, boolean isRight) {
+        int indent = (isRight) ? -75 : -110;
+        int count = 0;
+        if (message.getLikeCount() != 0) {
+            StackPane likePane = createEmoji("like", message.getLikeCount());
+            likePane.setTranslateX(count * 55 + indent);
+            likePane.setTranslateY(25);
+            messagePane.getChildren().add(likePane);
+            count++;
+        }
+        if (message.getDislikeCount() != 0) {
+            StackPane dislikePane = createEmoji("dislike", message.getDislikeCount());
+            dislikePane.setTranslateX(count * 55 + indent);
+            dislikePane.setTranslateY(25);
+            messagePane.getChildren().add(dislikePane);
+            count++;
+        }
+        if (message.getFireCount() != 0) {
+            StackPane firePane = createEmoji("fire", message.getFireCount());
+            firePane.setTranslateX(count * 55 + indent);
+            firePane.setTranslateY(25);
+            messagePane.getChildren().add(firePane);
+            count++;
+        }
+        if (message.getShitCount() != 0) {
+            StackPane shitPane = createEmoji("shit", message.getShitCount());
+            shitPane.setTranslateX(count * 55 + indent);
+            shitPane.setTranslateY(25);
+            messagePane.getChildren().add(shitPane);
+            count++;
+        }
+    }
+
+    public static void showMessages(ArrayList<Message> messages) {
         list.getChildren().clear();
         chat.getChatPart().getChildren().remove(scrollPane);
         for (int i = 0; i < messages.size(); i++) {
             Message message = messages.get(i);
+            if (message == null) continue;
             try {
                 if (message.getSender().equals(currentUser.getUsername()))
                     addRightMessage(message, i);
@@ -580,18 +592,24 @@ public class ChatViewController {
         chat.getChatPart().getChildren().add(scrollPane);
     }
 
-    private void addOptions(TextArea messageBox, Message message) {
-        createOption("Delete", -400 / 3, messageBox, message);
-        createOption("Delete for All", 0, messageBox, message);
-        createOption("Edit", 400 / 3, messageBox, message);
+    public static void addOptions(TextArea messageBox, Message message) {
+        createOption("Delete for All", -200 / 3, messageBox, message);
+        createOption("Edit", 200 / 3, messageBox, message);
     }
 
-    private void createOption(String text, double x, TextArea messageBox, Message message) {
+    public static void addEmojis(Message message) {
+        createReactOption("like", -100, message);
+        createReactOption("dislike", -100 / 3, message);
+        createReactOption("fire", 100 / 3, message);
+        createReactOption("shit", 100, message);
+    }
+
+    public static void createOption(String text, double x, TextArea messageBox, Message message) {
         StackPane option = new StackPane();
-        option.setMinWidth(400 / 3);
-        option.setMaxWidth(400 / 3);
-        option.setMinHeight(40);
-        option.setMaxHeight(40);
+        option.setMinWidth(130);
+        option.setMaxWidth(130);
+        option.setMinHeight(38);
+        option.setMaxHeight(38);
         option.setTranslateX(x);
         Text tabText = new Text(text);
         tabText.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
@@ -604,35 +622,51 @@ public class ChatViewController {
         });
         option.setOnMouseReleased(mouseEvent -> {
             if (text.equals("Edit")) enterEditMode(messageBox, message);
-            else {
-                setOptionAction(text, message.getId(), null);
-                try {
-                    Packet packet = new Packet("get messages - " + currentTabName);
-                    packet.setToken(Main.connection.getToken());
-                    if (currentTabName.equals("private")) packet.addAttribute("roomId", privates.get(currentRoomName));
-                    else if (currentTabName.equals("room")) packet.addAttribute("roomId", rooms.get(currentRoomName));
-                    packet.sendPacket();
-                    Packet response = Packet.receivePacket();
-                    messages = new ArrayList<>();
-                    for (int i = 0; i < response.getAttributes().size(); i++) {
-                        String currentMessage = (String) response.getAttribute("message" + i);
-                        messages.add(new Gson().fromJson((String) currentMessage, Message.class));
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                list.getChildren().clear();
-                chat.getChatPart().getChildren().remove(scrollPane);
-                addListBox(2);
-                showMessages(messages);
-            }
-            this.chat.getChildren().remove(this.chat.getOptionsPart());
-
+            else setOptionAction(text, message.getId(), null);
         });
-        this.chat.getOptionsPart().getChildren().add(option);
+        ChatViewController.chat.getOptionsPart().getChildren().add(option);
     }
 
-    private void setOptionAction(String action, String messageId, String newMessage) {
+    public static void createReactOption(String emojiName, double x, Message message) {
+        StackPane reactOption = new StackPane();
+        reactOption.setMinWidth(64);
+        reactOption.setMaxWidth(64);
+        reactOption.setMinHeight(38);
+        reactOption.setMaxHeight(38);
+        reactOption.setTranslateX(x);
+        ImageView emoji = new ImageView(new Image(ChatViewController.class.getResource("/images/icons/").
+                toExternalForm() + emojiName + ".png"));
+        emoji.setFitWidth(30);
+        emoji.setFitHeight(30);
+        reactOption.getChildren().add(emoji);
+        reactOption.setOnMouseEntered(mouseEvent -> {
+            reactOption.setStyle("-fx-background-color: rgb(3, 119, 252); -fx-background-radius: 10");
+        });
+        reactOption.setOnMouseExited(mouseEvent -> {
+            reactOption.setStyle("-fx-background-color: transparent");
+        });
+        reactOption.setOnMouseReleased(mouseEvent -> {
+            if (message.getReactors() != null && message.getReactors().contains(currentUser.getUsername())) {
+                ChatViewController.chat.getChildren().remove(ChatViewController.chat.getReactPart());
+                ChatViewController.chat.getChildren().remove(ChatViewController.chat.getOptionsPart());
+                return;
+            }
+            try {
+                Packet react = new Packet("new react");
+                react.setToken(Main.connection.getToken());
+                react.addAttribute("messageId", message.getId());
+                react.addAttribute("emoji", emojiName);
+                react.sendPacket();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            chat.getChildren().remove(chat.getOptionsPart());
+            chat.getChildren().remove(chat.getReactPart());
+        });
+        ChatViewController.chat.getReactPart().getChildren().add(reactOption);
+    }
+
+    public static void setOptionAction(String action, String messageId, String newMessage) {
         switch (action) {
             case "Delete for All" -> {
                 try {
@@ -658,10 +692,13 @@ public class ChatViewController {
         }
     }
 
-    private void enterEditMode(TextArea messageBox, Message message) {
-        messageBox.setEditable(true);
-        messageBox.getStyleClass().add("edit-mode");
-        ImageView confirmEdit = new ImageView(new Image(ChatViewController.class.getResource("/images/icons/check.png").toExternalForm()));
+    public static void enterEditMode(TextArea messageBox, Message message) {
+        ChatViewController.chat.getChildren().remove(ChatViewController.chat.getOptionsPart());
+        ChatViewController.chat.getChildren().remove(ChatViewController.chat.getReactPart());
+        editingMessageBox = messageBox;
+        editingMessageBox.setEditable(true);
+        editingMessageBox.getStyleClass().add("edit-mode");
+        confirmEdit = new ImageView(new Image(ChatViewController.class.getResource("/images/icons/check.png").toExternalForm()));
         confirmEdit.setFitWidth(50);
         confirmEdit.setFitHeight(50);
         confirmEdit.setTranslateX(740);
@@ -672,31 +709,102 @@ public class ChatViewController {
         confirmEdit.setOnMouseExited(mouseEvent -> {
             confirmEdit.setImage(new Image(ChatViewController.class.getResource("/images/icons/check.png").toExternalForm()));
         });
-        this.chat.getChildren().add(confirmEdit);
+        ChatViewController.chat.getChildren().add(confirmEdit);
         confirmEdit.setOnMouseClicked(mouseEvent -> {
-            String newMessage = messageBox.getText().substring(messageBox.getText().indexOf("\n") + 1);
+            String newMessage = editingMessageBox.getText().substring(editingMessageBox.getText().indexOf("\n") + 1);
             setOptionAction("Edit", message.getId(), newMessage);
+        });
+    }
+
+    public static void addNewMember() {
+        newMember = new ImageView(new Image(ChatViewController.class.getResource("/images/icons/plus.png").toExternalForm()));
+        newMember.setOnMouseEntered(mouseEvent -> {
+            newMember.setImage(new Image(ChatViewController.class.getResource("/images/icons/plusHovered.png").toExternalForm()));
+        });
+        newMember.setOnMouseExited(mouseEvent -> {
+            newMember.setImage(new Image(ChatViewController.class.getResource("/images/icons/plus.png").toExternalForm()));
+        });
+        newMember.setOnMouseClicked(mouseEvent -> {
+            scrollPane.setContent(null);
+            chat.getChatPart().getChildren().remove(scrollPane);
+            chat.getChatPart().getChildren().remove(newMember);
+            chat.getChatPart().getChildren().remove(typeBox);
+            chat.getChatPart().getChildren().remove(sendMessage);
+            addSearchBar(true);
             try {
-                Packet packet = new Packet("get messages - " + currentTabName);
+                Packet packet = new Packet("users for room");
                 packet.setToken(Main.connection.getToken());
-                if (currentTabName.equals("private")) packet.addAttribute("roomId", privates.get(currentRoomName));
-                else if (currentTabName.equals("room")) packet.addAttribute("roomId", rooms.get(currentRoomName));
+                packet.addAttribute("roomId", rooms.get(currentRoomName));
                 packet.sendPacket();
-                Packet response = Packet.receivePacket();
-                messages = new ArrayList<>();
-                for (int i = 0; i < response.getAttributes().size(); i++) {
-                    String currentMessage = (String) response.getAttribute("message" + i);
-                    messages.add(new Gson().fromJson((String) currentMessage, Message.class));
-                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            this.chat.getChildren().remove(confirmEdit);
-            list.getChildren().clear();
-            chat.getChatPart().getChildren().remove(scrollPane);
-            addListBox(2);
-            showMessages(messages);
-            messageBox.getStyleClass().remove("edit-mode");
         });
+        newMember.setFitWidth(35);
+        newMember.setFitHeight(35);
+        newMember.setTranslateX(167);
+        newMember.setTranslateY(-320);
+
+        chat.getChatPart().getChildren().add(newMember);
+    }
+
+    public static void showListOfUsersForRoom(ArrayList<String> usersForRoom) {
+        list.getChildren().clear();
+        chat.getChatPart().getChildren().remove(scrollPane);
+        for (int i = 0; i < usersForRoom.size(); i++) {
+            String username = usersForRoom.get(i);
+            StackPane listItem = new StackPane();
+            listItem.setMinWidth(400);
+            listItem.setMaxWidth(400);
+            listItem.setMinHeight(60);
+            listItem.setMaxHeight(60);
+            listItem.setStyle("-fx-background-color: rgb(250, 250, 250)");
+            listItem.setOnMouseEntered(mouseEvent -> {
+                listItem.setStyle("-fx-background-color: rgb(230, 230, 230)");
+            });
+            listItem.setOnMouseExited(mouseEvent -> {
+                listItem.setStyle("-fx-background-color: rgb(250, 250, 250)");
+            });
+            listItem.setOnMouseClicked(mouseEvent -> {
+                try {
+                    Packet packet = new Packet("new member");
+                    packet.setToken(Main.connection.getToken());
+                    packet.addAttribute("roomId", rooms.get(currentRoomName));
+                    packet.addAttribute("username", username);
+                    packet.sendPacket();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                chat.getChatPart().getChildren().remove(searchBar);
+                addTypeBox();
+                try {
+                    Packet packet = new Packet("get messages - room");
+                    packet.setToken(Main.connection.getToken());
+                    packet.addAttribute("roomId", rooms.get(currentRoomName));
+                    packet.sendPacket();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+//            Circle avatarCircle = new Circle(30);
+//            avatarCircle.setTranslateX(30);
+//            avatarCircle.setTranslateY(30);
+//            ImageView avatar = new ImageView(new Image(new ByteArrayInputStream(UsersController
+//                    .getImageFromServerByUsername(username).toByteArray())));
+//            avatar.setClip(avatarCircle);
+//            avatar.setFitWidth(60);
+//            avatar.setFitHeight(60);
+//            avatar.setTranslateX(-170);
+
+            Text usernameText = new Text(username);
+            usernameText.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
+            StackPane.setAlignment(usernameText, Pos.CENTER_LEFT);
+            usernameText.setTranslateX(75);
+
+            listItem.getChildren().addAll(usernameText);
+            list.add(listItem, 0, i);
+        }
+        chat.getChatPart().getChildren().add(scrollPane);
     }
 }

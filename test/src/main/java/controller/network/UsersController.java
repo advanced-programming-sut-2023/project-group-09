@@ -2,10 +2,12 @@ package controller.network;
 
 import client.Packet;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import model.Government;
 import view.Main;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -69,9 +71,6 @@ public class UsersController {
     }
 
 
-
-
-
     public static String getPath() throws IOException {
         Packet packet = new Packet("get path", "user");
         packet.sendPacket();
@@ -86,6 +85,7 @@ public class UsersController {
         packet.sendPacket();
         Packet.receivePacket();
     }
+
     public static ByteArrayOutputStream getImageFromServer(String path) throws IOException {
         Packet packet = new Packet("download image", "file");
         packet.addAttribute("path", path);
@@ -134,20 +134,33 @@ public class UsersController {
         return byteArrayOutputStream;
     }
 
+    public static void convertBytesToImage(String gson) {
+        try {
+            byte[] bytes = new GsonBuilder().setPrettyPrinting().create().fromJson(gson, byte[].class);
+            ByteArrayInputStream input = new ByteArrayInputStream(bytes);
+            BufferedImage image = ImageIO.read(input);
+
+            File outputFile = new File("files/img/temporary.png");
+            ImageIO.write(image, "png", outputFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static ArrayList<String> getSortedUsersUsername() throws IOException {
         Packet packet = new Packet("get sorted user", "user");
         packet.sendPacket();
 
         Packet receivePacket = Packet.receivePacket();
-        ArrayList<String> users = new Gson().fromJson(receivePacket.attributes.get("users").toString(), new TypeToken<ArrayList<String>>(){}.getType());
+        ArrayList<String> users = new Gson().fromJson(receivePacket.attributes.get("users").toString(), new TypeToken<ArrayList<String>>() {
+        }.getType());
         return users;
     }
 
 
-
     public static String getEmail(String username) throws IOException {
         Packet packet = new Packet("get email by username", "user");
-        packet.addAttribute("username",username);
+        packet.addAttribute("username", username);
         packet.sendPacket();
 
         Packet receivePacket = Packet.receivePacket();
@@ -156,7 +169,7 @@ public class UsersController {
 
     public static String getNickname(String username) throws IOException {
         Packet packet = new Packet("get nickname by username", "user");
-        packet.addAttribute("username",username);
+        packet.addAttribute("username", username);
         packet.sendPacket();
 
         Packet receivePacket = Packet.receivePacket();
@@ -165,7 +178,7 @@ public class UsersController {
 
     public static String getSlogan(String username) throws IOException {
         Packet packet = new Packet("get slogan by username", "user");
-        packet.addAttribute("username",username);
+        packet.addAttribute("username", username);
         packet.sendPacket();
 
         Packet receivePacket = Packet.receivePacket();
@@ -177,7 +190,7 @@ public class UsersController {
 
     public static String getHighScore(String username) throws IOException {
         Packet packet = new Packet("get high score by username", "user");
-        packet.addAttribute("username",username);
+        packet.addAttribute("username", username);
         packet.sendPacket();
 
         Packet receivePacket = Packet.receivePacket();
@@ -189,7 +202,7 @@ public class UsersController {
 
     public static String getRank(String username) throws IOException {
         Packet packet = new Packet("get rank by username", "user");
-        packet.addAttribute("username",username);
+        packet.addAttribute("username", username);
         packet.sendPacket();
 
         Packet receivePacket = Packet.receivePacket();
@@ -201,7 +214,7 @@ public class UsersController {
 
     public static String getPath(String username) throws IOException {
         Packet packet = new Packet("get path by username", "user");
-        packet.addAttribute("username",username);
+        packet.addAttribute("username", username);
         packet.sendPacket();
 
         Packet receivePacket = Packet.receivePacket();
@@ -218,7 +231,7 @@ public class UsersController {
 
     public static Boolean getOnline(String username) throws IOException {
         Packet packet = new Packet("get online by username", "user");
-        packet.addAttribute("username",username);
+        packet.addAttribute("username", username);
         packet.sendPacket();
 
         Packet receivePacket = Packet.receivePacket();
@@ -235,7 +248,7 @@ public class UsersController {
 
     public static String getLastSeen(String username) throws IOException {
         Packet packet = new Packet("get last seen", "user");
-        packet.addAttribute("username",username);
+        packet.addAttribute("username", username);
         packet.sendPacket();
 
         Packet receivePacket = Packet.receivePacket();

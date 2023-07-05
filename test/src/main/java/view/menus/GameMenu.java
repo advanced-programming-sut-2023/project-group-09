@@ -56,6 +56,7 @@ import java.util.*;
 
 //TODO 1- add color of buildings and government
 public class GameMenu extends Application {
+    public static ChatMenu chatMenu;
     public static Stage stage;
     public static Scene scene;
     public static StackPane root;
@@ -158,12 +159,11 @@ public class GameMenu extends Application {
         });
         createSelectedArea();
 
-        //ChatMenu chatMenu = new ChatMenu();
-        //GameMenu.root.getChildren().add(chatMenu);
         PacketOnlineReceiver packetOnlineReceiver = new PacketOnlineReceiver();
         packetOnlineReceiver.start();
         GameViewController.setNextTurnTimeline();
         GovernmentController.sendGetLordName();
+
         stage.show();
     }
 
@@ -210,7 +210,22 @@ public class GameMenu extends Application {
         }*/
     }
 
-
+    public static void addChatIcon() {
+        ImageView imageView = new ImageView(new Image(GameMenu.class.getResource("/images/icons/chat.png").toExternalForm()));
+        imageView.setTranslateX(1155);
+        imageView.setTranslateY(180);
+        imageView.setOnMouseEntered(mouseEvent -> {
+            imageView.setImage(new Image(GameMenu.class.getResource("/images/icons/chatHovered.png").toExternalForm()));
+        });
+        imageView.setOnMouseExited(mouseEvent -> {
+            imageView.setImage(new Image(GameMenu.class.getResource("/images/icons/chat.png").toExternalForm()));
+        });
+        imageView.setOnMouseClicked(mouseEvent -> {
+            chatMenu = new ChatMenu();
+            GameMenu.root.getChildren().add(chatMenu);
+        });
+        GameMenu.menuBar.getChildren().add(imageView);
+    }
 
     public static void createGameBar(int state) {
 //        state: 0=buildings  /  1=nemidunam(farzam midune)  /  2=menu  /  3=mercenaryPost  /  4=barrack
