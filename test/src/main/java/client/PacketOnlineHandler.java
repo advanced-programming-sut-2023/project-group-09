@@ -205,12 +205,18 @@ public class PacketOnlineHandler {
             case "* seen message" -> {
                 getSeenMessage();
             }
+            case "exit lobby" -> exitLobby();
         }
     }
 
     private void removeLord() {
         String color = (String) packet.getAttribute("color");
         getGovernmentByColor(color).getLord().setHealth(0);
+    }
+
+    private void exitLobby() {
+        Lobby.receiver.stopThread();
+        Platform.runLater(Lobby::exitLobby);
     }
 
     private void changeFearRate() {
