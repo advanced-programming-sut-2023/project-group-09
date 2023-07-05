@@ -206,7 +206,42 @@ public class PacketOnlineHandler {
                 getSeenMessage();
             }
             case "exit lobby" -> exitLobby();
+            case "create fake game spectator" -> {
+                createFakeGameSpectator();
+            }
         }
+    }
+
+    private void createFakeGameSpectator() throws IOException, ClassNotFoundException {
+        String username = (String) packet.getAttribute("username");
+        FakeGame fakeGame = (FakeGame) Main.connection.getObjectInputStream().readObject();
+        Packet packet1 = new Packet("get map", "Game");
+        packet1.addAttribute("map name", fakeGame.getMapName());
+        packet1.sendPacket();
+        Map map = (Map) Main.connection.getObjectInputStream().readObject();
+        Game game = new Game(map);
+        MapController.map = map;
+        GameController.setGame(game);
+        for (int i = 0; i != fakeGame.getAllUsernames().size(); i++) {
+            Government government = new Government(null, fakeGame.getCastleXs().get(i),
+                    fakeGame.getCastleYs().get(i), Colors.getColor(fakeGame.getColors().get(i)));
+            government.addAmountToProperties("wood", "resource", 1000);
+            government.addAmountToProperties("stone", "resource", 500);
+            government.addAmountToProperties("iron", "resource", 500);
+            government.addAmountToProperties("bread", "food", 60);
+            government.setGold(4000);
+            if (fakeGame.getAllUsernames().get(i).equals(username)) {
+                System.out.println("test");
+                game.getGovernments().add(0, government);
+                GameController.getGame().setCurrentGovernment(government);
+                GovernmentController.setCurrentGovernment(government);
+            } else {
+                game.addGovernment(government);
+            }
+        }
+        GameController.setFakeGame(fakeGame);
+        Lobby.receiver.stopThread();
+        Platform.runLater(Lobby::createGame);
     }
 
     private void removeLord() {

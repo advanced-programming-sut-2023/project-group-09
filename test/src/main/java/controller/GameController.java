@@ -572,12 +572,14 @@ public class GameController {
         consumeRequired(building.getCost());
         GovernmentController.getCurrentGovernment().setGold(GovernmentController.getCurrentGovernment().getGold() - building.getPrice());
         MapController.dropBuilding(x, y, type, GameController.getGame().getCurrentGovernment());
-        int popularity = GovernmentController.getCurrentGovernment().getPopularity() + 37;
-        GameViewController.popularityReporter.setText(String.format("%d", popularity));
-        GameViewController.populationReporter.setText(
-                String.format("%d/%d", GovernmentController.getCurrentGovernment().getPopulation(),
-                        GovernmentController.getCurrentGovernment().getMaxPopulation()));
-        GameViewController.updateFaceOfReporter();
+        if (!GameMenu.isSpectator) {
+            int popularity = GovernmentController.getCurrentGovernment().getPopularity() + 37;
+            GameViewController.popularityReporter.setText(String.format("%d", popularity));
+            GameViewController.populationReporter.setText(
+                    String.format("%d/%d", GovernmentController.getCurrentGovernment().getPopulation(),
+                            GovernmentController.getCurrentGovernment().getMaxPopulation()));
+            GameViewController.updateFaceOfReporter();
+        }
         return "building dropped successfully!";
     }
 
@@ -641,7 +643,8 @@ public class GameController {
         if (governmentDead) {
             deadMessage = deadMessage.substring(0 , deadMessage.length() - 2);
             deadMessage += " Are Dead!";
-            GameMenu.hoveringBarStateText.setText(deadMessage);
+            if (GameMenu.hoveringBarStateText != null)
+                GameMenu.hoveringBarStateText.setText(deadMessage);
             ViewController.playDeadSong();
         }
         return numberOfGovernments;
@@ -770,13 +773,15 @@ public class GameController {
         if (numberOfRemainedGovernments == 1) {
             if (!game.isEndGame()) {
                 game.setWinner();
-                game.setScores();
+                if (!GameMenu.isSpectator)
+                    game.setScores();
             }
             game.setEndGame(true);
         } else if (numberOfRemainedGovernments == 0) {
             if (!game.isEndGame()) {
                 game.setWinner();
-                game.setScores();
+                if (!GameMenu.isSpectator)
+                    game.setScores();
             }
             game.setEndGame(true);
         }
