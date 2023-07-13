@@ -58,7 +58,8 @@ public class Troop extends ImageView {
         health.setViewOrder(-1000);
 
         setImage();
-        setEventListener();
+        if (!GameMenu.isSpectator)
+            setEventListener();
         setTimeLine();
     }
 

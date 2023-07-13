@@ -133,4 +133,14 @@ public class Connection extends Thread {
         }
         return null;
     }
+
+    public static Connection getConnectionByUsername(String username) {
+        String token = TokenController.getTokenByUsername(username);
+        for (int i = 0; i < allConnections.size(); i++) {
+            Connection connection = allConnections.get(i);
+            if (connection.getToken().equals(token))
+                return connection;
+        }
+        return null;
+    }
 }

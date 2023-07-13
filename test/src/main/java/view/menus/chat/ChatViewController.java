@@ -1,6 +1,9 @@
 package view.menus.chat;
 
 import client.Packet;
+import client.PacketOnlineReceiver;
+import controller.GameController;
+import controller.network.UsersController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
@@ -11,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -18,7 +22,9 @@ import javafx.scene.text.Text;
 import model.User;
 import model.chat.Message;
 import view.Main;
+import view.menus.GameMenu;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -289,22 +295,23 @@ public class ChatViewController {
                 }
             });
 
-//            Circle avatarCircle = new Circle(30);
-//            avatarCircle.setTranslateX(30);
-//            avatarCircle.setTranslateY(30);
-//            ImageView avatar = new ImageView(new Image(new ByteArrayInputStream(UsersController
-//                    .getImageFromServerByUsername(username).toByteArray())));
-//            avatar.setClip(avatarCircle);
-//            avatar.setFitWidth(60);
-//            avatar.setFitHeight(60);
-//            avatar.setTranslateX(-170);
+            Circle avatarCircle = new Circle(30);
+            avatarCircle.setTranslateX(30);
+            avatarCircle.setTranslateY(30);
+            ImageView avatar = new ImageView(new Image(new ByteArrayInputStream(UsersController
+                    .getImageFromServerByUsername(username, true).toByteArray())));
+            GameMenu.packetOnlineReceiver.resumeThread();
+            avatar.setClip(avatarCircle);
+            avatar.setFitWidth(60);
+            avatar.setFitHeight(60);
+            avatar.setTranslateX(-170);
 
             Text usernameText = new Text(username);
             usernameText.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
             StackPane.setAlignment(usernameText, Pos.CENTER_LEFT);
             usernameText.setTranslateX(75);
 
-            listItem.getChildren().addAll(usernameText);
+            listItem.getChildren().addAll(avatar, usernameText);
             list.add(listItem, 0, i);
         }
         chat.getChatPart().getChildren().add(scrollPane);
@@ -426,15 +433,16 @@ public class ChatViewController {
         messagePane.setMinWidth(400);
         messagePane.setMaxWidth(400);
 
-//        Circle avatarCircle = new Circle(20);
-//        avatarCircle.setTranslateX(20);
-//        avatarCircle.setTranslateY(20);
-//        ImageView avatar = new ImageView(new Image(new ByteArrayInputStream(UsersController
-//                .getImageFromServerByUsername(message.getSender()).toByteArray())));
-//        avatar.setClip(avatarCircle);
-//        avatar.setFitWidth(40);
-//        avatar.setFitHeight(40);
-//        avatar.setTranslateX(-175);
+        Circle avatarCircle = new Circle(20);
+        avatarCircle.setTranslateX(20);
+        avatarCircle.setTranslateY(20);
+        ImageView avatar = new ImageView(new Image(new ByteArrayInputStream(UsersController
+                .getImageFromServerByUsername(message.getSender(), true).toByteArray())));
+        GameMenu.packetOnlineReceiver.resumeThread();
+        avatar.setClip(avatarCircle);
+        avatar.setFitWidth(40);
+        avatar.setFitHeight(40);
+        avatar.setTranslateX(-175);
 
         TextArea messageBox = new TextArea(message.getSender() + ":\n" + message.getData());
         messageBox.setMaxWidth(250);
@@ -458,7 +466,7 @@ public class ChatViewController {
 
         addAllEmojis(message, messagePane, false);
 
-        messagePane.getChildren().addAll(messageBox, sentTime);
+        messagePane.getChildren().addAll(messageBox, sentTime, avatar);
         list.add(messagePane, 0, count);
     }
 
@@ -467,15 +475,16 @@ public class ChatViewController {
         messagePane.setMinWidth(400);
         messagePane.setMaxWidth(400);
 
-//        Circle avatarCircle = new Circle(20);
-//        avatarCircle.setTranslateX(20);
-//        avatarCircle.setTranslateY(20);
-//        ImageView avatar = new ImageView(new Image(new ByteArrayInputStream(UsersController
-//                .getImageFromServerByUsername(message.getSender()).toByteArray())));
-//        avatar.setClip(avatarCircle);
-//        avatar.setFitWidth(40);
-//        avatar.setFitHeight(40);
-//        avatar.setTranslateX(165);
+        Circle avatarCircle = new Circle(20);
+        avatarCircle.setTranslateX(20);
+        avatarCircle.setTranslateY(20);
+        ImageView avatar = new ImageView(new Image(new ByteArrayInputStream(UsersController
+                .getImageFromServerByUsername(message.getSender(), true).toByteArray())));
+        GameMenu.packetOnlineReceiver.resumeThread();
+        avatar.setClip(avatarCircle);
+        avatar.setFitWidth(40);
+        avatar.setFitHeight(40);
+        avatar.setTranslateX(165);
 
         TextArea messageBox = new TextArea(message.getSender() + ":\n" + message.getData());
         messageBox.setMaxWidth(250);
@@ -514,7 +523,7 @@ public class ChatViewController {
 
         addAllEmojis(message, messagePane, true);
 
-        messagePane.getChildren().addAll(messageBox, sentTime, state);
+        messagePane.getChildren().addAll(messageBox, sentTime, state, avatar);
         list.add(messagePane, 0, count);
     }
 
@@ -748,7 +757,7 @@ public class ChatViewController {
         chat.getChatPart().getChildren().add(newMember);
     }
 
-    public static void showListOfUsersForRoom(ArrayList<String> usersForRoom) {
+    public static void showListOfUsersForRoom(ArrayList<String> usersForRoom) throws IOException {
         list.getChildren().clear();
         chat.getChatPart().getChildren().remove(scrollPane);
         for (int i = 0; i < usersForRoom.size(); i++) {
@@ -787,22 +796,23 @@ public class ChatViewController {
                 }
             });
 
-//            Circle avatarCircle = new Circle(30);
-//            avatarCircle.setTranslateX(30);
-//            avatarCircle.setTranslateY(30);
-//            ImageView avatar = new ImageView(new Image(new ByteArrayInputStream(UsersController
-//                    .getImageFromServerByUsername(username).toByteArray())));
-//            avatar.setClip(avatarCircle);
-//            avatar.setFitWidth(60);
-//            avatar.setFitHeight(60);
-//            avatar.setTranslateX(-170);
+            Circle avatarCircle = new Circle(30);
+            avatarCircle.setTranslateX(30);
+            avatarCircle.setTranslateY(30);
+            ImageView avatar = new ImageView(new Image(new ByteArrayInputStream(UsersController
+                    .getImageFromServerByUsername(username, true).toByteArray())));
+            GameMenu.packetOnlineReceiver.resumeThread();
+            avatar.setClip(avatarCircle);
+            avatar.setFitWidth(60);
+            avatar.setFitHeight(60);
+            avatar.setTranslateX(-170);
 
             Text usernameText = new Text(username);
             usernameText.setFont(Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 18));
             StackPane.setAlignment(usernameText, Pos.CENTER_LEFT);
             usernameText.setTranslateX(75);
 
-            listItem.getChildren().addAll(usernameText);
+            listItem.getChildren().addAll(avatar, usernameText);
             list.add(listItem, 0, i);
         }
         chat.getChatPart().getChildren().add(scrollPane);

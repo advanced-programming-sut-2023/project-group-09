@@ -6,6 +6,7 @@ public class PacketOnlineReceiver extends Thread {
 
     @Override
     public void run() {
+        System.out.println("I'm in thread!");
         while (true) {
             try {
                 Packet packet = Packet.receivePacket();
@@ -40,5 +41,21 @@ public class PacketOnlineReceiver extends Thread {
 
     public void stopThread() {
         shouldStop = true;
+    }
+
+    public boolean isPaused() {
+        return isPaused;
+    }
+
+    public void setPaused(boolean paused) {
+        isPaused = paused;
+    }
+
+    public boolean isShouldStop() {
+        return shouldStop;
+    }
+
+    public void setShouldStop(boolean shouldStop) {
+        this.shouldStop = shouldStop;
     }
 }

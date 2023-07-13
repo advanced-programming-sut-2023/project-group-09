@@ -2,6 +2,7 @@ package view.menus;
 
 import client.Packet;
 import client.PacketOnlineReceiver;
+import controller.GameController;
 import controller.MapController;
 import controller.network.LobbyController;
 import enumeration.Paths;
@@ -89,10 +90,15 @@ public class Lobby extends Application {
         leftSide.setStyle("-fx-background-color: #fff");
         root.getChildren().addAll(borderPane);
         makeOverPane();
-        setFlags();
-        setColor();
+        receiver = new PacketOnlineReceiver();
         setUsers();
         putIcons();
+        if (!GameMenu.isSpectator) {
+            setFlags();
+            setColor();
+        } else {
+            setThread();
+        }
         stage.show();
     }
 
@@ -119,7 +125,6 @@ public class Lobby extends Application {
         }));
         exitTimeline.setCycleCount(-1);
         exitTimeline.play();
-        receiver = new PacketOnlineReceiver();
     }
 
     public void scaleDown(MouseEvent mouseEvent) {

@@ -3,10 +3,7 @@ package client;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import controller.BuildingController;
-import controller.GameController;
-import controller.GovernmentController;
-import controller.MapController;
+import controller.*;
 import controller.human.HumanController;
 import enumeration.Textures;
 import enumeration.dictionary.Colors;
@@ -15,6 +12,7 @@ import enumeration.dictionary.Trees;
 import javafx.application.Platform;
 import model.FakeGame;
 import model.Government;
+import model.Trade;
 import model.User;
 import model.building.Building;
 import model.building.producerbuildings.Barrack;
@@ -24,8 +22,10 @@ import model.game.Game;
 import model.game.Map;
 import model.human.Human;
 import model.human.military.Military;
+import model.menugui.MenuHoverBox;
 import model.menugui.game.GameMap;
 import view.Main;
+import view.controllers.GameViewController;
 import view.menus.GameMenu;
 import view.menus.chat.ChatViewController;
 import view.menus.Lobby;
@@ -206,7 +206,64 @@ public class PacketOnlineHandler {
                 getSeenMessage();
             }
             case "exit lobby" -> exitLobby();
+            case "buy item" -> {
+                buyItem();
+            }
+            case "sell item" -> {
+                sellItem();
+            }
+            case "trade goods" -> {
+                tradeGoods();
+            }
+            case "accept trade" -> {
+                acceptTrade();
+            }
+            case "reject trade" -> {
+                rejectTrade();
+            }
+            case "request notification" -> {
+                getRequestNotification();
+            }
+            case "stop thread" -> {
+                System.out.println("stopped");
+                GameMenu.packetOnlineReceiver.pauseThread();
+            }
+            case "create fake game spectator" -> {
+                createFakeGameSpectator();
+            }
         }
+    }
+
+    private void createFakeGameSpectator() throws IOException, ClassNotFoundException {
+        String username = (String) packet.getAttribute("username");
+        FakeGame fakeGame = (FakeGame) Main.connection.getObjectInputStream().readObject();
+        Packet packet1 = new Packet("get map", "Game");
+        packet1.addAttribute("map name", fakeGame.getMapName());
+        packet1.sendPacket();
+        Map map = (Map) Main.connection.getObjectInputStream().readObject();
+        Game game = new Game(map);
+        MapController.map = map;
+        GameController.setGame(game);
+        for (int i = 0; i != fakeGame.getAllUsernames().size(); i++) {
+            Government government = new Government(null, fakeGame.getCastleXs().get(i),
+                    fakeGame.getCastleYs().get(i), Colors.getColor(fakeGame.getColors().get(i)));
+            government.addAmountToProperties("wood", "resource", 1000);
+            government.addAmountToProperties("stone", "resource", 500);
+            government.addAmountToProperties("iron", "resource", 500);
+            government.addAmountToProperties("bread", "food", 60);
+            government.setGold(4000);
+            if (fakeGame.getAllUsernames().get(i).equals(username)) {
+                System.out.println("test");
+                game.getGovernments().add(0, government);
+                GameController.getGame().setCurrentGovernment(government);
+                GovernmentController.setCurrentGovernment(government);
+            } else {
+                game.addGovernment(government);
+            }
+        }
+        GameController.setFakeGame(fakeGame);
+        Lobby.receiver.stopThread();
+        Platform.runLater(Lobby::createGame);
     }
 
     private void removeLord() {
@@ -516,7 +573,11 @@ public class PacketOnlineHandler {
         ChatViewController.usersForRoom = new Gson().fromJson((String) packet.getAttribute("list"), ArrayList.class);
         Platform.runLater(() -> {
             ChatViewController.addListBox(1);
-            ChatViewController.showListOfUsersForRoom(ChatViewController.usersForRoom);
+            try {
+                ChatViewController.showListOfUsersForRoom(ChatViewController.usersForRoom);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 
@@ -791,5 +852,59 @@ public class PacketOnlineHandler {
                 ChatViewController.chat.getChildren().remove(ChatViewController.chat.getReactPart());
             });
         }
+    }
+
+    private void buyItem() {
+        Government government = getGovernmentByColor((String) packet.getAttribute("color"));
+        GovernmentController.generateProduct(government, (String) packet.getAttribute("name"),
+                Integer.parseInt((String) packet.getAttribute("amount")));
+        government.addGold(-1 * Integer.parseInt((String) packet.getAttribute("cost")));
+    }
+
+    private void sellItem() {
+        Government government = getGovernmentByColor((String) packet.getAttribute("color"));
+        GovernmentController.consumeProduct(government, (String) packet.getAttribute("name"),
+                Integer.parseInt((String) packet.getAttribute("amount")));
+        government.addGold(Integer.parseInt((String) packet.getAttribute("cost")));
+    }
+
+    private void tradeGoods() {
+        Government government = getGovernmentByColor((String) packet.getAttribute("color1"));
+        Government targetGovernment = getGovernmentByColor((String) packet.getAttribute("color2"));
+        Trade trade = new Trade((String) packet.getAttribute("message"), (String) packet.getAttribute("resourceType"),
+                Integer.parseInt((String) packet.getAttribute("resourceAmount")), Integer.parseInt((String) packet.getAttribute("price")),
+                government, targetGovernment, (String) packet.getAttribute("tradeId"));
+        government.addSentTrade(trade);
+        targetGovernment.addReceivedTrade(trade);
+        TradeController.allTrades.put(trade.getId(), trade);
+    }
+
+    private void acceptTrade() {
+        Government government = getGovernmentByColor((String) packet.getAttribute("color"));
+        Trade trade = TradeController.allTrades.get((String) packet.getAttribute("tradeId"));
+        if (trade.getTradeType().equals("request")) {
+            GovernmentController.consumeProduct(government, trade.getType(), trade.getAmount());
+            government.addGold(trade.getPrice());
+            trade.getSender().addGold(-trade.getPrice());
+            GovernmentController.generateProduct(trade.getSender(), trade.getType(), trade.getAmount());
+        } else {
+            GovernmentController.consumeProduct(trade.getSender(), trade.getType(), trade.getAmount());
+            GovernmentController.generateProduct(government, trade.getType(), trade.getAmount());
+        }
+    }
+
+    private void rejectTrade() {
+        Trade trade = TradeController.allTrades.get((String) packet.getAttribute("tradeId"));
+        trade.reject();
+    }
+
+    private void getRequestNotification() {
+        Government government = getGovernmentByColor((String) packet.getAttribute("color1"));
+        String text = "New Trade Request\nFrom Government: " + government.getUser().getNickname();
+        MenuHoverBox notification = new MenuHoverBox(GameMenu.root, text, 10, 10);
+        notification.setOnMouseClicked(mouseEvent -> {
+            GameViewController.currentTradeId = (String) packet.getAttribute("tradeId");
+            GameViewController.setCenterOfBar("showReceivedTrade");
+        });
     }
 }

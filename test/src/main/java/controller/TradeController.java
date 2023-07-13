@@ -1,10 +1,12 @@
 package controller;
 
+import client.Packet;
 import model.Government;
 import model.Trade;
 import model.menugui.MenuPopUp;
 import view.menus.GameMenu;
 
+import java.io.IOException;
 import java.util.LinkedHashMap;
 
 public class TradeController {
@@ -28,6 +30,28 @@ public class TradeController {
         currentGovernment.addSentTrade(trade);
         targetGovernment.addReceivedTrade(trade);
         allTrades.put(trade.getId(), trade);
+        try {
+            Packet packet = new Packet("trade goods", "ShopTrade");
+            packet.addAttribute("color1", currentGovernment.getColor());
+            packet.addAttribute("color2", targetGovernment.getColor());
+            packet.addAttribute("message", message);
+            packet.addAttribute("resourceType", resourceType);
+            packet.addAttribute("resourceAmount", Integer.toString(resourceAmount));
+            packet.addAttribute("price", Integer.toString(price));
+            packet.addAttribute("tradeId", trade.getId());
+            packet.sendPacket();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            Packet requestNotification = new Packet("request notification", "ShopTrade");
+            requestNotification.addAttribute("color1", currentGovernment.getColor());
+            requestNotification.addAttribute("targetUsername", targetGovernment.getUser().getUsername());
+            requestNotification.addAttribute("tradeId", trade.getId());
+            requestNotification.sendPacket();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return "request sent successfully";
     }
 
@@ -73,6 +97,16 @@ public class TradeController {
             trade.getSender().addGold(-trade.getPrice());
             GovernmentController.generateProduct(trade.getSender(), trade.getType(), trade.getAmount());
         } else GovernmentController.generateProduct(currentGovernment, trade.getType(), trade.getAmount());
+
+        try {
+            Packet packet = new Packet("accept trade", "ShopTrade");
+            packet.addAttribute("tradeId", trade.getId());
+            packet.addAttribute("color1", currentGovernment.getColor());
+            packet.sendPacket();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         return true;
     }
 

@@ -38,7 +38,7 @@ public class ProfileView extends Pane {
         HBox profilePart = new HBox();
         HBox avatarPart = new HBox();
         Rectangle rectangle = new Rectangle(30,30);
-        ByteArrayOutputStream output = UsersController.getImageFromServerByUsername(username);
+        ByteArrayOutputStream output = UsersController.getImageFromServerByUsername(username, false);
         rectangle.setFill(new ImagePattern(new Image(new ByteArrayInputStream(output.toByteArray()))));
         rectangle.setArcWidth(50);
         rectangle.setArcHeight(50);

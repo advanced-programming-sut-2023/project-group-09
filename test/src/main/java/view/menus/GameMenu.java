@@ -75,10 +75,13 @@ public class GameMenu extends Application {
     public static boolean selectDone = false;
     public static boolean isSelected = false;
     public static String movingState = UnitMovingState.NORMAL.getState();
+    public static PacketOnlineReceiver packetOnlineReceiver;
 
     public static ImageView standing;
     public static ImageView defensive;
     public static ImageView aggressive;
+
+    public static boolean isSpectator = false;
 
     //---------------------------------
     public static HashMap<String, Integer> unitsCount = new HashMap<>();
@@ -139,9 +142,11 @@ public class GameMenu extends Application {
 //        selectCursor.setFill(new ImagePattern(GameImages.imageViews.get("selectMove")));
         Rectangle clipRectangle = new Rectangle(1200, 800);
         root.setClip(clipRectangle);
-        setEventListeners();
-        GameViewController.setCenterOfBar();
-        GameViewController.createBorderRectangles(gameMap, miniMap, root);
+        if (!isSpectator) {
+            setEventListeners();
+            GameViewController.setCenterOfBar();
+        }
+        GameViewController.createBorderRectangles(gameMap, miniMap,root);
         attacking = new ImageView(new Image(GameTile.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm() +
                 "icons/attacking.gif"));
         attacking.setViewOrder(-2000);
@@ -161,13 +166,11 @@ public class GameMenu extends Application {
         });
         createSelectedArea();
 
-
-        //ChatMenu chatMenu = new ChatMenu();
-        //GameMenu.root.getChildren().add(chatMenu);
-        PacketOnlineReceiver packetOnlineReceiver = new PacketOnlineReceiver();
+        packetOnlineReceiver = new PacketOnlineReceiver();
         packetOnlineReceiver.start();
         GameViewController.setNextTurnTimeline();
-        GovernmentController.sendGetLordName();
+        if (!GameMenu.isSpectator)
+            GovernmentController.sendGetLordName();
 
         stage.show();
     }
@@ -369,14 +372,15 @@ public class GameMenu extends Application {
     }
 
     public static void showAttacking() {
-
-        if (GameController.getGame().getCurrentGovernment().getNumberOfTroopInAttack().size() > 0) {
-            if (root.getChildren().contains(attacking)) {
-                return;
+        if (!GameMenu.isSpectator) {
+            if (GameController.getGame().getCurrentGovernment().getNumberOfTroopInAttack().size() > 0) {
+                if (root.getChildren().contains(attacking)) {
+                    return;
+                }
+                root.getChildren().add(attacking);
+            } else {
+                root.getChildren().remove(attacking);
             }
-            root.getChildren().add(attacking);
-        } else {
-            root.getChildren().remove(attacking);
         }
     }
 
