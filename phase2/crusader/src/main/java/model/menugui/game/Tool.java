@@ -20,6 +20,7 @@ import view.controllers.HumanViewController;
 import view.menus.GameMenu;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Tool extends ImageView {
     private Military military;
@@ -119,14 +120,14 @@ public class Tool extends ImageView {
             if (military.getMove() != null && military.getMove().isMoving()) {
                 if (getDistance() < 7) {
                     if (GameMap.gameTroops[military.getY()][military.getX()] == null) {
-                        GameMap.gameTroops[military.getY()][military.getX()] = new ArrayList<>();
+                        GameMap.gameTroops[military.getY()][military.getX()] = new HashSet<>();
                     }
                     doAttack();
                     GameMap.gameTroops[military.getY()][military.getX()].remove(this);
                     military.getMove().moveOneTurn();
                     changeGameTile(gameTile);
                     if (GameMap.gameTroops[military.getY()][military.getX()] == null) {
-                        GameMap.gameTroops[military.getY()][military.getX()] = new ArrayList<>();
+                        GameMap.gameTroops[military.getY()][military.getX()] = new HashSet<>();
                     }
                     GameTile next = GameMap.getGameTile(military.getX(), military.getY());
                     direction = HumanViewController.getDirection(gameTile.getX(), gameTile.getY(), next.getX(), next.getY());

@@ -20,10 +20,7 @@ import model.human.military.Military;
 import model.human.military.Tunneler;
 import model.tools.Tool;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 
 public class HumanController {
@@ -838,7 +835,7 @@ public class HumanController {
         return true;
     }
 
-    public static void setState(String state, ArrayList<Military> militaries) {
+    public static void setState(String state, HashSet<Military> militaries) {
         for (Military military : militaries) {
             military.setMilitaryState(state);
         }

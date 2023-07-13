@@ -13,6 +13,7 @@ import view.controllers.HumanViewController;
 import view.menus.GameMenu;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Citizen extends ImageView {
     private final Civilian civilian;
@@ -54,15 +55,8 @@ public class Citizen extends ImageView {
         move = new Timeline(new KeyFrame(Duration.millis((20 - civilian.getSpeed()) * 10), actionEvent -> {
             if (civilian.getMove() != null && civilian.getMove().isMoving()) {
                 if (getDistance() < 7) {
-                    if (GameMap.gameTroops[civilian.getY()][civilian.getX()] == null) {
-                        GameMap.gameTroops[civilian.getY()][civilian.getX()] = new ArrayList<>();
-                    }
-                    GameMap.gameTroops[civilian.getY()][civilian.getX()].remove(this);
                     civilian.getMove().moveOneTurn();
                     changeGameTile(gameTile);
-                    if (GameMap.gameTroops[civilian.getY()][civilian.getX()] == null) {
-                        GameMap.gameTroops[civilian.getY()][civilian.getX()] = new ArrayList<>();
-                    }
                     GameTile next = GameMap.getGameTile(civilian.getX(), civilian.getY());
                     direction = HumanViewController.getDirection(gameTile.getX(), gameTile.getY(), next.getX(), next.getY());
                     step = (step + 1) % 8;

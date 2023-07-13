@@ -6,6 +6,7 @@ import model.game.Tile;
 import view.menus.GameMenu;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class GameMap extends Pane {
     private final Map map;
@@ -19,7 +20,8 @@ public class GameMap extends Pane {
     private int cameraY;
     private int tilesLoaded;
     private static GameTile[][] gameTiles;
-    public static ArrayList<Troop>[][] gameTroops;
+    public static HashSet<Troop>[][] gameTroop;
+    public static HashSet<Troop>[][] gameTroops;
     private final boolean[][] load;
 
     private static final double ZOOM_FACTOR = 1.1;
@@ -33,7 +35,7 @@ public class GameMap extends Pane {
         height = map.getLength() * ((tileHeight * this.getScaleY()) / 2);
         this.map = map;
         gameTiles = new GameTile[map.getWidth()][map.getWidth()];
-        gameTroops = new ArrayList[map.getWidth()][map.getWidth()];
+        gameTroops = new HashSet[map.getWidth()][map.getWidth()];
         this.cameraX = (int) cameraX;
         this.cameraY = (int) cameraY;
         this.tilesLoaded = 0;

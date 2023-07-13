@@ -123,9 +123,21 @@ public class GameMaps {
         map2.addDefaultCastle(190, 120);
         smallMaps.add(map2);
     }
-
+    public static void createMap3() {
+        Map map3 = new Map(200, 200);
+        map3.addDefaultCastle(25, 60);
+        map3.addDefaultCastle(85, 35);
+        map3.addDefaultCastle(170, 40);
+        map3.addDefaultCastle(120, 90);
+        map3.addDefaultCastle(35, 180);
+        map3.addDefaultCastle(110, 180);
+        map3.addDefaultCastle(180, 180);
+        map3.addDefaultCastle(190, 120);
+        smallMaps.add(map3);
+    }
     public static void createMaps() {
         createMap1();
         createMap2();
+        createMap3();
     }
 }

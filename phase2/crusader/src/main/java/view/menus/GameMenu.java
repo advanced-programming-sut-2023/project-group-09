@@ -92,8 +92,9 @@ public class GameMenu extends Application {
         stage.setScene(scene);
         stage.setFullScreen(true);
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+        ViewController.stopMenuMusic();
+        ViewController.playGameMusic();
         root = ViewController.makeStackPaneScreen(stage, pane, 1200, 800);
-
         root.setOnMouseEntered(mouseEvent -> scene.setCursor(Cursor.DEFAULT));
         root.setOnMouseExited(mouseEvent -> scene.setCursor(Cursor.NONE));
 
@@ -120,16 +121,28 @@ public class GameMenu extends Application {
         selectCursor.setFill(new ImagePattern(GameImages.imageViews.get("selectMove")));
         Rectangle clipRectangle = new Rectangle(1200, 800);
         root.setClip(clipRectangle);
-        MapController.dropMilitary(14, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(11, 5, "slave", GameController.getGame().getCurrentGovernment());
 
-        MapController.dropMilitary(20, 5, "slave", GameController.getGame().getGovernments().get(1));
-        MapController.dropMilitary(21, 5, "fireThrower", GameController.getGame().getGovernments().get(1));
-        MapController.dropMilitary(21, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
-        MapController.dropMilitary(22, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
-        MapController.dropMilitary(22, 5, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
 
-        //MapController.dropCivilian(10,10,GameController.getGame().getCurrentGovernment(),false);
+
+
+
+
+        MapController.dropMilitary(20, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
+        MapController.dropMilitary(21, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
+        MapController.dropMilitary(22, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
+        MapController.dropMilitary(20, 6, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
+        MapController.dropMilitary(21, 6, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
+        MapController.dropMilitary(20, 7, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
+        MapController.dropMilitary(21, 7, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
+        MapController.dropMilitary(22, 7, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
+        MapController.dropMilitary(30, 5, "spearman", GameController.getGame().getGovernments().get(1));
+        MapController.dropMilitary(31, 5, "spearman", GameController.getGame().getGovernments().get(1));
+        MapController.dropMilitary(32, 5, "spearman",GameController.getGame().getGovernments().get(1));
+        MapController.dropMilitary(30, 6, "archer", GameController.getGame().getGovernments().get(1));
+        MapController.dropMilitary(31, 6, "archer", GameController.getGame().getGovernments().get(1));
+        MapController.dropMilitary(30, 7, "swordsman", GameController.getGame().getGovernments().get(1));
+        MapController.dropMilitary(31, 7, "swordsman", GameController.getGame().getGovernments().get(1));
+        MapController.dropMilitary(32, 7, "swordsman", GameController.getGame().getGovernments().get(1));
         setEventListeners();
         GameViewController.setCenterOfBar();
         GameViewController.createBorderRectangles(gameMap, miniMap);
@@ -254,7 +267,6 @@ public class GameMenu extends Application {
                     + "barrackBar.png");
             menuBox.setTranslateX(175);
             menuBox.setTranslateY(-25);
-            System.out.println("width:" + menuBox.getImage().getWidth());
             menuBar.getChildren().add(menuBox);
             hoveringButton.setTranslateX(275);
             hoveringButton.setTranslateY(45);
@@ -342,8 +354,12 @@ public class GameMenu extends Application {
                 return;
             }
             root.getChildren().add(attacking);
+            ViewController.playAttackMusic();
+            ViewController.stopGameMusic();
         } else {
             root.getChildren().remove(attacking);
+            ViewController.stopAttackMusic();
+            ViewController.playGameMusic();
         }
     }
 
@@ -407,7 +423,7 @@ public class GameMenu extends Application {
         });
 
         Timeline selectDoneTimeline = new Timeline(new KeyFrame(Duration.millis(100), actionEvent -> {
-            if (selectDone) {
+            if (selectDone && !selectedUnit) {
                 endSelectionTile = currentTile;
                 selectedArea.setVisible(false);
                 selectedArea.setWidth(0);
@@ -435,21 +451,21 @@ public class GameMenu extends Application {
                         } else {
                             HumanViewController.addTypes();
                             if (HumanViewController.selectedMilitaries.size() != 0) {
-                                Military military = HumanViewController.selectedMilitaries.get(0);
+                                Military military = HumanViewController.selectedMilitaries.stream().toList().get(0);
                                 HumanController.militaries.clear();
                                 HumanController.militaries.add(military);
                             }
                         }
                     }
                 }
-                String text = (selectedTiles.size() == 1) ? GameController.showDetailsOfTile(startSelectionTile.getTileX(),
-                        startSelectionTile.getTileY()) : GameController.showDetailsOfTiles(selectedTiles);
-                if (text != "") {
-                    MenuHoverBox details = new MenuHoverBox(root, text);
-                    details.setOnMouseExited(mouseEvent -> {
-                        details.getDetailsParent().getChildren().remove(details);
-                    });
-                }
+//                String text = (selectedTiles.size() == 1) ? GameController.showDetailsOfTile(startSelectionTile.getTileX(),
+//                        startSelectionTile.getTileY()) : GameController.showDetailsOfTiles(selectedTiles);
+//                if (text != "") {
+//                    MenuHoverBox details = new MenuHoverBox(root, text);
+//                    details.setOnMouseExited(mouseEvent -> {
+//                        details.getDetailsParent().getChildren().remove(details);
+//                    });
+//                }
 
             }
         }));

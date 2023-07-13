@@ -285,35 +285,11 @@ public class GameTile {
     }
 
     public void setSensor() {
-        textureImage.setOnMouseEntered(mouseEvent -> {
-            GameMenu.currentTile = this;
-        });
+        textureImage.setOnMouseEntered(mouseEvent -> GameMenu.currentTile = this);
         textureImage.setOnMouseClicked(mouseEvent -> {
             if (GameViewController.isDelete) {
                 GameViewController.isDelete = false;
                 GameMenu.scene.setCursor(Cursor.DEFAULT);
-            } else if (mouseEvent.getButton() == MouseButton.PRIMARY && !GameMenu.selectedUnit && !GameViewController.isTextureSelected && GameMenu.isSelected) {
-                GameViewController.unselectTiles();
-                if (GameMenu.selectedUnit) {
-                    if (GameMenu.unitsCount.get("lord") == null || GameMenu.unitsCount.get("lord") != 1 || GameMenu.selectedTroops.size() != 1) {
-                        if (GameMenu.unitsCount.get("lord") != null && GameMenu.unitsCount.get("lord") != 0) {
-                            GameMenu.selectedTroops.removeIf(i -> i.getName().equals("lord"));
-                            GameMenu.unitsCount.put("lord", 0);
-                        }
-                        GameMenu.hoveringBarStateText.setText("Unit Menu");
-                        GameViewController.setCenterOfBar();
-                    } else {
-                        HumanViewController.addTypes();
-                        if (GameMenu.selectedTroops.size() != 0) {
-                            Military military = null;
-                            for (Military m : GameMenu.selectedTroops) {
-                                military = m;
-                            }
-                            HumanController.militaries.clear();
-                            HumanController.militaries.add(military);
-                        }
-                    }
-                }
             } else if (GameMenu.isSelected && mouseEvent.getButton() == MouseButton.SECONDARY && !GameViewController.isTextureSelected) {
                 GameViewController.unselectTiles();
             } else if (GameMenu.selectedUnit && !GameViewController.isTextureSelected) {
@@ -323,7 +299,8 @@ public class GameTile {
                 GameViewController.unselectTilesWithOutUnits();
             } else if (GameMenu.isSelected && !GameViewController.isTextureSelected) {
                 GameViewController.unselectTiles();
-            } else if (!GameMenu.isSelected) {
+            } else if (!GameMenu.isSelected && !GameViewController.isTextureSelected) {
+                GameViewController.unselectTiles();
                 GameMenu.startSelectionTile = this;
                 GameMenu.endSelectionTile = this;
                 GameMenu.selectedTiles.add(this);

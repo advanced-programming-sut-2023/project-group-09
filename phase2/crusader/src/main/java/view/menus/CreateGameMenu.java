@@ -77,7 +77,7 @@ public class CreateGameMenu extends Application {
     }
 
     private void makeTitleStuff() {
-        String[] maps = {"Map 1", "Map 2"};
+        String[] maps = {"Map 1", "Map 2", "Empty"};
         mapsField = new MenuChoiceBox(menuBox, "Map", -90, -250,
                 FXCollections.observableArrayList(maps), 300);
         menuBox.getChildren().add(mapsField);
@@ -208,13 +208,13 @@ public class CreateGameMenu extends Application {
                 castles = new ArrayList<>();
                 GameMaps.createMaps();
                 Map selectedMap = (mapsField.getValue().equals("Map 1")) ?
-                        GameMaps.largeMaps.get(0) : GameMaps.smallMaps.get(0);
+                        GameMaps.largeMaps.get(0) : GameMaps.smallMaps.get(1);
                 menuBox.getChildren().remove(previewMap);
                 previewMap = new PreviewMap(selectedMap, 230, -120);
                 menuBox.getChildren().add(previewMap);
                 for (int i = 0; i < 8; i++) {
-                    castleFlags.get(i).setTranslateX(selectedMap.getDefaultCastles().get(i).getFirst() - selectedMap.getWidth() / 2);
-                    castleFlags.get(i).setTranslateY(selectedMap.getDefaultCastles().get(i).getSecond() - selectedMap.getWidth() / 2);
+                    castleFlags.get(i).setTranslateX(selectedMap.getDefaultCastles().get(i).getFirst() - (double) selectedMap.getWidth() / 2);
+                    castleFlags.get(i).setTranslateY(selectedMap.getDefaultCastles().get(i).getSecond() - (double) selectedMap.getWidth() / 2);
                     castleFlags.get(i).setVisible(true);
                     previewMap.getChildren().add(castleFlags.get(i));
                     castles.add("Castle " + (i + 1));
@@ -256,7 +256,7 @@ public class CreateGameMenu extends Application {
             governmentUsernames.get(governmentNumber - 1).handlingError("username doesn't exist!");
             return;
         }
-        if (addedGovernments.contains(governmentUsernames.get(governmentNumber - 1).getText())){
+        if (addedGovernments.contains(governmentUsernames.get(governmentNumber - 1).getText())) {
             governmentUsernames.get(governmentNumber - 1).handlingError("this government has been added!");
             return;
         }

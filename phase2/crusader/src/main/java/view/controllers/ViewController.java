@@ -19,6 +19,13 @@ public class ViewController {
 
     public static MediaPlayer musicPlayer;
 
+    public static MediaPlayer attackMediaPlayer;
+    public static MediaPlayer gameMediaPlayer;
+
+    public static boolean menuIsPlaying;
+    public static boolean attackIsPlaying;
+    public static boolean gameIsPlaying;
+
     //give -1 if you want full height
     public static Pane makeScreen(Stage stage, BorderPane pane, double width, double height) {
         stage.setFullScreen(true);
@@ -88,13 +95,61 @@ public class ViewController {
     }
 
     public static void playMenuMusic() {
+        if (menuIsPlaying) return;
         Media media = new Media(ViewController.class.getResource(Paths.MENU_IMAGES.getPath())
                 .toExternalForm() + "menuMusic.mp3");
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
         mediaPlayer.setCycleCount(-1);
         musicPlayer = mediaPlayer;
+        menuIsPlaying = true;
     }
+
+    public static void playAttackMusic() {
+        if (attackIsPlaying) return;
+        Media media = new Media(ViewController.class.getResource(Paths.MENU_IMAGES.getPath())
+                .toExternalForm() + "attack.mp3");
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.play();
+        mediaPlayer.setCycleCount(-1);
+        attackMediaPlayer = mediaPlayer;
+        attackIsPlaying = true;
+    }
+
+    public static void playGameMusic() {
+        if (gameIsPlaying) return;
+        Media media = new Media(ViewController.class.getResource(Paths.MENU_IMAGES.getPath())
+                .toExternalForm() + "game.mp3");
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.play();
+        mediaPlayer.setCycleCount(-1);
+        gameMediaPlayer= mediaPlayer;
+        gameIsPlaying = true;
+
+    }
+
+    public static void stopMenuMusic(){
+        if (musicPlayer != null){
+            musicPlayer.stop();
+            menuIsPlaying = false;
+        }
+    }
+
+    public static void stopGameMusic(){
+        if (gameMediaPlayer != null){
+            gameMediaPlayer.stop();
+            gameIsPlaying = false;
+        }
+    }
+
+
+    public static void stopAttackMusic(){
+        if (attackMediaPlayer != null){
+            attackMediaPlayer.stop();
+            attackIsPlaying = false;
+        }
+    }
+
 
     public static void createAndShowAlert(Alert.AlertType alertType, String title, String header, String content) {
         Alert alert = new Alert(alertType);
@@ -117,37 +172,31 @@ public class ViewController {
         button.setScaleX(3);
         button.setScaleY(3);
 
-        button.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                BackgroundImage backgroundImage =
-                        new BackgroundImage(new Image(ViewController.class.getResource
-                                (Paths.USER_ICONS.getPath()).toExternalForm() + "exitIcon.png"),
-                                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.REPEAT,
-                                BackgroundPosition.DEFAULT,
-                                new BackgroundSize(1.0, 1.0, true, true, false, false));
-                Background background = new Background(backgroundImage);
-                button.setBackground(background);
-            }
+        button.setOnMouseExited(mouseEvent -> {
+            BackgroundImage backgroundImage1 =
+                    new BackgroundImage(new Image(ViewController.class.getResource
+                            (Paths.USER_ICONS.getPath()).toExternalForm() + "exitIcon.png"),
+                            BackgroundRepeat.NO_REPEAT, BackgroundRepeat.REPEAT,
+                            BackgroundPosition.DEFAULT,
+                            new BackgroundSize(1.0, 1.0, true, true, false, false));
+            Background background1 = new Background(backgroundImage1);
+            button.setBackground(background1);
         });
 
-        button.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                Media media = new Media(ViewController.class.getResource(Paths.MENU_IMAGES.getPath())
-                        .toExternalForm() + "exitSound.mp3");
-                MediaPlayer mediaPlayer = new MediaPlayer(media);
-                mediaPlayer.setCycleCount(1);
-                mediaPlayer.play();
-                BackgroundImage backgroundImage =
-                        new BackgroundImage(new Image(ViewController.class.getResource
-                                (Paths.USER_ICONS.getPath()).toExternalForm() + "exitHoverIcon.png"),
-                                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.REPEAT,
-                                BackgroundPosition.DEFAULT,
-                                new BackgroundSize(1.0, 1.0, true, true, false, false));
-                Background background = new Background(backgroundImage);
-                button.setBackground(background);
-            }
+        button.setOnMouseEntered(mouseEvent -> {
+            Media media = new Media(ViewController.class.getResource(Paths.MENU_IMAGES.getPath())
+                    .toExternalForm() + "exitSound.mp3");
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setCycleCount(1);
+            mediaPlayer.play();
+            BackgroundImage backgroundImage12 =
+                    new BackgroundImage(new Image(ViewController.class.getResource
+                            (Paths.USER_ICONS.getPath()).toExternalForm() + "exitHoverIcon.png"),
+                            BackgroundRepeat.NO_REPEAT, BackgroundRepeat.REPEAT,
+                            BackgroundPosition.DEFAULT,
+                            new BackgroundSize(1.0, 1.0, true, true, false, false));
+            Background background12 = new Background(backgroundImage12);
+            button.setBackground(background12);
         });
 
         button.setOnMouseClicked(new EventHandler<MouseEvent>() {

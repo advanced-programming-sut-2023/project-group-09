@@ -17,7 +17,6 @@ public class MainController {
         DBController.loadMilitary();
         DBController.loadBuildings();
         DBController.loadTools();
-        new ImageLoader().start();
         GameMaps.createMaps();
     }
 

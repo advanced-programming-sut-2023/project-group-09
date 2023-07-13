@@ -30,6 +30,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -84,7 +86,7 @@ public class GameViewController {
     public static HashMap<String, String> buildingNameToName = new HashMap<>();
     public static HashMap<String, Double> buildingScales = new HashMap<>();
     public static HashMap<String, Double> buildingCoordinates = new HashMap<>();
-
+    public static MediaPlayer mediaPlayer;
 
     public static void setBarForCurrentGovernment() {
         ImageView emptyPage = new ImageView(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath()).toExternalForm()
@@ -2404,7 +2406,7 @@ public class GameViewController {
             colorAdjust.setSaturation(0);
             colorAdjust.setBrightness(0);
             if (requirements != null) {
-                Military human = (Military) GameHumans.getUnit(troop);
+                Military human = GameHumans.getUnit(troop);
                 System.out.println(human.getWeapon());
                 requirements.get(human.getWeapon()).setEffect(colorAdjust);
                 for (String armour : human.getArmours())
@@ -2466,50 +2468,33 @@ public class GameViewController {
         icon.setScaleX(size);
         icon.setScaleY(size);
         GameMenu.menuBar.getChildren().add(icon);
-        icon.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                GameMenu.hoveringBarStateText.setText(name);
-            }
-        });
-        icon.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                GameMenu.hoveringBarStateText.setText("");
-            }
-        });
+        icon.setOnMouseEntered(mouseEvent -> GameMenu.hoveringBarStateText.setText(name));
+        icon.setOnMouseExited(mouseEvent -> GameMenu.hoveringBarStateText.setText(""));
 
 
-        icon.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                isTextureSelected = true;
-                GameMenu.gameMap.setOnMouseDragged(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        if (mouseEvent.getButton() == MouseButton.PRIMARY && isTextureSelected) {
-                            Pair<Integer, Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
-                            tileX = pair.getFirst();
-                            tileY = pair.getSecond();
-                            System.out.println("Tile founded at : " + tileX + " " + tileY);
-                            GameMenu.hoveringBarStateText.setText(MapController.dropRock(tileX, tileY, rockDirection));
-                            GameMap.getGameTile(tileX, tileY).refreshTile();
-                        } else {
-                            isTextureSelected = false;
-                        }
+        icon.setOnMouseClicked(mouseEvent -> {
+            isTextureSelected = true;
+            GameMenu.gameMap.setOnMouseDragged(mouseEvent1 -> {
+                if (mouseEvent1.getButton() == MouseButton.PRIMARY && isTextureSelected) {
+                    Pair<Integer, Integer> pair = tileCoordinateWithMouseEvent(mouseEvent1);
+                    tileX = pair.getFirst();
+                    tileY = pair.getSecond();
+                    GameMenu.hoveringBarStateText.setText(MapController.dropRock(tileX, tileY, rockDirection));
+                    GameMap.getGameTile(tileX, tileY).refreshTile();
+                } else {
+                    isTextureSelected = false;
+                }
+            });
+
+            GameMenu.gameMap.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                        isTextureSelected = false;
                     }
-                });
+                }
+            });
 
-                GameMenu.gameMap.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        if (mouseEvent.getButton() == MouseButton.SECONDARY) {
-                            isTextureSelected = false;
-                        }
-                    }
-                });
-
-            }
         });
     }
 
@@ -2521,50 +2506,34 @@ public class GameViewController {
         icon.setScaleX(size);
         icon.setScaleY(size);
         GameMenu.menuBar.getChildren().add(icon);
-        icon.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                GameMenu.hoveringBarStateText.setText(name);
-            }
-        });
-        icon.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                GameMenu.hoveringBarStateText.setText("");
-            }
-        });
+        icon.setOnMouseEntered(mouseEvent -> GameMenu.hoveringBarStateText.setText(name));
+        icon.setOnMouseExited(mouseEvent -> GameMenu.hoveringBarStateText.setText(""));
 
 
-        icon.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                isTextureSelected = true;
-                GameMenu.gameMap.setOnMouseDragged(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        if (mouseEvent.getButton() == MouseButton.PRIMARY && isTextureSelected) {
-                            Pair<Integer, Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
-                            tileX = pair.getFirst();
-                            tileY = pair.getSecond();
-                            System.out.println("Tile founded at : " + tileX + " " + tileY);
-                            GameMenu.hoveringBarStateText.setText(MapController.dropTree(tileX, tileY, tree));
-                            GameMap.getGameTile(tileX, tileY).refreshTile();
-                        } else {
-                            isTextureSelected = false;
-                        }
+        icon.setOnMouseClicked(mouseEvent -> {
+            isTextureSelected = true;
+            GameMenu.gameMap.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    if (mouseEvent.getButton() == MouseButton.PRIMARY && isTextureSelected) {
+                        Pair<Integer, Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
+                        tileX = pair.getFirst();
+                        tileY = pair.getSecond();
+                        System.out.println("Tile founded at : " + tileX + " " + tileY);
+                        GameMenu.hoveringBarStateText.setText(MapController.dropTree(tileX, tileY, tree));
+                        GameMap.getGameTile(tileX, tileY).refreshTile();
+                    } else {
+                        isTextureSelected = false;
                     }
-                });
+                }
+            });
 
-                GameMenu.gameMap.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        if (mouseEvent.getButton() == MouseButton.SECONDARY) {
-                            isTextureSelected = false;
-                        }
-                    }
-                });
+            GameMenu.gameMap.setOnMouseClicked(mouseEvent1 -> {
+                if (mouseEvent1.getButton() == MouseButton.SECONDARY) {
+                    isTextureSelected = false;
+                }
+            });
 
-            }
         });
     }
 
@@ -2576,50 +2545,31 @@ public class GameViewController {
         icon.setScaleX(size);
         icon.setScaleY(size);
         GameMenu.menuBar.getChildren().add(icon);
-        icon.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                GameMenu.hoveringBarStateText.setText(name);
-            }
-        });
-        icon.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                GameMenu.hoveringBarStateText.setText("");
-            }
-        });
+        icon.setOnMouseEntered(mouseEvent -> GameMenu.hoveringBarStateText.setText(name));
+        icon.setOnMouseExited(mouseEvent -> GameMenu.hoveringBarStateText.setText(""));
 
 
-        icon.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                isTextureSelected = true;
-                GameMenu.gameMap.setOnMouseDragged(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        if (mouseEvent.getButton() == MouseButton.PRIMARY && isTextureSelected) {
-                            Pair<Integer, Integer> pair = tileCoordinateWithMouseEvent(mouseEvent);
-                            tileX = pair.getFirst();
-                            tileY = pair.getSecond();
-                            System.out.println("Tile founded at : " + tileX + " " + tileY);
-                            GameMenu.hoveringBarStateText.setText(MapController.setTexture(tileX, tileY, texture));
-                            GameMap.getGameTile(tileX, tileY).refreshTile();
-                        } else {
-                            isTextureSelected = false;
-                        }
-                    }
-                });
+        icon.setOnMouseClicked(mouseEvent -> {
+            isTextureSelected = true;
+            GameMenu.gameMap.setOnMouseDragged(mouseEvent1 -> {
+                if (mouseEvent1.getButton() == MouseButton.PRIMARY && isTextureSelected) {
+                    Pair<Integer, Integer> pair = tileCoordinateWithMouseEvent(mouseEvent1);
+                    tileX = pair.getFirst();
+                    tileY = pair.getSecond();
+                    System.out.println("Tile founded at : " + tileX + " " + tileY);
+                    GameMenu.hoveringBarStateText.setText(MapController.setTexture(tileX, tileY, texture));
+                    GameMap.getGameTile(tileX, tileY).refreshTile();
+                } else {
+                    isTextureSelected = false;
+                }
+            });
 
-                GameMenu.gameMap.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        if (mouseEvent.getButton() == MouseButton.SECONDARY) {
-                            isTextureSelected = false;
-                        }
-                    }
-                });
+            GameMenu.gameMap.setOnMouseClicked(mouseEvent12 -> {
+                if (mouseEvent12.getButton() == MouseButton.SECONDARY) {
+                    isTextureSelected = false;
+                }
+            });
 
-            }
         });
     }
 
@@ -2633,24 +2583,9 @@ public class GameViewController {
         GameMenu.menuBar.getChildren().add(icon);
         Building sampleBuilding = GameBuildings.getBuilding(buildingName);
         if (sampleBuilding != null) {
-            icon.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    GameMenu.hoveringBarStateText.setText(name);
-                }
-            });
-            icon.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    GameMenu.hoveringBarStateText.setText("");
-                }
-            });
-            icon.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    setCenterOfBar();
-                }
-            });
+            icon.setOnMouseEntered(mouseEvent -> GameMenu.hoveringBarStateText.setText(name));
+            icon.setOnMouseExited(mouseEvent -> GameMenu.hoveringBarStateText.setText(""));
+            icon.setOnMouseClicked(mouseEvent -> setCenterOfBar());
         }
     }
 
@@ -2806,9 +2741,15 @@ public class GameViewController {
         tileX = pair.getFirst();
         tileY = pair.getSecond();
         tileY = pair.getSecond();
-        System.out.println("Tile founded at : " + tileX + " " + tileY);
         String side = getSideOfGatehouseFromFilename(droppedPicFileName);
-        GameMenu.hoveringBarStateText.setText(GameController.dropBuilding(tileX, tileY, droppedBuildingName, side));
+        String massage = GameController.dropBuilding(tileX, tileY, droppedBuildingName, side);
+        if (!massage.equals("building dropped successfully!")){
+            Media media = new Media(ViewController.class.getResource("/sounds/")
+                    .toExternalForm() + "drop-warning.mp3");
+            mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.play();
+        }
+        GameMenu.hoveringBarStateText.setText(massage);
         GameMap.getGameTile(tileX, tileY).refreshTile();
     }
 

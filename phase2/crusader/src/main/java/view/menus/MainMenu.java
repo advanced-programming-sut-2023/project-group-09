@@ -4,18 +4,21 @@ import controller.DBController;
 import controller.MainController;
 import enumeration.Paths;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import model.menugui.MenuButton;
+import view.controllers.ImageLoader;
 import view.controllers.ViewController;
 import view.menus.profile.ProfileMenu;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
@@ -39,23 +42,38 @@ public class MainMenu extends Application {
                 new URL(Objects.requireNonNull(LoginMenu.class.getResource("/FXML/mainMenu.fxml")).toExternalForm()));
         Scene scene = new Scene(pane);
         stage.setScene(scene);
-        root = ViewController.makeStackPaneScreen(stage, pane, 1000, -1);
+        root = ViewController.makeStackPaneScreen(stage, pane, 1250, 940);
         setBackground();
 
-        MenuButton startGameButton = new MenuButton("Start game" , root , 0 , -170 , true);
-        startGameButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                CreateGameMenu createGameMenu = new CreateGameMenu();
-                try {
-                    createGameMenu.start(stage);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+        String videoPath = "files/rs.mp4";
+
+        Media media = new Media(new File(videoPath).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        MediaView mediaView = new MediaView(mediaPlayer);
+        // Set the size of the MediaView
+        double videoWidth = 353;
+        double videoHeight = 550;
+        mediaView.setFitWidth(videoWidth);
+        //mediaView.setFitHeight(videoHeight);
+        new ImageLoader().start();
+        // Set the translation (position) of the MediaView
+        double translateX = 310;
+        double translateY = -40;
+        mediaView.setTranslateX(translateX);
+        mediaView.setTranslateY(translateY);
+
+
+        MenuButton startGameButton = new MenuButton("Start game", root, -100, -170, true);
+        startGameButton.setOnMouseClicked(mouseEvent -> {
+            CreateGameMenu createGameMenu = new CreateGameMenu();
+            try {
+                createGameMenu.start(stage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         });
 
-        MenuButton menuButton = new MenuButton("Profile menu",root,0,-100,true);
+        MenuButton menuButton = new MenuButton("Profile menu", root, -100, -100, true);
         menuButton.setOnMouseClicked(mouseEvent -> {
             try {
                 new ProfileMenu().start(stage);
@@ -64,7 +82,7 @@ public class MainMenu extends Application {
             }
         });
 
-        MenuButton logoutButton = new MenuButton("Logout" ,  root , 0 , -25 , true);
+        MenuButton logoutButton = new MenuButton("Logout", root, -100, -25, true);
 
         logoutButton.setOnMouseClicked(mouseEvent -> {
             controller.Application.setCurrentUser(null);
@@ -77,21 +95,22 @@ public class MainMenu extends Application {
             }
         });
 
-        MenuButton exitButton = new MenuButton("Exit" , root , 0 , 50 , true);
+        MenuButton exitButton = new MenuButton("Exit", root, -100, 50, true);
         exitButton.setOnMouseClicked(mouseEvent -> MainController.exitCrusader());
 
         root.getChildren().add(menuButton);
         root.getChildren().add(logoutButton);
         root.getChildren().add(exitButton);
         root.getChildren().add(startGameButton);
-
+        root.getChildren().add(mediaView);
+        mediaPlayer.play();
         stage.show();
     }
 
-    public void setBackground(){
+    public void setBackground() {
         BackgroundImage backgroundImage =
-                new BackgroundImage( new Image( getClass().getResource
-                        (Paths.BACKGROUND_IMAGES.getPath()).toExternalForm() + "01.jpg"),
+                new BackgroundImage(new Image(getClass().getResource
+                        (Paths.BACKGROUND_IMAGES.getPath()).toExternalForm() + "09.png"),
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.REPEAT,
                         BackgroundPosition.DEFAULT,
                         new BackgroundSize(1.0, 1.0, true, true, false, false));

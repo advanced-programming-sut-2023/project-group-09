@@ -14,10 +14,12 @@
     "friendsRequest": {
       "Narges": "requesting",
       "Farzammm": "requesting",
-      "f": "requested",
-      "Narges1": "requesting"
+      "Amirh": "requesting",
+      "f": "requesting",
+      "Narges1": "requesting",
+      "Narges2": "requesting"
     },
-    "lastSeen": 0
+    "lastSeen": 1688829102365
   },
   {
     "username": "Moeein",
@@ -61,10 +63,10 @@
     "roomIds": [],
     "friends": [],
     "friendsRequest": {
-      "a": "requesting",
+      "a": "requested",
       "Amirh": "requesting"
     },
-    "lastSeen": 0
+    "lastSeen": 1688828993105
   },
   {
     "username": "Farzam3",
@@ -888,6 +890,7 @@
     "roomIds": [],
     "friends": [],
     "friendsRequest": {
+      "a": "requested",
       "f": "requested"
     },
     "lastSeen": 0

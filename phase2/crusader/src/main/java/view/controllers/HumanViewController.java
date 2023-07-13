@@ -18,6 +18,8 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.util.Duration;
@@ -37,10 +39,10 @@ public class HumanViewController {
     public static ArrayList<TypeBTN> typeBTNS = new ArrayList<>();
     public static ArrayList<ImageView> moveBTNS = new ArrayList<>();
     public static TypeBTN lastType;
-    public static ArrayList<Military> selectedMilitaries = new ArrayList<>();
+    public static HashSet<Military> selectedMilitaries = new HashSet<>();
     public static ArrayList<Engineer> selectedEngineers = new ArrayList<>();
     public static String selectedTool;
-
+    public static MediaPlayer mediaPlayer;
     //----------------------------------------------------------
     public static void setCenterOfUnitMenu() {
         GameMenu.barImage.setImage(GameImages.imageViews.get("unit bar"));
@@ -53,7 +55,7 @@ public class HumanViewController {
         putDefensive();
         putAggressive();
         updateStateOfMilitary();
-
+        GameMenu.hoveringBarStateText.setTranslateX(GameMenu.hoveringBarStateText.getTranslateX() + 20);
         ArrayList<Engineer> engineers = new ArrayList<>();
         for (Military military : selectedMilitaries) {
             if (military instanceof Engineer) engineers.add((Engineer) military);
@@ -86,14 +88,10 @@ public class HumanViewController {
         icon.setTranslateY(y);
         icon.setScaleY(1.1);
         icon.setScaleX(1.2);
-        icon.setOnMouseEntered(mouseEvent -> {
-            icon.setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
-                    .toExternalForm() + "icons/" + toolName + "-select.png"));
-        });
-        icon.setOnMouseExited(mouseEvent -> {
-            icon.setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
-                    .toExternalForm() + "icons/" + toolName + ".png"));
-        });
+        icon.setOnMouseEntered(mouseEvent -> icon.setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/" + toolName + "-select.png")));
+        icon.setOnMouseExited(mouseEvent -> icon.setImage(new Image(LoginMenu.class.getResource(Paths.BAR_IMAGES.getPath())
+                .toExternalForm() + "icons/" + toolName + ".png")));
         icon.setOnMouseClicked(mouseEvent -> {
             selectedTool = toolName;
             GameViewController.setCenterOfBar("Unit Menu");
@@ -107,7 +105,6 @@ public class HumanViewController {
         int count = 0;
         for (String name : GameMenu.unitsCount.keySet()) {
             if (GameMenu.unitsCount.get(name) != 0) {
-                System.out.println(name);
                 TypeBTN btn = new TypeBTN(name, GameMenu.menuBar, GameMenu.unitsCount.get(name), translateX, translateY);
                 translateX += 62;
                 GameViewController.setHoverEventForBar(btn.imageView, name);
@@ -117,8 +114,14 @@ public class HumanViewController {
                     for (TypeBTN typeBTN : typeBTNS) {
                         typeBTN.imageView.setEffect(null);
                     }
+
                     btn.imageView.setEffect(ds);
                     lastType = btn;
+
+                    Media media = new Media(ViewController.class.getResource("/sounds/troop/")
+                            .toExternalForm() + btn.name + ".mp3");
+                    mediaPlayer = new MediaPlayer(media);
+                    mediaPlayer.play();
                 });
                 btn.imageView.setOnMouseEntered(mouseEvent -> GameMenu.hoveringBarStateText.setText(btn.name));
                 btn.imageView.setOnMouseExited(mouseEvent -> GameMenu.hoveringBarStateText.setText(""));
@@ -150,7 +153,7 @@ public class HumanViewController {
         icon.setScaleX(1.2);
         GameMenu.menuBar.getChildren().add(icon);
         GameViewController.setHoverEventForBarOnUnitMenu(icon, "stop");
-        System.out.println(selectedMilitaries.size());
+
         icon.setOnMouseClicked(mouseEvent -> {
             setSelectedUnits();
             stopTroops();
@@ -292,8 +295,9 @@ public class HumanViewController {
         Troop troop = new Troop(military, tile, gameTile);
         gameMap.getChildren().add(troop);
         if (GameMap.gameTroops[y][x] == null) {
-            GameMap.gameTroops[y][x] = new ArrayList<>();
+            GameMap.gameTroops[y][x] = new HashSet<>();
         }
+        System.out.println("--- +++ ---");
         GameMap.gameTroops[y][x].add(troop);
     }
 
@@ -394,7 +398,6 @@ public class HumanViewController {
             return true;
         }
         if (GameController.validateAttackBuilding(endTile.getTileX(), endTile.getTileY())) {
-            System.out.println("check: " + endTile.getTileX() + " " + endTile.getTileY());
             return true;
         }
         return GameController.validateAttackTool(endTile.getTileX(), endTile.getTileY());
@@ -504,7 +507,7 @@ public class HumanViewController {
             if (count == 0) {
                 if (selectedMilitaries.size() != 0) {
                     HumanController.militaries.clear();
-                    HumanController.militaries.add(selectedMilitaries.get(0));
+                    HumanController.militaries.add(selectedMilitaries.stream().toList().get(0));
                 } else {
                     HumanController.militaries.clear();
                 }
@@ -514,7 +517,7 @@ public class HumanViewController {
         }
         if (selectedMilitaries.size() != 0) {
             HumanController.militaries.clear();
-            HumanController.militaries.add(selectedMilitaries.get(0));
+            HumanController.militaries.add(selectedMilitaries.stream().toList().get(0));
         } else {
             HumanController.militaries.clear();
         }
@@ -522,7 +525,6 @@ public class HumanViewController {
     }
 
     public static void moveUnits(GameTile end) {
-        System.out.println(selectedMilitaries.size());
         for (Military military : selectedMilitaries) {
             HumanController.militaries.clear();
             HumanController.militaries.add(military);
@@ -587,59 +589,57 @@ public class HumanViewController {
     }
 
     public static void attack(GameTile end) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("attack");
-        alert.setHeaderText("are you sure of your attack?");
-
-        ButtonType yes = new ButtonType("yes");
-        ButtonType no = new ButtonType("no");
-        alert.getButtonTypes().clear();
-        alert.getButtonTypes().addAll(yes, no);
-        Optional<ButtonType> option = alert.showAndWait();
-
-        if (option.get() == yes) {
-            for (Military military : selectedMilitaries) {
-                HumanController.militaries.clear();
-                HumanController.militaries.add(military);
-                if (GameController.validateAttackEnemy(end.getTileX(), end.getTileY())) {
-                    GameController.attackEnemy(end.getTileX(), end.getTileY());
-                    continue;
-                }
-                if (GameController.validateAttackBuilding(end.getTileX(), end.getTileY())) {
-                    GameController.attackBuilding(end.getTileX(), end.getTileY());
-                    continue;
-                }
-                if (GameController.validateAttackTool(end.getTileX(), end.getTileY())) {
-                    GameController.attackTool(end.getTileX(), end.getTileY());
-                    continue;
-                }
-                if (GameController.validateAirAttack(end.getTileX(), end.getTileY())) {
-                    GameController.airAttack(end.getTileX(), end.getTileY());
-                    continue;
-                }
-                if (GameController.validateAirAttackBuilding(end.getTileX(), end.getTileY())) {
-                    GameController.airAttackBuilding(end.getTileX(), end.getTileY());
-                    continue;
-                }
-                if (GameController.validateAirAttackTool(end.getTileX(), end.getTileY())) {
-                    GameController.airAttackTool(end.getTileX(), end.getTileY());
-                    continue;
-                }
-
-                GameController.moveUnit(end.getTileX(), end.getTileY());
+        //if you want to ask user
+//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//        alert.setTitle("attack");
+//        alert.setHeaderText("are you sure of your attack?");
+//
+//        ButtonType yes = new ButtonType("yes");
+//        ButtonType no = new ButtonType("no");
+//        alert.getButtonTypes().clear();
+//        alert.getButtonTypes().addAll(yes, no);
+//        Optional<ButtonType> option = alert.showAndWait();
+        for (Military military : selectedMilitaries) {
+            HumanController.militaries.clear();
+            HumanController.militaries.add(military);
+            if (GameController.validateAttackEnemy(end.getTileX(), end.getTileY())) {
+                GameController.attackEnemy(end.getTileX(), end.getTileY());
+                continue;
             }
-            GameMenu.unitsCount = new HashMap<>();
-            GameMenu.selectedTroops.clear();
-            GameMenu.selectedTilesTroop.clear();
-            selectedMilitaries.clear();
-            GameViewController.setCenterOfBar(null);
-            GameViewController.currentItem = null;
-            GameViewController.currentCategory = null;
+            if (GameController.validateAttackBuilding(end.getTileX(), end.getTileY())) {
+                GameController.attackBuilding(end.getTileX(), end.getTileY());
+                continue;
+            }
+            if (GameController.validateAttackTool(end.getTileX(), end.getTileY())) {
+                GameController.attackTool(end.getTileX(), end.getTileY());
+                continue;
+            }
+            if (GameController.validateAirAttack(end.getTileX(), end.getTileY())) {
+                GameController.airAttack(end.getTileX(), end.getTileY());
+                continue;
+            }
+            if (GameController.validateAirAttackBuilding(end.getTileX(), end.getTileY())) {
+                GameController.airAttackBuilding(end.getTileX(), end.getTileY());
+                continue;
+            }
+            if (GameController.validateAirAttackTool(end.getTileX(), end.getTileY())) {
+                GameController.airAttackTool(end.getTileX(), end.getTileY());
+                continue;
+            }
+
+            GameController.moveUnit(end.getTileX(), end.getTileY());
         }
+        GameMenu.unitsCount = new HashMap<>();
+        GameMenu.selectedTroops.clear();
+        GameMenu.selectedTilesTroop.clear();
+        selectedMilitaries.clear();
+        GameViewController.setCenterOfBar(null);
+        GameViewController.currentItem = null;
+        GameViewController.currentCategory = null;
     }
 
     public static Troop getTroopFromMilitary(Military military) {
-        ArrayList<Troop> militaries = GameMap.gameTroops[military.getY()][military.getX()];
+        HashSet<Troop> militaries = GameMap.gameTroops[military.getY()][military.getX()];
         for (Troop troop : militaries) {
             if (troop.getMilitary().equals(military)) {
                 return troop;

@@ -1,20 +1,19 @@
 package client;
 
-import java.io.IOException;
-
 public class PacketOnlineReceiver extends Thread {
     private boolean isPaused = false;
     private boolean shouldStop = false;
+
     @Override
     public void run() {
         while (true) {
             try {
                 Packet packet = Packet.receivePacket();
                 new PacketOnlineHandler(packet).handle();
-                if (shouldStop){
+                if (shouldStop) {
                     break;
                 }
-                synchronized (this){
+                synchronized (this) {
                     while (isPaused) {
                         try {
                             wait(); // Pause the thread
@@ -29,6 +28,7 @@ public class PacketOnlineReceiver extends Thread {
         }
 
     }
+
     public void pauseThread() {
         isPaused = true;
     }
@@ -38,7 +38,7 @@ public class PacketOnlineReceiver extends Thread {
         notify();
     }
 
-    public void stopThread(){
+    public void stopThread() {
         shouldStop = true;
     }
 }

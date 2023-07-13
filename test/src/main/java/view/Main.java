@@ -21,7 +21,7 @@ public class Main extends Application {
 //            DBController.saveAllUsers();
 //            DBController.saveCurrentUser();
 //        }));
-        connection = new Connection("localhost", 8888);
+        connection = new Connection(" tcp://5.tcp.eu.ngrok.io", 17905);
         connection.makeFakeConnection();
         MainController.run(stage);
     }

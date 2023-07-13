@@ -119,7 +119,7 @@ public class GameController {
 
     public static String setStateOfMilitary(int x, int y, String state) {
 
-        ArrayList<Military> militaries = MapController.getMilitariesOfGovernment(x, y, game.getCurrentGovernment());
+        HashSet<Military> militaries = new HashSet<>(MapController.getMilitariesOfGovernment(x, y, game.getCurrentGovernment()));
         if (militaries.size() == 0) {
             return "There is no troop in this place!";
         }
@@ -927,9 +927,7 @@ public class GameController {
         if (tile.getCivilians().size() != 0) {
             for (int i = 0; i != tile.getCivilians().size(); i++) {
                 Civilian civilian = tile.getCivilians().get(i);
-                if (civilians.get(civilian.getGovernment()) == null)
-                    civilians.put(civilian.getGovernment(), 1);
-                else civilians.put(civilian.getGovernment(), civilians.get(civilian.getGovernment()) + 1);
+                civilians.merge(civilian.getGovernment(), 1, Integer::sum);
             }
         }
         for (Government government : civilians.keySet())
@@ -940,9 +938,7 @@ public class GameController {
         if (filteredMilitariesList(tile.getMilitaries()).size() != 0) {
             for (int i = 0; i != filteredMilitariesList(tile.getMilitaries()).size(); i++) {
                 Military human = filteredMilitariesList(tile.getMilitaries()).get(i);
-                if (militaries.get(human.getGovernment()) == null)
-                    militaries.put(human.getGovernment(), 1);
-                else militaries.put(human.getGovernment(), militaries.get(human.getGovernment()) + 1);
+                militaries.merge(human.getGovernment(), 1, Integer::sum);
             }
         }
         for (Government government : militaries.keySet())

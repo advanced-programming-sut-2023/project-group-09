@@ -16,7 +16,7 @@ import view.controllers.GameViewController;
 import view.controllers.HumanViewController;
 import view.menus.GameMenu;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Troop extends ImageView {
     private Military military;
@@ -123,17 +123,21 @@ public class Troop extends ImageView {
 
     public void setTimeLine() {
         move = new Timeline(new KeyFrame(Duration.millis((20 - military.getSpeed()) * 10), actionEvent -> {
+            if (military.getGovernment() == null) {
+                setDead();
+                return;
+            }
             if (military.getMove() != null && military.getMove().isMoving()) {
                 if (getDistance() < 7) {
                     if (GameMap.gameTroops[military.getY()][military.getX()] == null) {
-                        GameMap.gameTroops[military.getY()][military.getX()] = new ArrayList<>();
+                        GameMap.gameTroops[military.getY()][military.getX()] = new HashSet<>();
                     }
                     doAttack();
                     GameMap.gameTroops[military.getY()][military.getX()].remove(this);
                     military.getMove().moveOneTurn();
                     changeGameTile(gameTile);
                     if (GameMap.gameTroops[military.getY()][military.getX()] == null) {
-                        GameMap.gameTroops[military.getY()][military.getX()] = new ArrayList<>();
+                        GameMap.gameTroops[military.getY()][military.getX()] = new HashSet<>();
                     }
                     GameTile next = GameMap.getGameTile(military.getX(), military.getY());
                     direction = HumanViewController.getDirection(gameTile.getX(), gameTile.getY(), next.getX(), next.getY());
@@ -174,6 +178,7 @@ public class Troop extends ImageView {
 
     public void setDead() {
         move.stop();
+        System.out.println("again " + color);
         GameMenu.timelines.remove(move);
         deadTimeline = new Timeline(new KeyFrame(Duration.millis(50), actionEvent -> {
             try {
@@ -212,6 +217,9 @@ public class Troop extends ImageView {
     }
 
     public void setImage() {
+        if (military.getGovernment() == null) {
+            return;
+        }
         setImage(GameImages.imageViews.get(
                 military.getName() + "_" + military.getGovernment().getColor() + "_" + (step * 16 + direction + 1)));
 

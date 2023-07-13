@@ -234,7 +234,7 @@ public class Attack {
     }
 
 
-    public synchronized void attackEnemy() {
+    public void attackEnemy() {
 
         if (tool != null) {
             attackToTool();
@@ -385,7 +385,7 @@ public class Attack {
 
 
     //this should use in nextTurn for each troop if troop has government so far
-    public synchronized void doAttack() {
+    public void doAttack() {
 
         if (military.getGovernment() == null) {
             return;
@@ -459,6 +459,7 @@ public class Attack {
             }
             attack();
         } else {
+            military.getGovernment().removeNumberOfTroopInAttack(military);
             attackCiviliansOfRange(military.getX(), military.getY(), 1);
         }
     }
