@@ -239,7 +239,7 @@ public class Lobby extends Application {
         governmentBlock.setTranslateX(250);
         governmentBlock.setTranslateY(100);
         governmentBlock.getChildren().add(label);
-        previewMap = new LobbyPreviewMap(selectedMap, 80, 130);
+        previewMap = new LobbyPreviewMap(selectedMap, 100, 130);
         governmentBlock.getChildren().add(previewMap);
         for (int i = 0; i < 8; i++) {
             int x = selectedMap.getDefaultCastles().get(i).getFirst();

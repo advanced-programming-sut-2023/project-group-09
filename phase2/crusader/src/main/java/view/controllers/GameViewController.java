@@ -2720,16 +2720,13 @@ public class GameViewController {
                             mouseEvent.getScreenY() - (GameMenu.scene.getHeight() - 800) / 2 - image.getHeight());
                 }
                 imageView.setOpacity(0.6);
-                icon.setOnMouseReleased(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        GameMenu.gameMap.getChildren().remove(imageView);
-                        droppedPicFileName = picFileName;
-                        droppedBuildingName = buildingName;
-                        isDropped = true;
-                        dropBuildingAfterSelectingTile(mouseEvent);
-                        isDropped = false;
-                    }
+                icon.setOnMouseReleased(mouseEvent1 -> {
+                    GameMenu.gameMap.getChildren().remove(imageView);
+                    droppedPicFileName = picFileName;
+                    droppedBuildingName = buildingName;
+                    isDropped = true;
+                    dropBuildingAfterSelectingTile(mouseEvent1);
+                    isDropped = false;
                 });
             }
         });
@@ -2744,7 +2741,7 @@ public class GameViewController {
         String side = getSideOfGatehouseFromFilename(droppedPicFileName);
         String massage = GameController.dropBuilding(tileX, tileY, droppedBuildingName, side);
         if (!massage.equals("building dropped successfully!")){
-            Media media = new Media(ViewController.class.getResource("/sounds/")
+            Media media = new Media(LoginMenu.class.getResource("/sounds/")
                     .toExternalForm() + "drop-warning.mp3");
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.play();

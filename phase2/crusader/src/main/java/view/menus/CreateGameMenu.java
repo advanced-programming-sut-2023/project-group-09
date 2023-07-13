@@ -207,8 +207,14 @@ public class CreateGameMenu extends Application {
                 addGovernment.setDisable(false);
                 castles = new ArrayList<>();
                 GameMaps.createMaps();
-                Map selectedMap = (mapsField.getValue().equals("Map 1")) ?
-                        GameMaps.largeMaps.get(0) : GameMaps.smallMaps.get(1);
+                Map selectedMap;
+                if (mapsField.getValue().equals("Map 1")){
+                    selectedMap = GameMaps.largeMaps.get(0);
+                }else if (mapsField.getValue().equals("Map 2")){
+                    selectedMap = GameMaps.smallMaps.get(0);
+                }else {
+                    selectedMap = GameMaps.smallMaps.get(1);
+                }
                 menuBox.getChildren().remove(previewMap);
                 previewMap = new PreviewMap(selectedMap, 230, -120);
                 menuBox.getChildren().add(previewMap);
