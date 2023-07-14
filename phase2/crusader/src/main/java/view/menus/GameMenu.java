@@ -127,13 +127,13 @@ public class GameMenu extends Application {
 
 
 
-        MapController.dropMilitary(20, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(21, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(22, 5, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(20, 6, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(21, 6, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(20, 7, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
-        MapController.dropMilitary(21, 7, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
+        MapController.dropMilitary(20, 5, "spearman", GameController.getGame().getCurrentGovernment());
+        MapController.dropMilitary(21, 5, "spearman", GameController.getGame().getCurrentGovernment());
+        MapController.dropMilitary(22, 5, "spearman", GameController.getGame().getCurrentGovernment());
+        MapController.dropMilitary(20, 6, "swordsman", GameController.getGame().getCurrentGovernment());
+        MapController.dropMilitary(21, 6, "swordsman", GameController.getGame().getCurrentGovernment());
+        MapController.dropMilitary(20, 7, "archer", GameController.getGame().getCurrentGovernment());
+        MapController.dropMilitary(21, 7, "slave", GameController.getGame().getCurrentGovernment());
         MapController.dropMilitary(22, 7, "arabianSwordsman", GameController.getGame().getCurrentGovernment());
         MapController.dropMilitary(30, 5, "spearman", GameController.getGame().getGovernments().get(1));
         MapController.dropMilitary(31, 5, "spearman", GameController.getGame().getGovernments().get(1));
@@ -142,7 +142,8 @@ public class GameMenu extends Application {
         MapController.dropMilitary(31, 6, "archer", GameController.getGame().getGovernments().get(1));
         MapController.dropMilitary(30, 7, "swordsman", GameController.getGame().getGovernments().get(1));
         MapController.dropMilitary(31, 7, "swordsman", GameController.getGame().getGovernments().get(1));
-        MapController.dropMilitary(32, 7, "swordsman", GameController.getGame().getGovernments().get(1));
+        MapController.dropMilitary(32, 7, "arabianSwordsman", GameController.getGame().getGovernments().get(1));
+        MapController.dropMilitary(31, 8, "slave", GameController.getGame().getGovernments().get(1));
         setEventListeners();
         GameViewController.setCenterOfBar();
         GameViewController.createBorderRectangles(gameMap, miniMap);
